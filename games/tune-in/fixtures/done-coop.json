@@ -1,0 +1,391 @@
+{
+  "phase": {
+    "id": "done",
+    "startedAt": 1700000171263,
+    "deadline": null
+  },
+  "rng": {
+    "seed": 1,
+    "step": 157
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "mode": "coop",
+    "rounds": 4,
+    "targetScore": 10,
+    "maxTurns": 12,
+    "clueSeconds": 45,
+    "dialSeconds": 25,
+    "callSeconds": 15,
+    "targetSize": "normal",
+    "huddle": true,
+    "spicy": false,
+    "reader": "sky"
+  },
+  "presence": {
+    "mode": "together",
+    "phoneOnly": false
+  },
+  "seats": ["p1", "p2", "p3", "p4"],
+  "left": [],
+  "mode": "coop",
+  "teams": null,
+  "psychicBag": {
+    "all": [],
+    "sun": [],
+    "moon": []
+  },
+  "spectra": [
+    {
+      "id": "tn-authentic-131",
+      "left": "Fake",
+      "right": "Authentic",
+      "es": {
+        "left": "Falso",
+        "right": "Auténtico"
+      },
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "plastic fruit",
+          "pos": 2
+        },
+        {
+          "text": "a laugh track",
+          "pos": 5
+        },
+        {
+          "text": "a knockoff handbag",
+          "pos": 10
+        },
+        {
+          "text": "a spray tan",
+          "pos": 16
+        },
+        {
+          "text": "a reality TV show",
+          "pos": 24
+        },
+        {
+          "text": "a mall Santa",
+          "pos": 32
+        },
+        {
+          "text": "a fortune cookie",
+          "pos": 44
+        },
+        {
+          "text": "a Renaissance fair",
+          "pos": 52
+        },
+        {
+          "text": "a diamond ring",
+          "pos": 70
+        },
+        {
+          "text": "a street taco",
+          "pos": 76
+        },
+        {
+          "text": "a baby's laugh",
+          "pos": 90
+        },
+        {
+          "text": "the Mona Lisa",
+          "pos": 97
+        }
+      ]
+    },
+    {
+      "id": "tn-cursed-138",
+      "left": "Cursed object",
+      "right": "Lucky charm",
+      "es": {
+        "left": "Objeto maldito",
+        "right": "Amuleto de suerte"
+      },
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a monkey's paw",
+          "pos": 2
+        },
+        {
+          "text": "a haunted doll",
+          "pos": 5
+        },
+        {
+          "text": "a creepy clown painting",
+          "pos": 10
+        },
+        {
+          "text": "an antique mirror",
+          "pos": 22
+        },
+        {
+          "text": "your ex's hoodie",
+          "pos": 30
+        },
+        {
+          "text": "a garden gnome",
+          "pos": 44
+        },
+        {
+          "text": "a snow globe",
+          "pos": 54
+        },
+        {
+          "text": "a rubber duck",
+          "pos": 60
+        },
+        {
+          "text": "unwashed game-day socks",
+          "pos": 70
+        },
+        {
+          "text": "a dreamcatcher",
+          "pos": 78
+        },
+        {
+          "text": "a pot of gold",
+          "pos": 86
+        },
+        {
+          "text": "a horseshoe",
+          "pos": 94
+        }
+      ]
+    },
+    {
+      "id": "tn-forgive-146",
+      "left": "Totally fine",
+      "right": "Unforgivable",
+      "es": {
+        "left": "Todo bien",
+        "right": "Imperdonable"
+      },
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "a sneeze",
+          "pos": 2
+        },
+        {
+          "text": "clapping when the plane lands",
+          "pos": 12
+        },
+        {
+          "text": "running a bit late",
+          "pos": 16
+        },
+        {
+          "text": "hitting reply all",
+          "pos": 22
+        },
+        {
+          "text": "pineapple on pizza",
+          "pos": 30
+        },
+        {
+          "text": "double-dipping",
+          "pos": 38
+        },
+        {
+          "text": "reclining your airplane seat",
+          "pos": 46
+        },
+        {
+          "text": "cheating at board games",
+          "pos": 56
+        },
+        {
+          "text": "eating my leftovers",
+          "pos": 62
+        },
+        {
+          "text": "spoiling a movie ending",
+          "pos": 72
+        },
+        {
+          "text": "forgetting a kid at school",
+          "pos": 88
+        },
+        {
+          "text": "kicking a puppy",
+          "pos": 99
+        }
+      ]
+    },
+    {
+      "id": "tn-creepy-036",
+      "left": "Cozy",
+      "right": "Creepy",
+      "es": {
+        "left": "Acogedor",
+        "right": "Espeluznante"
+      },
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a fireplace",
+          "pos": 3
+        },
+        {
+          "text": "a kitten on your lap",
+          "pos": 6
+        },
+        {
+          "text": "a treehouse",
+          "pos": 24
+        },
+        {
+          "text": "a rocking chair",
+          "pos": 34
+        },
+        {
+          "text": "a thunderstorm",
+          "pos": 42
+        },
+        {
+          "text": "a cabin in the woods",
+          "pos": 50
+        },
+        {
+          "text": "a music box",
+          "pos": 56
+        },
+        {
+          "text": "the attic",
+          "pos": 62
+        },
+        {
+          "text": "a scarecrow",
+          "pos": 74
+        },
+        {
+          "text": "a porcelain doll",
+          "pos": 84
+        },
+        {
+          "text": "a ventriloquist dummy",
+          "pos": 88
+        },
+        {
+          "text": "a foggy graveyard",
+          "pos": 95
+        }
+      ]
+    }
+  ],
+  "turn": {
+    "n": 4,
+    "psychic": "p1",
+    "team": null,
+    "catchUp": false,
+    "spectrum": 3,
+    "target": 3,
+    "clue": "a fireplace",
+    "clueAt": 1700000134520,
+    "clueDeadline": 1700000178173,
+    "rejected": null,
+    "dials": {
+      "p2": 5,
+      "p4": 13,
+      "p3": 0
+    },
+    "locked": ["p4", "p3", "p2"],
+    "needle": 6,
+    "calls": {},
+    "points": {
+      "p2": 4,
+      "p3": 4,
+      "p4": 3
+    },
+    "teamPoints": {
+      "sun": 0,
+      "moon": 0
+    },
+    "void": false,
+    "step": 1
+  },
+  "nextTeam": "moon",
+  "scores": {
+    "p1": 11,
+    "p2": 11,
+    "p3": 11,
+    "p4": 11
+  },
+  "turnStartScores": {
+    "p1": 7,
+    "p2": 7,
+    "p3": 7,
+    "p4": 7
+  },
+  "team": {
+    "sun": 0,
+    "moon": 0
+  },
+  "coopTotal": 11,
+  "played": 4,
+  "voidStreak": 0,
+  "stats": {
+    "p1": {
+      "bulls": 0,
+      "dials": 3,
+      "dist": 34,
+      "zeros": 1,
+      "psyTurns": 1,
+      "psyPts": 4
+    },
+    "p2": {
+      "bulls": 1,
+      "dials": 3,
+      "dist": 56,
+      "zeros": 2,
+      "psyTurns": 1,
+      "psyPts": 3
+    },
+    "p4": {
+      "bulls": 0,
+      "dials": 3,
+      "dist": 28,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 2
+    },
+    "p3": {
+      "bulls": 2,
+      "dials": 3,
+      "dist": 16,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 2
+    }
+  },
+  "speechMs": {}
+}

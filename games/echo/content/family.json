@@ -1,0 +1,6164 @@
+{
+  "lang": "en",
+  "words": [
+    {
+      "id": "echo-animals-001",
+      "category": "animals",
+      "answer": "penguin",
+      "accept": ["penguins", "pengiun", "penquin", "pinguin", "pengin", "penguine"],
+      "reject": ["puffin"],
+      "family": ["pengu"],
+      "clues": [
+        "ice",
+        "antarctica",
+        "tuxedo",
+        "waddle",
+        "cold",
+        "bird",
+        "fish",
+        "emperor",
+        "flippers",
+        "iceberg"
+      ]
+    },
+    {
+      "id": "echo-animals-002",
+      "category": "animals",
+      "answer": "giraffe",
+      "accept": ["giraffes", "girafe", "giraff", "jiraffe", "giraph", "giraffee"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "neck",
+        "tall",
+        "spots",
+        "africa",
+        "leaves",
+        "savanna",
+        "yellow",
+        "safari",
+        "tongue",
+        "zoo"
+      ]
+    },
+    {
+      "id": "echo-animals-003",
+      "category": "animals",
+      "answer": "elephant",
+      "accept": ["elephants", "elefant", "elephent", "elaphant", "elepant", "elehpant"],
+      "reject": ["elegant"],
+      "family": [],
+      "clues": [
+        "trunk",
+        "ears",
+        "tusks",
+        "big",
+        "peanuts",
+        "gray",
+        "Dumbo",
+        "ivory",
+        "memory",
+        "africa"
+      ]
+    },
+    {
+      "id": "echo-animals-004",
+      "category": "animals",
+      "answer": "kangaroo",
+      "accept": ["kangaroos", "kangeroo", "kangaru", "kangarooo", "kangoroo", "roo"],
+      "reject": ["wallaby"],
+      "family": ["roo"],
+      "clues": [
+        "australia",
+        "pouch",
+        "jump",
+        "joey",
+        "hop",
+        "boxing",
+        "outback",
+        "tail",
+        "marsupial",
+        "bounce"
+      ]
+    },
+    {
+      "id": "echo-animals-005",
+      "category": "animals",
+      "answer": "octopus",
+      "accept": ["octopuses", "octopi", "octapus", "octopodes", "octupus", "octopous"],
+      "reject": ["squid"],
+      "family": ["octo"],
+      "clues": [
+        "tentacles",
+        "ink",
+        "eight",
+        "ocean",
+        "arms",
+        "suckers",
+        "sea",
+        "camouflage",
+        "reef",
+        "kraken"
+      ]
+    },
+    {
+      "id": "echo-animals-006",
+      "category": "animals",
+      "answer": "dolphin",
+      "accept": ["dolphins", "dolfin", "dolphine", "dophin", "dolpin", "dolphen"],
+      "reject": ["porpoise"],
+      "family": [],
+      "clues": [
+        "ocean",
+        "smart",
+        "fin",
+        "sea",
+        "Flipper",
+        "clicks",
+        "mammal",
+        "jump",
+        "pod",
+        "aquarium"
+      ]
+    },
+    {
+      "id": "echo-animals-007",
+      "category": "animals",
+      "answer": "zebra",
+      "accept": ["zebras", "zebre", "zeebra", "zebrah", "zebbra", "zibra"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "stripes",
+        "horse",
+        "africa",
+        "black",
+        "white",
+        "savanna",
+        "safari",
+        "Marty",
+        "crossing",
+        "herd"
+      ]
+    },
+    {
+      "id": "echo-animals-008",
+      "category": "animals",
+      "answer": "owl",
+      "accept": ["owls", "owel", "oul", "owll", "owlet", "owlets"],
+      "reject": ["bowl"],
+      "family": [],
+      "clues": [
+        "hoot",
+        "night",
+        "wise",
+        "feathers",
+        "eyes",
+        "Hedwig",
+        "nocturnal",
+        "tree",
+        "bird",
+        "barn"
+      ]
+    },
+    {
+      "id": "echo-animals-009",
+      "category": "animals",
+      "answer": "spider",
+      "accept": ["spiders", "spyder", "spidder", "spieder", "spidre", "arachnid"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "web",
+        "eight",
+        "legs",
+        "creepy",
+        "silk",
+        "fly",
+        "tarantula",
+        "fangs",
+        "Charlotte",
+        "venom"
+      ]
+    },
+    {
+      "id": "echo-animals-010",
+      "category": "animals",
+      "answer": "camel",
+      "accept": ["camels", "camle", "camal", "cammel", "dromedary", "camell"],
+      "reject": ["llama"],
+      "family": [],
+      "clues": [
+        "hump",
+        "desert",
+        "sand",
+        "water",
+        "Egypt",
+        "ride",
+        "dunes",
+        "Arabia",
+        "caravan",
+        "spit"
+      ]
+    },
+    {
+      "id": "echo-animals-011",
+      "category": "animals",
+      "answer": "turtle",
+      "accept": ["turtles", "turtel", "turtl", "turttle", "tertle", "terrapin"],
+      "reject": ["tortoise"],
+      "family": [],
+      "clues": [
+        "shell",
+        "slow",
+        "green",
+        "ocean",
+        "beach",
+        "eggs",
+        "reptile",
+        "flippers",
+        "hare",
+        "Leonardo"
+      ]
+    },
+    {
+      "id": "echo-animals-012",
+      "category": "animals",
+      "answer": "lion",
+      "accept": ["lions", "lioness", "lyon", "lian", "lionn", "leon"],
+      "reject": ["loin"],
+      "family": [],
+      "clues": [
+        "king",
+        "roar",
+        "mane",
+        "jungle",
+        "africa",
+        "pride",
+        "Simba",
+        "cat",
+        "savanna",
+        "Leo"
+      ]
+    },
+    {
+      "id": "echo-animals-013",
+      "category": "animals",
+      "answer": "shark",
+      "accept": ["sharks", "shork", "sharck", "sahrk", "shak", "sharc"],
+      "reject": ["shard"],
+      "family": [],
+      "clues": [
+        "teeth",
+        "fin",
+        "ocean",
+        "Jaws",
+        "bite",
+        "predator",
+        "hammerhead",
+        "sea",
+        "blood",
+        "tank"
+      ]
+    },
+    {
+      "id": "echo-animals-014",
+      "category": "animals",
+      "answer": "bee",
+      "accept": ["bees", "bumblebee", "honeybee", "bumblebees", "bea", "beee", "bumbelbee"],
+      "reject": ["bean"],
+      "family": [],
+      "clues": [
+        "honey",
+        "buzz",
+        "sting",
+        "hive",
+        "flower",
+        "yellow",
+        "pollen",
+        "queen",
+        "stripes",
+        "wax"
+      ]
+    },
+    {
+      "id": "echo-animals-015",
+      "category": "animals",
+      "answer": "snail",
+      "accept": ["snails", "snale", "snial", "snayl", "snaile", "snell"],
+      "reject": ["slug", "nail"],
+      "family": [],
+      "clues": [
+        "slow",
+        "shell",
+        "slime",
+        "garden",
+        "trail",
+        "escargot",
+        "antennae",
+        "rain",
+        "lettuce",
+        "spiral"
+      ]
+    },
+    {
+      "id": "echo-animals-016",
+      "category": "animals",
+      "answer": "peacock",
+      "accept": ["peacocks", "peafowl", "peacok", "peecock", "peacoc", "pecock"],
+      "reject": [],
+      "family": ["pea", "cock"],
+      "clues": [
+        "feathers",
+        "tail",
+        "blue",
+        "proud",
+        "colorful",
+        "fan",
+        "strut",
+        "bird",
+        "eyes",
+        "India"
+      ]
+    },
+    {
+      "id": "echo-animals-017",
+      "category": "animals",
+      "answer": "crocodile",
+      "accept": ["crocodiles", "croc", "crocodil", "crocadile", "crockodile", "crocidile"],
+      "reject": ["alligator"],
+      "family": ["croc"],
+      "clues": [
+        "teeth",
+        "swamp",
+        "jaws",
+        "green",
+        "reptile",
+        "Nile",
+        "scales",
+        "tears",
+        "river",
+        "snap"
+      ]
+    },
+    {
+      "id": "echo-animals-018",
+      "category": "animals",
+      "answer": "bat",
+      "accept": ["bats", "batt", "batz"],
+      "reject": ["cat", "rat"],
+      "family": [],
+      "clues": [
+        "cave",
+        "night",
+        "wings",
+        "vampire",
+        "upside-down",
+        "echolocation",
+        "fangs",
+        "Dracula",
+        "flying",
+        "Halloween"
+      ]
+    },
+    {
+      "id": "echo-animals-019",
+      "category": "animals",
+      "answer": "squirrel",
+      "accept": ["squirrels", "squirel", "squirrell", "squrrel", "squril", "squirle"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "nuts",
+        "tree",
+        "acorn",
+        "tail",
+        "fluffy",
+        "bushy",
+        "park",
+        "chipmunk",
+        "hoard",
+        "winter"
+      ]
+    },
+    {
+      "id": "echo-animals-020",
+      "category": "animals",
+      "answer": "flamingo",
+      "accept": ["flamingos", "flamingoes", "flamengo", "flamingoe", "flamigo", "flamino"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "pink",
+        "bird",
+        "leg",
+        "shrimp",
+        "lawn",
+        "Florida",
+        "tropical",
+        "feathers",
+        "balance",
+        "wading"
+      ]
+    },
+    {
+      "id": "echo-animals-021",
+      "category": "animals",
+      "answer": "frog",
+      "accept": ["frogs", "froggy", "forg", "frogg", "frawg"],
+      "reject": ["toad"],
+      "family": [],
+      "clues": [
+        "green",
+        "jump",
+        "pond",
+        "ribbit",
+        "tadpole",
+        "lily",
+        "prince",
+        "croak",
+        "amphibian",
+        "fly"
+      ]
+    },
+    {
+      "id": "echo-animals-022",
+      "category": "animals",
+      "answer": "horse",
+      "accept": ["horses", "horsey", "hors", "horce", "hourse", "stallion"],
+      "reject": ["house", "pony"],
+      "family": [],
+      "clues": [
+        "ride",
+        "saddle",
+        "gallop",
+        "neigh",
+        "farm",
+        "hooves",
+        "jockey",
+        "stable",
+        "mane",
+        "carrot"
+      ]
+    },
+    {
+      "id": "echo-animals-023",
+      "category": "animals",
+      "answer": "rabbit",
+      "accept": ["rabbits", "bunny", "bunnies", "rabit", "rabbitt", "rabitt"],
+      "reject": ["hare"],
+      "family": [],
+      "clues": [
+        "carrot",
+        "ears",
+        "hop",
+        "Easter",
+        "hole",
+        "fluffy",
+        "magician",
+        "burrow",
+        "tail",
+        "white"
+      ]
+    },
+    {
+      "id": "echo-animals-024",
+      "category": "animals",
+      "answer": "whale",
+      "accept": ["whales", "whail", "whaile", "whael", "whayle"],
+      "reject": ["wail", "walrus"],
+      "family": [],
+      "clues": [
+        "ocean",
+        "big",
+        "blue",
+        "blowhole",
+        "sea",
+        "mammal",
+        "huge",
+        "Jonah",
+        "spout",
+        "orca"
+      ]
+    },
+    {
+      "id": "echo-animals-025",
+      "category": "animals",
+      "answer": "parrot",
+      "accept": ["parrots", "parot", "parrott", "parret", "perrot", "parrit"],
+      "reject": ["carrot"],
+      "family": [],
+      "clues": [
+        "talk",
+        "pirate",
+        "colorful",
+        "bird",
+        "repeat",
+        "feathers",
+        "cracker",
+        "tropical",
+        "beak",
+        "green"
+      ]
+    },
+    {
+      "id": "echo-animals-026",
+      "category": "animals",
+      "answer": "snake",
+      "accept": ["snakes", "snak", "snaek", "sanke", "serpent", "snaik"],
+      "reject": ["snack", "shake"],
+      "family": [],
+      "clues": [
+        "hiss",
+        "slither",
+        "venom",
+        "poison",
+        "reptile",
+        "cobra",
+        "fangs",
+        "rattle",
+        "scales",
+        "Medusa"
+      ]
+    },
+    {
+      "id": "echo-animals-027",
+      "category": "animals",
+      "answer": "panda",
+      "accept": ["pandas", "panda bear", "giant panda", "pamda", "pnada", "pandah", "pandaa"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "bamboo",
+        "bear",
+        "China",
+        "black",
+        "white",
+        "cute",
+        "zoo",
+        "lazy",
+        "endangered",
+        "fluffy"
+      ]
+    },
+    {
+      "id": "echo-animals-028",
+      "category": "animals",
+      "answer": "butterfly",
+      "accept": ["butterflies", "butterfy", "buterfly", "butterflie", "butterflys", "butterfley"],
+      "reject": [],
+      "family": ["butter", "fly"],
+      "clues": [
+        "wings",
+        "caterpillar",
+        "colorful",
+        "cocoon",
+        "flower",
+        "monarch",
+        "pretty",
+        "metamorphosis",
+        "garden",
+        "nectar"
+      ]
+    },
+    {
+      "id": "echo-animals-029",
+      "category": "animals",
+      "answer": "tiger",
+      "accept": ["tigers", "tigre", "tyger", "tigar", "tigger", "tigress"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "stripes",
+        "orange",
+        "cat",
+        "jungle",
+        "roar",
+        "India",
+        "claws",
+        "Bengal",
+        "predator",
+        "Hobbes"
+      ]
+    },
+    {
+      "id": "echo-animals-030",
+      "category": "animals",
+      "answer": "jellyfish",
+      "accept": ["jellyfishes", "jelyfish", "jellifish", "jellyfsh", "jellyfis", "jellyfishs"],
+      "reject": [],
+      "family": ["jelly", "fish"],
+      "clues": [
+        "sting",
+        "ocean",
+        "tentacles",
+        "clear",
+        "beach",
+        "sea",
+        "float",
+        "transparent",
+        "glowing",
+        "blob"
+      ]
+    },
+    {
+      "id": "echo-food-001",
+      "category": "food",
+      "answer": "pizza",
+      "accept": ["pizzas", "piza", "pitza", "peetza", "pizzah", "pizaa"],
+      "reject": ["pita"],
+      "family": [],
+      "clues": [
+        "cheese",
+        "pepperoni",
+        "Italy",
+        "slice",
+        "delivery",
+        "dough",
+        "sauce",
+        "oven",
+        "crust",
+        "toppings"
+      ]
+    },
+    {
+      "id": "echo-food-002",
+      "category": "food",
+      "answer": "pancake",
+      "accept": ["pancakes", "pankake", "pancak", "flapjack", "flapjacks", "hotcake", "hotcakes"],
+      "reject": [],
+      "family": ["pan", "cake"],
+      "clues": [
+        "syrup",
+        "breakfast",
+        "butter",
+        "flip",
+        "stack",
+        "griddle",
+        "maple",
+        "fluffy",
+        "diner",
+        "Shrove"
+      ]
+    },
+    {
+      "id": "echo-food-003",
+      "category": "food",
+      "answer": "popcorn",
+      "accept": ["popcorm", "popkorn", "popcon", "poppcorn", "popocorn", "popcorns"],
+      "reject": [],
+      "family": ["pop", "corn"],
+      "clues": [
+        "movie",
+        "butter",
+        "salt",
+        "kernel",
+        "cinema",
+        "microwave",
+        "snack",
+        "theater",
+        "bucket",
+        "kettle"
+      ]
+    },
+    {
+      "id": "echo-food-004",
+      "category": "food",
+      "answer": "spaghetti",
+      "accept": ["spagetti", "spagheti", "spaghetty", "spahgetti", "spagehtti", "spaghettie"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "meatballs",
+        "pasta",
+        "Italy",
+        "noodles",
+        "sauce",
+        "tomato",
+        "fork",
+        "twirl",
+        "Bolognese",
+        "strings"
+      ]
+    },
+    {
+      "id": "echo-food-005",
+      "category": "food",
+      "answer": "banana",
+      "accept": ["bananas", "bananna", "bannana", "bananah", "bannanna", "banan"],
+      "reject": ["bandana"],
+      "family": [],
+      "clues": [
+        "yellow",
+        "monkey",
+        "peel",
+        "fruit",
+        "split",
+        "slip",
+        "potassium",
+        "bunch",
+        "tropical",
+        "smoothie"
+      ]
+    },
+    {
+      "id": "echo-food-006",
+      "category": "food",
+      "answer": "sushi",
+      "accept": ["sushis", "suhsi", "sooshi", "sushie", "sushy", "suchi"],
+      "reject": ["sashimi"],
+      "family": [],
+      "clues": [
+        "Japan",
+        "rice",
+        "fish",
+        "raw",
+        "chopsticks",
+        "seaweed",
+        "salmon",
+        "roll",
+        "wasabi",
+        "soy"
+      ]
+    },
+    {
+      "id": "echo-food-007",
+      "category": "food",
+      "answer": "taco",
+      "accept": ["tacos", "tacco", "tako", "taccos", "takos", "tacko"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "Mexico",
+        "Tuesday",
+        "shell",
+        "salsa",
+        "beef",
+        "cheese",
+        "tortilla",
+        "lettuce",
+        "crunchy",
+        "spicy"
+      ]
+    },
+    {
+      "id": "echo-food-008",
+      "category": "food",
+      "answer": "cheese",
+      "accept": ["cheeses", "chese", "cheeze", "chees", "cheesee", "cheez"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "mouse",
+        "cheddar",
+        "milk",
+        "pizza",
+        "yellow",
+        "holes",
+        "Swiss",
+        "dairy",
+        "melt",
+        "grater"
+      ]
+    },
+    {
+      "id": "echo-food-009",
+      "category": "food",
+      "answer": "chocolate",
+      "accept": [
+        "chocolates",
+        "choclate",
+        "chocolat",
+        "chocolet",
+        "chocalate",
+        "choc",
+        "chocklate"
+      ],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "sweet",
+        "cocoa",
+        "candy",
+        "brown",
+        "bar",
+        "dessert",
+        "Valentine",
+        "milk",
+        "dark",
+        "fudge"
+      ]
+    },
+    {
+      "id": "echo-food-010",
+      "category": "food",
+      "answer": "watermelon",
+      "accept": [
+        "watermelons",
+        "watermellon",
+        "watermelone",
+        "watermeln",
+        "watermelen",
+        "wattermelon"
+      ],
+      "reject": [],
+      "family": ["water", "melon"],
+      "clues": [
+        "seeds",
+        "summer",
+        "red",
+        "green",
+        "juicy",
+        "picnic",
+        "fruit",
+        "slice",
+        "rind",
+        "stripes"
+      ]
+    },
+    {
+      "id": "echo-food-011",
+      "category": "food",
+      "answer": "burger",
+      "accept": [
+        "burgers",
+        "hamburger",
+        "hamburgers",
+        "cheeseburger",
+        "burguer",
+        "burgr",
+        "burgar"
+      ],
+      "reject": ["burglar"],
+      "family": [],
+      "clues": [
+        "fries",
+        "bun",
+        "beef",
+        "patty",
+        "ketchup",
+        "grill",
+        "cheese",
+        "lettuce",
+        "onion",
+        "barbecue"
+      ]
+    },
+    {
+      "id": "echo-food-012",
+      "category": "food",
+      "answer": "sandwich",
+      "accept": ["sandwiches", "sandwhich", "sanwich", "sandwitch", "samwich", "sandwhiches"],
+      "reject": [],
+      "family": ["sand"],
+      "clues": [
+        "bread",
+        "lunch",
+        "ham",
+        "cheese",
+        "deli",
+        "sub",
+        "turkey",
+        "mayonnaise",
+        "lettuce",
+        "picnic"
+      ]
+    },
+    {
+      "id": "echo-food-013",
+      "category": "food",
+      "answer": "cookie",
+      "accept": ["cookies", "cooky", "cookee", "cookey", "biscuit", "biscuits"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "milk",
+        "chocolate",
+        "jar",
+        "bake",
+        "dough",
+        "crumbs",
+        "oven",
+        "sweet",
+        "Santa",
+        "dunk"
+      ]
+    },
+    {
+      "id": "echo-food-014",
+      "category": "food",
+      "answer": "donut",
+      "accept": ["donuts", "doughnut", "doughnuts", "donught", "donnut", "dougnut"],
+      "reject": [],
+      "family": ["dough"],
+      "clues": [
+        "glaze",
+        "sprinkles",
+        "hole",
+        "coffee",
+        "sweet",
+        "Homer",
+        "frosting",
+        "bakery",
+        "jelly",
+        "ring"
+      ]
+    },
+    {
+      "id": "echo-food-015",
+      "category": "food",
+      "answer": "pineapple",
+      "accept": ["pineapples", "pinapple", "pineaple", "pinaple", "piniapple", "ananas"],
+      "reject": [],
+      "family": ["pine", "apple"],
+      "clues": [
+        "tropical",
+        "Hawaii",
+        "yellow",
+        "spiky",
+        "fruit",
+        "pizza",
+        "juice",
+        "crown",
+        "sweet",
+        "upside-down"
+      ]
+    },
+    {
+      "id": "echo-food-016",
+      "category": "food",
+      "answer": "lemon",
+      "accept": ["lemons", "lemmon", "lemin", "limon", "lemen", "lemonn"],
+      "reject": ["lime", "melon"],
+      "family": [],
+      "clues": [
+        "sour",
+        "yellow",
+        "citrus",
+        "juice",
+        "tart",
+        "squeeze",
+        "zest",
+        "acidic",
+        "pie",
+        "tea"
+      ]
+    },
+    {
+      "id": "echo-food-017",
+      "category": "food",
+      "answer": "carrot",
+      "accept": ["carrots", "carot", "carrott", "carrit", "carret", "carrat"],
+      "reject": ["parrot", "carat"],
+      "family": [],
+      "clues": [
+        "orange",
+        "rabbit",
+        "vegetable",
+        "snowman",
+        "eyes",
+        "crunchy",
+        "root",
+        "Bugs",
+        "vitamin",
+        "garden"
+      ]
+    },
+    {
+      "id": "echo-food-018",
+      "category": "food",
+      "answer": "egg",
+      "accept": ["eggs", "egge", "eggz"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "chicken",
+        "yolk",
+        "breakfast",
+        "shell",
+        "omelet",
+        "hen",
+        "scrambled",
+        "Easter",
+        "fried",
+        "nest"
+      ]
+    },
+    {
+      "id": "echo-food-019",
+      "category": "food",
+      "answer": "honey",
+      "accept": ["hunny", "honney", "hony", "huney", "honie", "honeys"],
+      "reject": ["money"],
+      "family": [],
+      "clues": ["bee", "sweet", "hive", "sticky", "Pooh", "golden", "jar", "tea", "bear", "syrup"]
+    },
+    {
+      "id": "echo-food-020",
+      "category": "food",
+      "answer": "soup",
+      "accept": ["soups", "soop", "soupe", "supe", "broth"],
+      "reject": ["soap"],
+      "family": [],
+      "clues": [
+        "bowl",
+        "spoon",
+        "hot",
+        "chicken",
+        "tomato",
+        "sick",
+        "noodles",
+        "ladle",
+        "stew",
+        "cracker"
+      ]
+    },
+    {
+      "id": "echo-food-021",
+      "category": "food",
+      "answer": "bread",
+      "accept": ["breads", "bred", "braed", "brea", "breadd"],
+      "reject": ["beard", "bead"],
+      "family": [],
+      "clues": [
+        "toast",
+        "loaf",
+        "butter",
+        "sandwich",
+        "wheat",
+        "slice",
+        "bake",
+        "dough",
+        "flour",
+        "crust"
+      ]
+    },
+    {
+      "id": "echo-food-022",
+      "category": "food",
+      "answer": "strawberry",
+      "accept": [
+        "strawberries",
+        "strawbery",
+        "strawberri",
+        "strawbarry",
+        "strawberrie",
+        "stawberry"
+      ],
+      "reject": [],
+      "family": ["straw", "berry"],
+      "clues": [
+        "red",
+        "fruit",
+        "seeds",
+        "cream",
+        "jam",
+        "summer",
+        "smoothie",
+        "shortcake",
+        "Wimbledon",
+        "sweet"
+      ]
+    },
+    {
+      "id": "echo-food-023",
+      "category": "food",
+      "answer": "cupcake",
+      "accept": ["cupcakes", "cupcak", "cupckae", "cupcacke", "fairy cake", "fairy cakes"],
+      "reject": [],
+      "family": ["cup", "cake"],
+      "clues": [
+        "frosting",
+        "birthday",
+        "sprinkles",
+        "muffin",
+        "bake",
+        "sweet",
+        "icing",
+        "candle",
+        "party",
+        "liner"
+      ]
+    },
+    {
+      "id": "echo-food-024",
+      "category": "food",
+      "answer": "pickle",
+      "accept": ["pickles", "pickel", "pikle", "pickl", "gherkin", "gherkins"],
+      "reject": ["nickel", "tickle"],
+      "family": [],
+      "clues": [
+        "green",
+        "jar",
+        "sour",
+        "cucumber",
+        "dill",
+        "vinegar",
+        "burger",
+        "crunchy",
+        "brine",
+        "relish"
+      ]
+    },
+    {
+      "id": "echo-food-025",
+      "category": "food",
+      "answer": "peanut",
+      "accept": ["peanuts", "penut", "peanutt", "peenut", "pnut", "groundnut", "goober"],
+      "reject": [],
+      "family": ["pea", "nut"],
+      "clues": [
+        "butter",
+        "allergy",
+        "elephant",
+        "shell",
+        "jelly",
+        "legume",
+        "circus",
+        "baseball",
+        "salted",
+        "brittle"
+      ]
+    },
+    {
+      "id": "echo-food-026",
+      "category": "food",
+      "answer": "coconut",
+      "accept": ["coconuts", "cocnut", "cocunut", "coconat", "cokonut", "cocoanut"],
+      "reject": [],
+      "family": ["coco", "nut"],
+      "clues": [
+        "palm",
+        "tropical",
+        "milk",
+        "island",
+        "hairy",
+        "beach",
+        "shell",
+        "Hawaii",
+        "water",
+        "macaroon"
+      ]
+    },
+    {
+      "id": "echo-food-027",
+      "category": "food",
+      "answer": "noodle",
+      "accept": ["noodles", "nodle", "noodel", "noddle", "nooddle", "nudel"],
+      "reject": ["poodle", "doodle"],
+      "family": [],
+      "clues": [
+        "ramen",
+        "pasta",
+        "soup",
+        "chopsticks",
+        "slurp",
+        "instant",
+        "wok",
+        "Asian",
+        "udon",
+        "brain"
+      ]
+    },
+    {
+      "id": "echo-food-028",
+      "category": "food",
+      "answer": "avocado",
+      "accept": ["avocados", "avocadoes", "avacado", "avocato", "advocado", "avo"],
+      "reject": ["advocate"],
+      "family": [],
+      "clues": [
+        "guacamole",
+        "green",
+        "toast",
+        "pit",
+        "Mexico",
+        "healthy",
+        "millennial",
+        "fruit",
+        "creamy",
+        "seed"
+      ]
+    },
+    {
+      "id": "echo-food-029",
+      "category": "food",
+      "answer": "salad",
+      "accept": ["salads", "sallad", "salid", "salade", "sallid", "salat"],
+      "reject": ["salsa", "ballad"],
+      "family": [],
+      "clues": [
+        "lettuce",
+        "healthy",
+        "green",
+        "dressing",
+        "bowl",
+        "vegetables",
+        "Caesar",
+        "tomato",
+        "croutons",
+        "diet"
+      ]
+    },
+    {
+      "id": "echo-food-030",
+      "category": "food",
+      "answer": "cereal",
+      "accept": ["cereals", "cerial", "sereal", "ceral", "cereale", "cearal"],
+      "reject": ["serial"],
+      "family": [],
+      "clues": [
+        "breakfast",
+        "milk",
+        "bowl",
+        "spoon",
+        "box",
+        "flakes",
+        "crunchy",
+        "toy",
+        "morning",
+        "oats"
+      ]
+    },
+    {
+      "id": "echo-objects-001",
+      "category": "objects",
+      "answer": "telescope",
+      "accept": ["telescopes", "telescop", "telliscope", "teloscope", "telascope", "tellescope"],
+      "reject": ["microscope", "periscope", "stethoscope"],
+      "family": ["tele", "scope"],
+      "clues": [
+        "stars",
+        "space",
+        "lens",
+        "astronomer",
+        "Galileo",
+        "zoom",
+        "observatory",
+        "planets",
+        "moon",
+        "sky"
+      ]
+    },
+    {
+      "id": "echo-objects-002",
+      "category": "objects",
+      "answer": "umbrella",
+      "accept": ["umbrellas", "umbrela", "umbrell", "umberella", "umbrellla", "brolly"],
+      "reject": ["parasol"],
+      "family": [],
+      "clues": [
+        "rain",
+        "wet",
+        "weather",
+        "storm",
+        "shade",
+        "drizzle",
+        "canopy",
+        "handle",
+        "Poppins",
+        "puddle"
+      ]
+    },
+    {
+      "id": "echo-objects-003",
+      "category": "objects",
+      "answer": "candle",
+      "accept": ["candles", "candel", "candal", "candell", "taper", "tealight"],
+      "reject": ["handle", "candy"],
+      "family": [],
+      "clues": [
+        "wax",
+        "flame",
+        "wick",
+        "birthday",
+        "fire",
+        "light",
+        "match",
+        "dinner",
+        "scent",
+        "melt"
+      ]
+    },
+    {
+      "id": "echo-objects-004",
+      "category": "objects",
+      "answer": "scissors",
+      "accept": ["scissor", "sissors", "scisors", "sizzors", "scissers", "shears"],
+      "reject": ["razor"],
+      "family": [],
+      "clues": [
+        "cut",
+        "paper",
+        "snip",
+        "sharp",
+        "blades",
+        "hair",
+        "craft",
+        "rock",
+        "barber",
+        "trim"
+      ]
+    },
+    {
+      "id": "echo-objects-005",
+      "category": "objects",
+      "answer": "ladder",
+      "accept": ["ladders", "lader", "laddar", "laddder", "ledder", "stepladder"],
+      "reject": ["latter", "lather", "leader"],
+      "family": [],
+      "clues": [
+        "climb",
+        "rungs",
+        "steps",
+        "roof",
+        "high",
+        "fall",
+        "painter",
+        "snakes",
+        "tree",
+        "fireman"
+      ]
+    },
+    {
+      "id": "echo-objects-006",
+      "category": "objects",
+      "answer": "key",
+      "accept": ["keys", "kee", "kei"],
+      "reject": ["kay", "keg"],
+      "family": [],
+      "clues": [
+        "lock",
+        "door",
+        "open",
+        "house",
+        "car",
+        "chain",
+        "secret",
+        "metal",
+        "jingle",
+        "piano"
+      ]
+    },
+    {
+      "id": "echo-objects-007",
+      "category": "objects",
+      "answer": "mirror",
+      "accept": ["mirrors", "miror", "mirrer", "mirrow", "mirorr", "looking glass"],
+      "reject": ["mirage", "minor"],
+      "family": [],
+      "clues": [
+        "reflection",
+        "glass",
+        "face",
+        "bathroom",
+        "makeup",
+        "selfie",
+        "vanity",
+        "image",
+        "vampire",
+        "Narcissus"
+      ]
+    },
+    {
+      "id": "echo-objects-008",
+      "category": "objects",
+      "answer": "clock",
+      "accept": ["clocks", "clok", "klock", "clcok", "clockk", "timepiece"],
+      "reject": ["cloak", "lock", "block"],
+      "family": [],
+      "clues": [
+        "time",
+        "hands",
+        "tick",
+        "alarm",
+        "hour",
+        "wall",
+        "minutes",
+        "cuckoo",
+        "midnight",
+        "grandfather"
+      ]
+    },
+    {
+      "id": "echo-objects-009",
+      "category": "objects",
+      "answer": "backpack",
+      "accept": ["backpacks", "bakpack", "backpak", "bookbag", "rucksack", "knapsack"],
+      "reject": ["backtrack"],
+      "family": ["back", "pack"],
+      "clues": [
+        "school",
+        "bag",
+        "books",
+        "straps",
+        "zipper",
+        "hiking",
+        "travel",
+        "shoulders",
+        "student",
+        "camping"
+      ]
+    },
+    {
+      "id": "echo-objects-010",
+      "category": "objects",
+      "answer": "guitar",
+      "accept": ["guitars", "gitar", "guiter", "guitare", "gutiar", "guittar"],
+      "reject": ["sitar"],
+      "family": [],
+      "clues": [
+        "strings",
+        "music",
+        "rock",
+        "strum",
+        "band",
+        "chords",
+        "pick",
+        "electric",
+        "amp",
+        "Elvis"
+      ]
+    },
+    {
+      "id": "echo-objects-011",
+      "category": "objects",
+      "answer": "camera",
+      "accept": ["cameras", "camra", "camara", "camerra", "cam", "kamera"],
+      "reject": ["camel", "cameo"],
+      "family": [],
+      "clues": [
+        "photo",
+        "picture",
+        "lens",
+        "flash",
+        "snap",
+        "click",
+        "selfie",
+        "film",
+        "tripod",
+        "zoom"
+      ]
+    },
+    {
+      "id": "echo-objects-012",
+      "category": "objects",
+      "answer": "balloon",
+      "accept": ["balloons", "baloon", "ballon", "balon", "baloons", "ballloon"],
+      "reject": ["saloon", "ballroom"],
+      "family": [],
+      "clues": [
+        "party",
+        "helium",
+        "pop",
+        "air",
+        "birthday",
+        "float",
+        "string",
+        "red",
+        "inflate",
+        "clown"
+      ]
+    },
+    {
+      "id": "echo-objects-013",
+      "category": "objects",
+      "answer": "hammer",
+      "accept": ["hammers", "hamer", "hammar", "hammmer", "hamner", "hamr"],
+      "reject": ["hamper", "hammock", "mallet"],
+      "family": [],
+      "clues": [
+        "nail",
+        "tool",
+        "hit",
+        "bang",
+        "pound",
+        "carpenter",
+        "Thor",
+        "build",
+        "toolbox",
+        "sledge"
+      ]
+    },
+    {
+      "id": "echo-objects-014",
+      "category": "objects",
+      "answer": "magnet",
+      "accept": ["magnets", "magent", "magnit", "magnett", "magnent", "magnnet"],
+      "reject": ["magnate", "maggot"],
+      "family": [],
+      "clues": [
+        "fridge",
+        "metal",
+        "attract",
+        "north",
+        "iron",
+        "pull",
+        "stick",
+        "poles",
+        "compass",
+        "horseshoe"
+      ]
+    },
+    {
+      "id": "echo-objects-015",
+      "category": "objects",
+      "answer": "glasses",
+      "accept": ["spectacles", "specs", "eyeglasses", "glases", "glasess", "glassess"],
+      "reject": ["goggles"],
+      "family": [],
+      "clues": [
+        "eyes",
+        "see",
+        "vision",
+        "frames",
+        "nose",
+        "read",
+        "nerd",
+        "optician",
+        "lenses",
+        "blurry"
+      ]
+    },
+    {
+      "id": "echo-objects-016",
+      "category": "objects",
+      "answer": "wallet",
+      "accept": ["wallets", "walet", "wallett", "wallit", "walllet", "billfold"],
+      "reject": ["purse", "pallet", "mallet"],
+      "family": [],
+      "clues": [
+        "money",
+        "cash",
+        "cards",
+        "pocket",
+        "leather",
+        "license",
+        "coins",
+        "bills",
+        "receipt",
+        "stolen"
+      ]
+    },
+    {
+      "id": "echo-objects-017",
+      "category": "objects",
+      "answer": "compass",
+      "accept": ["compasses", "compas", "compuss", "campass", "kompass", "compasss"],
+      "reject": ["campus", "compost"],
+      "family": [],
+      "clues": [
+        "north",
+        "direction",
+        "needle",
+        "map",
+        "navigate",
+        "south",
+        "hiking",
+        "explorer",
+        "arrow",
+        "sailor"
+      ]
+    },
+    {
+      "id": "echo-objects-018",
+      "category": "objects",
+      "answer": "piano",
+      "accept": ["pianos", "paino", "pianno", "pinao", "peano", "pianoforte"],
+      "reject": ["pinata", "organ"],
+      "family": [],
+      "clues": [
+        "keys",
+        "music",
+        "black",
+        "white",
+        "notes",
+        "Mozart",
+        "grand",
+        "pedals",
+        "concert",
+        "Beethoven"
+      ]
+    },
+    {
+      "id": "echo-objects-019",
+      "category": "objects",
+      "answer": "map",
+      "accept": ["maps", "mapp", "chart"],
+      "reject": ["mop", "mat", "mad"],
+      "family": [],
+      "clues": [
+        "directions",
+        "world",
+        "travel",
+        "treasure",
+        "lost",
+        "roads",
+        "country",
+        "globe",
+        "legend",
+        "route"
+      ]
+    },
+    {
+      "id": "echo-objects-020",
+      "category": "objects",
+      "answer": "envelope",
+      "accept": ["envelopes", "envelop", "envolope", "enveloppe", "envelpe", "envalope"],
+      "reject": ["antelope", "develop"],
+      "family": [],
+      "clues": [
+        "letter",
+        "mail",
+        "stamp",
+        "seal",
+        "post",
+        "lick",
+        "paper",
+        "address",
+        "card",
+        "postman"
+      ]
+    },
+    {
+      "id": "echo-objects-021",
+      "category": "objects",
+      "answer": "flashlight",
+      "accept": ["flashlights", "torch", "flashlite", "flahslight", "flaslight", "flashligt"],
+      "reject": ["floodlight", "spotlight"],
+      "family": ["flash", "light"],
+      "clues": [
+        "dark",
+        "beam",
+        "batteries",
+        "night",
+        "camping",
+        "blackout",
+        "bulb",
+        "search",
+        "cave",
+        "shine"
+      ]
+    },
+    {
+      "id": "echo-objects-022",
+      "category": "objects",
+      "answer": "bicycle",
+      "accept": ["bicycles", "bike", "bicicle", "bycicle", "bicylce", "cycle"],
+      "reject": ["tricycle", "motorcycle", "unicycle", "icicle"],
+      "family": ["cycl"],
+      "clues": [
+        "pedals",
+        "wheels",
+        "ride",
+        "helmet",
+        "chain",
+        "bell",
+        "spokes",
+        "handlebars",
+        "tour",
+        "tandem"
+      ]
+    },
+    {
+      "id": "echo-objects-023",
+      "category": "objects",
+      "answer": "trumpet",
+      "accept": ["trumpets", "trumpit", "trompet", "trumpett", "trumphet", "trumpt"],
+      "reject": ["trombone", "crumpet", "cornet"],
+      "family": [],
+      "clues": [
+        "brass",
+        "jazz",
+        "music",
+        "loud",
+        "blow",
+        "band",
+        "horn",
+        "Armstrong",
+        "fanfare",
+        "valves"
+      ]
+    },
+    {
+      "id": "echo-objects-024",
+      "category": "objects",
+      "answer": "paintbrush",
+      "accept": ["paintbrushes", "brush", "paintbrushs", "pantbrush", "paintbursh", "paintbruh"],
+      "reject": ["toothbrush", "hairbrush"],
+      "family": ["paint", "brush"],
+      "clues": [
+        "art",
+        "canvas",
+        "artist",
+        "color",
+        "bristles",
+        "easel",
+        "palette",
+        "watercolor",
+        "stroke",
+        "Picasso"
+      ]
+    },
+    {
+      "id": "echo-objects-025",
+      "category": "objects",
+      "answer": "toothbrush",
+      "accept": [
+        "toothbrushes",
+        "toothbursh",
+        "tothbrush",
+        "toofbrush",
+        "tootbrush",
+        "toothbrushs"
+      ],
+      "reject": ["paintbrush", "hairbrush"],
+      "family": ["tooth", "brush"],
+      "clues": [
+        "teeth",
+        "bathroom",
+        "bristles",
+        "dentist",
+        "morning",
+        "clean",
+        "floss",
+        "minty",
+        "sink",
+        "electric"
+      ]
+    },
+    {
+      "id": "echo-objects-026",
+      "category": "objects",
+      "answer": "suitcase",
+      "accept": ["suitcases", "luggage", "suitecase", "sutcase", "suitcas", "baggage"],
+      "reject": ["briefcase", "bookcase", "staircase"],
+      "family": ["suit", "case"],
+      "clues": [
+        "travel",
+        "vacation",
+        "packing",
+        "airport",
+        "clothes",
+        "wheels",
+        "trip",
+        "hotel",
+        "zipper",
+        "handle"
+      ]
+    },
+    {
+      "id": "echo-objects-027",
+      "category": "objects",
+      "answer": "headphones",
+      "accept": ["headphone", "headset", "headfones", "hedphones", "headphons", "earphones"],
+      "reject": ["earbuds", "microphone", "headlines"],
+      "family": ["head", "phone"],
+      "clues": [
+        "music",
+        "ears",
+        "listen",
+        "sound",
+        "noise",
+        "wireless",
+        "volume",
+        "bass",
+        "gaming",
+        "DJ"
+      ]
+    },
+    {
+      "id": "echo-objects-028",
+      "category": "objects",
+      "answer": "battery",
+      "accept": ["batteries", "batery", "battary", "batterie", "battry", "batterry"],
+      "reject": ["pottery", "bakery", "flattery"],
+      "family": [],
+      "clues": [
+        "power",
+        "charge",
+        "energy",
+        "electric",
+        "phone",
+        "dead",
+        "volts",
+        "remote",
+        "low",
+        "acid"
+      ]
+    },
+    {
+      "id": "echo-objects-029",
+      "category": "objects",
+      "answer": "calendar",
+      "accept": ["calendars", "calender", "calandar", "calander", "calindar", "calendr"],
+      "reject": ["colander"],
+      "family": [],
+      "clues": [
+        "date",
+        "days",
+        "month",
+        "year",
+        "schedule",
+        "week",
+        "appointment",
+        "birthday",
+        "planner",
+        "deadline"
+      ]
+    },
+    {
+      "id": "echo-objects-030",
+      "category": "objects",
+      "answer": "crayon",
+      "accept": ["crayons", "creyon", "crayan", "crayen", "crayone", "craon"],
+      "reject": ["canyon", "crayfish"],
+      "family": [],
+      "clues": [
+        "color",
+        "draw",
+        "wax",
+        "kids",
+        "box",
+        "paper",
+        "rainbow",
+        "school",
+        "art",
+        "doodle"
+      ]
+    },
+    {
+      "id": "echo-places-001",
+      "category": "places",
+      "answer": "beach",
+      "accept": ["beaches", "beachh", "beahc", "seaside", "shore", "seashore"],
+      "reject": ["bench", "beech", "peach"],
+      "family": [],
+      "clues": [
+        "sand",
+        "sun",
+        "waves",
+        "ocean",
+        "swim",
+        "towel",
+        "surf",
+        "shells",
+        "vacation",
+        "lifeguard"
+      ]
+    },
+    {
+      "id": "echo-places-002",
+      "category": "places",
+      "answer": "library",
+      "accept": ["libraries", "libary", "librery", "liberry", "librarry", "libray"],
+      "reject": ["librarian", "literary"],
+      "family": [],
+      "clues": [
+        "books",
+        "quiet",
+        "borrow",
+        "read",
+        "shelves",
+        "study",
+        "shh",
+        "card",
+        "overdue",
+        "silence"
+      ]
+    },
+    {
+      "id": "echo-places-003",
+      "category": "places",
+      "answer": "hospital",
+      "accept": ["hospitals", "hosptial", "hopsital", "hospitol", "hospitle", "hospitel"],
+      "reject": ["hospitality", "hostel"],
+      "family": [],
+      "clues": [
+        "doctor",
+        "nurse",
+        "sick",
+        "ambulance",
+        "emergency",
+        "surgery",
+        "patient",
+        "bed",
+        "medicine",
+        "wheelchair"
+      ]
+    },
+    {
+      "id": "echo-places-004",
+      "category": "places",
+      "answer": "airport",
+      "accept": ["airports", "airpot", "aireport", "airprt", "airfield", "aerodrome"],
+      "reject": ["seaport", "passport", "airplane"],
+      "family": ["air", "port"],
+      "clues": [
+        "plane",
+        "flight",
+        "luggage",
+        "travel",
+        "security",
+        "gate",
+        "runway",
+        "pilot",
+        "terminal",
+        "delay"
+      ]
+    },
+    {
+      "id": "echo-places-005",
+      "category": "places",
+      "answer": "museum",
+      "accept": ["museums", "musuem", "museam", "musem", "muesum", "museeum"],
+      "reject": ["mausoleum", "muse"],
+      "family": [],
+      "clues": [
+        "art",
+        "history",
+        "exhibit",
+        "dinosaur",
+        "paintings",
+        "statue",
+        "gallery",
+        "curator",
+        "artifacts",
+        "tour"
+      ]
+    },
+    {
+      "id": "echo-places-006",
+      "category": "places",
+      "answer": "castle",
+      "accept": ["castles", "castel", "catsle", "castal", "cassle", "fortress"],
+      "reject": ["cattle", "hassle", "tassel"],
+      "family": [],
+      "clues": [
+        "king",
+        "queen",
+        "moat",
+        "knight",
+        "tower",
+        "princess",
+        "medieval",
+        "drawbridge",
+        "throne",
+        "dragon"
+      ]
+    },
+    {
+      "id": "echo-places-007",
+      "category": "places",
+      "answer": "desert",
+      "accept": ["deserts", "desart", "dezert", "desrt", "desertt", "wasteland"],
+      "reject": ["dessert", "deserter"],
+      "family": [],
+      "clues": [
+        "sand",
+        "hot",
+        "camel",
+        "cactus",
+        "dry",
+        "Sahara",
+        "dunes",
+        "mirage",
+        "oasis",
+        "thirst"
+      ]
+    },
+    {
+      "id": "echo-places-008",
+      "category": "places",
+      "answer": "jungle",
+      "accept": ["jungles", "jungel", "jungal", "jungl", "jugnle", "rainforest"],
+      "reject": ["jingle", "bangle"],
+      "family": [],
+      "clues": [
+        "trees",
+        "monkey",
+        "Tarzan",
+        "vines",
+        "tiger",
+        "parrot",
+        "snakes",
+        "humid",
+        "explorer",
+        "Amazon"
+      ]
+    },
+    {
+      "id": "echo-places-009",
+      "category": "places",
+      "answer": "volcano",
+      "accept": ["volcanoes", "volcanos", "volcanoe", "vulcano", "volcaneo", "volacno"],
+      "reject": ["vulcan"],
+      "family": [],
+      "clues": [
+        "lava",
+        "erupt",
+        "magma",
+        "ash",
+        "mountain",
+        "hot",
+        "Hawaii",
+        "Pompeii",
+        "crater",
+        "smoke"
+      ]
+    },
+    {
+      "id": "echo-places-010",
+      "category": "places",
+      "answer": "island",
+      "accept": ["islands", "isle", "iland", "ilsand", "islend", "islan"],
+      "reject": ["iceland", "ireland"],
+      "family": [],
+      "clues": [
+        "ocean",
+        "palm",
+        "beach",
+        "stranded",
+        "sea",
+        "tropical",
+        "castaway",
+        "paradise",
+        "boat",
+        "treasure"
+      ]
+    },
+    {
+      "id": "echo-places-011",
+      "category": "places",
+      "answer": "farm",
+      "accept": ["farms", "fram", "farme", "ranch", "farmland", "farmyard"],
+      "reject": ["form", "firm", "fame"],
+      "family": [],
+      "clues": [
+        "cow",
+        "barn",
+        "tractor",
+        "pig",
+        "chicken",
+        "crops",
+        "hay",
+        "sheep",
+        "rooster",
+        "milk"
+      ]
+    },
+    {
+      "id": "echo-places-012",
+      "category": "places",
+      "answer": "circus",
+      "accept": ["circuses", "circas", "cirkus", "circis", "curcus", "sircus"],
+      "reject": ["circle", "circuit", "citrus"],
+      "family": [],
+      "clues": [
+        "clown",
+        "tent",
+        "acrobat",
+        "elephant",
+        "ringmaster",
+        "lion",
+        "trapeze",
+        "juggler",
+        "popcorn",
+        "tightrope"
+      ]
+    },
+    {
+      "id": "echo-places-013",
+      "category": "places",
+      "answer": "bakery",
+      "accept": ["bakeries", "bakry", "bakeri", "bakary", "patisserie", "bakehouse"],
+      "reject": ["battery", "brewery"],
+      "family": [],
+      "clues": [
+        "bread",
+        "cake",
+        "pastry",
+        "flour",
+        "oven",
+        "croissant",
+        "muffin",
+        "dough",
+        "cookies",
+        "smell"
+      ]
+    },
+    {
+      "id": "echo-places-014",
+      "category": "places",
+      "answer": "prison",
+      "accept": ["prisons", "jail", "prisson", "prisen", "prision", "penitentiary"],
+      "reject": ["poison", "prism", "person"],
+      "family": [],
+      "clues": [
+        "bars",
+        "criminal",
+        "cell",
+        "guard",
+        "escape",
+        "inmate",
+        "sentence",
+        "Alcatraz",
+        "handcuffs",
+        "warden"
+      ]
+    },
+    {
+      "id": "echo-places-015",
+      "category": "places",
+      "answer": "school",
+      "accept": ["schools", "shcool", "scool", "skool", "schol", "schoool"],
+      "reject": ["spool", "stool", "scholar"],
+      "family": [],
+      "clues": [
+        "teacher",
+        "students",
+        "class",
+        "homework",
+        "learn",
+        "desk",
+        "bus",
+        "recess",
+        "principal",
+        "lunch"
+      ]
+    },
+    {
+      "id": "echo-places-016",
+      "category": "places",
+      "answer": "stadium",
+      "accept": ["stadiums", "stadia", "stadum", "staduim", "stadiam", "arena"],
+      "reject": ["podium", "studio"],
+      "family": [],
+      "clues": [
+        "sports",
+        "crowd",
+        "fans",
+        "football",
+        "game",
+        "seats",
+        "concert",
+        "cheering",
+        "tickets",
+        "bleachers"
+      ]
+    },
+    {
+      "id": "echo-places-017",
+      "category": "places",
+      "answer": "zoo",
+      "accept": ["zoos", "zooo", "menagerie"],
+      "reject": ["zoom"],
+      "family": [],
+      "clues": [
+        "animals",
+        "cages",
+        "lion",
+        "monkey",
+        "elephant",
+        "giraffe",
+        "penguin",
+        "safari",
+        "keeper",
+        "visit"
+      ]
+    },
+    {
+      "id": "echo-places-018",
+      "category": "places",
+      "answer": "cave",
+      "accept": ["caves", "cavern", "caev", "cavve", "grotto", "caverns"],
+      "reject": ["cafe", "cove", "cane"],
+      "family": [],
+      "clues": [
+        "dark",
+        "bat",
+        "rock",
+        "bear",
+        "echo",
+        "stalactite",
+        "explore",
+        "underground",
+        "hibernate",
+        "damp"
+      ]
+    },
+    {
+      "id": "echo-places-019",
+      "category": "places",
+      "answer": "lighthouse",
+      "accept": ["lighthouses", "litehouse", "lighthose", "lighthous", "ligthhouse", "lighthuose"],
+      "reject": ["greenhouse", "clubhouse"],
+      "family": ["light", "house"],
+      "clues": [
+        "beacon",
+        "ships",
+        "coast",
+        "sea",
+        "rocks",
+        "keeper",
+        "tower",
+        "beam",
+        "storm",
+        "sailors"
+      ]
+    },
+    {
+      "id": "echo-places-020",
+      "category": "places",
+      "answer": "restaurant",
+      "accept": ["restaurants", "resturant", "restaraunt", "restuarant", "restaurent", "eatery"],
+      "reject": ["restroom"],
+      "family": [],
+      "clues": [
+        "food",
+        "waiter",
+        "menu",
+        "eat",
+        "dinner",
+        "chef",
+        "table",
+        "tip",
+        "reservation",
+        "dessert"
+      ]
+    },
+    {
+      "id": "echo-places-021",
+      "category": "places",
+      "answer": "supermarket",
+      "accept": [
+        "supermarkets",
+        "supermaket",
+        "supermarkt",
+        "supremarket",
+        "grocery",
+        "grocery store"
+      ],
+      "reject": ["superstar"],
+      "family": ["super", "market"],
+      "clues": [
+        "shopping",
+        "food",
+        "cart",
+        "aisles",
+        "checkout",
+        "cashier",
+        "trolley",
+        "milk",
+        "coupons",
+        "produce"
+      ]
+    },
+    {
+      "id": "echo-places-022",
+      "category": "places",
+      "answer": "cinema",
+      "accept": ["cinemas", "movie theater", "movie theatre", "movies", "cinima", "sinema"],
+      "reject": ["enigma", "cinnamon"],
+      "family": [],
+      "clues": [
+        "film",
+        "popcorn",
+        "screen",
+        "tickets",
+        "seats",
+        "dark",
+        "trailer",
+        "premiere",
+        "usher",
+        "projector"
+      ]
+    },
+    {
+      "id": "echo-places-023",
+      "category": "places",
+      "answer": "playground",
+      "accept": ["playgrounds", "playgroud", "plaground", "playgorund", "playgound", "playgrund"],
+      "reject": ["battleground", "fairground", "campground"],
+      "family": ["play", "ground"],
+      "clues": [
+        "swings",
+        "slide",
+        "kids",
+        "seesaw",
+        "park",
+        "sandbox",
+        "recess",
+        "monkey-bars",
+        "climb",
+        "merry-go-round"
+      ]
+    },
+    {
+      "id": "echo-places-024",
+      "category": "places",
+      "answer": "igloo",
+      "accept": ["igloos", "iglu", "iglo", "igloe", "iglooo", "snowhouse"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "ice",
+        "snow",
+        "cold",
+        "Inuit",
+        "Arctic",
+        "dome",
+        "blocks",
+        "polar",
+        "winter",
+        "freezing"
+      ]
+    },
+    {
+      "id": "echo-places-025",
+      "category": "places",
+      "answer": "pyramid",
+      "accept": ["pyramids", "piramid", "pyrimid", "pyramyd", "pyrmaid", "piramyd"],
+      "reject": ["prism", "pyre"],
+      "family": [],
+      "clues": [
+        "Egypt",
+        "pharaoh",
+        "mummy",
+        "tomb",
+        "desert",
+        "triangle",
+        "sand",
+        "ancient",
+        "sphinx",
+        "Giza"
+      ]
+    },
+    {
+      "id": "echo-places-026",
+      "category": "places",
+      "answer": "bridge",
+      "accept": ["bridges", "brigde", "bridg", "bridje", "brige", "bridgee"],
+      "reject": ["fridge", "ridge", "brigade"],
+      "family": [],
+      "clues": [
+        "river",
+        "cross",
+        "water",
+        "over",
+        "troll",
+        "suspension",
+        "arch",
+        "Brooklyn",
+        "London",
+        "toll"
+      ]
+    },
+    {
+      "id": "echo-places-027",
+      "category": "places",
+      "answer": "harbor",
+      "accept": ["harbors", "harbour", "harbours", "habor", "harber", "port"],
+      "reject": ["harbinger", "arbor"],
+      "family": [],
+      "clues": [
+        "boats",
+        "ships",
+        "dock",
+        "pier",
+        "sea",
+        "anchor",
+        "marina",
+        "sailors",
+        "fishing",
+        "cargo"
+      ]
+    },
+    {
+      "id": "echo-places-028",
+      "category": "places",
+      "answer": "gym",
+      "accept": ["gyms", "gymnasium", "gim", "jym", "gymn", "fitness center"],
+      "reject": ["gem", "gum", "gin"],
+      "family": [],
+      "clues": [
+        "workout",
+        "weights",
+        "exercise",
+        "sweat",
+        "treadmill",
+        "muscles",
+        "lift",
+        "trainer",
+        "membership",
+        "protein"
+      ]
+    },
+    {
+      "id": "echo-places-029",
+      "category": "places",
+      "answer": "hotel",
+      "accept": ["hotels", "hotle", "hottel", "hotell", "hotal", "inn"],
+      "reject": ["motel", "hostel", "hotdog"],
+      "family": [],
+      "clues": [
+        "room",
+        "bed",
+        "vacation",
+        "travel",
+        "lobby",
+        "key",
+        "suite",
+        "pool",
+        "reception",
+        "check-in"
+      ]
+    },
+    {
+      "id": "echo-places-030",
+      "category": "places",
+      "answer": "graveyard",
+      "accept": ["graveyards", "cemetery", "cemetary", "graveyrd", "churchyard", "boneyard"],
+      "reject": ["vineyard", "backyard", "gravity"],
+      "family": ["grave", "yard"],
+      "clues": [
+        "tombstone",
+        "ghost",
+        "dead",
+        "spooky",
+        "Halloween",
+        "coffin",
+        "zombie",
+        "buried",
+        "funeral",
+        "midnight"
+      ]
+    },
+    {
+      "id": "echo-jobs-001",
+      "category": "jobs",
+      "answer": "doctor",
+      "accept": ["doctors", "doc", "docter", "physician", "dr", "doctur"],
+      "reject": ["proctor"],
+      "family": [],
+      "clues": [
+        "hospital",
+        "stethoscope",
+        "nurse",
+        "medicine",
+        "sick",
+        "patient",
+        "surgery",
+        "prescription",
+        "checkup",
+        "diagnosis"
+      ]
+    },
+    {
+      "id": "echo-jobs-002",
+      "category": "jobs",
+      "answer": "firefighter",
+      "accept": ["firefighters", "fireman", "firemen", "firewoman", "firefigher", "firefightr"],
+      "reject": [],
+      "family": ["fire", "fight"],
+      "clues": [
+        "hose",
+        "truck",
+        "flames",
+        "smoke",
+        "ladder",
+        "helmet",
+        "rescue",
+        "siren",
+        "Dalmatian",
+        "extinguisher"
+      ]
+    },
+    {
+      "id": "echo-jobs-003",
+      "category": "jobs",
+      "answer": "pilot",
+      "accept": ["pilots", "aviator", "pylot", "pilote", "pillot", "pilott"],
+      "reject": ["pilates"],
+      "family": [],
+      "clues": [
+        "airplane",
+        "fly",
+        "cockpit",
+        "sky",
+        "captain",
+        "runway",
+        "jet",
+        "wings",
+        "airport",
+        "altitude"
+      ]
+    },
+    {
+      "id": "echo-jobs-004",
+      "category": "jobs",
+      "answer": "chef",
+      "accept": ["chefs", "cook", "cooks", "cheff", "shef", "sheff"],
+      "reject": ["chief"],
+      "family": [],
+      "clues": [
+        "kitchen",
+        "hat",
+        "knife",
+        "restaurant",
+        "recipe",
+        "apron",
+        "food",
+        "menu",
+        "spatula",
+        "gourmet"
+      ]
+    },
+    {
+      "id": "echo-jobs-005",
+      "category": "jobs",
+      "answer": "teacher",
+      "accept": [
+        "teachers",
+        "techer",
+        "teecher",
+        "teatcher",
+        "teachr",
+        "instructor",
+        "schoolteacher"
+      ],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "school",
+        "classroom",
+        "homework",
+        "students",
+        "chalkboard",
+        "apple",
+        "lesson",
+        "grades",
+        "principal",
+        "ruler"
+      ]
+    },
+    {
+      "id": "echo-jobs-006",
+      "category": "jobs",
+      "answer": "dentist",
+      "accept": ["dentists", "dentest", "dentis", "dentistt", "dentsit"],
+      "reject": ["orthodontist"],
+      "family": [],
+      "clues": [
+        "teeth",
+        "floss",
+        "cavity",
+        "drill",
+        "toothbrush",
+        "braces",
+        "smile",
+        "filling",
+        "molar",
+        "checkup"
+      ]
+    },
+    {
+      "id": "echo-jobs-007",
+      "category": "jobs",
+      "answer": "astronaut",
+      "accept": [
+        "astronauts",
+        "astronot",
+        "astronaught",
+        "astranaut",
+        "cosmonaut",
+        "austronaut",
+        "spaceman"
+      ],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "space",
+        "rocket",
+        "moon",
+        "NASA",
+        "helmet",
+        "shuttle",
+        "orbit",
+        "Armstrong",
+        "weightless",
+        "launch"
+      ]
+    },
+    {
+      "id": "echo-jobs-008",
+      "category": "jobs",
+      "answer": "farmer",
+      "accept": ["farmers", "farmar", "farmor", "fermer", "farmerr"],
+      "reject": ["framer"],
+      "family": [],
+      "clues": [
+        "tractor",
+        "cows",
+        "barn",
+        "crops",
+        "hay",
+        "overalls",
+        "pitchfork",
+        "harvest",
+        "chickens",
+        "scarecrow"
+      ]
+    },
+    {
+      "id": "echo-jobs-009",
+      "category": "jobs",
+      "answer": "plumber",
+      "accept": ["plumbers", "plumer", "plummer", "plumbr", "plumbar"],
+      "reject": ["plum"],
+      "family": [],
+      "clues": [
+        "pipes",
+        "toilet",
+        "leak",
+        "Mario",
+        "wrench",
+        "sink",
+        "drain",
+        "plunger",
+        "clog",
+        "water"
+      ]
+    },
+    {
+      "id": "echo-jobs-010",
+      "category": "jobs",
+      "answer": "lifeguard",
+      "accept": ["lifeguards", "lifegaurd", "lifegard", "lifegurad", "lifeguardd"],
+      "reject": [],
+      "family": ["life", "guard"],
+      "clues": [
+        "pool",
+        "beach",
+        "whistle",
+        "swim",
+        "rescue",
+        "Baywatch",
+        "drowning",
+        "tower",
+        "sunscreen",
+        "float"
+      ]
+    },
+    {
+      "id": "echo-jobs-011",
+      "category": "jobs",
+      "answer": "judge",
+      "accept": ["judges", "juge", "judg", "jugde", "magistrate", "justice"],
+      "reject": ["fudge", "nudge"],
+      "family": [],
+      "clues": [
+        "court",
+        "gavel",
+        "robe",
+        "jury",
+        "law",
+        "verdict",
+        "trial",
+        "guilty",
+        "sentence",
+        "wig"
+      ]
+    },
+    {
+      "id": "echo-jobs-012",
+      "category": "jobs",
+      "answer": "detective",
+      "accept": ["detectives", "detectiv", "detektive", "detecive", "sleuth", "investigator"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "Sherlock",
+        "clues",
+        "mystery",
+        "magnifying",
+        "crime",
+        "case",
+        "suspect",
+        "fingerprints",
+        "police",
+        "trenchcoat"
+      ]
+    },
+    {
+      "id": "echo-jobs-013",
+      "category": "jobs",
+      "answer": "mechanic",
+      "accept": [
+        "mechanics",
+        "mecanic",
+        "mechanik",
+        "machanic",
+        "mekanic",
+        "mechanick",
+        "grease monkey"
+      ],
+      "reject": ["mechanism"],
+      "family": [],
+      "clues": [
+        "car",
+        "wrench",
+        "garage",
+        "engine",
+        "oil",
+        "repair",
+        "tools",
+        "tires",
+        "grease",
+        "hood"
+      ]
+    },
+    {
+      "id": "echo-jobs-014",
+      "category": "jobs",
+      "answer": "nurse",
+      "accept": ["nurses", "nurce", "nures", "nurs", "rn"],
+      "reject": ["purse", "curse"],
+      "family": [],
+      "clues": [
+        "hospital",
+        "doctor",
+        "scrubs",
+        "patient",
+        "injection",
+        "care",
+        "needle",
+        "bandage",
+        "thermometer",
+        "shift"
+      ]
+    },
+    {
+      "id": "echo-jobs-015",
+      "category": "jobs",
+      "answer": "clown",
+      "accept": ["clowns", "klown", "cloun", "clawn", "clwon"],
+      "reject": ["crown", "cloud"],
+      "family": [],
+      "clues": [
+        "circus",
+        "nose",
+        "funny",
+        "makeup",
+        "balloon",
+        "juggle",
+        "wig",
+        "honk",
+        "shoes",
+        "Pennywise"
+      ]
+    },
+    {
+      "id": "echo-jobs-016",
+      "category": "jobs",
+      "answer": "lawyer",
+      "accept": ["lawyers", "attorney", "lawer", "lawya", "laywer", "solicitor"],
+      "reject": ["layer"],
+      "family": ["law"],
+      "clues": [
+        "court",
+        "suit",
+        "judge",
+        "case",
+        "client",
+        "defend",
+        "trial",
+        "contract",
+        "sue",
+        "objection"
+      ]
+    },
+    {
+      "id": "echo-jobs-017",
+      "category": "jobs",
+      "answer": "magician",
+      "accept": ["magicians", "magican", "magishan", "magicain", "conjurer", "illusionist"],
+      "reject": [],
+      "family": ["magic"],
+      "clues": [
+        "rabbit",
+        "hat",
+        "wand",
+        "cards",
+        "trick",
+        "Houdini",
+        "abracadabra",
+        "cape",
+        "disappear",
+        "saw"
+      ]
+    },
+    {
+      "id": "echo-jobs-018",
+      "category": "jobs",
+      "answer": "waiter",
+      "accept": ["waiters", "waitress", "server", "waitor", "wayter"],
+      "reject": ["water", "writer"],
+      "family": [],
+      "clues": [
+        "restaurant",
+        "tray",
+        "tip",
+        "menu",
+        "order",
+        "food",
+        "apron",
+        "table",
+        "bill",
+        "napkin"
+      ]
+    },
+    {
+      "id": "echo-jobs-019",
+      "category": "jobs",
+      "answer": "barber",
+      "accept": ["barbers", "barbor", "barbr", "barbour", "barbre"],
+      "reject": ["barbie", "barbarian"],
+      "family": [],
+      "clues": [
+        "haircut",
+        "scissors",
+        "shave",
+        "razor",
+        "pole",
+        "beard",
+        "chair",
+        "clippers",
+        "mustache",
+        "trim"
+      ]
+    },
+    {
+      "id": "echo-jobs-020",
+      "category": "jobs",
+      "answer": "soldier",
+      "accept": ["soldiers", "solider", "soldjer", "souldier", "soilder", "soldeir"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "army",
+        "war",
+        "gun",
+        "uniform",
+        "helmet",
+        "camouflage",
+        "salute",
+        "boots",
+        "tank",
+        "march"
+      ]
+    },
+    {
+      "id": "echo-jobs-021",
+      "category": "jobs",
+      "answer": "scientist",
+      "accept": ["scientists", "sciencetist", "scientest", "sientist", "scienist"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "lab",
+        "experiment",
+        "microscope",
+        "beaker",
+        "chemistry",
+        "research",
+        "Einstein",
+        "goggles",
+        "hypothesis",
+        "formula"
+      ]
+    },
+    {
+      "id": "echo-jobs-022",
+      "category": "jobs",
+      "answer": "librarian",
+      "accept": ["librarians", "libarian", "librarien", "librarain", "libraian"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "books",
+        "quiet",
+        "shh",
+        "shelves",
+        "glasses",
+        "card",
+        "reading",
+        "overdue",
+        "stamp",
+        "Dewey"
+      ]
+    },
+    {
+      "id": "echo-jobs-023",
+      "category": "jobs",
+      "answer": "photographer",
+      "accept": [
+        "photographers",
+        "fotographer",
+        "photografer",
+        "photgrapher",
+        "photographr",
+        "photog"
+      ],
+      "reject": [],
+      "family": ["photo", "graph"],
+      "clues": [
+        "camera",
+        "picture",
+        "flash",
+        "lens",
+        "pose",
+        "smile",
+        "wedding",
+        "click",
+        "portrait",
+        "tripod"
+      ]
+    },
+    {
+      "id": "echo-jobs-024",
+      "category": "jobs",
+      "answer": "baker",
+      "accept": ["bakers", "bakr", "bakor", "baiker", "bakker"],
+      "reject": ["bakery", "banker"],
+      "family": [],
+      "clues": [
+        "bread",
+        "oven",
+        "cake",
+        "flour",
+        "dough",
+        "cookies",
+        "muffin",
+        "apron",
+        "pastry",
+        "croissant"
+      ]
+    },
+    {
+      "id": "echo-jobs-025",
+      "category": "jobs",
+      "answer": "carpenter",
+      "accept": [
+        "carpenters",
+        "carpentor",
+        "carpender",
+        "capenter",
+        "carpentar",
+        "joiner",
+        "woodworker"
+      ],
+      "reject": ["carpet"],
+      "family": [],
+      "clues": [
+        "wood",
+        "hammer",
+        "nails",
+        "saw",
+        "table",
+        "chair",
+        "drill",
+        "Jesus",
+        "workshop",
+        "lumber"
+      ]
+    },
+    {
+      "id": "echo-jobs-026",
+      "category": "jobs",
+      "answer": "architect",
+      "accept": ["architects", "architech", "arkitect", "archetect", "architecht", "archietect"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "building",
+        "blueprint",
+        "design",
+        "house",
+        "skyscraper",
+        "plans",
+        "drawing",
+        "ruler",
+        "construction",
+        "model"
+      ]
+    },
+    {
+      "id": "echo-jobs-027",
+      "category": "jobs",
+      "answer": "cashier",
+      "accept": ["cashiers", "cashir", "casheir", "cashiere", "casheer"],
+      "reject": ["cashew"],
+      "family": [],
+      "clues": [
+        "register",
+        "money",
+        "store",
+        "checkout",
+        "receipt",
+        "change",
+        "groceries",
+        "scanner",
+        "till",
+        "coins"
+      ]
+    },
+    {
+      "id": "echo-jobs-028",
+      "category": "jobs",
+      "answer": "journalist",
+      "accept": ["journalists", "jornalist", "journelist", "jounalist", "reporter", "journo"],
+      "reject": [],
+      "family": ["journal"],
+      "clues": [
+        "news",
+        "interview",
+        "article",
+        "story",
+        "press",
+        "microphone",
+        "headline",
+        "writer",
+        "magazine",
+        "scoop"
+      ]
+    },
+    {
+      "id": "echo-jobs-029",
+      "category": "jobs",
+      "answer": "sailor",
+      "accept": ["sailors", "sailer", "saylor", "mariner", "seaman", "sailorr"],
+      "reject": ["tailor"],
+      "family": [],
+      "clues": [
+        "boat",
+        "ship",
+        "ocean",
+        "sea",
+        "anchor",
+        "Popeye",
+        "navy",
+        "knot",
+        "captain",
+        "hat"
+      ]
+    },
+    {
+      "id": "echo-jobs-030",
+      "category": "jobs",
+      "answer": "veterinarian",
+      "accept": ["veterinarians", "vet", "vets", "veterinarion", "vetrinarian", "veternarian"],
+      "reject": ["vegetarian"],
+      "family": [],
+      "clues": [
+        "animals",
+        "pets",
+        "dog",
+        "cat",
+        "sick",
+        "clinic",
+        "puppy",
+        "doctor",
+        "horse",
+        "farm"
+      ]
+    },
+    {
+      "id": "echo-nature-001",
+      "category": "nature",
+      "answer": "rainbow",
+      "accept": ["rainbows", "rainbo", "rainbw", "raimbow", "ranbow", "rainbwo"],
+      "reject": [],
+      "family": ["rain", "bow"],
+      "clues": [
+        "colors",
+        "sky",
+        "arc",
+        "gold",
+        "leprechaun",
+        "storm",
+        "pot",
+        "prism",
+        "sunshine",
+        "unicorn"
+      ]
+    },
+    {
+      "id": "echo-nature-002",
+      "category": "nature",
+      "answer": "tornado",
+      "accept": ["tornadoes", "tornados", "twister", "tornadoe", "tornato", "tornadu"],
+      "reject": ["tomato"],
+      "family": [],
+      "clues": [
+        "wind",
+        "storm",
+        "Kansas",
+        "funnel",
+        "spin",
+        "Dorothy",
+        "Oz",
+        "cyclone",
+        "destruction",
+        "chaser"
+      ]
+    },
+    {
+      "id": "echo-nature-003",
+      "category": "nature",
+      "answer": "waterfall",
+      "accept": ["waterfalls", "waterfal", "cascade", "falls", "watterfall", "waterfull"],
+      "reject": [],
+      "family": ["water", "fall"],
+      "clues": [
+        "Niagara",
+        "river",
+        "cliff",
+        "mist",
+        "drop",
+        "rocks",
+        "splash",
+        "barrel",
+        "rainbow",
+        "stream"
+      ]
+    },
+    {
+      "id": "echo-nature-004",
+      "category": "nature",
+      "answer": "snowflake",
+      "accept": ["snowflakes", "snoflake", "snowflak", "snowfake", "snowflke", "snoflakes"],
+      "reject": [],
+      "family": ["snow", "flake"],
+      "clues": [
+        "winter",
+        "cold",
+        "unique",
+        "ice",
+        "frozen",
+        "crystal",
+        "white",
+        "Christmas",
+        "melt",
+        "delicate"
+      ]
+    },
+    {
+      "id": "echo-nature-005",
+      "category": "nature",
+      "answer": "lightning",
+      "accept": ["lightening", "lightnin", "litning", "lightnig", "lighning", "lightning bolt"],
+      "reject": ["lighting"],
+      "family": ["light"],
+      "clues": [
+        "thunder",
+        "storm",
+        "bolt",
+        "flash",
+        "electricity",
+        "strike",
+        "zap",
+        "Zeus",
+        "Franklin",
+        "kite"
+      ]
+    },
+    {
+      "id": "echo-nature-006",
+      "category": "nature",
+      "answer": "mountain",
+      "accept": ["mountains", "mountian", "montain", "mountin", "mount", "mt"],
+      "reject": ["fountain"],
+      "family": [],
+      "clues": [
+        "climb",
+        "peak",
+        "Everest",
+        "snow",
+        "tall",
+        "hike",
+        "summit",
+        "rocky",
+        "Alps",
+        "hill"
+      ]
+    },
+    {
+      "id": "echo-nature-007",
+      "category": "nature",
+      "answer": "river",
+      "accept": ["rivers", "rivor", "rivver", "rivr", "rivir"],
+      "reject": ["liver", "diver"],
+      "family": [],
+      "clues": [
+        "water",
+        "flow",
+        "stream",
+        "boat",
+        "fish",
+        "bank",
+        "Nile",
+        "bridge",
+        "current",
+        "canoe"
+      ]
+    },
+    {
+      "id": "echo-nature-008",
+      "category": "nature",
+      "answer": "sunset",
+      "accept": ["sunsets", "sundown", "dusk", "sunsett", "sunet"],
+      "reject": [],
+      "family": ["sun", "set"],
+      "clues": [
+        "evening",
+        "orange",
+        "horizon",
+        "beach",
+        "night",
+        "sky",
+        "twilight",
+        "dark",
+        "romantic",
+        "pink"
+      ]
+    },
+    {
+      "id": "echo-nature-009",
+      "category": "nature",
+      "answer": "forest",
+      "accept": ["forests", "woods", "forrest", "forset", "woodland", "forist"],
+      "reject": ["florist"],
+      "family": [],
+      "clues": [
+        "trees",
+        "green",
+        "deer",
+        "hiking",
+        "camping",
+        "bear",
+        "owl",
+        "moss",
+        "leaves",
+        "pine"
+      ]
+    },
+    {
+      "id": "echo-nature-010",
+      "category": "nature",
+      "answer": "earthquake",
+      "accept": ["earthquakes", "quake", "earthqake", "eartquake", "earthquack", "tremor"],
+      "reject": [],
+      "family": ["earth", "quake"],
+      "clues": [
+        "shake",
+        "ground",
+        "California",
+        "Richter",
+        "crack",
+        "tremble",
+        "fault",
+        "disaster",
+        "tsunami",
+        "rumble"
+      ]
+    },
+    {
+      "id": "echo-nature-011",
+      "category": "nature",
+      "answer": "cloud",
+      "accept": ["clouds", "clowd", "cloudd", "clound", "cloude", "clowds"],
+      "reject": ["clown"],
+      "family": [],
+      "clues": [
+        "sky",
+        "rain",
+        "white",
+        "fluffy",
+        "weather",
+        "storm",
+        "cotton",
+        "gray",
+        "cumulus",
+        "nine"
+      ]
+    },
+    {
+      "id": "echo-nature-012",
+      "category": "nature",
+      "answer": "moon",
+      "accept": ["moons", "mooon", "moom", "moone", "luna"],
+      "reject": ["noon", "mood", "moan"],
+      "family": [],
+      "clues": [
+        "night",
+        "space",
+        "full",
+        "lunar",
+        "stars",
+        "astronaut",
+        "crescent",
+        "werewolf",
+        "tides",
+        "cheese"
+      ]
+    },
+    {
+      "id": "echo-nature-013",
+      "category": "nature",
+      "answer": "ocean",
+      "accept": ["oceans", "sea", "ocian", "oshen", "ocen", "oceon"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "waves",
+        "water",
+        "blue",
+        "fish",
+        "salt",
+        "whale",
+        "deep",
+        "beach",
+        "Pacific",
+        "sharks"
+      ]
+    },
+    {
+      "id": "echo-nature-014",
+      "category": "nature",
+      "answer": "glacier",
+      "accept": ["glaciers", "glasier", "glacior", "glaicer", "glacie"],
+      "reject": ["glazier"],
+      "family": [],
+      "clues": [
+        "ice",
+        "cold",
+        "melt",
+        "Alaska",
+        "frozen",
+        "Arctic",
+        "slow",
+        "iceberg",
+        "mountain",
+        "blue"
+      ]
+    },
+    {
+      "id": "echo-nature-015",
+      "category": "nature",
+      "answer": "fog",
+      "accept": ["fogs", "fogg", "foggy"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "mist",
+        "gray",
+        "cloud",
+        "London",
+        "hazy",
+        "morning",
+        "thick",
+        "see",
+        "horn",
+        "damp"
+      ]
+    },
+    {
+      "id": "echo-nature-016",
+      "category": "nature",
+      "answer": "mushroom",
+      "accept": ["mushrooms", "mushrom", "mushroon", "musroom", "shroom", "toadstool"],
+      "reject": [],
+      "family": ["mush", "room"],
+      "clues": [
+        "fungus",
+        "Mario",
+        "pizza",
+        "forest",
+        "spore",
+        "cap",
+        "poisonous",
+        "fairy",
+        "soup",
+        "gills"
+      ]
+    },
+    {
+      "id": "echo-nature-017",
+      "category": "nature",
+      "answer": "leaf",
+      "accept": ["leaves", "leafs", "leef", "lief", "leafe"],
+      "reject": ["loaf"],
+      "family": [],
+      "clues": [
+        "tree",
+        "green",
+        "autumn",
+        "fall",
+        "rake",
+        "branch",
+        "maple",
+        "plant",
+        "pile",
+        "Canada"
+      ]
+    },
+    {
+      "id": "echo-nature-018",
+      "category": "nature",
+      "answer": "wind",
+      "accept": ["winds", "windy", "wiind", "wynd", "winde"],
+      "reject": ["wine", "window"],
+      "family": [],
+      "clues": [
+        "blow",
+        "breeze",
+        "air",
+        "kite",
+        "storm",
+        "hurricane",
+        "gust",
+        "sail",
+        "whistle",
+        "chilly"
+      ]
+    },
+    {
+      "id": "echo-nature-019",
+      "category": "nature",
+      "answer": "puddle",
+      "accept": ["puddles", "puddel", "pudle", "puddl", "puddels"],
+      "reject": ["poodle", "paddle", "pudding"],
+      "family": [],
+      "clues": [
+        "rain",
+        "splash",
+        "jump",
+        "water",
+        "boots",
+        "mud",
+        "wet",
+        "reflection",
+        "pothole",
+        "ducks"
+      ]
+    },
+    {
+      "id": "echo-nature-020",
+      "category": "nature",
+      "answer": "iceberg",
+      "accept": ["icebergs", "iseberg", "icburg", "iceburg", "icebrg"],
+      "reject": [],
+      "family": ["ice", "berg"],
+      "clues": [
+        "Titanic",
+        "cold",
+        "Arctic",
+        "float",
+        "ocean",
+        "tip",
+        "glacier",
+        "polar",
+        "penguin",
+        "ship"
+      ]
+    },
+    {
+      "id": "echo-nature-021",
+      "category": "nature",
+      "answer": "eclipse",
+      "accept": ["eclipses", "eclips", "eclipes", "eclispe", "ecclipse"],
+      "reject": ["ellipse"],
+      "family": [],
+      "clues": [
+        "sun",
+        "moon",
+        "dark",
+        "solar",
+        "shadow",
+        "lunar",
+        "glasses",
+        "total",
+        "sky",
+        "rare"
+      ]
+    },
+    {
+      "id": "echo-nature-022",
+      "category": "nature",
+      "answer": "comet",
+      "accept": ["comets", "commet", "comit", "comett", "commets"],
+      "reject": ["comment"],
+      "family": [],
+      "clues": [
+        "tail",
+        "space",
+        "Halley",
+        "star",
+        "meteor",
+        "ice",
+        "orbit",
+        "sky",
+        "dinosaurs",
+        "streak"
+      ]
+    },
+    {
+      "id": "echo-nature-023",
+      "category": "nature",
+      "answer": "avalanche",
+      "accept": ["avalanches", "avalance", "avalanch", "avelanche", "avalanshe", "snowslide"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "snow",
+        "mountain",
+        "ski",
+        "slide",
+        "danger",
+        "bury",
+        "rumble",
+        "Alps",
+        "rescue",
+        "roll"
+      ]
+    },
+    {
+      "id": "echo-nature-024",
+      "category": "nature",
+      "answer": "swamp",
+      "accept": ["swamps", "swampland", "swomp", "swammp", "swanp"],
+      "reject": ["swap"],
+      "family": [],
+      "clues": [
+        "Shrek",
+        "alligator",
+        "mud",
+        "marsh",
+        "frog",
+        "murky",
+        "mosquito",
+        "bog",
+        "Louisiana",
+        "bayou"
+      ]
+    },
+    {
+      "id": "echo-nature-025",
+      "category": "nature",
+      "answer": "cactus",
+      "accept": ["cacti", "cactuses", "cactis", "catus", "cactos", "kactus"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "desert",
+        "spiky",
+        "prickly",
+        "needles",
+        "succulent",
+        "Arizona",
+        "thorns",
+        "water",
+        "sand",
+        "Mexico"
+      ]
+    },
+    {
+      "id": "echo-nature-026",
+      "category": "nature",
+      "answer": "sunflower",
+      "accept": ["sunflowers", "sunflour", "sunfower", "sunflwer", "sunfloer"],
+      "reject": [],
+      "family": ["sun", "flower"],
+      "clues": [
+        "yellow",
+        "seeds",
+        "tall",
+        "petals",
+        "Kansas",
+        "summer",
+        "field",
+        "bee",
+        "garden",
+        "Gogh"
+      ]
+    },
+    {
+      "id": "echo-nature-027",
+      "category": "nature",
+      "answer": "thunder",
+      "accept": ["thundr", "thunnder", "thuder", "thunderr", "thunderclap"],
+      "reject": ["plunder"],
+      "family": [],
+      "clues": [
+        "lightning",
+        "storm",
+        "loud",
+        "boom",
+        "rumble",
+        "Thor",
+        "clap",
+        "rain",
+        "scary",
+        "roar"
+      ]
+    },
+    {
+      "id": "echo-nature-028",
+      "category": "nature",
+      "answer": "seashell",
+      "accept": ["seashells", "shell", "shells", "seashel", "seeshell"],
+      "reject": [],
+      "family": ["sea", "shell"],
+      "clues": [
+        "beach",
+        "ocean",
+        "conch",
+        "spiral",
+        "sand",
+        "ear",
+        "collect",
+        "pearl",
+        "crab",
+        "clam"
+      ]
+    },
+    {
+      "id": "echo-nature-029",
+      "category": "nature",
+      "answer": "acorn",
+      "accept": ["acorns", "acron", "akorn", "acorne", "accorn"],
+      "reject": [],
+      "family": [],
+      "clues": ["oak", "squirrel", "nut", "tree", "autumn", "seed", "cap", "brown", "fall", "Scrat"]
+    },
+    {
+      "id": "echo-nature-030",
+      "category": "nature",
+      "answer": "pebble",
+      "accept": ["pebbles", "peble", "pebbel", "pebel", "pebbels", "pebbl"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "stone",
+        "rock",
+        "small",
+        "beach",
+        "smooth",
+        "river",
+        "skip",
+        "gravel",
+        "pond",
+        "Flintstones"
+      ]
+    },
+    {
+      "id": "echo-activities-001",
+      "category": "activities",
+      "answer": "swimming",
+      "accept": ["swim", "swiming", "swimmin", "swimmng", "swimmimg", "swims"],
+      "reject": ["skimming", "slimming", "trimming"],
+      "family": ["swim"],
+      "clues": [
+        "pool",
+        "water",
+        "goggles",
+        "freestyle",
+        "laps",
+        "dive",
+        "lifeguard",
+        "backstroke",
+        "ocean",
+        "splash"
+      ]
+    },
+    {
+      "id": "echo-activities-002",
+      "category": "activities",
+      "answer": "camping",
+      "accept": ["camp", "campin", "campping", "campng", "camps", "tenting"],
+      "reject": ["clamping", "cramping", "damping"],
+      "family": ["camp"],
+      "clues": [
+        "tent",
+        "fire",
+        "marshmallows",
+        "woods",
+        "outdoors",
+        "lantern",
+        "forest",
+        "stars",
+        "sleeping-bag",
+        "mosquitoes"
+      ]
+    },
+    {
+      "id": "echo-activities-003",
+      "category": "activities",
+      "answer": "dancing",
+      "accept": ["dance", "dancin", "danceing", "dansing", "dances", "dancng"],
+      "reject": ["lancing", "dashing", "prancing"],
+      "family": ["danc"],
+      "clues": [
+        "music",
+        "party",
+        "ballet",
+        "disco",
+        "salsa",
+        "tango",
+        "moves",
+        "club",
+        "waltz",
+        "rhythm"
+      ]
+    },
+    {
+      "id": "echo-activities-004",
+      "category": "activities",
+      "answer": "fishing",
+      "accept": ["fish", "fishin", "fising", "fisshing", "angling", "fishng"],
+      "reject": ["phishing", "wishing", "dishing"],
+      "family": ["fish"],
+      "clues": ["rod", "hook", "lake", "bait", "worm", "boat", "reel", "catch", "net", "patience"]
+    },
+    {
+      "id": "echo-activities-005",
+      "category": "activities",
+      "answer": "skiing",
+      "accept": ["ski", "skis", "sking", "skiiing", "skiin"],
+      "reject": ["skating", "skiving", "skying"],
+      "family": ["ski"],
+      "clues": [
+        "snow",
+        "mountain",
+        "slopes",
+        "poles",
+        "winter",
+        "lift",
+        "goggles",
+        "Alps",
+        "chalet",
+        "avalanche"
+      ]
+    },
+    {
+      "id": "echo-activities-006",
+      "category": "activities",
+      "answer": "knitting",
+      "accept": ["knit", "kniting", "nitting", "knittin", "knits", "knitted"],
+      "reject": ["kitting", "quilting", "crocheting"],
+      "family": ["knit"],
+      "clues": [
+        "yarn",
+        "wool",
+        "needles",
+        "scarf",
+        "sweater",
+        "grandma",
+        "stitch",
+        "purl",
+        "cozy",
+        "pattern"
+      ]
+    },
+    {
+      "id": "echo-activities-007",
+      "category": "activities",
+      "answer": "gardening",
+      "accept": ["garden", "gardens", "gardning", "gardenning", "gardenin", "gardeing"],
+      "reject": ["guarding", "hardening", "pardoning"],
+      "family": ["garden"],
+      "clues": [
+        "plants",
+        "flowers",
+        "dirt",
+        "shovel",
+        "seeds",
+        "weeds",
+        "watering",
+        "soil",
+        "hose",
+        "trowel"
+      ]
+    },
+    {
+      "id": "echo-activities-008",
+      "category": "activities",
+      "answer": "bowling",
+      "accept": ["bowlling", "boling", "bowlin", "bolling", "tenpin", "tenpin bowling"],
+      "reject": ["howling", "bowing", "blowing"],
+      "family": ["bowl"],
+      "clues": [
+        "pins",
+        "strike",
+        "alley",
+        "ball",
+        "spare",
+        "shoes",
+        "lane",
+        "gutter",
+        "league",
+        "turkey"
+      ]
+    },
+    {
+      "id": "echo-activities-009",
+      "category": "activities",
+      "answer": "karaoke",
+      "accept": ["carioke", "karoke", "kareoke", "karaoki", "carrioke", "karaokee"],
+      "reject": ["karate", "kabuki"],
+      "family": [],
+      "clues": [
+        "singing",
+        "microphone",
+        "lyrics",
+        "bar",
+        "song",
+        "screen",
+        "duet",
+        "Japan",
+        "off-key",
+        "stage"
+      ]
+    },
+    {
+      "id": "echo-activities-010",
+      "category": "activities",
+      "answer": "yoga",
+      "accept": ["yogas", "yogha", "youga", "yooga"],
+      "reject": ["yoda", "yogurt", "toga"],
+      "family": [],
+      "clues": [
+        "mat",
+        "stretch",
+        "meditation",
+        "pose",
+        "flexible",
+        "namaste",
+        "breathing",
+        "downward-dog",
+        "zen",
+        "India"
+      ]
+    },
+    {
+      "id": "echo-activities-011",
+      "category": "activities",
+      "answer": "painting",
+      "accept": ["paint", "paintings", "painitng", "paintin", "paiting", "painted"],
+      "reject": ["panting", "printing", "pointing", "planting"],
+      "family": ["paint"],
+      "clues": [
+        "brush",
+        "canvas",
+        "art",
+        "easel",
+        "colors",
+        "artist",
+        "palette",
+        "Picasso",
+        "gallery",
+        "watercolor"
+      ]
+    },
+    {
+      "id": "echo-activities-012",
+      "category": "activities",
+      "answer": "hiking",
+      "accept": ["hike", "hikeing", "hikking", "hikes", "hikin", "trekking"],
+      "reject": ["biking", "liking", "hacking"],
+      "family": ["hike"],
+      "clues": [
+        "trail",
+        "mountain",
+        "boots",
+        "backpack",
+        "walking",
+        "nature",
+        "woods",
+        "summit",
+        "map",
+        "compass"
+      ]
+    },
+    {
+      "id": "echo-activities-013",
+      "category": "activities",
+      "answer": "sleeping",
+      "accept": ["sleep", "sleping", "sleaping", "sleepin", "asleep", "sleeps"],
+      "reject": ["sweeping", "slipping", "sleeting", "weeping"],
+      "family": ["sleep"],
+      "clues": [
+        "bed",
+        "pillow",
+        "night",
+        "dreams",
+        "tired",
+        "nap",
+        "pajamas",
+        "blanket",
+        "alarm",
+        "zzz"
+      ]
+    },
+    {
+      "id": "echo-activities-014",
+      "category": "activities",
+      "answer": "juggling",
+      "accept": ["juggle", "jugling", "juggeling", "juggleing", "jugglin", "juggles"],
+      "reject": ["struggling", "smuggling", "snuggling", "jiggling"],
+      "family": ["juggl"],
+      "clues": [
+        "balls",
+        "clown",
+        "circus",
+        "catch",
+        "throw",
+        "pins",
+        "skill",
+        "balance",
+        "air",
+        "performer"
+      ]
+    },
+    {
+      "id": "echo-activities-015",
+      "category": "activities",
+      "answer": "surfing",
+      "accept": ["surf", "serfing", "surfin", "surffing", "surfs", "surfng"],
+      "reject": ["serving", "surging", "turfing"],
+      "family": ["surf"],
+      "clues": [
+        "waves",
+        "board",
+        "ocean",
+        "beach",
+        "wetsuit",
+        "Hawaii",
+        "shark",
+        "tube",
+        "dude",
+        "wipeout"
+      ]
+    },
+    {
+      "id": "echo-activities-016",
+      "category": "activities",
+      "answer": "reading",
+      "accept": ["read", "reeding", "readin", "readng", "reads", "raeding"],
+      "reject": ["riding", "reaping", "leading", "heading"],
+      "family": ["read"],
+      "clues": [
+        "book",
+        "library",
+        "novel",
+        "glasses",
+        "words",
+        "story",
+        "pages",
+        "chapter",
+        "bedtime",
+        "literacy"
+      ]
+    },
+    {
+      "id": "echo-activities-017",
+      "category": "activities",
+      "answer": "shopping",
+      "accept": ["shop", "shoping", "shoppin", "shopin", "shops", "shoppping"],
+      "reject": ["chopping", "shipping", "stopping", "swapping"],
+      "family": ["shop"],
+      "clues": [
+        "mall",
+        "money",
+        "bags",
+        "store",
+        "cart",
+        "sale",
+        "clothes",
+        "credit",
+        "receipt",
+        "spree"
+      ]
+    },
+    {
+      "id": "echo-activities-018",
+      "category": "activities",
+      "answer": "laughing",
+      "accept": ["laugh", "laffing", "lauging", "laughin", "laughter", "laughs"],
+      "reject": ["lauding", "loafing", "coughing"],
+      "family": ["laugh"],
+      "clues": [
+        "joke",
+        "funny",
+        "giggle",
+        "smile",
+        "comedy",
+        "tickle",
+        "happy",
+        "hilarious",
+        "lol",
+        "hyena"
+      ]
+    },
+    {
+      "id": "echo-activities-019",
+      "category": "activities",
+      "answer": "whistling",
+      "accept": ["whistle", "wistling", "whisling", "whisteling", "whistlin", "whistles"],
+      "reject": ["wrestling", "whisking", "bristling", "twisting"],
+      "family": ["whistl"],
+      "clues": [
+        "lips",
+        "tune",
+        "blow",
+        "referee",
+        "song",
+        "bird",
+        "pucker",
+        "sound",
+        "dog",
+        "kettle"
+      ]
+    },
+    {
+      "id": "echo-activities-020",
+      "category": "activities",
+      "answer": "sledding",
+      "accept": ["sled", "sleding", "sledging", "sleddin", "sledd", "tobogganing"],
+      "reject": ["sliding", "shedding", "bedding"],
+      "family": ["sled"],
+      "clues": [
+        "snow",
+        "hill",
+        "winter",
+        "cold",
+        "slide",
+        "mittens",
+        "sleigh",
+        "fast",
+        "downhill",
+        "Rosebud"
+      ]
+    },
+    {
+      "id": "echo-activities-021",
+      "category": "activities",
+      "answer": "skateboarding",
+      "accept": [
+        "skateboard",
+        "skatebording",
+        "skatboarding",
+        "skateborading",
+        "skateboards",
+        "sk8boarding"
+      ],
+      "reject": ["snowboarding", "skating", "surfboarding"],
+      "family": ["skate", "board"],
+      "clues": [
+        "ramp",
+        "wheels",
+        "tricks",
+        "ollie",
+        "halfpipe",
+        "helmet",
+        "kickflip",
+        "deck",
+        "grind",
+        "street"
+      ]
+    },
+    {
+      "id": "echo-activities-022",
+      "category": "activities",
+      "answer": "sneezing",
+      "accept": ["sneeze", "sneezeing", "sneazing", "sneesing", "sneezin", "sneezes"],
+      "reject": ["squeezing", "wheezing", "freezing"],
+      "family": ["sneez"],
+      "clues": [
+        "achoo",
+        "tissue",
+        "cold",
+        "allergies",
+        "nose",
+        "bless",
+        "pepper",
+        "dust",
+        "pollen",
+        "flu"
+      ]
+    },
+    {
+      "id": "echo-activities-023",
+      "category": "activities",
+      "answer": "snoring",
+      "accept": ["snore", "snoreing", "snorring", "snorin", "snores", "snoaring"],
+      "reject": ["storing", "scoring", "snorting", "soaring"],
+      "family": ["snor"],
+      "clues": [
+        "loud",
+        "sleep",
+        "nose",
+        "night",
+        "bed",
+        "grandpa",
+        "zzz",
+        "earplugs",
+        "pillow",
+        "rumble"
+      ]
+    },
+    {
+      "id": "echo-activities-024",
+      "category": "activities",
+      "answer": "texting",
+      "accept": ["text", "texing", "textting", "txting", "texts", "messaging"],
+      "reject": ["testing", "taxing", "tenting"],
+      "family": ["text"],
+      "clues": [
+        "phone",
+        "message",
+        "emoji",
+        "thumbs",
+        "typing",
+        "chat",
+        "send",
+        "reply",
+        "autocorrect",
+        "keyboard"
+      ]
+    },
+    {
+      "id": "echo-activities-025",
+      "category": "activities",
+      "answer": "vacuuming",
+      "accept": ["vacuum", "vacuming", "vacumming", "vaccuming", "vaccumming", "hoovering"],
+      "reject": ["vacationing"],
+      "family": ["vacuum"],
+      "clues": [
+        "carpet",
+        "dust",
+        "cleaning",
+        "dirt",
+        "loud",
+        "chores",
+        "floor",
+        "suction",
+        "cord",
+        "crumbs"
+      ]
+    },
+    {
+      "id": "echo-activities-026",
+      "category": "activities",
+      "answer": "sunbathing",
+      "accept": ["sunbathe", "sunbating", "sunbaithing", "sunbath", "sunbathin", "tanning"],
+      "reject": ["bathing", "sunburn"],
+      "family": ["sun", "bath"],
+      "clues": [
+        "beach",
+        "tan",
+        "towel",
+        "lotion",
+        "relaxing",
+        "pool",
+        "bikini",
+        "summer",
+        "lounger",
+        "heat"
+      ]
+    },
+    {
+      "id": "echo-activities-027",
+      "category": "activities",
+      "answer": "bungee jumping",
+      "accept": [
+        "bungee jump",
+        "bungy jumping",
+        "bungie jumping",
+        "bungee",
+        "bunji jumping",
+        "bungey jumping"
+      ],
+      "reject": ["skydiving", "base jumping"],
+      "family": ["bungee", "jump"],
+      "clues": [
+        "cord",
+        "bridge",
+        "fall",
+        "rope",
+        "elastic",
+        "drop",
+        "adrenaline",
+        "bounce",
+        "scary",
+        "extreme"
+      ]
+    },
+    {
+      "id": "echo-activities-028",
+      "category": "activities",
+      "answer": "picnic",
+      "accept": ["picnics", "picknick", "picnik", "picknic", "piknik", "picinic"],
+      "reject": ["panic", "picket"],
+      "family": [],
+      "clues": [
+        "basket",
+        "blanket",
+        "park",
+        "sandwiches",
+        "ants",
+        "grass",
+        "lunch",
+        "outdoors",
+        "lemonade",
+        "checkered"
+      ]
+    },
+    {
+      "id": "echo-activities-029",
+      "category": "activities",
+      "answer": "hide and seek",
+      "accept": [
+        "hide n go seek",
+        "hide n seek",
+        "hide and go seek",
+        "hide and seak",
+        "hid and seek",
+        "hide an seek"
+      ],
+      "reject": ["tag", "hopscotch"],
+      "family": ["hide", "seek"],
+      "clues": [
+        "counting",
+        "kids",
+        "closet",
+        "game",
+        "found",
+        "ready",
+        "quiet",
+        "playground",
+        "backyard",
+        "peekaboo"
+      ]
+    },
+    {
+      "id": "echo-activities-030",
+      "category": "activities",
+      "answer": "sightseeing",
+      "accept": ["sightsee", "siteseeing", "sightseing", "sightseein", "sighseeing", "touring"],
+      "reject": ["sightreading"],
+      "family": ["sight"],
+      "clues": [
+        "tourist",
+        "camera",
+        "landmarks",
+        "bus",
+        "vacation",
+        "travel",
+        "guide",
+        "monuments",
+        "Paris",
+        "map"
+      ]
+    },
+    {
+      "id": "echo-fantasy-001",
+      "category": "fantasy",
+      "answer": "dragon",
+      "accept": ["dragons", "dargon", "draggon", "dragan", "dragen", "drake"],
+      "reject": ["wagon", "dragonfly", "drag"],
+      "family": [],
+      "clues": [
+        "fire",
+        "wings",
+        "scales",
+        "knight",
+        "castle",
+        "treasure",
+        "cave",
+        "breath",
+        "lizard",
+        "Smaug"
+      ]
+    },
+    {
+      "id": "echo-fantasy-002",
+      "category": "fantasy",
+      "answer": "unicorn",
+      "accept": ["unicorns", "unicron", "unicorne", "unikorn", "unicon", "unicorm"],
+      "reject": ["unicycle", "capricorn"],
+      "family": ["uni", "corn"],
+      "clues": [
+        "horn",
+        "rainbow",
+        "horse",
+        "magic",
+        "sparkle",
+        "glitter",
+        "mythical",
+        "pink",
+        "mane",
+        "Scotland"
+      ]
+    },
+    {
+      "id": "echo-fantasy-003",
+      "category": "fantasy",
+      "answer": "wizard",
+      "accept": ["wizards", "wizzard", "wizerd", "wisard", "sorcerer", "mage"],
+      "reject": ["lizard", "blizzard", "witch"],
+      "family": [],
+      "clues": [
+        "magic",
+        "wand",
+        "hat",
+        "spell",
+        "beard",
+        "staff",
+        "Merlin",
+        "robe",
+        "Gandalf",
+        "potion"
+      ]
+    },
+    {
+      "id": "echo-fantasy-004",
+      "category": "fantasy",
+      "answer": "mermaid",
+      "accept": ["mermaids", "mermade", "mermaide", "mermiad", "murmaid", "mermayd"],
+      "reject": ["merman", "maid"],
+      "family": ["maid"],
+      "clues": [
+        "tail",
+        "ocean",
+        "fish",
+        "sea",
+        "Ariel",
+        "shells",
+        "scales",
+        "siren",
+        "sailors",
+        "lagoon"
+      ]
+    },
+    {
+      "id": "echo-fantasy-005",
+      "category": "fantasy",
+      "answer": "vampire",
+      "accept": ["vampires", "vampyre", "vampier", "vampir", "vampere", "vampyr"],
+      "reject": ["umpire", "empire"],
+      "family": ["vamp"],
+      "clues": [
+        "blood",
+        "fangs",
+        "Dracula",
+        "bite",
+        "bat",
+        "coffin",
+        "garlic",
+        "night",
+        "cape",
+        "Transylvania"
+      ]
+    },
+    {
+      "id": "echo-fantasy-006",
+      "category": "fantasy",
+      "answer": "ghost",
+      "accept": ["ghosts", "gost", "ghoast", "ghots", "phantom", "spook"],
+      "reject": ["host", "ghoul", "toast"],
+      "family": [],
+      "clues": [
+        "boo",
+        "sheet",
+        "haunted",
+        "Halloween",
+        "white",
+        "scary",
+        "dead",
+        "chains",
+        "Casper",
+        "transparent"
+      ]
+    },
+    {
+      "id": "echo-fantasy-007",
+      "category": "fantasy",
+      "answer": "zombie",
+      "accept": ["zombies", "zombi", "zombee", "zomby", "zoombie", "undead"],
+      "reject": ["zamboni"],
+      "family": [],
+      "clues": [
+        "brains",
+        "dead",
+        "walking",
+        "apocalypse",
+        "grave",
+        "slow",
+        "groan",
+        "rotting",
+        "bite",
+        "horde"
+      ]
+    },
+    {
+      "id": "echo-fantasy-008",
+      "category": "fantasy",
+      "answer": "witch",
+      "accept": ["witches", "wich", "whitch", "witche", "sorceress", "wytch"],
+      "reject": ["which", "switch", "twitch", "wizard"],
+      "family": [],
+      "clues": [
+        "broom",
+        "cauldron",
+        "hat",
+        "spell",
+        "Halloween",
+        "cat",
+        "potion",
+        "cackle",
+        "Salem",
+        "warts"
+      ]
+    },
+    {
+      "id": "echo-fantasy-009",
+      "category": "fantasy",
+      "answer": "fairy",
+      "accept": ["fairies", "fairie", "faerie", "fary", "fairey"],
+      "reject": ["ferry", "dairy", "hairy"],
+      "family": [],
+      "clues": [
+        "wings",
+        "wand",
+        "Tinkerbell",
+        "dust",
+        "magic",
+        "tooth",
+        "tiny",
+        "glitter",
+        "godmother",
+        "sparkle"
+      ]
+    },
+    {
+      "id": "echo-fantasy-010",
+      "category": "fantasy",
+      "answer": "giant",
+      "accept": ["giants", "gaint", "gient", "gyant", "giantess", "titan"],
+      "reject": ["grant", "gnat", "infant"],
+      "family": [],
+      "clues": [
+        "big",
+        "tall",
+        "beanstalk",
+        "huge",
+        "Jack",
+        "Goliath",
+        "stomp",
+        "castle",
+        "footsteps",
+        "clouds"
+      ]
+    },
+    {
+      "id": "echo-fantasy-011",
+      "category": "fantasy",
+      "answer": "troll",
+      "accept": ["trolls", "trol", "troal", "trole", "trool"],
+      "reject": ["toll", "stroll", "trowel"],
+      "family": [],
+      "clues": [
+        "bridge",
+        "ugly",
+        "internet",
+        "goats",
+        "cave",
+        "club",
+        "green",
+        "hair",
+        "Norway",
+        "stone"
+      ]
+    },
+    {
+      "id": "echo-fantasy-012",
+      "category": "fantasy",
+      "answer": "robot",
+      "accept": ["robots", "robbot", "robott", "robo", "android", "droid"],
+      "reject": ["rabbit", "robin", "robe"],
+      "family": [],
+      "clues": [
+        "metal",
+        "machine",
+        "beep",
+        "computer",
+        "wires",
+        "battery",
+        "future",
+        "laser",
+        "gears",
+        "circuit"
+      ]
+    },
+    {
+      "id": "echo-fantasy-013",
+      "category": "fantasy",
+      "answer": "alien",
+      "accept": ["aliens", "allien", "alein", "alian", "extraterrestrial", "martian"],
+      "reject": ["align"],
+      "family": [],
+      "clues": [
+        "ufo",
+        "space",
+        "green",
+        "saucer",
+        "Mars",
+        "abduction",
+        "planet",
+        "antennae",
+        "invasion",
+        "Roswell"
+      ]
+    },
+    {
+      "id": "echo-fantasy-014",
+      "category": "fantasy",
+      "answer": "pirate",
+      "accept": ["pirates", "pirat", "pyrate", "piratte", "pirite", "buccaneer"],
+      "reject": ["private", "karate", "pilot"],
+      "family": [],
+      "clues": [
+        "ship",
+        "treasure",
+        "parrot",
+        "eyepatch",
+        "sword",
+        "ahoy",
+        "plank",
+        "captain",
+        "rum",
+        "hook"
+      ]
+    },
+    {
+      "id": "echo-fantasy-015",
+      "category": "fantasy",
+      "answer": "knight",
+      "accept": ["knights", "knigt", "kinght", "knigth", "knihgt"],
+      "reject": ["night", "knit", "kite"],
+      "family": [],
+      "clues": [
+        "armor",
+        "sword",
+        "horse",
+        "castle",
+        "shield",
+        "king",
+        "lance",
+        "dragon",
+        "Arthur",
+        "chivalry"
+      ]
+    },
+    {
+      "id": "echo-fantasy-016",
+      "category": "fantasy",
+      "answer": "princess",
+      "accept": ["princesses", "princesse", "princiss", "prinsess", "princesss", "princcess"],
+      "reject": ["prince", "princes", "prowess"],
+      "family": ["prince"],
+      "clues": [
+        "crown",
+        "castle",
+        "tiara",
+        "royal",
+        "queen",
+        "gown",
+        "frog",
+        "pea",
+        "Cinderella",
+        "ball"
+      ]
+    },
+    {
+      "id": "echo-fantasy-017",
+      "category": "fantasy",
+      "answer": "genie",
+      "accept": ["genies", "jeanie", "geenie", "genei", "djinn", "jinn"],
+      "reject": ["genius", "gene", "genre"],
+      "family": [],
+      "clues": [
+        "lamp",
+        "wishes",
+        "bottle",
+        "Aladdin",
+        "blue",
+        "magic",
+        "three",
+        "smoke",
+        "rub",
+        "master"
+      ]
+    },
+    {
+      "id": "echo-fantasy-018",
+      "category": "fantasy",
+      "answer": "werewolf",
+      "accept": ["werewolves", "warewolf", "werwolf", "wearwolf", "wherewolf", "lycanthrope"],
+      "reject": ["wolf", "wolverine"],
+      "family": ["were", "wolf"],
+      "clues": [
+        "moon",
+        "howl",
+        "full",
+        "fur",
+        "silver",
+        "claws",
+        "bite",
+        "transform",
+        "fangs",
+        "night"
+      ]
+    },
+    {
+      "id": "echo-fantasy-019",
+      "category": "fantasy",
+      "answer": "superhero",
+      "accept": ["superheroes", "superheros", "superheroe", "superhereo", "superheroine", "hero"],
+      "reject": ["supervillain", "villain"],
+      "family": ["super", "hero"],
+      "clues": [
+        "cape",
+        "powers",
+        "mask",
+        "flying",
+        "comics",
+        "costume",
+        "strength",
+        "rescue",
+        "Batman",
+        "sidekick"
+      ]
+    },
+    {
+      "id": "echo-fantasy-020",
+      "category": "fantasy",
+      "answer": "elf",
+      "accept": ["elves", "elfs", "elph", "elfe", "elven"],
+      "reject": ["self", "shelf", "elk"],
+      "family": [],
+      "clues": [
+        "Christmas",
+        "Santa",
+        "ears",
+        "pointy",
+        "toys",
+        "workshop",
+        "Legolas",
+        "archer",
+        "forest",
+        "cookies"
+      ]
+    },
+    {
+      "id": "echo-fantasy-021",
+      "category": "fantasy",
+      "answer": "dinosaur",
+      "accept": ["dinosaurs", "dino", "dinasaur", "dinosour", "dinosuar", "dinosor"],
+      "reject": ["minotaur", "dinner"],
+      "family": ["dino", "saur"],
+      "clues": [
+        "extinct",
+        "t-rex",
+        "fossil",
+        "Jurassic",
+        "bones",
+        "meteor",
+        "roar",
+        "prehistoric",
+        "museum",
+        "raptor"
+      ]
+    },
+    {
+      "id": "echo-fantasy-022",
+      "category": "fantasy",
+      "answer": "phoenix",
+      "accept": ["phoenixes", "pheonix", "phenix", "phonix", "fenix", "feenix"],
+      "reject": ["phonics", "phone"],
+      "family": [],
+      "clues": [
+        "fire",
+        "bird",
+        "ashes",
+        "rebirth",
+        "flames",
+        "feathers",
+        "immortal",
+        "rise",
+        "Arizona",
+        "Dumbledore"
+      ]
+    },
+    {
+      "id": "echo-fantasy-023",
+      "category": "fantasy",
+      "answer": "goblin",
+      "accept": ["goblins", "gobblin", "goblen", "gobline", "hobgoblin", "goblyn"],
+      "reject": ["gobbling", "gremlin", "goblet"],
+      "family": ["gobl"],
+      "clues": [
+        "green",
+        "ugly",
+        "gold",
+        "sneaky",
+        "cave",
+        "mischief",
+        "pointy",
+        "orc",
+        "dungeon",
+        "warts"
+      ]
+    },
+    {
+      "id": "echo-fantasy-024",
+      "category": "fantasy",
+      "answer": "treasure",
+      "accept": ["treasures", "tresure", "treasur", "treashure", "treausre", "loot"],
+      "reject": ["measure", "pleasure", "treasurer"],
+      "family": [],
+      "clues": [
+        "gold",
+        "chest",
+        "pirate",
+        "map",
+        "jewels",
+        "buried",
+        "coins",
+        "island",
+        "diamonds",
+        "dig"
+      ]
+    },
+    {
+      "id": "echo-fantasy-025",
+      "category": "fantasy",
+      "answer": "time machine",
+      "accept": [
+        "time machines",
+        "time mashine",
+        "time machien",
+        "time machin",
+        "time masheen",
+        "tardis"
+      ],
+      "reject": ["slot machine", "washing machine"],
+      "family": ["time", "machine"],
+      "clues": [
+        "future",
+        "past",
+        "travel",
+        "clock",
+        "history",
+        "paradox",
+        "portal",
+        "Wells",
+        "century",
+        "rewind"
+      ]
+    },
+    {
+      "id": "echo-fantasy-026",
+      "category": "fantasy",
+      "answer": "magic wand",
+      "accept": ["magic wands", "wand", "wands", "majic wand", "magick wand", "magik wand"],
+      "reject": ["magic lamp", "magic hat"],
+      "family": ["magic", "wand"],
+      "clues": [
+        "wizard",
+        "spell",
+        "fairy",
+        "stick",
+        "abracadabra",
+        "sparkle",
+        "star",
+        "hat",
+        "rabbit",
+        "Hogwarts"
+      ]
+    },
+    {
+      "id": "echo-fantasy-027",
+      "category": "fantasy",
+      "answer": "crystal ball",
+      "accept": [
+        "crystal balls",
+        "cristal ball",
+        "crystall ball",
+        "chrystal ball",
+        "crystel ball",
+        "crystle ball"
+      ],
+      "reject": ["disco ball", "snow globe"],
+      "family": ["crystal", "ball"],
+      "clues": [
+        "fortune",
+        "future",
+        "psychic",
+        "glass",
+        "predict",
+        "mystic",
+        "glowing",
+        "seer",
+        "carnival",
+        "fog"
+      ]
+    },
+    {
+      "id": "echo-fantasy-028",
+      "category": "fantasy",
+      "answer": "flying carpet",
+      "accept": [
+        "flying carpets",
+        "magic carpet",
+        "flyng carpet",
+        "flying carpit",
+        "flying carpett",
+        "flying rug"
+      ],
+      "reject": ["red carpet"],
+      "family": ["fly", "carpet"],
+      "clues": [
+        "Aladdin",
+        "rug",
+        "sky",
+        "genie",
+        "ride",
+        "Arabian",
+        "soar",
+        "Jasmine",
+        "tassels",
+        "clouds"
+      ]
+    },
+    {
+      "id": "echo-fantasy-029",
+      "category": "fantasy",
+      "answer": "haunted house",
+      "accept": [
+        "haunted houses",
+        "hanted house",
+        "haunted mansion",
+        "hauntted house",
+        "haunted hous",
+        "haunted home"
+      ],
+      "reject": ["dollhouse", "greenhouse"],
+      "family": ["haunt", "house"],
+      "clues": [
+        "ghosts",
+        "spooky",
+        "Halloween",
+        "creepy",
+        "scary",
+        "cobwebs",
+        "creaking",
+        "attic",
+        "skeleton",
+        "bats"
+      ]
+    },
+    {
+      "id": "echo-fantasy-030",
+      "category": "fantasy",
+      "answer": "ninja",
+      "accept": ["ninjas", "ninija", "ninjia", "ninjah", "ninga", "shinobi"],
+      "reject": ["nina"],
+      "family": [],
+      "clues": [
+        "stealth",
+        "Japan",
+        "black",
+        "sword",
+        "turtles",
+        "sneaky",
+        "shuriken",
+        "mask",
+        "karate",
+        "shadow"
+      ]
+    },
+    {
+      "id": "echo-sports-001",
+      "category": "sports",
+      "answer": "soccer",
+      "accept": ["football", "futbol", "socer", "soccor", "sokker", "soccar"],
+      "reject": ["hockey", "sucker"],
+      "family": [],
+      "clues": [
+        "ball",
+        "goal",
+        "kick",
+        "field",
+        "net",
+        "cleats",
+        "penalty",
+        "striker",
+        "World-Cup",
+        "offside"
+      ]
+    },
+    {
+      "id": "echo-sports-002",
+      "category": "sports",
+      "answer": "basketball",
+      "accept": ["basketbal", "basketbll", "baskteball", "basketboll", "bball", "baketball"],
+      "reject": ["baseball", "volleyball", "netball"],
+      "family": ["basket", "ball"],
+      "clues": [
+        "hoop",
+        "dribble",
+        "dunk",
+        "court",
+        "layup",
+        "rebound",
+        "tall",
+        "sneakers",
+        "jersey",
+        "orange"
+      ]
+    },
+    {
+      "id": "echo-sports-003",
+      "category": "sports",
+      "answer": "tennis",
+      "accept": ["tenis", "tennys", "tennnis", "lawn tennis", "tenniss", "tennes"],
+      "reject": ["badminton", "squash", "table tennis"],
+      "family": [],
+      "clues": [
+        "racket",
+        "ball",
+        "net",
+        "court",
+        "serve",
+        "Wimbledon",
+        "love",
+        "deuce",
+        "volley",
+        "umpire"
+      ]
+    },
+    {
+      "id": "echo-sports-004",
+      "category": "sports",
+      "answer": "golf",
+      "accept": ["golfing", "golff", "goff", "golfs", "gollf", "golfe"],
+      "reject": ["gulf", "gold", "wolf"],
+      "family": [],
+      "clues": [
+        "club",
+        "ball",
+        "hole",
+        "tee",
+        "putt",
+        "caddie",
+        "green",
+        "course",
+        "birdie",
+        "flag"
+      ]
+    },
+    {
+      "id": "echo-sports-005",
+      "category": "sports",
+      "answer": "boxing",
+      "accept": ["box", "boxer", "boxng", "boxin", "boxxing", "prizefighting", "pugilism"],
+      "reject": ["bowling", "fencing"],
+      "family": [],
+      "clues": [
+        "gloves",
+        "punch",
+        "ring",
+        "knockout",
+        "fight",
+        "jab",
+        "Ali",
+        "bell",
+        "uppercut",
+        "referee"
+      ]
+    },
+    {
+      "id": "echo-sports-006",
+      "category": "sports",
+      "answer": "baseball",
+      "accept": ["basball", "baseboll", "basebal", "bseball", "baseballs", "hardball"],
+      "reject": ["basketball", "softball", "volleyball"],
+      "family": ["base", "ball"],
+      "clues": [
+        "bat",
+        "pitcher",
+        "glove",
+        "home-run",
+        "diamond",
+        "catcher",
+        "strike",
+        "inning",
+        "dugout",
+        "peanuts"
+      ]
+    },
+    {
+      "id": "echo-sports-007",
+      "category": "sports",
+      "answer": "hockey",
+      "accept": ["ice hockey", "field hockey", "hocky", "hockee", "hokey", "hockie"],
+      "reject": ["jockey", "lacrosse"],
+      "family": [],
+      "clues": [
+        "puck",
+        "ice",
+        "stick",
+        "skates",
+        "rink",
+        "goalie",
+        "Canada",
+        "slapshot",
+        "fight",
+        "teeth"
+      ]
+    },
+    {
+      "id": "echo-sports-008",
+      "category": "sports",
+      "answer": "volleyball",
+      "accept": ["voleyball", "vollyball", "volleybal", "voleybal", "volleybll", "vollieball"],
+      "reject": ["basketball", "netball", "dodgeball"],
+      "family": ["volley", "ball"],
+      "clues": ["net", "spike", "beach", "serve", "bump", "set", "sand", "dig", "block", "team"]
+    },
+    {
+      "id": "echo-sports-009",
+      "category": "sports",
+      "answer": "marathon",
+      "accept": ["marathons", "marthon", "maraton", "marrathon", "marathan", "marathone"],
+      "reject": ["triathlon", "decathlon", "sprint"],
+      "family": [],
+      "clues": [
+        "run",
+        "miles",
+        "race",
+        "finish",
+        "long",
+        "endurance",
+        "Boston",
+        "sneakers",
+        "Greece",
+        "medal"
+      ]
+    },
+    {
+      "id": "echo-sports-010",
+      "category": "sports",
+      "answer": "wrestling",
+      "accept": ["wrestle", "wrestler", "wresling", "wrestleing", "rasslin", "wrestlin"],
+      "reject": ["boxing", "sumo"],
+      "family": [],
+      "clues": [
+        "pin",
+        "mat",
+        "ring",
+        "headlock",
+        "grapple",
+        "takedown",
+        "singlet",
+        "belt",
+        "suplex",
+        "spandex"
+      ]
+    },
+    {
+      "id": "echo-sports-011",
+      "category": "sports",
+      "answer": "archery",
+      "accept": ["archer", "archers", "archey", "archary", "archerey", "arhcery"],
+      "reject": ["artery", "archway"],
+      "family": [],
+      "clues": [
+        "bow",
+        "arrow",
+        "target",
+        "bullseye",
+        "quiver",
+        "aim",
+        "Robin",
+        "feathers",
+        "string",
+        "Cupid"
+      ]
+    },
+    {
+      "id": "echo-sports-012",
+      "category": "sports",
+      "answer": "cycling",
+      "accept": ["biking", "bicycling", "cyclng", "cylcing", "cyclist", "cycing"],
+      "reject": ["recycling", "circling"],
+      "family": [],
+      "clues": [
+        "bike",
+        "pedal",
+        "helmet",
+        "wheels",
+        "Tour",
+        "race",
+        "spandex",
+        "chain",
+        "gears",
+        "uphill"
+      ]
+    },
+    {
+      "id": "echo-sports-013",
+      "category": "sports",
+      "answer": "gymnastics",
+      "accept": ["gymnastic", "gymnast", "gymnasts", "gimnastics", "gymnastiks", "gymnastcs"],
+      "reject": ["gym"],
+      "family": ["gym"],
+      "clues": [
+        "flip",
+        "balance",
+        "beam",
+        "leotard",
+        "cartwheel",
+        "vault",
+        "Olympics",
+        "somersault",
+        "handstand",
+        "flexible"
+      ]
+    },
+    {
+      "id": "echo-sports-014",
+      "category": "sports",
+      "answer": "karate",
+      "accept": ["karati", "karrate", "karatee", "kerate", "karete", "karatey"],
+      "reject": ["karaoke", "carat", "taekwondo"],
+      "family": [],
+      "clues": [
+        "chop",
+        "kick",
+        "belt",
+        "dojo",
+        "Japan",
+        "sensei",
+        "punch",
+        "uniform",
+        "kata",
+        "board"
+      ]
+    },
+    {
+      "id": "echo-sports-015",
+      "category": "sports",
+      "answer": "rugby",
+      "accept": ["rugger", "rugbee", "rugbie", "rugbi", "rughby", "rugby union"],
+      "reject": ["rug", "ruby"],
+      "family": [],
+      "clues": [
+        "scrum",
+        "tackle",
+        "ball",
+        "try",
+        "oval",
+        "muddy",
+        "England",
+        "haka",
+        "Wales",
+        "mouthguard"
+      ]
+    },
+    {
+      "id": "echo-sports-016",
+      "category": "sports",
+      "answer": "sumo",
+      "accept": ["sumo wrestling", "sumo wrestler", "sumos", "sumu", "soomo", "sumoo"],
+      "reject": ["sushi"],
+      "family": [],
+      "clues": [
+        "Japan",
+        "heavy",
+        "ring",
+        "big",
+        "loincloth",
+        "push",
+        "salt",
+        "topknot",
+        "stomp",
+        "yokozuna"
+      ]
+    },
+    {
+      "id": "echo-sports-017",
+      "category": "sports",
+      "answer": "badminton",
+      "accept": ["badmington", "badmitton", "badmiton", "badmenton", "badmintin", "badminten"],
+      "reject": ["tennis", "squash"],
+      "family": [],
+      "clues": [
+        "birdie",
+        "shuttlecock",
+        "racket",
+        "net",
+        "feathers",
+        "backyard",
+        "smash",
+        "serve",
+        "lawn",
+        "volley"
+      ]
+    },
+    {
+      "id": "echo-sports-018",
+      "category": "sports",
+      "answer": "ping pong",
+      "accept": ["table tennis", "ping pongs", "pinpong", "ping pog", "pingpang", "pimg pong"],
+      "reject": ["beer pong", "tennis"],
+      "family": ["ping", "pong"],
+      "clues": [
+        "paddle",
+        "table",
+        "ball",
+        "net",
+        "spin",
+        "bounce",
+        "basement",
+        "China",
+        "serve",
+        "Forrest"
+      ]
+    },
+    {
+      "id": "echo-sports-019",
+      "category": "sports",
+      "answer": "darts",
+      "accept": ["dart", "dartz", "darst", "dars", "darts game", "dartes"],
+      "reject": ["dates", "carts", "drats"],
+      "family": [],
+      "clues": [
+        "board",
+        "bullseye",
+        "pub",
+        "throw",
+        "target",
+        "aim",
+        "bar",
+        "triple",
+        "points",
+        "flights"
+      ]
+    },
+    {
+      "id": "echo-sports-020",
+      "category": "sports",
+      "answer": "rowing",
+      "accept": ["row", "rower", "crew", "rowin", "rowwing", "roing", "sculling"],
+      "reject": ["mowing", "sewing", "towing"],
+      "family": [],
+      "clues": [
+        "boat",
+        "oars",
+        "paddle",
+        "river",
+        "stroke",
+        "team",
+        "canoe",
+        "Oxford",
+        "lake",
+        "muscles"
+      ]
+    },
+    {
+      "id": "echo-sports-021",
+      "category": "sports",
+      "answer": "skydiving",
+      "accept": ["skydive", "skydiver", "skidiving", "skydivng", "parachuting", "skydiveing"],
+      "reject": ["scuba diving"],
+      "family": ["sky", "dive"],
+      "clues": [
+        "parachute",
+        "plane",
+        "jump",
+        "freefall",
+        "adrenaline",
+        "altitude",
+        "goggles",
+        "clouds",
+        "scream",
+        "landing"
+      ]
+    },
+    {
+      "id": "echo-sports-022",
+      "category": "sports",
+      "answer": "fencing",
+      "accept": ["fence", "fencer", "fensing", "fenceing", "fencng", "fencin", "swordplay"],
+      "reject": ["dancing", "boxing"],
+      "family": [],
+      "clues": [
+        "sword",
+        "mask",
+        "foil",
+        "duel",
+        "lunge",
+        "epee",
+        "touche",
+        "parry",
+        "musketeer",
+        "white"
+      ]
+    },
+    {
+      "id": "echo-sports-023",
+      "category": "sports",
+      "answer": "referee",
+      "accept": ["ref", "referees", "refree", "refferee", "referie", "refaree", "umpire"],
+      "reject": ["referral", "reference"],
+      "family": [],
+      "clues": [
+        "whistle",
+        "stripes",
+        "foul",
+        "rules",
+        "penalty",
+        "card",
+        "zebra",
+        "flag",
+        "blind",
+        "yell"
+      ]
+    },
+    {
+      "id": "echo-sports-024",
+      "category": "sports",
+      "answer": "trophy",
+      "accept": ["trophies", "trofy", "trophey", "trofee", "trophie", "troffy"],
+      "reject": ["atrophy"],
+      "family": [],
+      "clues": [
+        "win",
+        "cup",
+        "gold",
+        "shelf",
+        "champion",
+        "award",
+        "prize",
+        "shiny",
+        "first",
+        "victory"
+      ]
+    },
+    {
+      "id": "echo-sports-025",
+      "category": "sports",
+      "answer": "medal",
+      "accept": ["medals", "medel", "medle", "medallion", "meddal", "medall"],
+      "reject": ["meddle", "metal", "pedal"],
+      "family": [],
+      "clues": [
+        "gold",
+        "silver",
+        "bronze",
+        "Olympics",
+        "win",
+        "ribbon",
+        "podium",
+        "neck",
+        "first",
+        "honor"
+      ]
+    },
+    {
+      "id": "echo-sports-026",
+      "category": "sports",
+      "answer": "goalkeeper",
+      "accept": ["goalie", "keeper", "goaltender", "golkeeper", "goalkeper", "goalkeepr"],
+      "reject": ["gatekeeper", "goalpost"],
+      "family": ["goal", "keep"],
+      "clues": [
+        "gloves",
+        "save",
+        "net",
+        "dive",
+        "soccer",
+        "block",
+        "penalty",
+        "catch",
+        "hands",
+        "jersey"
+      ]
+    },
+    {
+      "id": "echo-sports-027",
+      "category": "sports",
+      "answer": "olympics",
+      "accept": ["olympic", "olympic games", "olimpics", "olympiad", "olymics", "olympix"],
+      "reject": ["paralympics"],
+      "family": ["olymp"],
+      "clues": [
+        "gold",
+        "medal",
+        "torch",
+        "rings",
+        "athletes",
+        "Greece",
+        "world",
+        "flags",
+        "summer",
+        "podium"
+      ]
+    },
+    {
+      "id": "echo-sports-028",
+      "category": "sports",
+      "answer": "cheerleader",
+      "accept": [
+        "cheerleaders",
+        "cheerleading",
+        "cheerlader",
+        "cheerleeder",
+        "cheerleder",
+        "cheerleadr"
+      ],
+      "reject": [],
+      "family": ["cheer", "lead"],
+      "clues": [
+        "pompoms",
+        "pyramid",
+        "skirt",
+        "football",
+        "chant",
+        "jump",
+        "megaphone",
+        "splits",
+        "school",
+        "spirit"
+      ]
+    },
+    {
+      "id": "echo-sports-029",
+      "category": "sports",
+      "answer": "scuba diving",
+      "accept": [
+        "scuba",
+        "scuba dive",
+        "scuba diver",
+        "skuba diving",
+        "scuba divng",
+        "deep sea diving"
+      ],
+      "reject": ["snorkeling", "skydiving"],
+      "family": ["scuba", "dive"],
+      "clues": [
+        "ocean",
+        "tank",
+        "fish",
+        "oxygen",
+        "wetsuit",
+        "flippers",
+        "coral",
+        "mask",
+        "underwater",
+        "reef"
+      ]
+    },
+    {
+      "id": "echo-sports-030",
+      "category": "sports",
+      "answer": "trampoline",
+      "accept": [
+        "trampolines",
+        "trampolin",
+        "trampaline",
+        "trampolene",
+        "trampoleen",
+        "trampoline park"
+      ],
+      "reject": ["tramp"],
+      "family": [],
+      "clues": [
+        "bounce",
+        "jump",
+        "backyard",
+        "springs",
+        "flip",
+        "net",
+        "kids",
+        "high",
+        "gymnastics",
+        "somersault"
+      ]
+    },
+    {
+      "id": "echo-house-001",
+      "category": "house",
+      "answer": "bathtub",
+      "accept": ["bath", "bathtubs", "tub", "bathub", "bathtube", "batthub"],
+      "reject": ["bathrobe"],
+      "family": ["bath", "tub"],
+      "clues": [
+        "bubbles",
+        "water",
+        "soak",
+        "duck",
+        "relax",
+        "foam",
+        "soap",
+        "faucet",
+        "drain",
+        "porcelain"
+      ]
+    },
+    {
+      "id": "echo-house-002",
+      "category": "house",
+      "answer": "fridge",
+      "accept": [
+        "refrigerator",
+        "fridges",
+        "frige",
+        "frigde",
+        "refridgerator",
+        "icebox",
+        "refrigerater"
+      ],
+      "reject": ["bridge", "ridge", "freezer"],
+      "family": [],
+      "clues": [
+        "cold",
+        "food",
+        "milk",
+        "kitchen",
+        "magnets",
+        "leftovers",
+        "ice",
+        "snack",
+        "door",
+        "chill"
+      ]
+    },
+    {
+      "id": "echo-house-003",
+      "category": "house",
+      "answer": "sofa",
+      "accept": ["couch", "sofas", "settee", "sofa bed", "divan", "soffa"],
+      "reject": ["soda", "chair"],
+      "family": [],
+      "clues": [
+        "sit",
+        "cushions",
+        "TV",
+        "nap",
+        "comfy",
+        "lounge",
+        "living",
+        "remote",
+        "relax",
+        "pillows"
+      ]
+    },
+    {
+      "id": "echo-house-004",
+      "category": "house",
+      "answer": "pillow",
+      "accept": ["pillows", "pilow", "pillo", "pilloe", "pilliow", "pellow"],
+      "reject": ["willow", "pillar"],
+      "family": [],
+      "clues": [
+        "sleep",
+        "bed",
+        "soft",
+        "head",
+        "feathers",
+        "fight",
+        "fluffy",
+        "dream",
+        "case",
+        "nap"
+      ]
+    },
+    {
+      "id": "echo-house-005",
+      "category": "house",
+      "answer": "toaster",
+      "accept": ["toasters", "toastor", "toster", "toastr", "toaster oven", "tostor"],
+      "reject": ["coaster", "roaster"],
+      "family": ["toast"],
+      "clues": [
+        "bread",
+        "breakfast",
+        "pop",
+        "kitchen",
+        "crumbs",
+        "slice",
+        "burnt",
+        "bagel",
+        "hot",
+        "waffle"
+      ]
+    },
+    {
+      "id": "echo-house-006",
+      "category": "house",
+      "answer": "microwave",
+      "accept": ["microwaves", "microwave oven", "micro", "microwve", "mircowave", "microwae"],
+      "reject": ["microphone"],
+      "family": ["micro", "wave"],
+      "clues": [
+        "popcorn",
+        "heat",
+        "beep",
+        "kitchen",
+        "leftovers",
+        "minute",
+        "fast",
+        "spin",
+        "zap",
+        "buttons"
+      ]
+    },
+    {
+      "id": "echo-house-007",
+      "category": "house",
+      "answer": "blanket",
+      "accept": ["blankets", "blankie", "blanky", "blankit", "blancket", "throw"],
+      "reject": ["basket", "bracket"],
+      "family": [],
+      "clues": [
+        "warm",
+        "cozy",
+        "bed",
+        "cold",
+        "snuggle",
+        "fort",
+        "wool",
+        "couch",
+        "fleece",
+        "cover"
+      ]
+    },
+    {
+      "id": "echo-house-008",
+      "category": "house",
+      "answer": "lamp",
+      "accept": ["lamps", "table lamp", "desk lamp", "lampp", "lampe", "lanp", "lammp"],
+      "reject": ["lamb", "ramp", "camp"],
+      "family": [],
+      "clues": [
+        "light",
+        "bulb",
+        "shade",
+        "switch",
+        "bright",
+        "night",
+        "reading",
+        "glow",
+        "nightstand",
+        "plug"
+      ]
+    },
+    {
+      "id": "echo-house-009",
+      "category": "house",
+      "answer": "doorbell",
+      "accept": ["doorbells", "dorbell", "doorbel", "doorbelle", "bell", "buzzer"],
+      "reject": ["doorknob"],
+      "family": ["door", "bell"],
+      "clues": [
+        "ring",
+        "ding-dong",
+        "visitor",
+        "button",
+        "guest",
+        "chime",
+        "knock",
+        "delivery",
+        "press",
+        "porch"
+      ]
+    },
+    {
+      "id": "echo-house-010",
+      "category": "house",
+      "answer": "stairs",
+      "accept": ["stair", "staircase", "stairway", "steps", "stairz", "stiars"],
+      "reject": ["chairs", "stars"],
+      "family": [],
+      "clues": [
+        "climb",
+        "up",
+        "down",
+        "railing",
+        "escalator",
+        "banister",
+        "trip",
+        "landing",
+        "basement",
+        "elevator"
+      ]
+    },
+    {
+      "id": "echo-house-011",
+      "category": "house",
+      "answer": "window",
+      "accept": ["windows", "windo", "windoww", "windw", "windowpane", "winow", "windoes"],
+      "reject": ["widow", "wind"],
+      "family": [],
+      "clues": [
+        "glass",
+        "view",
+        "curtain",
+        "open",
+        "sill",
+        "pane",
+        "breeze",
+        "frame",
+        "shutters",
+        "blinds"
+      ]
+    },
+    {
+      "id": "echo-house-012",
+      "category": "house",
+      "answer": "curtain",
+      "accept": ["curtains", "drapes", "curtian", "curtin", "curtan", "drape", "cutrain"],
+      "reject": ["certain", "captain"],
+      "family": [],
+      "clues": [
+        "window",
+        "fabric",
+        "rod",
+        "shower",
+        "stage",
+        "close",
+        "blinds",
+        "theater",
+        "privacy",
+        "hang"
+      ]
+    },
+    {
+      "id": "echo-house-013",
+      "category": "house",
+      "answer": "carpet",
+      "accept": ["carpets", "rug", "carpit", "carpt", "carpeting", "carpett"],
+      "reject": ["carrot", "parrot"],
+      "family": [],
+      "clues": [
+        "floor",
+        "soft",
+        "vacuum",
+        "stain",
+        "red",
+        "fluffy",
+        "magic",
+        "wall-to-wall",
+        "shag",
+        "barefoot"
+      ]
+    },
+    {
+      "id": "echo-house-014",
+      "category": "house",
+      "answer": "bed",
+      "accept": ["beds", "bedd", "cot", "bunk bed"],
+      "reject": ["bad", "bud", "bet"],
+      "family": [],
+      "clues": [
+        "sleep",
+        "pillow",
+        "blanket",
+        "mattress",
+        "sheets",
+        "night",
+        "dream",
+        "nap",
+        "tired",
+        "snooze"
+      ]
+    },
+    {
+      "id": "echo-house-015",
+      "category": "house",
+      "answer": "chimney",
+      "accept": [
+        "chimneys",
+        "chimmney",
+        "chimeny",
+        "chiminey",
+        "chimny",
+        "chimeney",
+        "smokestack",
+        "flue"
+      ],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "smoke",
+        "Santa",
+        "fireplace",
+        "brick",
+        "roof",
+        "soot",
+        "sweep",
+        "Christmas",
+        "ash",
+        "warm"
+      ]
+    },
+    {
+      "id": "echo-house-016",
+      "category": "house",
+      "answer": "garage",
+      "accept": ["garages", "garrage", "garag", "garadge", "carport", "garaje"],
+      "reject": ["garbage", "garden"],
+      "family": [],
+      "clues": [
+        "car",
+        "door",
+        "tools",
+        "park",
+        "sale",
+        "driveway",
+        "band",
+        "storage",
+        "opener",
+        "workbench"
+      ]
+    },
+    {
+      "id": "echo-house-017",
+      "category": "house",
+      "answer": "attic",
+      "accept": ["attics", "loft", "atic", "attick", "attik", "garret"],
+      "reject": ["antic", "arctic", "attack"],
+      "family": [],
+      "clues": [
+        "dust",
+        "storage",
+        "upstairs",
+        "boxes",
+        "roof",
+        "ladder",
+        "spiders",
+        "junk",
+        "creepy",
+        "ghost"
+      ]
+    },
+    {
+      "id": "echo-house-018",
+      "category": "house",
+      "answer": "mailbox",
+      "accept": ["mailboxes", "postbox", "mailboxs", "letterbox", "mailbx", "maillbox", "mailbos"],
+      "reject": ["mailman"],
+      "family": ["mail", "box"],
+      "clues": [
+        "letters",
+        "post",
+        "flag",
+        "stamps",
+        "envelope",
+        "carrier",
+        "delivery",
+        "bills",
+        "curb",
+        "package"
+      ]
+    },
+    {
+      "id": "echo-house-019",
+      "category": "house",
+      "answer": "washing machine",
+      "accept": [
+        "washer",
+        "washing machines",
+        "washer machine",
+        "washin machine",
+        "washng machine",
+        "washing mashine",
+        "clothes washer"
+      ],
+      "reject": ["dishwasher"],
+      "family": ["wash", "machine"],
+      "clues": [
+        "laundry",
+        "clothes",
+        "spin",
+        "soap",
+        "detergent",
+        "socks",
+        "rinse",
+        "water",
+        "suds",
+        "cycle"
+      ]
+    },
+    {
+      "id": "echo-house-020",
+      "category": "house",
+      "answer": "dishwasher",
+      "accept": ["dishwashers", "dishwaser", "dishwhasher", "diswasher", "dishwahser", "dishwashr"],
+      "reject": ["washing machine"],
+      "family": ["dish", "wash"],
+      "clues": [
+        "plates",
+        "kitchen",
+        "clean",
+        "soap",
+        "rinse",
+        "cups",
+        "load",
+        "forks",
+        "sink",
+        "detergent"
+      ]
+    },
+    {
+      "id": "echo-house-021",
+      "category": "house",
+      "answer": "oven",
+      "accept": ["ovens", "stove", "ovan", "ovin", "range", "cooker", "oben"],
+      "reject": ["open", "over", "even"],
+      "family": [],
+      "clues": [
+        "bake",
+        "hot",
+        "cake",
+        "kitchen",
+        "cookies",
+        "pizza",
+        "roast",
+        "timer",
+        "mitt",
+        "bread"
+      ]
+    },
+    {
+      "id": "echo-house-022",
+      "category": "house",
+      "answer": "kettle",
+      "accept": ["kettles", "kettel", "ketle", "tea kettle", "kittle", "kettal"],
+      "reject": ["cattle", "settle", "kettlebell"],
+      "family": [],
+      "clues": [
+        "tea",
+        "whistle",
+        "boil",
+        "water",
+        "steam",
+        "hot",
+        "stove",
+        "spout",
+        "kitchen",
+        "British"
+      ]
+    },
+    {
+      "id": "echo-house-023",
+      "category": "house",
+      "answer": "sink",
+      "accept": ["sinks", "sinc", "synk", "basin", "washbasin", "sinck", "sinkk"],
+      "reject": ["sync", "wink", "pink"],
+      "family": [],
+      "clues": [
+        "faucet",
+        "dishes",
+        "water",
+        "kitchen",
+        "drain",
+        "wash",
+        "tap",
+        "soap",
+        "bathroom",
+        "plug"
+      ]
+    },
+    {
+      "id": "echo-house-024",
+      "category": "house",
+      "answer": "closet",
+      "accept": [
+        "closets",
+        "wardrobe",
+        "closit",
+        "clozet",
+        "cupboard",
+        "closset",
+        "walk-in closet"
+      ],
+      "reject": ["closed", "cloister", "close"],
+      "family": [],
+      "clues": [
+        "clothes",
+        "hangers",
+        "coats",
+        "skeletons",
+        "shoes",
+        "door",
+        "monster",
+        "Narnia",
+        "storage",
+        "bedroom"
+      ]
+    },
+    {
+      "id": "echo-house-025",
+      "category": "house",
+      "answer": "remote control",
+      "accept": [
+        "remote",
+        "remotes",
+        "remote controls",
+        "clicker",
+        "controller",
+        "remot control",
+        "remote controll"
+      ],
+      "reject": [],
+      "family": ["remote", "control"],
+      "clues": [
+        "TV",
+        "channel",
+        "couch",
+        "buttons",
+        "batteries",
+        "lost",
+        "volume",
+        "mute",
+        "sofa",
+        "press"
+      ]
+    },
+    {
+      "id": "echo-house-026",
+      "category": "house",
+      "answer": "doormat",
+      "accept": ["doormats", "welcome mat", "doremat", "mat", "dormat", "doormatt", "floor mat"],
+      "reject": [],
+      "family": ["door", "mat"],
+      "clues": [
+        "welcome",
+        "shoes",
+        "wipe",
+        "feet",
+        "mud",
+        "porch",
+        "entrance",
+        "key",
+        "dirt",
+        "rug"
+      ]
+    },
+    {
+      "id": "echo-house-027",
+      "category": "house",
+      "answer": "bookshelf",
+      "accept": ["bookshelves", "bookcase", "bookshelfs", "bookself", "bookshlf", "bookshelve"],
+      "reject": [],
+      "family": ["book", "shelf"],
+      "clues": [
+        "novels",
+        "reading",
+        "library",
+        "wood",
+        "dust",
+        "stack",
+        "titles",
+        "spines",
+        "study",
+        "organize"
+      ]
+    },
+    {
+      "id": "echo-house-028",
+      "category": "house",
+      "answer": "broom",
+      "accept": ["brooms", "broomstick", "brum", "brom", "broome", "brrom"],
+      "reject": ["groom", "bloom", "brook", "room"],
+      "family": [],
+      "clues": [
+        "sweep",
+        "witch",
+        "floor",
+        "dust",
+        "bristles",
+        "clean",
+        "fly",
+        "janitor",
+        "handle",
+        "Cinderella"
+      ]
+    },
+    {
+      "id": "echo-house-029",
+      "category": "house",
+      "answer": "laundry",
+      "accept": ["laundries", "laundary", "landry", "loundry", "laundrey", "laundy", "washing"],
+      "reject": ["foundry", "sundry"],
+      "family": [],
+      "clues": [
+        "clothes",
+        "wash",
+        "basket",
+        "socks",
+        "detergent",
+        "fold",
+        "dirty",
+        "dryer",
+        "hamper",
+        "chores"
+      ]
+    },
+    {
+      "id": "echo-house-030",
+      "category": "house",
+      "answer": "trash can",
+      "accept": [
+        "trash cans",
+        "garbage can",
+        "bin",
+        "trash bin",
+        "garbage bin",
+        "rubbish bin",
+        "dustbin",
+        "wastebasket"
+      ],
+      "reject": ["trash compactor"],
+      "family": ["trash"],
+      "clues": [
+        "garbage",
+        "lid",
+        "smell",
+        "raccoon",
+        "curb",
+        "bag",
+        "waste",
+        "recycle",
+        "Oscar",
+        "junk"
+      ]
+    }
+  ]
+}
