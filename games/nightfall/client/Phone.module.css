@@ -148,7 +148,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 64px;
+  /* Scales with the text size, so a name keeps its letters at 200 %. */
+  width: max(64px, 4.6em);
   gap: 2px;
 }
 
@@ -161,14 +162,19 @@
 .miniName {
   max-width: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow-wrap: anywhere;
+  text-align: center;
+  line-height: 1.15;
   font-size: var(--pb-font-caption);
   font-weight: 800;
 }
 
 .miniDead {
-  width: 84px;
+  width: max(84px, 6em);
 }
 
 /* A grave's name and role may take two lines rather than being cut ("Vill…"). */

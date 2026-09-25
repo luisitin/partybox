@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import {
+  playRandom,
   EIGHT,
   finish,
   input,
@@ -152,5 +153,14 @@ describe('awards', () => {
     expect(ids).toContain('sharp-eyes:ana');
     expect(ids).toContain('first-to-fall:dee');
     expect(ids?.some((a) => a.startsWith('life-saver'))).toBe(false);
+  });
+
+  it('results carry the sides (ADR-052) and the ending as the headline, never a tie', () => {
+    const s = playRandom(8, 5, { roles: 'seer,doctor,jester' }).at(-1) as State;
+    const r = game.results(s);
+    expect(r?.outcome).toMatchObject({ kind: 'teams', winner: s.winner });
+    const teams = r?.outcome?.kind === 'teams' ? r.outcome.teams : [];
+    expect(teams.flatMap((t) => t.members).sort()).toEqual([...s.seats].sort());
+    expect(r?.headline).toBeTruthy();
   });
 });

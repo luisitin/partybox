@@ -1,4 +1,4 @@
-// Local stand-in for Part 00 §6's `FacePicker` (Imposter owns the SDK one; NOTES: stand-ins). A grid
+// Nightfall's face grid (not the SDK FacePicker, which has no "No one" tile or "You" badge). A grid
 // of faces with names: the pick gets a ring and a ✓ (never colour alone), your own tile says "You",
 // an optional last tile ("No one"). Three columns, so 15 faces fit an iPhone SE in five rows. The
 // grid itself never marks a role: at night every phone draws the same grid (SPEC §10.10).

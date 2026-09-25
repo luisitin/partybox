@@ -1,16 +1,11 @@
-/* The face grid (stand-in FacePicker): 3 columns, ≥ 44 px targets, a ring + ✓ for the pick. Tokens
-   only; taps never zoom, select or leave a highlight. */
+/* The face grid: ≥ 44 px targets, a ring + ✓ for the pick. Columns follow the text size: three on
+   an SE at 100 %, two at 200 %, more on wide phones. Tokens only; taps never zoom, select or leave
+   a highlight. */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(clamp(80px, 5.2em, 42%), 1fr));
   gap: var(--pb-space-2);
   width: 100%;
-}
-
-@media (min-width: 560px) {
-  .grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
 }
 
 .tile {
@@ -98,8 +93,12 @@
 .name {
   max-width: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow-wrap: anywhere;
+  text-align: center;
   font-size: var(--pb-font-caption);
   font-weight: 800;
   line-height: 1.25;

@@ -3,8 +3,12 @@
 // earned them, and ties share them.
 import { buildResults } from '@partybox/game-sdk';
 import type { GameAward, GameResults } from '@partybox/game-sdk';
+import { flavourOf } from './content';
 import { roleOf, sideOf } from './rules';
-import type { State } from './types';
+import type { Side, State } from './types';
+import { sideText } from './views-common';
+
+type GameOutcome = NonNullable<GameResults['outcome']>;
 
 export function scoresOf(state: State): Record<string, number> {
   const scores: Record<string, number> = {};
@@ -62,7 +66,29 @@ export function awardsOf(state: State): GameAward[] {
   return out;
 }
 
+const MARKS: Record<Side, string> = { village: '🏡', wolves: '🐺', jester: '🃏' };
+
+/** ADR-052: sides, not a tie between the winners. The jester is a side of one when dealt. */
+export function outcomeOf(state: State): GameOutcome {
+  const f = flavourOf(state.cfg.flavour);
+  const sides: Side[] = ['village', 'wolves', 'jester'];
+  const teams = sides
+    .map((side) => ({
+      id: side,
+      name: f.sides[side],
+      mark: side === 'wolves' ? (f.roles.wolf?.icon ?? MARKS.wolves) : MARKS[side],
+      members: state.seats.filter((id) => sideOf(roleOf(state, id)) === side),
+    }))
+    .filter((t) => t.members.length > 0);
+  return { kind: 'teams', winner: state.winner, teams };
+}
+
 export function results(state: State): GameResults | null {
   if (state.phase.id !== 'done') return null;
-  return buildResults(state, scoresOf(state), awardsOf(state));
+  const headline = sideText(state.cfg.flavour, state.winner);
+  return {
+    ...buildResults(state, scoresOf(state), awardsOf(state)),
+    outcome: outcomeOf(state),
+    ...(headline ? { headline } : {}),
+  };
 }
