@@ -19,7 +19,7 @@
 }
 
 .secretWord {
-  font-size: var(--pb-font-h1);
+  font-size: var(--pb-font-h2);
   font-weight: 1000;
   text-transform: uppercase;
   overflow-wrap: anywhere;
@@ -98,6 +98,7 @@
 }
 
 .legal {
+  text-wrap: balance;
   min-height: 1.4em;
   margin: 0;
   font-size: var(--pb-font-body);

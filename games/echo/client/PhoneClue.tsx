@@ -112,6 +112,14 @@ export function PhoneClue({
             ? L('Two different words to help {name}', { name: guesser })
             : L('One word to help {name}', { name: guesser })}
         </p>
+        <SecretCard
+          key={secret.id}
+          size="mini"
+          backLabel={L('Hold to see the word')}
+          label={L('Hold to see the word')}
+        >
+          <span className={styles.secretWord}>{secret.answer}</span>
+        </SecretCard>
         {editing ? (
           drafts.map((d, i) => (
             <div className={styles.field} key={i}>
@@ -155,13 +163,6 @@ export function PhoneClue({
         ) : (
           <p className={styles.hint}>{L('Locked in. Waiting for the others…')}</p>
         )}
-        <SecretCard
-          key={secret.id}
-          backLabel={L('Hold to see the word')}
-          label={L('Hold to see the word')}
-        >
-          <span className={styles.secretWord}>{secret.answer}</span>
-        </SecretCard>
         {serverReject ? <p className={styles.errorLine}>{serverReject}</p> : null}
         {showDontKnow ? (
           <button

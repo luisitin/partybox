@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "guess",
-    "startedAt": 1700000015520,
-    "deadline": 1700000040520
+    "startedAt": 1700000009020,
+    "deadline": 1700000034020
   },
   "rng": {
     "seed": 1,
@@ -13,31 +13,36 @@
       "id": "p1",
       "name": "Player 1",
       "avatarId": "fox",
-      "connected": true
+      "connected": true,
+      "canSeeTv": true
     },
     "p2": {
       "id": "p2",
       "name": "Player 2",
       "avatarId": "owl",
-      "connected": true
+      "connected": true,
+      "canSeeTv": true
     },
     "p3": {
       "id": "p3",
       "name": "Player 3",
       "avatarId": "frog",
-      "connected": true
+      "connected": true,
+      "canSeeTv": true
     },
     "p4": {
       "id": "p4",
       "name": "Player 4",
       "avatarId": "cat",
-      "connected": true
+      "connected": true,
+      "canSeeTv": true
     },
     "p5": {
       "id": "p5",
       "name": "Player 5",
       "avatarId": "panda",
-      "connected": true
+      "connected": true,
+      "canSeeTv": false
     }
   },
   "cfg": {
@@ -468,18 +473,19 @@
       }
     ],
     "checkOk": ["p5", "p4", "p3", "p1"],
-    "guess": null
+    "guess": null,
+    "early": null
   },
   "turns": [],
   "speechMs": {
-    "ec203687922585951567": -1,
-    "ec18241895482705157425": -1,
-    "ec25100806463345901183": -1,
-    "ec28185332781204587419": -1,
-    "ec30346349201100182539": -1,
-    "ec39882238813436877772": -1,
-    "ec35888527351448897788": -1,
-    "ec22643771661684773103": -1,
-    "ec9972919802693348689": -1
+    "echo-e0bdbdbd09ef0e37": -1,
+    "echo-e30b40df5ea470de": -1,
+    "echo-89884699d18f9a5a": -1,
+    "echo-4fabda3de63c245e": -1,
+    "echo-35d8bfcd9ce1f16f": -1,
+    "echo-16825ef78a5ac0b3": -1,
+    "echo-8fe6bee1a1a81baf": -1,
+    "echo-c13a96f38e3cf497": -1,
+    "echo-663c8a6f7bb1e530": -1
   }
 }
