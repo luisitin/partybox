@@ -1,5 +1,5 @@
 // A row/grid of player chips built from the view envelope's `players[]`.
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import type { ViewPlayer } from '@partybox/shared';
 import { useT } from '../ui/lang';
@@ -41,6 +41,12 @@ export interface PlayerChipsProps {
   autoFacesPastRows?: number;
 }
 
+/** More rows than `limit` in a wrapped list (distinct tops of its items). */
+function tooManyRows(el: HTMLElement, limit: number | undefined): boolean {
+  if (!limit) return false;
+  return new Set([...el.children].map((c) => (c as HTMLElement).offsetTop)).size > limit;
+}
+
 export function PlayerChips({
   players,
   vip,
@@ -67,12 +73,17 @@ export function PlayerChips({
   const key = players.map((p) => `${p.id}:${p.name}`).join('|');
   const [auto, setAuto] = useState<{ key: string; faces: boolean }>({ key, faces: false });
   if (auto.key !== key) setAuto({ key, faces: false });
+  // Measured before the first paint (a layout effect), so a 16-player strip never shows its names
+  // once and then collapses (tune-in's note); a resize is watched after that.
+  useLayoutEffect(() => {
+    const el = list.current;
+    if (el && !auto.faces && tooManyRows(el, autoFacesPastRows)) setAuto({ key, faces: true });
+  }, [key, auto.faces, autoFacesPastRows]);
   useEffect(() => {
     const el = list.current;
     if (!el || !autoFacesPastRows || auto.faces) return undefined;
     const ro = new ResizeObserver(() => {
-      const tops = new Set([...el.children].map((c) => (c as HTMLElement).offsetTop));
-      if (tops.size > autoFacesPastRows) setAuto({ key, faces: true });
+      if (tooManyRows(el, autoFacesPastRows)) setAuto({ key, faces: true });
     });
     ro.observe(el);
     return () => ro.disconnect();
@@ -108,10 +119,15 @@ export function PlayerChips({
             waving={wavingIds.includes(p.id)}
             awayLeft={awayLeft[p.id] ?? null}
             thinking={thinkingIds.includes(p.id)}
-            score={showScores && !(faces && p.id !== leadId) ? p.score : undefined}
+            // a game's faces-only (a claim) drops the scores too; the automatic one drops only the
+            // names, so a game that shows scores keeps them (face + score)
+            score={showScores && !(facesOnly && p.id !== leadId) ? p.score : undefined}
             scoreMuted={scoresMuted}
             leader={leaders.has(p.id)}
-            isBot={botIds.includes(p.id)}
+            // faces only: the chip is its content — no empty ✓ slot, no 🤖 (a bot's face already
+            // says so) — so the rows read as faces, not blank name tags (reviewer)
+            isBot={botIds.includes(p.id) && !(faces && p.id !== leadId)}
+            compact={faces && p.id !== leadId}
             size={p.id === leadId ? 'md' : size}
           />
         </li>
