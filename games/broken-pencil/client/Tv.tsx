@@ -83,7 +83,11 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
       <p className={styles.passWay} aria-hidden>
         {L('books pass this way →')}
       </p>
-      <ul className={styles.cards} aria-label={L('who is done')} key={phaseKey}>
+      <ul
+        className={`${styles.cards} ${seats > 8 ? styles.cardsMany : ''}`}
+        aria-label={L('who is done')}
+        key={phaseKey}
+      >
         {view.progress.map((p, seat) => {
           const player = view.players.find((x) => x.id === p.playerId);
           const finished = p.stage === 'done';
@@ -100,7 +104,7 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
             >
               <Avatar
                 avatarId={player?.avatarId ?? ''}
-                size={72}
+                size={seats > 8 ? 40 : 72}
                 dim={player?.connected === false}
               />
               <span className={styles.cardName}>{player?.name ?? '?'}</span>
@@ -202,7 +206,7 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
   if (view.phaseId === 'pick') {
     const picked = view.progress.filter((p) => p.stage === 'done').length;
     return (
-      <Stage center>
+      <Stage center className={view.progress.length > 8 ? styles.pickMany : undefined}>
         <BigText level="display" tone="accent">
           Broken Pencil
         </BigText>

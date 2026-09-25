@@ -12,8 +12,8 @@ export const STRINGS: Strings = {
     'Telephone with a pencil. Pick a secret word, draw it on your phone, pass the book on: the next player guesses, the one after draws that guess, and so on around the circle. Then the TV turns the pages of every book one at a time while the VIP holds the Next button. No points — the show is the game.':
       'El juego del teléfono, con lápiz. Elige una palabra secreta, dibújala en tu teléfono y pasa el libro: el siguiente jugador adivina, el que sigue dibuja esa respuesta, y así por todo el círculo. Luego la TV pasa las páginas de cada libro, una a una, mientras el VIP controla el botón Siguiente. Sin puntos: el show es el juego.',
     'Players per book': 'Jugadores por libro',
-    'How many other players touch each book (everyone in the room by default).':
-      'Cuántos otros jugadores tocan cada libro (por defecto, todos los de la sala).',
+    'How many other players touch each book (everyone by default; fewer in a room of 9 or more, so the show stays an 8-player length).':
+      'Cuántos otros jugadores tocan cada libro (por defecto, todos; menos en una sala de 9 o más, para que el show dure como con 8).',
     'Drawing time': 'Tiempo para dibujar',
     'Seconds per drawing': 'Segundos por dibujo',
     'Guessing time': 'Tiempo para adivinar',

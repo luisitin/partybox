@@ -12,7 +12,11 @@ function textOf(page: Page): string | null {
   return page.kind === 'word' ? page.text : page.kind === 'guess' ? page.text : null;
 }
 
-function split(state: State, visible: (b: number, i: number, page: Page) => boolean): string[] {
+function split(
+  state: State,
+  visible: (b: number, i: number, page: Page) => boolean,
+  alsoVisible: readonly string[] = [],
+): string[] {
   const shown = new Set<string>();
   const hidden: string[] = [];
   state.books.forEach((book, b) =>
@@ -24,7 +28,8 @@ function split(state: State, visible: (b: number, i: number, page: Page) => bool
     }),
   );
   // Substring semantics: "sun" inside a visible "sunburn" is not a leak the suite can tell apart.
-  const visibleText = [...shown].join('|');
+  // I-238: plus what this phone legitimately holds besides pages (its own three offers)
+  const visibleText = [...shown, ...alsoVisible].join('|');
   // Short base64-alphabet words ("cat", "sun") also occur by chance inside stroke data, which
   // every draw view carries; __tests__/game.test.ts checks those structurally instead.
   return hidden.filter((t) => !visibleText.includes(t) && !/^[A-Za-z0-9+/]{1,5}$/.test(t));
@@ -57,6 +62,7 @@ export const contractConfig = {
         mine.has(textOf(page) ?? '') ||
         (b === inHands && i === promptPage) ||
         (showing !== null && (b < showing.book || (b === showing.book && i <= showing.page))),
+      state.offers[playerId] ?? [],
     );
   },
   settingsVariants: [
