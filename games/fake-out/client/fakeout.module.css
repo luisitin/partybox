@@ -187,56 +187,6 @@
   animation: none;
 }
 
-/* The 3 · 2 · 1 before question 1 (Countdown.tsx). */
-.countdown {
-  display: grid;
-  justify-items: center;
-  gap: var(--pb-space-3);
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.countdownLabel {
-  margin: 0;
-  font-size: var(--pb-font-h2);
-  font-weight: 800;
-  color: var(--pb-text-muted);
-}
-
-.countdownDigit {
-  display: inline-block;
-  font-size: calc(var(--pb-font-display) * 1.6);
-  font-weight: 900;
-  line-height: 1;
-  color: var(--pb-accent);
-  animation: countdown-pop 900ms var(--pb-ease) both;
-}
-
-.countdownBig .countdownDigit {
-  font-size: calc(var(--pb-font-display) * 2.6);
-}
-
-@keyframes countdown-pop {
-  0% {
-    opacity: 0;
-    transform: perspective(600px) translateZ(-240px) rotateX(40deg) scale(0.6);
-  }
-  45% {
-    opacity: 1;
-    transform: perspective(600px) translateZ(0) rotateX(0) scale(1.08);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .countdown,
-  .countdownDigit {
-    animation: none;
-  }
-}
-
 .englishNote {
   margin: 0;
   padding: var(--pb-space-1) var(--pb-space-3);

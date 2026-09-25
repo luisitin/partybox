@@ -1,9 +1,9 @@
-// The phase graph: intro → (question → lie → pick → reveal → scores)× → done. Phase files only
+// The phase graph: (question → lie → pick → reveal → scores)× → done (the rules, READY and
+// 3 · 2 · 1 are the shell's start stage, ADR-053). Phase files only
 // know their own entry and exit; this file wires the loop so no phase imports another. A VIP skip
 // runs the same transition a deadline does — except in the reveal, where it turns one page.
 import { allConnectedDone, applyVip, setConnected } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { checkReady, enterIntro, reduceIntro, startCountdown } from './phases/intro';
 import { enterLie, liesIn, reduceLie } from './phases/lie';
 import { enterPick, picksIn, reducePick } from './phases/pick';
 import { enterQuestion, newQuestion, reduceQuestion, retimeQuestion } from './phases/question';
@@ -11,13 +11,11 @@ import { enterReveal, reduceReveal, retimeReveal, skipStep } from './phases/reve
 import { enterDone, enterScores, isLastQuestion, reduceScores } from './phases/scores';
 import type { Input, State } from './types';
 
-export { enterIntro };
+export { enterQuestion };
 
 /** What a deadline does in each phase. */
 export function advance(state: State, now: number): State {
   switch (state.phase.id) {
-    case 'intro':
-      return enterQuestion(state, now);
     case 'question':
       return enterLie(state, now);
     case 'lie':
@@ -35,14 +33,11 @@ export function advance(state: State, now: number): State {
 }
 
 function skip(state: State, now: number): State {
-  // The VIP's Start now on the rules runs the 3 · 2 · 1 first; a second skip cuts it.
-  if (state.phase.id === 'intro' && !state.counting) return startCountdown(state, now);
   return state.phase.id === 'reveal' ? skipStep(state, now, advance) : advance(state, now);
 }
 
 /** The drop of the last outstanding player ends an input phase like their input would have. */
 function closeIfDone(state: State, now: number): State {
-  if (state.phase.id === 'intro') return checkReady(state, now);
   if (state.phase.id === 'lie' && allConnectedDone(state, liesIn(state)))
     return advance(state, now);
   if (state.phase.id === 'pick' && allConnectedDone(state, picksIn(state)))
@@ -76,13 +71,11 @@ export function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') return onPlayer(state, event);
   if (event.type === 'speech') return onSpeech(state, event.key, event.ms, event.now);
   const vip = applyVip(state, event, { skip, end: enterDone });
-  // A resume may find the room ready: a phone that dropped during the pause was the last one
-  // not ready, and drops don't re-check while paused (session-c [7f85d5], spy-grid [6865e4]).
-  if (vip) return vip.phase.id === 'intro' ? checkReady(vip, event.now) : vip;
+  // A resume may find everyone in: a phone that dropped during the pause was the last one out,
+  // and drops don't close a phase while paused (spy-grid [86aff3]).
+  if (vip) return vip.phase.paused ? vip : closeIfDone(vip, event.now);
   if (state.phase.paused) return state; // inputs and timers wait while paused
   switch (state.phase.id) {
-    case 'intro':
-      return reduceIntro(state, event, advance);
     case 'question':
       return reduceQuestion(state, event, advance);
     case 'lie':

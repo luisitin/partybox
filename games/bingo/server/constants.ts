@@ -1,5 +1,6 @@
 // Bingo's pacing and board constants: pure numbers the server, the phones and the TV all read.
 // No zod here (types.ts holds the input schemas), so the client entries stay free of it (ADR-050).
+import { readingMs } from '@partybox/game-sdk/reading';
 
 /** The card-pick step's longest wait (loop 344); everyone ready ends it sooner. */
 export const INTRO_MS = 15_000;
@@ -15,16 +16,16 @@ export const DEAL_BOUNCE_MS = 250;
 export function dealDoneMs(cards: number): number {
   return DEAL_START_MS + Math.max(0, cards - 1) * DEAL_STEP_MS + DEAL_BOUNCE_MS + 300;
 }
-/** The first number is never sooner than the deal plus the 3 · 2 · 1, whoever is ready. */
+/** The first number is never sooner than the deal plus that hold, whoever has picked. */
 export function introMinMs(cards: number): number {
-  return dealDoneMs(cards) + INTRO_BREATH_MS + INTRO_READY_MS + 600;
+  return dealDoneMs(cards) + INTRO_BREATH_MS + PICKED_HOLD_MS + 600;
 }
-/** Everyone ready: the first number is this far away (the 3 · 2 · 1)… */
-export const INTRO_READY_MS = 3_000;
 /**
- * …after a breath: the last Ready's lock tick and the ring's first tick were 30 ms apart (loop
- * 349); "everyone is ready" holds this long before the 3 · 2 · 1 starts.
+ * Everyone has picked: "everyone has picked" holds this long, then the first number — no
+ * count-in: the shell's start stage did READY and the 3 · 2 · 1 (ADR-053, reviewer 59a5f4)…
  */
+export const PICKED_HOLD_MS = 1_000;
+/** …after a breath for the last pick's lock tick (loop 349). */
 export const INTRO_BREATH_MS = 400;
 /** The dibs window after the first BINGO! tap. */
 export const ARM_MS = 3_000;
@@ -43,7 +44,7 @@ export const NO_PICK_MS = 20_000;
  *  screen of words stays up 1.5 s + 1/3 s a word, x1.3 because a Spanish phone or 200 % text
  *  reads longer (the server cannot see the phones' languages, so the margin is always on). */
 export function readMs(words: number): number {
-  return Math.round((1_500 + words * 333) * 1.3);
+  return readingMs(words, { ui: true });
 }
 /** I-105 A: the vote after a bingo runs this long from its first choice — three options and the
  *  hint to read, then a moment to choose (was the note's six seconds; pacing rule 2026-09-25).
