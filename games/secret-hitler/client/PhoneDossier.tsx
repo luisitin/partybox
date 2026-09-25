@@ -27,10 +27,14 @@ export function PhoneDossier({
   view,
   open,
   onOpen,
+  beckon = false,
+  compact = false,
 }: {
   view: ShControllerView;
   open: boolean;
   onOpen: (open: boolean) => void;
+  beckon?: boolean;
+  compact?: boolean;
 }): JSX.Element | null {
   const L = useT(STRINGS);
   const [hold] = useState(() => getSecretCardMode() === 'hold');
@@ -45,7 +49,12 @@ export function PhoneDossier({
   if (!d) return null;
   const name = (id: string): string => nameIn(view.players, id);
   return (
-    <div className={styles.folder} data-open={open || undefined}>
+    <div
+      className={styles.folder}
+      data-open={open || undefined}
+      data-beckon={(beckon && !open) || undefined}
+      data-compact={(compact && !open) || undefined}
+    >
       <button
         type="button"
         className={styles.cover}
@@ -104,16 +113,29 @@ export function PhoneDossier({
                 ? '—'
                 : d.intel.map((i) => (
                     <span key={`${i.k}${i.n}`}>
-                      {i.k === 'investigate'
-                        ? L('Round {n}: {name} is {party}', {
+                      {i.k === 'investigate' ? (
+                        L('Round {n}: {name} is {party}', {
+                          n: i.n,
+                          name: name(i.who),
+                          party: partyName(L, i.party),
+                        })
+                      ) : (
+                        // The peek as the cards themselves, in order (review 4fa011 #6).
+                        <span
+                          className={styles.peek}
+                          aria-label={L('Round {n}: the top three were {cards}', {
                             n: i.n,
-                            name: name(i.who),
-                            party: partyName(L, i.party),
-                          })
-                        : L('Round {n}: the top three were {cards}', {
-                            n: i.n,
-                            cards: i.cards.join(' '),
+                            cards: i.cards.map((c) => partyName(L, c)).join(', '),
                           })}
+                        >
+                          <span aria-hidden="true">
+                            {L('Round {n}: the top three', { n: i.n })}
+                          </span>
+                          {i.cards.map((c, k) => (
+                            <PolicyCard key={k} party={c} size="sm" />
+                          ))}
+                        </span>
+                      )}
                     </span>
                   ))}
             </dd>

@@ -82,6 +82,29 @@ describe('R12–R14 · silence, reshuffle, the power table', () => {
 });
 
 describe('R15–R18 · investigate, special election, peek, execution', () => {
+  it('R15 an investigation reaches only the President: no other phone, not the TV', () => {
+    let s = send(toPower(7, 1), 'p1', { type: 'target', target: 'p7' });
+    s = timeout(s); // the file opens
+    expect(controllerView(s, 'p1').dossier?.intel).toHaveLength(1);
+    for (const id of ['p2', 'p3', 'p4', 'p5', 'p6', 'p7'])
+      expect(controllerView(s, id).dossier?.intel).toEqual([]);
+    expect(JSON.stringify(tvView(s))).not.toContain('"intel"');
+    expect(tvView(s).seats[6]?.role).toBeUndefined();
+  });
+
+  it('R17 the peek reaches only the President: no other phone, not the TV', () => {
+    let s = toPower(5, 2);
+    expect(controllerView(s, 'p1').act?.cards).toHaveLength(3);
+    for (const id of ['p2', 'p3', 'p4', 'p5']) {
+      expect(controllerView(s, id).act).toBeNull();
+      expect(JSON.stringify(controllerView(s, id))).not.toContain('"cards":["');
+    }
+    expect(JSON.stringify(tvView(s))).not.toContain('"cards":["');
+    s = send(s, 'p1', { type: 'peekDone' });
+    for (const id of ['p2', 'p3', 'p4', 'p5'])
+      expect(controllerView(s, id).dossier?.intel).toEqual([]);
+  });
+
   it('R15 the President sees the target’s party, never the role, after the pause', () => {
     let s = toPower(7, 1); // slot 2 at 7 players
     expect(s.round.power?.kind).toBe('investigate');

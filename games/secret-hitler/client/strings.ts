@@ -3,9 +3,11 @@
 // scripts/i18n-coverage.test.ts fails until each has its Spanish. Ja and Nein stay as they are in
 // both languages (SPEC §19). `{name}` marks a placeholder.
 import type { Strings } from '@partybox/game-sdk/ui';
+import { HEADLINES_ES } from './headlines-es';
 
 export const STRINGS: Strings = {
   es: {
+    ...HEADLINES_ES,
     'Last call': 'Última llamada',
     'Start now': 'Empezar ya',
     'Based on Secret Hitler by Max Temkin, Mike Boxleiter & Tommy Maranges · CC BY-NC-SA 4.0':
@@ -97,6 +99,8 @@ export const STRINGS: Strings = {
     'Check your dossier. Keep it secret.': 'Revisa tu expediente. Guárdalo en secreto.',
     '{players} players · {lib} Liberals · {fas} Fascists · Hitler':
       '{players} jugadores · {lib} liberales · {fas} fascistas · Hitler',
+    '{players} players · {lib} Liberals · 1 Fascist · Hitler':
+      '{players} jugadores · {lib} liberales · 1 fascista · Hitler',
     'President {name} is choosing a Chancellor': 'El Presidente {name} está eligiendo Canciller',
     'President {p} · Chancellor {c}': 'Presidente {p} · Canciller {c}',
     'Vote now': 'Voten ahora',
@@ -121,6 +125,8 @@ export const STRINGS: Strings = {
     'The top policy is enacted: {party}': 'Se aprueba la ley de arriba del mazo: {party}',
     'Term limits are lifted.': 'Se levantan los límites de mandato.',
     'No one left to investigate.': 'No queda nadie a quien investigar.',
+    'No one can be chosen, so the power passes.':
+      'No se puede elegir a nadie, así que el poder se pierde.',
     '{p} has seen {t}’s file': '{p} vio el expediente de {t}',
     'Checking the files…': 'Revisando los expedientes…',
     '{name} will be the next President': '{name} será el próximo Presidente',
@@ -145,6 +151,7 @@ export const STRINGS: Strings = {
     'Power card': 'Carta de poder',
     'Round {n}: {name} is {party}': 'Ronda {n}: {name} es {party}',
     'Round {n}: the top three were {cards}': 'Ronda {n}: las tres de arriba eran {cards}',
+    'Round {n}: the top three': 'Ronda {n}: las tres de arriba',
     Ready: 'Listo',
     'Got it': 'Entendido',
     'Choose your Chancellor': 'Elige a tu Canciller',

@@ -32,11 +32,16 @@ export function phaseLines(L: Translator, view: View): Lines {
       return {
         title: L('Check your dossier. Keep it secret.'),
         lines: [
-          L('{players} players · {lib} Liberals · {fas} Fascists · Hitler', {
-            players: view.setup.players,
-            lib: view.setup.L,
-            fas: view.setup.F,
-          }),
+          view.setup.F === 1
+            ? L('{players} players · {lib} Liberals · 1 Fascist · Hitler', {
+                players: view.setup.players,
+                lib: view.setup.L,
+              })
+            : L('{players} players · {lib} Liberals · {fas} Fascists · Hitler', {
+                players: view.setup.players,
+                lib: view.setup.L,
+                fas: view.setup.F,
+              }),
         ],
       };
     case 'nominate':
@@ -123,7 +128,10 @@ export function phaseLines(L: Translator, view: View): Lines {
 function powerOutcome(L: Translator, view: View, pres: string, target: string): string {
   const p = view.round.power;
   if (!p) return '';
-  if (p.target === null && p.kind !== 'peek') return L('No one left to investigate.');
+  if (p.target === null && p.kind !== 'peek')
+    return p.kind === 'investigate'
+      ? L('No one left to investigate.')
+      : L('No one can be chosen, so the power passes.');
   switch (p.kind) {
     case 'investigate':
       return p.shown

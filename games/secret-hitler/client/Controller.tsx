@@ -84,7 +84,7 @@ function Moment({ view }: { view: ShControllerView }): JSX.Element | null {
     case 'claims':
       // The law they just passed, face-up, while the table argues about it.
       return r.enacted ? (
-        <div className={styles.momentCard}>
+        <div className={styles.momentCard} data-small>
           <FlipCard party={r.enacted} up />
         </div>
       ) : null;
@@ -115,16 +115,29 @@ export function Controller({
   skip,
 }: GameControllerProps<ShControllerView, Input>): JSX.Element {
   const L = useT(STRINGS);
-  // The dossier starts open while everyone reads it at the start; after that it opens on a tap.
-  const [dossierOpen, setDossierOpen] = useState(() => view.phaseId === 'seating');
+  // The dossier starts closed (a neighbour can't read a phone nobody touched, review 4fa011 #3)
+  // and its cover beckons at the start until it has been opened once.
+  const [dossierOpen, setDossierOpenState] = useState(false);
+  const [readOnce, setReadOnce] = useState(false);
+  const setDossierOpen = (open: boolean): void => {
+    setDossierOpenState(open);
+    if (open) setReadOnce(true);
+  };
   // A new phase closes it again (the player's next job is on screen; a secret isn't left out).
   const [seenPhase, setSeenPhase] = useState(view.phaseId);
   if (seenPhase !== view.phaseId) {
     setSeenPhase(view.phaseId);
-    setDossierOpen(view.phaseId === 'seating');
+    setDossierOpenState(false);
   }
-  const frame: Frame = { view, dossierOpen, setDossierOpen };
   const act = view.status === 'alive' ? view.act : null;
+  const frame: Frame = {
+    view,
+    dossierOpen,
+    setDossierOpen,
+    beckon: view.phaseId === 'seating' && !readOnce,
+    // A choice on screen: the cover shrinks to one line so the choice sits above the button.
+    compact: act !== null && act.kind !== 'ready',
+  };
   const over = view.phaseId === 'gameOver' || view.phaseId === 'done';
   const { title, lines } = phaseLines(L, view);
   const hint = statusHint(L, view);
@@ -133,6 +146,7 @@ export function Controller({
   return (
     <div
       className={`${theme.sh} ${styles.phone}`}
+      data-surface="phone"
       data-phase={view.phaseId}
       data-paused={view.paused || undefined}
     >
@@ -146,6 +160,8 @@ export function Controller({
         <PhoneAct key={`${view.phaseId}:${view.round.n}`} frame={frame} act={act} send={send} />
       ) : (
         <PhoneFrame
+          // A fresh scroll per phase: the win screen never opens scrolled past its headline.
+          key={view.phaseId}
           frame={frame}
           kicker={over ? endingBanner(L, view.winReason, view.winner) : (hint ?? undefined)}
           title={over ? winnerLine(L, view.winner) : title}

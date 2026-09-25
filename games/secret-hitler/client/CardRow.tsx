@@ -45,6 +45,12 @@ export function CardRow({
   };
   return (
     <div className={styles.cardRowWrap}>
+      {/* Above the face-down cards, so a first-timer reads it before the cards (review 1724cb #2). */}
+      {open ? null : (
+        <p className={styles.rowHint} data-lead>
+          {hold ? L('Hold to see the policies') : L('Tap to see the policies')}
+        </p>
+      )}
       <div
         className={styles.cardRow}
         role="group"
@@ -98,11 +104,7 @@ export function CardRow({
             ? L('Tap a card to choose it · tap here to hide them')
             : L('Tap here to hide them')}
         </button>
-      ) : (
-        <p className={styles.rowHint}>
-          {hold ? L('Hold to see the policies') : L('Tap to see the policies')}
-        </p>
-      )}
+      ) : null}
       {onMark ? (
         <div className={styles.cardKeys}>
           {cards.map((_, i) => (

@@ -199,7 +199,7 @@ export function TvMoments({
       ) : null}
       {phase === 'enactReveal' && view.headline ? (
         <div className={styles.paperAt}>
-          <Newspaper headline={view.headline} session={r.n} delayMs={2300} />
+          <Newspaper headline={L(view.headline)} session={r.n} delayMs={2300} />
         </div>
       ) : null}
       {folderSeat ? (
@@ -226,7 +226,7 @@ export function TvMoments({
       {phase === 'gameOver' && view.headline ? (
         <div className={styles.finale}>
           <Newspaper
-            headline={view.headline}
+            headline={L(view.headline)}
             session={r.n}
             kicker={L('Final edition')}
             footer={L(CREDIT)}

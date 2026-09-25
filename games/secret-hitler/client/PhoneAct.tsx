@@ -28,6 +28,13 @@ function Picker({
   picked,
 }: Props & { onPick: (id: string) => void; picked: string | null }): JSX.Element {
   const L = useT(STRINGS);
+  const [narrow] = useState(() => {
+    try {
+      return window.matchMedia('(max-width: 380px)').matches;
+    } catch {
+      return false;
+    }
+  });
   const { view } = frame;
   const face = (seat: number, reason?: string) => {
     const p = view.players.find((x) => x.id === view.seats[seat]?.id);
@@ -44,12 +51,15 @@ function Picker({
   ]
     .sort((a, b) => a.seat - b.seat)
     .map((x) => x.o);
+  // A small phone with long names ("Tess's bot 2"): one column, so no tile cuts a name and nobody
+  // picks blind (review 1724cb #1).
+  const longest = Math.max(0, ...options.map((o) => o.name.length));
   return (
     <FacePicker
       options={options}
       selected={picked ? [picked] : []}
       onChange={(ids) => onPick(ids[0] ?? '')}
-      columns={options.length > 6 ? 3 : 2}
+      columns={narrow && longest > 9 ? 1 : options.length > 6 ? 3 : 2}
       label={act.kind === 'nominate' ? L('Choose your Chancellor') : L('Choose a player')}
     />
   );

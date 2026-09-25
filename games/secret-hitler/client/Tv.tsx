@@ -68,7 +68,9 @@ export function Tv({ view }: GameTvProps<ShTvView>): JSX.Element {
         <div className={styles.ticker}>
           <span className={styles.extra}>{L('Extra')}</span>
           <span key={view.headline ?? ''} className={styles.tickerText}>
-            {view.headline ?? L('The Evening Republic · a new parliament sits tonight')}
+            {view.headline
+              ? L(view.headline)
+              : L('The Evening Republic · a new parliament sits tonight')}
           </span>
         </div>
         <header

@@ -63,9 +63,7 @@ describe('D1 · deadlines and timeouts', () => {
     let s = rig(5);
     for (const id of ['p1', 'p2', 'p3', 'p4']) s = send(s, id, { type: 'ready' });
     while (s.startAt === null) s = timeout(s);
-    expect((s.startAt ?? 0) - COUNTDOWN_MS - s.phase.startedAt).toBeGreaterThanOrEqual(
-      SEATING_PATIENCE_MS,
-    );
+    expect((s.startAt ?? 0) - COUNTDOWN_MS - s.phase.startedAt).toBe(SEATING_PATIENCE_MS);
     expect(timeout(s).phase.id).toBe('nominate');
   });
 

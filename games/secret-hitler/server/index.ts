@@ -5,7 +5,7 @@ import { applyVip, gameManifestSchema, nextInt, seedRng, shuffle } from '@partyb
 import type { GameDefinition, GameEvent, InitContext } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
 import { decide } from './bot';
-import { expireDrops, onPlayer } from './exile';
+import { expireDrops, onPlayer, recheckOnResume } from './exile';
 import { advance, vipSkip } from './flow';
 import { emptyRound } from './phase';
 import { reduceChanEnact } from './phases/chanEnact';
@@ -122,7 +122,10 @@ function reduce(state: State, event: GameEvent<Input>): State {
   const s = expireDrops(state, event.now);
   // D4 / D10: Skip is Last call in a choosing phase; pause freezes every deadline; End → done.
   const vip = applyVip(s, event, { skip: vipSkip, end: enterDone });
-  if (vip) return vip;
+  if (vip)
+    return event.type === 'vip' && event.action === 'resume'
+      ? recheckOnResume(vip, event.now)
+      : vip;
   if (s.phase.paused) return s;
   // Exiled players and ghosts send nothing that counts (§14): phases accept only the living.
   if (event.type === 'input' && !s.alive.includes(event.playerId)) return s;

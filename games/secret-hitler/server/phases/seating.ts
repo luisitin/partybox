@@ -30,7 +30,8 @@ export function startCountdown(state: State, now: number): State {
 
 /** A ready, a drop or a leave may complete the table: start the count. */
 export function checkReady(state: State, now: number): State {
-  return state.phase.id === 'seating' && allReady(state) ? startCountdown(state, now) : state;
+  if (state.phase.id !== 'seating' || state.phase.paused) return state; // resume re-checks
+  return allReady(state) ? startCountdown(state, now) : state;
 }
 
 export function reduceSeating(state: State, event: GameEvent<Input>, next: Transition): State {
@@ -39,7 +40,12 @@ export function reduceSeating(state: State, event: GameEvent<Input>, next: Trans
     const someoneTapped = state.ready.some((id) => state.players[id]?.bot !== true);
     const waited = event.now - state.phase.startedAt;
     if (!someoneTapped || waited >= SEATING_PATIENCE_MS) return startCountdown(state, event.now);
-    return { ...state, phase: { ...state.phase, deadline: event.now + SEATING_SAFETY_MS } };
+    // The last check lands exactly at the cap (review 4fa011 C1).
+    const deadline = Math.min(
+      event.now + SEATING_SAFETY_MS,
+      state.phase.startedAt + SEATING_PATIENCE_MS,
+    );
+    return { ...state, phase: { ...state.phase, deadline } };
   }
   if (event.type !== 'input' || event.input.type !== 'ready') return state;
   const id = event.playerId;

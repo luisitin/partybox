@@ -31,23 +31,44 @@ function exile(state: State, id: string, now: number): State {
     return enterGameOver({ ...s, winner: 'liberals', winReason: 'hitlerFled' }, now);
   if (!wasAlive) return s; // a ghost leaving changes nothing at the table
   if (s.alive.length < 3) return enterGameOver(endTooFew(s), now);
+  const { [id]: _vote, ...votes } = s.round.votes;
+  void _vote;
+  const counted = withRound(s, { votes });
+  // Paused: only the bookkeeping. The table moves on at resume (recheckOnResume), never mid-pause.
+  return s.phase.paused ? counted : afterExit(counted, id, now);
+}
+
+/** What a seat leaving does to the phase it left. */
+function afterExit(s: State, id: string, now: number): State {
   const r = s.round;
   switch (s.phase.id) {
     case 'seating':
       return checkReady(s, now);
     case 'nominate':
       return r.president === id ? nextRound(s, now) : s;
-    case 'vote': {
+    case 'vote':
       if (r.president === id) return nextRound(s, now);
       if (r.nominee === id) return enterNominate(withRound(s, { nominee: null, votes: {} }), now);
-      const { [id]: _vote, ...votes } = r.votes;
-      void _vote;
-      const after = withRound(s, { votes });
-      return everyoneVoted(after) ? advance(after, now) : after;
-    }
+      return everyoneVoted(s) ? advance(s, now) : s;
     default:
       return chooserOf(s) === id ? resolveNow(s, now) : s;
   }
+}
+
+/**
+ * At resume, whatever a pause held back: a President, nominee or chooser who left, a vote or a
+ * ready-up that a leave or a drop completed (hub review 12ea6b).
+ */
+export function recheckOnResume(s: State, now: number): State {
+  if (OVER.has(s.phase.id)) return s;
+  const r = s.round;
+  const gone = [r.president, r.nominee, chooserOf(s)].find(
+    (id): id is string => id !== null && s.seats.includes(id) && !s.alive.includes(id),
+  );
+  if (gone !== undefined) return afterExit(s, gone, now);
+  if (s.phase.id === 'seating') return checkReady(s, now);
+  if (s.phase.id === 'vote' && everyoneVoted(s)) return advance(s, now);
+  return s;
 }
 
 /** Exiles every seat whose drop has lasted EXILE_MS. Paused games hold the clock (D10). */

@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { EXILE_MS } from '../server/types';
 import type { Party, State } from '../server/types';
-import { elect, reduce, rig, seated, send, timeout, until } from './helpers';
+import { elect, reduce, rig, seated, send, timeout, until, vip } from './helpers';
 
 function leave(state: State, id: string, at?: number): State {
   const now = at ?? state.phase.startedAt + 100;
@@ -105,6 +105,31 @@ describe('D7 · exile', () => {
     const s = timeout(drop(table, 'p1', table.phase.startedAt + 100));
     expect(s.phase.id).toBe('vote');
     expect(s.exiled).toEqual([]);
+  });
+});
+
+describe('D10 · a pause holds what a leave or drop would do until resume', () => {
+  it('D10 the last missing voter leaves during a pause: the reveal waits for resume', () => {
+    // p4 is a Liberal (not Hitler), so the table plays on without them.
+    let s = send(seated(rig(6)), 'p1', { type: 'nominate', target: 'p2' });
+    for (const id of ['p1', 'p2', 'p3', 'p5', 'p6']) s = send(s, id, { type: 'vote', ja: true });
+    const at = s.phase.startedAt + 1_000;
+    s = vip(s, 'pause', at);
+    s = leave(s, 'p4', at + 500);
+    expect(s.phase.id).toBe('vote');
+    s = vip(s, 'resume', at + 5_000);
+    expect(s.phase.id).toBe('voteReveal');
+  });
+
+  it('D10 a drop completes the ready-up during a pause: the count starts at resume', () => {
+    let s = rig(5);
+    for (const id of ['p1', 'p2', 'p3', 'p4']) s = send(s, id, { type: 'ready' });
+    const at = s.phase.startedAt + 1_000;
+    s = vip(s, 'pause', at);
+    s = drop(s, 'p5', at + 500);
+    expect(s.startAt).toBeNull();
+    s = vip(s, 'resume', at + 4_000);
+    expect(s.startAt).not.toBeNull();
   });
 });
 

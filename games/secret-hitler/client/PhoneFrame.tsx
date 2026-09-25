@@ -12,6 +12,10 @@ export interface Frame {
   view: ShControllerView;
   dossierOpen: boolean;
   setDossierOpen: (open: boolean) => void;
+  /** Seating, never opened yet: the cover breathes. */
+  beckon?: boolean;
+  /** A choice is on screen: the cover is one short line. */
+  compact?: boolean;
 }
 
 export function PhoneFrame({
@@ -39,7 +43,13 @@ export function PhoneFrame({
       }
     >
       <div className={styles.body}>
-        <PhoneDossier view={view} open={dossierOpen} onOpen={setDossierOpen} />
+        <PhoneDossier
+          view={view}
+          open={dossierOpen}
+          onOpen={setDossierOpen}
+          beckon={frame.beckon}
+          compact={frame.compact}
+        />
         {kicker ? <p className={styles.kicker}>{kicker}</p> : null}
         {title ? <h2 className={styles.title}>{title}</h2> : null}
         {children}

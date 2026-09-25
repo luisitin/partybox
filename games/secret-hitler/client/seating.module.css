@@ -86,9 +86,11 @@
   display: grid;
   grid-template-columns: 64px minmax(0, 1fr);
   align-items: center;
+  align-content: start;
   gap: 8px 16px;
   animation: ruleIn 700ms var(--sh-ease) both;
-  animation-delay: calc(900ms + var(--i) * 900ms);
+  /* All three land together, a beat apart, so the whole briefing is readable at once. */
+  animation-delay: calc(400ms + var(--i) * 150ms);
 }
 
 @keyframes ruleIn {
@@ -161,7 +163,7 @@
   gap: 18px;
   padding-top: 8px;
   border-top: 2px dashed var(--sh-ink-soft);
-  animation: global(sh-fade) 500ms var(--sh-ease) 3600ms both;
+  animation: global(sh-fade) 500ms var(--sh-ease) 900ms both;
 }
 
 .readyCount {

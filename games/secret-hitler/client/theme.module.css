@@ -140,6 +140,12 @@
   animation-play-state: paused !important;
 }
 
+/* Phones skip the typewriter webfont (53 KB of the ~105 KB a phone would fetch, review 4fa011
+   C2): a system typewriter face carries the dossier; the TV keeps Special Elite. */
+.sh[data-surface='phone'] {
+  --sh-font-type: 'Courier New', Courier, ui-monospace, monospace;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .sh *,
   .sh *::before,

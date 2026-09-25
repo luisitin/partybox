@@ -97,7 +97,7 @@
 .hint {
   margin: 0;
   font-size: var(--pb-font-caption);
-  color: var(--sh-text-muted);
+  color: var(--sh-text);
   text-align: center;
 }
 
@@ -239,6 +239,11 @@
   transform: translateY(8px) rotate(-6deg);
 }
 
+.rowHint[data-lead] {
+  font-weight: 800;
+  color: var(--sh-brass);
+}
+
 .rowHint {
   margin: 0;
   padding: 0.35rem;
@@ -295,6 +300,11 @@ button.rowHint {
 .moment {
   opacity: 0;
   animation: global(sh-stamp) 700ms var(--sh-ease) forwards;
+}
+
+.momentCard[data-small] {
+  --sh-card-w: 5.4rem;
+  --sh-card-h: 7.6rem;
 }
 
 .momentCard {
