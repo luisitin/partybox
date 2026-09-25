@@ -65,6 +65,10 @@ export const en = {
     title: 'Lobby',
     waitingForVip: 'Waiting for the VIP to pick a game…',
     waitingFor: (name: string) => `Waiting for ${name} to pick a game…`,
+    /** I-663: the lobby line while the VIP's phone is gone (no handover in the lobby: I-347). */
+    vipDropped: (vip: string) => `${vip}'s phone dropped — waiting for it to come back`,
+    /** I-663 B: the way out — the TV's host bar can pick a game too. */
+    vipDroppedTv: (vip: string) => `${vip}'s phone dropped — pick a game on the TV, or wait for ${vip}`,
     waitingForFirst: 'Waiting for the first player…',
     youAreVip: 'You are the VIP — pick a game when everyone is in.',
     pickGame: 'Pick a game',

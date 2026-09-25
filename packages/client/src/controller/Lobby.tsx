@@ -16,6 +16,7 @@ import styles from './Lobby.module.css';
 import { LobbyLine } from './LobbyLine';
 import type { LobbyLineItem } from './LobbyLine';
 import { LobbyMore } from './LobbyMore';
+import { useVipAway } from '../vipAway';
 import { ShareButton } from './ShareSheet';
 import { VoteRow, tallyLine, voteLeader } from './VoteRow';
 import { VIP_TIPS, setTipsSeen, tipsSeen } from './vipTips';
@@ -39,16 +40,19 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
   const hasBot = room.players.some((p) => p.bot);
   const tips = VIP_TIPS.filter((tip) => !(tip.id === 'bots' && hasBot));
   const tally = me.isVip ? tallyLine(room) : null;
+  const away = useVipAway(room); // I-663 B
   const lines: LobbyLineItem[] = me.isVip
     ? [
         ...(tally ? [{ id: 'tally', text: `🙋 ${tally}` }] : []),
         { id: 'in', text: t.lobbyTop.everyoneIn },
         ...(tipsOn ? tips.map((tip) => ({ id: tip.id, text: t.tips[tip.id], tip: true })) : []),
       ]
-    : [
-        { id: 'wait', text: lobbyStrings().waitingForVip },
-        { id: 'bots', text: t.lobby.addBotHint },
-      ];
+    : away
+      ? [{ id: 'away', text: t.lobby.vipDroppedTv(away.vip) }] // I-663 B: the VIP's phone is gone
+      : [
+          { id: 'wait', text: lobbyStrings().waitingForVip },
+          { id: 'bots', text: t.lobby.addBotHint },
+        ];
   // I-074 A: a removed bot puffs out before the remove is sent (450 ms, one poof at a time).
   const [poofing, setPoofing] = useState<string | null>(null);
   const poof = (botId: string): void => {
