@@ -47,9 +47,13 @@ export function kindName(L: Translator, kind: ContentKind): string {
  *  are content and stay in the deck's language. */
 export function boxWords(
   L: Translator,
-  box: { name: string; flavour: string; event?: string },
+  box: { name: string; nameEs?: string; flavour: string; event?: string },
+  lang?: string,
 ): { name: string; flavour: string } {
-  return box.event ? { name: L(box.name), flavour: L(box.flavour) } : box;
+  // Box names are the game's own labels (Spanish comes in the view as nameEs); flavour lines stay
+  // English (Flavour.tsx). A live event's words are the game's own strings.
+  if (box.event) return { name: L(box.name), flavour: L(box.flavour) };
+  return { name: lang === 'es' && box.nameEs ? box.nameEs : box.name, flavour: box.flavour };
 }
 
 /** An option's icon: a live event's own (🐢, 🎲 call, 🍕) or the content's. */

@@ -4,6 +4,7 @@
 // event's `run` (its winner and how it plays out) is public from `open` step 0 — bets are closed,
 // and the TV needs it to play the event before the payouts.
 import { controllerEnvelope, envelope } from '@partybox/game-sdk';
+import { ES_BOXES } from './box-names-es';
 import { peekPrice, splitHalves } from './odds';
 import type { PlayerStatus } from '@partybox/game-sdk';
 import { inGame } from './phases/bet';
@@ -51,6 +52,7 @@ function boxView(state: State): BoxView | null {
     of: state.boxes.length,
     grand: box.grand,
     name: box.name,
+    ...(!box.event && ES_BOXES[box.name] ? { nameEs: ES_BOXES[box.name] } : {}),
     icon: box.icon,
     flavour: box.flavour,
     options: box.options.map((o) => ({

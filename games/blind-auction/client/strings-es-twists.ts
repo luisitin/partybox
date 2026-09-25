@@ -1,5 +1,6 @@
 // Spanish for the twists (Cfg.twists): the note on the TV and phone, and the phone's buttons.
 export const ES_TWISTS: Record<string, string> = {
+  'in English': 'en inglés',
   Twist: 'Giro',
   '⏰ Early bird: bet now for up to ×1.25 more — it slides to ×1.00 at the buzzer.':
     '⏰ Madrugador: apuesta ya y gana hasta ×1.25 más; baja a ×1.00 al sonar el timbre.',
@@ -11,7 +12,7 @@ export const ES_TWISTS: Record<string, string> = {
   '🛟 Add insurance': '🛟 Añadir seguro',
   '👁 Peek: pay to rule out one wrong answer, on your phone only.':
     '👁 Espiar: paga para descartar una respuesta equivocada, solo en tu celular.',
-  '👁 Ruled out: the struck card': '👁 Descartada: la carta tachada',
+  '👁 Ruled out: {what}': '👁 Descartada: {what}',
   '✂️ Split: tap two answers to put half your stake on each.':
     '✂️ Dividir: toca dos respuestas para poner la mitad de tu apuesta en cada una.',
   '👁 Peek: rule one out ({coin} {n})': '👁 Espiar: descarta una ({coin} {n})',

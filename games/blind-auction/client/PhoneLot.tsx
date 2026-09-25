@@ -2,7 +2,7 @@
 // read out — its name and everything it might hold, with the odds, so a phone that cannot see the
 // TV has what the TV shows.
 import type { JSX } from 'react';
-import { Screen, usePhoneOnly, useT } from '@partybox/game-sdk/ui';
+import { Screen, usePhoneOnly, useT, useLang } from '@partybox/game-sdk/ui';
 import type { PushedView } from '@partybox/game-sdk/ui';
 import type { BlindAuctionControllerView, BoxView } from '../server/views';
 import { COIN, boxWords } from './copy';
@@ -11,6 +11,7 @@ import { OptionBoard } from './Options';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 import { useReading } from './useVoice';
+import { Flavour } from './Flavour';
 
 type View = PushedView<BlindAuctionControllerView>;
 
@@ -27,6 +28,7 @@ export function Purse({ coins }: { coins: number }): JSX.Element {
 /** "Box 3/8 · 🏴‍☠️ Pirate's Chest" in one line. */
 export function LotTitle({ box, coins }: { box: BoxView; coins?: number }): JSX.Element {
   const L = useT(STRINGS);
+  const lang = useLang();
   const kicker = (
     <span className={styles.lotTitleKicker}>
       {box.grand ? `★ ${L('Grand box ×2')}` : L('Box {n}/{total}', { n: box.n, total: box.of })}
@@ -44,7 +46,7 @@ export function LotTitle({ box, coins }: { box: BoxView; coins?: number }): JSX.
         </span>
       )}
       <span className={styles.lotTitleName}>
-        <span aria-hidden>{box.icon}</span> {boxWords(L, box).name}
+        <span aria-hidden>{box.icon}</span> {boxWords(L, box, lang).name}
       </span>
     </p>
   );
@@ -71,7 +73,7 @@ export function PhoneBox({ view }: { view: View }): JSX.Element {
             deal
             size="phone"
           />
-          <p className={styles.flavour}>{boxWords(L, box).flavour}</p>
+          <Flavour box={box} className={styles.flavour} />
           <OptionBoard options={box.options} size="phone" />
         </div>
       ) : null}

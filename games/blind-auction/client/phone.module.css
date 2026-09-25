@@ -541,7 +541,7 @@
   .lotTitleName {
     flex: 1 1 0;
     order: 1;
-    font-size: calc(var(--pb-font-h2) * 0.85);
+    font-size: var(--pb-font-body);
   }
   .lotTitle .kickerRow > :last-child {
     order: 2;

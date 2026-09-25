@@ -70,10 +70,13 @@ export function InsureSwitch({
 export function PeekButton({
   price,
   done,
+  struck,
   onPeek,
 }: {
   price: number;
   done: boolean;
+  /** The ruled-out card's name, once peeked. */
+  struck: string;
   onPeek: () => void;
 }): JSX.Element {
   const L = useT(STRINGS);
@@ -89,7 +92,7 @@ export function PeekButton({
       }}
     >
       {done
-        ? L('👁 Ruled out: the struck card')
+        ? L('👁 Ruled out: {what}', { what: struck })
         : L('👁 Peek: rule one out ({coin} {n})', { coin: COIN, n: price })}
     </button>
   );

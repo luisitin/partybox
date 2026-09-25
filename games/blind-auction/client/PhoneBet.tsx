@@ -41,6 +41,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
   const what = option !== null ? box.options[option] : undefined;
   const second = box.twist === 'split' && also !== null ? box.options[also] : undefined;
   // Names only: the icon is on the ticked card above, and the button stays one line on an SE.
+  const struck = view.myPeek !== null ? box.options[view.myPeek] : undefined;
   const label = (what ? nameOf(L, what) : '') + (second ? ` + ${nameOf(L, second)}` : '');
   // "Placed" only while the shown bet is the one sent: picking another content re-arms the button.
   // Sitting out is sitting out whatever card is picked.
@@ -174,6 +175,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
           <PeekButton
             price={view.peekPrice}
             done={view.myPeek !== null}
+            struck={struck ? nameOf(L, struck) : ''}
             onPeek={() => send({ type: 'peek' })}
           />
         ) : undefined

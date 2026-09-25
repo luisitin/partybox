@@ -5,7 +5,15 @@
 // three, so the box holds its place (the phases cut into each other: `quickInto`).
 import { useEffect, useRef } from 'react';
 import type { JSX } from 'react';
-import { Avatar, Confetti, Stage, useSequence, useSound, useT } from '@partybox/game-sdk/ui';
+import {
+  Avatar,
+  Confetti,
+  Stage,
+  useSequence,
+  useSound,
+  useT,
+  useLang,
+} from '@partybox/game-sdk/ui';
 import type { PushedView, SoundCue } from '@partybox/game-sdk/ui';
 import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS, betsMs } from '../server/timing';
 import type { BlindAuctionTvView } from '../server/views';
@@ -31,6 +39,7 @@ import { OptionBoard } from './Options';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
 import { useLine, useReading } from './useVoice';
+import { Flavour } from './Flavour';
 
 type View = PushedView<BlindAuctionTvView>;
 
@@ -54,14 +63,15 @@ function Kicker({ view }: { view: View }): JSX.Element {
 
 function BoxPanel({ view }: { view: View }): JSX.Element | null {
   const L = useT(STRINGS);
+  const lang = useLang();
   const play = useSound();
   useEffect(() => play('card'), [play]);
   useReading(view.voice);
   if (!view.box) return null;
   return (
     <div className={`${styles.panel} ${styles.panelRise}`}>
-      <h1 className={styles.plate}>{boxWords(L, view.box).name}</h1>
-      <p className={styles.flavour}>{boxWords(L, view.box).flavour}</p>
+      <h1 className={styles.plate}>{boxWords(L, view.box, lang).name}</h1>
+      <Flavour box={view.box} className={styles.flavour} />
       {view.box.event === 'keno' ? <PayTable /> : <OptionBoard options={view.box.options} />}
       <TwistNote twist={view.box.twist} />
     </div>

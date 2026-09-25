@@ -26,6 +26,8 @@ export interface BoxView {
   of: number;
   grand: boolean;
   name: string;
+  /** The Spanish name (plain boxes; live events translate on the client). */
+  nameEs?: string;
   icon: string;
   flavour: string;
   options: OptionView[];
