@@ -162,3 +162,18 @@ double-tap Lock in; callers tap a side; Priya's phone (iPhone SE, 320 × 568) ge
   (its labels were TV-sized in a 560 px column) and "+0" on the co-op needle. Fixed: the ends'
   size follows the dial's (never below body size), the demo dial column is 720 px, a miss reads
   "0". The waiting phone's strip was a 140 px stub; it now spans the screen.
+
+## p11 — co-op, phones in Spanish (4 players: 3 real phones + a bot, seed 44)
+
+- The phones join in English and switch to Spanish with a reload (the phone rejoins on its own).
+  TV dead-air: 128.2 s, **0 dead spans, 0 hard cuts**; phones: only the results screen at the end.
+  Worst long frame 100 ms. The touch-abuse pass on Priya's dial (swipes, pinch, long-press,
+  triple tap) left no zoom, selection or shift.
+- Found: on an iPhone SE the psychic's huddle screen cut the lock row's faces at the bottom edge;
+  at 200 % text the "Hold to see the target" label spilled out of its card onto the next line (the
+  card was a fixed height with both faces positioned over it, and a min-height on a flex item let
+  the full page squeeze it).
+- Fixed: the card's two faces share one grid cell (it is as tall as the taller one), it never
+  shrinks, and a short screen drops the lock row's faces for its count. SE and 200 % re-shot with
+  nothing overlapping; at 200 % the psychic screens scroll a little, the card, the clue box and
+  Send in view (open question in REVIEW.md).

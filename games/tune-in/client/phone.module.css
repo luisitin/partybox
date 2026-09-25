@@ -106,8 +106,11 @@
 }
 
 /* ── hold to see ── */
+/* Never squeezed by the screen's column: a min-height on a flex item stands in for its content
+   size, so an overfull page shrank the card and spilled its label onto the next line. */
 .hold {
   position: relative;
+  flex-shrink: 0;
   width: 100%;
   min-height: 132px;
   padding: 0;
@@ -123,9 +126,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Both faces share one grid cell, so the card is as tall as the taller of them (at 200 % text the
+   label outgrew a fixed-height card and ran into the line below). */
 .holdInner {
   position: relative;
-  display: block;
+  display: grid;
   min-height: 132px;
   transform-style: preserve-3d;
   transition: transform var(--pb-motion-base) var(--pb-ease);
@@ -137,8 +142,7 @@
 
 .holdBack,
 .holdFront {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
   display: flex;
   border-radius: var(--pb-radius-lg);
   backface-visibility: hidden;
@@ -150,6 +154,8 @@
   align-items: center;
   justify-content: center;
   gap: var(--pb-space-1);
+  padding: var(--pb-space-3);
+  text-align: center;
   background: var(--pb-surface);
   border: 2px dashed var(--pb-surface-2);
   font-size: var(--pb-font-body);
@@ -396,6 +402,15 @@
    the reassurance lines go. */
 @media (max-height: 640px) {
   .optional {
+    display: none;
+  }
+  /* An SE's psychic in a huddle: the strip, the card, the hush and the lock row must fit (p11 cut
+     the lock row's faces at the bottom edge). */
+  .hold,
+  .holdInner {
+    min-height: 104px;
+  }
+  .lockTight .lockFaces {
     display: none;
   }
 }

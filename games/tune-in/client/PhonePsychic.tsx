@@ -143,7 +143,12 @@ export function PsychicDial({ view }: { view: TuneControllerView }): JSX.Element
         <Target view={view} live />
       </div>
       <p className={styles.hush}>{L('Psychics stay silent! 🤫')}</p>
-      <LockRow players={view.players} phase={view.phaseId} className={styles.roomy} />
+      {/* A short screen keeps the count and drops the faces (the card and the strip come first). */}
+      <LockRow
+        players={view.players}
+        phase={view.phaseId}
+        className={`${styles.roomy} ${styles.lockTight}`}
+      />
     </Screen>
   );
 }
