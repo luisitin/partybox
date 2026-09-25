@@ -57,10 +57,12 @@ function boxView(state: State): BoxView | null {
       kind: o.kind,
       tier: tierOf(o.chance),
       chance: o.chance,
-      pay: box.grand ? o.pay * 2 : o.pay,
+      // The crowd-sets-the-odds twist: no fixed pay, the pot splits (shown as 'splits the pot').
+      pay: box.twist === 'pool' ? 0 : box.grand ? o.pay * 2 : o.pay,
       ...(o.label ? { label: o.label } : {}),
     })),
     ...(box.event ? { event: box.event } : {}),
+    ...(box.twist ? { twist: box.twist } : {}),
   };
 }
 

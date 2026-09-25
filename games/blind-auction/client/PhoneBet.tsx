@@ -12,6 +12,7 @@ import type { BlindAuctionControllerView } from '../server/views';
 import { COIN, iconOf, nameOf } from './copy';
 import { OptionBoard } from './Options';
 import { KenoPad } from './Keno';
+import { InsureSwitch, TwistNote } from './Twist';
 import { LotTitle } from './PhoneLot';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
@@ -32,6 +33,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
           : null),
   );
   const [amount, setAmount] = useState(view.myBet?.amount ?? 0);
+  const [insured, setInsured] = useState(view.myBet?.insured === true);
   const box = view.box;
   if (!box) return null;
   const what = option !== null ? box.options[option] : undefined;
@@ -42,7 +44,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
     ? null
     : view.myBet.amount === 0
       ? 0
-      : view.myBet.option === option
+      : view.myBet.option === option && (view.myBet.insured === true) === insured
         ? view.myBet.amount
         : null;
   // Hot potato: you cannot back yourself (you could just keep it).
@@ -72,7 +74,8 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       placed={placed}
       onChange={setAmount}
       onConfirm={(n) => {
-        if (option !== null) send({ type: 'bet', option, amount: n });
+        if (option !== null)
+          send({ type: 'bet', option, amount: n, ...(box.twist === 'insure' ? { insured } : {}) });
       }}
       onPass={() => {
         setAmount(0);
@@ -102,6 +105,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       header={
         <div className={styles.betHead}>
           <LotTitle box={box} coins={view.coins} />
+          <TwistNote twist={box.twist} size="phone" />
           {option === null && box.event !== 'shells' && box.event !== 'keno' ? (
             // Above the cards, never in the fade (review). A first-timer didn't know to tap a card or where the stake goes.
             <p className={styles.betHint}>{L('Tap a card, then choose your coins')}</p>
@@ -131,6 +135,11 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
             />
           )}
         </div>
+      }
+      below={
+        box.twist === 'insure' ? (
+          <InsureSwitch on={insured} amount={amount} onToggle={() => setInsured((v) => !v)} />
+        ) : undefined
       }
       notice={notice}
     />

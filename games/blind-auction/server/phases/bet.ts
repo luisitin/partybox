@@ -5,6 +5,7 @@
 import { allConnectedDone, enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { PITY_COINS } from '../timing';
+import { insuranceFee } from '../odds';
 import type { Input, State, Transition } from '../types';
 import { teamOf } from './tug';
 
@@ -17,7 +18,7 @@ export function enterBet(state: State, now: number): State {
   const coins = { ...state.coins };
   for (const id of broke) coins[id] = PITY_COINS;
   return enterPhase(
-    { ...state, coins, r: { ...state.r, topped: broke } },
+    { ...state, coins, r: { ...state.r, topped: broke, betOpenedAt: now } },
     'bet',
     now,
     state.cfg.betSeconds * 1000,
@@ -41,6 +42,7 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
   const id = event.playerId;
   if (!inGame(state, id)) return state;
   const { option, amount } = event.input;
+  const insured = event.input.insured === true && state.boxes[state.r.idx]?.box.twist === 'insure';
   const have = state.coins[id] ?? 0;
   const box = state.boxes[state.r.idx]?.box;
   // Hot potato: you cannot bet on yourself holding it (you could just keep it).
@@ -51,7 +53,7 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
   // Keno: pick your three numbers before you stake.
   const noSpots = box?.event === 'keno' && amount > 0 && (state.r.spots?.[id]?.length ?? 0) !== 3;
   const code =
-    amount > have
+    amount + (insured ? insuranceFee(amount) : 0) > have
       ? 'over'
       : !box || option >= box.options.length || wrongSide
         ? 'option'
@@ -65,7 +67,13 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
   const after: State = {
     ...state,
     notices,
-    r: { ...state.r, bets: { ...state.r.bets, [id]: { option, amount } } },
+    r: {
+      ...state.r,
+      bets: {
+        ...state.r.bets,
+        [id]: { option, amount, at: event.now, ...(insured ? { insured } : {}) },
+      },
+    },
   };
   return betsAllIn(after) ? next(after, event.now) : after;
 }

@@ -83,7 +83,7 @@ describe('betting', () => {
     expect(s.r.bets).toEqual({});
     s = bet(s, 'p1', 0, 100);
     expect(game.controllerView(s, 'p1').notice).toBeNull();
-    expect(game.controllerView(s, 'p1').myBet).toEqual({ option: 0, amount: 100 });
+    expect(game.controllerView(s, 'p1').myBet).toMatchObject({ option: 0, amount: 100 });
   });
 
   it('a resend changes the bet; the last one stands', () => {
@@ -91,7 +91,7 @@ describe('betting', () => {
     s = bet(s, 'p1', 1, 50);
     s = bet(s, 'p1', 0, 20);
     s = bet(s, 'p2', 1, 0);
-    expect(s.r.bets['p1']).toEqual({ option: 0, amount: 20 });
+    expect(s.r.bets['p1']).toMatchObject({ option: 0, amount: 20 });
   });
 
   it('a broke player is topped up to the pity stake when betting opens', () => {

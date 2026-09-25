@@ -22,3 +22,8 @@ export function payout(amount: number, pay: number, grand: boolean): number {
   // In tenths: 50 × 2.3 is 115, never 114.99999 floored to 114 (review C1).
   return Math.floor((amount * Math.round(pay * 10) * (grand ? 2 : 1)) / 10);
 }
+
+/** Insurance twist: 10 % of the stake (at least 1), paid for half the stake back if wrong. */
+export function insuranceFee(amount: number): number {
+  return amount > 0 ? Math.max(1, Math.ceil(amount / 10)) : 0;
+}

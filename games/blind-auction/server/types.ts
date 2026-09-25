@@ -36,6 +36,8 @@ export interface Cfg {
   spicy: boolean;
   /** Live events: every other box is an event the TV runs (a race, dice, a wheel). */
   live: boolean;
+  /** Twists (the owner: a toggle; each live event gets one that fits it, at random). */
+  twists: boolean;
   reader: Reader;
 }
 
@@ -91,6 +93,8 @@ export interface Box {
   grand: boolean;
   /** A live event instead of a box: the TV runs it at `open`. */
   event?: LiveKind;
+  /** A twist on this event's betting (Cfg.twists). */
+  twist?: Twist;
 }
 
 /** A box and its SECRET outcome. `detail` is how a live event plays out (the dice, the race's
@@ -106,7 +110,15 @@ export interface Round {
 export interface Bet {
   option: number;
   amount: number;
+  /** When it was placed (the early-bird twist pays more for an early bet). */
+  at?: number;
+  /** The insurance twist: paid 10 % on top, half the stake back if wrong. */
+  insured?: boolean;
 }
+
+/** The twists (LIVE-EVENTS.md): each event with odds may get one. */
+export const TWISTS = ['early', 'insure', 'pool'] as const;
+export type Twist = (typeof TWISTS)[number];
 
 export interface RoundState {
   idx: number;
@@ -120,6 +132,8 @@ export interface RoundState {
   turnedAt: number | null;
   /** Players topped up to the pity stake this round (they were broke). */
   topped: string[];
+  /** When betting opened (the early-bird twist measures from it). */
+  betOpenedAt?: number;
   /** Doors (`swap`): the goat door the host opened, and each bettor's stay/switch choice (their
    *  final door; absent = undecided, which stays). */
   opened?: number;
@@ -208,6 +222,7 @@ export const inputSchema = z.discriminatedUnion('type', [
     // Up to 16 for hot potato (one option per player).
     option: z.number().int().min(0).max(15),
     amount: z.number().int().min(0).max(100000),
+    insured: z.boolean().optional(),
   }),
 ]);
 export type Input = z.infer<typeof inputSchema>;

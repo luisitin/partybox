@@ -2,7 +2,7 @@
 import type { ControllerView, TvView } from '@partybox/game-sdk';
 import type { Tier } from './odds';
 import type { FixedLine } from './speech';
-import type { Bet, ContentKind, LiveKind } from './types';
+import type { Bet, ContentKind, LiveKind, Twist } from './types';
 
 export interface OptionView {
   kind: ContentKind;
@@ -30,6 +30,7 @@ export interface BoxView {
   flavour: string;
   options: OptionView[];
   event?: LiveKind;
+  twist?: Twist;
 }
 
 export interface BetView {

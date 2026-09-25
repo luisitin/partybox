@@ -25,6 +25,7 @@ import {
   TugPanel,
 } from './EventPanels';
 import { PayTable } from './Keno';
+import { TwistNote } from './Twist';
 import { LotCard } from './LotCard';
 import { OptionBoard } from './Options';
 import { STRINGS } from './strings';
@@ -62,6 +63,7 @@ function BoxPanel({ view }: { view: View }): JSX.Element | null {
       <h1 className={styles.plate}>{boxWords(L, view.box).name}</h1>
       <p className={styles.flavour}>{boxWords(L, view.box).flavour}</p>
       {view.box.event === 'keno' ? <PayTable /> : <OptionBoard options={view.box.options} />}
+      <TwistNote twist={view.box.twist} />
     </div>
   );
 }

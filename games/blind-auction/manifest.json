@@ -72,7 +72,14 @@
     {
       "key": "live",
       "label": "Live events",
-      "description": "Every other box is a live event: a race, dice, a wheel, doors or a hot potato",
+      "description": "Every other box is a live event: races, dice, doors, cards and more",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "twists",
+      "label": "Twists",
+      "description": "Live events get a twist: early-bird odds, insurance, or the crowd sets the odds",
       "type": "boolean",
       "default": false
     },

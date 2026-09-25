@@ -70,6 +70,7 @@ function cfgOf(settings: Settings): Cfg {
     grand: settings['grand'] !== false,
     spicy: settings['spicy'] === true,
     live: settings['live'] === true,
+    twists: settings['twists'] === true,
     reader: (READERS as readonly string[]).includes(reader) ? (reader as Reader) : 'george',
   };
 }

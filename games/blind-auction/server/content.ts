@@ -1,7 +1,7 @@
 // Typed access to content/*.json and the draw (P00 §2.5): `init` takes exactly the boxes this game
 // plays, with each one's outcome, and nothing else of the packs ever enters state or a view. A lot
 // from the packs becomes a box: each possible outcome is something the box might hold.
-import { shuffle } from '@partybox/game-sdk';
+import { nextFloat, shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { lotPackSchema, pronunciationsSchema } from '../content/schema';
 import type { Lot, Outcome, Pronunciations } from '../content/schema';
@@ -12,7 +12,8 @@ import spicyJson from '../content/spicy.json' with { type: 'json' };
 import { drawOutcome } from './draw';
 import { payOf } from './odds';
 import { drawEvent } from './events';
-import { LIVE_KINDS } from './types';
+import { LIVE_KINDS, TWISTS } from './types';
+import type { LiveKind } from './types';
 import type { Box, BoxOption, Cfg, ContentKind, Round } from './types';
 
 export const LOT_POOL: readonly Lot[] = lotPackSchema.parse(lotsJson);
@@ -72,6 +73,17 @@ function take(
 /** Boxes with a single possible content would be a sure thing: never drawn. */
 const bettable = (l: Lot): boolean => l.outcomes.length >= 2;
 
+/** Events bet by the odds: the ones a twist fits. */
+const TWISTABLE: readonly LiveKind[] = [
+  'race',
+  'dice',
+  'wheel',
+  'coins',
+  'penalty',
+  'ghost',
+  'wires',
+];
+
 /** The game's boxes in play order; with `spicy`, half come from the spicy pack; the grand box last. */
 export function drawBoxes(cfg: Cfg, rng: RngState): [Round[], RngState] {
   const taken = new Set<string>();
@@ -104,6 +116,17 @@ export function drawBoxes(cfg: Cfg, rng: RngState): [Round[], RngState] {
     const [round, next] = drawEvent(kind, state, i);
     state = next;
     out[i] = round;
+  }
+  if (!cfg.twists) return [out, state];
+  // Twists: each event bet by the odds gets one at random (the owner: only where it makes sense —
+  // not a shared pot, keno, blackjack, doors, the potato or tug of war).
+  for (let i = 0; i < out.length; i++) {
+    const round = out[i];
+    if (!round?.box.event || !TWISTABLE.includes(round.box.event)) continue;
+    const [f, next] = nextFloat(state);
+    state = next;
+    const twist = TWISTS[Math.min(TWISTS.length - 1, Math.floor(f * TWISTS.length))];
+    out[i] = { ...round, box: { ...round.box, twist } };
   }
   return [out, state];
 }
