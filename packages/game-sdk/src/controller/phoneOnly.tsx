@@ -18,9 +18,17 @@ export function PhoneOnlyProvider({
   return <PhoneOnlyContext.Provider value={value}>{children}</PhoneOnlyContext.Provider>;
 }
 
-/** True in a "phone only" room: there is no TV to look at. False outside any shell (previews). */
+/**
+ * True when this phone is the stage: a "phone only" room (no TV to look at), or — ADR-047 — this
+ * player can't see the room's TV (remote). False outside any shell (previews).
+ */
 export function usePhoneOnly(): boolean {
   return useContext(PhoneOnlyContext);
+}
+
+/** ADR-047: whether this player can look at the TV — the words for "look at the TV" follow it. */
+export function useCanSeeTv(): boolean {
+  return !useContext(PhoneOnlyContext);
 }
 
 /** The SDK's default lines, with and without a TV in the room, in the device's language (`L`,

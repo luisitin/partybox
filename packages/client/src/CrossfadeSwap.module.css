@@ -16,9 +16,13 @@
 }
 
 /* The outgoing screen's snapshot: on top, inert, fading over the fast token. */
+/* Above the live screen, always: the newcomer rises with a transform (its own stacking context), and
+   without a layer of its own the ghost painted UNDER it — the TV showed the picker and the first
+   game frame at once (S1, three design reviews). */
 .ghost {
   position: absolute;
   inset: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   pointer-events: none;

@@ -29,3 +29,17 @@ export function multiselectPicks(
   const known = spec.options.map((o) => o.value);
   return known.filter((v) => picks.includes(v));
 }
+
+/**
+ * Where everyone is (Part 00 §3.2, ADR-047), the VIP's room switch: all in one room, some remote on
+ * a call, some remote with PartyBox the only shared channel. Here, not in contract.ts: the phones
+ * read it, and contract.ts would bring zod into their download.
+ */
+export const PRESENCE_MODES = ['together', 'remote-voice', 'remote-text'] as const;
+export type PresenceMode = (typeof PRESENCE_MODES)[number];
+/** What a game learns of the room at `init` (ADR-047): fixed for the game, like the seed. */
+export interface GamePresence {
+  mode: PresenceMode;
+  /** No TV in the room at all (ADR-041). */
+  phoneOnly: boolean;
+}

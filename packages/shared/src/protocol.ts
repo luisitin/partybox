@@ -3,6 +3,8 @@
 import { z } from 'zod';
 import type { GameResults, PlayerInfo, PresenceNeeds, SettingSpec, Settings } from './contract';
 import { PHOTO_MAX_BYTES } from './constants';
+import type { PresenceMode } from './constants';
+import { PRESENCE_MODES } from './constants';
 import { settingsSchema } from './contract';
 
 // ─── client → server ────────────────────────────────────────────────────────────────────────────
@@ -21,6 +23,8 @@ export const joinPayloadSchema = z.object({
   photo: photoSchema.optional(),
   /** I-741 C: "That's me — take my seat". */
   takeOver: z.boolean().optional(),
+  /** ADR-047: the phone's own "I can see the TV" (🎨), when it has one; else the host guesses. */
+  canSeeTv: z.boolean().optional(),
 });
 export type JoinPayload = z.infer<typeof joinPayloadSchema>;
 
@@ -29,6 +33,10 @@ export const inputPayloadSchema = z.object({
   input: z.unknown(),
 });
 export type InputPayload = z.infer<typeof inputPayloadSchema>;
+
+/** ADR-047: a phone flips its "I can see the TV" (any time; a running game keeps its start value). */
+export const presencePayloadSchema = z.object({ canSeeTv: z.boolean() });
+export type PresencePayload = z.infer<typeof presencePayloadSchema>;
 
 export const vipPayloadSchema = z.discriminatedUnion('action', [
   /** `null`: the game list with nothing chosen (Part 00 §1.3; nothing downloads until a pick). */
@@ -57,6 +65,8 @@ export const vipPayloadSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('setMusicOnPhones'), on: z.boolean() }),
   /** S-005: the room's "phone only" mode; any time but mid-game. */
   z.object({ action: z.literal('setPhoneOnly'), on: z.boolean() }),
+  /** ADR-047: "Where is everyone?" — beside Phone only, any time but mid-game. */
+  z.object({ action: z.literal('setPresenceMode'), mode: z.enum(PRESENCE_MODES) }),
   /** The owner (2026-09-22): whether this room shows up in the join page's room list. */
   z.object({ action: z.literal('setListed'), on: z.boolean() }),
 ]);
@@ -97,6 +107,8 @@ export interface PlayerPublic {
   joinedAt: number;
   /** Present for bots: who added it (null = added by the dev API). */
   bot?: { ownerId: string | null; strategy: BotStrategy };
+  /** ADR-047: false when this person can't see the TV (absent = can; bots always can). */
+  canSeeTv?: false;
 }
 
 /** I-189: a game's measured pace — minutes = (fixedSeconds + rounds × (perRoundSeconds + players ×
@@ -191,6 +203,8 @@ export interface RoomSnapshot {
   musicOnPhones: boolean;
   /** S-005: "phone only" — games hand the phones what the TV would show; set by the VIP. */
   phoneOnly: boolean;
+  /** ADR-047: where everyone is (the VIP's switch); absent = `together`, the default. */
+  presenceMode?: Exclude<PresenceMode, 'together'>;
   /** I-746 B: every phone is asleep and the game is paused until one is back. */
   asleep?: boolean;
   /** I-652 B: tonight's finished games (newest last) and their human winners. */
