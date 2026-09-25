@@ -36,6 +36,10 @@ export const gameLoaders: Readonly<Record<string, GameLoaders>> = {
     tv: () => import('../../../games/spy-grid/client/tv-entry').then((m) => m.tv),
     settings: () => import('../../../games/spy-grid/client/settings-entry').then((m) => m.settings),
   },
+  'tune-in': {
+    phone: () => import('../../../games/tune-in/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/tune-in/client/tv-entry').then((m) => m.tv),
+  },
   'who-said-it': {
     phone: () => import('../../../games/who-said-it/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/who-said-it/client/tv-entry').then((m) => m.tv),

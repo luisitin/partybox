@@ -8,6 +8,7 @@ import { game as hiveRank } from '../../../games/hive-rank/server/index';
 import { game as imposter } from '../../../games/imposter/server/index';
 import { game as lightningRound } from '../../../games/lightning-round/server/index';
 import { game as spyGrid } from '../../../games/spy-grid/server/index';
+import { game as tuneIn } from '../../../games/tune-in/server/index';
 import { game as whoSaidIt } from '../../../games/who-said-it/server/index';
 import { game as wisecrack } from '../../../games/wisecrack/server/index';
 import bingoEs from '../../../games/bingo/manifest.es.json' with { type: 'json' };
@@ -18,6 +19,7 @@ import hiveRankEs from '../../../games/hive-rank/manifest.es.json' with { type: 
 import imposterEs from '../../../games/imposter/manifest.es.json' with { type: 'json' };
 import lightningRoundEs from '../../../games/lightning-round/manifest.es.json' with { type: 'json' };
 import spyGridEs from '../../../games/spy-grid/manifest.es.json' with { type: 'json' };
+import tuneInEs from '../../../games/tune-in/manifest.es.json' with { type: 'json' };
 import whoSaidItEs from '../../../games/who-said-it/manifest.es.json' with { type: 'json' };
 import wisecrackEs from '../../../games/wisecrack/manifest.es.json' with { type: 'json' };
 
@@ -30,6 +32,7 @@ export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'imposter': imposter,
   'lightning-round': lightningRound,
   'spy-grid': spyGrid,
+  'tune-in': tuneIn,
   'who-said-it': whoSaidIt,
   'wisecrack': wisecrack,
 };
@@ -43,6 +46,7 @@ export const serverGameText: Readonly<Record<string, Readonly<Record<string, Rea
   'imposter': { es: imposterEs },
   'lightning-round': { es: lightningRoundEs },
   'spy-grid': { es: spyGridEs },
+  'tune-in': { es: tuneInEs },
   'who-said-it': { es: whoSaidItEs },
   'wisecrack': { es: wisecrackEs },
 };
