@@ -28,6 +28,13 @@ export const enPhone = {
     leaveConfirm: 'Leave the room?',
     tapAgain: 'tap again',
     tvSounds: 'TV sounds on this phone',
+    tvSoundsHint: 'When this phone is the screen',
+    /** The 🎨 sheet's top group: where this phone is and what it does (reviewer D3). */
+    thisPhone: 'This phone',
+    // ADR-047: where this phone's player is.
+    seeTv: 'I can see the TV',
+    seeTvOn: 'The TV shows the game; this phone shows your part.',
+    seeTvOff: 'The TV’s moments and the reader come to this phone.',
   },
   /** S-004 B: what the phone's music is on right now. */
   music: {

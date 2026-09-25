@@ -31,7 +31,11 @@ export type {
   ViewEnvelope,
   ViewPlayer,
   VipGameAction,
+  GamePresence,
+  PresenceMode,
 } from '@partybox/shared';
+// ADR-047: where everyone is, for games that switch features on it
+export { PRESENCE_MODES } from '@partybox/shared';
 export type {
   GameControllerProps,
   GameLoaders,
