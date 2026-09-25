@@ -608,3 +608,11 @@
   font-weight: 800;
   color: var(--pb-accent-2);
 }
+
+.kickerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-2);
+  align-self: stretch;
+}

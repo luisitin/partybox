@@ -12,7 +12,7 @@ import type { BlindAuctionControllerView } from '../server/views';
 import { COIN, iconOf, nameOf } from './copy';
 import { OptionBoard } from './Options';
 import { KenoPad } from './Keno';
-import { LotTitle, Purse } from './PhoneLot';
+import { LotTitle } from './PhoneLot';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 
@@ -89,10 +89,8 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
         zero:
           option === null
             ? box.event === 'potato'
-              ? L('Pick who will be holding it')
-              : box.event
-                ? L('Pick what will happen')
-                : L('Pick what is inside')
+              ? L('Pick a player')
+              : L('Pick a card')
             : L('Choose your stake'),
         pass: L('Sit this one out'),
         passed: L('✓ Sitting this one out'),
@@ -101,10 +99,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       showHave={false}
       header={
         <div className={styles.betHead}>
-          <div className={styles.topRow}>
-            <LotTitle box={box} />
-            <Purse coins={view.coins} />
-          </div>
+          <LotTitle box={box} coins={view.coins} />
           {box.event === 'keno' ? (
             <KenoPad spots={view.mySpots} onSpots={(spots) => send({ type: 'spots', spots })} />
           ) : box.event === 'shells' ? (

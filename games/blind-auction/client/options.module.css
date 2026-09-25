@@ -162,10 +162,7 @@
 
 /* ── phone ── */
 .phone {
-  gap: var(--pb-space-2);
-  /* As many columns as fit at this text size (200 % text: two, then one), never words that
-     collide. */
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.5em), 1fr));
+  gap: 6px;
 }
 
 .phone .option {
@@ -330,4 +327,46 @@ button.option:focus-visible {
 
 .nowrap {
   white-space: nowrap;
+}
+
+/* Phone rows (not the compact sample, not a names-only board): icon left, name over odds, the pay
+   big on the right — about 48 px a row, so four options fit above the fold on an SE. */
+.phone:not(.compact):not(.uniformBoard) .option {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    'icon name pay'
+    'icon odds pay'
+    'bets bets bets';
+  align-items: center;
+  column-gap: var(--pb-space-2);
+  row-gap: 0;
+  padding: 3px var(--pb-space-2);
+  text-align: left;
+}
+
+.phone:not(.compact):not(.uniformBoard) .name {
+  line-height: 1.1;
+}
+
+.phone:not(.compact):not(.uniformBoard) .icon {
+  grid-area: icon;
+  font-size: 1.5rem;
+}
+
+.phone:not(.compact):not(.uniformBoard) .name {
+  grid-area: name;
+}
+
+.phone:not(.compact):not(.uniformBoard) .odds {
+  grid-area: odds;
+}
+
+.phone:not(.compact):not(.uniformBoard) .pay {
+  grid-area: pay;
+  text-align: right;
+}
+
+.phone:not(.compact):not(.uniformBoard) .bets {
+  grid-area: bets;
 }

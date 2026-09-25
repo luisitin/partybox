@@ -48,7 +48,6 @@ export function OptionBoard({
   // two or three per row, and the words get smaller rather than break.
   const n = options.length - (hideLocked && locked !== null ? 1 : 0);
   const many = n >= 4;
-  const cols = size === 'tv' ? (n <= 4 ? n : 3) : n <= 3 ? n : n === 4 ? 2 : 3;
   // Every option the same odds (hot potato: one per player): the odds are said once, above, and
   // the cards carry only who — small enough for a whole room on an SE.
   const first = options[0];
@@ -56,6 +55,10 @@ export function OptionBoard({
     many &&
     first !== undefined &&
     options.every((o) => o.pay === first.pay && o.tier === first.tier);
+  // TV: four in a row, three past that. Phone: options are compact rows (name over odds + pay)
+  // so a whole box sits above the fold on an SE (play-tests): one short row each;
+  // a names-only board (hot potato) keeps three.
+  const cols = size === 'tv' ? (n <= 4 ? n : 3) : compact || uniform ? Math.min(n, 3) : 1;
   return (
     <div
       className={`${styles.board} ${styles[size]} ${compact ? styles.compact : ''} ${many ? styles.many : ''} ${uniform ? styles.uniformBoard : ''} ${className ?? ''}`}

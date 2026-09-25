@@ -73,6 +73,8 @@ export const ES_SCREENS: Record<string, string> = {
   "That's the last box!": '¡Esa fue la última caja!',
   'Tap a card, then choose your coins': 'Toca una carta y luego elige tus monedas',
   // live events
+  'Pick a card': 'Elige una carta',
+  'Pick a player': 'Elige a alguien',
   'drawn {list}': 'salieron {list}',
   'Lucky Numbers': 'Números de la suerte',
   'Pick three numbers. Five balls drop. Match them all for ×25!':
