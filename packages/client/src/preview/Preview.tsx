@@ -10,7 +10,7 @@ import type {
   RoomSnapshot,
   TvView,
 } from '@partybox/shared';
-import { ServerClockProvider } from '@partybox/game-sdk/ui';
+import { ServerClockProvider, getLang } from '@partybox/game-sdk/ui';
 import { ControllerShell } from '../controller/ControllerShell';
 import { Playing } from '../controller/Playing';
 import type { Controller, ControllerState } from '../net/controller';
@@ -67,6 +67,8 @@ function fakeRoom(gameId: string, view: PushedView<TvView>): RoomSnapshot {
     canStart: { ok: false, reason: 'preview' },
     recording: true,
     musicOnPhones: false,
+    // ADR-054: a preview in ?lang=es shows the Spanish content where a game has it
+    contentLang: getLang() === 'es' ? 'es' : 'en',
     phoneOnly: false,
     listed: true,
   };

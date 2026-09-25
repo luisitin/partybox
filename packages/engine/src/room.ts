@@ -1,6 +1,7 @@
 // The room state machine entry point: `createRoom` and `applyRoomEvent` (ADR-010). Dispatches to
 // players / vip / runner, then normalises effects: at most one `push` per event, and `rev` bumps
 // exactly when a push is emitted.
+import { withJoinLang } from './content-lang';
 import { LIMITS } from '@partybox/shared';
 import type { GameEvent, GameStateBase } from '@partybox/shared';
 import { addBot, removeBot } from './bots';
@@ -150,7 +151,7 @@ function isStateBase(value: unknown): value is GameStateBase {
 function dispatch(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyResult {
   switch (event.type) {
     case 'join':
-      return withJoinPresence(join(room, event, deps), event.canSeeTv);
+      return withJoinLang(withJoinPresence(join(room, event, deps), event.canSeeTv), event.lang);
     case 'presence':
       return setCanSeeTv(room, event.playerId, event.canSeeTv);
     case 'ready':

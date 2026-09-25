@@ -154,6 +154,8 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
           canSeeTv:
             parsed.data.canSeeTv ??
             canSeeTvByAddress(socket.handshake.address, socket.handshake.headers),
+          // ADR-054: the phone's language (the VIP's is the room's content language by default)
+          ...(parsed.data.lang ? { lang: parsed.data.lang } : {}),
         });
         const welcome = result?.effects.find((e) => e.type === 'welcome');
         if (welcome) funnel?.joined(code);

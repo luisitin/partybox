@@ -274,7 +274,12 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
       <button
         type="button"
         className={styles.button}
-        onClick={() => setLang(spanish ? 'en' : 'es')}
+        onClick={() => {
+          // ADR-054: the TV's language is the room's content language too (an explicit choice)
+          const next = spanish ? 'en' : 'es';
+          setLang(next);
+          client.act({ action: 'setContentLang', lang: next });
+        }}
         aria-label={switchLabel}
         title={switchLabel}
       >

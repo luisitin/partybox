@@ -252,6 +252,12 @@ export function applyVip(
       if (room.listed === action.on) return { room, effects: [] };
       return { room: { ...room, listed: action.on }, effects: [{ type: 'push' }] };
     }
+    case 'setContentLang': {
+      // ADR-054: any time. A running game keeps the language it started with; the choice is for
+      // the next game, and the TV's own UI follows it at once (its language switch sends this).
+      if (room.contentLang === action.lang) return { room, effects: [] };
+      return { room: { ...room, contentLang: action.lang }, effects: [{ type: 'push' }] };
+    }
     case 'setPhoneOnly': {
       // S-005: like the recap switch — any time but mid-game.
       if (room.status === 'playing')

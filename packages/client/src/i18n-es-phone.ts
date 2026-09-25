@@ -123,6 +123,10 @@ export const esPhone: Pick<Texts, keyof typeof enPhone> = {
     recap: '📼 Resumen',
     music: '🎵 Música en teléfonos',
     phoneOnly: '📱 Solo teléfonos',
+    cards: (lang) => (lang === 'es' ? '🗣 Cartas en español' : '🗣 Cartas en inglés'),
+    cardsSwitch: 'Cartas y voz en español',
+    cardsOn: 'Mazos, frases de los bots y el lector en español, donde el juego los tiene',
+    cardsOff: 'Mazos, frases de los bots y el lector en inglés',
     aria: (recap, music, phoneOnly) =>
       `Sala: resumen ${recap ? 'sí' : 'no'}, música en todos los teléfonos ${music ? 'sí' : 'no'}, solo teléfonos ${phoneOnly ? 'sí' : 'no'} — cambiar`,
     betweenGames: 'El resumen y Solo teléfonos cambian entre juegos.',

@@ -11,6 +11,7 @@ import type {
   ViewPush,
   WelcomePayload,
 } from '@partybox/shared';
+import { getLang } from '@partybox/game-sdk/ui';
 import { createLinkWatch } from './link-watch';
 import { dropRoomFromUrl } from './leave-url';
 import { storeCanSeeTv, storedCanSeeTv } from '../presence';
@@ -98,6 +99,8 @@ export function createController(url?: string): Controller {
       ...(storedCanSeeTv(session.roomCode) !== undefined
         ? { canSeeTv: storedCanSeeTv(session.roomCode) }
         : {}),
+      // ADR-054: the VIP phone's language is the room's content language until someone chooses
+      lang: getLang() === 'es' ? 'es' : 'en',
     });
   };
 

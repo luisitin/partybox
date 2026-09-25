@@ -112,6 +112,9 @@ export function ChosenGame({ controller, room, me }: ChosenGameProps): JSX.Eleme
         onClick={() => window.dispatchEvent(new Event('pb:vip-menu'))}
       >
         <span className={selecting.roomLabel}>{t.roomRow.label}</span>
+        {/* ADR-054 (Session C): the deck's language first, on screen on an SE, so the stage holds
+            no surprise */}
+        <span className={selecting.roomChip}>{t.roomRow.cards(room.contentLang)}</span>
         <span className={`${selecting.roomChip} ${room.recording ? selecting.roomOn : ''}`}>
           {room.recording ? '✓ ' : ''}
           {t.roomRow.recap}

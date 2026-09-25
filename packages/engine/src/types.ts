@@ -3,6 +3,7 @@
 import type {
   AnyGameDefinition,
   BotStrategy,
+  ContentLang,
   ErrorCode,
   GameStateBase,
   PresenceMode,
@@ -29,6 +30,8 @@ export interface RoomPlayer {
   bot?: { ownerId: string | null; strategy: BotStrategy };
   /** ADR-047: this person can't see the TV (stored only when false; bots always can). */
   canSeeTv?: false;
+  /** ADR-054: the phone's own language (the VIP's is the room's content language by default). */
+  lang?: ContentLang;
 }
 
 export interface RunningGame {
@@ -66,6 +69,9 @@ export interface RoomState {
   recording: boolean;
   /** S-004: the VIP's room-wide phone-music switch. */
   musicOnPhones: boolean;
+  /** ADR-054: the content language someone chose (the VIP's or the TV's switch); absent = follow
+   *  the VIP phone's language (content-lang.ts). Optional so saved rooms still load. */
+  contentLang?: ContentLang;
   /** The owner (2026-09-22): shown in the join page's room list. */
   listed: boolean;
   /** S-005: "phone only" — the TV's moments go to the phones. */
@@ -129,6 +135,8 @@ export type RoomEvent =
       takeOver?: boolean;
       /** ADR-047: the phone's own "I can see the TV", else the host's guess from its address. */
       canSeeTv?: boolean;
+      /** ADR-054: the phone's language. */
+      lang?: ContentLang;
     }
   | {
       /** A player (or the dev API, ownerId null) adds a bot; the host mints id + token. */

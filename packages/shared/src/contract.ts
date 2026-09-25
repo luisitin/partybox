@@ -1,7 +1,7 @@
 // The game contract (docs/GAME_CONTRACT.md). Games implement `GameDefinition`; the engine drives it.
 // Changing anything here changes every game — write an ADR first (docs/DECISIONS.md).
 import { z } from 'zod';
-import type { GamePresence } from './constants';
+import type { ContentLang, GamePresence } from './constants';
 import type { Rng, RngState } from './rng';
 
 // ─── Manifest + settings ────────────────────────────────────────────────────────────────────────
@@ -191,6 +191,9 @@ export interface InitContext {
   now: number;
   /** ADR-047: where everyone is, fixed at start. Optional: absent means all in one room with a TV. */
   presence?: GamePresence;
+  /** ADR-054: the language of this game's shared content (deck, bot lines, reader, matcher),
+   *  fixed at start. Optional: absent means 'en'. A game with no pack in it keeps its own. */
+  contentLang?: ContentLang;
 }
 
 // ─── Events ─────────────────────────────────────────────────────────────────────────────────────
@@ -229,7 +232,8 @@ export const SPEECH_KEY_PATTERN = /^[a-z0-9][a-z0-9-]{5,63}$/;
 export interface SpeechRequest {
   /** SPEECH_KEY_PATTERN; a content hash, so the WAV behind a key never changes. */
   key: string;
-  /** A voice id the host's speech service knows ('george', 'fable', 'jessica', 'sky', 'original'). */
+  /** A voice id the host's speech service knows: 'george', 'fable', 'jessica', 'sky', 'original' (English),
+   *  'dora', 'alex', 'santa' (Latin American Spanish, ADR-054). */
   voice: string;
   parts: readonly SpeechPart[];
 }

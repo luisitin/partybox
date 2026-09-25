@@ -1,6 +1,7 @@
 // Turns room state into what clients see: the RoomSnapshot (lobby/selecting/results) and the
 // per-TV / per-controller game views, decorated with the VIP (ADR-020). A view function that
 // throws (contract violation) degrades to a bare envelope instead of taking the room down.
+import { contentLangOf } from './content-lang';
 import { avatarIdOf } from './avatar';
 import type {
   ControllerView,
@@ -54,6 +55,7 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     canStart: canStart(room, deps),
     recording: room.recording,
     musicOnPhones: room.musicOnPhones,
+    contentLang: contentLangOf(room),
     listed: room.listed,
     phoneOnly: room.phoneOnly,
     ...(room.presenceMode && room.presenceMode !== 'together'

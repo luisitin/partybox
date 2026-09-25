@@ -1,5 +1,6 @@
 // GameRunner: the bridge between a room and a pure GameDefinition. Starts games, feeds them events
 // (catching anything a buggy reducer throws), detects the end, and turns deadlines into ticks.
+import { contentLangOf } from './content-lang';
 import { avatarIdOf } from './avatar';
 import type { GameEvent, GameStateBase, PlayerInfo, Settings } from '@partybox/shared';
 import { LIMITS } from '@partybox/shared';
@@ -37,7 +38,7 @@ export function startGame(
   const base = { ...room, players };
   let state: GameStateBase;
   try {
-    state = game.init({ players: playerInfos(base), settings, seed, now, presence: gamePresence(base) }); // prettier-ignore
+    state = game.init({ players: playerInfos(base), settings, seed, now, presence: gamePresence(base), contentLang: contentLangOf(base) }); // prettier-ignore
   } catch (err) {
     return {
       room,

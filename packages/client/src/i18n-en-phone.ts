@@ -138,6 +138,11 @@ export const enPhone = {
     recap: '📼 Recap',
     music: '🎵 Phone music',
     phoneOnly: '📱 Phone only',
+    /** ADR-054: the language of the game's cards, bot lines and reader (Session C's note). */
+    cards: (lang: 'en' | 'es') => (lang === 'es' ? '🗣 Cards in Spanish' : '🗣 Cards in English'),
+    cardsSwitch: 'Cards and voice in Spanish',
+    cardsOn: 'Decks, bot lines and the reader in Spanish, where a game has them',
+    cardsOff: 'Decks, bot lines and the reader in English',
     aria: (recap: boolean, music: boolean, phoneOnly: boolean) =>
       `Room: recap ${recap ? 'on' : 'off'}, music on every phone ${music ? 'on' : 'off'}, phone only ${phoneOnly ? 'on' : 'off'} — change`,
     betweenGames: 'Recap and Phone only change between games.',

@@ -214,6 +214,15 @@ export function VipMenu({
               onChange={(on) => controller.vip({ action: 'setMusicOnPhones', on })}
             />
             <RoomSwitch
+              id="vip-cards-es"
+              label={t.roomRow.cardsSwitch}
+              hint={room.contentLang === 'es' ? t.roomRow.cardsOn : t.roomRow.cardsOff}
+              on={room.contentLang === 'es'}
+              onChange={(on) =>
+                controller.vip({ action: 'setContentLang', lang: on ? 'es' : 'en' })
+              }
+            />
+            <RoomSwitch
               id="vip-phone-only"
               label={t.selecting.phoneOnly}
               hint={room.phoneOnly ? t.selecting.phoneOnlyOn : t.selecting.phoneOnlyOff}

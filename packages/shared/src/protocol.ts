@@ -2,8 +2,8 @@
 // server → client shapes are plain types (the server builds them, clients trust them).
 import { z } from 'zod';
 import type { GameResults, PlayerInfo, PresenceNeeds, SettingSpec, Settings } from './contract';
-import { PHOTO_MAX_BYTES } from './constants';
-import type { PresenceMode } from './constants';
+import { CONTENT_LANGS, PHOTO_MAX_BYTES } from './constants';
+import type { ContentLang, PresenceMode } from './constants';
 import { PRESENCE_MODES } from './constants';
 import { settingsSchema } from './contract';
 
@@ -25,6 +25,8 @@ export const joinPayloadSchema = z.object({
   takeOver: z.boolean().optional(),
   /** ADR-047: the phone's own "I can see the TV" (🎨), when it has one; else the host guesses. */
   canSeeTv: z.boolean().optional(),
+  /** ADR-054: this phone's language; the VIP's is the room's content language until one is chosen. */
+  lang: z.enum(CONTENT_LANGS).optional(),
 });
 export type JoinPayload = z.infer<typeof joinPayloadSchema>;
 
@@ -68,6 +70,8 @@ export const vipPayloadSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('setRecording'), on: z.boolean() }),
   /** S-004 (the owner): every phone plays the room's music when this is on. */
   z.object({ action: z.literal('setMusicOnPhones'), on: z.boolean() }),
+  // ADR-054: the room's content language (the TV's language switch sends it too)
+  z.object({ action: z.literal('setContentLang'), lang: z.enum(CONTENT_LANGS) }),
   /** S-005: the room's "phone only" mode; any time but mid-game. */
   z.object({ action: z.literal('setPhoneOnly'), on: z.boolean() }),
   /** ADR-047: "Where is everyone?" — beside Phone only, any time but mid-game. */
@@ -206,6 +210,9 @@ export interface RoomSnapshot {
   recording: boolean;
   /** S-004: every phone plays the room's music plan (the VIP's switch, default off). */
   musicOnPhones: boolean;
+  /** ADR-054: the language of the next game's shared content: the VIP's or TV's choice, else the
+   *  VIP phone's language, else 'en'. The TV's own UI follows it; each phone's UI stays its own. */
+  contentLang: ContentLang;
   /** S-005: "phone only" — games hand the phones what the TV would show; set by the VIP. */
   phoneOnly: boolean;
   /** ADR-047: where everyone is (the VIP's switch); absent = `together`, the default. */

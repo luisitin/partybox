@@ -37,6 +37,11 @@ export function multiselectPicks(
  */
 export const PRESENCE_MODES = ['together', 'remote-voice', 'remote-text'] as const;
 export type PresenceMode = (typeof PRESENCE_MODES)[number];
+
+/** ADR-054: the languages a room's shared content (decks, bot lines, the reader) can be in. Each
+ *  device's own UI language is separate and stays on the device. */
+export const CONTENT_LANGS = ['en', 'es'] as const;
+export type ContentLang = (typeof CONTENT_LANGS)[number];
 /** What a game learns of the room at `init` (ADR-047): fixed for the game, like the seed. */
 export interface GamePresence {
   mode: PresenceMode;

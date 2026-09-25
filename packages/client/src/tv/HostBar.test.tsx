@@ -36,6 +36,7 @@ const room = (status: RoomStatus): RoomSnapshot => ({
   canStart: { ok: false, reason: 'Pick a game first.' },
   recording: false,
   musicOnPhones: false,
+  contentLang: 'en',
   phoneOnly: false,
   listed: true,
 });

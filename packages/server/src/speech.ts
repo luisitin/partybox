@@ -24,6 +24,11 @@ const KOKORO: Readonly<Record<string, { voice: string; speed: number; lang: stri
   fable: { voice: 'bm_fable', speed: 1, lang: 'en-gb' },
   jessica: { voice: 'af_jessica', speed: 1.1, lang: 'en-us' },
   sky: { voice: 'af_sky', speed: 1.1, lang: 'en-us' },
+  // ADR-054: Kokoro's Spanish voices, read as Latin American Spanish ('es-419' seseo: "hace" is
+  // /ˈase/, where 'es' gives the Castilian /ˈaθe/); a room whose content is Spanish uses these.
+  dora: { voice: 'ef_dora', speed: 1, lang: 'es-419' },
+  alex: { voice: 'em_alex', speed: 1, lang: 'es-419' },
+  santa: { voice: 'em_santa', speed: 1, lang: 'es-419' },
 };
 // Hyphens allowed, so `<gameId>-<hash>` keys of hyphenated ids (broken-pencil) are made and served
 // (audit #18); no dot or slash, so a key never names a path outside the cache.
