@@ -6,7 +6,7 @@ import type { FormEvent, JSX } from 'react';
 import { buzz, PrimaryButton, Screen, useSound, useT } from '@partybox/game-sdk/ui';
 import type { PushedView } from '@partybox/game-sdk/ui';
 import { normalize } from '../server/match';
-import { TYPED_MAX_CHARS } from '../server/types';
+import { TYPED_MAX_CHARS } from '../server/limits';
 import type { Input } from '../server/types';
 import type { HerdControllerView } from '../server/views';
 import { kicker } from './labels';

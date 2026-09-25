@@ -6,7 +6,7 @@ import type { QuestionItem } from '../content/schema';
 
 export type { QuestionItem };
 
-export const PHASES = ['intro', 'answer', 'herd', 'score', 'done'] as const;
+export const PHASES = ['answer', 'herd', 'score', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export const READERS = ['george', 'fable', 'jessica', 'sky', 'original', 'none'] as const;
@@ -79,10 +79,6 @@ export interface State extends GameStateBase {
   pairs: Record<string, number>;
   /** Reading key → its length in ms (-1: could not be made). */
   speechMs: Record<string, number>;
-  /** intro: who has tapped Ready (bots from the start). */
-  ready: string[];
-  /** intro: everyone is ready — the 3 · 2 · 1 ends and question 1 starts at this time. */
-  startAt: number | null;
   /** Players with their settings menu open: the room holds while any is. */
   menus: string[];
   /** The hold: the phase's clock is stopped with this much left (null: it had no deadline). */
@@ -96,19 +92,13 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('type'), text: z.string().min(1).max(60) }),
   z.object({ type: z.literal('merge'), a: z.string().max(64), b: z.string().max(64) }),
   z.object({ type: z.literal('unmerge'), a: z.string().max(64), b: z.string().max(64) }),
-  /** intro: I've read the rules. */
-  z.object({ type: z.literal('ready') }),
   /** My settings menu opened or closed: the room holds while any is open. */
   z.object({ type: z.literal('menu'), open: z.boolean() }),
 ]);
 export type Input = z.infer<typeof inputSchema>;
 
-export const TYPED_MAX_CHARS = 30;
-/** The ready-up's longest wait: after it the 3 · 2 · 1 starts whoever is ready. */
-export const INTRO_MS = 60_000;
-/** "Everyone's ready" holds a breath before the 3 · 2 · 1, so the last Ready lands first. */
-export const READY_BREATH_MS = 400;
-/** The 3 · 2 · 1 before question 1, and after the last settings menu closes. */
+export { TYPED_MAX_CHARS } from './limits';
+/** The 3 · 2 · 1 after the last settings menu closes. */
 export const COUNTDOWN_MS = 3_000;
 /** Answer time by pace (§2.13), seconds. */
 export const ANSWER_SECONDS: Record<Pace, Record<Mode, number>> = {

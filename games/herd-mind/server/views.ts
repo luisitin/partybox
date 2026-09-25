@@ -46,9 +46,6 @@ interface Shared {
   sheepFrom: string | null;
   winners: string[];
   lines: Line[];
-  /** intro: who has tapped Ready, and when the 3 · 2 · 1 to question 1 ends (null: not yet). */
-  ready: string[];
-  startAt: number | null;
   /** Who has their settings open (the room holds while this is not empty). */
   holdBy: string[];
   /** The last menu closed: the 3 · 2 · 1 back into the game ends at this time. */
@@ -121,7 +118,7 @@ function groupView(g: Group, typed: boolean): GroupView {
 
 function shared(state: State): Shared {
   const item = state.questions[state.q.n];
-  const revealed = state.phase.id !== 'answer' && state.phase.id !== 'intro';
+  const revealed = state.phase.id !== 'answer';
   const scoring = state.phase.id === 'score' || state.phase.id === 'done';
   const typed = state.cfg.mode === 'typed';
   return {
@@ -129,8 +126,8 @@ function shared(state: State): Shared {
     n: state.q.n + 1,
     total: state.questions.length,
     target: state.cfg.target,
-    prompt: state.phase.id === 'intro' ? '' : (item?.prompt ?? ''),
-    tiles: state.phase.id === 'intro' ? null : state.q.tiles,
+    prompt: item?.prompt ?? '',
+    tiles: state.q.tiles,
     groups: revealed && state.q.groups ? state.q.groups.map((g) => groupView(g, typed)) : null,
     merges: revealed && typed ? state.q.merges : [],
     outcome: revealed ? state.q.outcome : null,
@@ -141,8 +138,6 @@ function shared(state: State): Shared {
     sheepFrom: scoring ? state.q.sheepFrom : null,
     winners: state.winners,
     lines: lines(state),
-    ready: state.phase.id === 'intro' ? state.ready : [],
-    startAt: state.phase.id === 'intro' ? state.startAt : null,
     holdBy: state.menus,
     resumeAt: state.resumeAt,
   };

@@ -26,8 +26,6 @@ function endHold(state: State, now: number): State {
     ...state,
     hold: null,
     resumeAt,
-    // a 3 · 2 · 1 already running before question 1 restarts after this one
-    startAt: state.startAt === null ? null : deadline,
     phase: { ...state.phase, deadline },
   };
 }

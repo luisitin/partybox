@@ -1,0 +1,1453 @@
+{
+  "lang": "en",
+  "facts": [
+    {
+      "id": "fs-dating-001",
+      "category": "dating",
+      "kind": "object",
+      "fact": "Colonial courting couples could share a bed if a wooden ___ was placed between them.",
+      "truth": {
+        "answer": "board",
+        "accept": ["bundling board", "plank", "boards", "wooden board", "wood board", "bord"],
+        "reject": ["bored", "beard"]
+      },
+      "houseLies": ["fence", "cross", "wall", "bench", "spoon", "log", "screen", "barrel"],
+      "source": "Wikipedia: Bundling (tradition)",
+      "verified": true
+    },
+    {
+      "id": "fs-dating-002",
+      "category": "dating",
+      "kind": "object",
+      "fact": "Welsh suitors carved wooden ___ to prove to a girl's father they could provide for her.",
+      "truth": {
+        "answer": "spoons",
+        "accept": [
+          "spoon",
+          "lovespoons",
+          "love spoons",
+          "lovespoon",
+          "love spoon",
+          "spoones",
+          "carved spoons",
+          "wooden spoons"
+        ],
+        "reject": ["spools"]
+      },
+      "houseLies": ["hearts", "rings", "cradles", "clogs", "combs", "birds", "chairs", "bowls"],
+      "source": "Wikipedia: Lovespoon",
+      "verified": true
+    },
+    {
+      "id": "fs-dating-003",
+      "category": "dating",
+      "kind": "body-part",
+      "fact": "In Fiji, a polished sperm whale ___ is a treasured gift at weddings.",
+      "truth": {
+        "answer": "tooth",
+        "accept": ["teeth", "whale tooth", "sperm whale tooth", "whales tooth", "tabua", "toothe"],
+        "reject": ["tusk"]
+      },
+      "houseLies": ["rib", "bone", "jawbone", "eye", "vertebra", "ear bone", "tail fin", "skull"],
+      "source": "Wikipedia: Tabua",
+      "verified": true,
+      "hardWords": ["Fiji"]
+    },
+    {
+      "id": "fs-dating-004",
+      "category": "dating",
+      "kind": "other",
+      "fact": "France is one of the few countries that lets you legally marry a ___ person.",
+      "truth": {
+        "answer": "dead",
+        "accept": ["deceased", "dead person", "passed away", "departed", "deceased person", "ded"],
+        "reject": ["deaf"]
+      },
+      "houseLies": [
+        "fictional",
+        "imaginary",
+        "unborn",
+        "invisible",
+        "sleeping",
+        "hypnotized",
+        "virtual",
+        "frozen"
+      ],
+      "source": "Wikipedia: Posthumous marriage",
+      "verified": true
+    },
+    {
+      "id": "fs-dating-005",
+      "category": "dating",
+      "kind": "job",
+      "fact": "The first well-documented diamond engagement ring was given in 1477 by an Austrian ___.",
+      "truth": {
+        "answer": "archduke",
+        "accept": [
+          "arch duke",
+          "arch-duke",
+          "archdukes",
+          "archduke maximilian",
+          "maximilian",
+          "archduk",
+          "duke",
+          "maximilian of austria",
+          "archdook"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "ambassador",
+        "admiral",
+        "innkeeper",
+        "astronomer",
+        "abbot",
+        "alchemist",
+        "archbishop",
+        "explorer"
+      ],
+      "source": "Wikipedia: Engagement ring",
+      "verified": true
+    },
+    {
+      "id": "fs-dating-006",
+      "category": "dating",
+      "kind": "body-part",
+      "fact": "Rings go on the fourth finger thanks to an old belief that a vein ran from it straight to the ___.",
+      "truth": {
+        "answer": "heart",
+        "accept": ["hearts", "hart", "haert", "heart muscle", "heartt", "human heart"],
+        "reject": ["heat", "hearth", "head"]
+      },
+      "houseLies": ["brain", "soul", "liver", "stomach", "spine", "tongue", "belly button", "lips"],
+      "source": "Wikipedia: Vena amoris",
+      "verified": true
+    },
+    {
+      "id": "fs-dating-007",
+      "category": "dating",
+      "kind": "activity",
+      "fact": "Tujia brides in China traditionally ___ every day for up to a month before their wedding.",
+      "truth": {
+        "answer": "cry",
+        "accept": ["weep", "sob", "cried", "crying", "wail", "weeping", "sobbing"],
+        "reject": ["fry", "try"]
+      },
+      "houseLies": ["fast", "sing", "dance", "hide", "meditate", "laugh", "stay silent", "knit"],
+      "source": "China Culture (chinaculture.org): Tujia Ethnic Minority Customs: Weeping Marriage",
+      "verified": true,
+      "hardWords": ["Tujia"]
+    },
+    {
+      "id": "fs-dating-008",
+      "category": "dating",
+      "kind": "group",
+      "fact": "Operation Match, a computer dating service from 1965, was dreamed up by ___ students.",
+      "truth": {
+        "answer": "harvard",
+        "accept": [
+          "harvard university",
+          "harvard college",
+          "harvard undergraduates",
+          "harvard undergrads",
+          "havard",
+          "harvad"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "yale",
+        "mit",
+        "stanford",
+        "princeton",
+        "oxford",
+        "columbia",
+        "berkeley",
+        "caltech"
+      ],
+      "source": "Wikipedia: Operation Match",
+      "verified": true
+    },
+    {
+      "id": "fs-dating-009",
+      "category": "dating",
+      "kind": "object",
+      "fact": "In one mistletoe custom, a ___ was plucked for every kiss, and the kissing stopped when none were left.",
+      "truth": {
+        "answer": "berry",
+        "accept": ["berries", "mistletoe berry", "white berry", "berrie", "bery", "berri"],
+        "reject": ["beery", "merry"]
+      },
+      "houseLies": ["leaf", "twig", "petal", "feather", "candle", "ribbon", "sprig", "hair"],
+      "source": "Wikipedia: Mistletoe",
+      "verified": true
+    },
+    {
+      "id": "fs-dating-010",
+      "category": "dating",
+      "kind": "word",
+      "fact": "Victorians sent anonymous insulting cards known as ___ valentines.",
+      "truth": {
+        "answer": "vinegar",
+        "accept": ["vinager", "vineger", "vinigar", "vinegars", "vinegary", "vinnegar"],
+        "reject": []
+      },
+      "houseLies": ["pickle", "poison", "mustard", "lemon", "rotten", "thorn", "nettle", "sour"],
+      "source": "Wikipedia: Vinegar valentines",
+      "verified": true
+    },
+    {
+      "id": "fs-dating-011",
+      "category": "dating",
+      "kind": "object",
+      "fact": "At a German Polterabend before a wedding, guests smash ___, but never glass.",
+      "truth": {
+        "answer": "porcelain",
+        "accept": [
+          "china",
+          "crockery",
+          "dishes",
+          "plates",
+          "ceramics",
+          "porcelan",
+          "porcelin",
+          "stoneware"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "eggs",
+        "mirrors",
+        "guitars",
+        "pumpkins",
+        "chairs",
+        "walnuts",
+        "clocks",
+        "windows"
+      ],
+      "source": "Wikipedia: Polterabend",
+      "verified": true,
+      "hardWords": ["Polterabend"]
+    },
+    {
+      "id": "fs-dating-012",
+      "category": "dating",
+      "kind": "animal",
+      "fact": "At Rome's Lupercalia, near-naked men ran about whipping people with strips of ___ hide.",
+      "truth": {
+        "answer": "goat",
+        "accept": [
+          "goats",
+          "goatskin",
+          "goat skin",
+          "billy goat",
+          "male goat",
+          "goat's",
+          "goat leather",
+          "goatskins",
+          "goate"
+        ],
+        "reject": ["boat", "coat", "goad"]
+      },
+      "houseLies": ["cow", "horse", "pig", "wolf", "sheep", "bull", "deer", "donkey"],
+      "source": "Wikipedia: Lupercalia",
+      "verified": true,
+      "hardWords": ["Lupercalia"]
+    },
+    {
+      "id": "fs-dating-013",
+      "category": "dating",
+      "kind": "food",
+      "fact": "Unmarried Danes turning 25 are traditionally doused in ___ by their friends.",
+      "truth": {
+        "answer": "cinnamon",
+        "accept": [
+          "ground cinnamon",
+          "cinnamon powder",
+          "cinamon",
+          "cinnemon",
+          "cinnamin",
+          "cinammon"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "flour",
+        "glitter",
+        "ketchup",
+        "fish oil",
+        "beer",
+        "mustard",
+        "sugar",
+        "paprika"
+      ],
+      "source": "The Local Denmark: Why do Danes cover each other in cinnamon on their 25th birthdays?",
+      "verified": true
+    },
+    {
+      "id": "fs-dating-014",
+      "category": "dating",
+      "kind": "drink",
+      "fact": "The winning couple at Finland's Wife Carrying World Championships gets the wife's weight in ___.",
+      "truth": {
+        "answer": "beer",
+        "accept": ["beers", "lager", "ale", "brew", "brews", "bier", "beer cans"],
+        "reject": ["bear", "deer"]
+      },
+      "houseLies": [
+        "gold",
+        "cheese",
+        "sausages",
+        "salmon",
+        "chocolate",
+        "vodka",
+        "coffee",
+        "firewood"
+      ],
+      "source": "VinePair: At Finland's Wife-Carrying Competition, Winners Are Paid in Beer",
+      "verified": true
+    },
+    {
+      "id": "fs-dating-015",
+      "category": "dating",
+      "kind": "place",
+      "fact": "Every Ascension Day, the Doge of Venice threw a gold ring into the water to symbolically marry the ___.",
+      "truth": {
+        "answer": "sea",
+        "accept": ["seas", "adriatic", "adriatic sea", "ocean", "sae", "the sea itself"],
+        "reject": []
+      },
+      "houseLies": ["city", "pope", "moon", "church", "republic", "lagoon", "gondola", "lion"],
+      "source": "Wikipedia: Marriage of the Sea ceremony",
+      "verified": true,
+      "hardWords": ["Doge", "Ascension"]
+    },
+    {
+      "id": "fs-drinking-001",
+      "category": "drinking",
+      "kind": "drink",
+      "fact": "In 1814, a burst vat sent a deadly flood of ___ through the streets of London.",
+      "truth": {
+        "answer": "beer",
+        "accept": ["porter", "beers", "porter beer", "dark beer", "ale", "bier", "beeer"],
+        "reject": ["bear", "deer"]
+      },
+      "houseLies": ["molasses", "gin", "sewage", "whiskey", "milk", "custard", "wine", "cider"],
+      "source": "Wikipedia: London Beer Flood",
+      "verified": true
+    },
+    {
+      "id": "fs-drinking-002",
+      "category": "drinking",
+      "kind": "year",
+      "fact": "The Royal Navy served sailors their last daily rum ration on Black Tot Day in ___.",
+      "truth": {
+        "answer": "1970",
+        "accept": [
+          "nineteen seventy",
+          "july 1970",
+          "31 july 1970",
+          "july 31 1970",
+          "'70",
+          "70",
+          "the year 1970",
+          "summer 1970",
+          "in 1970"
+        ],
+        "reject": []
+      },
+      "houseLies": ["1918", "1945", "1805", "1956", "1982", "1901", "1964", "1999"],
+      "source": "Wikipedia: Black Tot Day",
+      "verified": true
+    },
+    {
+      "id": "fs-drinking-003",
+      "category": "drinking",
+      "kind": "substance",
+      "fact": "Pope Leo XIII awarded a gold medal to Vin Mariani, a wine laced with ___.",
+      "truth": {
+        "answer": "coca",
+        "accept": [
+          "cocaine",
+          "coca leaves",
+          "coca leaf",
+          "coca extract",
+          "cocain",
+          "cocaine leaves"
+        ],
+        "reject": ["cocoa", "cola"]
+      },
+      "houseLies": [
+        "opium",
+        "holy water",
+        "absinthe",
+        "gold flakes",
+        "wormwood",
+        "gunpowder",
+        "frankincense",
+        "mercury"
+      ],
+      "source": "Wikipedia: Vin Mariani",
+      "verified": true,
+      "hardWords": ["Leo XIII", "Vin Mariani"]
+    },
+    {
+      "id": "fs-drinking-004",
+      "category": "drinking",
+      "kind": "body-part",
+      "fact": "A bar in Dawson City, Yukon, serves a shot garnished with a mummified human ___.",
+      "truth": {
+        "answer": "toe",
+        "accept": [
+          "toes",
+          "big toe",
+          "human toe",
+          "pinky toe",
+          "toe bone",
+          "frostbitten toe",
+          "severed toe"
+        ],
+        "reject": ["tie", "toad"]
+      },
+      "houseLies": ["finger", "ear", "eyeball", "tooth", "tongue", "nose", "thumb", "kneecap"],
+      "source": "Wikipedia: Sourtoe Cocktail",
+      "verified": true,
+      "hardWords": ["Yukon"]
+    },
+    {
+      "id": "fs-drinking-005",
+      "category": "drinking",
+      "kind": "drink",
+      "fact": "After Trafalgar, Admiral Nelson's body was shipped home pickled in a cask of ___.",
+      "truth": {
+        "answer": "brandy",
+        "accept": [
+          "brandies",
+          "brandy and spirits",
+          "spirits of wine",
+          "french brandy",
+          "brandi",
+          "brandy wine"
+        ],
+        "reject": ["candy", "randy"]
+      },
+      "houseLies": ["rum", "gin", "seawater", "vinegar", "whiskey", "port wine", "sherry", "tar"],
+      "source": "Wikipedia: State funeral of Horatio Nelson",
+      "verified": true,
+      "hardWords": ["Trafalgar"]
+    },
+    {
+      "id": "fs-drinking-006",
+      "category": "drinking",
+      "kind": "object",
+      "fact": "The Finnish word kalsarikannit means getting drunk at home alone in your ___.",
+      "truth": {
+        "answer": "underwear",
+        "accept": [
+          "underpants",
+          "undies",
+          "boxers",
+          "briefs",
+          "knickers",
+          "underware",
+          "under wear",
+          "pants"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "sauna",
+        "bathtub",
+        "pajamas",
+        "bathrobe",
+        "car",
+        "socks",
+        "basement",
+        "snowsuit"
+      ],
+      "source": "Wikipedia: Pantsdrunk",
+      "verified": true,
+      "hardWords": ["kalsarikannit"]
+    },
+    {
+      "id": "fs-drinking-007",
+      "category": "drinking",
+      "kind": "drink",
+      "fact": "The most profitable business at George Washington's Mount Vernon estate was a ___ distillery.",
+      "truth": {
+        "answer": "whiskey",
+        "accept": ["whisky", "rye whiskey", "rye", "rye whisky", "whiskies", "wiskey", "whiskeys"],
+        "reject": []
+      },
+      "houseLies": ["rum", "gin", "brandy", "mead", "cider", "vodka", "tequila", "absinthe"],
+      "source": "Wikipedia: Mount Vernon",
+      "verified": true
+    },
+    {
+      "id": "fs-drinking-008",
+      "category": "drinking",
+      "kind": "drink",
+      "fact": "Australia's only military coup, which toppled Governor William Bligh in 1808, is called the ___ Rebellion.",
+      "truth": {
+        "answer": "rum",
+        "accept": ["rums", "rhum", "ruum", "rum's", "rumm", "rum corps", "rum rebellion"],
+        "reject": ["run", "rump"]
+      },
+      "houseLies": ["whiskey", "beer", "gin", "convict", "sheep", "bounty", "eureka", "tea"],
+      "source": "Wikipedia: Rum Rebellion",
+      "verified": true,
+      "hardWords": ["Bligh"]
+    },
+    {
+      "id": "fs-drinking-009",
+      "category": "drinking",
+      "kind": "other",
+      "fact": "In 19th-century France, absinthe was nicknamed 'the green ___'.",
+      "truth": {
+        "answer": "fairy",
+        "accept": ["fairies", "faerie", "faery", "fairey", "fee verte", "green fairy", "fairie"],
+        "reject": ["ferry"]
+      },
+      "houseLies": ["devil", "goddess", "witch", "muse", "monster", "dragon", "lady", "ghost"],
+      "source": "Wikipedia: Absinthe",
+      "verified": true,
+      "hardWords": ["absinthe"]
+    },
+    {
+      "id": "fs-drinking-010",
+      "category": "drinking",
+      "kind": "substance",
+      "fact": "Stock car racing grew out of drivers souping up cars to outrun the law while hauling ___.",
+      "truth": {
+        "answer": "moonshine",
+        "accept": [
+          "bootleg whiskey",
+          "whiskey",
+          "whisky",
+          "bootleg liquor",
+          "liquor",
+          "moon shine",
+          "hooch",
+          "bootleg whisky"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "cigarettes",
+        "fireworks",
+        "stolen cash",
+        "mail",
+        "bank robbers",
+        "chickens",
+        "tobacco",
+        "gold bars"
+      ],
+      "source": "Wikipedia: NASCAR",
+      "verified": true
+    },
+    {
+      "id": "fs-drinking-011",
+      "category": "drinking",
+      "kind": "other",
+      "fact": "'Hair of the dog' comes from an old cure for a ___ that meant putting the dog's hair in the wound.",
+      "truth": {
+        "answer": "dog bite",
+        "accept": [
+          "dog bites",
+          "bite",
+          "rabid dog bite",
+          "rabies",
+          "bite wound",
+          "dogbite",
+          "dog-bite",
+          "bite from a dog",
+          "dog bitten"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "hangover",
+        "bald spot",
+        "toothache",
+        "broken heart",
+        "rash",
+        "snakebite",
+        "black eye",
+        "cough"
+      ],
+      "source": "Wikipedia: Hair of the dog",
+      "verified": true
+    },
+    {
+      "id": "fs-drinking-012",
+      "category": "drinking",
+      "kind": "object",
+      "fact": "Grog is named after Admiral Vernon, nicknamed 'Old Grog' for his coat made of ___.",
+      "truth": {
+        "answer": "grogram",
+        "accept": ["grogram cloth", "grosgrain", "grogram fabric", "grograms", "grogam", "grogran"],
+        "reject": []
+      },
+      "houseLies": [
+        "sealskin",
+        "tweed",
+        "sailcloth",
+        "velvet",
+        "goat hair",
+        "burlap",
+        "oilcloth",
+        "bearskin"
+      ],
+      "source": "Wikipedia: Grog",
+      "verified": true,
+      "hardWords": ["Vernon", "grogram"]
+    },
+    {
+      "id": "fs-drinking-013",
+      "category": "drinking",
+      "kind": "food",
+      "fact": "Raising a 'toast' is named after pieces of spiced ___ once dropped into drinks.",
+      "truth": {
+        "answer": "bread",
+        "accept": ["toast", "toasted bread", "spiced bread", "breads", "bred", "spiced toast"],
+        "reject": ["beard", "bead"]
+      },
+      "houseLies": ["ham", "cheese", "fruit", "cake", "fish", "sugar cubes", "apple", "ginger"],
+      "source": "Wikipedia: Toast (honor)",
+      "verified": true
+    },
+    {
+      "id": "fs-drinking-014",
+      "category": "drinking",
+      "kind": "object",
+      "fact": "In 1932, a doctor's note let Winston Churchill drink during Prohibition after he was hit by a ___.",
+      "truth": {
+        "answer": "car",
+        "accept": ["cars", "automobile", "motorcar", "motor car", "auto", "carr", "speeding car"],
+        "reject": ["cat", "cart"]
+      },
+      "houseLies": [
+        "bus",
+        "horse",
+        "bicycle",
+        "streetcar",
+        "baseball",
+        "golf ball",
+        "milk truck",
+        "falling piano"
+      ],
+      "source": "HistoryNet: A Doctor's Note for Booze? Winston Churchill Prescribed 'Indefinite' Quantities of Alcohol During Prohibition",
+      "verified": true
+    },
+    {
+      "id": "fs-drinking-015",
+      "category": "drinking",
+      "kind": "word",
+      "fact": "In Britain, gin has long been nicknamed 'mother's ___'.",
+      "truth": {
+        "answer": "ruin",
+        "accept": [
+          "mother's ruin",
+          "mothers ruin",
+          "ruins",
+          "ruination",
+          "ruine",
+          "rouin",
+          "ruinn",
+          "ruined"
+        ],
+        "reject": ["rain", "run"]
+      },
+      "houseLies": [
+        "milk",
+        "little helper",
+        "curse",
+        "comfort",
+        "shame",
+        "medicine",
+        "downfall",
+        "tears"
+      ],
+      "source": "Wikipedia: Gin",
+      "verified": true
+    },
+    {
+      "id": "fs-history-001",
+      "category": "history",
+      "kind": "object",
+      "fact": "The Tudor courtier who helped Henry VIII on the toilet held the title Groom of the ___.",
+      "truth": {
+        "answer": "stool",
+        "accept": ["stools", "close stool", "king's stool", "stoole", "stol", "stoll"],
+        "reject": []
+      },
+      "houseLies": [
+        "bedchamber",
+        "wardrobe",
+        "throne",
+        "bucket",
+        "chamber pot",
+        "royal bottom",
+        "robes",
+        "towel"
+      ],
+      "source": "Wikipedia: Groom of the Stool",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-history-002",
+      "category": "history",
+      "kind": "substance",
+      "fact": "Roman Emperor Vespasian taxed human ___, which launderers bought to whiten togas.",
+      "truth": {
+        "answer": "urine",
+        "accept": ["pee", "piss", "wee", "urin", "piddle", "pee pee", "wizz"],
+        "reject": []
+      },
+      "houseLies": ["hair", "sweat", "ashes", "tears", "spit", "teeth", "bones", "earwax"],
+      "source": "Wikipedia: Pecunia non olet",
+      "verified": true,
+      "hardWords": ["Vespasian"]
+    },
+    {
+      "id": "fs-history-003",
+      "category": "history",
+      "kind": "substance",
+      "fact": "In 16th-century Europe, powdered Egyptian ___ was sold as medicine to stop bleeding.",
+      "truth": {
+        "answer": "mummy",
+        "accept": [
+          "mummies",
+          "mummia",
+          "mummy powder",
+          "mumy",
+          "mummie",
+          "mummy dust",
+          "mummified corpses"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "papyrus",
+        "sand",
+        "crocodile",
+        "cat",
+        "lotus",
+        "pyramid stone",
+        "camel dung",
+        "beetle"
+      ],
+      "source": "Wikipedia: Medical cannibalism",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-history-004",
+      "category": "history",
+      "kind": "body-part",
+      "fact": "To revive near-drowned people, 18th-century Londoners blew tobacco smoke into their ___.",
+      "truth": {
+        "answer": "rectum",
+        "accept": [
+          "bum",
+          "butt",
+          "bottom",
+          "backside",
+          "anus",
+          "arse",
+          "rear end",
+          "rectums",
+          "behind"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "ears",
+        "nostrils",
+        "eyes",
+        "belly buttons",
+        "armpits",
+        "boots",
+        "hats",
+        "pockets"
+      ],
+      "source": "Wikipedia: Tobacco smoke enema",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-history-005",
+      "category": "history",
+      "kind": "substance",
+      "fact": "From 1898, Bayer sold ___ as a non-addictive cough suppressant.",
+      "truth": {
+        "answer": "heroin",
+        "accept": ["heroine", "diamorphine", "diacetylmorphine", "herion", "horoin", "smack"],
+        "reject": []
+      },
+      "houseLies": [
+        "cocaine",
+        "opium",
+        "morphine",
+        "chloroform",
+        "laudanum",
+        "radium",
+        "ether",
+        "cannabis"
+      ],
+      "source": "Wikipedia: Heroin",
+      "verified": true,
+      "hardWords": ["Bayer"]
+    },
+    {
+      "id": "fs-history-007",
+      "category": "history",
+      "kind": "event",
+      "fact": "In 1821, King George IV had his own wife turned away at the doors of his ___.",
+      "truth": {
+        "answer": "coronation",
+        "accept": [
+          "coronations",
+          "crowning",
+          "coronation ceremony",
+          "cornation",
+          "coranation",
+          "coronaton"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "wedding",
+        "birthday ball",
+        "bedroom",
+        "christening",
+        "gentlemen's club",
+        "opera box",
+        "card party",
+        "tea party"
+      ],
+      "source": "Wikipedia: Caroline of Brunswick",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-history-009",
+      "category": "history",
+      "kind": "animal",
+      "fact": "In old Southwark, sex workers licensed by the Bishop of Winchester were nicknamed Winchester ___.",
+      "truth": {
+        "answer": "geese",
+        "accept": ["goose", "gooses", "geeses", "geece", "geese girls", "winchester geese"],
+        "reject": []
+      },
+      "houseLies": ["ducks", "swans", "hens", "doves", "pigeons", "cats", "belles", "roses"],
+      "source": "Wikipedia: Winchester Geese",
+      "verified": true,
+      "hardWords": ["Southwark"]
+    },
+    {
+      "id": "fs-history-010",
+      "category": "history",
+      "kind": "animal",
+      "fact": "The ancient Egyptian Kahun Papyrus is famous for a contraceptive recipe using ___ dung.",
+      "truth": {
+        "answer": "crocodile",
+        "accept": ["crocodiles", "croc", "crocs", "crocodyle", "crockodile", "nile crocodile"],
+        "reject": []
+      },
+      "houseLies": ["elephant", "camel", "hippo", "cat", "bat", "lion", "goat", "donkey"],
+      "source": "Wikipedia: Kahun Gynaecological Papyrus",
+      "verified": true,
+      "hardWords": ["Kahun"]
+    },
+    {
+      "id": "fs-history-011",
+      "category": "history",
+      "kind": "word",
+      "fact": "Elizabeth I's godson John Harington invented a flushing toilet he named the ___.",
+      "truth": {
+        "answer": "ajax",
+        "accept": ["jakes", "ajacks", "a-jax", "ajaks", "ajjax", "ajax toilet"],
+        "reject": []
+      },
+      "houseLies": [
+        "throne",
+        "thunderbox",
+        "neptune",
+        "excalibur",
+        "gloriana",
+        "royal flush",
+        "cascade",
+        "poseidon"
+      ],
+      "source": "Wikipedia: John Harington (writer)",
+      "verified": true,
+      "hardWords": ["Harington", "Ajax"]
+    },
+    {
+      "id": "fs-history-012",
+      "category": "history",
+      "kind": "food",
+      "fact": "Before becoming Charles II's mistress, Nell Gwyn sold ___ to theatre audiences.",
+      "truth": {
+        "answer": "oranges",
+        "accept": ["orange", "china oranges", "sweet oranges", "orenges", "oranjes", "oragnes"],
+        "reject": []
+      },
+      "houseLies": [
+        "apples",
+        "nuts",
+        "oysters",
+        "pies",
+        "flowers",
+        "ribbons",
+        "gingerbread",
+        "chestnuts"
+      ],
+      "source": "Wikipedia: Nell Gwyn",
+      "verified": true,
+      "hardWords": ["Nell Gwyn"]
+    },
+    {
+      "id": "fs-history-013",
+      "category": "history",
+      "kind": "animal",
+      "fact": "In 1726, Mary Toft fooled doctors into believing she had given birth to ___.",
+      "truth": {
+        "answer": "rabbits",
+        "accept": ["rabbit", "bunnies", "bunny", "rabits", "baby rabbits", "coneys"],
+        "reject": []
+      },
+      "houseLies": [
+        "kittens",
+        "puppies",
+        "eels",
+        "frogs",
+        "piglets",
+        "hedgehogs",
+        "toads",
+        "ducklings"
+      ],
+      "source": "Wikipedia: Mary Toft",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-history-014",
+      "category": "history",
+      "kind": "object",
+      "fact": "In 1760, King George II collapsed and died just after a visit to his ___.",
+      "truth": {
+        "answer": "close stool",
+        "accept": [
+          "toilet",
+          "commode",
+          "chamber pot",
+          "loo",
+          "privy",
+          "necessary stool",
+          "closestool",
+          "potty",
+          "stool"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "bath",
+        "stables",
+        "mistress",
+        "carriage",
+        "wine cellar",
+        "kitchen",
+        "chapel",
+        "barber"
+      ],
+      "source": "Wikipedia: George II of Great Britain",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-history-015",
+      "category": "history",
+      "kind": "object",
+      "fact": "In 897, Pope Stephen VI put the ___ of Pope Formosus on trial.",
+      "truth": {
+        "answer": "corpse",
+        "accept": ["body", "dead body", "cadaver", "corps", "remains", "corspe"],
+        "reject": []
+      },
+      "houseLies": ["ghost", "cat", "horse", "mistress", "portrait", "statue", "parrot", "cook"],
+      "source": "Wikipedia: Cadaver Synod",
+      "verified": true,
+      "hardWords": ["Formosus"]
+    },
+    {
+      "id": "fs-history-016",
+      "category": "history",
+      "kind": "activity",
+      "fact": "An early chain saw, from the 1780s, was designed by a Scottish doctor to help with difficult ___.",
+      "truth": {
+        "answer": "childbirth",
+        "accept": [
+          "childbirths",
+          "births",
+          "birth",
+          "labour",
+          "labor",
+          "child birth",
+          "deliveries"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "tooth pulling",
+        "logging",
+        "ice fishing",
+        "wig making",
+        "bagpipe repair",
+        "ship repairs",
+        "shaving",
+        "haggis carving"
+      ],
+      "source": "Wikipedia: Chainsaw (and Wikipedia: Symphysiotomy)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-history-017",
+      "category": "history",
+      "kind": "other",
+      "fact": "Benjamin Franklin wrote a joke essay urging scientists to make ___ smell like perfume.",
+      "truth": {
+        "answer": "farts",
+        "accept": ["fart", "farting", "flatulence", "passing gas", "toots", "wind", "gas"],
+        "reject": []
+      },
+      "houseLies": [
+        "armpits",
+        "feet",
+        "breath",
+        "cheese",
+        "horses",
+        "sweat",
+        "chamber pots",
+        "onions"
+      ],
+      "source": "Wikipedia: Fart Proudly",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-history-018",
+      "category": "history",
+      "kind": "food",
+      "fact": "Ancient Egyptians tested for pregnancy by peeing on bags of wheat and ___.",
+      "truth": {
+        "answer": "barley",
+        "accept": ["barly", "barely", "barley seeds", "barley grains", "barly seeds", "barleys"],
+        "reject": []
+      },
+      "houseLies": ["lentils", "onions", "figs", "papyrus", "sand", "dates", "flax", "beans"],
+      "source": "Wikipedia: Pregnancy test",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-001",
+      "category": "weird-laws",
+      "kind": "word",
+      "fact": "England's Licensing Act 1872 made it a crime to be drunk while in charge of a ___ engine.",
+      "truth": {
+        "answer": "steam",
+        "accept": [
+          "steam-powered",
+          "steam powered",
+          "steamer",
+          "steem",
+          "stream",
+          "steams",
+          "steam engine",
+          "steem engine"
+        ],
+        "reject": []
+      },
+      "houseLies": ["diesel", "fire", "petrol", "gas", "clockwork", "jet", "rocket", "wind"],
+      "source": "Wikipedia: Licensing Act 1872",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-002",
+      "category": "weird-laws",
+      "kind": "activity",
+      "fact": "Until 2020, profane ___ in public was a crime in Virginia, with fines up to $250.",
+      "truth": {
+        "answer": "swearing",
+        "accept": [
+          "cursing",
+          "cussing",
+          "swear",
+          "swear words",
+          "curse words",
+          "profanity",
+          "sweraing"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "spitting",
+        "singing",
+        "whistling",
+        "kissing",
+        "belching",
+        "dancing",
+        "gambling",
+        "drinking"
+      ],
+      "source": "ARLnow: State Repeals Cussing Law (https://www.arlnow.com/2020/03/06/state-repeals-cussing-law-but-ordinance-remains-on-the-books-in-arlington/)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-003",
+      "category": "weird-laws",
+      "kind": "object",
+      "fact": "A Michigan man was convicted in 1999 of cursing near children after falling out of his ___.",
+      "truth": {
+        "answer": "canoe",
+        "accept": ["canoes", "cannoe", "canoo", "kanoe", "canoe boat", "cano"],
+        "reject": []
+      },
+      "houseLies": [
+        "hammock",
+        "kayak",
+        "deer stand",
+        "bathtub",
+        "tractor",
+        "hot tub",
+        "pontoon boat",
+        "tree"
+      ],
+      "source": "ACLU of Michigan: Cussing Canoeist Conviction Reversed (https://www.aclumich.org/press-releases/cussing-canoeist-conviction-reversed/)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-005",
+      "category": "weird-laws",
+      "kind": "activity",
+      "fact": "Until 2015, Japanese law barred nightclubs from letting customers ___ after midnight.",
+      "truth": {
+        "answer": "dance",
+        "accept": ["dancing", "dances", "danse", "dence", "boogie", "bust a move"],
+        "reject": []
+      },
+      "houseLies": ["sing", "kiss", "smoke", "gamble", "whistle", "eat", "sit down", "clap"],
+      "source": "CNN: Japan shakes off 67-year ban on dancing after midnight (https://edition.cnn.com/2015/06/21/asia/japan-midnight-dancing-ban)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-006",
+      "category": "weird-laws",
+      "kind": "drink",
+      "fact": "Iceland banned strong ___ until 1989, even though wine and spirits were legal.",
+      "truth": {
+        "answer": "beer",
+        "accept": ["beers", "bier", "beir", "lager", "lagers", "ale"],
+        "reject": []
+      },
+      "houseLies": [
+        "coffee",
+        "tea",
+        "cheese",
+        "mustard",
+        "perfume",
+        "cough syrup",
+        "energy drinks",
+        "licorice"
+      ],
+      "source": "Wikipedia: Beer Day (Iceland)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-008",
+      "category": "weird-laws",
+      "kind": "person",
+      "fact": "Britain's 1745 swearing law charged a labourer 1 shilling per oath, but a ___ 5 shillings.",
+      "truth": {
+        "answer": "gentleman",
+        "accept": ["gentlemen", "gent", "gents", "gentelman", "nobleman", "aristocrat", "lord"],
+        "reject": []
+      },
+      "houseLies": [
+        "priest",
+        "soldier",
+        "lawyer",
+        "merchant",
+        "woman",
+        "magistrate",
+        "schoolteacher",
+        "blacksmith"
+      ],
+      "source": "Wikipedia: Profane Oaths Act 1745",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-009",
+      "category": "weird-laws",
+      "kind": "substance",
+      "fact": "In 1642, Pope Urban VIII threatened excommunication for using ___ in Seville's churches.",
+      "truth": {
+        "answer": "tobacco",
+        "accept": [
+          "snuff",
+          "tabacco",
+          "tobbaco",
+          "tobacoo",
+          "pipe tobacco",
+          "smoking tobacco",
+          "tobaco"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "perfume",
+        "chocolate",
+        "dice",
+        "playing cards",
+        "garlic",
+        "coffee",
+        "hot peppers",
+        "mirrors"
+      ],
+      "source": "Wikipedia: Pope Urban VIII",
+      "verified": true,
+      "hardWords": ["Urban VIII", "Seville"]
+    },
+    {
+      "id": "fs-weird-laws-010",
+      "category": "weird-laws",
+      "kind": "drink",
+      "fact": "From 1919 to 1955, Swedes needed a stamped ration book called a motbok to buy ___.",
+      "truth": {
+        "answer": "liquor",
+        "accept": ["alcohol", "spirits", "booze", "liquour", "liqour", "hard liquor", "likker"],
+        "reject": []
+      },
+      "houseLies": [
+        "bananas",
+        "candy",
+        "fireworks",
+        "perfume",
+        "lingerie",
+        "lottery tickets",
+        "chewing gum",
+        "playing cards"
+      ],
+      "source": "Wikipedia: Bratt System",
+      "verified": true,
+      "hardWords": ["motbok"]
+    },
+    {
+      "id": "fs-weird-laws-011",
+      "category": "weird-laws",
+      "kind": "drink",
+      "fact": "During Prohibition, US doctors could prescribe a patient a pint of ___ every 10 days.",
+      "truth": {
+        "answer": "whiskey",
+        "accept": [
+          "whisky",
+          "medicinal whiskey",
+          "liquor",
+          "alcohol",
+          "bourbon",
+          "wiskey",
+          "whiskies"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "cough syrup",
+        "castor oil",
+        "cod liver oil",
+        "root beer",
+        "olive oil",
+        "vinegar",
+        "milk",
+        "snake oil"
+      ],
+      "source": "HowStuffWorks: When Doctors Prescribed Alcohol During Prohibition (https://history.howstuffworks.com/historical-events/ridiculous-history-when-doctors-prescribed-alcohol-during-prohibition.htm)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-012",
+      "category": "weird-laws",
+      "kind": "word",
+      "fact": "In WWI, British 'no treating' orders made it illegal in many areas to buy a ___ of drinks.",
+      "truth": {
+        "answer": "round",
+        "accept": ["rounds", "shout", "rownd", "rond", "whole round", "pub round"],
+        "reject": []
+      },
+      "houseLies": ["tray", "bucket", "jug", "tab", "crate", "barrel", "pitcher", "table"],
+      "source": "Wikipedia: Defence of the Realm Act 1914",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-013",
+      "category": "weird-laws",
+      "kind": "drink",
+      "fact": "The United States banned ___ from 1912 until 2007.",
+      "truth": {
+        "answer": "absinthe",
+        "accept": ["absinth", "absynthe", "absenthe", "absinthes", "green fairy", "la fee verte"],
+        "reject": []
+      },
+      "houseLies": [
+        "mead",
+        "sake",
+        "mezcal",
+        "limoncello",
+        "ouija boards",
+        "fireworks",
+        "haggis",
+        "tequila"
+      ],
+      "source": "Wikipedia: Absinthe",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-014",
+      "category": "weird-laws",
+      "kind": "food",
+      "fact": "Bavaria's 1516 beer law allowed only three ingredients: water, barley and ___.",
+      "truth": {
+        "answer": "hops",
+        "accept": ["hop", "hopps", "hop flowers", "hop cones", "hopz", "humulus"],
+        "reject": []
+      },
+      "houseLies": ["yeast", "wheat", "honey", "salt", "sugar", "oats", "juniper", "rye"],
+      "source": "Wikipedia: Reinheitsgebot",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-015",
+      "category": "weird-laws",
+      "kind": "other",
+      "fact": "England's 1650 Adultery Act made adultery with a married woman punishable by ___.",
+      "truth": {
+        "answer": "death",
+        "accept": [
+          "execution",
+          "death penalty",
+          "hanging",
+          "capital punishment",
+          "being executed",
+          "deth"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "flogging",
+        "branding",
+        "banishment",
+        "public shaming",
+        "ducking",
+        "imprisonment",
+        "castration",
+        "excommunication"
+      ],
+      "source": "Wikipedia: Commonwealth (Adultery) Act (1650)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-016",
+      "category": "weird-laws",
+      "kind": "word",
+      "fact": "Australia's 6 pm pub closing laws caused a nightly drinking rush called the six o'clock ___.",
+      "truth": {
+        "answer": "swill",
+        "accept": ["swil", "swills", "swiil", "sswill", "swill up", "swill-up", "six oclock swill"],
+        "reject": ["swell", "swig", "spill"]
+      },
+      "houseLies": [
+        "scramble",
+        "stampede",
+        "dash",
+        "slosh",
+        "guzzle",
+        "gallop",
+        "rush hour",
+        "frenzy"
+      ],
+      "source": "Wikipedia: Six o'clock swill",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-017",
+      "category": "weird-laws",
+      "kind": "object",
+      "fact": "An old Paris rule said women needed police permission to wear ___, unless riding a bike or a horse.",
+      "truth": {
+        "answer": "trousers",
+        "accept": [
+          "trouser",
+          "pants",
+          "slacks",
+          "pantaloons",
+          "men's trousers",
+          "trowsers",
+          "pantalons"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "top hats",
+        "red lipstick",
+        "clogs",
+        "fake beards",
+        "perfume",
+        "high heels",
+        "silk stockings",
+        "monocles"
+      ],
+      "source": "France 24: Parisian women finally 'allowed' to wear trousers (france24.com/en/20130204-paris-women-trousers-law-revolution-equality-france)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fs-weird-laws-018",
+      "category": "weird-laws",
+      "kind": "person",
+      "fact": "Old Sunday pub laws in Ireland still let a bona fide ___ from three miles away buy a drink.",
+      "truth": {
+        "answer": "traveller",
+        "accept": ["traveler", "travellers", "travelers", "trveller", "travller", "wayfarer"],
+        "reject": []
+      },
+      "houseLies": [
+        "pilgrim",
+        "fisherman",
+        "sailor",
+        "widower",
+        "drover",
+        "soldier",
+        "bachelor",
+        "horseman"
+      ],
+      "source": "Boak and Bailey: Bona Fide Travellers: Fibbing For a Pint (boakandbailey.com/2015/03/bona-fide-travellers-fibbing-for-a-pint/)",
+      "verified": true,
+      "hardWords": ["bona fide"]
+    }
+  ]
+}

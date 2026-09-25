@@ -10,5 +10,5 @@ export const shared: GameShared = {
   // the shell re-chimes a mapped phase whenever its deadline moves, and both re-time (the voice,
   // the settings hold), so they map to `silence`.
   sounds: { herd: 'silence', score: 'silence' },
-  beds: { intro: 'bossa', answer: 'bossa', herd: 'bossa', score: 'warm' },
+  beds: { answer: 'bossa', herd: 'bossa', score: 'warm' },
 };

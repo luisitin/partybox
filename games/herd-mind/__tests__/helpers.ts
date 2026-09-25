@@ -76,14 +76,14 @@ export function timer(state: State): State {
   });
 }
 
-/** Past the ready-up and its 3 · 2 · 1, into question 1's `answer`. */
+/** Question 1's `answer` (where the game starts). */
 export function atAnswer(
   settings: Record<string, number | string | boolean> = {},
   n = 6,
   seed = 1,
 ): State {
-  // the first skip starts the 3 · 2 · 1, the second ends it
-  return skip(skip(start(settings, n, seed)));
+  // the shell's start stage (rules → READY → 3·2·1) runs before init: the game opens on Q1
+  return start(settings, n, seed);
 }
 
 /** Tile ids in the order the current question shows them. */

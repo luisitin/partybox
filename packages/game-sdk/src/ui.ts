@@ -83,7 +83,7 @@ export { PrimaryButton } from './controller/PrimaryButton';
 export type { PrimaryButtonProps } from './controller/PrimaryButton';
 export { WaitingScreen } from './controller/WaitingScreen';
 export type { WaitingScreenProps } from './controller/WaitingScreen';
-export { PhoneOnlyProvider, usePhoneOnly } from './controller/phoneOnly';
+export { PhoneOnlyProvider, useCanSeeTv, usePhoneOnly } from './controller/phoneOnly';
 export {
   LANGS,
   fill,

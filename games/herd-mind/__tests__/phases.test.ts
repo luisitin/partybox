@@ -9,13 +9,9 @@ import { atAnswer, input, pickAll, skip, start, T0, timer, tileIds } from './hel
 const ID = 'herd-mind';
 
 describe('phase order and exits', () => {
-  it('intro (ready-up, up to 60 s) → 3 · 2 · 1 → answer → herd → score → the next answer', () => {
+  it('answer (question 1) → herd → score → the next answer', () => {
     let s = start();
-    expect(s.phase).toEqual({ id: 'intro', startedAt: T0, deadline: T0 + 60_000 });
-    s = timer(s); // nobody tapped Ready: the count starts anyway
-    expect([s.phase.id, s.startAt]).toEqual(['intro', T0 + 60_000 + 3_400]);
-    s = timer(s);
-    expect(s.phase.id).toBe('answer');
+    expect(s.phase).toEqual({ id: 'answer', startedAt: T0, deadline: T0 + 15_000 });
     expect(s.q.tiles).toHaveLength(8);
     s = timer(s);
     expect(s.phase.id).toBe('herd');
@@ -50,9 +46,8 @@ describe('phase order and exits', () => {
   });
 
   it('a VIP skip leaves every phase; end jumps to done', () => {
-    let s = skip(start()); // the intro's skip starts the 3 · 2 · 1
-    expect([s.phase.id, s.startAt !== null]).toEqual(['intro', true]);
-    for (const id of ['answer', 'herd', 'score', 'answer']) {
+    let s = start();
+    for (const id of ['herd', 'score', 'answer', 'herd']) {
       s = skip(s);
       expect(s.phase.id).toBe(id);
     }

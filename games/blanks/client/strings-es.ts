@@ -4,6 +4,8 @@
 // language: only the words around them are here.
 
 export const SCREENS_ES: Readonly<Record<string, string>> = {
+  // The content-language marker (EnglishNote.tsx): the cards are English only.
+  'in English': 'en inglés',
   // ── shared ──────────────────────────────────────────────────────────────────────────────────
   'One moment…': 'Un momento…',
   'Look at the TV': 'Mira la TV',

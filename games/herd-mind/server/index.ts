@@ -7,7 +7,6 @@ import { botInput } from './bot';
 import { drawQuestions } from './content';
 import { enterAnswer, freshQuestion, closeWhenAllIn, reduceAnswer } from './phases/answer';
 import { enterHerd, reduceHerd, retimeHerd } from './phases/herd';
-import { checkReady, enterIntro, reduceIntro, startCountdown } from './phases/intro';
 import { applyMenu, clearHold, releaseMenu } from './hold';
 import { enterDone, enterScore, reduceScore } from './phases/score';
 import { recap } from './recap';
@@ -47,7 +46,7 @@ function init(ctx: InitContext): State {
   const cfg = settingsFrom(ctx.settings);
   const [questions, rng] = drawQuestions(seedRng(ctx.seed), cfg);
   const base: State = {
-    phase: { id: 'intro', startedAt: ctx.now, deadline: null },
+    phase: { id: 'answer', startedAt: ctx.now, deadline: null },
     rng,
     players,
     cfg,
@@ -61,21 +60,18 @@ function init(ctx: InitContext): State {
     stats: Object.fromEntries(ctx.players.map((p) => [p.id, { herd: 0, alone: 0, sheepHeld: 0 }])),
     pairs: {},
     speechMs: {},
-    ready: [],
-    startAt: null,
     menus: [],
     hold: null,
     resumeAt: null,
   };
-  return enterIntro(base, ctx.now);
+  // The shell's start stage (rules → READY → 3·2·1, ADR on main) comes first: the game opens on
+  // question 1.
+  return enterAnswer(base, ctx.now, 0);
 }
 
 /** The phase order. What a deadline does — and what a VIP skip does (docs/GAME_CONTRACT.md). */
 export function advance(state: State, now: number): State {
   switch (state.phase.id) {
-    case 'intro':
-      // The VIP's Start now (or the ready-up running out) starts the 3 · 2 · 1; its end, question 1.
-      return state.startAt === null ? startCountdown(state, now) : enterAnswer(state, now, 0);
     case 'answer':
       return enterHerd(state, now);
     case 'herd':
@@ -102,7 +98,7 @@ function onPlayer(state: State, event: GameEvent<Input>): State {
   }
   // A phone that drops or leaves with its settings open no longer holds the room.
   if (!event.connected || event.gone) next = releaseMenu(next, event.playerId, event.now);
-  return next.phase.paused ? next : checkReady(closeWhenAllIn(next, event.now), event.now);
+  return next.phase.paused ? next : closeWhenAllIn(next, event.now);
 }
 
 function reduce(state: State, event: GameEvent<Input>): State {
@@ -121,8 +117,6 @@ function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'input' && event.input.type === 'menu')
     return applyMenu(state, event.playerId, event.input.open, event.now);
   switch (state.phase.id) {
-    case 'intro':
-      return reduceIntro(state, event, advance);
     case 'answer':
       return reduceAnswer(state, event, advance);
     case 'herd':

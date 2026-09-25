@@ -4,8 +4,14 @@ import type { GameManifest, VipAction } from '@partybox/shared';
 import { removePlayer } from './players';
 import { abortGame, applyGameEvent, startGame } from './runner';
 import { applyHighlight } from './picker';
+import { setPresenceMode } from './presence';
 import { coerceSettings, defaultSettings } from './settings';
-import type { ApplyResult, Effect, EngineDeps, RoomState } from './types';
+import { canStart } from './can-start';
+import { backFromStage, beginStage, holdStage, startNow } from './start-stage';
+import { switchToast } from './switch-toast';
+import type { ApplyResult, EngineDeps, RoomState } from './types';
+
+export { canStart };
 
 function reject(
   room: RoomState,
@@ -14,31 +20,6 @@ function reject(
   message: string,
 ): ApplyResult {
   return { room, effects: [{ type: 'error', to, code, message }] };
-}
-
-/** Why the Start button is disabled, or ok. Shown to everyone in the room snapshot. */
-export function canStart(
-  room: RoomState,
-  deps: EngineDeps,
-): { ok: true } | { ok: false; reason: string } {
-  if (room.status !== 'selecting' && room.status !== 'results' && room.status !== 'lobby')
-    return { ok: false, reason: 'A game is already running.' };
-  const gameId = room.selectedGameId;
-  const game = gameId ? deps.games[gameId] : undefined;
-  if (!game) return { ok: false, reason: 'Pick a game first.' };
-  const count = Object.keys(room.players).length;
-  const { minPlayers, maxPlayers, name } = game.manifest;
-  const bots = Object.values(room.players).filter((p) => p.bot).length;
-  if (bots > 0 && !game.manifest.supportsBots)
-    return {
-      ok: false,
-      reason: `${name} has no bot support — remove the ${bots === 1 ? 'bot' : `${bots} bots`} or pick a game that welcomes bots.`,
-    };
-  if (count < minPlayers)
-    return { ok: false, reason: `${name} needs at least ${minPlayers} players (${count} here).` };
-  if (count > maxPlayers)
-    return { ok: false, reason: `${name} takes at most ${maxPlayers} players (${count} here).` };
-  return { ok: true };
 }
 
 function manifestOf(room: RoomState, deps: EngineDeps): GameManifest | undefined {
@@ -65,6 +46,9 @@ export function applyVip(
       return reject(room, playerId, 'not_vip', 'Only the VIP can do that.');
   }
 
+  // ADR-053: in the start stage, pause is "Wait" (the count stops) and resume is Start now
+  if (room.starting && action.action === 'pause') return holdStage(room);
+  if (room.starting && action.action === 'resume') return startNow(room, now);
   switch (action.action) {
     case 'selectGame': {
       if (room.status === 'playing')
@@ -106,6 +90,8 @@ export function applyVip(
       const manifest = manifestOf(room, deps);
       if (room.status !== 'selecting' || !manifest)
         return reject(room, playerId, 'cannot_start', 'Pick a game first.');
+      // the rules on every screen describe these settings: change them from the picker
+      if (room.starting) return reject(room, playerId, 'cannot_start', 'Go back to change that.');
       const settings = coerceSettings(manifest, room.settings, action.settings);
       return {
         room: {
@@ -125,18 +111,22 @@ export function applyVip(
         return reject(room, playerId, 'cannot_start', 'Pick a game first.');
       const check = canStart(room, deps);
       if (!check.ok) return reject(room, playerId, 'cannot_start', check.reason);
-      // I-347: a new game starts — the handover is settled
-      const { formerVip: _settled, ...settled } = room;
-      void _settled;
-      return startGame(
-        settled as RoomState,
-        room.selectedGameId as string,
-        room.settings,
-        seed ?? now,
-        now,
-        deps,
-      );
+      // ADR-053: the start stage — rules, everyone's READY, 3·2·1 (start-stage.ts)
+      return beginStage(room, seed ?? now, now);
     }
+    case 'startNow': {
+      // Outside a stage (the dev API, tests) it starts at once, as Start used to.
+      if (room.starting) return startNow(room, now);
+      if (room.status !== 'selecting')
+        return reject(room, playerId, 'cannot_start', 'Pick a game first.');
+      const check = canStart(room, deps);
+      if (!check.ok) return reject(room, playerId, 'cannot_start', check.reason);
+      const { formerVip: _settled, ...settled } = room; // I-347: a new game settles the handover
+      void _settled;
+      return startGame(settled as RoomState, room.selectedGameId as string, room.settings, seed ?? now, now, deps); // prettier-ignore
+    }
+    case 'back':
+      return backFromStage(room);
     case 'playAgain': {
       if (room.status !== 'results' || !room.lastGame)
         return reject(room, playerId, 'cannot_start', 'Nothing to replay.');
@@ -148,14 +138,7 @@ export function applyVip(
       };
       const check = canStart(again, deps);
       if (!check.ok) return reject(room, playerId, 'cannot_start', check.reason);
-      return startGame(
-        again,
-        again.selectedGameId as string,
-        again.settings,
-        seed ?? now,
-        now,
-        deps,
-      );
+      return beginStage(again, seed ?? now, now);
     }
     case 'skip':
     case 'pause':
@@ -240,7 +223,10 @@ export function applyVip(
       return {
         room: { ...room, recording: action.on },
         effects: [
-          switchToast(action.on ? '📼 Saving a recap of each game' : '📼 Not saving recaps'),
+          ...switchToast(
+            room,
+            action.on ? '📼 Saving a recap of each game' : '📼 Not saving recaps',
+          ),
           { type: 'push' },
         ],
       };
@@ -251,7 +237,8 @@ export function applyVip(
       return {
         room: { ...room, musicOnPhones: action.on },
         effects: [
-          switchToast(
+          ...switchToast(
+            room,
             action.on
               ? '🎵 Music on every phone'
               : '🎵 Music on the TV only — a phone can turn its own on',
@@ -273,7 +260,8 @@ export function applyVip(
       return {
         room: { ...room, phoneOnly: action.on },
         effects: [
-          switchToast(
+          ...switchToast(
+            room,
             action.on
               ? '📱 Phone-only room — the phones show what the TV would'
               : '📺 The TV is the stage again',
@@ -281,6 +269,12 @@ export function applyVip(
           { type: 'push' },
         ],
       };
+    }
+    case 'setPresenceMode': {
+      const done = setPresenceMode(room, action.mode);
+      return done === 'mid-game'
+        ? reject(room, playerId, 'cannot_start', 'Change that before the next game.')
+        : done;
     }
     case 'highlight':
       return applyHighlight(room, action.gameId, playerId, deps);
@@ -291,9 +285,4 @@ export function applyVip(
       return { room: { ...room, status: 'lobby' }, effects: [{ type: 'push' }] };
     }
   }
-}
-
-/** I-642 C: a room switch changed — everyone is told what it means. */
-function switchToast(text: string): Effect {
-  return { type: 'toast', to: 'all', kind: 'info', text };
 }

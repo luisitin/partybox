@@ -9,7 +9,6 @@ import type { GameControllerProps, PushedView } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { HerdControllerView } from '../server/views';
 import { MergeTool } from './MergeTool';
-import { PhoneIntro } from './PhoneIntro';
 import { PhoneHerd, PhoneScore } from './PhoneStages';
 import { PhoneTiles } from './PhoneTiles';
 import { PhoneTyped } from './PhoneTyped';
@@ -31,8 +30,6 @@ function Screen({
 }): JSX.Element {
   const L = useT(STRINGS);
   switch (view.phaseId) {
-    case 'intro':
-      return <PhoneIntro view={view} send={send} skip={skip} />;
     case 'answer':
       return view.mode === 'typed' ? (
         <PhoneTyped view={view} send={send} />
@@ -77,9 +74,8 @@ export function Controller({
     .filter((id) => id !== view.me.id)
     .map((id) => view.players.find((p) => p.id === id)?.name ?? '?');
   const resuming = view.resumeAt !== null && now < view.resumeAt;
-  const starting = view.startAt !== null && now < view.startAt;
   // The stage stands still under a sheet, a hold or a count: its beats resume where they stopped.
-  const frozen = open || others.length > 0 || resuming || starting;
+  const frozen = open || others.length > 0 || resuming;
   const shown: V = frozen ? { ...view, paused: true } : view;
   return (
     <OpenSettings.Provider value={offered && !open ? () => menu(true) : null}>
@@ -90,8 +86,6 @@ export function Controller({
         <HoldCurtain names={others} onOpen={() => menu(true)} />
       ) : resuming && view.resumeAt !== null ? (
         <Countdown until={view.resumeAt} line={L('Back to the game')} />
-      ) : starting && view.startAt !== null ? (
-        <Countdown until={view.startAt} line={L('Question 1 coming up')} />
       ) : null}
     </OpenSettings.Provider>
   );

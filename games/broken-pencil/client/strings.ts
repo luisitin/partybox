@@ -113,13 +113,8 @@ export const STRINGS: Strings = {
 
     // TV: the pick screen and the waiting stage.
     'Pick a secret word on your phone.': 'Elige una palabra secreta en tu teléfono.',
-    'Everyone draws their word.': 'Todos dibujan su palabra.',
-    'Your drawing goes to the next player: they guess it, then draw their guess.':
-      'Tu dibujo pasa al siguiente jugador: lo adivina y luego dibuja su respuesta.',
     'That goes on round the circle; the last player only guesses.':
       'Así sigue por todo el círculo; el último jugador solo adivina.',
-    'Then everyone presents their own book on the TV, page by page.':
-      'Luego cada uno presenta su libro en la TV, página a página.',
     '1 of {total} picked': '1 de {total} ya eligió',
     '{picked} of {total} picked': '{picked} de {total} ya eligieron',
     'Everyone is drawing their word…': 'Todos dibujan su palabra…',
@@ -177,6 +172,9 @@ export const STRINGS: Strings = {
     'Your book broke': 'Tu libro se rompió',
     'That was Broken Pencil': 'Eso fue Broken Pencil',
     'close enough ✓': 'casi igual ✓',
+    // Pacing rule (2026-09-25): the summary waits for the VIP's Next.
+    'Finish the game': 'Terminar el juego',
+    'Moving on…': 'Avanzando…',
     Unbroken: 'Intacto',
     '“{word}” survived {n} players': '“{word}” sobrevivió a {n} jugadores',
   },

@@ -72,7 +72,6 @@ export function speech(state: State): SpeechRequest[] {
   const phase = state.phase.id;
   const n = state.q.n;
   const fixed = (Object.keys(FIXED) as FixedLine[]).map((line) => fixedReading(state, line));
-  if (phase === 'intro') want.push(questionReading(state, 0), ...fixed, questionReading(state, 1));
   if (phase === 'answer' || phase === 'herd') {
     want.push(questionReading(state, n));
     const herd = state.q.groups?.find((g) => g.key === state.q.herd);

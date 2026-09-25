@@ -22,8 +22,6 @@ function weighted(rng: Rng, weights: number[]): number {
 export function botInput(state: State, playerId: string, rng: Rng, gameId: string): Input | null {
   const view = controllerView(state, playerId, gameId);
   if (view.me.role !== 'player') return null;
-  // intro: a bot has read the rules.
-  if (view.phaseId === 'intro') return view.ready.includes(playerId) ? null : { type: 'ready' };
   if (view.phaseId !== 'answer' || view.mine !== null) return null;
   // The content bank: this question's answers, looked up by what the phone shows.
   const bank = state.questions[view.n - 1]?.answers ?? [];

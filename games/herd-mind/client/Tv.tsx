@@ -10,14 +10,11 @@ import { Countdown, holdLine } from './Settings';
 import { STRINGS } from './strings';
 import { TvAnswer } from './TvAnswer';
 import { TvHerd } from './TvHerd';
-import { TvIntro } from './TvIntro';
 import { TvScore } from './TvScore';
 import styles from './Tv.module.css';
 
 function Screen({ view }: { view: PushedView<HerdTvView> }): JSX.Element {
   switch (view.phaseId) {
-    case 'intro':
-      return <TvIntro view={view} />;
     case 'answer':
       return <TvAnswer view={view} />;
     case 'herd':
@@ -32,9 +29,8 @@ export function Tv({ view }: GameTvProps<HerdTvView>): JSX.Element {
   const now = useServerNow(200);
   const names = view.holdBy.map((id) => view.players.find((p) => p.id === id)?.name ?? '?');
   const resuming = view.resumeAt !== null && now < view.resumeAt;
-  const starting = view.startAt !== null && now < view.startAt;
   // A hold or a count freezes the choreography (its beats resume where they stopped).
-  const frozen = names.length > 0 || resuming || starting;
+  const frozen = names.length > 0 || resuming;
   const shown = frozen ? { ...view, paused: true } : view;
   return (
     <Stage>
@@ -49,8 +45,6 @@ export function Tv({ view }: GameTvProps<HerdTvView>): JSX.Element {
         </div>
       ) : resuming && view.resumeAt !== null ? (
         <Countdown until={view.resumeAt} line={L('Back to the game')} size="tv" />
-      ) : starting && view.startAt !== null ? (
-        <Countdown until={view.startAt} line={L('Question 1 coming up')} size="tv" />
       ) : null}
     </Stage>
   );

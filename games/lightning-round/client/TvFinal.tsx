@@ -81,7 +81,9 @@ export function FinalReveal({
       <p className={styles.asked}>{question.text}</p>
       <AnswerCard question={question} correctIndex={correctIndex} hidden={!answered} />
       <ol
-        className={`${styles.rows} ${rowsClass(n)} ${styles.rowsFinal}`}
+        // Three or four bet rows (two lines each, under the question and the answer) ran past the
+        // host bar in one column: they take two columns, like five to eight do.
+        className={`${styles.rows} ${rowsClass(n > 2 ? Math.max(n, 5) : n)} ${styles.rowsFinal}`}
         style={listStyle}
         aria-label={L('results')}
       >

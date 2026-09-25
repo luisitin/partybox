@@ -1,6 +1,7 @@
 // I-105 (preview branch): the pick after a bingo is a vote.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
+import { VOTE_MS } from '../server/types';
 import type { Input, State } from '../server/types';
 import { after, callUntil, claim, daubAll, input, start, timer } from './helpers';
 
@@ -25,7 +26,7 @@ describe('I-105 the vote after a bingo', () => {
     expect(game.controllerView(s, 'c').pendingDecision).toBeNull();
     s = input(s, 'c', { type: 'next' }, t + 500);
     s = input(s, 'b', { type: 'next' }, t + 900); // b changes their mind
-    expect(s.phase.deadline).toBe(t + 6000);
+    expect(s.phase.deadline).toBe(t + VOTE_MS);
     expect(timer(s).phase.id).toBe('scoreboard'); // next round: 2 votes to 0
   });
 

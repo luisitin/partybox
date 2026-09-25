@@ -16,6 +16,6 @@ export const tv: GameTvModule = {
     const sheep = (view as unknown as HerdTvView).sheep;
     return view.phaseId === 'score' && sheep ? [sheep] : [];
   },
-  // The ready-up shows every face in its own row; the pens and the lanes show them too.
-  stripHidden: ['intro', 'herd', 'score'],
+  // The pens and the lanes show every face: the stage takes the room there.
+  stripHidden: ['herd', 'score'],
 };
