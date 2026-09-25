@@ -1,20 +1,6 @@
 // Spanish for Mystery Box's TV and phone screens, keyed by the English sentence (ADR-044).
 // Content (box names and flavour lines) stays in the deck's language.
 export const ES_SCREENS: Record<string, string> = {
-  // the rules
-  'A mystery box shows what might be inside, and the odds.':
-    'Una caja misteriosa muestra lo que podría tener dentro, y sus probabilidades.',
-  'Bet your coins in secret on what you think is inside. Long shots pay big.':
-    'Apuesta tus monedas en secreto a lo que crees que hay dentro. Lo improbable paga mucho.',
-  'The box opens: call it right and you get paid by the odds. Most coins at the end wins.':
-    'La caja se abre: si aciertas, cobras según las probabilidades. Gana quien tenga más monedas al final.',
-  'Everyone starts with {coin} {n}': 'Todos empiezan con {coin} {n}',
-  'Tap Ready on your phone · {n} of {total} ready':
-    'Toca «Listo» en tu teléfono · {n} de {total} listos',
-  "I'm ready": 'Estoy listo',
-  '✓ Ready': '✓ Listo',
-  '✓ Ready · waiting for {n} more': '✓ Listo · faltan {n}',
-  'Here comes the first box…': 'Ahí viene la primera caja…',
   // the box
   'Box {n} of {total}': 'Caja {n} de {total}',
   'Box {n}/{total}': 'Caja {n}/{total}',

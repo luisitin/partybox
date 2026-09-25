@@ -59,7 +59,12 @@ describe('betting', () => {
     expect(s.r.step).toBe(1);
     expect(shown(s, 'p2')).toBe(80);
     expect(game.tvView(s).outcome).toBe(0);
-    expect(game.controllerView(s, 'p2').line).toEqual({ kind: 'lost', option: 1, amount: 20 });
+    expect(game.controllerView(s, 'p2').line).toEqual({
+      kind: 'lost',
+      option: 1,
+      amount: 20,
+      delta: -20,
+    });
   });
 
   it('the grand box pays double', () => {

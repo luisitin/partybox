@@ -94,8 +94,8 @@ export function ownLineText(
     case 'won':
       return {
         big: line.doubled
-          ? L('Doubled! +{n}', { n: line.back - line.amount })
-          : L('You called it! +{n}', { n: line.back - line.amount }),
+          ? L('Doubled! +{n}', { n: line.delta })
+          : L('You called it! +{n}', { n: line.delta }),
         // Coin and number glued (NBSP): never an orphaned number on its own line.
         small: L('It was {what}. Your {bet} paid {back}.', {
           what: inside,
@@ -106,8 +106,8 @@ export function ownLineText(
     case 'lost':
       return {
         big: line.busted
-          ? L('Right call, but the coin said nothing: −{n}', { n: line.amount })
-          : L('Not this time: −{n}', { n: line.amount }),
+          ? L('Right call, but the coin said nothing: −{n}', { n: -line.delta })
+          : L('Not this time: −{n}', { n: -line.delta }),
         small: line.busted
           ? L('It was {what}. Double or nothing came up tails.', { what: inside })
           : L('It was {what}.', { what: inside }),
@@ -118,6 +118,13 @@ export function ownLineText(
         small: L('Your stake came back. It was {what}.', { what: inside }),
       };
     case 'sat':
-      return { big: L('You sat this one out'), small: L('It was {what}.', { what: inside }) };
+      // A peek is paid even when you sit out.
+      return {
+        big:
+          line.delta < 0
+            ? L('Sat out, the peek cost −{n}', { n: -line.delta })
+            : L('You sat this one out'),
+        small: L('It was {what}.', { what: inside }),
+      };
   }
 }

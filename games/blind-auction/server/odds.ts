@@ -39,3 +39,11 @@ export function splitHalves(amount: number): [number, number] {
 export function insuranceFee(amount: number): number {
   return amount > 0 ? Math.max(1, Math.ceil(amount / 10)) : 0;
 }
+
+/** The biggest stake that fits `have` coins, the insurance fee included when insured. */
+export function maxStake(have: number, insured: boolean): number {
+  if (!insured) return Math.max(0, have);
+  let a = Math.max(0, have);
+  while (a > 0 && a + insuranceFee(a) > have) a--;
+  return a;
+}

@@ -6,6 +6,7 @@ import type { JSX } from 'react';
 import { useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import { BidPad } from '@partybox/game-sdk/ui/bid-pad';
+import { maxStake } from '../server/odds';
 import { PITY_COINS } from '../server/timing';
 import type { Input } from '../server/types';
 import type { BlindAuctionControllerView } from '../server/views';
@@ -78,7 +79,10 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
   return (
     <BidPad
       value={amount}
-      max={Math.max(0, view.coins - (view.myPeek !== null ? view.peekPrice : 0))}
+      max={maxStake(
+        view.coins - (view.myPeek !== null ? view.peekPrice : 0),
+        box.twist === 'insure' && insured,
+      )}
       placed={placed}
       onChange={setAmount}
       onConfirm={(n) => {

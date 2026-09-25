@@ -6,7 +6,7 @@ import { game } from '../server/index';
 import { insuranceFee, payout, peekPrice, splitHalves } from '../server/odds';
 import { seedRng } from '@partybox/game-sdk';
 import type { Twist } from '../server/types';
-import { send, start, walkTo } from './helpers';
+import { send, start, timer, walkTo } from './helpers';
 
 /** A 3-player game whose second box is a dice roll with `twist`, now at `bet`. */
 function twisted(twist: Twist): ReturnType<typeof start> {
@@ -173,5 +173,32 @@ describe('twists', () => {
     }
     expect(heads).toBeGreaterThan(0);
     expect(tails).toBeGreaterThan(0);
+  });
+
+  it('peek + sit out: the TV strip, results and the own line all show the real −price, only at the reveal', () => {
+    let s = twisted('peek');
+    const price = peekPrice(s.boxes[s.r.idx]?.box.options.length ?? 0);
+    const before = s.coins['p1'] ?? 0;
+    s = send(s, {
+      type: 'input',
+      now: s.phase.startedAt + 50,
+      playerId: 'p1',
+      input: { type: 'peek' },
+    });
+    s = betAt(betAt(betAt(s, 'p1', 0, 0, 100), 'p2', 0, 0, 100), 'p3', 0, 0, 100);
+    // Step 0: settled, but nothing shows yet (the TV must not reveal who peeked).
+    expect(s.phase.id).toBe('open');
+    const tvCoins = (st: typeof s) =>
+      (game.tvView(st).players as { id: string; score?: number }[]).find((p) => p.id === 'p1')
+        ?.score;
+    expect(tvCoins(s)).toBe(before);
+    s = timer(s);
+    expect(s.r.step).toBe(1);
+    expect(tvCoins(s)).toBe(before - price);
+    expect(game.controllerView(s, 'p1').line).toEqual({ kind: 'sat', delta: -price });
+    const results = (
+      game.tvView(s) as unknown as { results: { id: string; delta: number }[] | null }
+    ).results;
+    expect(results?.find((r) => r.id === 'p1')?.delta).toBe(-price);
   });
 });

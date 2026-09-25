@@ -660,11 +660,6 @@
   line-height: 1.35;
 }
 
-.stepIn {
-  opacity: 1;
-  transform: none;
-}
-
 .stepNum {
   display: grid;
   place-items: center;
@@ -749,101 +744,15 @@
   color: var(--pb-text-muted);
 }
 
-/* ── rules ── */
-.rules {
-  gap: var(--pb-space-4);
-}
-
-.rulesRow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--pb-space-7);
-  --ba-card-h: min(340px, 38cqh);
-}
-
-.rulesCard {
-  flex: none;
-}
-
 .stepBody {
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-3);
 }
 
-.rulesSample {
-  flex: 0 0 600px;
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity var(--pb-motion-slow) var(--pb-ease),
-    transform var(--pb-motion-slow) var(--pb-ease);
-}
-
-.readyRow {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--pb-space-3);
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity var(--pb-motion-slow) var(--pb-ease),
-    transform var(--pb-motion-slow) var(--pb-ease);
-}
-
-.readyLine {
-  margin: 0;
-  font-size: var(--pb-font-body);
-  font-weight: 800;
-  color: var(--pb-text-muted);
-}
-
-.readyFaces {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--pb-space-2);
-  max-width: 1400px;
-}
-
-.readyFace {
-  position: relative;
-  display: block;
-  width: 56px;
-  height: 56px;
-  opacity: 0.4;
-  transition: opacity var(--pb-motion-base) var(--pb-ease);
-}
-
 .isReady {
   opacity: 1;
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.readyTick {
-  position: absolute;
-  right: -6px;
-  bottom: -6px;
-  display: grid;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--pb-accent-3);
-  color: var(--pb-on-accent);
-  font-size: 16px;
-  font-weight: 1000;
-}
-
-.countdown {
-  display: block;
-  font-size: min(200px, 22cqh);
-  font-weight: 1000;
-  line-height: 1;
-  color: var(--pb-accent-2);
-  animation: global(pb-tick) var(--pb-motion-base) var(--pb-ease);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -915,22 +824,4 @@
 
 :global(:root[data-motion='off']) :is(.stepItem, .startCoins) {
   transition: none;
-}
-
-/* Last in the file: after every hidden rule for these, so they win (the ready row never showed
-   before this). */
-.rulesSample.stepIn,
-.readyRow.stepIn {
-  opacity: 1;
-  transform: none;
-}
-
-/* The rules' 3·2·1 gets the whole stage, centred well clear of the host bar. */
-.countdownStage {
-  gap: var(--pb-space-5);
-  padding-bottom: 140px;
-}
-
-.countdownStage .countdown {
-  font-size: min(320px, 40cqh);
 }

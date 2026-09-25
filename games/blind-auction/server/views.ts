@@ -13,7 +13,7 @@ import { shareOf, teamOf } from './phases/tug';
 import { stakers } from './phases/shells';
 import { isBlackjack as isBlackjackRound } from './phases/hands';
 import { tierOf } from './odds';
-import { deltaOf, opened, ownLine } from './own-line';
+import { deltaOf, movers, opened, ownLine } from './own-line';
 import { FIXED_LINES, boxRequest, fixedRequest, lineOf, openRequest } from './speech';
 import type { FixedLine } from './speech';
 import type { State } from './types';
@@ -125,8 +125,9 @@ function tugView(state: State): Common['tug'] {
 
 function resultsView(state: State): ResultView[] | null {
   if (!opened(state)) return null;
+  const moved = movers(state);
   return state.seats
-    .filter((id) => (state.r.bets[id]?.amount ?? 0) > 0)
+    .filter((id) => moved.includes(id))
     .map((id) => ({ id, delta: deltaOf(state, id) }));
 }
 
@@ -135,7 +136,7 @@ function resultsView(state: State): ResultView[] | null {
 export function shownCoins(state: State): Record<string, number> {
   if (state.phase.id !== 'open' || state.r.step === 1) return state.coins;
   const before = { ...state.coins };
-  for (const id of Object.keys(state.r.bets))
+  for (const id of movers(state))
     if (Object.hasOwn(before, id)) before[id] = (before[id] ?? 0) - deltaOf(state, id);
   return before;
 }

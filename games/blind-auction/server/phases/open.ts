@@ -33,7 +33,8 @@ export function settle(state: State): State {
   for (const [id, bet] of Object.entries(state.r.bets)) {
     if (bet.amount <= 0 || !Object.hasOwn(coins, id)) continue;
     const s = stats[id] ?? { biggestBet: 0, biggestWin: 0, longShots: 0, calls: 0, lost: 0 };
-    const option = box.options[bet.option];
+    // The pick that was inside (a split's second pick can be the one that won).
+    const option = box.options[bet.also === round.outcome ? round.outcome : bet.option];
     const back = returned(state, id);
     // A right call is one that paid more than the stake (keno's one "option" always matches).
     const won = back > bet.amount;

@@ -73,7 +73,6 @@ export function speech(state: State): SpeechRequest[] {
   const want: (SpeechRequest | null)[] = [];
   const phase = state.phase.id;
   const idx = state.r.idx;
-  if (phase === 'rules') want.push(boxRequest(state, 0));
   if (phase === 'box') want.push(boxRequest(state, idx));
   if (phase === 'open') want.push(openRequest(state), boxRequest(state, idx + 1));
   for (const line of ['bets', 'closed'] as FixedLine[]) want.push(fixedRequest(state, line));

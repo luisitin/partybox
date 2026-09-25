@@ -91,10 +91,11 @@ export interface BlindAuctionTvView extends TvView, Common {
 }
 
 export type OwnLine =
-  | { kind: 'won'; option: number; amount: number; back: number; doubled?: boolean }
-  | { kind: 'lost'; option: number; amount: number; busted?: boolean }
-  | { kind: 'back'; amount: number }
-  | { kind: 'sat' };
+  // `delta` is the real change in coins: fees and a peek's price included.
+  | { kind: 'won'; option: number; amount: number; back: number; delta: number; doubled?: boolean }
+  | { kind: 'lost'; option: number; amount: number; delta: number; busted?: boolean }
+  | { kind: 'back'; amount: number; delta: number }
+  | { kind: 'sat'; delta: number };
 
 export interface BlindAuctionControllerView extends ControllerView, Common {
   coins: number;

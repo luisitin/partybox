@@ -1,6 +1,7 @@
 // Spanish for the twists (Cfg.twists): the note on the TV and phone, and the phone's buttons.
 export const ES_TWISTS: Record<string, string> = {
   'in English': 'en inglés',
+  'Sat out, the peek cost −{n}': 'Pasaste; espiar costó −{n}',
   Twist: 'Giro',
   '⏰ Early bird: bet now for up to ×1.25 more — it slides to ×1.00 at the buzzer.':
     '⏰ Madrugador: apuesta ya y gana hasta ×1.25 más; baja a ×1.00 al sonar el timbre.',

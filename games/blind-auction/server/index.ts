@@ -202,10 +202,25 @@ function reduce(state: State, event: GameEvent<Input>): State {
     // Resumed: the potato's secret pop (and its hold) move by the pause (review C3).
     const shift = Math.max(0, event.now - state.phase.paused.at);
     const r = vip.r;
+    // …and the early-bird clock (bet times and the open) moves with it too.
     const shifted =
       vip.phase.id === 'potato' && r.popAt !== undefined
         ? { ...vip, r: { ...r, popAt: r.popAt + shift, heldAt: (r.heldAt ?? 0) + shift } }
-        : vip;
+        : vip.phase.id === 'bet' && r.betOpenedAt !== undefined
+          ? {
+              ...vip,
+              r: {
+                ...r,
+                betOpenedAt: r.betOpenedAt + shift,
+                bets: Object.fromEntries(
+                  Object.entries(r.bets).map(([id, b]) => [
+                    id,
+                    b.at === undefined ? b : { ...b, at: b.at + shift },
+                  ]),
+                ),
+              },
+            }
+          : vip;
     return recheck(shifted, event.now);
   }
   if (state.phase.paused) return state;

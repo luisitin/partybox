@@ -141,44 +141,6 @@
   align-self: stretch;
 }
 
-/* ── how to play ── */
-.howTitle {
-  margin: var(--pb-space-2) 0 var(--pb-space-3);
-  font-size: var(--pb-font-h1);
-  font-weight: 1000;
-  text-align: center;
-}
-
-.howSteps {
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-3);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.howStep {
-  display: flex;
-  align-items: baseline;
-  gap: var(--pb-space-3);
-  line-height: 1.4;
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.howNum {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: 50%;
-  background: var(--pb-accent);
-  color: var(--pb-on-accent);
-  font-weight: 1000;
-  transform: translateY(0.3rem);
-}
-
 .startCoins {
   margin: var(--pb-space-4) 0 0;
   text-align: center;
@@ -555,32 +517,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-2);
-}
-
-.howBody {
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-2);
-  min-width: 0;
-  flex: 1;
-}
-
-.countdownBox {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--pb-space-4);
-}
-
-.countdown {
-  font-size: clamp(4rem, 30vw, 8rem);
-  font-weight: 900;
-  line-height: 1;
-  color: var(--pb-accent);
-  font-variant-numeric: tabular-nums;
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 /* ── doors: stay or switch ── */
