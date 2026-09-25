@@ -21,7 +21,7 @@ import {
 } from './helpers';
 
 describe('phase order and exits', () => {
-  it('runs intro → question → lie → pick → reveal → scores → question … → done', () => {
+  it('starts on question 1 (the shell ran the rules), then question → lie → pick → reveal → scores → question … → done', () => {
     let s = start({ settings: { questions: 3 } });
     const seen: string[] = [s.phase.id];
     let guard = 0;
@@ -30,14 +30,11 @@ describe('phase order and exits', () => {
       if (seen[seen.length - 1] !== s.phase.id) seen.push(s.phase.id);
     }
     const loop = ['question', 'lie', 'pick', 'reveal', 'scores'];
-    expect(seen).toEqual(['intro', ...loop, ...loop, ...loop, 'done']);
+    expect(seen).toEqual([...loop, ...loop, ...loop, 'done']);
   });
 
   it('a VIP skip leaves every phase (the reveal one page at a time)', () => {
     let s = start({ fact: PENGUIN });
-    s = vip(s, 'skip'); // Start now: the 3 · 2 · 1
-    expect([s.phase.id, s.counting]).toEqual(['intro', true]);
-    s = vip(s, 'skip');
     expect(s.phase.id).toBe('question');
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('lie');
@@ -203,5 +200,18 @@ describe('Suggest and likes', () => {
     s = pick(s, 'ana', optionId(s, 'penguin'));
     s = input(s, 'ana', { type: 'pick', option: s.q.options?.find((o) => o.house)?.id ?? '' });
     expect(s.q.options?.find((o) => o.id === s.q.picks['ana'])?.house).toBe(true);
+  });
+});
+
+describe('pause and drops', () => {
+  it('the last missing liar dropping during a pause closes the lie on resume', () => {
+    let s = toLie(start({ fact: PENGUIN, players: 3 }));
+    s = lie(lie(s, 'ana', 'moose'), 'ben', 'walrus');
+    const at = s.phase.startedAt + 2_000;
+    s = vip(s, 'pause', at);
+    s = connect(s, 'cy', false, at + 500);
+    expect(s.phase.id).toBe('lie');
+    s = vip(s, 'resume', at + 3_000);
+    expect(s.phase.id).toBe('pick');
   });
 });

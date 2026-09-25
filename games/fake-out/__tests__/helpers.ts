@@ -114,10 +114,10 @@ export function speech(s: State, key: string, ms: number, now = s.phase.startedA
   return reduce(s, { type: 'speech', now, key, ms });
 }
 
-/** intro → question → lie. */
+/** question → lie. */
 export function toLie(s: State): State {
   let out = s;
-  while (out.phase.id === 'intro' || out.phase.id === 'question') out = timer(out);
+  while (out.phase.id === 'question') out = timer(out);
   return out;
 }
 

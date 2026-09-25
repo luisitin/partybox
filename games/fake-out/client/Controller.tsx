@@ -7,7 +7,7 @@ import type { FakeOutControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { PhoneLie } from './PhoneLie';
 import { PhonePick } from './PhonePick';
-import { PhoneIntro, PhoneQuestion, PhoneReveal, PhoneScores } from './PhoneScreens';
+import { PhoneQuestion, PhoneReveal, PhoneScores } from './PhoneScreens';
 import { STRINGS } from './strings';
 
 type Props = GameControllerProps<FakeOutControllerView, Input>;
@@ -24,8 +24,6 @@ export function Controller(props: Props): JSX.Element {
       />
     );
   switch (view.phaseId) {
-    case 'intro':
-      return <PhoneIntro {...props} />;
     case 'question':
       return <PhoneQuestion {...props} />;
     case 'lie':
