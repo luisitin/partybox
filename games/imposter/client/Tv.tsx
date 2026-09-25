@@ -2,7 +2,7 @@
 // the accusation, the last chance and the word reveal are their own scenes (TvMoments). Dumb by
 // design: it renders `view`, plays the reader's line and the moment's cue, nothing else.
 import type { JSX } from 'react';
-import { BigText, Stage, useT } from '@partybox/game-sdk/ui';
+import { Stage, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { ImposterTvView } from '../server/index';
 import { TvBoard } from './TvBoard';
@@ -13,31 +13,6 @@ import { STRINGS } from './strings';
 import styles from './tv.module.css';
 
 type Props = GameTvProps<ImposterTvView>;
-
-function TvIntro(): JSX.Element {
-  const L = useT(STRINGS);
-  const steps = [
-    L('Everyone gets the secret word except the imposter, who only knows the category.'),
-    L('Everyone types one word about it. The imposter has to fake it.'),
-    L('Vote out the imposter. A caught imposter can still steal it by guessing the word.'),
-  ];
-  return (
-    <Stage center>
-      <p className={styles.glyphBig} aria-hidden="true">
-        🕵️
-      </p>
-      <BigText level="display">Imposter</BigText>
-      <ol className={styles.steps}>
-        {steps.map((s, i) => (
-          <li key={s} style={{ animationDelay: `${300 + i * 350}ms` }}>
-            <span className={styles.stepNo}>{i + 1}</span>
-            {s}
-          </li>
-        ))}
-      </ol>
-    </Stage>
-  );
-}
 
 function Headline({ view }: Props): JSX.Element {
   const L = useT(STRINGS);
@@ -116,8 +91,6 @@ export function Tv(props: Props): JSX.Element {
       </Stage>
     );
   switch (view.phaseId) {
-    case 'intro':
-      return <TvIntro />;
     case 'accuse':
       return <TvAccuse view={view} />;
     case 'lastChance':

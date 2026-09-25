@@ -2,7 +2,7 @@
 // in a phone-only room the shell swaps in PhoneStage for the paced reveals, and the moments with
 // VIP buttons (intro, word reveal, scores) stage inline here so the VIP keeps them.
 import type { JSX } from 'react';
-import { PrimaryButton, Screen, WaitingScreen, useT } from '@partybox/game-sdk/ui';
+import { Screen, WaitingScreen, useT } from '@partybox/game-sdk/ui';
 import { PhoneDeal } from './PhoneCards';
 import type { Props } from './PhoneCards';
 import { PhoneClue } from './PhoneClue';
@@ -13,27 +13,12 @@ import { useSay } from './helpers';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
-function Intro({ view, skip }: Props): JSX.Element {
-  const L = useT(STRINGS);
-  return (
-    <Screen
-      footer={skip ? <PrimaryButton onClick={skip}>{L("Let's go")}</PrimaryButton> : undefined}
-    >
-      <p className={styles.glyph} aria-hidden="true">
-        🕵️
-      </p>
-      <h2 className={styles.title}>{L('How to play')}</h2>
-      <PhoneStageBody view={{ ...view, phaseId: 'intro' }} />
-    </Screen>
-  );
-}
-
 export function Controller(props: Props): JSX.Element {
   const { view } = props;
   const L = useT(STRINGS);
   // A phone that stages the show also speaks it (phone-only rooms; remote phones with F4's P2).
   useSay(view.stage.say, view.phoneOnly === true);
-  if (!view.seated && view.phaseId !== 'intro')
+  if (!view.seated)
     return (
       <WaitingScreen
         title={L('You joined mid-game')}
@@ -44,8 +29,6 @@ export function Controller(props: Props): JSX.Element {
       </WaitingScreen>
     );
   switch (view.phaseId) {
-    case 'intro':
-      return <Intro {...props} />;
     case 'deal':
       return <PhoneDeal {...props} />;
     case 'clue':
@@ -65,13 +48,15 @@ export function Controller(props: Props): JSX.Element {
     case 'scores':
       return <PhoneAfter {...props} />;
     default:
+      // The reveal moments live on every phone too (design review [a0c548] 2: no dead hands),
+      // on the same server beat as the TV, so nothing is spoiled.
       return (
-        <WaitingScreen
-          title={view.phoneOnly ? L('Here it comes…') : `👀 ${L('Watch the TV')}`}
-          mood="watch"
-        >
-          {view.phoneOnly ? <PhoneStageBody view={view} /> : null}
-        </WaitingScreen>
+        <Screen>
+          <div className={styles.stageCenter}>
+            {view.phoneOnly ? null : <p className={styles.sayLine}>👀 {L('Watch the TV')}</p>}
+            <PhoneStageBody view={view} />
+          </div>
+        </Screen>
       );
   }
 }

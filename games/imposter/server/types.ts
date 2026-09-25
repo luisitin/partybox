@@ -4,7 +4,6 @@ import type { GameStateBase } from '@partybox/game-sdk';
 import type { WordItem } from '../content/schema';
 
 export const PHASES = [
-  'intro',
   'deal',
   'clue',
   'clueReveal',
@@ -20,7 +19,6 @@ export const PHASES = [
 ] as const;
 export type PhaseId = (typeof PHASES)[number];
 
-export const INTRO_MS = 8_000;
 export const DEAL_MS = 12_000;
 export const RUNOFF_MS = 20_000;
 export const LAST_CHANCE_MS = 20_000;

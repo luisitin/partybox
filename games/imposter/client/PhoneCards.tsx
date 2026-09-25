@@ -7,6 +7,7 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import { SecretCard, useSecretCardMode } from '@partybox/game-sdk/ui/secret-card';
 import type { ImposterControllerView } from '../server/index';
 import type { Input } from '../server/types';
+import { EnMark } from './en';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
@@ -50,6 +51,7 @@ function Face({ view, mini }: { view: Props['view']; mini: boolean }): JSX.Eleme
     <>
       <span className={styles.faceCaption}>{L('Your word')}</span>
       <span className={styles.faceWord}>{word}</span>
+      <EnMark />
     </>
   );
 }

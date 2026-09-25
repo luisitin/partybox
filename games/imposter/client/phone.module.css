@@ -484,3 +484,10 @@
   gap: var(--pb-space-2);
   min-height: 12rem;
 }
+
+.enMark {
+  display: block;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-align: center;
+}

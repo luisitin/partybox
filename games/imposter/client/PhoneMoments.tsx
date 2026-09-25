@@ -95,12 +95,12 @@ function resultLine(
   if (why.includes('escaped')) return L('You escaped!');
   if (why.includes('stole')) return L('Caught, but you stole it');
   if (role === 'imposter') return L('They got you');
+  // A steal is news for the crew too (design review [a0c548] 1): say both halves.
+  if (why.includes('caught') && stealer)
+    return L('You caught {name}, but they stole the word', { name: stealer });
   if (why.includes('caught') && why.includes('read'))
     return L('You caught the imposter and read it right');
-  if (why.includes('caught'))
-    return stealer
-      ? L('Caught, but {name} stole it', { name: stealer })
-      : L('The room caught the imposter');
+  if (why.includes('caught')) return L('The room caught the imposter');
   if (why.includes('read')) return L('You read it right');
   return L('The imposter got away');
 }
@@ -127,18 +127,6 @@ export function PhoneAfter({ view, skip, send }: Props): JSX.Element {
       </PrimaryButton>
     </div>
   ) : undefined;
-  const stage = view.phoneOnly === true;
-  if (!view.result && !stage)
-    return (
-      <Screen footer={vipButtons}>
-        <div className={styles.centerFill} role="status">
-          <span className={styles.eye} aria-hidden="true">
-            ◎
-          </span>
-          <p className={styles.resultLine}>👀 {L('Watch the TV')}</p>
-        </div>
-      </Screen>
-    );
   const me = view.players.find((p) => p.id === view.me.id);
   const place = rank(Object.fromEntries(view.players.map((p) => [p.id, p.score ?? 0]))).find(
     (row) => row.playerId === view.me.id,
@@ -167,7 +155,7 @@ export function PhoneAfter({ view, skip, send }: Props): JSX.Element {
           ) : null}
         </div>
       ) : null}
-      {stage || scores ? <PhoneStageBody view={view} /> : null}
+      <PhoneStageBody view={view} />
     </Screen>
   );
 }

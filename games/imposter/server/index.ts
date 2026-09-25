@@ -9,7 +9,6 @@ import { enterAccuse, reduceAccuse, stepAccuse } from './phases/accuse';
 import { enterClue, reduceClue } from './phases/clue';
 import { enterClueReveal, reduceClueReveal, retimeClueReveal } from './phases/clueReveal';
 import { enterDeal, reduceDeal } from './phases/deal';
-import { enterIntro, reduceIntro } from './phases/intro';
 import { enterLastChance, reduceLastChance, wantsLastChance } from './phases/lastChance';
 import { enterDone, enterScores, reduceScores } from './phases/scores';
 import { reduceTalk, enterTalk } from './phases/talk';
@@ -37,7 +36,7 @@ function init(ctx: InitContext): State {
   const seats = ctx.players.map((p) => p.id);
   const first = words[0];
   const base: State = {
-    phase: { id: 'intro', startedAt: ctx.now, deadline: null },
+    phase: { id: 'deal', startedAt: ctx.now, deadline: null },
     rng,
     players,
     cfg,
@@ -52,15 +51,14 @@ function init(ctx: InitContext): State {
     stats: {},
     speechMs: {},
   };
-  return enterIntro(base, ctx.now);
+  // ADR-053: the shell's stage already showed the rules and waited for everyone's READY + 3·2·1.
+  return enterDeal(base, ctx.now, 1);
 }
 
 /** The phase order: what a deadline does, and what the VIP's skip does (docs/GAME_CONTRACT.md). */
 export function advance(state: State, now: number): State {
   const r = state.round;
   switch (state.phase.id) {
-    case 'intro':
-      return enterDeal(state, now, 1);
     case 'deal':
       return enterClue(state, now, 1);
     case 'clue':
@@ -134,8 +132,6 @@ function reduce(state: State, event: GameEvent<Input>): State {
   if (vip) return vip;
   if (state.phase.paused) return state;
   switch (state.phase.id) {
-    case 'intro':
-      return reduceIntro(state, event, advance);
     case 'deal':
       return reduceDeal(state, event, advance);
     case 'clue':

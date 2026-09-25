@@ -19,7 +19,6 @@ describe('phase order', () => {
   it('together: one clue round, talk, vote; an idle room ends with the imposters escaping', () => {
     const order = phasesOf(start(6, { rounds: 1 }));
     expect(order).toEqual([
-      'intro',
       'deal',
       'clue',
       'clueReveal',
@@ -37,7 +36,6 @@ describe('phase order', () => {
     expect(s.cfg.talk).toBe(false);
     expect(s.cfg.clueRounds).toBe(2);
     expect(phasesOf(s)).toEqual([
-      'intro',
       'deal',
       'clue',
       'clueReveal',
@@ -82,17 +80,7 @@ describe('phase order', () => {
     }
     expect(s.phase.id).toBe('done');
     expect(seen).toEqual(
-      new Set([
-        'intro',
-        'deal',
-        'clue',
-        'clueReveal',
-        'talk',
-        'vote',
-        'voteReveal',
-        'wordReveal',
-        'scores',
-      ]),
+      new Set(['deal', 'clue', 'clueReveal', 'talk', 'vote', 'voteReveal', 'wordReveal', 'scores']),
     );
   });
 

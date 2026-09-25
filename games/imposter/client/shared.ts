@@ -7,7 +7,6 @@ export const shared: GameShared = {
   strings: STRINGS,
   // `phase` (pick up your phone) stays on deal, clue, vote, runoff; the TV moments get theirs.
   sounds: {
-    intro: 'start',
     deal: 'phase', // pick up your phone; the TV plucks one card per seat as the deal lands
     // Paced reveals step their deadline (ADR-033), and the shell re-chimes a mapped cue on every
     // step: these stay 'silence' and their scenes play 'reveal' once, on mount.
@@ -20,7 +19,6 @@ export const shared: GameShared = {
     scores: 'tally',
   },
   beds: {
-    intro: 'lounge',
     deal: 'lounge',
     clue: 'marimba',
     talk: 'latenight',

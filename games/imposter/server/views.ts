@@ -211,7 +211,6 @@ function extras(state: State): Pick<TvView, 'timerMode' | 'vipSkipLabel'> {
   const out: Pick<TvView, 'timerMode' | 'vipSkipLabel'> = {};
   if (p === 'deal' || p === 'scores') out.timerMode = 'quiet';
   if (REVEALS.has(p) || p === 'intro') out.timerMode = 'hidden';
-  if (p === 'intro') out.vipSkipLabel = "Let's go";
   if (p === 'talk') out.vipSkipLabel = 'Start the vote';
   if (p === 'wordReveal') out.vipSkipLabel = 'Scores';
   if (p === 'scores')

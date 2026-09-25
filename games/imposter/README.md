@@ -16,9 +16,10 @@ decides from its own phone view. Late joiners are spectators (stage only, no rol
 
 ## Phases
 
+The shell's start stage (ADR-053) shows the rules and waits for everyone's READY + 3·2·1; the game begins at the first deal.
+
 | Phase        | What happens                                                   | Ends when                                   |
 | ------------ | -------------------------------------------------------------- | ------------------------------------------- |
-| `intro`      | Title and the three steps (first round only)                   | 8 s, or VIP                                 |
 | `deal`       | Word, category and imposters drawn; phones hold the SecretCard | all connected ready, 12 s (quiet), or VIP   |
 | `clue`       | Everyone types one word (resend replaces)                      | all connected submitted, `clueSeconds`, VIP |
 | `clueReveal` | Cards dealt one at a time (seeded order), each read aloud      | last card + 2 s (hidden); VIP = next card   |

@@ -8,6 +8,7 @@ import { Avatar, Scoreboard, Screen, useT } from '@partybox/game-sdk/ui';
 import type { ControllerView, PushedView } from '@partybox/game-sdk/ui';
 import type { ImposterControllerView } from '../server/index';
 import { byId, cluesOf, pointsOf, useSay } from './helpers';
+import { EnMark } from './en';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
@@ -38,6 +39,7 @@ export function PhoneStageBody({ view }: { view: View }): JSX.Element | null {
         <>
           <p className={styles.kicker}>{L('Round {n} of {of}', { n: s.round, of: s.rounds })}</p>
           <h2 className={styles.title}>{L('Clues are in')}</h2>
+          <EnMark />
           <ul className={styles.clueList}>
             {dealt.map((c) => (
               <li
@@ -100,6 +102,7 @@ export function PhoneStageBody({ view }: { view: View }): JSX.Element | null {
         <div className={styles.accused}>
           <p className={styles.kicker}>{L('The word was')}</p>
           <p className={styles.bigWord}>{r.word}</p>
+          <EnMark />
           {r.imposters.map((id) => (
             <p key={id} className={styles.impLine}>
               🕵️ {name(id)}: {cluesOf(s, id).join(' · ') || '—'}
