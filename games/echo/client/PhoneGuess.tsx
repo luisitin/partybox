@@ -6,6 +6,7 @@ import { PrimaryButton, Screen, useHold, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { EchoControllerView } from '../server/views';
+import { EnglishTag } from './EnglishTag';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
@@ -88,7 +89,10 @@ export function PhoneGuess({
       }
     >
       <div className={styles.stack}>
-        <p className={styles.kicker}>{L("What's the word?")}</p>
+        <p className={styles.kicker}>
+          {L("What's the word?")}
+          <EnglishTag />
+        </p>
         <Clues view={view} />
         <input
           className={styles.input}

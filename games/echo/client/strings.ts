@@ -69,6 +69,8 @@ export const STRINGS: Strings = {
     '🔁 Try again! {won} of {total} words': '🔁 ¡Otra vez! {won} de {total} palabras',
     // intro (TV + phone)
     Echo: 'Echo',
+    'in English': 'en inglés',
+    'The words and clues are in English.': 'Las palabras y las pistas están en inglés.',
     'One player guesses; everyone else sees the secret word and writes a one-word clue.':
       'Una persona adivina; las demás ven la palabra secreta y escriben una pista de una palabra.',
     'Clues that match each other vanish before the guesser sees them.':

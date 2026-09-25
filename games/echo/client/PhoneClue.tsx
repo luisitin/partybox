@@ -11,6 +11,7 @@ import type { ClueReject, Input } from '../server/types';
 import { CLUE_MAX_CHARS } from '../shared/rules';
 import type { EchoControllerView } from '../server/views';
 import { SecretCard } from '@partybox/game-sdk/ui/secret-card';
+import { EnglishTag } from './EnglishTag';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
@@ -104,14 +105,8 @@ export function PhoneClue({
       <div className={styles.stack}>
         <p className={styles.kicker}>
           {L('Word {n} of {total}', { n: view.tv.wordNo, total: view.tv.deckSize })}
+          <EnglishTag />
         </p>
-        <SecretCard
-          key={secret.id}
-          backLabel={L('Hold to see the word')}
-          label={L('Hold to see the word')}
-        >
-          <span className={styles.secretWord}>{secret.answer}</span>
-        </SecretCard>
         <p className={styles.prompt}>
           {n === 2
             ? L('Two different words to help {name}', { name: guesser })
@@ -160,6 +155,13 @@ export function PhoneClue({
         ) : (
           <p className={styles.hint}>{L('Locked in. Waiting for the others…')}</p>
         )}
+        <SecretCard
+          key={secret.id}
+          backLabel={L('Hold to see the word')}
+          label={L('Hold to see the word')}
+        >
+          <span className={styles.secretWord}>{secret.answer}</span>
+        </SecretCard>
         {serverReject ? <p className={styles.errorLine}>{serverReject}</p> : null}
         {showDontKnow ? (
           <button

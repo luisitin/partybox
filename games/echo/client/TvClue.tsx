@@ -7,6 +7,7 @@ import { Avatar, Stage, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { EchoTvView } from '../server/views';
 import { Deck } from './TvParts';
+import { EnglishTag } from './EnglishTag';
 import { STRINGS } from './strings';
 import stage from './stage.module.css';
 import styles from './tv.module.css';
@@ -82,6 +83,7 @@ export function TvClue({ view }: GameTvProps<EchoTvView>): JSX.Element {
       <div className={styles.top}>
         <span className={styles.kicker}>
           {L('Word {n} of {total}', { n: view.wordNo, total: view.deckSize })}
+          <EnglishTag />
         </span>
         <Deck counts={view.counts} />
       </div>

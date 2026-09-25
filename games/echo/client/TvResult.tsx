@@ -10,6 +10,7 @@ import { AuthorTag, Card, ClueText, Deck, EchoFace } from './TvParts';
 import { RESULT } from './timing';
 import { usePhaseBeat, useMountElapsed } from './usePhaseBeat';
 import { useLine } from './useLine';
+import { EnglishTag } from './EnglishTag';
 import { STRINGS } from './strings';
 import res from './result.module.css';
 import stage from './stage.module.css';
@@ -55,6 +56,7 @@ export function TvResult({ view }: GameTvProps<EchoTvView>): JSX.Element | null 
       <div className={styles.top}>
         <span className={styles.kicker}>
           {L('Word {n} of {total}', { n: view.wordNo, total: view.deckSize })}
+          <EnglishTag />
         </span>
         <Deck counts={counts} />
       </div>

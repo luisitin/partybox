@@ -11,6 +11,7 @@ import { Card, ClueText, Deck, EchoFace } from './TvParts';
 import { GUESS } from './timing';
 import { usePhaseBeat, useMountElapsed } from './usePhaseBeat';
 import { useLine } from './useLine';
+import { EnglishTag } from './EnglishTag';
 import { STRINGS } from './strings';
 import stage from './stage.module.css';
 import styles from './tv.module.css';
@@ -58,6 +59,7 @@ export function TvGuess({ view }: GameTvProps<EchoTvView>): JSX.Element {
       <div className={styles.top}>
         <span className={styles.kicker}>
           {L('Word {n} of {total}', { n: view.wordNo, total: view.deckSize })}
+          <EnglishTag />
         </span>
         <Deck counts={view.counts} />
       </div>
