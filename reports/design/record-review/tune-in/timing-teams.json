@@ -1,0 +1,47 @@
+{
+  "settings": "{\"mode\":\"teams\"}",
+  "players": "8",
+  "cpu": "1",
+  "frames": 13184,
+  "long": 6,
+  "pct": 0.05,
+  "over100": 0,
+  "worst": 100,
+  "byPhase": {
+    "intro": 2,
+    "scores": 3,
+    "reveal": 1
+  },
+  "samples": [
+    {
+      "ms": 100,
+      "phase": "intro",
+      "s": 0.15
+    },
+    {
+      "ms": 50,
+      "phase": "intro",
+      "s": 0.61
+    },
+    {
+      "ms": 50,
+      "phase": "scores",
+      "s": 85.21
+    },
+    {
+      "ms": 50,
+      "phase": "scores",
+      "s": 164.27
+    },
+    {
+      "ms": 50,
+      "phase": "reveal",
+      "s": 208.05
+    },
+    {
+      "ms": 50,
+      "phase": "scores",
+      "s": 214.08
+    }
+  ]
+}

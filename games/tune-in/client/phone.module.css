@@ -1,0 +1,583 @@
+/* Tune In's phone (320 × 568 first; rem-based type so 200 % text scales). Tokens only; no text is
+   selectable on the input screens and no control shows a callout or a tap flash. */
+.screen {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kicker {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.title {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+}
+
+.role {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.clue {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.15;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* "(pista en inglés)" under a bot's clue on a Spanish phone. */
+.clueNote {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.yourClue {
+  font-size: var(--pb-font-body);
+  overflow-wrap: anywhere;
+}
+
+.tip,
+.hush {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  line-height: 1.4;
+}
+
+.hush {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+}
+
+/* ── the clue box ── */
+.clueForm {
+  position: relative;
+}
+
+.clueInput {
+  width: 100%;
+  min-height: 52px;
+  padding: var(--pb-space-3) 72px var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+}
+
+.clueInput:focus-visible {
+  outline: none;
+  border-color: var(--pb-focus);
+}
+
+.clueBad {
+  border-color: var(--pb-danger);
+}
+
+.counter {
+  position: absolute;
+  right: var(--pb-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.legal,
+.legalBad {
+  min-height: 1.4em;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.legal {
+  color: var(--pb-accent-3);
+}
+
+.legalBad {
+  color: var(--pb-danger);
+  animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease);
+}
+
+/* ── hold to see ── */
+/* Never squeezed by the screen's column: a min-height on a flex item stands in for its content
+   size, so an overfull page shrank the card and spilled its label onto the next line. */
+.hold {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  min-height: 132px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  perspective: 900px;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Both faces share one grid cell, so the card is as tall as the taller of them (at 200 % text the
+   label outgrew a fixed-height card and ran into the line below). */
+.holdInner {
+  position: relative;
+  display: grid;
+  min-height: 132px;
+  transform-style: preserve-3d;
+  transition: transform var(--pb-motion-base) var(--pb-ease);
+}
+
+.holdOpen .holdInner {
+  transform: rotateY(180deg);
+}
+
+.holdBack,
+.holdFront {
+  grid-area: 1 / 1;
+  display: flex;
+  border-radius: var(--pb-radius-lg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.holdBack {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-1);
+  padding: var(--pb-space-3);
+  text-align: center;
+  background: var(--pb-surface);
+  border: 2px dashed var(--pb-surface-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.holdGlyph {
+  font-size: var(--pb-font-h1);
+}
+
+.holdFront {
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--pb-space-3) 0;
+  background: var(--pb-surface);
+  transform: rotateY(180deg);
+}
+
+/* ── the call ── */
+/* LEFT on the left, RIGHT on the right: the side you mean is the side you tap. */
+.calls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pb-space-3);
+}
+
+.call {
+  min-height: 80px;
+  display: grid;
+  gap: var(--pb-space-1);
+  place-content: center;
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  border: 3px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.call:active {
+  transform: scale(0.97);
+}
+
+.callChosen {
+  border-color: var(--pb-accent);
+  background: var(--pb-surface-2);
+}
+
+.callSide {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+.callEnd {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* ── lock-in row ── */
+.lockRow {
+  display: grid;
+  gap: var(--pb-space-2);
+}
+
+.lockCount {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.lockFaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+}
+
+.lockFace {
+  position: relative;
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+/* Still to lock in: the face breathes, like the start stage's unready faces. */
+.lockWaiting {
+  animation: tune-wait-breathe calc(var(--pb-motion-pulse) * 2) ease-in-out infinite;
+}
+
+@keyframes tune-wait-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+
+.lockTick {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  border: 2px solid var(--pb-bg);
+  font-size: 11px;
+  font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The waiting phone's spectrum: a real strip, not a stub (a waiting screen centres at content
+   width). */
+.waitStrip {
+  width: min(100%, 360px);
+}
+
+/* ── the scores beat waits for the VIP ── */
+/* Their Next round / See results breathes: the next action is the thing that moves. */
+.breathe {
+  animation: tune-ready-breathe calc(var(--pb-motion-pulse) * 2) ease-in-out infinite;
+}
+
+@keyframes tune-ready-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.05);
+    filter: brightness(1.15);
+  }
+}
+
+/* Every other phone: whose tap moves it on, breathing in opacity (no dead phone, p14). */
+.nextHint {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  text-align: center;
+  text-wrap: balance;
+  animation: tune-hint-breathe calc(var(--pb-motion-pulse) * 2) ease-in-out infinite;
+}
+
+@keyframes tune-hint-breathe {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breathe,
+  .nextHint,
+  .lockWaiting {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .breathe,
+:global(:root[data-motion='off']) .nextHint,
+:global(:root[data-motion='off']) .lockWaiting {
+  animation: none;
+}
+
+/* ── results ── */
+/* The result sits in the middle of the screen, not stuck to the top of a tall phone. */
+.middle {
+  margin-block: auto;
+  display: grid;
+  gap: var(--pb-space-4);
+}
+
+.picture {
+  width: 100%;
+  margin-top: var(--pb-space-2);
+}
+.result {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-5) var(--pb-space-3);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  text-align: center;
+}
+
+.big {
+  font-size: var(--pb-font-display);
+  font-weight: 1000;
+  line-height: 1;
+  color: var(--pb-accent-2);
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.resultLine {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+.total {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  text-align: center;
+  color: var(--pb-text);
+  text-wrap: balance;
+}
+
+.verdict {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  text-align: center;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── intro ── */
+.teamBadge {
+  --team: var(--pb-team-sun);
+  align-self: flex-start;
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border-left: 8px solid var(--team);
+  background: var(--pb-surface);
+  font-weight: 900;
+}
+
+/* The teams card centres its badge under the waiting line. */
+.teamBadgeCentred {
+  align-self: center;
+}
+
+.sun {
+  --team: var(--pb-team-sun);
+}
+
+.moon {
+  --team: var(--pb-team-moon);
+}
+
+.steps {
+  margin: 0;
+  padding-left: 1.4em;
+  display: grid;
+  gap: var(--pb-space-3);
+  font-size: var(--pb-font-body);
+  line-height: 1.35;
+}
+
+.step {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── phone stage board ── */
+.board {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--pb-space-2);
+}
+
+.board li {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+}
+
+.boardMe {
+  outline: 2px solid var(--pb-accent);
+}
+
+.boardName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.boardScore {
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .holdInner {
+    transition: none;
+  }
+}
+:global(:root[data-motion='off']) .holdInner {
+  transition: none;
+}
+
+/* A short screen (an iPhone SE, a sideways phone, big text) keeps what the player needs to act;
+   the reassurance lines go. */
+@media (max-height: 640px) {
+  .optional {
+    display: none;
+  }
+  /* An SE's psychic in a huddle: the strip, the card, the hush and the lock row must fit (p11 cut
+     the lock row's faces at the bottom edge). */
+  .hold,
+  .holdInner {
+    min-height: 104px;
+  }
+  .lockTight .lockFaces {
+    display: none;
+  }
+  /* The intro's rules, the note and I'm ready on one page (p-intro shots: step 3 and the note fell
+     under the fold on an SE). */
+  .title {
+    font-size: var(--pb-font-h2);
+  }
+  .steps {
+    gap: var(--pb-space-2);
+    font-size: var(--pb-font-caption);
+    line-height: 1.3;
+  }
+}
+
+/* Stacked everywhere but a sideways phone, where the two sit side by side. */
+.pair,
+.pairSide {
+  display: contents;
+}
+
+/* A sideways phone (the shell's own query): side by side instead of stacked, and the lines that
+   only reassure go, so everything a player acts on fits without a scroll. */
+@media (orientation: landscape) and (max-height: 420px) {
+  .pair {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: var(--pb-space-4);
+    align-items: center;
+  }
+  .pairSide {
+    display: grid;
+    gap: var(--pb-space-2);
+  }
+  .roomy {
+    display: none;
+  }
+  /* The three rules side by side under the title. */
+  .steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--pb-space-6);
+  }
+  /* The result card takes three fifths; the totals (a line, or the teams' banner) the rest. */
+  .middle {
+    display: flex;
+    align-items: center;
+  }
+  .middle > .result {
+    flex: 3 1 0;
+    min-width: 0;
+  }
+  .middle > :not(.result) {
+    flex: 2 1 0;
+    min-width: 0;
+  }
+  /* Teams' scores: a card without a picture beside the banner — half and half. */
+  .middle.even > .result,
+  .middle.even > :not(.result) {
+    flex: 1 1 0;
+  }
+  /* The scores beat keeps your result and the totals; the round's picture was just on screen. */
+  .atScores .picture {
+    display: none;
+  }
+  .result {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--pb-space-4);
+    padding: var(--pb-space-3) var(--pb-space-4);
+  }
+  .big {
+    grid-row: 1 / span 2;
+  }
+  .resultLine,
+  .picture {
+    grid-column: 2;
+  }
+  /* No picture under it: the line centres beside the number. */
+  .resultLine:last-child {
+    grid-row: 1 / span 2;
+  }
+  .picture {
+    margin-top: 0;
+  }
+}
