@@ -446,6 +446,8 @@
   padding: 0;
   display: grid;
   gap: var(--pb-space-2);
+  max-height: 32vh;
+  overflow-y: auto;
 }
 
 .board li {
@@ -472,6 +474,56 @@
 .boardScore {
   font-weight: 900;
   font-variant-numeric: tabular-nums;
+}
+
+.scoreCard {
+  display: grid;
+  gap: var(--pb-space-3);
+  width: 100%;
+  padding: var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+}
+
+.scoreTitle {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  text-align: center;
+}
+
+.scoreNote {
+  margin: 0;
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  text-align: center;
+}
+
+.coopTotal {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--pb-space-2);
+}
+
+.coopTotal strong {
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-display);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.coopGain {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  text-align: center;
+}
+
+.coopProgress {
+  width: 100%;
+  height: 12px;
+  accent-color: var(--pb-accent-2);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -550,6 +602,29 @@
   .middle > :not(.result) {
     flex: 2 1 0;
     min-width: 0;
+  }
+  .middle > .scoreCard {
+    flex: 1 1 auto;
+  }
+  .soloScores .result {
+    display: none;
+  }
+  .scoreCard {
+    gap: var(--pb-space-1);
+    padding: var(--pb-space-2) var(--pb-space-4);
+  }
+  .scoreTitle {
+    font-size: var(--pb-font-body);
+  }
+  .coopTotal strong {
+    font-size: var(--pb-font-h1);
+  }
+  .coopGain,
+  .scoreNote {
+    font-size: var(--pb-font-caption);
+  }
+  .coopProgress {
+    height: 8px;
   }
   /* Teams' scores: a card without a picture beside the banner — half and half. */
   .middle.even > .result,

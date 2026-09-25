@@ -212,3 +212,14 @@ double-tap Lock in; callers tap a side; Priya's phone (iPhone SE, 320 × 568) ge
   motion).
 - p14c: TV 246 s, 0 dead spans, 0 hard cuts; phones 0 dead spans in the game. The only still
   left starts after the results arrive (the shell's results screen on the phones).
+
+## Phone-only score beat (2026-09-25, owner screenshot)
+
+- Reproduced the missing Next action: `phoneStagePhases` included `scores`, which replaced the
+  controller screen and left a bare “Group 3 / 32 · Tuning in.” line until the 20 s fallback.
+- The new scorecard was captured on the owned 42640 build at SE 320 × 568, sideways 852 × 330,
+  200 % text, and Spanish, in co-op, solo and teams. Co-op shows group points and the round's gain;
+  solo shows the leaderboard; teams show both totals. The VIP button and non-VIP wait line fit.
+- A live phone-only co-op run reached `scores`, tapped the VIP's **Next round** and entered the next
+  `clue` without waiting for the fallback. Evidence is in `C:/dev/scratch/codex-tune-in/score-live/`
+  and `score-shots/` through `score-shots-4/` (local, not committed).

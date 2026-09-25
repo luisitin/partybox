@@ -60,6 +60,11 @@ returns `ctx.presence` (the SDK's `GamePresence`), else all in one room. Still l
   the psychic's hold card and the huddle strip sit side by side; the reassurance rows hide; the
   scores beat drops the round's picture (it was just on screen). LEFT / RIGHT sit side by side in
   every orientation — the side you mean is the side you tap.
+- **Phone-only score beat** (owner screenshot, 2026-09-25): the old `PhoneStage` covered `scores`,
+  hiding the VIP's Next round button and leaving everyone on “Group 3 / 32 · Tuning in.” until the
+  20 s fallback. Keep `PhoneStage` for the dial reveal only. The controller score beat now shows
+  a solo leaderboard, team totals or a co-op card that names points this round and points earned
+  so far; the VIP can advance as soon as everyone has read it.
 - **An idle room ends after three void rounds in a row** (spec §5.17 "the game ends quickly"): a
   whole idle game otherwise ran every round of "No signal!" (396 s in the sim, now 154 s). A round
   with a clue starts the count again.

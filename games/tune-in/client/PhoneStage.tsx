@@ -1,49 +1,16 @@
-// In a phone-only room (S-005, P00 §3.6) the phones show the TV's moments — the reveal and the
-// scores (the intro stays the phone's own screen: it carries I'm ready): a horizontal dial with
-// the zones, the markers and the needle, the verdict and a compact score list. Every spoken line
-// is also written here, and the reader plays on the phone.
+// In a phone-only room (S-005, P00 §3.6) the phones show the TV's reveal: a horizontal dial with
+// the zones, markers, needle and verdict. The score beat returns to Controller so the VIP can
+// advance the game without waiting for the timer.
 import type { JSX } from 'react';
-import { Avatar, Screen, useT } from '@partybox/game-sdk/ui';
+import { Screen, useT } from '@partybox/game-sdk/ui';
 import type { ControllerView, PushedView } from '@partybox/game-sdk/ui';
 import { DialStrip } from '@partybox/game-sdk/ui/dial';
 import type { TuneControllerView } from '../server/index';
-import { avatarOf, englishClueNote, ratingText, roundLine, teamName, verdictText } from './copy';
+import { avatarOf, englishClueNote, roundLine, verdictText } from './copy';
 import { useEnds } from './ends';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 import { useReading } from './useReading';
-
-function Board({ view }: { view: TuneControllerView }): JSX.Element {
-  const L = useT(STRINGS);
-  if (view.turn.mode === 'teams')
-    return (
-      <p className={styles.total}>
-        {`${teamName(L, 'sun')} ${view.team.sun} · ${teamName(L, 'moon')} ${view.team.moon}`}
-        {' · '}
-        {L('First to {n}', { n: view.winAt })}
-      </p>
-    );
-  if (view.turn.mode === 'coop' && view.coop)
-    return (
-      <p className={styles.total}>
-        {L('Group {total} / {max}', { total: view.coop.total, max: view.coop.max })}
-        {'\u00a0· '}
-        {ratingText(L, view.coop.rating)}
-      </p>
-    );
-  const rows = [...view.players].sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
-  return (
-    <ol className={styles.board}>
-      {rows.map((p) => (
-        <li key={p.id} className={p.id === view.me.id ? styles.boardMe : undefined}>
-          <Avatar avatarId={p.avatarId} size={24} />
-          <span className={styles.boardName}>{p.name}</span>
-          <span className={styles.boardScore}>{p.score ?? 0}</span>
-        </li>
-      ))}
-    </ol>
-  );
-}
 
 export function PhoneStage({ view: raw }: { view: PushedView<ControllerView> }): JSX.Element {
   const L = useT(STRINGS);
@@ -82,7 +49,6 @@ export function PhoneStage({ view: raw }: { view: PushedView<ControllerView> }):
           ) : null}
         </>
       )}
-      {view.phaseId === 'scores' ? <Board view={view} /> : null}
     </Screen>
   );
 }

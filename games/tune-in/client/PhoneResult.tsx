@@ -2,12 +2,19 @@
 // "+4 · Bullseye! You were 2 away", the psychic's average, the caller's verdict — then, in
 // `scores`, the running total and the VIP's Next round / See results.
 import type { JSX } from 'react';
-import { PrimaryButton, Screen, WaitingScreen, usePhoneOnly, useT } from '@partybox/game-sdk/ui';
+import {
+  Avatar,
+  PrimaryButton,
+  Screen,
+  WaitingScreen,
+  usePhoneOnly,
+  useT,
+} from '@partybox/game-sdk/ui';
 import type { Translator } from '@partybox/game-sdk/ui';
 import { DialStrip } from '@partybox/game-sdk/ui/dial';
 import { TeamBanner } from '@partybox/game-sdk/ui/team-banner';
 import type { TuneControllerView } from '../server/index';
-import { avatarOf, ratingText, roundLine } from './copy';
+import { avatarOf, roundLine } from './copy';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 
@@ -113,6 +120,56 @@ function standing(L: Translator, view: TuneControllerView): string {
   }).replace(' · ', '\u00a0· ');
 }
 
+function SoloBoard({ view }: { view: TuneControllerView }): JSX.Element {
+  const L = useT(STRINGS);
+  const rows = [...view.players].sort(
+    (a, b) => (b.score ?? 0) - (a.score ?? 0) || a.name.localeCompare(b.name),
+  );
+  return (
+    <section className={styles.scoreCard} aria-label={L('Leaderboard')}>
+      <h2 className={styles.scoreTitle}>{L('Leaderboard')}</h2>
+      <ol className={styles.board}>
+        {rows.map((p) => (
+          <li key={p.id} className={p.id === view.me.id ? styles.boardMe : undefined}>
+            <Avatar avatarId={p.avatarId} size={24} />
+            <span className={styles.boardName}>{p.name}</span>
+            <span className={styles.boardScore}>{p.score ?? 0}</span>
+          </li>
+        ))}
+      </ol>
+      <p className={styles.scoreNote}>{standing(L, view)}</p>
+    </section>
+  );
+}
+
+function CoopScore({ view }: { view: TuneControllerView }): JSX.Element | null {
+  const L = useT(STRINGS);
+  if (!view.coop) return null;
+  const gained = view.reveal?.needlePts ?? 0;
+  return (
+    <section className={styles.scoreCard} aria-label={L('Group score')}>
+      <h2 className={styles.scoreTitle}>{L('Group score')}</h2>
+      <div className={styles.coopTotal}>
+        <strong>{view.coop.total}</strong>
+        <span>{L('points so far')}</span>
+      </div>
+      <p className={styles.coopGain}>{L('+{n} this round', { n: gained })}</p>
+      <progress
+        className={styles.coopProgress}
+        value={view.coop.total}
+        max={view.coop.max}
+        aria-label={L('{earned} of {possible} possible points', {
+          earned: view.coop.total,
+          possible: view.coop.max,
+        })}
+      />
+      <p className={styles.scoreNote}>
+        {L('Round {n} of {total} complete', { n: view.turn.n, total: view.turn.total })}
+      </p>
+    </section>
+  );
+}
+
 export function PhoneResult({
   view,
   skip,
@@ -129,7 +186,7 @@ export function PhoneResult({
   const teams = view.turn.mode === 'teams';
   return (
     <Screen
-      className={`${styles.screen} ${scores ? styles.atScores : ''}`}
+      className={`${styles.screen} ${scores ? styles.atScores : ''} ${scores && view.turn.mode === 'solo' ? styles.soloScores : ''}`}
       footer={
         // The scores beat waits for the VIP (p14: a phone held still for 5 s): their button breathes,
         // and every other phone breathes whose tap moves it on, as the TV does.
@@ -146,16 +203,25 @@ export function PhoneResult({
         ) : undefined
       }
     >
-      <p className={styles.kicker}>{roundLine(L, view.turn)}</p>
+      <p className={styles.kicker}>
+        {scores
+          ? teams
+            ? L('Turn {n} complete', { n: view.turn.n })
+            : L('Round {n} complete', { n: view.turn.n })
+          : roundLine(L, view.turn)}
+      </p>
       <div className={`${styles.middle} ${scores && teams ? styles.even : ''}`}>
-        <div className={styles.result} role="status">
-          <span key={big} className={styles.big}>
-            {big}
-          </span>
-          <span className={styles.resultLine}>{line}</span>
-          {/* Teams' scores swap the picture for the totals: both did not fit a 320 × 568 phone. */}
-          {scores && teams ? null : <Picture view={view} />}
-        </div>
+        {scores && view.turn.mode === 'coop' ? (
+          <CoopScore view={view} />
+        ) : (
+          <div className={styles.result} role="status">
+            <span key={big} className={styles.big}>
+              {big}
+            </span>
+            <span className={styles.resultLine}>{line}</span>
+            {scores ? null : <Picture view={view} />}
+          </div>
+        )}
         {scores && teams ? (
           <TeamBanner
             size="phone"
@@ -166,16 +232,7 @@ export function PhoneResult({
             words={{ sun: L('Sun'), moon: L('Moon'), middle: L('First to {n}', { n: view.winAt }) }}
           />
         ) : null}
-        {scores && view.turn.mode === 'coop' && view.coop ? (
-          <p className={styles.total}>
-            {L('Group {total} / {max}', { total: view.coop.total, max: view.coop.max })}
-            {'\u00a0· '}
-            {ratingText(L, view.coop.rating)}
-          </p>
-        ) : null}
-        {scores && view.turn.mode === 'solo' ? (
-          <p className={styles.total}>{standing(L, view)}</p>
-        ) : null}
+        {scores && view.turn.mode === 'solo' ? <SoloBoard view={view} /> : null}
       </div>
     </Screen>
   );

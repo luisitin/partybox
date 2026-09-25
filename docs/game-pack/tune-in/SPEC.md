@@ -112,7 +112,7 @@ The first team to 10 points wins. A team that hits a bullseye while still behind
 | `dial`   | The clue in large text, the dial, chips ✓. Huddle: live markers and the needle                     | Guessers: clue, `DialInput`, **Lock in**; in huddle, teammates' markers too. Psychic: own clue and the target. Others: waiting | `dial` (throttled, §5.9), `lock` | all guessers locked, 25 s, or VIP                                | `phase` · `marimba`                                            |
 | `call`   | Sun's needle on the dial (target still hidden), "Moon: LEFT or RIGHT?"                             | Moon: ◀ LEFT / RIGHT ▶. Sun: waiting                                                                                           | `call`                           | all callers tapped, 15 s, or VIP                                 | `phase` · `pulse`                                              |
 | `reveal` | The shutter swings open; faces land at their dials; the needle settles; distances and points       | Stage, then own result                                                                                                         | —                                | paced, about 6 s                                                 | `reveal`; `jackpot` on a bullseye; `bust` if everyone scored 0 |
-| `scores` | Solo: scoreboard. Teams: the two totals racing to the target. Co-op: the group meter               | Own points; VIP: **Next round**                                                                                                | —                                | 6 s, or VIP                                                      | `tally` · `warm`                                               |
+| `scores` | Solo: scoreboard. Teams: the two totals racing to the target. Co-op: the group meter               | Solo: leaderboard; teams: both totals; co-op: points this round and group total. VIP: **Next round**                           | —                                | VIP, or 20 s fallback                                            | `tally` · `warm`                                               |
 
 **Client hooks:**
 
@@ -211,7 +211,7 @@ The first team to 10 points wins. A team that hits a bullseye while still behind
 
 ### PhoneStage
 
-`phoneStagePhases: ['intro', 'reveal', 'scores']`. PhoneStage shows a horizontal dial with the zones, the markers and the needle, plus a compact score list.
+`phoneStagePhases: ['reveal']`. PhoneStage shows the dial's zones, markers, needle and verdict. At `scores`, phones use the controller scorecard so the VIP can tap **Next round** and the others can see who advances the game.
 
 **Small-phone check:** every phase fits 320×568. The dial phase uses about 330 px for the clue, labels, track and fine-adjust buttons, plus the pinned **Lock in**.
 
@@ -465,7 +465,7 @@ The reader defaults to `sky`.
 | `together`     | Huddle is available in teams and co-op. The psychic's hold-to-see matters                                  |
 | `remote-voice` | Same as together; huddles happen on the call                                                               |
 | `remote-text`  | Huddle is forced off. Each teammate dials alone, and the needle is their average, shown only at the reveal |
-| phone-only     | `intro`, `reveal` and `scores` run on `PhoneStage`                                                         |
+| phone-only     | `reveal` runs on `PhoneStage`; `scores` shows the controller scorecard and VIP Next action                 |
 
 Solo mode plays the same in every presence mode.
 

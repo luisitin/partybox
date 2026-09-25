@@ -7,8 +7,8 @@ import { shared } from './shared';
 export const phone: GamePhoneModule = {
   ...shared,
   Controller,
-  // A phone-only room: the phones run the TV's stage for the reveal and the scores. The intro stays
-  // the phone's own screen: it carries the rules and I'm ready [cc45f4].
+  // A phone-only room uses the dial stage for the reveal. Scores return to Controller so the VIP
+  // has a visible Next round action rather than waiting for the scores timer to expire.
   PhoneStage: lazy(() => import('./PhoneStage').then((m) => ({ default: m.PhoneStage }))),
-  phoneStagePhases: ['reveal', 'scores'],
+  phoneStagePhases: ['reveal'],
 };
