@@ -1,5 +1,5 @@
 // Phase "intro": the round card ("Round r of R", double points on the last round). Entering it
-// starts the round: draws prompts and pairs authors. Exits on the 5 s deadline or VIP skip.
+// starts the round: draws prompts and pairs authors. Exits on the 7 s deadline or VIP skip.
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { startRound } from '../round';

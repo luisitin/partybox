@@ -72,6 +72,16 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     ...(room.formerVip ? { formerVip: room.formerVip } : {}),
     ...(room.votes ? { votes: peopleVotes(room) } : {}),
     ...(highlightedGameId(room) ? { highlightedGameId: highlightedGameId(room) ?? undefined } : {}),
+    ...(room.starting
+      ? {
+          starting: {
+            gameId: room.starting.gameId,
+            ready: room.starting.ready.filter((id) => room.players[id]),
+            countdownAt: room.starting.countdownAt,
+            ...(room.starting.held ? { held: true } : {}),
+          },
+        }
+      : {}),
   };
 }
 

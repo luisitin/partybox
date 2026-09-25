@@ -2,6 +2,7 @@
 import type { VipAction } from '@partybox/shared';
 import { fakeGame } from './fake-game.helper';
 import { applyRoomEvent, createRoom } from './room';
+import { STAGE_COUNT_MS } from './runner';
 import type { ApplyResult, Effect, EngineDeps, RoomEvent, RoomState } from './types';
 
 export const deps: EngineDeps = { games: { fake: fakeGame } };
@@ -29,10 +30,16 @@ export function vip(
   return applyRoomEvent(room, { type: 'vip', now, playerId, action, seed }, deps);
 }
 
+/** ADR-053: through a start stage the room is in — the VIP's Start now, then the count's end. */
+export function throughStage(room: RoomState, now = T0 + 500): RoomState {
+  const counting = vip(room, { action: 'startNow' }, now).room;
+  return applyRoomEvent(counting, { type: 'tick', now: now + STAGE_COUNT_MS }, deps).room;
+}
+
 /** A room already playing the fake game with N players. */
 export function playingRoom(n = 3, now = T0 + 100): RoomState {
   const selected = vip(roomWith(n), { action: 'selectGame', gameId: 'fake' }, now).room;
-  return vip(selected, { action: 'start' }, now + 1, 'p1', 42).room;
+  return vip(selected, { action: 'startNow' }, now + 1, 'p1', 42).room;
 }
 
 export function effectTypes(effects: Effect[]): string[] {

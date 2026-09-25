@@ -4,15 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { fill, fillText, glue, revealMs } from '../server/cards';
 import { DECKS, whitePool } from '../server/content';
 import { game } from '../server/index';
-import {
-  BIG_REVEAL_MAX_MS,
-  BIG_REVEAL_MIN_MS,
-  BIG_REVEAL_PER_CHAR_MS,
-  FINAL_MS,
-  REVEAL_MAX_MS,
-  REVEAL_MIN_MS,
-  REVEAL_PER_CHAR_MS,
-} from '../server/types';
+import { FINAL_MS, REVEAL_POP_MS, readMs } from '../server/types';
 import { PLAYERS, T0, playRound, start, timer, tv } from './helpers';
 
 describe('whole game', () => {
@@ -258,17 +250,14 @@ describe('fill', () => {
     expect(fillText("What's that smell?", ['Grandma.'])).toBe("What's that smell? Grandma.");
   });
 
-  it('reveal time grows with length and is clamped', () => {
-    expect(revealMs('Hi ____.', ['Yo.'])).toBe(
-      REVEAL_MIN_MS + 'Hi Yo.'.length * REVEAL_PER_CHAR_MS,
-    );
-    expect(revealMs('x'.repeat(200), ['y'.repeat(100)])).toBe(REVEAL_MAX_MS);
-    // A big room reads faster: twelve cards stay under a minute.
-    expect(revealMs('Hi ____.', ['Yo.'], 12)).toBe(
-      BIG_REVEAL_MIN_MS + 'Hi Yo.'.length * BIG_REVEAL_PER_CHAR_MS,
-    );
-    expect(revealMs('x'.repeat(200), ['y'.repeat(100)], 12)).toBe(BIG_REVEAL_MAX_MS);
-    expect(revealMs('x'.repeat(200), ['y'.repeat(100)], 8)).toBe(REVEAL_MAX_MS);
+  it('reveal time is the drop-in plus a slow readerâ€™s time for the sentence (pacing rule)', () => {
+    // 'Hi Yo.' is 2 words: 0.9 s + 1.5 s + 2 × 1/3 s.
+    expect(revealMs('Hi ____.', ['Yo.'])).toBe(REVEAL_POP_MS + readMs(2, 1));
+    expect(readMs(2, 1)).toBe(2_166);
+    // 30 words: never cut short, in any room size.
+    const long = Array.from({ length: 29 }, () => 'word').join(' ') + ' ____.';
+    expect(revealMs(long, ['Yo.'], 12)).toBe(REVEAL_POP_MS + readMs(30, 1));
+    expect(revealMs(long, ['Yo.'], 12)).toBeGreaterThan(11_000);
   });
 });
 

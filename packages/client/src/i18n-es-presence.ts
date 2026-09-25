@@ -1,5 +1,5 @@
 // Spanish for "Where is everyone?" — the twin of i18n-en-presence.ts (the compiler holds them to
-// one shape through `Texts`); "vosotros" like the rest of the shell.
+// one shape through `Texts`); Latin American (ustedes) like the rest of the shell ([28c1e1]).
 import type { Texts } from './i18n-en';
 
 export const esPresence: Pick<Texts, 'presence'> = {
@@ -17,8 +17,8 @@ export const esPresence: Pick<Texts, 'presence'> = {
     },
     prompt: (name, more) =>
       more > 0
-        ? `${name} y ${more} más no ven la TV. ¿Están en una llamada con vosotros?`
-        : `${name} no ve la TV. ¿Está en una llamada con vosotros?`,
+        ? `${name} y ${more} más no ven la TV. ¿Están en una llamada con ustedes?`
+        : `${name} no ve la TV. ¿Está en una llamada con ustedes?`,
     onCall: 'En una llamada',
     onCallHint: 'Se juega igual',
     noCall: 'Sin llamada',
