@@ -19,6 +19,10 @@ export const gameLoaders: Readonly<Record<string, GameLoaders>> = {
     phone: () => import('../../../games/hive-rank/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/hive-rank/client/tv-entry').then((m) => m.tv),
   },
+  'imposter': {
+    phone: () => import('../../../games/imposter/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/imposter/client/tv-entry').then((m) => m.tv),
+  },
   'lightning-round': {
     phone: () => import('../../../games/lightning-round/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/lightning-round/client/tv-entry').then((m) => m.tv),

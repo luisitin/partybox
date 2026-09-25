@@ -50,7 +50,7 @@ const previewQuery = z.object({
   view: z.enum(['tv', 'controller']).default('tv'),
   player: z.string().optional(),
 });
-const SAFE_NAME = /^[a-z0-9-]+$/;
+const SAFE_NAME = /^[a-zA-Z0-9-]+$/; // camelCase phase ids are fixture names (Imposter: clueReveal)
 
 export function registerDevApi(app: FastifyInstance, options: DevApiOptions): void {
   const { host, bots, clock, deps } = options;

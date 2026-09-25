@@ -4,6 +4,7 @@ import { game as bingo } from '../../../games/bingo/server/index';
 import { game as blanks } from '../../../games/blanks/server/index';
 import { game as brokenPencil } from '../../../games/broken-pencil/server/index';
 import { game as hiveRank } from '../../../games/hive-rank/server/index';
+import { game as imposter } from '../../../games/imposter/server/index';
 import { game as lightningRound } from '../../../games/lightning-round/server/index';
 import { game as spyGrid } from '../../../games/spy-grid/server/index';
 import { game as wisecrack } from '../../../games/wisecrack/server/index';
@@ -11,6 +12,7 @@ import bingoEs from '../../../games/bingo/manifest.es.json' with { type: 'json' 
 import blanksEs from '../../../games/blanks/manifest.es.json' with { type: 'json' };
 import brokenPencilEs from '../../../games/broken-pencil/manifest.es.json' with { type: 'json' };
 import hiveRankEs from '../../../games/hive-rank/manifest.es.json' with { type: 'json' };
+import imposterEs from '../../../games/imposter/manifest.es.json' with { type: 'json' };
 import lightningRoundEs from '../../../games/lightning-round/manifest.es.json' with { type: 'json' };
 import spyGridEs from '../../../games/spy-grid/manifest.es.json' with { type: 'json' };
 import wisecrackEs from '../../../games/wisecrack/manifest.es.json' with { type: 'json' };
@@ -20,6 +22,7 @@ export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'blanks': blanks,
   'broken-pencil': brokenPencil,
   'hive-rank': hiveRank,
+  'imposter': imposter,
   'lightning-round': lightningRound,
   'spy-grid': spyGrid,
   'wisecrack': wisecrack,
@@ -30,6 +33,7 @@ export const serverGameText: Readonly<Record<string, Readonly<Record<string, Rea
   'blanks': { es: blanksEs },
   'broken-pencil': { es: brokenPencilEs },
   'hive-rank': { es: hiveRankEs },
+  'imposter': { es: imposterEs },
   'lightning-round': { es: lightningRoundEs },
   'spy-grid': { es: spyGridEs },
   'wisecrack': { es: wisecrackEs },
