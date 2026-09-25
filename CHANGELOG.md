@@ -251,6 +251,15 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Friends who can't see the TV** (game pack F4, ADR-047): the VIP's ★ menu asks "Where is everyone?" —
+  all in one room, some remote on a call, some remote with no call (between games; the TV has the same
+  chip). Each phone has "I can see the TV" in its 🎨 sheet; until someone answers, the host guesses from
+  where the phone connects (home Wi-Fi sees the TV; a Tailscale or tunnel phone does not). A phone that
+  can't see the TV gets the TV's moments on its own screen, the reader, the TV's cues and the music, in
+  every game that already worked phone-only. The VIP is asked "Maya can't see the TV. Are you on a
+  call?" and choosing a game that needs talking or the same room says so first. Games learn the room's
+  presence when they start.
+
 - **Co-op and team games end properly** (ADR-052): a game can say it was a co-op mission (complete or
   failed) or a team game (▲ Sun wins, or a draw), with its own headline. The results screens stop
   calling those a tie: a win gets the cheer and the confetti, a loss or a draw the quiet chord.

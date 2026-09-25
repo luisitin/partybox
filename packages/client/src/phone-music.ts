@@ -22,13 +22,17 @@ export function phoneMusicChoice(): 'on' | 'off' | null {
 export function phoneMusicOn(): boolean {
   return phoneMusicChoice() === 'on';
 }
-/** Whether this phone plays music: its own choice, else the room's ask (phone only / VIP switch). */
+/**
+ * Whether this phone plays music: its own choice, else the room's ask (phone only / VIP switch) —
+ * or, ADR-047 (ruling 14), this player can't see the TV, so it can't hear the TV's music either.
+ */
 export function phoneMusicWanted(
   choice: 'on' | 'off' | null,
   room: { phoneOnly?: boolean; musicOnPhones?: boolean } | null | undefined,
+  remote = false,
 ): boolean {
   if (choice !== null) return choice === 'on';
-  return (room?.phoneOnly ?? false) || (room?.musicOnPhones ?? false);
+  return (room?.phoneOnly ?? false) || (room?.musicOnPhones ?? false) || remote;
 }
 export function setPhoneMusicOn(on: boolean): void {
   try {

@@ -28,9 +28,19 @@ export interface ThemePickerProps {
   onClose?: () => void;
   /** Sheet only: extra rows under the themes (the phone's sound and vibration toggles). */
   footer?: ReactNode;
+  /** Sheet only: a group above the themes; the sheet then takes `title` and the themes get their
+   *  own heading (a phone's "This phone" group, reviewer D3). */
+  header?: ReactNode;
+  title?: string;
 }
 
-export function ThemePicker({ variant, onClose, footer }: ThemePickerProps): JSX.Element {
+export function ThemePicker({
+  variant,
+  onClose,
+  footer,
+  header,
+  title,
+}: ThemePickerProps): JSX.Element {
   const current = useTheme();
   // The names and hints read in the device's language (`t.themes`); a switch re-renders them.
   useLang();
@@ -80,17 +90,25 @@ export function ThemePicker({ variant, onClose, footer }: ThemePickerProps): JSX
       className={styles.backdrop}
       role="dialog"
       aria-modal="true"
-      aria-label={t.theme.title}
+      aria-label={title ?? t.theme.title}
       onClick={onClose}
     >
       <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
         <div className={styles.head}>
-          <h2 className={styles.title}>{t.theme.title}</h2>
+          <h2 className={styles.title}>{title ?? t.theme.title}</h2>
           <button type="button" className={styles.close} onClick={onClose} aria-label={t.vip.close}>
             ✕
           </button>
         </div>
-        {list}
+        {header}
+        {header ? (
+          <section className={styles.gameSection}>
+            <h4 className={styles.gameTitle}>{t.theme.title}</h4>
+            {list}
+          </section>
+        ) : (
+          list
+        )}
         {footer ? <div className={styles.footer}>{footer}</div> : null}
         <button type="button" className={styles.done} onClick={onClose}>
           {t.theme.done}

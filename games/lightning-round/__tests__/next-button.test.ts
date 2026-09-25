@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { controllerView, tvView } from '../server/views';
+import { revealMs } from '../server/phases/reveal';
 import { FINAL_REVEAL_MS, REVEAL_MS } from '../server/types';
 import type { State } from '../server/types';
 
@@ -34,13 +35,18 @@ describe('I-589: the standings Next button', () => {
     }
   });
 
-  it('the regular reveal holds 8 s, the final 5 s', () => {
+  it('a reveal holds long enough to read every row (pacing rule): at least 8 s, more with more players', () => {
     expect(REVEAL_MS).toBe(8000);
-    expect(FINAL_REVEAL_MS).toBe(5000);
+    expect(FINAL_REVEAL_MS).toBe(8000);
     let s = game.init({ players, settings: { questions: 5 }, seed: 1, now: 0 }) as State;
     s = game.reduce(s, { type: 'vip', action: 'skip', now: 10 }) as State;
     s = game.reduce(s, { type: 'vip', action: 'skip', now: 20 }) as State;
     expect(s.phase.id).toBe('reveal');
-    expect(s.phase.deadline).toBe(20 + REVEAL_MS);
+    expect(s.phase.deadline).toBe(20 + revealMs(s));
+    expect(revealMs(s)).toBeGreaterThanOrEqual(REVEAL_MS);
+    const crowd = Object.fromEntries(
+      Array.from({ length: 12 }, (_, i) => [`p${i}`, Object.values(s.players)[0]]),
+    );
+    expect(revealMs({ ...s, players: crowd } as State)).toBeGreaterThan(revealMs(s) + 5_000);
   });
 });

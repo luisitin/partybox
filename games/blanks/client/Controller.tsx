@@ -138,12 +138,13 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
           ? L('Final scores')
           : L('Round {round} of {rounds}', { round: view.round, rounds: view.rounds })
       }
-      // Untimed rounds: the result stays up until the VIP moves on.
+      // The result stays up until the VIP moves on — timed rounds too, with a long fallback
+      // (owner's pacing rule 2026-09-25: results wait for a tap, not a timer).
       footer={
         final ? undefined : (
           <NextButton
             skip={skip}
-            timed={view.timed}
+            timed={false}
             label={view.round < view.rounds ? L('Next round') : L('Final scores')}
           />
         )

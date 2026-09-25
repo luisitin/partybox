@@ -3,7 +3,7 @@
 // `packs` and the optional __tests__/contract.config.ts.
 import { describe, expect, it } from 'vitest';
 import type { GameStateBase } from '@partybox/shared';
-import { STATE_SIZE_LIMIT_BYTES, gameManifestSchema } from '@partybox/shared';
+import { PRESENCE_MODES, STATE_SIZE_LIMIT_BYTES, gameManifestSchema } from '@partybox/shared';
 import { fuzzOnce } from './fuzz';
 import { hashState, jsonSize } from './hash';
 import { loadAllGames } from './load';
@@ -237,6 +237,31 @@ for (const loaded of games) {
       expect(a).toEqual(b);
       expect(a.at(-1)).toBe(hashState(run.finalState));
     });
+
+    // Presence is a seeded input: a game may switch features on it, never stall or diverge. One
+    // case per mode × phone only, at the fewest players (six full games at max players in one `it`
+    // was every branch's flaky verify step, reviewer C1).
+    const presences = PRESENCE_MODES.flatMap((mode) =>
+      [false, true].map((phoneOnly) => ({ mode, phoneOnly })),
+    );
+    it.each(presences)(
+      'plays through in presence $mode, phone only $phoneOnly (ADR-047)',
+      ({ mode, phoneOnly }) => {
+        const options = {
+          players: playerCounts(loaded)[0] as number,
+          seed: 31,
+          strategy: 'random' as const,
+          maxSimMs: budgetMs,
+          presence: { mode, phoneOnly },
+          remote: mode === 'together' ? 0 : 1,
+        };
+        const run = playGame(game, options);
+        expect(run.stuck).toBe(false);
+        expect(run.init.presence).toEqual({ mode, phoneOnly });
+        const again = replay(game, run.init, run.events).map(hashState);
+        expect(again.at(-1), 'not deterministic').toBe(hashState(run.finalState));
+      },
+    );
 
     it('ignores stale timers and survives fuzzed events mid-game', () => {
       const visited: GameStateBase[] = [];
