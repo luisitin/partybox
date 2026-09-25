@@ -197,6 +197,26 @@ function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>):
   );
 }
 
+/** Pacing rule (2026-09-25): the summary waits for the VIP's Next (a long fallback on the server).
+ *  One tap locks it, so a double tap never skips two phases. Other phones get no `skip`. */
+function SummaryNext({ skip }: { skip: () => void }): JSX.Element {
+  const L = useT(STRINGS);
+  const [sent, setSent] = useState(false);
+  return (
+    <PrimaryButton
+      tone="neutral"
+      done={sent}
+      onClick={() => {
+        if (sent) return;
+        setSent(true);
+        skip();
+      }}
+    >
+      {sent ? L('Moving on…') : L('Finish the game')}
+    </PrimaryButton>
+  );
+}
+
 export function Controller(props: GameControllerProps<PencilControllerView, Input>): JSX.Element {
   const L = useT(STRINGS);
   const { view, me, send } = props;
@@ -224,6 +244,9 @@ export function Controller(props: GameControllerProps<PencilControllerView, Inpu
       const mine = view.myBook;
       return (
         <Screen
+          footer={
+            view.phaseId === 'summary' && props.skip ? <SummaryNext skip={props.skip} /> : undefined
+          }
           title={
             mine
               ? mine.intact

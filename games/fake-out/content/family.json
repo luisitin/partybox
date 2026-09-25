@@ -1,0 +1,4067 @@
+{
+  "lang": "en",
+  "facts": [
+    {
+      "id": "fo-animals-001",
+      "category": "animals",
+      "kind": "object",
+      "fact": "Wombats are famous for leaving poop shaped like ___.",
+      "truth": {
+        "answer": "cubes",
+        "accept": ["cube", "cube shaped", "cube-shaped", "cubed", "dice", "cubez", "square blocks"],
+        "reject": []
+      },
+      "houseLies": [
+        "pyramids",
+        "stars",
+        "hearts",
+        "spheres",
+        "triangles",
+        "coins",
+        "pancakes",
+        "marbles"
+      ],
+      "source": "Wikipedia: Wombat",
+      "verified": true
+    },
+    {
+      "id": "fo-animals-002",
+      "category": "animals",
+      "kind": "number",
+      "fact": "An octopus has ___ hearts.",
+      "truth": {
+        "answer": "3",
+        "accept": [
+          "three",
+          "3 hearts",
+          "three hearts",
+          "thre",
+          "iii",
+          "3 of them",
+          "thee",
+          "3 separate hearts"
+        ],
+        "reject": []
+      },
+      "houseLies": ["2", "4", "5", "6", "8", "9", "10", "12"],
+      "source": "Wikipedia: Octopus",
+      "verified": true
+    },
+    {
+      "id": "fo-animals-003",
+      "category": "animals",
+      "kind": "animal",
+      "fact": "Koala fingerprints look so much like ___ fingerprints that experts struggle to tell them apart.",
+      "truth": {
+        "answer": "human",
+        "accept": [
+          "humans",
+          "human's",
+          "humans'",
+          "people",
+          "people's",
+          "person",
+          "hooman",
+          "humen"
+        ],
+        "reject": []
+      },
+      "houseLies": ["dog", "cat", "kangaroo", "raccoon", "bear", "squirrel", "panda", "owl"],
+      "source": "PBS NOVA: Koalas have fingerprints almost identical to ours (https://www.pbs.org/wgbh/nova/article/koala-fingerprints/)",
+      "verified": true
+    },
+    {
+      "id": "fo-animals-004",
+      "category": "animals",
+      "kind": "person",
+      "fact": "In seahorses, it's the ___ who gets pregnant and gives birth.",
+      "truth": {
+        "answer": "father",
+        "accept": ["dad", "daddy", "fathers", "dads", "male", "males", "fahter", "the male"],
+        "reject": []
+      },
+      "houseLies": [
+        "mother",
+        "grandmother",
+        "uncle",
+        "aunt",
+        "oldest sibling",
+        "big sister",
+        "stepmother",
+        "nanny"
+      ],
+      "source": "Wikipedia: Seahorse",
+      "verified": true
+    },
+    {
+      "id": "fo-animals-005",
+      "category": "animals",
+      "kind": "animal",
+      "fact": "Tiny tardigrades are nicknamed water ___.",
+      "truth": {
+        "answer": "bears",
+        "accept": ["bear", "bares", "baers", "beares", "water bears", "water bear", "bearz"],
+        "reject": ["beers", "bees"]
+      },
+      "houseLies": [
+        "fleas",
+        "puppies",
+        "dragons",
+        "hamsters",
+        "worms",
+        "sheep",
+        "elephants",
+        "lions"
+      ],
+      "source": "Wikipedia: Tardigrade",
+      "verified": true,
+      "hardWords": ["tardigrades"]
+    },
+    {
+      "id": "fo-animals-006",
+      "category": "animals",
+      "kind": "substance",
+      "fact": "The snap of a pistol shrimp makes a bubble that gives off a tiny flash of ___.",
+      "truth": {
+        "answer": "light",
+        "accept": ["lights", "lite", "ligth", "lght", "sonoluminescence", "shrimpoluminescence"],
+        "reject": []
+      },
+      "houseLies": [
+        "electricity",
+        "smoke",
+        "steam",
+        "ink",
+        "static",
+        "radio waves",
+        "glitter",
+        "fog"
+      ],
+      "source": "Wikipedia: Alpheidae",
+      "verified": true
+    },
+    {
+      "id": "fo-animals-007",
+      "category": "animals",
+      "kind": "body-part",
+      "fact": "A male platypus can inject venom with a ___ on each hind leg.",
+      "truth": {
+        "answer": "spur",
+        "accept": [
+          "spurs",
+          "spurr",
+          "sper",
+          "venomous spur",
+          "venom spur",
+          "ankle spur",
+          "heel spur"
+        ],
+        "reject": []
+      },
+      "houseLies": ["claw", "quill", "fang", "stinger", "barb", "thorn", "hook", "toe"],
+      "source": "Wikipedia: Platypus",
+      "verified": true
+    },
+    {
+      "id": "fo-animals-008",
+      "category": "animals",
+      "kind": "activity",
+      "fact": "Honeybees tell each other where the flowers are with a ___ dance.",
+      "truth": {
+        "answer": "waggle",
+        "accept": ["waggles", "wagle", "waggel", "waggling", "wagging", "waggle run"],
+        "reject": ["wiggle", "round", "tremble"]
+      },
+      "houseLies": ["buzz", "zigzag", "bumble", "conga", "honey", "flutter", "pollen", "hula"],
+      "source": "Wikipedia: Waggle dance",
+      "verified": true
+    },
+    {
+      "id": "fo-animals-009",
+      "category": "animals",
+      "kind": "place",
+      "fact": "The longest-living vertebrate known is the ___ shark, which can live for centuries.",
+      "truth": {
+        "answer": "greenland",
+        "accept": [
+          "greenland shark",
+          "greenlandic",
+          "greenland's",
+          "grenland",
+          "greeland",
+          "greenlnad"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "whale",
+        "great white",
+        "hammerhead",
+        "tiger",
+        "lemon",
+        "goblin",
+        "nurse",
+        "iceland"
+      ],
+      "source": "Wikipedia: Greenland shark",
+      "verified": true
+    },
+    {
+      "id": "fo-animals-010",
+      "category": "animals",
+      "kind": "body-part",
+      "fact": "To eat, a starfish can push its ___ out through its mouth.",
+      "truth": {
+        "answer": "stomach",
+        "accept": ["stomachs", "tummy", "stomache", "stomac", "belly", "gut", "cardiac stomach"],
+        "reject": []
+      },
+      "houseLies": ["tongue", "heart", "liver", "lungs", "eyeball", "brain", "teeth", "skeleton"],
+      "source": "Wikipedia: Starfish",
+      "verified": true
+    },
+    {
+      "id": "fo-animals-011",
+      "category": "animals",
+      "kind": "object",
+      "fact": "Sea otters crack open shellfish by pounding them on a ___ resting on their chest.",
+      "truth": {
+        "answer": "rock",
+        "accept": ["rocks", "stone", "stones", "pebble", "rok", "flat rock"],
+        "reject": []
+      },
+      "houseLies": [
+        "stick",
+        "coconut",
+        "bone",
+        "brick",
+        "ice cube",
+        "turtle",
+        "anchor",
+        "frying pan"
+      ],
+      "source": "Wikipedia: Sea otter",
+      "verified": true
+    },
+    {
+      "id": "fo-animals-012",
+      "category": "animals",
+      "kind": "substance",
+      "fact": "Hippos ooze a red natural sunscreen nicknamed ___.",
+      "truth": {
+        "answer": "blood sweat",
+        "accept": [
+          "blood-sweat",
+          "bloodsweat",
+          "bloody sweat",
+          "blood sweats",
+          "sweat blood",
+          "red sweat",
+          "blood sweating",
+          "sweating blood",
+          "blud sweat"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "hippo ketchup",
+        "river wine",
+        "jam juice",
+        "mud milk",
+        "lava lotion",
+        "red tears",
+        "beet juice",
+        "pink milk"
+      ],
+      "source": "Wikipedia: Hippopotamus",
+      "verified": true
+    },
+    {
+      "id": "fo-animals-013",
+      "category": "animals",
+      "kind": "food",
+      "fact": "Thanks to a gene mutation, cats can't taste anything ___.",
+      "truth": {
+        "answer": "sweet",
+        "accept": ["sweets", "sweetness", "sugary", "sugar", "swet", "sweeet"],
+        "reject": ["sweat"]
+      },
+      "houseLies": ["fishy", "meaty", "bitter", "sour", "umami", "cheesy", "milky", "bacony"],
+      "source": "Wikipedia: Cat",
+      "verified": true
+    },
+    {
+      "id": "fo-body-001",
+      "category": "body",
+      "kind": "body-part",
+      "fact": "The ___ is the only bone in your body that is not connected to any other bone.",
+      "truth": {
+        "answer": "hyoid",
+        "accept": ["hyoid bone", "hyoids", "hyiod", "hioid", "tongue bone", "hyoide", "hyod"],
+        "reject": []
+      },
+      "houseLies": [
+        "kneecap",
+        "tailbone",
+        "collarbone",
+        "wishbone",
+        "stapes",
+        "pinky toe",
+        "jawbone",
+        "funny bone"
+      ],
+      "source": "Wikipedia: Hyoid bone",
+      "verified": true,
+      "hardWords": ["hyoid"]
+    },
+    {
+      "id": "fo-body-002",
+      "category": "body",
+      "kind": "object",
+      "fact": "The smallest bone in your body is named after a horse rider's ___.",
+      "truth": {
+        "answer": "stirrup",
+        "accept": [
+          "stirrups",
+          "stapes",
+          "stirup",
+          "stirrip",
+          "sturrup",
+          "saddle stirrup",
+          "styrrup"
+        ],
+        "reject": []
+      },
+      "houseLies": ["spur", "saddle", "whip", "horseshoe", "bridle", "helmet", "boot", "bit"],
+      "source": "Wikipedia: Stapes",
+      "verified": true
+    },
+    {
+      "id": "fo-body-003",
+      "category": "body",
+      "kind": "body-part",
+      "fact": "The cornea of your eye has no ___, so it gets its oxygen from your tears.",
+      "truth": {
+        "answer": "blood vessels",
+        "accept": [
+          "blood vessel",
+          "veins",
+          "vessels",
+          "arteries",
+          "blood supply",
+          "capillaries",
+          "blood",
+          "bloodvessels"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "nerves",
+        "cells",
+        "water",
+        "collagen",
+        "proteins",
+        "feeling",
+        "layers",
+        "enzymes"
+      ],
+      "source": "Wikipedia: Cornea",
+      "verified": true,
+      "hardWords": ["cornea"]
+    },
+    {
+      "id": "fo-body-004",
+      "category": "body",
+      "kind": "body-part",
+      "fact": "Your funny bone is not a bone at all, it is a ___.",
+      "truth": {
+        "answer": "nerve",
+        "accept": [
+          "ulnar nerve",
+          "nerves",
+          "nerv",
+          "the ulnar nerve",
+          "ulnar",
+          "nerve ending",
+          "nurve"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "tendon",
+        "ligament",
+        "muscle",
+        "cartilage",
+        "vein",
+        "blood vessel",
+        "joint",
+        "gland"
+      ],
+      "source": "Wikipedia: Funny bone",
+      "verified": true
+    },
+    {
+      "id": "fo-body-005",
+      "category": "body",
+      "kind": "substance",
+      "fact": "The hardest substance in the whole human body is ___.",
+      "truth": {
+        "answer": "enamel",
+        "accept": [
+          "tooth enamel",
+          "enamal",
+          "enamle",
+          "enammel",
+          "teeth enamel",
+          "dental enamel",
+          "enamel of teeth"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "thighbone",
+        "skull",
+        "fingernail",
+        "dentin",
+        "cartilage",
+        "keratin",
+        "earwax",
+        "kneecap"
+      ],
+      "source": "Wikipedia: Tooth enamel",
+      "verified": true
+    },
+    {
+      "id": "fo-body-006",
+      "category": "body",
+      "kind": "word",
+      "fact": "The scientific name for the hiccups is ___.",
+      "truth": {
+        "answer": "singultus",
+        "accept": [
+          "singultis",
+          "singultas",
+          "singulltus",
+          "sinultus",
+          "singutlus",
+          "singultuses",
+          "singultous"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "diaphragmitis",
+        "glottalis",
+        "hiccupia",
+        "spasmodia",
+        "gulpus",
+        "vox interruptus",
+        "burpulus",
+        "hypoglottis"
+      ],
+      "source": "Wikipedia: Hiccup",
+      "verified": true,
+      "hardWords": ["singultus"]
+    },
+    {
+      "id": "fo-body-007",
+      "category": "body",
+      "kind": "body-part",
+      "fact": "The little groove between your nose and your upper lip is called the ___.",
+      "truth": {
+        "answer": "philtrum",
+        "accept": [
+          "filtrum",
+          "philtrim",
+          "philtrem",
+          "philtum",
+          "philtrums",
+          "philtra",
+          "phyltrum"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "cupid's gutter",
+        "nasolabia",
+        "labrum",
+        "septum",
+        "vermilion",
+        "mustache ridge",
+        "nose canal",
+        "columella"
+      ],
+      "source": "Wikipedia: Philtrum",
+      "verified": true,
+      "hardWords": ["philtrum"]
+    },
+    {
+      "id": "fo-body-008",
+      "category": "body",
+      "kind": "object",
+      "fact": "The pop when you crack your knuckles comes from gas ___ in the joint fluid.",
+      "truth": {
+        "answer": "bubbles",
+        "accept": [
+          "bubble",
+          "nitrogen bubbles",
+          "gas bubbles",
+          "bubbels",
+          "bubbls",
+          "cavitation bubbles",
+          "cavitation"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "crystals",
+        "sparks",
+        "valves",
+        "springs",
+        "pebbles",
+        "clicks",
+        "pumps",
+        "grains"
+      ],
+      "source": "Wikipedia: Cracking joints",
+      "verified": true
+    },
+    {
+      "id": "fo-body-009",
+      "category": "body",
+      "kind": "word",
+      "fact": "A rumbling tummy has a real medical name: ___.",
+      "truth": {
+        "answer": "borborygmus",
+        "accept": [
+          "borborygmi",
+          "borborigmus",
+          "borborygmos",
+          "borborygamus",
+          "borborygma",
+          "borborigmi",
+          "borborygmy"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "gastrophony",
+        "abdominal choir",
+        "gurglitis",
+        "stomachus rumblus",
+        "intestinal thunder",
+        "grumbulus",
+        "tummitus",
+        "gastric yodel"
+      ],
+      "source": "Wikipedia: Stomach rumble",
+      "verified": true,
+      "hardWords": ["borborygmus"]
+    },
+    {
+      "id": "fo-body-010",
+      "category": "body",
+      "kind": "substance",
+      "fact": "Your fingernails are made of ___, the same stuff as a rhino's horn.",
+      "truth": {
+        "answer": "keratin",
+        "accept": [
+          "keratine",
+          "keratins",
+          "keratin protein",
+          "alpha-keratin",
+          "alpha keratin",
+          "keritin",
+          "keratyn"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "calcium",
+        "collagen",
+        "ivory",
+        "chitin",
+        "enamel",
+        "cartilage",
+        "bone",
+        "gelatin"
+      ],
+      "source": "Wikipedia: Keratin",
+      "verified": true,
+      "hardWords": ["keratin"]
+    },
+    {
+      "id": "fo-body-011",
+      "category": "body",
+      "kind": "other",
+      "fact": "Body odor comes mostly from ___ breaking down sweat on your skin.",
+      "truth": {
+        "answer": "bacteria",
+        "accept": [
+          "bacterium",
+          "germs",
+          "microbes",
+          "skin bacteria",
+          "bacterias",
+          "bactria",
+          "microorganisms"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "hormones",
+        "onions",
+        "garlic",
+        "toxins",
+        "dead skin",
+        "vinegar",
+        "salt",
+        "adrenaline"
+      ],
+      "source": "Wikipedia: Body odor",
+      "verified": true
+    },
+    {
+      "id": "fo-body-012",
+      "category": "body",
+      "kind": "body-part",
+      "fact": "A leaf-shaped flap called the ___ stops food going down your windpipe.",
+      "truth": {
+        "answer": "epiglottis",
+        "accept": [
+          "epiglotis",
+          "epiglottus",
+          "epiglottes",
+          "epi-glottis",
+          "epiglottises",
+          "epiglottal flap",
+          "epiglotus"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "uvula",
+        "tonsil",
+        "adenoid",
+        "larynx",
+        "throat lid",
+        "soft palate",
+        "thyroid",
+        "gullet valve"
+      ],
+      "source": "Wikipedia: Epiglottis",
+      "verified": true,
+      "hardWords": ["epiglottis"]
+    },
+    {
+      "id": "fo-body-013",
+      "category": "body",
+      "kind": "body-part",
+      "fact": "The pale half-moon at the base of your fingernail is called the ___.",
+      "truth": {
+        "answer": "lunula",
+        "accept": ["lunulae", "lunule", "lunala", "lunulla", "lanula", "half moon", "half-moon"],
+        "reject": []
+      },
+      "houseLies": [
+        "cuticle",
+        "nail bed",
+        "crescentia",
+        "moonlet",
+        "eponychium",
+        "nail root",
+        "quick",
+        "halo"
+      ],
+      "source": "Wikipedia: Nail (anatomy)",
+      "verified": true,
+      "hardWords": ["lunula"]
+    },
+    {
+      "id": "fo-food-001",
+      "category": "food",
+      "kind": "object",
+      "fact": "In 1834, an Ohio doctor sold tomatoes as a medicine in the form of ___.",
+      "truth": {
+        "answer": "pills",
+        "accept": [
+          "pill",
+          "tablets",
+          "tablet",
+          "tomato pills",
+          "ketchup pills",
+          "capsules",
+          "pils"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "lozenges",
+        "gummies",
+        "cough syrup",
+        "bath salts",
+        "ointment",
+        "chewing gum",
+        "powder",
+        "cough drops"
+      ],
+      "source": "History Facts: Tomato pills were once sold as medicine (historyfacts.com/us-history/fact/tomatoes-were-once-sold-as-medicine/)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-food-002",
+      "category": "food",
+      "kind": "food",
+      "fact": "Botanically, a peanut is not a nut at all but a ___.",
+      "truth": {
+        "answer": "legume",
+        "accept": ["legumes", "bean", "beans", "pulse", "legum", "leguem", "fabaceae"],
+        "reject": []
+      },
+      "houseLies": ["tuber", "root", "fungus", "grain", "berry", "bulb", "gourd", "drupe"],
+      "source": "Wikipedia: Peanut",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-food-003",
+      "category": "food",
+      "kind": "food",
+      "fact": "Botanically speaking, a banana counts as a ___.",
+      "truth": {
+        "answer": "berry",
+        "accept": ["berries", "true berry", "berri", "bery", "berrie", "fruit"],
+        "reject": []
+      },
+      "houseLies": ["vegetable", "nut", "legume", "grass", "melon", "pod", "gourd", "seed pod"],
+      "source": "Wikipedia: Banana",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-food-004",
+      "category": "food",
+      "kind": "person",
+      "fact": "The sandwich is named after an 18th-century English ___.",
+      "truth": {
+        "answer": "earl",
+        "accept": [
+          "earls",
+          "earl of sandwich",
+          "lord",
+          "lord sandwich",
+          "aristocrat",
+          "nobleman",
+          "noble"
+        ],
+        "reject": ["pearl"]
+      },
+      "houseLies": [
+        "baker",
+        "butler",
+        "bishop",
+        "poet",
+        "chimney sweep",
+        "schoolteacher",
+        "cheesemonger",
+        "royal chef"
+      ],
+      "source": "Wikipedia: Sandwich",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-food-005",
+      "category": "food",
+      "kind": "place",
+      "fact": "Caesar salad was invented in the Mexican city of ___.",
+      "truth": {
+        "answer": "tijuana",
+        "accept": ["tiajuana", "tijuanna", "tj", "tijuna", "tijauna", "tiuana"],
+        "reject": []
+      },
+      "houseLies": [
+        "acapulco",
+        "guadalajara",
+        "cancun",
+        "monterrey",
+        "oaxaca",
+        "puebla",
+        "mazatlan",
+        "ensenada"
+      ],
+      "source": "Wikipedia: Caesar salad",
+      "verified": true,
+      "hardWords": ["Tijuana"]
+    },
+    {
+      "id": "fo-food-006",
+      "category": "food",
+      "kind": "job",
+      "fact": "Nachos were invented in 1943 by a restaurant ___ named Ignacio Anaya.",
+      "truth": {
+        "answer": "maitre d",
+        "accept": [
+          "maitre d'",
+          "maître d'",
+          "maitre d'hotel",
+          "maitre de",
+          "head waiter",
+          "headwaiter",
+          "maitred",
+          "matre d",
+          "maitre dee",
+          "mater d",
+          "maitre di"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "dishwasher",
+        "janitor",
+        "delivery driver",
+        "bartender",
+        "parking valet",
+        "bouncer",
+        "pianist",
+        "cashier"
+      ],
+      "source": "Wikipedia: Nachos",
+      "verified": true,
+      "hardWords": ["Ignacio Anaya", "maitre d"]
+    },
+    {
+      "id": "fo-food-007",
+      "category": "food",
+      "kind": "word",
+      "fact": "German chocolate cake is named after an American chocolate maker whose last name was ___.",
+      "truth": {
+        "answer": "german",
+        "accept": [
+          "sam german",
+          "samuel german",
+          "germans",
+          "german's",
+          "germann",
+          "jerman",
+          "germen",
+          "mr german"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "baker",
+        "hershey",
+        "schmidt",
+        "fudge",
+        "cocoa",
+        "sweet",
+        "mueller",
+        "black forest"
+      ],
+      "source": "Wikipedia: German chocolate cake",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-food-008",
+      "category": "food",
+      "kind": "food",
+      "fact": "Classic Worcestershire sauce, a fermented condiment, gets part of its flavor from ___.",
+      "truth": {
+        "answer": "anchovies",
+        "accept": ["anchovy", "anchovys", "anchovie", "ancovies", "fish", "small fish"],
+        "reject": []
+      },
+      "houseLies": [
+        "beetroot",
+        "prunes",
+        "seaweed",
+        "mushrooms",
+        "snails",
+        "walnuts",
+        "bee pollen",
+        "squid ink"
+      ],
+      "source": "Wikipedia: Worcestershire sauce",
+      "verified": true,
+      "hardWords": ["Worcestershire"]
+    },
+    {
+      "id": "fo-food-009",
+      "category": "food",
+      "kind": "job",
+      "fact": "Machine-spun cotton candy was co-invented in 1897 by a ___.",
+      "truth": {
+        "answer": "dentist",
+        "accept": ["dentists", "dental surgeon", "tooth doctor", "dentst", "denist", "dentis"],
+        "reject": []
+      },
+      "houseLies": [
+        "clockmaker",
+        "candle maker",
+        "sheep farmer",
+        "barber",
+        "circus clown",
+        "beekeeper",
+        "pharmacist",
+        "blacksmith"
+      ],
+      "source": "Wikipedia: Cotton candy",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-food-010",
+      "category": "food",
+      "kind": "place",
+      "fact": "Hawaiian pizza was first created in 1962 in the country of ___.",
+      "truth": {
+        "answer": "canada",
+        "accept": ["ontario", "chatham", "chatham-kent", "canda", "cananda", "candada"],
+        "reject": []
+      },
+      "houseLies": [
+        "hawaii",
+        "greece",
+        "italy",
+        "japan",
+        "australia",
+        "fiji",
+        "new zealand",
+        "brazil"
+      ],
+      "source": "Wikipedia: Hawaiian pizza",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-food-011",
+      "category": "food",
+      "kind": "other",
+      "fact": "Vanilla flavoring comes from the seed pods of a type of ___.",
+      "truth": {
+        "answer": "orchid",
+        "accept": ["orchids", "vanilla orchid", "orchid plant", "orcid", "orchd", "orhcid"],
+        "reject": ["orchard"]
+      },
+      "houseLies": [
+        "bean plant",
+        "palm tree",
+        "lily",
+        "cactus",
+        "tulip",
+        "pea plant",
+        "magnolia",
+        "sunflower"
+      ],
+      "source": "Wikipedia: Vanilla",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-food-012",
+      "category": "food",
+      "kind": "food",
+      "fact": "Each cashew nut grows hanging from the end of a fruit called the cashew ___.",
+      "truth": {
+        "answer": "apple",
+        "accept": ["apples", "appel", "aple", "cashew apple", "apple fruit", "maranon"],
+        "reject": []
+      },
+      "houseLies": ["pear", "plum", "pepper", "melon", "berry", "fig", "lemon", "pod"],
+      "source": "Wikipedia: Cashew",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-food-013",
+      "category": "food",
+      "kind": "body-part",
+      "fact": "Saffron spice is made from the dried ___ of crocus flowers.",
+      "truth": {
+        "answer": "stigmas",
+        "accept": ["stigma", "stigmas and styles", "threads", "styles", "stigmass", "stigmes"],
+        "reject": []
+      },
+      "houseLies": ["petals", "pollen", "roots", "bulbs", "seeds", "leaves", "stems", "nectar"],
+      "source": "Wikipedia: Saffron",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-geography-001",
+      "category": "geography",
+      "kind": "object",
+      "fact": "Nepal has the only national flag in the world that is not a ___.",
+      "truth": {
+        "answer": "rectangle",
+        "accept": [
+          "rectangles",
+          "rectangular",
+          "rectangle shape",
+          "rectangel",
+          "retangle",
+          "oblong",
+          "rectangular shape"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "single color",
+        "cloth flag",
+        "circle",
+        "tricolor",
+        "square",
+        "solid color",
+        "horizontal flag",
+        "flat shape"
+      ],
+      "source": "Wikipedia: Flag of Nepal",
+      "verified": true,
+      "hardWords": ["Nepal"]
+    },
+    {
+      "id": "fo-geography-002",
+      "category": "geography",
+      "kind": "word",
+      "fact": "Because of the date line, Big Diomede, a Russian island near Alaska, is nicknamed ___ Island.",
+      "truth": {
+        "answer": "tomorrow",
+        "accept": [
+          "tommorow",
+          "tomorow",
+          "tommorrow",
+          "tomorrows",
+          "tomorrow's",
+          "the tomorrow",
+          "future",
+          "tomorrow island",
+          "tmrw"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "midnight",
+        "yesterday",
+        "sunrise",
+        "polar bear",
+        "last minute",
+        "twilight",
+        "early bird",
+        "calendar"
+      ],
+      "source": "Wikipedia: Diomede Islands",
+      "verified": true,
+      "hardWords": ["Diomede"]
+    },
+    {
+      "id": "fo-geography-003",
+      "category": "geography",
+      "kind": "place",
+      "fact": "The town of Boring, Oregon, is officially paired with a Scottish village called ___.",
+      "truth": {
+        "answer": "dull",
+        "accept": [
+          "dul",
+          "dull scotland",
+          "dull village",
+          "dulls",
+          "dull perthshire",
+          "the dull",
+          "dulll",
+          "dull village scotland"
+        ],
+        "reject": ["doll", "dell"]
+      },
+      "houseLies": ["tedium", "snooze", "yawn", "drab", "meh", "plain", "sleepy hollow", "humdrum"],
+      "source": "Wikipedia: Boring, Oregon",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-geography-004",
+      "category": "geography",
+      "kind": "place",
+      "fact": "The coldest national capital in the world, by average yearly temperature, is ___.",
+      "truth": {
+        "answer": "ulaanbaatar",
+        "accept": [
+          "ulan bator",
+          "ulaanbator",
+          "ulan baatar",
+          "ulaan baatar",
+          "ulanbaatar",
+          "ulaanbatar",
+          "mongolia",
+          "urga",
+          "ulanbatar"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "reykjavik",
+        "moscow",
+        "helsinki",
+        "ottawa",
+        "oslo",
+        "astana",
+        "nuuk",
+        "anchorage"
+      ],
+      "source": "Wikipedia: Ulaanbaatar",
+      "verified": true,
+      "hardWords": ["Ulaanbaatar"]
+    },
+    {
+      "id": "fo-geography-005",
+      "category": "geography",
+      "kind": "job",
+      "fact": "Angel Falls, the world's tallest waterfall, is named after an American ___, not an angel.",
+      "truth": {
+        "answer": "pilot",
+        "accept": [
+          "aviator",
+          "airplane pilot",
+          "pilots",
+          "bush pilot",
+          "flier",
+          "flyer",
+          "pilott",
+          "aviater"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "explorer",
+        "missionary",
+        "geologist",
+        "photographer",
+        "gold miner",
+        "priest",
+        "botanist",
+        "stuntman"
+      ],
+      "source": "Wikipedia: Angel Falls",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-geography-006",
+      "category": "geography",
+      "kind": "place",
+      "fact": "The only country in Europe surrounded entirely by other landlocked countries is ___.",
+      "truth": {
+        "answer": "liechtenstein",
+        "accept": [
+          "lichtenstein",
+          "liechtenstien",
+          "lichtenstien",
+          "liechenstein",
+          "liechtensten",
+          "principality of liechtenstein"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "andorra",
+        "switzerland",
+        "luxembourg",
+        "san marino",
+        "austria",
+        "vatican city",
+        "hungary",
+        "moldova"
+      ],
+      "source": "Wikipedia: Landlocked country",
+      "verified": true,
+      "hardWords": ["Liechtenstein"]
+    },
+    {
+      "id": "fo-geography-007",
+      "category": "geography",
+      "kind": "place",
+      "fact": "The mountain kingdom of Lesotho is completely surrounded by ___.",
+      "truth": {
+        "answer": "south africa",
+        "accept": [
+          "southafrica",
+          "south afrika",
+          "republic of south africa",
+          "rsa",
+          "s africa",
+          "s. africa",
+          "south-africa",
+          "south afica",
+          "sth africa"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "botswana",
+        "zimbabwe",
+        "namibia",
+        "mozambique",
+        "kenya",
+        "ethiopia",
+        "zambia",
+        "madagascar"
+      ],
+      "source": "Wikipedia: Lesotho",
+      "verified": true,
+      "hardWords": ["Lesotho"]
+    },
+    {
+      "id": "fo-geography-008",
+      "category": "geography",
+      "kind": "place",
+      "fact": "Canberra was built as Australia's capital as a compromise between Sydney and ___.",
+      "truth": {
+        "answer": "melbourne",
+        "accept": ["melborne", "melbourn", "melburn", "melbourne city", "melboune", "melbounre"],
+        "reject": []
+      },
+      "houseLies": [
+        "brisbane",
+        "adelaide",
+        "perth",
+        "hobart",
+        "darwin",
+        "auckland",
+        "alice springs",
+        "gold coast"
+      ],
+      "source": "Wikipedia: Canberra",
+      "verified": true,
+      "hardWords": ["Canberra"]
+    },
+    {
+      "id": "fo-geography-009",
+      "category": "geography",
+      "kind": "job",
+      "fact": "Mount Everest is named after a British ___ who never saw the mountain himself.",
+      "truth": {
+        "answer": "surveyor",
+        "accept": [
+          "surveyor general",
+          "land surveyor",
+          "surveyer",
+          "surveyors",
+          "map surveyor",
+          "surveyor-general",
+          "geographer"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "king",
+        "general",
+        "tea merchant",
+        "sea captain",
+        "bishop",
+        "prime minister",
+        "poet",
+        "explorer"
+      ],
+      "source": "Wikipedia: George Everest",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-geography-010",
+      "category": "geography",
+      "kind": "place",
+      "fact": "The only royal palace on United States soil is in ___.",
+      "truth": {
+        "answer": "honolulu",
+        "accept": [
+          "hawaii",
+          "hawai'i",
+          "oahu",
+          "honalulu",
+          "honolulu hawaii",
+          "hawaii state",
+          "honolula"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "new orleans",
+        "puerto rico",
+        "san francisco",
+        "philadelphia",
+        "boston",
+        "las vegas",
+        "santa fe",
+        "palm beach"
+      ],
+      "source": "Wikipedia: Iolani Palace",
+      "verified": true,
+      "hardWords": ["Iolani", "Honolulu"]
+    },
+    {
+      "id": "fo-geography-011",
+      "category": "geography",
+      "kind": "place",
+      "fact": "Counting cold deserts, the biggest desert on Earth is ___.",
+      "truth": {
+        "answer": "antarctica",
+        "accept": [
+          "antartica",
+          "the antarctic",
+          "antarctic",
+          "antarctic desert",
+          "antarctica desert",
+          "south pole",
+          "antartic"
+        ],
+        "reject": ["arctic", "arctic desert"]
+      },
+      "houseLies": [
+        "the sahara",
+        "the gobi",
+        "siberia",
+        "greenland",
+        "the arctic",
+        "mongolia",
+        "the kalahari",
+        "alaska"
+      ],
+      "source": "Wikipedia: Desert",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-geography-012",
+      "category": "geography",
+      "kind": "place",
+      "fact": "Istanbul sits on two continents at once, Europe and ___.",
+      "truth": {
+        "answer": "asia",
+        "accept": ["asian", "asia minor", "western asia", "the asian continent", "asai", "aisa"],
+        "reject": []
+      },
+      "houseLies": [
+        "africa",
+        "australia",
+        "antarctica",
+        "north america",
+        "oceania",
+        "arabia",
+        "atlantis",
+        "south america"
+      ],
+      "source": "Wikipedia: Istanbul",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-geography-013",
+      "category": "geography",
+      "kind": "animal",
+      "fact": "The Canary Islands were not named after birds, but after ___.",
+      "truth": {
+        "answer": "dogs",
+        "accept": ["dog", "hounds", "hound", "doggies", "puppies", "canines", "canine"],
+        "reject": []
+      },
+      "houseLies": [
+        "goats",
+        "lizards",
+        "bananas",
+        "sailors",
+        "volcanoes",
+        "whales",
+        "lemons",
+        "parrots"
+      ],
+      "source": "Wikipedia: Canary Islands",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-history-001",
+      "category": "history",
+      "kind": "activity",
+      "fact": "Abraham Lincoln is honored in the National ___ Hall of Fame.",
+      "truth": {
+        "answer": "wrestling",
+        "accept": [
+          "wrestler",
+          "wrestlers",
+          "wresling",
+          "wrestleing",
+          "catch wrestling",
+          "amateur wrestling",
+          "wrasslin"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "boxing",
+        "chess",
+        "bowling",
+        "storytelling",
+        "axe throwing",
+        "log rolling",
+        "checkers",
+        "rail splitting"
+      ],
+      "source": "National Wrestling Hall of Fame: https://nwhof.org/news/hall-of-fame-hosts-animatronic-abraham-lincoln",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-history-002",
+      "category": "history",
+      "kind": "body-part",
+      "fact": "In 1698, Russia's Peter the Great made men pay a tax on their ___.",
+      "truth": {
+        "answer": "beards",
+        "accept": ["beard", "facial hair", "baerds", "beardes", "beard hair", "long beards"],
+        "reject": ["bears"]
+      },
+      "houseLies": [
+        "hats",
+        "socks",
+        "cats",
+        "boots",
+        "wigs",
+        "pocket watches",
+        "windows",
+        "sleighs"
+      ],
+      "source": "Wikipedia: Beard tax",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-history-003",
+      "category": "history",
+      "kind": "food",
+      "fact": "In 1919, a giant wave of ___ flooded the streets of Boston.",
+      "truth": {
+        "answer": "molasses",
+        "accept": ["molases", "mollasses", "molassas", "molasess", "treacle", "black treacle"],
+        "reject": []
+      },
+      "houseLies": [
+        "maple syrup",
+        "root beer",
+        "tea",
+        "chocolate milk",
+        "clam chowder",
+        "baked beans",
+        "cranberry juice",
+        "ketchup"
+      ],
+      "source": "Wikipedia: Great Molasses Flood",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-history-004",
+      "category": "history",
+      "kind": "activity",
+      "fact": "In 1518, a strange plague of ___ spread through the city of Strasbourg.",
+      "truth": {
+        "answer": "dancing",
+        "accept": [
+          "dance",
+          "dancers",
+          "dancing mania",
+          "dance mania",
+          "danceing",
+          "dansing",
+          "choreomania"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "laughing",
+        "sneezing",
+        "hiccups",
+        "sleepwalking",
+        "yawning",
+        "singing",
+        "frogs",
+        "whistling"
+      ],
+      "source": "Wikipedia: Dancing plague of 1518",
+      "verified": true,
+      "hardWords": ["Strasbourg"]
+    },
+    {
+      "id": "fo-history-005",
+      "category": "history",
+      "kind": "activity",
+      "fact": "___ was an Olympic team sport from 1900 until it was dropped after 1920.",
+      "truth": {
+        "answer": "tug of war",
+        "accept": [
+          "tug-of-war",
+          "tug o war",
+          "tugofwar",
+          "tug of wars",
+          "rope pulling",
+          "tug a war",
+          "tug war",
+          "rope pull"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "pillow fighting",
+        "sack racing",
+        "hide and seek",
+        "leapfrog",
+        "pie eating",
+        "cheese rolling",
+        "dodgeball",
+        "hopscotch"
+      ],
+      "source": "Wikipedia: Tug of war at the Summer Olympics",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-history-006",
+      "category": "history",
+      "kind": "event",
+      "fact": "In 1858, London's Great ___ forced the city to build a modern sewer system.",
+      "truth": {
+        "answer": "stink",
+        "accept": ["stench", "stinks", "stank", "stinky", "the great stink", "stinck"],
+        "reject": ["sink", "stick"]
+      },
+      "houseLies": ["fog", "flood", "flush", "sneeze", "rat panic", "mud", "frost", "fire"],
+      "source": "Wikipedia: Great Stink",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-history-007",
+      "category": "history",
+      "kind": "body-part",
+      "fact": "Mexican leader Santa Anna had his amputated ___ buried with full military honors.",
+      "truth": {
+        "answer": "leg",
+        "accept": ["legs", "left leg", "lower leg", "his leg", "severed leg", "leg and foot"],
+        "reject": []
+      },
+      "houseLies": ["horse", "parrot", "hat", "sword", "mustache", "dog", "arm", "boots"],
+      "source": "Wikipedia: Antonio Lopez de Santa Anna",
+      "verified": true,
+      "hardWords": ["Santa Anna"]
+    },
+    {
+      "id": "fo-history-008",
+      "category": "history",
+      "kind": "number",
+      "fact": "The Hundred Years' War between England and France actually lasted ___ years.",
+      "truth": {
+        "answer": "116",
+        "accept": [
+          "one hundred sixteen",
+          "one hundred and sixteen",
+          "one-hundred-sixteen",
+          "hundred sixteen",
+          "116 years",
+          "a hundred and sixteen",
+          "116 yrs"
+        ],
+        "reject": []
+      },
+      "houseLies": ["99", "100", "88", "132", "81", "150", "107", "124"],
+      "source": "Wikipedia: Hundred Years' War",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-history-009",
+      "category": "history",
+      "kind": "word",
+      "fact": "Cleopatra was the first ruler of her dynasty known to learn the ___ language.",
+      "truth": {
+        "answer": "egyptian",
+        "accept": [
+          "egyption",
+          "egytian",
+          "egiptian",
+          "ancient egyptian",
+          "demotic",
+          "egyptian language"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "latin",
+        "greek",
+        "hebrew",
+        "persian",
+        "aramaic",
+        "ethiopian",
+        "arabic",
+        "nubian"
+      ],
+      "source": "Wikipedia: Cleopatra",
+      "verified": true,
+      "hardWords": ["Cleopatra"]
+    },
+    {
+      "id": "fo-history-010",
+      "category": "history",
+      "kind": "animal",
+      "fact": "President Calvin Coolidge kept a pet ___ named Rebecca at the White House.",
+      "truth": {
+        "answer": "raccoon",
+        "accept": ["racoon", "raccon", "raccoons", "racoons", "rackoon", "trash panda"],
+        "reject": []
+      },
+      "houseLies": ["goat", "skunk", "alligator", "parrot", "pig", "opossum", "turkey", "hedgehog"],
+      "source": "Wikipedia: United States presidential pets",
+      "verified": true,
+      "hardWords": ["Coolidge"]
+    },
+    {
+      "id": "fo-history-011",
+      "category": "history",
+      "kind": "person",
+      "fact": "The first known written use of OMG was in a 1917 letter to ___.",
+      "truth": {
+        "answer": "winston churchill",
+        "accept": [
+          "churchill",
+          "winston",
+          "sir winston churchill",
+          "winston churchil",
+          "churchil",
+          "winston s churchill"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "king george v",
+        "the pope",
+        "woodrow wilson",
+        "albert einstein",
+        "charlie chaplin",
+        "teddy roosevelt",
+        "harry houdini",
+        "thomas edison"
+      ],
+      "source": "Smithsonian Magazine: The First Use of OMG Was in a 1917 Letter to Winston Churchill",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-history-012",
+      "category": "history",
+      "kind": "year",
+      "fact": "The Eiffel Tower was built as a temporary structure and was slated for dismantling in ___.",
+      "truth": {
+        "answer": "1909",
+        "accept": [
+          "nineteen oh nine",
+          "nineteen-oh-nine",
+          "nineteen o nine",
+          "nineteen hundred nine",
+          "nineteen hundred and nine",
+          "in 1909",
+          "the year 1909"
+        ],
+        "reject": []
+      },
+      "houseLies": ["1900", "1919", "1914", "1899", "1912", "1925", "1905", "1939"],
+      "source": "Wikipedia: Eiffel Tower",
+      "verified": true,
+      "hardWords": ["Eiffel"]
+    },
+    {
+      "id": "fo-history-014",
+      "category": "history",
+      "kind": "food",
+      "fact": "As the Great Fire of London spread, Samuel Pepys saved his wine and his ___ by burying them.",
+      "truth": {
+        "answer": "parmesan",
+        "accept": [
+          "parmesan cheese",
+          "parmigiano",
+          "parmazan",
+          "parmesean",
+          "parmesan wheel",
+          "cheese"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "oysters",
+        "sausages",
+        "marmalade",
+        "pickled herring",
+        "gingerbread",
+        "cocoa",
+        "mustard",
+        "pies"
+      ],
+      "source": "Wikipedia: Samuel Pepys",
+      "verified": true,
+      "hardWords": ["Pepys"]
+    },
+    {
+      "id": "fo-history-015",
+      "category": "history",
+      "kind": "animal",
+      "fact": "Banned from keeping a dog at Cambridge, the poet Lord Byron kept a tame ___ instead.",
+      "truth": {
+        "answer": "bear",
+        "accept": ["bears", "brown bear", "tame bear", "bear cub", "baer", "bare"],
+        "reject": []
+      },
+      "houseLies": ["fox", "badger", "monkey", "goat", "wolf", "parrot", "raccoon", "pig"],
+      "source": "University of Cambridge: Lord Byron and the bears beneath Cambridge (cam.ac.uk/research/news/lord-byron-and-the-bears-beneath-cambridge)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-holidays-001",
+      "category": "holidays",
+      "kind": "food",
+      "fact": "In Japan, a hugely popular Christmas meal is ___ from KFC.",
+      "truth": {
+        "answer": "fried chicken",
+        "accept": [
+          "chicken",
+          "kentucky fried chicken",
+          "fried chickens",
+          "friend chicken",
+          "fried chiken",
+          "chicken bucket"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "sushi",
+        "ramen",
+        "roast turkey",
+        "pizza",
+        "curry rice",
+        "dumplings",
+        "cheeseburgers",
+        "hot dogs"
+      ],
+      "source": "Wikipedia: Christmas in Japan",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-holidays-002",
+      "category": "holidays",
+      "kind": "food",
+      "fact": "Every August in Bunol, Spain, thousands of people pelt each other with ___.",
+      "truth": {
+        "answer": "tomatoes",
+        "accept": [
+          "tomato",
+          "tomatos",
+          "tomattoes",
+          "rotten tomatoes",
+          "squashed tomatoes",
+          "tomatoe"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "water balloons",
+        "eggs",
+        "flour",
+        "olives",
+        "mud",
+        "paella",
+        "peppers",
+        "cabbages"
+      ],
+      "source": "Wikipedia: La Tomatina",
+      "verified": true,
+      "hardWords": ["Bunol"]
+    },
+    {
+      "id": "fo-holidays-003",
+      "category": "holidays",
+      "kind": "food",
+      "fact": "In Spain, people ring in the New Year by eating twelve ___ at midnight.",
+      "truth": {
+        "answer": "grapes",
+        "accept": ["grape", "green grapes", "white grapes", "uvas", "grapez", "graps"],
+        "reject": []
+      },
+      "houseLies": [
+        "olives",
+        "cherries",
+        "almonds",
+        "meatballs",
+        "churros",
+        "dates",
+        "figs",
+        "sardines"
+      ],
+      "source": "Wikipedia: Twelve Grapes",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-holidays-004",
+      "category": "holidays",
+      "kind": "food",
+      "fact": "Every December 23, Oaxaca, Mexico, holds a carving contest using giant ___.",
+      "truth": {
+        "answer": "radishes",
+        "accept": ["radish", "raddishes", "radishs", "red radishes", "rabanos", "giant radishes"],
+        "reject": []
+      },
+      "houseLies": [
+        "pumpkins",
+        "avocados",
+        "watermelons",
+        "pineapples",
+        "cactus paddles",
+        "potatoes",
+        "ice blocks",
+        "carrots"
+      ],
+      "source": "Wikipedia: Night of the Radishes",
+      "verified": true,
+      "hardWords": ["Oaxaca"]
+    },
+    {
+      "id": "fo-holidays-005",
+      "category": "holidays",
+      "kind": "animal",
+      "fact": "Every year, the Thai town of Lopburi throws a giant buffet feast for its ___.",
+      "truth": {
+        "answer": "monkeys",
+        "accept": ["monkey", "macaques", "macaque", "crab-eating macaques", "monkies", "primates"],
+        "reject": []
+      },
+      "houseLies": [
+        "elephants",
+        "cats",
+        "stray dogs",
+        "pigeons",
+        "tigers",
+        "grandmothers",
+        "rats",
+        "fishermen"
+      ],
+      "source": "Wikipedia: Monkey Buffet Festival",
+      "verified": true,
+      "hardWords": ["Lopburi"]
+    },
+    {
+      "id": "fo-holidays-006",
+      "category": "holidays",
+      "kind": "food",
+      "fact": "At Cooper's Hill in England, racers chase a rolling wheel of ___ down a steep slope.",
+      "truth": {
+        "answer": "cheese",
+        "accept": [
+          "cheeses",
+          "chese",
+          "cheeze",
+          "double gloucester",
+          "double gloucester cheese",
+          "cheese wheel"
+        ],
+        "reject": []
+      },
+      "houseLies": ["pie", "ham", "butter", "cake", "pudding", "sausage", "hay", "gingerbread"],
+      "source": "Wikipedia: Cooper's Hill Cheese-Rolling and Wake",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-holidays-007",
+      "category": "holidays",
+      "kind": "object",
+      "fact": "In Catalonia, children whack a smiling ___ with sticks until it poops out sweets.",
+      "truth": {
+        "answer": "log",
+        "accept": ["logs", "tio", "tio de nadal", "caga tio", "wooden log", "tree trunk"],
+        "reject": ["dog", "hog", "frog"]
+      },
+      "houseLies": ["donkey", "pumpkin", "snowman", "pinata", "goat", "turnip", "pillow", "teapot"],
+      "source": "Wikipedia: Tio de Nadal",
+      "verified": true,
+      "hardWords": ["Catalonia"]
+    },
+    {
+      "id": "fo-holidays-008",
+      "category": "holidays",
+      "kind": "food",
+      "fact": "In Olney, England, women race on Shrove Tuesday while flipping ___ in frying pans.",
+      "truth": {
+        "answer": "pancakes",
+        "accept": [
+          "pancake",
+          "crepes",
+          "pancaks",
+          "pankakes",
+          "pan cakes",
+          "flapjacks",
+          "pancackes",
+          "hotcakes"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "eggs",
+        "sausages",
+        "omelettes",
+        "waffles",
+        "potato cakes",
+        "burgers",
+        "crumpets",
+        "fried bread"
+      ],
+      "source": "Wikipedia: Pancake race",
+      "verified": true,
+      "hardWords": ["Olney"]
+    },
+    {
+      "id": "fo-holidays-009",
+      "category": "holidays",
+      "kind": "animal",
+      "fact": "Every Christmas, the Swedish town of Gavle builds a giant straw ___ that vandals often burn.",
+      "truth": {
+        "answer": "goat",
+        "accept": ["goats", "yule goat", "julbock", "gavle goat", "christmas goat", "billy goat"],
+        "reject": ["boat", "coat"]
+      },
+      "houseLies": ["reindeer", "moose", "pig", "rooster", "horse", "gnome", "troll", "bear"],
+      "source": "Wikipedia: Gavle goat",
+      "verified": true,
+      "hardWords": ["Gavle"]
+    },
+    {
+      "id": "fo-holidays-010",
+      "category": "holidays",
+      "kind": "object",
+      "fact": "At Up Helly Aa in Shetland, crowds throw flaming torches into a replica Viking ___.",
+      "truth": {
+        "answer": "longship",
+        "accept": [
+          "galley",
+          "longships",
+          "long ship",
+          "viking ship",
+          "ship",
+          "boat",
+          "viking longship",
+          "longboat"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "castle",
+        "helmet",
+        "village",
+        "throne",
+        "lighthouse",
+        "longhouse",
+        "great hall",
+        "statue"
+      ],
+      "source": "Wikipedia: Up Helly Aa",
+      "verified": true,
+      "hardWords": ["Up Helly Aa", "Shetland"]
+    },
+    {
+      "id": "fo-holidays-011",
+      "category": "holidays",
+      "kind": "animal",
+      "fact": "Some Australians swap the Easter Bunny for the Easter ___, an endangered marsupial.",
+      "truth": {
+        "answer": "bilby",
+        "accept": [
+          "bilbies",
+          "bilbie",
+          "bilbi",
+          "greater bilby",
+          "rabbit-eared bandicoot",
+          "bilbey"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "wombat",
+        "koala",
+        "platypus",
+        "quokka",
+        "numbat",
+        "echidna",
+        "possum",
+        "kangaroo"
+      ],
+      "source": "Wikipedia: Easter Bilby",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-holidays-012",
+      "category": "holidays",
+      "kind": "food",
+      "fact": "During carnival in Ivrea, Italy, teams fight a huge battle by hurling ___.",
+      "truth": {
+        "answer": "oranges",
+        "accept": ["orange", "blood oranges", "oranjes", "ornages", "oragnes", "orangs"],
+        "reject": []
+      },
+      "houseLies": [
+        "lemons",
+        "meatballs",
+        "spaghetti",
+        "olives",
+        "pizza dough",
+        "confetti",
+        "water balloons",
+        "eggs"
+      ],
+      "source": "Wikipedia: Battle of the Oranges",
+      "verified": true,
+      "hardWords": ["Ivrea"]
+    },
+    {
+      "id": "fo-holidays-013",
+      "category": "holidays",
+      "kind": "person",
+      "fact": "Since 1960, millions of Swedes have watched a Christmas Eve TV special starring ___.",
+      "truth": {
+        "answer": "donald duck",
+        "accept": [
+          "donald",
+          "kalle anka",
+          "donald duck and friends",
+          "donal duck",
+          "donald ducks",
+          "donnald duck"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "the muppets",
+        "pippi longstocking",
+        "abba",
+        "charlie brown",
+        "mr bean",
+        "garfield",
+        "the moomins",
+        "the grinch"
+      ],
+      "source": "Wikipedia: From All of Us to All of You",
+      "verified": true,
+      "hardWords": ["Kalle Anka"]
+    },
+    {
+      "id": "fo-inventions-001",
+      "category": "inventions",
+      "kind": "object",
+      "fact": "Play-Doh was first made as a putty for cleaning ___.",
+      "truth": {
+        "answer": "wallpaper",
+        "accept": [
+          "wall paper",
+          "wallpapers",
+          "walls",
+          "sooty wallpaper",
+          "wallpaer",
+          "wallpapper",
+          "walpaper"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "chalkboards",
+        "windows",
+        "false teeth",
+        "bowling balls",
+        "shoes",
+        "carpets",
+        "piano keys",
+        "gravestones"
+      ],
+      "source": "Wikipedia: Play-Doh",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-inventions-002",
+      "category": "inventions",
+      "kind": "food",
+      "fact": "The Frisbee is named after a Connecticut company that made ___.",
+      "truth": {
+        "answer": "pies",
+        "accept": ["pie", "pie tins", "pie tin", "pie pans", "pie plates", "pys"],
+        "reject": []
+      },
+      "houseLies": [
+        "trash can lids",
+        "hubcaps",
+        "cake pans",
+        "bagels",
+        "top hats",
+        "doughnuts",
+        "cymbals",
+        "hockey pucks"
+      ],
+      "source": "Wikipedia: Frisbee",
+      "verified": true,
+      "hardWords": ["Frisbee", "Connecticut"]
+    },
+    {
+      "id": "fo-inventions-003",
+      "category": "inventions",
+      "kind": "object",
+      "fact": "Velcro was inspired by ___ that clung to its inventor's dog in the Alps.",
+      "truth": {
+        "answer": "burrs",
+        "accept": ["burs", "burr", "bur", "burdock", "burdock burrs", "burdock burs", "seed burrs"],
+        "reject": []
+      },
+      "houseLies": [
+        "ticks",
+        "fleas",
+        "porcupine quills",
+        "pine needles",
+        "bubble gum",
+        "snowballs",
+        "feathers",
+        "fish hooks"
+      ],
+      "source": "Wikipedia: Velcro",
+      "verified": true,
+      "hardWords": ["Velcro"]
+    },
+    {
+      "id": "fo-inventions-004",
+      "category": "inventions",
+      "kind": "substance",
+      "fact": "The first computer mouse was carved out of ___.",
+      "truth": {
+        "answer": "wood",
+        "accept": ["redwood", "wooden", "a block of wood", "woods", "wood block", "timber"],
+        "reject": []
+      },
+      "houseLies": ["soap", "plastic", "cork", "ivory", "bone", "clay", "marble", "potato"],
+      "source": "Computer History Museum: https://www.computerhistory.org/revolution/input-output/14/350",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-inventions-005",
+      "category": "inventions",
+      "kind": "object",
+      "fact": "The world's first webcam was pointed at a ___ in a Cambridge lab.",
+      "truth": {
+        "answer": "coffee pot",
+        "accept": [
+          "coffee pots",
+          "coffeepot",
+          "coffee maker",
+          "coffee machine",
+          "coffe pot",
+          "coffee percolator",
+          "coffe maker",
+          "percolator"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "fish tank",
+        "hamster cage",
+        "cookie jar",
+        "fridge",
+        "toaster",
+        "bird feeder",
+        "clock",
+        "pizza oven"
+      ],
+      "source": "Wikipedia: Trojan Room coffee pot",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-inventions-006",
+      "category": "inventions",
+      "kind": "place",
+      "fact": "The first Ferris wheel was built in 1893 as America's answer to the ___.",
+      "truth": {
+        "answer": "eiffel tower",
+        "accept": [
+          "eifel tower",
+          "eiffle tower",
+          "eifle tower",
+          "eiffel",
+          "tour eiffel",
+          "eiffel towers"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "big ben",
+        "leaning tower",
+        "great pyramid",
+        "colosseum",
+        "crystal palace",
+        "taj mahal",
+        "tower bridge",
+        "great wall"
+      ],
+      "source": "Wikipedia: Ferris Wheel (1893)",
+      "verified": true,
+      "hardWords": ["Ferris", "Eiffel"]
+    },
+    {
+      "id": "fo-inventions-007",
+      "category": "inventions",
+      "kind": "substance",
+      "fact": "The first stethoscope was simply a rolled-up tube of ___.",
+      "truth": {
+        "answer": "paper",
+        "accept": [
+          "papers",
+          "rolled paper",
+          "paper tube",
+          "sheet of paper",
+          "sheets of paper",
+          "papper",
+          "notebook paper"
+        ],
+        "reject": []
+      },
+      "houseLies": ["leather", "tree bark", "copper", "bamboo", "reed", "brass", "horn", "seaweed"],
+      "source": "Wikipedia: Stethoscope",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-inventions-008",
+      "category": "inventions",
+      "kind": "object",
+      "fact": "The lawn mower was inspired by a mill machine that trimmed ___.",
+      "truth": {
+        "answer": "cloth",
+        "accept": ["woolen cloth", "woollen cloth", "wool", "fabric", "textiles", "clothe"],
+        "reject": []
+      },
+      "houseLies": [
+        "hedges",
+        "beards",
+        "paper",
+        "sheep",
+        "logs",
+        "tobacco",
+        "candles",
+        "sugar cane"
+      ],
+      "source": "Wikipedia: Edwin Beard Budding",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-inventions-010",
+      "category": "inventions",
+      "kind": "food",
+      "fact": "The microwave oven was invented after radar melted a ___ in an engineer's pocket.",
+      "truth": {
+        "answer": "candy bar",
+        "accept": [
+          "chocolate bar",
+          "candy bars",
+          "candybar",
+          "chocolate",
+          "candy",
+          "peanut bar",
+          "chocolate candy bar",
+          "choc bar"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "crayon",
+        "lollipop",
+        "stick of butter",
+        "gummy bear",
+        "cheese slice",
+        "wax seal",
+        "marshmallow",
+        "ice cube"
+      ],
+      "source": "Wikipedia: Microwave oven",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-inventions-011",
+      "category": "inventions",
+      "kind": "animal",
+      "fact": "The first hot-air balloon passengers were a sheep, a duck and a ___.",
+      "truth": {
+        "answer": "rooster",
+        "accept": ["roosters", "cockerel", "chicken", "chickens", "rooser", "roostor"],
+        "reject": []
+      },
+      "houseLies": ["goat", "pig", "cat", "dog", "monkey", "goose", "frog", "cow"],
+      "source": "Wikipedia: Montgolfier brothers",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-inventions-012",
+      "category": "inventions",
+      "kind": "food",
+      "fact": "The first product ever scanned with a supermarket barcode was a pack of ___.",
+      "truth": {
+        "answer": "chewing gum",
+        "accept": [
+          "gum",
+          "juicy fruit",
+          "juicy fruit gum",
+          "chewing-gum",
+          "chewinggum",
+          "chewing gums",
+          "chewin gum",
+          "juicy fruit chewing gum",
+          "chewing gum pack"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "cigarettes",
+        "crackers",
+        "baseball cards",
+        "batteries",
+        "playing cards",
+        "cough drops",
+        "hot dogs",
+        "lightbulbs"
+      ],
+      "source": "Wikipedia: Barcode",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-inventions-013",
+      "category": "inventions",
+      "kind": "job",
+      "fact": "The Slinky was invented by a ___ engineer who saw a spring tumble off a shelf.",
+      "truth": {
+        "answer": "naval",
+        "accept": ["navy", "naval mechanical", "navy mechanical", "navel", "navall", "nautical"],
+        "reject": []
+      },
+      "houseLies": ["railroad", "rocket", "circus", "bridge", "clock", "radio", "toy", "mining"],
+      "source": "Wikipedia: Slinky",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-inventions-014",
+      "category": "inventions",
+      "kind": "substance",
+      "fact": "London's first traffic light, set up in 1868, blew up because it was lit by ___.",
+      "truth": {
+        "answer": "gas",
+        "accept": [
+          "gas lamps",
+          "gaslight",
+          "gas light",
+          "coal gas",
+          "gas lamp",
+          "town gas",
+          "gaslamps",
+          "gas lighting",
+          "gass"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "candles",
+        "whale oil",
+        "kerosene",
+        "electricity",
+        "gunpowder",
+        "torches",
+        "tallow",
+        "fireworks"
+      ],
+      "source": "Wikipedia: J. P. Knight",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-inventions-015",
+      "category": "inventions",
+      "kind": "object",
+      "fact": "The trampoline's inventor named it after the Spanish word for a ___.",
+      "truth": {
+        "answer": "diving board",
+        "accept": [
+          "diving boards",
+          "divingboard",
+          "diving-board",
+          "springboard",
+          "spring board",
+          "diving plank",
+          "trampolin",
+          "diving platform",
+          "diveing board"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "bouncy bed",
+        "circus net",
+        "jumping bean",
+        "drumhead",
+        "frog",
+        "flea",
+        "trap door",
+        "acrobat"
+      ],
+      "source": "Wikipedia: Trampoline",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-science-001",
+      "category": "science",
+      "kind": "substance",
+      "fact": "Bananas are very slightly radioactive because they are rich in ___.",
+      "truth": {
+        "answer": "potassium",
+        "accept": [
+          "potassium-40",
+          "potassium 40",
+          "k-40",
+          "potasium",
+          "potassim",
+          "potassum",
+          "potassiam"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "uranium",
+        "radium",
+        "sugar",
+        "iron",
+        "magnesium",
+        "plutonium",
+        "sodium",
+        "vitamin c"
+      ],
+      "source": "Wikipedia: Banana equivalent dose",
+      "verified": true
+    },
+    {
+      "id": "fo-science-002",
+      "category": "science",
+      "kind": "place",
+      "fact": "Helium was spotted on the ___ decades before anyone found it on Earth.",
+      "truth": {
+        "answer": "sun",
+        "accept": ["the sun", "sol", "suns", "solar", "sunn", "our sun", "sunlight"],
+        "reject": []
+      },
+      "houseLies": [
+        "moon",
+        "mars",
+        "saturn",
+        "jupiter",
+        "north pole",
+        "venus",
+        "halley's comet",
+        "milky way"
+      ],
+      "source": "Wikipedia: Helium",
+      "verified": true
+    },
+    {
+      "id": "fo-science-004",
+      "category": "science",
+      "kind": "substance",
+      "fact": "Silly Putty was invented during World War II by scientists trying to make fake ___.",
+      "truth": {
+        "answer": "rubber",
+        "accept": [
+          "synthetic rubber",
+          "artificial rubber",
+          "rubbers",
+          "ruber",
+          "rubbber",
+          "substitute rubber"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "glue",
+        "chewing gum",
+        "plastic",
+        "leather",
+        "silk",
+        "toothpaste",
+        "explosives",
+        "bandages"
+      ],
+      "source": "Wikipedia: Silly Putty",
+      "verified": true
+    },
+    {
+      "id": "fo-science-006",
+      "category": "science",
+      "kind": "person",
+      "fact": "William Herschel wanted to name the planet Uranus after King ___.",
+      "truth": {
+        "answer": "george iii",
+        "accept": [
+          "george",
+          "george the third",
+          "george 3",
+          "king george",
+          "georgeiii",
+          "george the 3rd",
+          "george 3rd"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "henry viii",
+        "louis xvi",
+        "arthur",
+        "charles ii",
+        "william iii",
+        "frederick",
+        "richard",
+        "james i"
+      ],
+      "source": "Wikipedia: Uranus",
+      "verified": true,
+      "hardWords": ["Herschel", "Uranus"]
+    },
+    {
+      "id": "fo-science-009",
+      "category": "science",
+      "kind": "activity",
+      "fact": "Neptune is the only planet that was found by ___ before anyone saw it.",
+      "truth": {
+        "answer": "mathematics",
+        "accept": [
+          "math",
+          "maths",
+          "mathematical prediction",
+          "calculations",
+          "calculation",
+          "equations",
+          "mathmatics",
+          "arithmetic"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "radio waves",
+        "sound waves",
+        "dreaming",
+        "astrology",
+        "x-rays",
+        "satellite",
+        "magnets",
+        "luck"
+      ],
+      "source": "Wikipedia: Neptune",
+      "verified": true
+    },
+    {
+      "id": "fo-science-012",
+      "category": "science",
+      "kind": "object",
+      "fact": "Super glue was discovered by accident while scientists tried to make clear plastic ___.",
+      "truth": {
+        "answer": "gun sights",
+        "accept": [
+          "gunsights",
+          "gun sight",
+          "gunsight",
+          "rifle sights",
+          "sights",
+          "gun-sights",
+          "scopes",
+          "gunsites",
+          "gun scopes",
+          "rifle scopes"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "goggles",
+        "windshields",
+        "contact lenses",
+        "dentures",
+        "fishing line",
+        "raincoats",
+        "bottles",
+        "eyeglasses"
+      ],
+      "source": "Wikipedia: Cyanoacrylate",
+      "verified": true
+    },
+    {
+      "id": "fo-science-013",
+      "category": "science",
+      "kind": "substance",
+      "fact": "The 'lead' inside a pencil is really ___ mixed with clay.",
+      "truth": {
+        "answer": "graphite",
+        "accept": [
+          "graphite powder",
+          "carbon",
+          "grafite",
+          "graphit",
+          "graphyte",
+          "powdered graphite",
+          "plumbago"
+        ],
+        "reject": []
+      },
+      "houseLies": ["charcoal", "coal", "tar", "ink", "soot", "slate", "iron", "ash"],
+      "source": "Wikipedia: Pencil",
+      "verified": true
+    },
+    {
+      "id": "fo-science-014",
+      "category": "science",
+      "kind": "substance",
+      "fact": "Oxygen got its name from Greek words meaning ___ maker, thanks to a chemist's wrong guess.",
+      "truth": {
+        "answer": "acid",
+        "accept": ["acids", "acid former", "acid producer", "asid", "sour", "sharp"],
+        "reject": []
+      },
+      "houseLies": ["fire", "air", "breath", "life", "rust", "flame", "spark", "cloud"],
+      "source": "Wikipedia: Oxygen",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-science-015",
+      "category": "science",
+      "kind": "object",
+      "fact": "When lightning strikes sand, it can melt it into glassy tubes called ___.",
+      "truth": {
+        "answer": "fulgurites",
+        "accept": [
+          "fulgurite",
+          "fulgarites",
+          "fulgerites",
+          "fossilized lightning",
+          "fossil lightning",
+          "petrified lightning"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "thunder pipes",
+        "sky straws",
+        "glassworms",
+        "zapstones",
+        "bolt glass",
+        "storm tubes",
+        "lightning reeds",
+        "obsidian"
+      ],
+      "source": "Wikipedia: Fulgurite",
+      "verified": true,
+      "hardWords": ["fulgurites"]
+    },
+    {
+      "id": "fo-science-016",
+      "category": "science",
+      "kind": "word",
+      "fact": "Tungsten's chemical symbol is W because of the metal's other name, ___.",
+      "truth": {
+        "answer": "wolfram",
+        "accept": [
+          "wolfrum",
+          "wolfrom",
+          "wolf ram",
+          "wolfrahm",
+          "volfram",
+          "wolfram metal",
+          "wolfran"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "tungstium",
+        "wendelium",
+        "wittrium",
+        "walstenite",
+        "wotan",
+        "whiteore",
+        "wurmstone",
+        "weberium"
+      ],
+      "source": "Wikipedia: Tungsten",
+      "verified": true,
+      "hardWords": ["wolfram"]
+    },
+    {
+      "id": "fo-science-017",
+      "category": "science",
+      "kind": "food",
+      "fact": "A Tanzanian schoolboy noticed that a hot ___ mix froze before a cold one, now called the Mpemba effect.",
+      "truth": {
+        "answer": "ice cream",
+        "accept": [
+          "icecream",
+          "ice-cream",
+          "ice creams",
+          "ice cream mix",
+          "icecream mix",
+          "ice crem",
+          "ice cream base",
+          "icecreem",
+          "ice cream mixture"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "lemonade",
+        "jelly",
+        "cake batter",
+        "soup",
+        "milk tea",
+        "pudding",
+        "cocoa",
+        "pancake batter"
+      ],
+      "source": "Wikipedia: Mpemba effect",
+      "verified": true,
+      "hardWords": ["Mpemba"]
+    },
+    {
+      "id": "fo-science-018",
+      "category": "science",
+      "kind": "word",
+      "fact": "The earthy smell of rain falling on dry ground has a name: ___.",
+      "truth": {
+        "answer": "petrichor",
+        "accept": [
+          "petricor",
+          "petrichore",
+          "petricore",
+          "petrikor",
+          "petrichour",
+          "petrichor smell"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "terravapor",
+        "pluviance",
+        "ozonia",
+        "rainmusk",
+        "humbrine",
+        "stormbloom",
+        "argilla",
+        "nimbosity"
+      ],
+      "source": "Wikipedia: Petrichor",
+      "verified": true,
+      "hardWords": ["petrichor"]
+    },
+    {
+      "id": "fo-science-019",
+      "category": "science",
+      "kind": "word",
+      "fact": "A rainbow made by moonlight instead of sunlight is called a ___.",
+      "truth": {
+        "answer": "moonbow",
+        "accept": [
+          "moon bow",
+          "moon-bow",
+          "moonbows",
+          "lunar rainbow",
+          "moon rainbow",
+          "lunarbow",
+          "moonbo",
+          "lunar rainbows",
+          "moonlight rainbow"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "nightbow",
+        "ghostbow",
+        "starbow",
+        "silverbow",
+        "dimbow",
+        "fogbow",
+        "duskbow",
+        "owlbow"
+      ],
+      "source": "Wikipedia: Moonbow",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-space-001",
+      "category": "space",
+      "kind": "word",
+      "fact": "One spin of Venus on its axis takes longer than a Venusian ___.",
+      "truth": {
+        "answer": "year",
+        "accept": ["years", "yr", "yaer", "orbit", "venus year", "venusian year"],
+        "reject": []
+      },
+      "houseLies": [
+        "month",
+        "week",
+        "summer",
+        "century",
+        "decade",
+        "season",
+        "eclipse",
+        "school term"
+      ],
+      "source": "Wikipedia: Venus",
+      "verified": true,
+      "hardWords": ["Venusian"]
+    },
+    {
+      "id": "fo-space-002",
+      "category": "space",
+      "kind": "place",
+      "fact": "The name Pluto was suggested by an 11-year-old schoolgirl from ___.",
+      "truth": {
+        "answer": "oxford",
+        "accept": ["oxford england", "north oxford", "oxfordshire", "england", "oxfrod", "oxferd"],
+        "reject": []
+      },
+      "houseLies": [
+        "cambridge",
+        "london",
+        "liverpool",
+        "dublin",
+        "flagstaff",
+        "boston",
+        "edinburgh",
+        "paris"
+      ],
+      "source": "Wikipedia: Venetia Burney",
+      "verified": true
+    },
+    {
+      "id": "fo-space-003",
+      "category": "space",
+      "kind": "substance",
+      "fact": "Saturn is the only planet in our Solar System less dense than ___.",
+      "truth": {
+        "answer": "water",
+        "accept": ["h2o", "liquid water", "watr", "wter", "waters", "seawater", "sea water"],
+        "reject": []
+      },
+      "houseLies": [
+        "air",
+        "helium",
+        "steam",
+        "styrofoam",
+        "cotton candy",
+        "soap bubbles",
+        "popcorn",
+        "fog"
+      ],
+      "source": "Wikipedia: Saturn",
+      "verified": true
+    },
+    {
+      "id": "fo-space-004",
+      "category": "space",
+      "kind": "body-part",
+      "fact": "Uranus is tilted so far over that it spins on its ___.",
+      "truth": {
+        "answer": "side",
+        "accept": ["sides", "sideways", "sidways", "side ways", "syde", "flank", "sidewise"],
+        "reject": []
+      },
+      "houseLies": ["head", "back", "belly", "tail", "nose", "rings", "moon", "elbow"],
+      "source": "Wikipedia: Uranus",
+      "verified": true
+    },
+    {
+      "id": "fo-space-005",
+      "category": "space",
+      "kind": "word",
+      "fact": "Tree seeds flown around the Moon on Apollo 14 grew into so-called ___ trees.",
+      "truth": {
+        "answer": "moon",
+        "accept": [
+          "moon tree",
+          "moon trees",
+          "moontree",
+          "lunar",
+          "mooon",
+          "the moon",
+          "moons",
+          "lunar trees"
+        ],
+        "reject": []
+      },
+      "houseLies": ["space", "rocket", "astronaut", "apollo", "star", "galaxy", "orbit", "comet"],
+      "source": "Wikipedia: Moon tree",
+      "verified": true
+    },
+    {
+      "id": "fo-space-006",
+      "category": "space",
+      "kind": "animal",
+      "fact": "The first animals ever sent into space, in 1947, were ___.",
+      "truth": {
+        "answer": "fruit flies",
+        "accept": [
+          "fruit fly",
+          "fruitflies",
+          "fruit-flies",
+          "fly",
+          "drosophila",
+          "fruit flys",
+          "drosophila flies",
+          "vinegar flies"
+        ],
+        "reject": []
+      },
+      "houseLies": ["monkeys", "mice", "dogs", "frogs", "spiders", "bees", "rats", "goldfish"],
+      "source": "Wikipedia: Animals in space",
+      "verified": true
+    },
+    {
+      "id": "fo-space-007",
+      "category": "space",
+      "kind": "animal",
+      "fact": "In 1961, a ___ named Ham rode a Mercury capsule into space.",
+      "truth": {
+        "answer": "chimpanzee",
+        "accept": ["chimp", "chimps", "chimpanzees", "chimpansee", "chimpanze", "ape", "great ape"],
+        "reject": []
+      },
+      "houseLies": ["pig", "monkey", "dog", "cat", "parrot", "rabbit", "hamster", "goat"],
+      "source": "Wikipedia: Animals in space",
+      "verified": true
+    },
+    {
+      "id": "fo-space-008",
+      "category": "space",
+      "kind": "substance",
+      "fact": "The Voyager Golden Records are actually made of gold-plated ___.",
+      "truth": {
+        "answer": "copper",
+        "accept": ["coper", "coppper", "copper disk", "copper disc", "cu", "copper metal"],
+        "reject": []
+      },
+      "houseLies": ["silver", "vinyl", "plastic", "glass", "iron", "lead", "titanium", "steel"],
+      "source": "Wikipedia: Voyager Golden Record",
+      "verified": true
+    },
+    {
+      "id": "fo-space-009",
+      "category": "space",
+      "kind": "other",
+      "fact": "Thanks to fine dust in the air, sunsets on Mars glow ___.",
+      "truth": {
+        "answer": "blue",
+        "accept": ["bluish", "blue-ish", "blu", "bleu", "pale blue", "light blue"],
+        "reject": []
+      },
+      "houseLies": ["green", "purple", "silver", "gold", "white", "black", "yellow", "rainbow"],
+      "source": "Wikipedia: Sunset",
+      "verified": true
+    },
+    {
+      "id": "fo-space-010",
+      "category": "space",
+      "kind": "object",
+      "fact": "On Apollo 14, astronaut Alan Shepard hit two ___ on the Moon.",
+      "truth": {
+        "answer": "golf balls",
+        "accept": [
+          "golf ball",
+          "golfballs",
+          "golfball",
+          "golf-balls",
+          "golf ballz",
+          "ball",
+          "golfbals",
+          "gulf balls",
+          "two golf balls"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "baseballs",
+        "tennis balls",
+        "hockey pucks",
+        "gongs",
+        "pinatas",
+        "cymbals",
+        "rocks",
+        "high notes"
+      ],
+      "source": "Wikipedia: Alan Shepard",
+      "verified": true
+    },
+    {
+      "id": "fo-space-011",
+      "category": "space",
+      "kind": "event",
+      "fact": "Jupiter's Great Red Spot is a giant ___.",
+      "truth": {
+        "answer": "storm",
+        "accept": ["storms", "anticyclone", "cyclone", "hurricane", "windstorm", "stom", "strom"],
+        "reject": []
+      },
+      "houseLies": ["volcano", "crater", "ocean", "mountain", "lake", "bruise", "rash", "desert"],
+      "source": "Wikipedia: Great Red Spot",
+      "verified": true
+    },
+    {
+      "id": "fo-space-012",
+      "category": "space",
+      "kind": "place",
+      "fact": "Olympus Mons, a volcano more than twice as tall as Mount Everest, stands on ___.",
+      "truth": {
+        "answer": "mars",
+        "accept": [
+          "mars's",
+          "red planet",
+          "the red planet",
+          "planet mars",
+          "marz",
+          "mras",
+          "mars planet",
+          "marrs"
+        ],
+        "reject": []
+      },
+      "houseLies": ["venus", "io", "mercury", "pluto", "titan", "europa", "jupiter", "neptune"],
+      "source": "Wikipedia: Olympus Mons",
+      "verified": true,
+      "hardWords": ["Olympus Mons"]
+    },
+    {
+      "id": "fo-space-013",
+      "category": "space",
+      "kind": "job",
+      "fact": "Before becoming the first woman in space, Valentina Tereshkova was an amateur ___.",
+      "truth": {
+        "answer": "skydiver",
+        "accept": [
+          "skydiving",
+          "sky diver",
+          "sky-diver",
+          "skydivers",
+          "parachutist",
+          "parachuting",
+          "skydiver girl",
+          "sky dive",
+          "parachute jumper"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "pilot",
+        "astronomer",
+        "boxer",
+        "chess player",
+        "ballerina",
+        "figure skater",
+        "mountaineer",
+        "gymnast"
+      ],
+      "source": "Wikipedia: Valentina Tereshkova",
+      "verified": true,
+      "hardWords": ["Valentina Tereshkova"]
+    },
+    {
+      "id": "fo-sports-001",
+      "category": "sports",
+      "kind": "food",
+      "fact": "James Naismith's very first basketball hoops were ___ baskets.",
+      "truth": {
+        "answer": "peach",
+        "accept": ["peaches", "peach basket", "peech", "peache", "fruit", "peachs"],
+        "reject": ["beach", "pear"]
+      },
+      "houseLies": ["laundry", "apple", "bread", "egg", "picnic", "fishing", "flower", "potato"],
+      "source": "Wikipedia: Basketball",
+      "verified": true,
+      "hardWords": ["Naismith"]
+    },
+    {
+      "id": "fo-sports-004",
+      "category": "sports",
+      "kind": "word",
+      "fact": "Volleyball's inventor first named his new game ___.",
+      "truth": {
+        "answer": "mintonette",
+        "accept": [
+          "mintonet",
+          "minitonette",
+          "mintonnette",
+          "mintenette",
+          "mintonett",
+          "mintonnet"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "netball",
+        "bounceball",
+        "skyball",
+        "hand tennis",
+        "batinette",
+        "puffball",
+        "airball",
+        "tossball"
+      ],
+      "source": "Wikipedia: Volleyball",
+      "verified": true,
+      "hardWords": ["mintonette"]
+    },
+    {
+      "id": "fo-sports-005",
+      "category": "sports",
+      "kind": "object",
+      "fact": "The first Wimbledon, in 1877, was held to pay for repairing the club's ___.",
+      "truth": {
+        "answer": "pony roller",
+        "accept": [
+          "roller",
+          "lawn roller",
+          "pony-roller",
+          "ponyroller",
+          "pony rollers",
+          "poney roller",
+          "horse roller",
+          "pony drawn roller"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "lawnmower",
+        "leaky roof",
+        "tea urn",
+        "broken fence",
+        "grandstand",
+        "horse carriage",
+        "church bell",
+        "water pump"
+      ],
+      "source": "Wikipedia: 1877 Wimbledon Championship",
+      "verified": true,
+      "hardWords": ["Wimbledon"]
+    },
+    {
+      "id": "fo-sports-006",
+      "category": "sports",
+      "kind": "substance",
+      "fact": "An Olympic gold medal must be made of at least 92.5 percent ___.",
+      "truth": {
+        "answer": "silver",
+        "accept": ["sterling silver", "sliver", "silvr", "silber", "argentum", "solid silver"],
+        "reject": []
+      },
+      "houseLies": ["copper", "brass", "bronze", "nickel", "tin", "zinc", "pewter", "iron"],
+      "source": "Wikipedia: Olympic medal",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-sports-007",
+      "category": "sports",
+      "kind": "place",
+      "fact": "Snooker was invented by British army officers stationed in ___.",
+      "truth": {
+        "answer": "india",
+        "accept": ["jabalpur", "jubbulpore", "british india", "indai", "inda", "british raj"],
+        "reject": ["indiana"]
+      },
+      "houseLies": [
+        "egypt",
+        "south africa",
+        "malta",
+        "gibraltar",
+        "hong kong",
+        "ireland",
+        "canada",
+        "jamaica"
+      ],
+      "source": "Wikipedia: Snooker",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-sports-008",
+      "category": "sports",
+      "kind": "person",
+      "fact": "Badminton is named after a ___'s country house in Gloucestershire, England.",
+      "truth": {
+        "answer": "duke",
+        "accept": ["duke of beaufort", "dukes", "beaufort", "duk", "dook", "duc"],
+        "reject": []
+      },
+      "houseLies": [
+        "bishop",
+        "king",
+        "vicar",
+        "admiral",
+        "prince",
+        "pirate",
+        "general",
+        "sea captain"
+      ],
+      "source": "Wikipedia: Badminton",
+      "verified": true,
+      "hardWords": ["Gloucestershire"]
+    },
+    {
+      "id": "fo-sports-010",
+      "category": "sports",
+      "kind": "animal",
+      "fact": "In 1966, the stolen World Cup trophy was found by a ___ named Pickles.",
+      "truth": {
+        "answer": "dog",
+        "accept": ["dogs", "doggy", "pup", "collie", "collie dog", "mongrel", "doggo"],
+        "reject": []
+      },
+      "houseLies": [
+        "cat",
+        "parrot",
+        "schoolboy",
+        "postman",
+        "milkman",
+        "pigeon",
+        "goat",
+        "bus driver"
+      ],
+      "source": "Wikipedia: Pickles (dog)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-sports-011",
+      "category": "sports",
+      "kind": "animal",
+      "fact": "Paul the ___ correctly picked the winner of all seven of Germany's 2010 World Cup games.",
+      "truth": {
+        "answer": "octopus",
+        "accept": [
+          "octopi",
+          "octopuses",
+          "octapus",
+          "octopous",
+          "octupus",
+          "ocotpus",
+          "cephalopod"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "parrot",
+        "goldfish",
+        "tortoise",
+        "squid",
+        "penguin",
+        "lobster",
+        "hamster",
+        "crab"
+      ],
+      "source": "Wikipedia: Paul the Octopus",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-sports-012",
+      "category": "sports",
+      "kind": "object",
+      "fact": "The first runner across the 1904 Olympic marathon finish had ridden part of the way in a ___.",
+      "truth": {
+        "answer": "car",
+        "accept": [
+          "automobile",
+          "motor car",
+          "motorcar",
+          "auto",
+          "cars",
+          "carr",
+          "motor vehicle",
+          "automobil"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "wheelbarrow",
+        "hot air balloon",
+        "buggy",
+        "rowboat",
+        "stagecoach",
+        "milk wagon",
+        "rickshaw",
+        "trolley"
+      ],
+      "source": "Wikipedia: Fred Lorz",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-sports-013",
+      "category": "sports",
+      "kind": "object",
+      "fact": "The 1939 'Timeless Test' cricket match was abandoned so England wouldn't miss their ___ home.",
+      "truth": {
+        "answer": "boat",
+        "accept": ["ship", "boats", "steamship", "liner", "ocean liner", "steamer", "bote"],
+        "reject": []
+      },
+      "houseLies": [
+        "bus",
+        "plane",
+        "zeppelin",
+        "taxi",
+        "stagecoach",
+        "hot air balloon",
+        "submarine",
+        "carriage"
+      ],
+      "source": "Wikipedia: Timeless Test",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-sports-014",
+      "category": "sports",
+      "kind": "substance",
+      "fact": "Before 1850, the best golf balls were hand-sewn leather pouches stuffed with boiled ___.",
+      "truth": {
+        "answer": "feathers",
+        "accept": [
+          "feather",
+          "goose feathers",
+          "chicken feathers",
+          "goose feather",
+          "fethers",
+          "feathres"
+        ],
+        "reject": []
+      },
+      "houseLies": ["wool", "sawdust", "cork", "straw", "moss", "sand", "rags", "rice"],
+      "source": "Wikipedia: Golf ball",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-sports-015",
+      "category": "sports",
+      "kind": "activity",
+      "fact": "Until 1948, the Olympics gave medals for architecture, literature, music, painting and ___.",
+      "truth": {
+        "answer": "sculpture",
+        "accept": ["sculpting", "sculptures", "sculpure", "sculpter", "sculpturing", "sculptor"],
+        "reject": []
+      },
+      "houseLies": [
+        "dance",
+        "photography",
+        "pottery",
+        "opera",
+        "cooking",
+        "knitting",
+        "film",
+        "embroidery"
+      ],
+      "source": "Wikipedia: Art competitions at the Summer Olympics",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-sports-016",
+      "category": "sports",
+      "kind": "place",
+      "fact": "The 1908 London Olympic marathon did not start in the city, it started at ___.",
+      "truth": {
+        "answer": "windsor castle",
+        "accept": [
+          "windsor",
+          "windsor castle grounds",
+          "windsor castel",
+          "windsor catle",
+          "windsor palace",
+          "windsor great park"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "buckingham palace",
+        "big ben",
+        "tower of london",
+        "hampton court",
+        "wembley",
+        "oxford",
+        "stonehenge",
+        "greenwich"
+      ],
+      "source": "Wikipedia: Marathon",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-weird-laws-001",
+      "category": "weird-laws",
+      "kind": "event",
+      "fact": "In 1659, Puritan Boston made celebrating ___ a crime, with a five-shilling fine.",
+      "truth": {
+        "answer": "christmas",
+        "accept": ["christmas day", "xmas", "x-mas", "chrismas", "christmass", "cristmas", "yule"],
+        "reject": []
+      },
+      "houseLies": [
+        "halloween",
+        "birthdays",
+        "leap day",
+        "new year's",
+        "valentine's day",
+        "april fools' day",
+        "st patrick's day",
+        "thanksgiving"
+      ],
+      "source": "Wikipedia: Christmas in Puritan New England",
+      "verified": true,
+      "hardWords": ["Puritan"]
+    },
+    {
+      "id": "fo-weird-laws-002",
+      "category": "weird-laws",
+      "kind": "food",
+      "fact": "In 1992, Singapore banned the import and sale of ___.",
+      "truth": {
+        "answer": "chewing gum",
+        "accept": [
+          "gum",
+          "bubble gum",
+          "bubblegum",
+          "chewing-gum",
+          "chewinggum",
+          "chewing gums",
+          "chewin gum",
+          "gums",
+          "chewy gum",
+          "gum chewing"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "comic books",
+        "water pistols",
+        "skateboards",
+        "cotton candy",
+        "yo-yos",
+        "roller skates",
+        "whoopee cushions",
+        "pet hamsters"
+      ],
+      "source": "Wikipedia: Chewing gum sales ban in Singapore",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-weird-laws-004",
+      "category": "weird-laws",
+      "kind": "object",
+      "fact": "From 1696 to 1851, English homes were taxed on how many ___ they had.",
+      "truth": {
+        "answer": "windows",
+        "accept": [
+          "window",
+          "windowpanes",
+          "window panes",
+          "panes",
+          "glass windows",
+          "windoes",
+          "windos"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "doors",
+        "staircases",
+        "bedrooms",
+        "mirrors",
+        "rugs",
+        "chairs",
+        "garden gnomes",
+        "teacups"
+      ],
+      "source": "Wikipedia: Window tax",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-weird-laws-005",
+      "category": "weird-laws",
+      "kind": "object",
+      "fact": "After New York City banned them, its mayor smashed ___ machines with sledgehammers.",
+      "truth": {
+        "answer": "pinball",
+        "accept": [
+          "pin ball",
+          "pin-ball",
+          "pinballs",
+          "pinbal",
+          "pinnball",
+          "pinbll",
+          "pinball machines",
+          "pinball games"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "jukebox",
+        "popcorn",
+        "cotton candy",
+        "sewing",
+        "washing",
+        "snow cone",
+        "karaoke",
+        "soda"
+      ],
+      "source": "Wikipedia: Pinball",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-weird-laws-006",
+      "category": "weird-laws",
+      "kind": "object",
+      "fact": "Under Britain's 1865 Locomotive Act, a person had to walk ahead of road engines carrying a red ___.",
+      "truth": {
+        "answer": "flag",
+        "accept": ["flags", "red flag", "banner", "flagg", "falg", "pennant"],
+        "reject": ["flat"]
+      },
+      "houseLies": [
+        "bell",
+        "umbrella",
+        "broom",
+        "whistle",
+        "drum",
+        "handkerchief",
+        "tambourine",
+        "trumpet"
+      ],
+      "source": "Wikipedia: Locomotive Acts",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-weird-laws-007",
+      "category": "weird-laws",
+      "kind": "activity",
+      "fact": "In 2005, Turkmenistan's president banned ___ at public concerts.",
+      "truth": {
+        "answer": "lip-syncing",
+        "accept": [
+          "lip syncing",
+          "lip-synching",
+          "lip synching",
+          "lipsyncing",
+          "lip sync",
+          "lip-sync",
+          "miming",
+          "lipsynching",
+          "lip synch",
+          "lipsincing",
+          "mouthing the words",
+          "lip syncs"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "whistling",
+        "air guitar",
+        "encores",
+        "clapping",
+        "yodeling",
+        "crowd surfing",
+        "glow sticks",
+        "sunglasses"
+      ],
+      "source": "Wikipedia: Saparmurat Niyazov",
+      "verified": true,
+      "hardWords": ["Turkmenistan"]
+    },
+    {
+      "id": "fo-weird-laws-008",
+      "category": "weird-laws",
+      "kind": "other",
+      "fact": "A 2002 law in Turkmenistan renamed the month of ___ after the president's mother.",
+      "truth": {
+        "answer": "april",
+        "accept": ["apr", "aprill", "apirl", "aprl", "fourth month", "4th month"],
+        "reject": []
+      },
+      "houseLies": [
+        "may",
+        "march",
+        "june",
+        "october",
+        "december",
+        "august",
+        "february",
+        "september"
+      ],
+      "source": "Wikipedia: Renaming of Turkmen months and days of week",
+      "verified": true,
+      "hardWords": ["Turkmenistan"]
+    },
+    {
+      "id": "fo-weird-laws-009",
+      "category": "weird-laws",
+      "kind": "animal",
+      "fact": "A 1986 British law created the crime of handling ___ in suspicious circumstances.",
+      "truth": {
+        "answer": "salmon",
+        "accept": [
+          "salmons",
+          "samon",
+          "salman",
+          "salmen",
+          "atlantic salmon",
+          "wild salmon",
+          "fish"
+        ],
+        "reject": ["salami"]
+      },
+      "houseLies": [
+        "cheese",
+        "sausages",
+        "cabbages",
+        "crumpets",
+        "pineapples",
+        "teapots",
+        "haggis",
+        "turnips"
+      ],
+      "source": "Wikipedia: Salmon Act 1986",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-weird-laws-010",
+      "category": "weird-laws",
+      "kind": "other",
+      "fact": "Britain's old tax on playing cards is why the ace of ___ looks so fancy.",
+      "truth": {
+        "answer": "spades",
+        "accept": ["spade", "spaids", "spads", "spaedes", "spaeds", "ace of spades"],
+        "reject": []
+      },
+      "houseLies": ["hearts", "diamonds", "clubs", "swords", "cups", "coins", "crowns", "bells"],
+      "source": "Wikipedia: Ace of spades",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-weird-laws-011",
+      "category": "weird-laws",
+      "kind": "animal",
+      "fact": "In 2008, Venice made it illegal to feed the ___ in St Mark's Square.",
+      "truth": {
+        "answer": "pigeons",
+        "accept": ["pigeon", "doves", "rock doves", "pidgeons", "pigions", "pigeions", "piccioni"],
+        "reject": []
+      },
+      "houseLies": [
+        "gondoliers",
+        "tourists",
+        "street musicians",
+        "winged lions",
+        "mimes",
+        "goldfish",
+        "crabs",
+        "orchestra"
+      ],
+      "source": "NBC News: When in Venice, please don't feed the pigeons (nbcnews.com/id/wbna24390018)",
+      "verified": true,
+      "hardWords": ["Venice"]
+    },
+    {
+      "id": "fo-weird-laws-012",
+      "category": "weird-laws",
+      "kind": "other",
+      "fact": "In 1925, Tennessee made it a crime for public school teachers to teach human ___.",
+      "truth": {
+        "answer": "evolution",
+        "accept": [
+          "theory of evolution",
+          "evolution theory",
+          "evolutionary theory",
+          "darwinism",
+          "evoloution",
+          "evolushion",
+          "evolotion"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "anatomy",
+        "biology",
+        "cloning",
+        "flight",
+        "geography",
+        "psychology",
+        "rights",
+        "history"
+      ],
+      "source": "Wikipedia: Butler Act",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-weird-laws-013",
+      "category": "weird-laws",
+      "kind": "food",
+      "fact": "Until 1967, Wisconsin banned the sale of yellow-colored ___.",
+      "truth": {
+        "answer": "margarine",
+        "accept": [
+          "margerine",
+          "margarin",
+          "oleo",
+          "oleomargarine",
+          "marge",
+          "margerin",
+          "butter substitute"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "cheese",
+        "butter",
+        "mustard",
+        "popcorn",
+        "lemonade",
+        "crayons",
+        "raincoats",
+        "bananas"
+      ],
+      "source": "WPR: I can't believe it's not yellow: A peek into Wisconsin's quirky margarine laws",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-weird-laws-014",
+      "category": "weird-laws",
+      "kind": "object",
+      "fact": "An English law from 1313, still on the books, bans coming to Parliament wearing ___.",
+      "truth": {
+        "answer": "armour",
+        "accept": [
+          "armor",
+          "suit of armour",
+          "suit of armor",
+          "suits of armour",
+          "armours",
+          "chain mail",
+          "armer"
+        ],
+        "reject": []
+      },
+      "houseLies": ["pyjamas", "kilts", "spurs", "clogs", "masks", "perfume", "purple", "fur"],
+      "source": "Wikipedia: Statute forbidding Bearing of Armour",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-001",
+      "category": "words",
+      "kind": "animal",
+      "fact": "The word 'muscle' comes from Latin for 'little ___'.",
+      "truth": {
+        "answer": "mouse",
+        "accept": ["mice", "mouses", "mous", "mause", "tiny mouse", "little mouse"],
+        "reject": ["moose", "moss"]
+      },
+      "houseLies": ["bull", "lion", "rope", "worm", "strong man", "rock", "snake", "hammer"],
+      "source": "Etymonline: muscle (https://www.etymonline.com/word/muscle)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-002",
+      "category": "words",
+      "kind": "word",
+      "fact": "When it first appeared in English, the word 'nice' meant ___.",
+      "truth": {
+        "answer": "foolish",
+        "accept": [
+          "silly",
+          "stupid",
+          "ignorant",
+          "senseless",
+          "frivolous",
+          "dumb",
+          "foolsh",
+          "fool"
+        ],
+        "reject": []
+      },
+      "houseLies": ["shiny", "rich", "holy", "sleepy", "tiny", "cold", "brave", "sweet"],
+      "source": "Etymonline: nice (https://www.etymonline.com/word/nice)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-003",
+      "category": "words",
+      "kind": "activity",
+      "fact": "The word 'robot' comes from a Czech word meaning forced ___.",
+      "truth": {
+        "answer": "labor",
+        "accept": [
+          "labour",
+          "work",
+          "drudgery",
+          "hard work",
+          "labor work",
+          "laboring",
+          "compulsory service"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "obedience",
+        "silence",
+        "march",
+        "smile",
+        "metal",
+        "thinking",
+        "dancing",
+        "friendship"
+      ],
+      "source": "Etymonline: robot (https://www.etymonline.com/word/robot)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-004",
+      "category": "words",
+      "kind": "object",
+      "fact": "The word 'disaster' literally means 'bad ___'.",
+      "truth": {
+        "answer": "star",
+        "accept": ["stars", "astro", "planet", "ill star", "starr", "astra"],
+        "reject": ["stair", "start"]
+      },
+      "houseLies": ["luck", "weather", "day", "harvest", "omen", "storm", "moon", "news"],
+      "source": "Etymonline: disaster (https://www.etymonline.com/word/disaster)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-005",
+      "category": "words",
+      "kind": "object",
+      "fact": "The word 'tulip' comes from a Turkish word for ___.",
+      "truth": {
+        "answer": "turban",
+        "accept": ["turbans", "turbin", "turben", "head wrap", "headwrap", "tulbent", "dulband"],
+        "reject": []
+      },
+      "houseLies": [
+        "lips",
+        "cup",
+        "red flower",
+        "sultan",
+        "lantern",
+        "springtime",
+        "onion",
+        "bell"
+      ],
+      "source": "Etymonline: tulip (https://www.etymonline.com/word/tulip)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-006",
+      "category": "words",
+      "kind": "other",
+      "fact": "German miners named the metal nickel after a mischievous ___ that fooled them.",
+      "truth": {
+        "answer": "goblin",
+        "accept": ["goblins", "copper goblin", "gobln", "goblen", "gobblin", "rascal", "imp"],
+        "reject": []
+      },
+      "houseLies": ["fox", "dwarf", "ghost", "wizard", "raven", "saint", "troll", "boss"],
+      "source": "Etymonline: nickel (https://www.etymonline.com/word/nickel)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-007",
+      "category": "words",
+      "kind": "animal",
+      "fact": "In Greek, 'hippopotamus' literally means river ___.",
+      "truth": {
+        "answer": "horse",
+        "accept": ["horses", "hors", "horsey", "hippos", "steed", "pony", "hourse"],
+        "reject": ["house", "hoarse"]
+      },
+      "houseLies": ["pig", "giant", "cow", "monster", "tank", "king", "whale", "bear"],
+      "source": "Etymonline: hippopotamus (https://www.etymonline.com/word/hippopotamus)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-008",
+      "category": "words",
+      "kind": "object",
+      "fact": "The word 'clue' comes from 'clew', a ball of ___.",
+      "truth": {
+        "answer": "thread",
+        "accept": ["yarn", "string", "threads", "thred", "twine", "wool"],
+        "reject": ["bread", "threat"]
+      },
+      "houseLies": ["wax", "clay", "ink", "dough", "fire", "light", "paper", "gold"],
+      "source": "Etymonline: clue (https://www.etymonline.com/word/clue)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-009",
+      "category": "words",
+      "kind": "food",
+      "fact": "The word 'companion' comes from Latin for someone you share ___ with.",
+      "truth": {
+        "answer": "bread",
+        "accept": ["breads", "bred", "a loaf", "loaf", "loaves", "panis", "breadd", "bread roll"],
+        "reject": ["beard", "bead"]
+      },
+      "houseLies": [
+        "wine",
+        "a horse",
+        "a tent",
+        "a road",
+        "secrets",
+        "a blanket",
+        "soup",
+        "a boat"
+      ],
+      "source": "Etymonline: companion (https://www.etymonline.com/word/companion)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-010",
+      "category": "words",
+      "kind": "place",
+      "fact": "Denim is named after ___, a town in southern France.",
+      "truth": {
+        "answer": "nimes",
+        "accept": ["nimes france", "nismes", "neems", "nemes", "nimmes", "nime"],
+        "reject": []
+      },
+      "houseLies": [
+        "denville",
+        "marseille",
+        "toulouse",
+        "avignon",
+        "nice",
+        "montpellier",
+        "cannes",
+        "genoa"
+      ],
+      "source": "Etymonline: denim (https://www.etymonline.com/word/denim)",
+      "verified": true,
+      "hardWords": ["Nimes"]
+    },
+    {
+      "id": "fo-words-011",
+      "category": "words",
+      "kind": "number",
+      "fact": "The word 'quarantine' comes from Italian for ___ days.",
+      "truth": {
+        "answer": "40",
+        "accept": [
+          "forty",
+          "fourty",
+          "quaranta",
+          "forty days",
+          "40 days",
+          "fourty days",
+          "40 day",
+          "quaranta giorni"
+        ],
+        "reject": []
+      },
+      "houseLies": ["14", "21", "30", "7", "10", "12", "100", "3"],
+      "source": "Etymonline: quarantine (https://www.etymonline.com/word/quarantine)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-012",
+      "category": "words",
+      "kind": "food",
+      "fact": "The word 'salary' traces back to the Latin word for ___.",
+      "truth": {
+        "answer": "salt",
+        "accept": ["sal", "salts", "sault", "sea salt", "table salt", "salarium"],
+        "reject": ["salad", "silt"]
+      },
+      "houseLies": ["silver", "soldier", "reward", "wheat", "gold", "bread", "sweat", "coins"],
+      "source": "Etymonline: salary (https://www.etymonline.com/word/salary)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-013",
+      "category": "words",
+      "kind": "animal",
+      "fact": "The word 'jumbo' became popular thanks to a famous ___ from London Zoo.",
+      "truth": {
+        "answer": "elephant",
+        "accept": [
+          "elephants",
+          "elefant",
+          "elephent",
+          "african elephant",
+          "circus elephant",
+          "elaphant"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "giraffe",
+        "hippo",
+        "gorilla",
+        "zookeeper",
+        "whale",
+        "rhino",
+        "walrus",
+        "tortoise"
+      ],
+      "source": "Etymonline: jumbo (https://www.etymonline.com/word/jumbo)",
+      "verified": true,
+      "hardWords": []
+    }
+  ]
+}
