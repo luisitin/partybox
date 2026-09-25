@@ -1,0 +1,105 @@
+// Hive Rank's words in other languages, keyed by the English sentence (ADR-044): screens write
+// `L('…')` from `useT(STRINGS)`; the shell's game picker reads the manifest's tagline, description
+// and setting labels from here too, and scripts/i18n-coverage.test.ts fails until each has its
+// Spanish. `{name}` marks a placeholder. The questions (content/) stay in English.
+import type { Strings } from '@partybox/game-sdk/ui';
+
+export const STRINGS: Strings = {
+  es: {
+    // manifest.json — the game picker
+    'Rank five things the way the hive would.': 'Ordena cinco cosas como lo haría la colmena.',
+    "Five things and a question, like best to worst road-trip snack. Everyone puts them in order on their phone, the orders are combined into the hive's order, and the TV counts it down from fifth to first. Score for each thing you put where the hive did — you're predicting the room, not your own taste.":
+      'Cinco cosas y una pregunta, como el mejor y el peor snack para un viaje en carro. Cada quien las ordena en su teléfono, los órdenes se combinan en el orden de la colmena y la TV lo revela del quinto al primero. Sumas por cada cosa que pusiste donde la puso la colmena: predices al grupo, no tu gusto.',
+    Rounds: 'Rondas',
+    'How many questions to rank': 'Cuántas preguntas ordenar',
+    'Ranking time': 'Tiempo para ordenar',
+    'Seconds to put the five things in order': 'Segundos para poner las cinco cosas en orden',
+    'Spicy questions': 'Preguntas picantes',
+    'Mix in grown-up questions: dating, exes, hangovers (18+)':
+      'Mezcla preguntas para adultos: citas, ex, resacas (18+)',
+    Reader: 'Lector',
+    "Who reads the question and the hive's countdown aloud":
+      'Quién lee en voz alta la pregunta y la cuenta atrás de la colmena',
+    'No reader': 'Sin lector',
+    'Old British Man': 'Señor británico mayor',
+    'Young British Man': 'Joven británico',
+    'American Woman': 'Mujer estadounidense',
+    'Soft-Spoken Woman': 'Mujer de voz suave',
+    Original: 'Original',
+    // how to play (TV + phone)
+    'You get five things and a question, like “best to worst road-trip snack”. Put them in order.':
+      'Recibes cinco cosas y una pregunta, como «del mejor al peor snack de viaje». Ponlas en orden.',
+    'Everyone’s orders are combined into the hive’s order.':
+      'Los órdenes de todos se combinan en el orden de la colmena.',
+    'Score 2 for each thing in the hive’s exact spot, and 1 if you’re one spot off.':
+      'Sumas 2 por cada cosa en el lugar exacto de la colmena, y 1 si te quedas a un lugar.',
+    'You’re not ranking what you like — you’re predicting the room.':
+      'No ordenas lo que te gusta: predices lo que piensa el grupo.',
+    'Let’s go': '¡Vamos!',
+    'Moving on…': 'Seguimos…',
+    // rank
+    'Round {n} of {total}': 'Ronda {n} de {total}',
+    '1 = {top} · 5 = {bottom}': '1 = {top} · 5 = {bottom}',
+    '{n} of {total} locked in': '{n} de {total} confirmados',
+    'Rank them on your phone': 'Ordénalas en tu teléfono',
+    'Tap from {top} to {bottom}': '1 = {top} · 5 = {bottom}',
+    'Lock it in': 'Confirmar',
+    'Locking in…': 'Confirmando…',
+    '{n} more to place': 'Faltan {n}',
+    '✓ Locked in': '✓ Confirmado',
+    Change: 'Cambiar',
+    Reset: 'Borrar',
+    'Your locked order still counts until you lock a new one.':
+      'Tu orden confirmado sigue contando hasta que confirmes uno nuevo.',
+    '✗ Didn’t go through — tap Lock it in again': '✗ No se envió: toca Confirmar otra vez',
+    'You’re in from the next game': 'Entras en el próximo juego',
+    // hive
+    'The hive has decided…': 'La colmena ha decidido…',
+    'Number {n}: {label}': 'Número {n}: {label}',
+    'Not enough bees!': '¡No hay suficientes abejas!',
+    'Not enough bees this round.': 'No hay suficientes abejas esta ronda.',
+    'Fewer than two orders came in — nobody scores this round.':
+      'Llegaron menos de dos órdenes: nadie suma esta ronda.',
+    'Unanimous!': '¡Unánime!',
+    '{n} put it here': '{n} lo pusieron aquí',
+    nobody: 'nadie',
+    'average spot {avg}': 'lugar promedio {avg}',
+    'avg {avg}': 'prom. {avg}',
+    'not revealed yet': 'todavía sin revelar',
+    '👀 Watch the TV': '👀 Mira la TV',
+    'The hive is counting down…': 'La colmena está contando…',
+    // score
+    Scores: 'Puntos',
+    'Queen Bee': 'Abeja reina',
+    'Queen Bees': 'Abejas reinas',
+    'No Queen Bee this round': 'Sin abeja reina esta ronda',
+    '{n} players': '{n} jugadores',
+    'PERFECT HIVE': 'COLMENA PERFECTA',
+    'Next round': 'Siguiente ronda',
+    'See results': 'Ver resultados',
+    'this round': 'esta ronda',
+    'No order this round — you’ll get the next one!':
+      'No enviaste orden esta ronda: ¡a por la siguiente!',
+    '👑 You’re the Queen Bee!': '👑 ¡Eres la abeja reina!',
+    'Your order against the hive': 'Tu orden frente al de la colmena',
+    '+2': '+2',
+    'hive #{n}': 'colmena #{n}',
+    'exact spot': 'lugar exacto',
+    'one spot off': 'a un lugar',
+    'more than one spot off': 'a más de un lugar',
+    'That’s the hive!': '¡Así votó la colmena!',
+    // awards (written by the server, translated at display time)
+    '👑 Queen Bee': '👑 Abeja reina',
+    '🎯 Hive Mind': '🎯 Mente colmena',
+    '🦗 Odd Bug': '🦗 Bicho raro',
+    '🧠 Twin Brains': '🧠 Cerebros gemelos',
+    'Top scorer in 1 round': 'Mejor puntuación en 1 ronda',
+    'Top scorer in {n} rounds': 'Mejor puntuación en {n} rondas',
+    '1 thing in the hive’s exact spot': '1 cosa en el lugar exacto de la colmena',
+    '{n} things in the hive’s exact spot': '{n} cosas en el lugar exacto de la colmena',
+    'The round’s lowest score once': 'La puntuación más baja de la ronda una vez',
+    'The round’s lowest score {n} times': 'La puntuación más baja de la ronda {n} veces',
+    '1 thing in the same spot as {name}': '1 cosa en el mismo lugar que {name}',
+    '{n} things in the same spot as {name}': '{n} cosas en el mismo lugar que {name}',
+  },
+};
