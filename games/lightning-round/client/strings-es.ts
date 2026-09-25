@@ -111,4 +111,9 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   // I-790 C: the reveal band
   '{delta} this round': '{delta} en esta ronda',
   '{total} total': '{total} en total',
+  // I-540 A
+  '#{rank} of {count}': '#{rank} de {count}',
+  '{gap} behind {name}': '{gap} detrás de {name}',
+  '{gap} ahead of {name}': '{gap} por delante de {name}',
+  'tied with {name}': 'empatado con {name}',
 };

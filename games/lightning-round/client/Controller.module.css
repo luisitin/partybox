@@ -411,3 +411,12 @@
   letter-spacing: 0;
   text-transform: none;
 }
+
+/* ── I-540 A: my place, the reveal band's own last line. (Not `.place`: that is the custom
+   wager's pink Place button in this sheet — a first build borrowed its look by accident.) */
+.myPlace {
+  flex-basis: 100%;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text);
+}
