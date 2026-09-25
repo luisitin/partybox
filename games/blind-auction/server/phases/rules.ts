@@ -40,8 +40,13 @@ export function reduceRules(state: State, event: GameEvent<Input>, next: Transit
     // The safety net only ends a room where no person has done anything (the contract's idle
     // players); once anyone is ready, it keeps waiting for the rest (reviewer [a9623e]) — up to
     // RULES_GIVE_UP_MS, after which a phone that still hasn't tapped has walked away.
-    if (anyHumanReady(state) && event.now - state.phase.startedAt < RULES_GIVE_UP_MS)
-      return { ...state, phase: { ...state.phase, deadline: event.now + RULES_SAFETY_MS } };
+    const giveUp = state.phase.startedAt + RULES_GIVE_UP_MS;
+    if (anyHumanReady(state) && event.now < giveUp)
+      // Re-armed, never past the 10-minute mark (review C4: it ran to ~12).
+      return {
+        ...state,
+        phase: { ...state.phase, deadline: Math.min(event.now + RULES_SAFETY_MS, giveUp) },
+      };
     return countDown(state, event.now);
   }
   if (event.type !== 'input' || event.input.type !== 'ready') return state;

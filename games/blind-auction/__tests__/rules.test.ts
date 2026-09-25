@@ -86,3 +86,15 @@ describe('pause and resume (reviewer [12ea6b])', () => {
     expect(s.phase.id).toBe('open');
   });
 });
+
+describe('review C4: the rules give up at exactly 10 minutes', () => {
+  it('the re-armed net never runs past startedAt + 10 min', () => {
+    let s = ready(start(3), 'p1');
+    const cap = s.phase.startedAt + 600_000;
+    for (let i = 0; i < 6 && s.rulesStep === 0; i++) {
+      expect(s.phase.deadline ?? 0).toBeLessThanOrEqual(cap);
+      s = timer(s);
+    }
+    expect(s.rulesStep).toBe(1);
+  });
+});

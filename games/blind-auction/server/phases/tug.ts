@@ -39,12 +39,8 @@ export function enterTug(state: State, now: number): State {
 /** The pull is over: the side the rope leans to wins; dead level, every stake goes back. */
 export function finishTug(state: State): State {
   const rope = state.r.rope ?? 0;
-  if (rope === 0) {
-    const bets = Object.fromEntries(
-      Object.entries(state.r.bets).map(([id, b]) => [id, { ...b, amount: 0 }]),
-    );
-    return { ...state, r: { ...state.r, bets, draw: true } };
-  }
+  // A dead heat: returns.ts gives every stake back (the stakes stay, so the stats stay right).
+  if (rope === 0) return { ...state, r: { ...state.r, draw: true } };
   const outcome = rope < 0 ? 0 : 1;
   const boxes = state.boxes.map((b, i) => (i === state.r.idx ? { ...b, outcome } : b));
   return { ...state, boxes };

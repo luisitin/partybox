@@ -208,3 +208,21 @@
     font-size: var(--pb-font-h1);
   }
 }
+
+/* Short portrait phones (an SE at 568 px): the dial and chips tighten so the stake sits on screen
+   with the choice above it (a blind-auction review: the stepper was half under the fade). */
+@media (orientation: portrait) and (max-height: 600px) {
+  .pad {
+    gap: var(--pb-space-2);
+  }
+  .step {
+    height: var(--pb-touch);
+  }
+  .amount {
+    font-size: var(--pb-font-h1);
+  }
+  .chip {
+    min-height: 40px;
+    padding: var(--pb-space-1);
+  }
+}

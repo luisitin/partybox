@@ -19,5 +19,6 @@ export function payOf(chance: number): number {
 
 /** The winnings for a right call: the stake back plus the profit, rounded down to whole coins. */
 export function payout(amount: number, pay: number, grand: boolean): number {
-  return Math.floor(amount * pay * (grand ? 2 : 1));
+  // In tenths: 50 × 2.3 is 115, never 114.99999 floored to 114 (review C1).
+  return Math.floor((amount * Math.round(pay * 10) * (grand ? 2 : 1)) / 10);
 }

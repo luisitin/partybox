@@ -7,6 +7,31 @@ import { blackjackReturn } from './phases/hands';
 import { KENO_PAY } from './timing';
 import type { State } from './types';
 
+/** The pot split among the right calls by stake, largest remainder first (ties by seat order), so
+ *  the shares always add up to the whole pot (review C2). */
+function shellShares(state: State, pot: number): Record<string, number> {
+  const round = state.boxes[state.r.idx];
+  const right = state.seats.filter((id) => {
+    const b = state.r.bets[id];
+    return b !== undefined && b.amount > 0 && b.option === round?.outcome;
+  });
+  const total = right.reduce((s, id) => s + (state.r.bets[id]?.amount ?? 0), 0);
+  const exact = right.map((id) => ({ id, x: (pot * (state.r.bets[id]?.amount ?? 0)) / total }));
+  const out: Record<string, number> = {};
+  let left = pot;
+  for (const e of exact) {
+    out[e.id] = Math.floor(e.x);
+    left -= out[e.id] ?? 0;
+  }
+  const byRemainder = [...exact].sort((a, b) => b.x - Math.floor(b.x) - (a.x - Math.floor(a.x)));
+  for (const e of byRemainder) {
+    if (left <= 0) break;
+    out[e.id] = (out[e.id] ?? 0) + 1;
+    left--;
+  }
+  return out;
+}
+
 export function returned(state: State, id: string): number {
   const round = state.boxes[state.r.idx];
   const bet = state.r.bets[id];
@@ -17,10 +42,11 @@ export function returned(state: State, id: string): number {
     const right = staked.filter((b) => b.option === round.outcome);
     if (right.length === 0 || right.length === staked.length) return bet.amount;
     if (bet.option !== round.outcome) return 0;
-    const rightTotal = right.reduce((s, b) => s + b.amount, 0);
-    return Math.floor((pot * bet.amount) / rightTotal);
+    return shellShares(state, pot)[id] ?? 0;
   }
   if (round.box.event === 'blackjack') return blackjackReturn(state, id, bet.amount);
+  // Tug of war, a dead heat: every stake back.
+  if (round.box.event === 'tug' && state.r.draw) return bet.amount;
   if (round.box.event === 'keno') {
     const drawn = round.detail ?? [];
     const matches = (state.r.spots?.[id] ?? []).filter((n) => drawn.includes(n)).length;

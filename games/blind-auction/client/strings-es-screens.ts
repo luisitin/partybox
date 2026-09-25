@@ -73,6 +73,8 @@ export const ES_SCREENS: Record<string, string> = {
   "That's the last box!": '¡Esa fue la última caja!',
   'Tap a card, then choose your coins': 'Toca una carta y luego elige tus monedas',
   // live events
+  'A goat behind door {n}! You are switching to door {m}.':
+    '¡Una cabra tras la puerta {n}! Vas a cambiar a la puerta {m}.',
   Blackjack: 'Blackjack',
   'Beat the dealer without going over 21. Win ×2, blackjack ×2.5.':
     'Gánale a la banca sin pasarte de 21. Ganas ×2, blackjack ×2.5.',

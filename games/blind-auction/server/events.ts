@@ -191,8 +191,8 @@ function doors(rng: RngState, n: number): [Round, RngState] {
  *  (at most 6 flips: a sixth heads ends the streak there). */
 const STREAKS: readonly (Label & { chance: number })[] = [
   { icon: '🪙', name: 'Tails first', chance: 50 },
-  { icon: '🔥', name: '1 or 2 heads', chance: 37 },
-  { icon: '🚀', name: '3+ heads', chance: 13 },
+  { icon: '🔥', name: '1 or 2 heads', chance: 38 },
+  { icon: '🚀', name: '3+ heads', chance: 12 },
 ];
 
 function coins(rng: RngState, n: number): [Round, RngState] {

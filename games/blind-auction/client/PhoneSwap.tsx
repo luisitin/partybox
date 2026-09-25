@@ -48,7 +48,13 @@ export function PhoneSwap({ view, send }: Props): JSX.Element {
       <p className={styles.swapLine}>
         {forced
           ? L('A goat behind your door {n}! Pick one of the other two.', { n: mine + 1 })
-          : L('A goat behind door {n}! You are on door {m}.', { n: opened + 1, m: mine + 1 })}
+          : now !== null && now !== mine
+            ? // The ring and the words agree (review): after a switch, say where you are going.
+              L('A goat behind door {n}! You are switching to door {m}.', {
+                n: opened + 1,
+                m: now + 1,
+              })
+            : L('A goat behind door {n}! You are on door {m}.', { n: opened + 1, m: mine + 1 })}
       </p>
       <div className={styles.swapButtons}>
         {choices.map((door) => {

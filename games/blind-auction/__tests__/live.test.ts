@@ -303,8 +303,9 @@ describe('live events: the shell game', () => {
     const before = { ...s.coins };
     s = cup(cup(cup(s, 'p1', ball), 'p2', wrong), 'p3', ball);
     expect(s.phase.id).toBe('open');
-    // The owner's example: 50 + 25 right, 25 wrong → 2/3 and 1/3 of 100.
-    expect(s.coins['p1']).toBe((before['p1'] ?? 0) - 50 + 66);
+    // The owner's example: 50 + 25 right, 25 wrong → 2/3 and 1/3 of 100 (67 + 33: the
+    // remainder goes to the larger share, so the pot adds up).
+    expect(s.coins['p1']).toBe((before['p1'] ?? 0) - 50 + 67);
     expect(s.coins['p3']).toBe((before['p3'] ?? 0) - 25 + 33);
     expect(s.coins['p2']).toBe((before['p2'] ?? 0) - 25);
 
@@ -412,5 +413,54 @@ describe('live events: blackjack', () => {
     expect(at([9, 7], [9, 7])).toBe(10); // push
     expect(at([0, 12], [9, 8])).toBe(25); // natural
     expect(at([9, 6], [9, 5, 9])).toBe(20); // dealer busts
+  });
+});
+
+describe('review C3–C5', () => {
+  it('C3: a pause during hot potato does not make it pop on resume', async () => {
+    const { potatoOptions } = await import('../server/events');
+    let s = start(4, { rounds: 5 });
+    const names = s.seats.map((id) => s.players[id]?.name ?? id);
+    const [round] = drawEvent('potato', seedRng(2), 1);
+    s = {
+      ...s,
+      boxes: s.boxes.map((b, i) =>
+        i === 1 ? { ...round, box: { ...round.box, options: potatoOptions(names) } } : b,
+      ),
+    };
+    s = walkTo(walkTo(walkTo(s, 'bet'), 'box'), 'bet');
+    s = walkTo(bet(s, 'p1', 1, 10), 'potato');
+    const popAt = s.r.popAt ?? 0;
+    const at = s.phase.startedAt;
+    s = send(s, { type: 'vip', now: at + 100, action: 'pause' });
+    s = send(s, { type: 'vip', now: at + 100 + 60_000, action: 'resume' });
+    expect(s.phase.id).toBe('potato');
+    expect(s.r.popAt).toBe(popAt + 60_000);
+  });
+
+  it('C5: keno stats count only paying calls', () => {
+    let s = start(3, { rounds: 5 });
+    const [round] = drawEvent('keno', seedRng(8), 1);
+    s = {
+      ...s,
+      boxes: s.boxes.map((b, i) => (i === 1 ? { ...round, detail: [1, 2, 3, 4, 5] } : b)),
+    };
+    s = walkTo(walkTo(walkTo(s, 'bet'), 'box'), 'bet');
+    for (const [id, n] of [
+      ['p1', [11, 12, 13]],
+      ['p2', [1, 2, 13]],
+      ['p3', [14, 15, 16]],
+    ] as const)
+      s = send(s, {
+        type: 'input',
+        now: s.phase.startedAt + 50,
+        playerId: id,
+        input: { type: 'spots', spots: [...n] },
+      });
+    s = bet(bet(bet(s, 'p1', 0, 10), 'p2', 0, 10), 'p3', 0, 10);
+    s = walkTo(s, 'box');
+    expect(s.stats['p1']?.calls).toBe(0);
+    expect(s.stats['p2']?.calls).toBe(1);
+    expect(s.stats['p3']?.lost).toBe(10);
   });
 });

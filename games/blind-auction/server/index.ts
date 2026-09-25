@@ -204,7 +204,17 @@ function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'speech') return onSpeech(state, event.key, event.ms, event.now);
   const vip = applyVip(state, event, { skip: advance, end: enterDone });
   // A resume re-checks: whoever dropped (or readied) during the pause may have completed the phase.
-  if (vip) return state.phase.paused && !vip.phase.paused ? recheck(vip, event.now) : vip;
+  if (vip) {
+    if (!state.phase.paused || vip.phase.paused) return vip;
+    // Resumed: the potato's secret pop (and its hold) move by the pause (review C3).
+    const shift = Math.max(0, event.now - state.phase.paused.at);
+    const r = vip.r;
+    const shifted =
+      vip.phase.id === 'potato' && r.popAt !== undefined
+        ? { ...vip, r: { ...r, popAt: r.popAt + shift, heldAt: (r.heldAt ?? 0) + shift } }
+        : vip;
+    return recheck(shifted, event.now);
+  }
   if (state.phase.paused) return state;
   switch (state.phase.id) {
     case 'rules':

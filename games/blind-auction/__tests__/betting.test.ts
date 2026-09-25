@@ -127,3 +127,12 @@ describe('betting', () => {
     expect(Object.values(s.coins)).toEqual([100, 100, 100]);
   });
 });
+
+describe('review C1: payouts in whole tenths', () => {
+  it('50 × 2.3 is 115 and 25 × 4.6 is 115 (no float error)', () => {
+    expect(payout(50, 2.3, false)).toBe(115);
+    expect(payout(25, 4.6, false)).toBe(115);
+    expect(payout(10, 11.2, false)).toBe(112);
+    expect(payout(20, 2.8, true)).toBe(112);
+  });
+});

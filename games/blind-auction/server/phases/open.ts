@@ -24,20 +24,22 @@ const VOICE_LATE_MS = 3_000;
 export function settle(state: State): State {
   const round = state.boxes[state.r.idx];
   if (!round) return state;
-  const { box, outcome } = round;
+  const { box } = round;
   const coins = { ...state.coins };
   const stats: Record<string, Stats> = { ...state.stats };
   for (const [id, bet] of Object.entries(state.r.bets)) {
     if (bet.amount <= 0 || !Object.hasOwn(coins, id)) continue;
     const s = stats[id] ?? { biggestBet: 0, biggestWin: 0, longShots: 0, calls: 0, lost: 0 };
     const option = box.options[bet.option];
-    const won = bet.option === outcome && option !== undefined;
     const back = returned(state, id);
+    // A right call is one that paid more than the stake (keno's one "option" always matches).
+    const won = back > bet.amount;
     coins[id] = Math.max(0, (coins[id] ?? 0) - bet.amount + back);
     stats[id] = {
       biggestBet: Math.max(s.biggestBet, bet.amount),
       biggestWin: Math.max(s.biggestWin, back - bet.amount),
-      longShots: s.longShots + (won && tierOf(option.chance) === 'RARE' ? 1 : 0),
+      longShots:
+        s.longShots + (won && option !== undefined && tierOf(option.chance) === 'RARE' ? 1 : 0),
       calls: s.calls + (won ? 1 : 0),
       lost: s.lost + (won ? 0 : bet.amount),
     };
