@@ -1492,3 +1492,27 @@
     transform: scaleX(0);
   }
 }
+
+/* The pick preview's window (useWholeRows): when the phone can't hold the whole card, it ends on
+   a row's edge and the rest scrolls inside it — never a row cut through its digits. */
+.previewRows {
+  position: relative;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+/* The window's own overflow must not let the flex body squeeze the card: the rows are measured. */
+.introBody > .focus {
+  flex-shrink: 0;
+}
+/* The pattern's rule on the pick step: clamped to two lines, a tap opens the whole of it. */
+.hintTap {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  text-align: start;
+}
+.hint.hintOpen {
+  display: block;
+}

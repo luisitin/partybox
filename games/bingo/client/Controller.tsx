@@ -17,7 +17,7 @@ import { DecideFooter } from './Vote';
 import { IntroStyleSheet, RoundStyleSheet, StylePill } from './StyleEntry';
 import { AllCardsLayout, FocusLayout, Thumbnails, introOutline } from './Layouts';
 import { Countdown, HoldCurtain } from './Overlays';
-import { IntroActions, IntroCount } from './IntroParts';
+import { IntroActions, IntroCount, PatternRule, useWholeRows } from './IntroParts';
 import { ClaimNote, MissedToast, TurnGate, Watching } from './Notices';
 import {
   setTabletStyle,
@@ -124,6 +124,8 @@ export function Controller({
   // I-099 B: sideways, the pattern demo is the wait's centrepiece.
   const landscape = useLandscape();
   const demoSize = landscape ? 92 : 56;
+  // The pick preview ends on a row's edge at any caption height or text size (2026-09-25).
+  const { body: rowsBodyRef, clip: rowsClipRef } = useWholeRows(intro && !landscape);
   if (sheet === 'intro' && !intro) setSheet('');
 
   if (!cards) return <Watching view={view} />;
@@ -164,7 +166,7 @@ export function Controller({
           landscape ? undefined : actions
         }
       >
-        <div className={`${styles.roundBody} ${styles.introBody}`}>
+        <div ref={rowsBodyRef} className={`${styles.roundBody} ${styles.introBody}`}>
           <div className={styles.intro}>
             {/* The same demo the TV runs, small, in step with it (loop 290). */}
             <PatternDemo
@@ -174,10 +176,7 @@ export function Controller({
             />
             <div>
               <p className={styles.patternLabel}>{L.sent(view.patternLabel)}</p>
-              <p className={styles.hint}>
-                {L.sent(view.patternHint)}
-                {/* I-094 B: the count line is the one instruction; the hint is the pattern's. */}
-              </p>
+              <PatternRule text={L.sent(view.patternHint)} />
             </div>
             {!sheet ? <StylePill onOpen={openMenu} /> : null}
           </div>
@@ -192,13 +191,15 @@ export function Controller({
           {landscape ? <div className={styles.introSide}>{actions}</div> : null}
           <div className={`${styles.focus} ${styles.dealing} ${n > 1 ? styles.focusMany : ''}`}>
             <div className={styles.focusMain}>
-              <div key={swaps} className={swaps > 0 ? styles.swapIn : undefined}>
-                <Card
-                  numbers={cards[pick] ?? []}
-                  daubs={[]}
-                  pattern={introOutline(view)}
-                  disabled
-                />
+              <div ref={rowsClipRef} className={styles.previewRows}>
+                <div key={swaps} className={swaps > 0 ? styles.swapIn : undefined}>
+                  <Card
+                    numbers={cards[pick] ?? []}
+                    daubs={[]}
+                    pattern={introOutline(view)}
+                    disabled
+                  />
+                </div>
               </div>
             </div>
             {n > 1 ? (

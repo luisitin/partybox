@@ -1,7 +1,7 @@
 // The Bingo phone's card-pick step (the intro): the "who is still picking" caption and the two
 // buttons under the dealt cards. Split from Overlays.tsx (2026-09-23) to keep both under 300 lines.
-import { useEffect } from 'react';
-import type { JSX } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import type { JSX, RefObject } from 'react';
 import { PrimaryButton, buzz, useHold, useSecondsLeft, useT } from '@partybox/game-sdk/ui';
 import type { PlayCue } from '@partybox/game-sdk/ui';
 import { dealDoneMs } from '../server/constants';
@@ -127,5 +127,62 @@ export function IntroActions({
         {view.ready ? L('✓ Picked') : cards > 1 ? L('Play these') : L('Play it')}
       </PrimaryButton>
     </div>
+  );
+}
+
+/**
+ * The pick preview shows whole rows (2026-09-25, font200 ES): when the body cannot hold the whole
+ * card, the preview window ends on a row's edge instead of cutting a row through its digits — a
+ * one-line caption and a two-line one leave different heights, so the count is measured, never
+ * guessed. The rest of the card scrolls inside the window.
+ */
+export function useWholeRows(on: boolean): {
+  body: RefObject<HTMLDivElement | null>;
+  clip: RefObject<HTMLDivElement | null>;
+} {
+  const body = useRef<HTMLDivElement | null>(null);
+  const clip = useRef<HTMLDivElement | null>(null);
+  useLayoutEffect(() => {
+    const b = body.current;
+    const c = clip.current;
+    if (!b || !c || !on) return undefined;
+    const fit = (): void => {
+      c.style.maxHeight = '';
+      const grid = c.querySelector('[role="gridcell"]')?.parentElement;
+      if (!grid) return;
+      // offsets, not rects: the deal's drop and the swap's flip transform the card mid-measure
+      let top = 0;
+      for (let el: HTMLElement | null = c; el && el !== b; el = el.offsetParent as HTMLElement)
+        top += el.offsetTop;
+      // the room under the preview, less the thumbnails still below it (and their gap)
+      const next = c.parentElement?.nextElementSibling as HTMLElement | null;
+      const room = b.clientHeight - top - (next?.offsetHeight ?? 0) * 1.2;
+      if (room >= c.offsetHeight) return;
+      // whole rows only; not even one (the whole rule open at 200 %): the letters alone
+      let edge = grid.offsetTop - 4;
+      for (const cell of Array.from(grid.children) as HTMLElement[]) {
+        const bottom = grid.offsetTop + cell.offsetTop + cell.offsetHeight;
+        if (bottom <= room) edge = bottom;
+      }
+      c.style.maxHeight = `${edge <= room ? edge + 1 : 0}px`;
+    };
+    const ro = new ResizeObserver(() => requestAnimationFrame(fit));
+    for (const el of [b, ...Array.from(b.children)]) ro.observe(el);
+    fit();
+    return () => ro.disconnect();
+  }, [on]);
+  return { body, clip };
+}
+
+/** The pattern's rule: two lines, and a tap opens the whole of it (at 200 % the clamp hid it). */
+export function PatternRule({ text }: { text: string }): JSX.Element {
+  return (
+    <button
+      type="button"
+      className={`${styles.hint} ${styles.hintTap}`}
+      onClick={(e) => e.currentTarget.classList.toggle(styles.hintOpen ?? '')}
+    >
+      {text}
+    </button>
   );
 }
