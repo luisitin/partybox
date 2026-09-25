@@ -5,8 +5,11 @@ import { useLang, useT } from '@partybox/game-sdk/ui';
 import { STRINGS } from './strings';
 import styles from './wisecrack.module.css';
 
-export function EnglishNote(): JSX.Element | null {
+/** ADR-054: `contentLang` is the running game's (the pushed view's): a Spanish game's prompts are
+ *  Spanish, so the marker shows only where the deck is still English on a non-English phone. */
+export function EnglishNote({ contentLang }: { contentLang?: 'en' | 'es' }): JSX.Element | null {
   const L = useT(STRINGS);
-  if (useLang() === 'en') return null;
+  const lang = useLang();
+  if (lang === 'en' || contentLang === 'es') return null;
   return <span className={styles.englishNote}>{L('in English')}</span>;
 }

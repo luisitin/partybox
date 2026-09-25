@@ -33,6 +33,9 @@ export interface State extends GameStateBase {
   settings: Settings;
   /** Shuffled prompt ids not yet drawn; rounds take from the front (no repeats across the game). */
   deck: string[];
+  /** ADR-054: the language of the prompts and the bots' answers, fixed at init. Absent (older
+   *  states, fixtures) = English. */
+  contentLang?: 'en' | 'es';
   /** 1-based; 0 before the first intro. */
   round: number;
   /** The current round's prompts, in vote order. */

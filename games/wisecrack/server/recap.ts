@@ -37,7 +37,7 @@ export function recap(state: State, ctx: RecapContext<State>): GameRecap | null 
       Object.entries(votes)
         .filter(([, votedFor]) => votedFor === author)
         .map(([voter]) => name(voter));
-    lines.push(`### ${prompt.text || promptText(prompt.id)}`, '');
+    lines.push(`### ${prompt.text || promptText(prompt.id, state.contentLang)}`, '');
     prompt.authors.forEach((author, slot) => {
       const text = answers[author];
       const voters = tally(author);

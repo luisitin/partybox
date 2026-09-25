@@ -64,7 +64,7 @@ export function ControllerVote({
       prompt={
         <>
           {vote.promptText}
-          <EnglishNote />
+          <EnglishNote contentLang={view.contentLang} />
         </>
       }
       size="large"

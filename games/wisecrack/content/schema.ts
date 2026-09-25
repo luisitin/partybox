@@ -26,4 +26,15 @@ export const spicyPackSchema = z.object({
 });
 export type SpicyPack = z.infer<typeof spicyPackSchema>;
 
-export const packs = { family: familyPackSchema, spicy: spicyPackSchema } as const;
+/** ADR-054: the Spanish packs — the same prompt ids as the English ones (the content test proves
+ *  one ES entry per English prompt, "___" blanks kept), and the family pack's bot answers
+ *  index-aligned with the English ones. */
+export const familyEsPackSchema = familyPackSchema.extend({ lang: z.literal('es') });
+export const spicyEsPackSchema = spicyPackSchema.extend({ lang: z.literal('es') });
+
+export const packs = {
+  family: familyPackSchema,
+  spicy: spicyPackSchema,
+  'family.es': familyEsPackSchema,
+  'spicy.es': spicyEsPackSchema,
+} as const;

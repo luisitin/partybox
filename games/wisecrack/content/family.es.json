@@ -1,0 +1,694 @@
+{
+  "lang": "es",
+  "prompts": [
+    {
+      "id": "f001",
+      "text": "Lo peor que puedes oír de tu dentista: ___"
+    },
+    {
+      "id": "f002",
+      "text": "Un nombre rechazado para un planeta nuevo"
+    },
+    {
+      "id": "f003",
+      "text": "La verdadera razón por la que los dinosaurios se extinguieron"
+    },
+    {
+      "id": "f004",
+      "text": "Lo que los gatos realmente piensan cuando se quedan mirando la pared"
+    },
+    {
+      "id": "f005",
+      "text": "Un nombre horrible para un perfume"
+    },
+    {
+      "id": "f006",
+      "text": "La atracción menos popular del parque acuático"
+    },
+    {
+      "id": "f007",
+      "text": "Lo que dice tu GPS cuando finalmente se rinde contigo"
+    },
+    {
+      "id": "f008",
+      "text": "El ingrediente sorpresa en la receta secreta de la abuela"
+    },
+    {
+      "id": "f009",
+      "text": "Lo peor que puedes encontrar en el fondo de tu caja de cereal"
+    },
+    {
+      "id": "f010",
+      "text": "Un póster motivacional para perezosos diría: ___"
+    },
+    {
+      "id": "f011",
+      "text": "Lo más raro que podrías llevar a una entrevista de trabajo"
+    },
+    {
+      "id": "f012",
+      "text": "Un nuevo feriado que nadie pidió"
+    },
+    {
+      "id": "f013",
+      "text": "Lo que hace la luna cuando nadie la ve"
+    },
+    {
+      "id": "f014",
+      "text": "El superpoder más inútil"
+    },
+    {
+      "id": "f015",
+      "text": "Un eslogan para una panadería manejada por piratas"
+    },
+    {
+      "id": "f016",
+      "text": "El peor nombre posible para un barco"
+    },
+    {
+      "id": "f017",
+      "text": "Algo que nunca deberías decirle a un ganso"
+    },
+    {
+      "id": "f018",
+      "text": "El pasatiempo secreto del Ratón Pérez"
+    },
+    {
+      "id": "f019",
+      "text": "Con qué sueñan los robots"
+    },
+    {
+      "id": "f020",
+      "text": "El disfraz de Halloween menos aterrador del mundo"
+    },
+    {
+      "id": "f021",
+      "text": "Un sabor de pasta de dientes rechazado"
+    },
+    {
+      "id": "f022",
+      "text": "Lo primero que dice un alienígena al aterrizar en una gasolinera"
+    },
+    {
+      "id": "f023",
+      "text": "Lo peor que puedes gritar en medio de una boda"
+    },
+    {
+      "id": "f024",
+      "text": "Un título de libro que jamás se vendería"
+    },
+    {
+      "id": "f025",
+      "text": "La verdadera razón por la que el pollo cruzó la calle"
+    },
+    {
+      "id": "f026",
+      "text": "Lo que hay dentro de la caja de la oficina que dice NO ABRIR"
+    },
+    {
+      "id": "f027",
+      "text": "Un nombre terrible para un equipo deportivo"
+    },
+    {
+      "id": "f028",
+      "text": "Lo único que le falta a toda pizza"
+    },
+    {
+      "id": "f029",
+      "text": "Lo que tu perro publicaría en internet si pudiera"
+    },
+    {
+      "id": "f030",
+      "text": "El peor consejo que podría dar una galleta de la fortuna"
+    },
+    {
+      "id": "f031",
+      "text": "Una nueva regla para el comedor escolar"
+    },
+    {
+      "id": "f032",
+      "text": "Algo que jamás debería venderse en una venta de garaje"
+    },
+    {
+      "id": "f033",
+      "text": "Sobre qué discuten los pingüinos"
+    },
+    {
+      "id": "f034",
+      "text": "El objeto menos útil de un kit de supervivencia"
+    },
+    {
+      "id": "f035",
+      "text": "Un título de canción para una banda formada solo por contadores"
+    },
+    {
+      "id": "f036",
+      "text": "Lo más incómodo que podrías decir en un ascensor lleno"
+    },
+    {
+      "id": "f037",
+      "text": "Lo que encontrarías en el fondo del océano si lo vaciaran"
+    },
+    {
+      "id": "f038",
+      "text": "Lo peor que podrías poner encima de un pastel de cumpleaños"
+    },
+    {
+      "id": "f039",
+      "text": "Un eslogan rechazado para un gimnasio"
+    },
+    {
+      "id": "f040",
+      "text": "Lo que dijo la tortuga después de vencer a la liebre"
+    },
+    {
+      "id": "f041",
+      "text": "El peor nombre para un pez dorado de mascota"
+    },
+    {
+      "id": "f042",
+      "text": "Lo más sorprendente que podrías encontrar en tu cajón de calcetines"
+    },
+    {
+      "id": "f043",
+      "text": "Una máquina expendedora que solo vende ___"
+    },
+    {
+      "id": "f044",
+      "text": "El peor tema para una fiesta de cumpleaños"
+    },
+    {
+      "id": "f045",
+      "text": "De qué se quejan los fantasmas"
+    },
+    {
+      "id": "f046",
+      "text": "La nueva mascota de los Juegos Olímpicos: ___"
+    },
+    {
+      "id": "f047",
+      "text": "Algo raro para susurrarle a una planta de interior"
+    },
+    {
+      "id": "f048",
+      "text": "Lo último que esperarías que un mago sacara de un sombrero"
+    },
+    {
+      "id": "f049",
+      "text": "Lo peor que le puedes decir a un policía"
+    },
+    {
+      "id": "f050",
+      "text": "Una atracción turística que nadie visita jamás"
+    },
+    {
+      "id": "f051",
+      "text": "El ingrediente secreto de la carne misteriosa de la escuela"
+    },
+    {
+      "id": "f052",
+      "text": "Lo que diría el océano si pudiera hablar"
+    },
+    {
+      "id": "f053",
+      "text": "Un nuevo emoji que el mundo necesita desesperadamente"
+    },
+    {
+      "id": "f054",
+      "text": "El peor compañero de cuarto posible: ___"
+    },
+    {
+      "id": "f055",
+      "text": "Lo que hace el monstruo del lago Ness los fines de semana"
+    },
+    {
+      "id": "f056",
+      "text": "Un nombre rechazado para un superhéroe"
+    },
+    {
+      "id": "f057",
+      "text": "Lo más raro que podrías guardar en tu refrigerador"
+    },
+    {
+      "id": "f058",
+      "text": "Algo que nunca deberías meter al microondas"
+    },
+    {
+      "id": "f059",
+      "text": "Lo más decepcionante que podrías encontrar en un cofre del tesoro"
+    },
+    {
+      "id": "f060",
+      "text": "El peor parque temático del mundo: ___"
+    },
+    {
+      "id": "f061",
+      "text": "Lo que las ardillas están planeando en secreto"
+    },
+    {
+      "id": "f062",
+      "text": "Una frase de ligue terrible para un muñeco de nieve"
+    },
+    {
+      "id": "f063",
+      "text": "Lo peor que puedes oír de tu piloto"
+    },
+    {
+      "id": "f064",
+      "text": "La exhibición de museo más aburrida de la historia"
+    },
+    {
+      "id": "f065",
+      "text": "Un nuevo deporte para los próximos Juegos Olímpicos"
+    },
+    {
+      "id": "f066",
+      "text": "Cómo llamarías a una piedra mascota"
+    },
+    {
+      "id": "f067",
+      "text": "El peor regalo posible para un mago"
+    },
+    {
+      "id": "f068",
+      "text": "De qué se esconde realmente el Pie Grande"
+    },
+    {
+      "id": "f069",
+      "text": "Algo ridículo para comprar al por mayor"
+    },
+    {
+      "id": "f070",
+      "text": "La próxima gran tendencia de moda: ___"
+    },
+    {
+      "id": "f071",
+      "text": "Algo que nadie quiere en un sándwich"
+    },
+    {
+      "id": "f072",
+      "text": "De qué hablan las estatuas del parque en la noche"
+    },
+    {
+      "id": "f073",
+      "text": "Un mal nombre para una peluquería"
+    },
+    {
+      "id": "f074",
+      "text": "La peor frase posible en una película de terror"
+    },
+    {
+      "id": "f075",
+      "text": "La verdadera razón por la que tus calcetines siguen desapareciendo"
+    },
+    {
+      "id": "f076",
+      "text": "Un título ridículo para un libro de autoayuda"
+    },
+    {
+      "id": "f077",
+      "text": "De qué chismean las nubes"
+    },
+    {
+      "id": "f078",
+      "text": "El peor sabor de helado del mundo"
+    },
+    {
+      "id": "f079",
+      "text": "La primera regla del club clandestino de tejido"
+    },
+    {
+      "id": "f080",
+      "text": "Lo que diría tu celular si pudiera contestarte"
+    },
+    {
+      "id": "f081",
+      "text": "Un nombre terrible para una cadena de comida rápida"
+    },
+    {
+      "id": "f082",
+      "text": "El invento más innecesario de la historia"
+    },
+    {
+      "id": "f083",
+      "text": "Lo que diría un caracol si tuviera prisa"
+    },
+    {
+      "id": "f084",
+      "text": "Lo peor que podrías encontrar debajo de tu cama"
+    },
+    {
+      "id": "f085",
+      "text": "Una nueva función para el próximo celular"
+    },
+    {
+      "id": "f086",
+      "text": "El superpoder más decepcionante"
+    },
+    {
+      "id": "f087",
+      "text": "Un eslogan para una empresa que vende nubes"
+    },
+    {
+      "id": "f088",
+      "text": "Algo que un pirata jamás diría"
+    },
+    {
+      "id": "f089",
+      "text": "Lo peor que podrías llevar a un campamento"
+    },
+    {
+      "id": "f090",
+      "text": "Lo que hace el Conejo de Pascua el resto del año"
+    },
+    {
+      "id": "f091",
+      "text": "Un eslogan para una película sobre un hámster muy cansado"
+    },
+    {
+      "id": "f092",
+      "text": "El peor nombre posible para una barra de chocolate"
+    },
+    {
+      "id": "f093",
+      "text": "El momento más incómodo en una reunión familiar"
+    },
+    {
+      "id": "f094",
+      "text": "Un mensaje en una botella que odiarías encontrar"
+    },
+    {
+      "id": "f095",
+      "text": "La verdadera razón por la que el cielo es azul"
+    },
+    {
+      "id": "f096",
+      "text": "Lo que piensa la máquina expendedora cuando se traga tu dinero"
+    },
+    {
+      "id": "f097",
+      "text": "Una nueva regla para jugar a las escondidas"
+    },
+    {
+      "id": "f098",
+      "text": "Lo que dirías para calmar a un dragón enojado"
+    },
+    {
+      "id": "f099",
+      "text": "Lo más raro que podrías ver en un anuncio de carretera"
+    },
+    {
+      "id": "f100",
+      "text": "La peor mascota posible para un hospital"
+    },
+    {
+      "id": "f101",
+      "text": "Lo primero que compraría un gato con una tarjeta de crédito"
+    },
+    {
+      "id": "f102",
+      "text": "Lo peor que puedes decir al conocer a tu ídolo"
+    },
+    {
+      "id": "f103",
+      "text": "Un nombre terrible para una montaña rusa"
+    },
+    {
+      "id": "f104",
+      "text": "Lo que gritan las hormigas en el picnic"
+    },
+    {
+      "id": "f105",
+      "text": "Lo que realmente hay en la alacena de botanas de la estación espacial"
+    },
+    {
+      "id": "f106",
+      "text": "El peor adorno posible para un pastel de bodas"
+    },
+    {
+      "id": "f107",
+      "text": "Un animal de zoológico totalmente nuevo que nadie esperaba"
+    },
+    {
+      "id": "f108",
+      "text": "Lo menos emocionante que podrías ver en un show de fuegos artificiales"
+    },
+    {
+      "id": "f109",
+      "text": "Lo que dice el sol cada mañana"
+    },
+    {
+      "id": "f110",
+      "text": "El peor nombre posible para un videojuego"
+    },
+    {
+      "id": "f111",
+      "text": "Algo muy raro para coleccionar"
+    },
+    {
+      "id": "f112",
+      "text": "Lo que piensa tu zapato izquierdo de tu zapato derecho"
+    },
+    {
+      "id": "f113",
+      "text": "El platillo más raro para llevar a una comida compartida"
+    },
+    {
+      "id": "f114",
+      "text": "La peor manera de empezar un discurso"
+    },
+    {
+      "id": "f115",
+      "text": "El tono de celular más vergonzoso imaginable"
+    },
+    {
+      "id": "f116",
+      "text": "Un nuevo sabor de papas fritas que nadie pidió"
+    },
+    {
+      "id": "f117",
+      "text": "Lo primero que compraría un viajero en el tiempo"
+    },
+    {
+      "id": "f118",
+      "text": "Lo peor que podrías ver escrito en la luna"
+    },
+    {
+      "id": "f119",
+      "text": "Lo que hacen las ranas cuando el estanque se congela"
+    },
+    {
+      "id": "f120",
+      "text": "El sonido de alarma más molesto del mundo"
+    },
+    {
+      "id": "f121",
+      "text": "Una regla que todo zoológico debería tener"
+    },
+    {
+      "id": "f122",
+      "text": "Lo que los búhos realmente hacen toda la noche despiertos"
+    },
+    {
+      "id": "f123",
+      "text": "Un título para un libro de cocina verdaderamente terrible"
+    },
+    {
+      "id": "f124",
+      "text": "Lo más inesperado que podría caer de una piñata"
+    },
+    {
+      "id": "f125",
+      "text": "Lo que hace tu reflejo cuando te alejas"
+    },
+    {
+      "id": "f126",
+      "text": "Lo peor que puedes oír de un salvavidas"
+    },
+    {
+      "id": "f127",
+      "text": "Un récord mundial completamente inútil"
+    },
+    {
+      "id": "f128",
+      "text": "Lo que hace la mascota de la escuela fuera de horario"
+    },
+    {
+      "id": "f129",
+      "text": "El próximo truco de mascota viral: ___"
+    },
+    {
+      "id": "f130",
+      "text": "Algo raro para decir en un autoservicio"
+    },
+    {
+      "id": "f131",
+      "text": "Lo peor que podrías poner en una cápsula del tiempo"
+    },
+    {
+      "id": "f132",
+      "text": "Lo que más temen los muñecos de nieve"
+    },
+    {
+      "id": "f133",
+      "text": "Un artículo raro en el menú de servicio a la habitación de un hotel"
+    },
+    {
+      "id": "f134",
+      "text": "La peor excusa por llegar tarde a la escuela"
+    },
+    {
+      "id": "f135",
+      "text": "Lo que hacen los mapaches con todo lo que roban"
+    },
+    {
+      "id": "f136",
+      "text": "El peor guía turístico del mundo diría: ___"
+    },
+    {
+      "id": "f137",
+      "text": "Algo que nunca deberías ponerle de nombre a un bebé"
+    },
+    {
+      "id": "f138",
+      "text": "El peor escondite para una fiesta sorpresa"
+    },
+    {
+      "id": "f139",
+      "text": "Lo que sabe el fondo de la caja de juguetes"
+    },
+    {
+      "id": "f140",
+      "text": "Un nuevo aroma de ambientador para autos"
+    },
+    {
+      "id": "f141",
+      "text": "Lo peor que podrías encontrar dentro de una galleta de la fortuna"
+    },
+    {
+      "id": "f142",
+      "text": "De qué hablan las abejas en sus reuniones"
+    },
+    {
+      "id": "f143",
+      "text": "Un pasatiempo que debería ser deporte olímpico"
+    },
+    {
+      "id": "f144",
+      "text": "El peor nombre para una montaña"
+    },
+    {
+      "id": "f145",
+      "text": "Algo que nunca deberías decirle a un bibliotecario"
+    },
+    {
+      "id": "f146",
+      "text": "Lo único que los dragones temen"
+    },
+    {
+      "id": "f147",
+      "text": "Lo que la impresora de la oficina realmente quiere"
+    },
+    {
+      "id": "f148",
+      "text": "El letrero menos útil de la playa"
+    },
+    {
+      "id": "f149",
+      "text": "Algo raro para encontrar dentro de la armadura de un caballero"
+    },
+    {
+      "id": "f150",
+      "text": "La excusa menos convincente por no hacer la tarea"
+    },
+    {
+      "id": "f151",
+      "text": "Lo que el cartero realmente está entregando en secreto"
+    },
+    {
+      "id": "f152",
+      "text": "Un nuevo platillo en un restaurante para perros"
+    },
+    {
+      "id": "f153",
+      "text": "Lo peor que puedes oír en una montaña rusa"
+    },
+    {
+      "id": "f154",
+      "text": "Lo que dice tu tarea cuando no la estás viendo"
+    },
+    {
+      "id": "f155",
+      "text": "Lo más ridículo para vender de puerta en puerta"
+    },
+    {
+      "id": "f156",
+      "text": "De qué susurran las estrellas por la noche"
+    },
+    {
+      "id": "f157",
+      "text": "Un nombre muy malo para un detective"
+    },
+    {
+      "id": "f158",
+      "text": "Lo peor que puedes oír de tu barbero"
+    },
+    {
+      "id": "f159",
+      "text": "El título de tu autobiografía"
+    },
+    {
+      "id": "f160",
+      "text": "Algo que jamás quieres oír en el zoológico"
+    }
+  ],
+  "botAnswers": [
+    "un sándwich ligeramente húmedo",
+    "la colección de cucharas de mi tío",
+    "una danza interpretativa agresiva",
+    "un solo de kazoo a las 3 a.m.",
+    "una paloma muy segura de sí misma",
+    "diecisiete plátanos, sin explicación",
+    "temporada de impuestos",
+    "un hámster con un casquito diminuto",
+    "la salsa picante secreta de la abuela",
+    "un suspiro extremadamente largo",
+    "una llama con título en administración",
+    "puros calcetines y nada más",
+    "mi historial de búsqueda",
+    "una silla sospechosamente tibia",
+    "la cuchara más grande del mundo",
+    "un kazoo roto",
+    "el olor de la clase de educación física",
+    "un perezoso muy cansado",
+    "un haiku no solicitado",
+    "un mapache en esmoquin",
+    "una ligera decepción",
+    "un frasco de brillantina caducada",
+    "la redecilla de la señora del comedor",
+    "un trombón muy pequeño",
+    "el papá de alguien gritando '¡bingo!'",
+    "un cactus de apoyo emocional",
+    "doce gansos furiosos",
+    "la corteza que nadie se comió",
+    "un directorio telefónico empapado",
+    "una papa heroica",
+    "yodel extremo",
+    "un dinosaurio que necesita una siesta",
+    "el asiento del medio",
+    "un guisado misterioso",
+    "una polilla con grandes planes",
+    "mi vieja tarea de matemáticas",
+    "una pausa dramática",
+    "las sobras del pastel de cumpleaños",
+    "un refrigerador desconectado",
+    "una cabra en un carrito de supermercado",
+    "el control remoto equivocado",
+    "un estornudo en cámara lenta",
+    "una espátula embrujada",
+    "un pulpo haciendo su declaración de impuestos",
+    "tres ardillas en una gabardina",
+    "beige, pero más fuerte",
+    "un silbato que solo los perros respetan"
+  ]
+}

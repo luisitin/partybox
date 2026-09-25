@@ -3,6 +3,7 @@
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { promptPool, promptText } from './content';
+import type { ContentLang } from './content';
 import type { RoundPrompt, State } from './types';
 
 /**
@@ -14,6 +15,7 @@ export function pairPrompts(
   rng: RngState,
   order: readonly string[],
   promptIds: readonly string[],
+  lang?: ContentLang,
 ): [RoundPrompt[], RngState] {
   const n = order.length;
   let next = rng;
@@ -25,7 +27,7 @@ export function pairPrompts(
     next = r;
     prompts.push({
       id,
-      text: promptText(id),
+      text: promptText(id, lang),
       authors: [authors[0] as string, authors[1] as string],
     });
   });
@@ -50,7 +52,7 @@ export function startRound(state: State): State {
   const ids = Object.keys(state.players).sort();
   const [drawn, deck, r1] = draw(state, ids.length);
   const [order, r2] = shuffle(r1, ids);
-  const [prompts, rng] = pairPrompts(r2, order, drawn);
+  const [prompts, rng] = pairPrompts(r2, order, drawn, state.contentLang);
   return {
     ...state,
     rng,

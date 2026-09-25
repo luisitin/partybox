@@ -4,7 +4,7 @@ import { gameManifestSchema, seedRng, shuffle } from '@partybox/game-sdk';
 import type { GameDefinition, InitContext, Settings as RawSettings } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
 import { recap } from './recap';
-import { FAMILY, promptPool } from './content';
+import { botAnswers, promptPool } from './content';
 import { reduce } from './flow';
 import { enterIntro } from './phases/intro';
 import { currentPrompt, hasVoted, promptsFor, answerOf } from './round';
@@ -56,6 +56,8 @@ function init(ctx: InitContext): State {
     scores: zero,
     roundStartScores: zero,
     stats: { votesReceived: {}, sweeps: {}, fastAnswers: {} },
+    // ADR-054: the prompts' and bot answers' language, fixed for the game (absent = English).
+    ...(ctx.contentLang === 'es' ? { contentLang: 'es' as const } : {}),
   };
   return enterIntro(base, ctx.now);
 }
@@ -81,7 +83,7 @@ export const game: GameDefinition<State, Input> = {
         return {
           type: 'answer',
           promptId: rng.pick(pending).id,
-          text: rng.pick(FAMILY.botAnswers),
+          text: rng.pick(botAnswers(state.contentLang)),
         };
       }
       if (state.phase.id === 'vote') {

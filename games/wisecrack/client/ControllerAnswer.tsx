@@ -55,7 +55,7 @@ export function ControllerAnswer({
         prompt={
           <>
             {heldPrompt.text}
-            <EnglishNote />
+            <EnglishNote contentLang={view.contentLang} />
           </>
         }
         submitted
@@ -94,7 +94,7 @@ export function ControllerAnswer({
         <>
           {current.text}
           {/* [196a9e]: the prompts are English on every phone */}
-          <EnglishNote />
+          <EnglishNote contentLang={view.contentLang} />
         </>
       }
       placeholder={L('Your funniest answer…')}
