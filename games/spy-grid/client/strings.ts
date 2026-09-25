@@ -191,5 +191,37 @@ export const STRINGS: Strings = {
       'Las pistas van por el significado, no por letras ni casillas.',
     'Sending…': 'Enviando…',
     'Send clue': 'Enviar pista',
+    // the coach line and the TV's how-it-works demo (play-test 2026-09-24)
+    'New here? Here is how it works': '¿Nuevo? Así se juega',
+    'Pick a team. Want to give the clues? Switch on “I’ll be spymaster”.':
+      'Elige un equipo. ¿Quieres dar las pistas? Activa “Seré jefe de espías”.',
+    Watching: 'Mirando',
+    'You join the next game.': 'Entras en la próxima partida.',
+    '{team} is playing': 'Juega {team}',
+    'Your key is below — plan your next clue.': 'Tu clave está abajo: planea tu próxima pista.',
+    'Watch the TV. Your team is next.': 'Mira la tele. Tu equipo va después.',
+    '🕶️ You are the spymaster': '🕶️ Eres el jefe de espías',
+    'Tap Show key, find your {shape} words, type ONE word that links some of them, pick how many, Send.':
+      'Toca Ver clave, busca tus palabras {shape}, escribe UNA palabra que una varias, elige cuántas y Envía.',
+    'You are a guesser': 'Eres adivinador',
+    'Your spymaster is thinking of a clue — get ready.':
+      'Tu jefe de espías piensa una pista: prepárate.',
+    'Your team is guessing. No hints, no faces! 🤐': 'Tu equipo adivina. ¡Sin pistas ni caras! 🤐',
+    'Your turn to guess': 'Te toca adivinar',
+    'Tap a word that fits “{clue}”, then tap Point.':
+      'Toca una palabra que encaje con “{clue}” y luego Señalar.',
+    'Waiting for most of your team to agree…': 'Esperando a que la mayoría de tu equipo coincida…',
+    'Watch the TV.': 'Mira la tele.',
+    'Everyone sees 25 words.': 'Todos ven 25 palabras.',
+    'Only the spymaster 🕶️ sees whose they are.':
+      'Solo el jefe de espías 🕶️ sabe de quién es cada una.',
+    'The spymaster gives one word and a number.': 'El jefe de espías da una palabra y un número.',
+    'Your team points on their phones — the most-pointed word turns over.':
+      'Tu equipo señala en el móvil: la palabra más señalada se voltea.',
+    'Find all your agents first. Never touch the assassin 💀.':
+      'Encuentra primero a todos tus agentes. Nunca toques al asesino 💀.',
+    '📱 On your phone: want to give the clues? Tap “I’ll be spymaster”':
+      '📱 En tu móvil: ¿quieres dar las pistas? Toca “Seré jefe de espías”',
+    '📱 On your phone: pick ▲ Sun or ● Moon': '📱 En tu móvil: elige ▲ Sol o ● Luna',
   },
 };

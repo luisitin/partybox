@@ -1,0 +1,206 @@
+.demo {
+  --sg-sun: var(--pb-team-sun, var(--pb-accent));
+  --sg-moon: var(--pb-team-moon, var(--pb-info));
+  display: grid;
+  gap: var(--pb-space-3);
+  justify-items: center;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  padding-top: 56px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  perspective: 1200px;
+}
+
+.card {
+  position: relative;
+  height: 76px;
+  transition: transform var(--pb-motion-base) var(--pb-ease);
+}
+
+.inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform var(--pb-motion-slow) var(--pb-ease);
+}
+
+.turned .inner {
+  animation: turn var(--pb-motion-slow) var(--pb-ease) var(--delay, 900ms) both;
+  animation-delay: inherit;
+}
+
+@keyframes turn {
+  0%,
+  40% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
+.front,
+.back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--pb-radius);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.front {
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  transition: box-shadow var(--pb-motion-base) var(--pb-ease);
+}
+
+.back {
+  transform: rotateY(180deg);
+  color: var(--pb-on-accent);
+}
+
+.back.sun {
+  background: var(--sg-sun);
+}
+
+.back.moon {
+  background: var(--sg-moon);
+}
+
+.icon {
+  display: flex;
+  font-size: 34px;
+}
+
+/* the spymaster's view: each word's side as a band and a mark (never colour alone) */
+.key-sun .front {
+  box-shadow: inset 0 -7px 0 var(--sg-sun);
+}
+
+.key-moon .front {
+  box-shadow: inset 0 -7px 0 var(--sg-moon);
+}
+
+.key-assassin .front {
+  box-shadow: inset 0 -7px 0 var(--pb-danger);
+}
+
+.key-bystander .front {
+  color: var(--pb-text-muted);
+}
+
+.keyMark {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  display: flex;
+  font-size: 16px;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.key-sun .keyMark {
+  color: var(--sg-sun);
+}
+
+.key-moon .keyMark {
+  color: var(--sg-moon);
+}
+
+.pointed {
+  transform: translateY(-4px) scale(1.04);
+}
+
+.pointed .front {
+  outline: 4px solid var(--sg-sun);
+  outline-offset: -4px;
+}
+
+.finger {
+  position: absolute;
+  right: -6px;
+  top: -14px;
+  font-size: 30px;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.warn {
+  animation: global(pb-shake) 500ms var(--pb-ease) 2;
+}
+
+.warn .front {
+  outline: 4px solid var(--pb-danger);
+  outline-offset: -4px;
+}
+
+.skull {
+  position: absolute;
+  right: -6px;
+  top: -16px;
+  font-size: 32px;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.clue {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: 30px;
+  font-weight: 900;
+  white-space: nowrap;
+  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.clueSpy {
+  font-size: 26px;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  transition: background var(--pb-motion-base) var(--pb-ease);
+}
+
+.dots .dotOn {
+  background: var(--pb-accent-2);
+}
+
+.caption {
+  margin: 0;
+  min-height: 2.8em;
+  font-size: 28px;
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.35;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .turned .inner {
+    animation: none;
+    transform: rotateY(180deg);
+  }
+}

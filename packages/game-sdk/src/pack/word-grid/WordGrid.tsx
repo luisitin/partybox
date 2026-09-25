@@ -10,6 +10,13 @@ import { Avatar } from '../../ui/Avatar';
 import { useServerNow } from '../../ui/clock';
 import styles from './WordGrid.module.css';
 
+/** A word's width in average letters: W and M run about 1.5× wide, I and punctuation half. */
+export function fitWidth(word: string): number {
+  let n = 0;
+  for (const ch of word.toUpperCase()) n += /[WM]/.test(ch) ? 1.5 : /[I.'’\- ]/.test(ch) ? 0.5 : 1;
+  return Math.max(1, Math.round(n * 100) / 100);
+}
+
 export type CardKind = 'sun' | 'moon' | 'bystander' | 'assassin';
 
 export const KIND_ICON: Record<CardKind, string> = {
@@ -187,7 +194,7 @@ function Card(props: {
           ) : null}
           <span
             className={`${styles.word} ${sizeClass(card.word)}`}
-            style={{ '--n': card.word.length } as CSSProperties}
+            style={{ '--n': fitWidth(card.word) } as CSSProperties}
           >
             {card.word}
           </span>

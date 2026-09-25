@@ -8,6 +8,7 @@ import { SHAPE, faceOf, nameOf } from './model';
 import type { Team } from './model';
 import styles from './Tv.module.css';
 import { STRINGS } from './strings';
+import { TvDemo } from './TvDemo';
 
 function Column({
   view,
@@ -59,46 +60,11 @@ export function TvTeams({ view }: { view: SpyTvView }): JSX.Element {
       </div>
       <aside className={styles.howTo}>
         <h2 className={styles.howTitle}>{coop ? L('A co-op mission') : L('How to play')}</h2>
-        <ol className={styles.steps}>
-          {coop ? (
-            <>
-              <li>{L('One spymaster sees which 9 of the 25 words are your agents.')}</li>
-              <li>{L('They give one word and a number. Point at the words you think match.')}</li>
-              <li>
-                {L(
-                  'Find all 9 before the clues run out. Touch the assassin and the mission fails.',
-                )}
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                {L(
-                  "Two teams, one grid of 25 words. Only each team's spymaster knows which words are their agents.",
-                )}
-              </li>
-              <li>
-                {L(
-                  'Your spymaster gives a one-word clue and a number, like "Ocean, 3". Point at the words you think match.',
-                )}
-              </li>
-              <li>
-                {L(
-                  'Find all your agents first. Touch the assassin and your team loses on the spot.',
-                )}
-              </li>
-            </>
-          )}
-        </ol>
-        <p className={styles.rules}>
-          {L(
-            'Spymasters: clues are about meaning, not letters or spots on the grid. No hints, no faces, no pointing.',
-          )}
-        </p>
+        <TvDemo />
         <p className={styles.callToAction}>
           {coop
-            ? L('Want to be the spymaster? Say so on your phone')
-            : L('Pick a team on your phone')}
+            ? L('📱 On your phone: want to give the clues? Tap “I’ll be spymaster”')
+            : L('📱 On your phone: pick ▲ Sun or ● Moon')}
         </p>
       </aside>
     </div>

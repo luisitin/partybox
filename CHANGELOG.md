@@ -2,6 +2,8 @@
 
 All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); conventional commits feed it.
 
+- Spy Grid: first-play guidance (TV how-to-play demo, phone coach line), tap sounds + haptics, breathing next-action highlights, wide-letter word fitting.
+
 ## [Unreleased]
 
 ### Added

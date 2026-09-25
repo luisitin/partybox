@@ -5,7 +5,7 @@
 // SecretCard is Imposter's SDK piece: this cover is a local stand-in until it ships (NOTES.md).
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { useT } from '@partybox/game-sdk/ui';
+import { useSound, useT } from '@partybox/game-sdk/ui';
 import type { SpyControllerView } from '../server/views';
 import { SHAPE, other } from './model';
 import { PhoneBoard } from './PhoneParts';
@@ -27,11 +27,21 @@ function useCover(): [boolean, (on: boolean) => void, () => void] {
 
 export function SpyKey({ view }: { view: SpyControllerView }): JSX.Element {
   const L = useT(STRINGS);
+  const play = useSound();
+  // The spymaster's first move: the cover breathes while it's their clue to give.
+  const urgent = view.phaseId === 'clue' && view.team === view.turnTeam;
   const [shown, setShown, touch] = useCover();
   const [grid, setGrid] = useState(false);
   if (!shown)
     return (
-      <button type="button" className={styles.cover} onClick={() => setShown(true)}>
+      <button
+        type="button"
+        className={`${styles.cover} ${urgent ? styles.breathe : ''}`}
+        onClick={() => {
+          play('card', { quiet: true, gain: 0.6 });
+          setShown(true);
+        }}
+      >
         <span className={styles.coverTitle}>{L('Show key 👁')}</span>
         <span className={styles.hint}>{L('Tilt your phone away from your team.')}</span>
       </button>

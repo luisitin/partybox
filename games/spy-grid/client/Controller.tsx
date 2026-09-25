@@ -16,6 +16,7 @@ import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
 import type { SpyControllerView } from '../server/views';
 import type { Input } from '../server/types';
 import { BoardScreen } from './BoardScreen';
+import { Coach } from './Coach';
 import { ClueInputs, SendClue, useClueDraft } from './ClueForm';
 import { SHAPE, other } from './model';
 import { useVoice } from './moments';
@@ -28,15 +29,6 @@ import { STRINGS } from './strings';
 
 type V = SpyControllerView;
 const team = (t: 'sun' | 'moon', L: Translator): string => (t === 'sun' ? L('Sun') : L('Moon'));
-
-function statusLine(view: V, L: Translator): string {
-  const t = view.turnTeam;
-  if (view.phaseId === 'clue')
-    return view.mode === 'coop'
-      ? L('The spymaster is thinking…')
-      : L("{shape} {team}'s spymaster is thinking…", { shape: SHAPE[t], team: team(t, L) });
-  return L('{shape} {team} is guessing…', { shape: SHAPE[t], team: team(t, L) });
-}
 
 /** The guessing team's phones feel their own card: `correct` / `wrong` once it shows (stage 2). */
 function useVerdict(view: V): void {
@@ -63,10 +55,8 @@ function Watching({
   spy: boolean;
   send: (i: Input) => void;
 }): JSX.Element {
-  const L = useT(STRINGS);
   const draft = useClueDraft();
   const active = spy && view.phaseId === 'clue' && view.team === view.turnTeam;
-  const ownGuessing = spy && view.phaseId === 'guess' && view.team === view.turnTeam;
   return (
     // The clue box sits above the key: near the top, the phone's keyboard never covers it, and a
     // phone held sideways keeps it (and Send) in the left column beside the key.
@@ -76,12 +66,7 @@ function Watching({
         <>
           <Scores view={view} />
           {view.phaseId === 'guess' ? <ClueLine view={view} /> : null}
-          {active ? (
-            <div className={styles.status}>{L('Your clue: one word and a number')}</div>
-          ) : (
-            <div className={styles.status}>{statusLine(view, L)}</div>
-          )}
-          {ownGuessing ? <div className={styles.silent}>{L('Stay silent 🤐')}</div> : null}
+          <Coach view={view} />
           {active ? <ClueInputs view={view} draft={draft} /> : null}
         </>
       }

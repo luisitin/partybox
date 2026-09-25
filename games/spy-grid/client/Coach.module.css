@@ -1,0 +1,44 @@
+.coach {
+  display: grid;
+  gap: 2px;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border-left: 5px solid var(--pb-text-muted);
+  animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* the next move is yours: the bar lights and breathes */
+.mine {
+  border-left-color: var(--pb-accent-2);
+  background: color-mix(in srgb, var(--pb-accent-2) 12%, var(--pb-surface));
+}
+
+.mine .role::before {
+  content: '';
+  display: inline-block;
+  width: 0.55em;
+  height: 0.55em;
+  margin-right: 0.4em;
+  border-radius: 50%;
+  background: var(--pb-accent-2);
+  animation: global(pb-breathe) 1.6s ease-in-out infinite;
+}
+
+.role {
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--pb-text-muted);
+}
+
+.mine .role {
+  color: var(--pb-accent-2);
+}
+
+.next {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  line-height: 1.3;
+}

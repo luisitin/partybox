@@ -1,9 +1,10 @@
 // The phone during `teams` (SPEC §9.6): Join Sun / Join Moon, "I'll be spymaster", and for the VIP
 // Shuffle and Start. In co-op only the spymaster toggle.
 import type { JSX } from 'react';
-import { PrimaryButton, Screen, useT } from '@partybox/game-sdk/ui';
+import { PrimaryButton, Screen, buzz, useT } from '@partybox/game-sdk/ui';
 import type { SpyControllerView } from '../server/views';
 import type { Input } from '../server/types';
+import { Coach } from './Coach';
 import { SHAPE } from './model';
 import styles from './Controller.module.css';
 import { STRINGS } from './strings';
@@ -43,6 +44,7 @@ export function PhoneTeams({
       }
     >
       <div className={styles.stack}>
+        <Coach view={view} />
         {coop ? (
           <p className={styles.hint}>
             {L('One spymaster gives the clues; everyone else guesses together.')}
@@ -55,7 +57,10 @@ export function PhoneTeams({
                 type="button"
                 aria-pressed={view.team === t}
                 className={`${styles.join} ${styles[`join-${t}`]} ${view.team === t ? styles.joinOn : ''}`}
-                onClick={() => send({ type: 'join', team: t })}
+                onClick={() => {
+                  buzz(12);
+                  send({ type: 'join', team: t });
+                }}
               >
                 <span className={styles.joinName}>
                   <span className={styles[`shape-${t}`]}>{SHAPE[t]}</span>{' '}
@@ -75,7 +80,10 @@ export function PhoneTeams({
           role="switch"
           aria-checked={volunteering}
           className={styles.toggle}
-          onClick={() => send({ type: 'volunteer', on: !volunteering })}
+          onClick={() => {
+            buzz(12);
+            send({ type: 'volunteer', on: !volunteering });
+          }}
         >
           <span>{L("🕶️ I'll be spymaster")}</span>
           <span className={`${styles.switch} ${volunteering ? styles.switchOn : ''}`} />

@@ -3,7 +3,7 @@
 // reader will say, and a sticky Send clue. A refused clue shows the server's reason.
 import { useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, buzz, useT } from '@partybox/game-sdk/ui';
+import { PrimaryButton, buzz, useSound, useT } from '@partybox/game-sdk/ui';
 import type { Translator } from '@partybox/game-sdk/ui';
 import { CLUE_MAX, clueProblem } from '../server/clue-rules';
 import type { SpyControllerView } from '../server/views';
@@ -79,7 +79,12 @@ export function ClueInputs({
             className={styles.step}
             aria-label={L('One fewer')}
             aria-disabled={n <= 1}
-            onClick={() => n > 1 && draft.setNumber(n - 1)}
+            onClick={() => {
+              if (n > 1) {
+                draft.setNumber(n - 1);
+                buzz(8);
+              }
+            }}
           >
             −
           </button>
@@ -91,7 +96,12 @@ export function ClueInputs({
             className={styles.step}
             aria-label={L('One more')}
             aria-disabled={n >= 9}
-            onClick={() => n < 9 && draft.setNumber(n + 1)}
+            onClick={() => {
+              if (n < 9) {
+                draft.setNumber(n + 1);
+                buzz(8);
+              }
+            }}
           >
             +
           </button>
@@ -118,6 +128,7 @@ export function SendClue({
   send: (input: Input) => void;
 }): JSX.Element {
   const L = useT(STRINGS);
+  const play = useSound();
   const [sentWord, setSentWord] = useState<string | null>(null);
   const word = draft.word.trim();
   const ok = word.length > 0 && clueProblem(word, targets(view)) === null;
@@ -125,8 +136,10 @@ export function SendClue({
   return (
     <PrimaryButton
       disabled={!ok || waiting}
+      className={ok && !waiting ? styles.breathe : undefined}
       onClick={() => {
         buzz(20);
+        play('submit');
         setSentWord(word);
         send({ type: 'clue', word, number: draft.number });
       }}

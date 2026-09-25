@@ -4,10 +4,11 @@
 // echo before it counts again, so mashing never double-sends.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { buzz, useT } from '@partybox/game-sdk/ui';
+import { buzz, useSound, useT } from '@partybox/game-sdk/ui';
 import type { SpyControllerView } from '../server/views';
 import type { Input } from '../server/types';
 import { BoardScreen } from './BoardScreen';
+import { Coach } from './Coach';
 import { ClueLine, PhoneBoard, Scores } from './PhoneParts';
 import styles from './Controller.module.css';
 import { STRINGS } from './strings';
@@ -22,6 +23,7 @@ export function PhoneGuess({
   send: (input: Input) => void;
 }): JSX.Element {
   const L = useT(STRINGS);
+  const play = useSound();
   const [pending, setPending] = useState<Pending>(null);
   // The target we sent and are waiting on (cleared by the echo: myPointer catches up).
   const [sent, setSent] = useState<number | 'end' | 'none' | null>(null);
@@ -40,16 +42,20 @@ export function PhoneGuess({
     setSent(target);
     setPending(null);
     buzz(15);
+    play('submit');
     send({ type: 'point', target });
   };
   const takeBack = (): void => {
     if (sent !== null) return;
     setSent('none');
     setPending(null);
+    play('lock', { quiet: true, gain: 0.5 });
     send({ type: 'unpoint' });
   };
   const onTap = (i: number): void => {
     if (view.kinds[i] !== null) return;
+    play('card', { quiet: true, gain: 0.5 });
+    buzz(8);
     setPending(mine === i ? null : { kind: 'confirm', card: i });
   };
   const onLong = (i: number): void => {
@@ -60,7 +66,7 @@ export function PhoneGuess({
   let footer: JSX.Element;
   if (pending?.kind === 'react') {
     footer = (
-      <div className={styles.bar}>
+      <div className={styles.bar} key="react">
         <div className={styles.barLine}>{L('React to {word}', { word: word(pending.card) })}</div>
         <div className={styles.reactRow}>
           {(['👍', '👎', '🤔'] as const).map((emoji) => (
@@ -70,6 +76,7 @@ export function PhoneGuess({
               className={styles.react}
               aria-label={emoji}
               onClick={() => {
+                play('submit', { gain: 0.5 });
                 send({ type: 'react', card: pending.card, emoji });
                 setPending(null);
               }}
@@ -82,7 +89,7 @@ export function PhoneGuess({
     );
   } else if (pending?.kind === 'confirm') {
     footer = (
-      <div className={styles.bar}>
+      <div className={styles.bar} key={`confirm${pending.card}`}>
         <div className={styles.barLine}>{L('Point at {word}?', { word: word(pending.card) })}</div>
         <div className={styles.row}>
           <button type="button" className={styles.button} onClick={() => setPending(null)}>
@@ -90,7 +97,7 @@ export function PhoneGuess({
           </button>
           <button
             type="button"
-            className={`${styles.button} ${styles.primary}`}
+            className={`${styles.button} ${styles.primary} ${styles.breathe}`}
             onClick={() => point(pending.card)}
           >
             {L('Point ☝️')}
@@ -100,7 +107,7 @@ export function PhoneGuess({
     );
   } else if (mine !== null) {
     footer = (
-      <div className={styles.bar}>
+      <div className={styles.bar} key="pointed">
         <div className={styles.barLine}>
           {mine === 'end'
             ? L('You voted to end the turn ✋')
@@ -113,7 +120,7 @@ export function PhoneGuess({
     );
   } else {
     footer = (
-      <div className={styles.bar}>
+      <div className={styles.bar} key="idle">
         <div className={styles.barLine}>{L('Tap a card to point at it')}</div>
         {view.canEnd ? (
           <button type="button" className={styles.button} onClick={() => point('end')}>
@@ -129,7 +136,8 @@ export function PhoneGuess({
       side={
         <>
           <Scores view={view} />
-          <ClueLine view={view} rule />
+          <Coach view={view} />
+          <ClueLine view={view} />
         </>
       }
       board={

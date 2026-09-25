@@ -483,6 +483,7 @@
 }
 
 .callToAction {
+  animation: global(pb-breathe) 2.4s ease-in-out infinite;
   margin: auto 0 0;
   font-size: var(--pb-font-body);
   font-weight: 800;
