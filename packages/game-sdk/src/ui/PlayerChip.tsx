@@ -172,7 +172,10 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
           {L('you')}
         </span>
       ) : null}
-      {isBot ? (
+      {/* A compact chip with a ✕ (the lobby's removable bot) leaves the 🤖 out: at an SE's two
+          columns badge + ✕ cut "Bot 1" to "B" (foundation, imposter-defaults review), and the
+          ✕ and the name already say it; the chip's label still says "(bot)". */}
+      {isBot && !(compact && onRemove) ? (
         <span className={styles.bot} role="img" aria-label={L('bot')}>
           🤖
         </span>
