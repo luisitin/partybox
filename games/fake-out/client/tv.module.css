@@ -410,6 +410,7 @@
     border-color var(--pb-motion-base) var(--pb-ease);
 }
 
+/* No opacity at the end: a held 1 would override the chip's own dimming (on stage, stamped). */
 @keyframes deck-in {
   from {
     opacity: 0;
@@ -417,7 +418,6 @@
   }
 
   to {
-    opacity: 1;
     transform: none;
   }
 }
