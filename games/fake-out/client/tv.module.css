@@ -32,12 +32,14 @@
 /* ── intro ─────────────────────────────────────────────────────────────────────────────── */
 
 .intro {
-  gap: var(--pb-space-4);
+  gap: var(--pb-space-3);
+  /* the ready row sits clear of the host bar along the bottom */
+  padding-bottom: calc(var(--pb-space-7) * 2);
 }
 
 .mask {
   display: inline-block;
-  font-size: calc(var(--pb-font-display) * 1.2);
+  font-size: calc(var(--pb-font-display) * 0.8);
   line-height: 1;
   animation: mask-float calc(var(--pb-motion-pulse) * 3) ease-in-out infinite;
 }
@@ -75,7 +77,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: var(--pb-space-5);
   width: min(100%, 1640px);
-  margin: var(--pb-space-5) 0 0;
+  margin: var(--pb-space-3) 0 0;
   padding: 0;
   list-style: none;
   perspective: 1400px;
@@ -84,8 +86,8 @@
 .step {
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-3);
-  padding: var(--pb-space-5) var(--pb-space-6);
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-4) var(--pb-space-5);
   border-radius: var(--pb-radius-lg);
   background: var(--pb-surface);
   border: 1px solid var(--pb-border);
@@ -772,4 +774,64 @@
 :global(:root[data-motion='off']) .pen,
 :global(:root[data-motion='off']) .nextFinal {
   animation: none;
+}
+
+/* Intro ready-up (owner, [cc45f4]): a chip per connected player; the check pops in on Ready. */
+.readyRow {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-3);
+  margin-top: var(--pb-space-4);
+  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-slow) * 2);
+}
+
+.readyLine {
+  margin: 0;
+  font-size: var(--pb-font-h3);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.readyList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.readyChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-2) var(--pb-space-4) var(--pb-space-2) var(--pb-space-2);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-h3);
+  font-weight: 700;
+  opacity: 0.6;
+  transition:
+    opacity var(--pb-motion-base) var(--pb-ease),
+    transform var(--pb-motion-base) var(--pb-ease),
+    background var(--pb-motion-base) var(--pb-ease);
+}
+
+.readyOn {
+  opacity: 1;
+  transform: translateY(-4px);
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+}
+
+.readyMark {
+  display: inline-block;
+  min-width: 1.2em;
+  text-align: center;
+}
+
+.readyOn .readyMark {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }

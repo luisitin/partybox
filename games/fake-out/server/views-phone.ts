@@ -68,6 +68,9 @@ export interface FakeOutControllerView extends ControllerView {
   myDelta: number;
   myWhy: Why[];
   standings: StandingView[];
+  /** intro: I tapped I'm ready; when the 3 · 2 · 1 ends (null until everyone is). */
+  meReady: boolean;
+  goAt: number | null;
 }
 
 function momentsFor(state: State, p: string): Moment[] {
@@ -153,5 +156,7 @@ export function controllerView(state: State, gameId: string, p: string): FakeOut
     myDelta: onBoard ? (me?.delta ?? 0) : 0,
     myWhy: onBoard ? (me?.why ?? []) : [],
     standings: onBoard ? standingsView(state) : [],
+    meReady: phase === 'intro' && state.ready.includes(p),
+    goAt: phase === 'intro' ? state.goAt : null,
   };
 }

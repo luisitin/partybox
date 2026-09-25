@@ -13,6 +13,7 @@ import type { GameControllerProps, Translator, ViewPlayer } from '@partybox/game
 import type { FakeOutControllerView, Moment } from '../server/index';
 import type { Input } from '../server/types';
 import { useAfter } from './beats';
+import { Countdown } from './Countdown';
 import { FactCard } from './FactCard';
 import { STRINGS } from './strings';
 import { kicker } from './TvRound';
@@ -42,13 +43,28 @@ export function HowToPlay(): JSX.Element {
   );
 }
 
-export function PhoneIntro({ skip }: Props): JSX.Element {
+export function PhoneIntro({ view, send, skip }: Props): JSX.Element {
   const L = useT(STRINGS);
+  const footer =
+    view.goAt !== null ? undefined : !view.meReady ? (
+      <PrimaryButton onClick={() => send({ type: 'ready' })}>{L('I’m ready')}</PrimaryButton>
+    ) : skip ? (
+      <PrimaryButton tone="neutral" onClick={skip}>
+        {L('Start now')}
+      </PrimaryButton>
+    ) : (
+      <p className={styles.readyWait}>{L('Ready! Waiting for the others…')}</p>
+    );
+  if (view.goAt !== null)
+    return (
+      <Screen className={styles.screen}>
+        <div className={styles.countdownScreen}>
+          <Countdown goAt={view.goAt} big />
+        </div>
+      </Screen>
+    );
   return (
-    <Screen
-      className={styles.screen}
-      footer={skip ? <PrimaryButton onClick={skip}>{L("Let's go")}</PrimaryButton> : undefined}
-    >
+    <Screen className={styles.screen} footer={footer}>
       <p className={styles.introMask} aria-hidden>
         🎭
       </p>

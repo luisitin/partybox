@@ -100,11 +100,16 @@ export interface State extends GameStateBase {
   offered: Record<string, string[]>;
   /** Speech key → length in ms (−1 = could not be made). */
   speechMs: Record<string, number>;
+  /** Intro ready-up (owner, [cc45f4]): who has tapped I'm ready (bots from the start). */
+  ready: string[];
+  /** When the 3 · 2 · 1 ends and question 1 starts (server time); null until everyone is ready. */
+  goAt: number | null;
 }
 
 export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('lie'), text: z.string().min(1).max(80) }),
   z.object({ type: z.literal('suggest') }),
+  z.object({ type: z.literal('ready') }),
   z.object({ type: z.literal('pick'), option: z.string().max(16) }),
   z.object({ type: z.literal('like'), option: z.string().max(16), on: z.boolean() }),
 ]);
@@ -114,19 +119,24 @@ export type LieInput = Extract<Input, { type: 'lie' }>;
 /** "Leave the current phase now": injected into phase reducers by server/flow.ts. */
 export type Transition = (state: State, now: number) => State;
 
-export const INTRO_MS = 8_000;
-export const SCORES_MS = 6_000;
+/** The rules wait for everyone's I'm ready; this only stops a room of idle phones hanging. */
+export const INTRO_MS = 90_000;
+/** A breath after the last Ready, then the 3 · 2 · 1. */
+export const READY_BREATH_MS = 700;
+export const COUNTDOWN_MS = 3_000;
+/** Long enough for a slow reader to take in the board and the reason chips (owner, [cc45f4]). */
+export const SCORES_MS = 10_000;
 /** The question card holds for its reading plus this beat, at most QUESTION_MAX_MS. */
-export const QUESTION_BEAT_MS = 1_000;
+export const QUESTION_BEAT_MS = 1_500;
 export const QUESTION_MAX_MS = 12_000;
 /** A reveal step: its reading + the stamp beat + the points beat, clamped (SPEC §3.12). */
 export const STAMP_MS = 800;
-export const POINTS_MS = 1_200;
-export const STEP_MIN_MS = 2_500;
-export const STEP_MAX_MS = 4_500;
+export const POINTS_MS = 1_800;
+export const STEP_MIN_MS = 3_000;
+export const STEP_MAX_MS = 5_500;
 /** The completed fact holds its reading plus this. */
-export const FACT_HOLD_MS = 2_000;
-export const UNPICKED_MS = 1_500;
+export const FACT_HOLD_MS = 3_000;
+export const UNPICKED_MS = 3_000;
 /** A reading that is not made yet holds its moment this long at most; a stuck voice never
  *  holds the room. */
 export const VOICE_WAIT_MS = 6_000;

@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { factReading, optionReading } from '../server/speech';
 import type { Input, State } from '../server/types';
+import { POINTS_MS, QUESTION_BEAT_MS, STAMP_MS, STEP_MIN_MS } from '../server/types';
 import { PENGUIN, PLAYERS, input, lies, speech, start, timer, toLie, tv } from './helpers';
 
 /** Plays a whole game with every seat a bot acting whenever it has something to do; also
@@ -126,7 +127,7 @@ describe('pacing to the voice', () => {
     s = speech(s, factReading('fable', PENGUIN).key, 3_000, arrival);
     expect(tv(s).reading?.at).toBe(arrival);
     expect(tv(s).readAlong).toEqual({ at: arrival, ms: 3_000 });
-    expect(s.phase.deadline).toBe(arrival + 3_000 + 1_000);
+    expect(s.phase.deadline).toBe(arrival + 3_000 + QUESTION_BEAT_MS);
   });
 
   it('a failed voice never holds the room', () => {
@@ -136,14 +137,14 @@ describe('pacing to the voice', () => {
     expect(timer(s).phase.id).toBe('lie');
   });
 
-  it('a reveal step lasts its reading + stamp + points, clamped to 2.5–4.5 s', () => {
+  it('a reveal step lasts its reading + stamp + points, clamped to 3–5.5 s', () => {
     let s = lies(toLie(start({ fact: PENGUIN, settings: { reader: 'fable' } })), {});
     for (const o of s.q.options ?? []) s = speech(s, optionReading('fable', o.display).key, 900);
     s = timer(s);
     expect(s.phase.id).toBe('reveal');
     const ms = (s.phase.deadline ?? 0) - s.phase.startedAt;
-    expect(ms).toBe(900 + 800 + 1_200);
-    expect(tv(s).reveal?.stampMs).toBe(900 + 800);
+    expect(ms).toBe(Math.max(STEP_MIN_MS, 900 + STAMP_MS + POINTS_MS));
+    expect(tv(s).reveal?.stampMs).toBe(900 + STAMP_MS);
     expect(tv(s).reading?.url).toContain('/api/speech/');
   });
 });

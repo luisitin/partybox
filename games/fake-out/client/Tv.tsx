@@ -11,7 +11,7 @@ import { TvScores } from './TvScores';
 export function Tv({ view }: GameTvProps<FakeOutTvView>): JSX.Element {
   switch (view.phaseId) {
     case 'intro':
-      return <TvIntro />;
+      return <TvIntro view={view} />;
     case 'question':
       return <TvQuestion view={view} />;
     case 'lie':

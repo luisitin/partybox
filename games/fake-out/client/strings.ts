@@ -61,7 +61,14 @@ export const STRINGS: Strings = {
       'Todas las respuestas se mezclan con la verdad. Elige la que crees que es real.',
     'Score for finding the truth, and for every player your fake fools.':
       'Sumas por encontrar la verdad y por cada jugador que cae con tu mentira.',
-    "Let's go": '¡Vamos!',
+    'I’m ready': 'Estoy listo',
+    'Start now': 'Empezar ya',
+    'Ready! Waiting for the others…': '¡Listo! Esperando a los demás…',
+    'Tap I’m ready on your phone · {n} / {total} ready':
+      'Toca «Estoy listo» en tu teléfono · {n} / {total} listos',
+    ready: 'listo',
+    'not ready': 'no listo',
+    'Everyone is ready!': '¡Todos listos!',
     // TV
     'Final Fake-Out · double points': 'Engaño Final · puntos dobles',
     'Question {n} of {total}': 'Pregunta {n} de {total}',

@@ -654,3 +654,17 @@
     font-size: var(--pb-font-caption);
   }
 }
+
+.readyWait {
+  margin: 0;
+  padding: var(--pb-space-3);
+  text-align: center;
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.countdownScreen {
+  display: grid;
+  place-items: center;
+  min-height: 60vh;
+}

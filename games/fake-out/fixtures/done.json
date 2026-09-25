@@ -1,7 +1,7 @@
 {
   "phase": {
     "id": "done",
-    "startedAt": 1700000315894,
+    "startedAt": 1700000371036,
     "deadline": null
   },
   "rng": {
@@ -292,22 +292,22 @@
       "verified": true,
       "hardWords": ["Turkmenistan"]
     },
-    "readAt": 1700000275654,
+    "readAt": 1700000319753,
     "lies": {
-      "p1": "september",
-      "p2": "october",
-      "p4": "may",
-      "p3": "march"
+      "p1": "february",
+      "p3": "may",
+      "p2": "june",
+      "p4": "december"
     },
     "truthTyped": [],
     "rejected": {},
     "suggestions": {
       "p1": ["february", "september"],
-      "p3": ["august", "march"],
-      "p4": ["may", "december"],
+      "p3": ["august", "may"],
+      "p4": ["march", "december"],
       "p2": ["june", "october"]
     },
-    "claimed": ["february", "september", "august", "march", "may", "december", "june", "october"],
+    "claimed": ["february", "september", "august", "may", "march", "december", "june", "october"],
     "options": [
       {
         "display": "April",
@@ -317,28 +317,28 @@
         "id": "o71"
       },
       {
-        "display": "September",
+        "display": "February",
         "authors": ["p1"],
         "house": false,
         "truth": false,
         "id": "o33"
       },
       {
-        "display": "March",
+        "display": "May",
         "authors": ["p3"],
         "house": false,
         "truth": false,
         "id": "o31"
       },
       {
-        "display": "May",
+        "display": "December",
         "authors": ["p4"],
         "house": false,
         "truth": false,
         "id": "o56"
       },
       {
-        "display": "October",
+        "display": "June",
         "authors": ["p2"],
         "house": false,
         "truth": false,
@@ -346,42 +346,17 @@
       }
     ],
     "picks": {
-      "p2": "o33",
-      "p3": "o71",
       "p4": "o33",
+      "p2": "o31",
+      "p3": "o56",
       "p1": "o56"
     },
     "likes": {},
-    "revealOrder": ["o56", "o33", "o71"],
-    "step": 4,
-    "stepAt": 1700000308394,
+    "revealOrder": ["o33", "o31", "o56", "o71"],
+    "step": 5,
+    "stepAt": 1700000358036,
     "delta": {
-      "p3": {
-        "pts": 2000,
-        "why": [
-          {
-            "k": "truth",
-            "pts": 2000
-          },
-          {
-            "k": "final"
-          }
-        ]
-      },
       "p1": {
-        "pts": 2000,
-        "why": [
-          {
-            "k": "fooled",
-            "n": 2,
-            "pts": 2000
-          },
-          {
-            "k": "final"
-          }
-        ]
-      },
-      "p4": {
         "pts": 1000,
         "why": [
           {
@@ -393,159 +368,196 @@
             "k": "final"
           }
         ]
+      },
+      "p3": {
+        "pts": 1000,
+        "why": [
+          {
+            "k": "fooled",
+            "n": 1,
+            "pts": 1000
+          },
+          {
+            "k": "final"
+          }
+        ]
+      },
+      "p4": {
+        "pts": 2000,
+        "why": [
+          {
+            "k": "fooled",
+            "n": 2,
+            "pts": 2000
+          },
+          {
+            "k": "final"
+          }
+        ]
       }
     }
   },
   "scores": {
-    "p1": 8500,
-    "p2": 2000,
-    "p3": 3500,
-    "p4": 5500
+    "p1": 4000,
+    "p2": 3500,
+    "p3": 4500,
+    "p4": 7500
   },
   "stats": {
     "p1": {
-      "fooled": 9,
-      "truths": 3,
-      "likes": 2,
+      "fooled": 5,
+      "truths": 1,
+      "likes": 4,
       "truthTyped": 0,
       "house": 0
     },
     "p2": {
-      "fooled": 4,
-      "truths": 0,
-      "likes": 2,
+      "fooled": 3,
+      "truths": 2,
+      "likes": 1,
       "truthTyped": 0,
       "house": 0
     },
     "p3": {
-      "fooled": 3,
-      "truths": 1,
+      "fooled": 4,
+      "truths": 2,
       "likes": 2,
       "truthTyped": 0,
       "house": 0
     },
     "p4": {
-      "fooled": 6,
+      "fooled": 9,
       "truths": 2,
-      "likes": 3,
+      "likes": 4,
       "truthTyped": 0,
       "house": 0
     }
   },
   "offered": {
-    "p4": [
+    "p1": [
       "sausage",
       "gingerbread",
       "dancing",
       "thinking",
-      "radio waves",
-      "static",
-      "north pole",
-      "saturn",
-      "bandages",
-      "toothpaste",
-      "badger",
-      "pig",
-      "may",
-      "december"
-    ],
-    "p1": [
-      "pudding",
-      "cake",
-      "metal",
-      "silence",
       "smoke",
       "ink",
-      "venus",
-      "jupiter",
-      "chewing gum",
-      "silk",
-      "monkey",
-      "goat",
-      "february",
-      "september"
-    ],
-    "p3": [
-      "pie",
-      "butter",
-      "obedience",
-      "smile",
-      "electricity",
-      "glitter",
       "milky way",
       "mars",
       "explosives",
       "glue",
       "fox",
       "parrot",
+      "february",
+      "september"
+    ],
+    "p3": [
+      "pudding",
+      "cake",
+      "friendship",
+      "march",
+      "radio waves",
+      "static",
+      "venus",
+      "jupiter",
+      "bandages",
+      "toothpaste",
+      "wolf",
+      "raccoon",
       "august",
-      "march"
+      "may"
+    ],
+    "p4": [
+      "pie",
+      "butter",
+      "metal",
+      "silence",
+      "electricity",
+      "glitter",
+      "north pole",
+      "saturn",
+      "leather",
+      "plastic",
+      "badger",
+      "pig",
+      "march",
+      "december"
     ],
     "p2": [
       "hay",
       "ham",
-      "friendship",
-      "march",
+      "obedience",
+      "smile",
       "fog",
       "steam",
       "halley's comet",
       "moon",
-      "leather",
-      "plastic",
-      "wolf",
-      "raccoon",
+      "chewing gum",
+      "silk",
+      "monkey",
+      "goat",
       "june",
       "october"
     ]
   },
   "speechMs": {
-    "fo6ravkm1mgmjz4": -1,
-    "fo15kn60jo02tcj": -1,
-    "fotj0l8ogup9t0": -1,
-    "fon8vu4x12w2hd": -1,
-    "fohpu0kc1trpm5c": -1,
-    "fo1pi9flt5kfnd": -1,
-    "forkrictnkdvrr": -1,
-    "fovuzul61ry42eg": -1,
-    "fo1v5cmyuthtw8o": -1,
-    "fogd7wkr1p32ic9": -1,
-    "fo1h0bcce1yzde94": -1,
-    "fo1nle5w3iqaez1": -1,
-    "fo1wzm638touyq": -1,
-    "fo16r75ia707z9k": -1,
-    "fo3sbbpj1ihvh99": -1,
-    "fo1wwlqd0pvrcjw": -1,
-    "fo1uf6tty1scn24y": -1,
-    "fo1wp6j0d1dwk9o7": -1,
-    "fo5lq8oqlnrn6i": -1,
-    "fouo65kp6n8041": -1,
-    "fo18aqhjpo30j5x": -1,
-    "fo1nxrr8ql6zst6": -1,
-    "fo188b65d1i1ipdn": -1,
-    "fohxhu9s1s5ov98": -1,
-    "foeh59ol19llyvd": -1,
-    "forpa5j1afmz0z": -1,
-    "foqje2bd1k1dhd7": -1,
-    "fo14d33i1em5r6s": -1,
-    "fo19mbuzhbjgncr": -1,
-    "fo1718slx1syvbh7": -1,
-    "fowbucq81d735m4": -1,
-    "fo19n88s01yfodcm": -1,
-    "fo1ljqkgzwaafmp": -1,
-    "fo1ql1yrd1lp7b63": -1,
-    "fopo8v27pu13qx": -1,
-    "fob8wd2b1smjp4v": -1,
-    "fo1l7mjfhf9eiq1": -1,
-    "fol7l7mt14nutzh": -1,
-    "fo21shurqaloj7": -1,
-    "fo1mzzecc8ouy00": -1,
-    "fo1vnwznj9uarc5": -1,
-    "fot2c6vppj4krl": -1,
-    "foloa8lc1ozan5c": -1,
-    "fo16ttac2bqddwy": -1,
-    "fo1mfwe6v8recwr": -1,
-    "fo1up2kb5yrxuwh": -1,
-    "fo1ekuaai1vc8gd2": -1,
-    "foe1rn4e1wx9sqg": -1
-  }
+    "fake-out-392e93e73353fd0d": -1,
+    "fake-out-5232f80954c39f06": -1,
+    "fake-out-6f1e24fb4a569594": -1,
+    "fake-out-102522184e8bdeec": -1,
+    "fake-out-66d48250cfb9d932": -1,
+    "fake-out-512f39705a64471f": -1,
+    "fake-out-8b77cba91500e3de": -1,
+    "fake-out-017416ce83a6e883": -1,
+    "fake-out-d6433bec2601394c": -1,
+    "fake-out-fe616111a6785742": -1,
+    "fake-out-f55076209682b62f": -1,
+    "fake-out-a2ade1d1879e0396": -1,
+    "fake-out-673688a451dabea6": -1,
+    "fake-out-47eb4bb64c727047": -1,
+    "fake-out-afd18848c29c6c72": -1,
+    "fake-out-13b70fce6af45dea": -1,
+    "fake-out-b25181fb16321519": -1,
+    "fake-out-c9fce41e443af684": -1,
+    "fake-out-b5da521f3f552011": -1,
+    "fake-out-237617b3947fa7ec": -1,
+    "fake-out-110c3f15527e6811": -1,
+    "fake-out-f4a2cc365d822331": -1,
+    "fake-out-f6d2706d8fe3dcb5": -1,
+    "fake-out-c906557ab9caf3c3": -1,
+    "fake-out-c8d05cfa044bb625": -1,
+    "fake-out-02e8f39a263274ff": -1,
+    "fake-out-7ce899c96c2e42d9": -1,
+    "fake-out-55628baa69e2f56b": -1,
+    "fake-out-43f10475b2fb1655": -1,
+    "fake-out-1c04dc533f67cfba": -1,
+    "fake-out-c2129bec962417ab": -1,
+    "fake-out-411e954e6058b7f1": -1,
+    "fake-out-70c52dc854ca4e66": -1,
+    "fake-out-de26fd19bfd4ca15": -1,
+    "fake-out-b660ff967f92ab8e": -1,
+    "fake-out-16db35c21f7b5c9a": -1,
+    "fake-out-b948cc2a67b2934f": -1,
+    "fake-out-74f0cdaef35f6a09": -1,
+    "fake-out-b85f184b904b6086": -1,
+    "fake-out-bc088d6a27c46ae3": -1,
+    "fake-out-1b01d519c15fe392": -1,
+    "fake-out-a04d6fcabff32af5": -1,
+    "fake-out-04db07c7eeff0c52": -1,
+    "fake-out-5e24b21c35ed624b": -1,
+    "fake-out-3ec8966d2c6332ce": -1,
+    "fake-out-0fe079b58104080e": -1,
+    "fake-out-457281f0189e685d": -1,
+    "fake-out-4e5f43f9866fd1e0": -1,
+    "fake-out-0c2a08072cf4c8da": -1,
+    "fake-out-42d2a1035e4766b3": -1,
+    "fake-out-42a3c646f7948caa": -1,
+    "fake-out-bf66c05a5bde106f": -1,
+    "fake-out-102a272871055bf8": -1,
+    "fake-out-f599fcca26c9ab2c": -1,
+    "fake-out-b18b33a55d694949": -1,
+    "fake-out-8273b1c65ba6618b": -1,
+    "fake-out-e3da91a10108d773": -1
+  },
+  "ready": ["p1", "p4", "p2", "p3"],
+  "goAt": 1700000008638
 }

@@ -3,7 +3,7 @@
 // runs the same transition a deadline does — except in the reveal, where it turns one page.
 import { allConnectedDone, applyVip, setConnected } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { enterIntro, reduceIntro } from './phases/intro';
+import { checkReady, enterIntro, reduceIntro, startCountdown } from './phases/intro';
 import { enterLie, liesIn, reduceLie } from './phases/lie';
 import { enterPick, picksIn, reducePick } from './phases/pick';
 import { enterQuestion, newQuestion, reduceQuestion, retimeQuestion } from './phases/question';
@@ -35,11 +35,14 @@ export function advance(state: State, now: number): State {
 }
 
 function skip(state: State, now: number): State {
+  // The VIP's Start now on the rules runs the 3 · 2 · 1 first; a second skip cuts it.
+  if (state.phase.id === 'intro' && state.goAt === null) return startCountdown(state, now);
   return state.phase.id === 'reveal' ? skipStep(state, now, advance) : advance(state, now);
 }
 
 /** The drop of the last outstanding player ends an input phase like their input would have. */
 function closeIfDone(state: State, now: number): State {
+  if (state.phase.id === 'intro') return checkReady(state, now);
   if (state.phase.id === 'lie' && allConnectedDone(state, liesIn(state)))
     return advance(state, now);
   if (state.phase.id === 'pick' && allConnectedDone(state, picksIn(state)))

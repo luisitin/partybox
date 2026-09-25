@@ -2,7 +2,7 @@
   "phase": {
     "id": "intro",
     "startedAt": 1700000000000,
-    "deadline": 1700000008000
+    "deadline": 1700000090000
   },
   "rng": {
     "seed": 1,
@@ -341,5 +341,7 @@
     }
   },
   "offered": {},
-  "speechMs": {}
+  "speechMs": {},
+  "ready": [],
+  "goAt": null
 }

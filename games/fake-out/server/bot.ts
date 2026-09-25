@@ -23,6 +23,8 @@ export function sampleInput(
 ): Input | null {
   const view = controllerView(state, gameId, playerId);
   if (view.me.role !== 'player') return null;
+  if (view.phaseId === 'intro')
+    return view.meReady || view.goAt !== null ? null : { type: 'ready' };
   if (view.phaseId === 'lie') {
     if (view.myLie !== null) return null;
     if (view.suggestions.length > 0) return { type: 'lie', text: rng.pick(view.suggestions) };

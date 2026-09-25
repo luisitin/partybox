@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "lie",
-    "startedAt": 1700000020000,
-    "deadline": 1700000065000
+    "startedAt": 1700000015818,
+    "deadline": 1700000060818
   },
   "rng": {
     "seed": 1,
@@ -290,7 +290,7 @@
       "verified": true,
       "hardWords": []
     },
-    "readAt": 1700000008000,
+    "readAt": 1700000008638,
     "lies": {},
     "truthTyped": [],
     "rejected": {},
@@ -342,6 +342,16 @@
   },
   "offered": {},
   "speechMs": {
-    "fo6ravkm1mgmjz4": -1
-  }
+    "fake-out-392e93e73353fd0d": -1,
+    "fake-out-5232f80954c39f06": -1,
+    "fake-out-6f1e24fb4a569594": -1,
+    "fake-out-102522184e8bdeec": -1,
+    "fake-out-66d48250cfb9d932": -1,
+    "fake-out-512f39705a64471f": -1,
+    "fake-out-8b77cba91500e3de": -1,
+    "fake-out-017416ce83a6e883": -1,
+    "fake-out-d6433bec2601394c": -1
+  },
+  "ready": ["p1", "p4", "p2", "p3"],
+  "goAt": 1700000008638
 }
