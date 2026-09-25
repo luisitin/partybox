@@ -99,6 +99,23 @@
 }
 
 /* faces only (the TV strip past two rows, a claim): no empty name slot, so the chips close up */
+/* A bot's owner part ellipsizes; its "bot 2" tail stays (reviewer 90838c). */
+.split {
+  display: inline-flex;
+  min-width: 0;
+}
+.nameHead {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nameTail {
+  flex-shrink: 0;
+  margin-left: 0.25em;
+  white-space: nowrap;
+}
+
 .name:empty {
   display: none;
 }

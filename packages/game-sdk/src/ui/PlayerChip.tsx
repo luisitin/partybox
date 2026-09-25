@@ -9,6 +9,13 @@ import { useT } from './lang';
 import type { Translator } from './lang';
 import styles from './PlayerChip.module.css';
 
+/** A bot named after its owner ("Maximiliano's bot 2", engine bots.ts) splits into the part that
+ *  may shrink and the part that tells the bots apart; "Bot 1" and people's names stay whole. */
+export function splitBotName(name: string): { head: string; tail: string } | null {
+  const m = /^(.*\S)\s+(bot(?:\s+\d+)?)$/i.exec(name);
+  return m && m[1] && m[2] ? { head: m[1], tail: m[2] } : null;
+}
+
 export interface PlayerChipProps {
   name: string;
   avatarId: string;
@@ -89,6 +96,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     size = 'md',
   } = props;
   const L = useT(STRINGS);
+  const botTail = isBot ? splitBotName(name) : null;
   // The ★ VIP badge pops only when it arrives on a mounted chip (a handover), never on a screen
   // swap — 'adjust state when a prop changes' (review-loop #5).
   const [wasVip, setWasVip] = useState(isVip ?? false);
@@ -158,7 +166,23 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
           </span>
         ) : null}
       </span>
-      <span className={styles.name}>{name}</span>
+      {/* A bot's name keeps its tail: "Maximiliano's bot 2" truncates the owner, never "bot 2"
+          (reviewer 90838c: three chips all read "Ma…" on an SE). */}
+      {botTail && compact && onRemove ? (
+        // The VIP's lobby chip on an SE has room for "Bot 2", not the owner too (reviewer
+        // 90838c: "Maximiliano's bot 2" read "Ma…" three times); the full name is the label.
+        <span className={styles.name}>
+          {botTail.tail.charAt(0).toUpperCase()}
+          {botTail.tail.slice(1)}
+        </span>
+      ) : botTail ? (
+        <span className={`${styles.name} ${styles.split}`}>
+          <span className={styles.nameHead}>{botTail.head}</span>
+          <span className={styles.nameTail}>{botTail.tail}</span>
+        </span>
+      ) : (
+        <span className={styles.name}>{name}</span>
+      )}
       {!connected && awayLeft !== null ? (
         <span
           className={styles.away}

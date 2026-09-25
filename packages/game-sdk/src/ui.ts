@@ -25,7 +25,7 @@ export type {
 // ── shared ───────────────────────────────────────────────────────────────────────────────────
 export { Avatar, AvatarPhotos, avatarColorVar } from './ui/Avatar';
 export type { AvatarProps } from './ui/Avatar';
-export { PlayerChip } from './ui/PlayerChip';
+export { PlayerChip, splitBotName } from './ui/PlayerChip';
 export { LeadMark } from './ui/LeadMark';
 export type { PlayerChipProps } from './ui/PlayerChip';
 export { ServerClockProvider, useSecondsLeft, useServerNow, useServerOffset } from './ui/clock';
