@@ -51,7 +51,7 @@ export const STRINGS_ES_PLAY: Record<string, string> = {
   'Hold to see your word': 'Mantén presionado para ver tu palabra',
   'Hold to peek': 'Mantén para ver',
   'Tap to see it; it hides again by itself': 'Tócala para verla; se vuelve a ocultar sola',
-  'Keep it close — neighbours peek': 'Tápala bien: los vecinos espían',
+  'Keep it close — neighbors peek': 'Tápala bien: los vecinos espían',
   'Your word': 'Tu palabra',
   "You're the": 'Eres el',
   "Blend in. Don't get caught.": 'Pasa desapercibido. Que no te atrapen.',

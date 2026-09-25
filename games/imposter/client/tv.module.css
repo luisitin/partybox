@@ -199,12 +199,13 @@
   color: var(--pb-text-muted);
 }
 
-/* voteReveal: voters' faces drop onto the card they picked, one after another, then the count. */
+/* voteReveal: voters' faces drop onto the card they picked, one after another, then the count;
+   inside the card's bottom edge, never across the border (hive-rank review [489534]). */
 .votes {
   position: absolute;
   left: var(--pb-space-3);
   right: var(--pb-space-3);
-  bottom: calc(-1 * var(--pb-space-3));
+  bottom: var(--pb-space-3);
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;

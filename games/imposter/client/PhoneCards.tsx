@@ -73,7 +73,7 @@ export function PhoneSecret({
       backHint={
         mode === 'tap'
           ? L('Tap to see it; it hides again by itself')
-          : L('Keep it close — neighbours peek')
+          : L('Keep it close — neighbors peek')
       }
     >
       <Face view={view} mini={mini} />
