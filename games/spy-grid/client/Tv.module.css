@@ -325,6 +325,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-2);
+  /* a soft end instead of a row cut in half: the last ~60 px fade out */
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 64px), transparent);
   padding-top: 40px;
   overflow: hidden;
 }

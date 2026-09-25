@@ -144,7 +144,9 @@ export function History({ view }: { view: SpyTvView }): JSX.Element {
       {view.history.length === 0 ? (
         <div className={styles.historyEmpty}>{L('The first clue lands here')}</div>
       ) : null}
-      {view.history.map((h, i) => (
+      {/* newest first: when the rail is full it's the oldest clues that trail off under the fade
+          (session-c [76e78d]: oldest-first cut the newest ones) */}
+      {[...view.history.entries()].reverse().map(([i, h]) => (
         <span
           key={`${i}${h.word}`}
           className={`${styles.chip} ${styles[`chip-${h.team}`]} ${fresh && i === last ? styles.chipNew : ''}`}
