@@ -196,7 +196,9 @@ export function TvReveal({ view }: Props): JSX.Element {
       </div>
       <div className={styles.revealArea}>
         {current ? (
-          <Spotlight key={`${reveal?.step}:${reveal?.stepAt}`} view={view} option={current} />
+          // Keyed by the step only: a late reading re-times the step (stepAt moves), and a remount
+          // replayed the fly-in and the faces (the avatar flicker session-c saw [ba4fbb]).
+          <Spotlight key={`${reveal?.step}`} view={view} option={current} />
         ) : null}
         {reveal?.kind === 'fact' ? (
           <div className={styles.completed} key="fact">

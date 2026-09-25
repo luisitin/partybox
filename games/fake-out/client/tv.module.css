@@ -610,7 +610,7 @@
   /* slides in, then breathes while the strip holds (no still span on the TV) */
   animation:
     slide-in var(--pb-motion-base) var(--pb-ease) both,
-    card-breathe calc(var(--pb-motion-pulse) * 2.4) ease-in-out infinite;
+    soft-breathe calc(var(--pb-motion-pulse) * 2.4) ease-in-out infinite;
   animation-delay:
     calc(var(--i) * var(--pb-motion-fast)),
     calc(var(--pb-motion-base) + var(--i) * var(--pb-motion-fast) * 3);
@@ -665,7 +665,7 @@
   align-items: center;
   gap: var(--pb-space-2);
   /* the reasons breathe once the board has climbed, so the scores never sit still */
-  animation: card-breathe calc(var(--pb-motion-pulse) * 2.4) ease-in-out infinite;
+  animation: soft-breathe calc(var(--pb-motion-pulse) * 2.4) ease-in-out infinite;
   animation-delay: calc(var(--pb-motion-slow) * 3 + var(--i) * var(--pb-motion-fast) * 3);
 }
 
@@ -746,7 +746,28 @@
   }
 }
 
+/* Transform only (no shadow): rows and chips must not grow an outline mid-breath (session-c
+   [ba4fbb]: the reason chips looked boxed on some rows). */
+@keyframes soft-breathe {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-3px) scale(1.015);
+  }
+}
+
+/* The spotlit answer keeps breathing while it holds with its stamp (the reveal's longest beat);
+   on the wrapper, so it never fights the card's fly-in. */
+.spotScene {
+  animation: soft-breathe calc(var(--pb-motion-pulse) * 2.8) ease-in-out var(--pb-motion-slow)
+    infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .spotScene,
   .how,
   .unpickedItem,
   .questionCard > p,
@@ -755,6 +776,7 @@
   }
 }
 
+:global(:root[data-motion='off']) .spotScene,
 :global(:root[data-motion='off']) .how,
 :global(:root[data-motion='off']) .unpickedItem,
 :global(:root[data-motion='off']) .questionCard > p,

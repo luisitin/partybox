@@ -79,8 +79,11 @@ p.fact {
 
 .input {
   width: 100%;
-  min-height: calc(var(--pb-font-h2) * 2.6);
-  padding: var(--pb-space-3) var(--pb-space-4) var(--pb-space-5);
+  /* three lines of a 40-character lie at any text size (reviewer [f9d6d3]: at 200 % the lie
+     scrolled inside a two-line box and the counter sat on the text) */
+  min-height: calc(var(--pb-font-h2) * 1.25 * 3 + var(--pb-space-3) * 2);
+  field-sizing: content;
+  padding: var(--pb-space-3) var(--pb-space-4);
   border-radius: var(--pb-radius);
   border: 2px solid var(--pb-surface-2);
   background: var(--pb-surface);
@@ -96,9 +99,10 @@ p.fact {
 }
 
 .counter {
-  position: absolute;
-  right: var(--pb-space-3);
-  bottom: var(--pb-space-2);
+  /* under the box, never on the text */
+  display: block;
+  margin-top: var(--pb-space-1);
+  text-align: right;
   font-size: var(--pb-font-caption);
   color: var(--pb-text-muted);
   font-variant-numeric: tabular-nums;
@@ -137,6 +141,16 @@ p.fact {
 
 .suggestButton {
   align-self: flex-start;
+}
+
+/* The lie screen's pieces keep their own height; at 200 % the body scrolls instead of squashing
+   them (the Suggest pill's border ran through its text). */
+.inputWrap,
+.suggestButton,
+.suggestions,
+.legality,
+p.fact {
+  flex-shrink: 0;
 }
 
 .suggestions {
@@ -310,7 +324,10 @@ p.fact {
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  overflow-wrap: anywhere;
+  /* capped by the phone's width so a long single word fits whole at 200 % ('Gingerbrea / d');
+     a word breaks only if it still can't fit */
+  font-size: min(1em, 6.6vw);
+  overflow-wrap: break-word;
 }
 
 .likeButton {
