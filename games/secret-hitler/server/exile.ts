@@ -7,7 +7,7 @@ import { advance, chooserOf, endTooFew, nextRound, resolveNow } from './flow';
 import { withRound, without } from './phase';
 import { enterGameOver } from './phases/gameOver';
 import { enterNominate } from './phases/nominate';
-import { checkReady } from './phases/seating';
+import { checkRead } from './phases/seating';
 import { everyoneVoted } from './phases/vote';
 import { EXILE_MS } from './types';
 import type { Input, State } from './types';
@@ -43,7 +43,7 @@ function afterExit(s: State, id: string, now: number): State {
   const r = s.round;
   switch (s.phase.id) {
     case 'seating':
-      return checkReady(s, now);
+      return checkRead(s, now, advance);
     case 'nominate':
       return r.president === id ? nextRound(s, now) : s;
     case 'vote':
@@ -66,7 +66,7 @@ export function recheckOnResume(s: State, now: number): State {
     (id): id is string => id !== null && s.seats.includes(id) && !s.alive.includes(id),
   );
   if (gone !== undefined) return afterExit(s, gone, now);
-  if (s.phase.id === 'seating') return checkReady(s, now);
+  if (s.phase.id === 'seating') return checkRead(s, now, advance);
   if (s.phase.id === 'vote' && everyoneVoted(s)) return advance(s, now);
   return s;
 }
@@ -93,5 +93,5 @@ export function onPlayer(state: State, event: GameEvent<Input>): State {
   }
   if (s.exiled.includes(id) || Object.hasOwn(s.droppedAt, id)) return s;
   // A dropped phone never holds up the start.
-  return checkReady({ ...s, droppedAt: { ...s.droppedAt, [id]: event.now } }, event.now);
+  return checkRead({ ...s, droppedAt: { ...s.droppedAt, [id]: event.now } }, event.now, advance);
 }

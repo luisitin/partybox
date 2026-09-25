@@ -58,7 +58,6 @@ function init(ctx: InitContext): State {
     exiled: [],
     droppedAt: {},
     ready: ctx.players.filter((p) => p.bot).map((p) => p.id),
-    startAt: null,
     deck,
     discards: [],
     board: { L: 0, F: 0 },

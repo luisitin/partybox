@@ -11,7 +11,6 @@ import { enterNominate, timeoutNominate } from './phases/nominate';
 import { enterPower, pendingPower, timeoutPower } from './phases/power';
 import { deliverFile, enterPowerReveal } from './phases/powerReveal';
 import { enterPresDraw, timeoutPresDraw } from './phases/presDraw';
-import { startCountdown } from './phases/seating';
 import { enterEnactReveal } from './phases/enactReveal';
 import { answerVeto, enterVetoAsk } from './phases/vetoAsk';
 import { enterVote } from './phases/vote';
@@ -147,8 +146,6 @@ export function advance(state: State, now: number): State {
 
 /** The VIP's Skip: Last call in a choosing phase (D4), else the phase's normal exit. */
 export function vipSkip(state: State, now: number): State {
-  // Seating: Start now begins the 3 · 2 · 1 (a second Skip does nothing).
-  if (state.phase.id === 'seating') return startCountdown(state, now);
   if (!CHOOSING.includes(state.phase.id)) return advance(state, now);
   if (state.round.lastCall || state.phase.deadline === null) return state;
   const deadline = Math.min(state.phase.deadline, now + LAST_CALL_MS);

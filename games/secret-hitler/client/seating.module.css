@@ -1,185 +1,44 @@
-/* The TV at seating (TvSeating.tsx): a manila briefing folder, the front page pinned to its corner,
-   and three rules dealt in one by one, side by side. TV only, so sizes are px (the TV root font is scaled). */
+/* The TV at seating (TvSeating.tsx): the front page spins in, with the dossier count under it.
+   TV only, so sizes are px (the TV root font is scaled). */
 .seating {
-  display: grid;
-  align-items: center;
-  min-height: 0;
-  padding: 6px 12px 0;
-}
-
-.brief {
-  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 14px 36px 12px;
-  border-radius: 4px 14px 14px 14px;
-  background:
-    repeating-linear-gradient(0deg, transparent 0 33px, rgba(90, 81, 67, 0.12) 33px 34px),
-    linear-gradient(170deg, var(--sh-paper), var(--sh-paper-2));
-  color: var(--sh-ink);
-  box-shadow:
-    0 22px 50px var(--sh-shadow),
-    inset 0 0 0 1px rgba(90, 81, 67, 0.25);
-  animation: global(sh-deal) 600ms var(--sh-ease) 200ms both;
-}
-
-/* The front page, cut out and pinned to the folder's corner. */
-.clipping {
-  position: absolute;
-  top: -18px;
-  right: 34px;
-  width: 640px;
-  transform-origin: top right;
-  transform: scale(0.44) rotate(3deg);
-  pointer-events: none;
-}
-
-.clipping::after {
-  content: '';
-  position: absolute;
-  top: 8px;
-  left: 12px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #e86a5a, var(--sh-fascist) 60%, #5a1012);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.45);
-}
-
-.head {
-  display: flex;
-  align-items: baseline;
-  gap: 18px;
-  border-bottom: 3px double var(--sh-ink-soft);
-  padding-bottom: 8px;
-}
-
-.tab {
-  padding: 2px 12px;
-  border: 3px solid var(--sh-fascist);
-  border-radius: 4px;
-  font-family: var(--sh-font-display);
-  font-size: 26px;
-  letter-spacing: 0.1em;
-  color: var(--sh-fascist);
-  transform: rotate(-3deg);
-}
-
-.heading {
-  margin: 0;
-  font-family: var(--sh-font-headline);
-  font-size: 34px;
-  font-weight: 800;
-}
-
-.rules {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 34px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.rule {
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
   align-items: center;
-  align-content: start;
-  gap: 8px 16px;
-  animation: ruleIn 700ms var(--sh-ease) both;
-  /* All three land together, a beat apart, so the whole briefing is readable at once. */
-  animation-delay: calc(400ms + var(--i) * 150ms);
+  justify-content: center;
+  gap: 18px;
+  min-height: 0;
 }
 
-@keyframes ruleIn {
-  from {
-    opacity: 0;
-    transform: translateY(28px) rotate(-1deg);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.art {
+.paper {
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--sh-night-2);
-  color: var(--sh-brass);
-  box-shadow:
-    inset 0 0 0 3px var(--sh-brass-2),
-    0 6px 14px rgba(0, 0, 0, 0.3);
+  /* A little smaller, so the count below clears the seat row with room to spare. */
+  scale: 0.82;
+  margin-block: -30px;
 }
 
-.art[data-rule='0'] {
+.reading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  animation: global(sh-rise) 600ms var(--sh-ease) 900ms both;
+}
+
+.readCount {
+  font-family: var(--sh-font-display);
+  font-size: 44px;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: var(--sh-brass);
+}
+
+.reading[data-all] .readCount {
   color: var(--sh-text);
 }
 
-.pair {
-  display: flex;
-  gap: 0;
-}
-
-.pair > svg:first-child {
-  color: var(--sh-liberal);
-  filter: brightness(1.5);
-}
-
-.pair > svg:last-child {
-  margin-left: -12px;
-  color: var(--sh-fascist);
-  filter: brightness(1.5);
-}
-
-.words {
-  display: contents;
-}
-
-.ruleTitle {
-  font-family: var(--sh-font-display);
-  font-size: 34px;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  line-height: 1;
-}
-
-.ruleText {
-  grid-column: 1 / -1;
-  font-family: var(--sh-font-type);
-  font-size: 23px;
-  line-height: 1.28;
-}
-
-.ready {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 18px;
-  padding-top: 8px;
-  border-top: 2px dashed var(--sh-ink-soft);
-  animation: global(sh-fade) 500ms var(--sh-ease) 900ms both;
-}
-
-.readyCount {
-  font-family: var(--sh-font-display);
-  font-size: 30px;
-  letter-spacing: 0.06em;
-  line-height: 1;
-  color: var(--sh-fascist);
-}
-
-.ready[data-all] .readyCount {
-  color: var(--sh-liberal);
-}
-
-.readyHint {
-  font-family: var(--sh-font-type);
-  font-size: 22px;
-  color: var(--sh-ink-soft);
+.readHint {
+  font-size: 26px;
+  color: var(--sh-text-muted);
 }

@@ -7,7 +7,6 @@ import type { JSX } from 'react';
 import { useSecondsLeft, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { ShTvView } from '../server/views';
-import { Countdown } from './Countdown';
 import { phaseLines } from './lines';
 import './sh-global.css';
 import { STRINGS } from './strings';
@@ -108,9 +107,6 @@ export function Tv({ view }: GameTvProps<ShTvView>): JSX.Element {
         <TvSeats view={view} />
       </div>
       <TvMoments view={view} root={root} />
-      {phase === 'seating' && view.startAt !== undefined ? (
-        <Countdown key={view.startAt} until={view.startAt} paused={view.paused} size="tv" />
-      ) : null}
     </div>
   );
 }

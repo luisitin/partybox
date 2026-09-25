@@ -371,6 +371,24 @@ button.rowHint {
   box-shadow: 0 0 0 3px var(--sh-alarm);
 }
 
+/* The ballot is the whole screen's purpose: a smaller headline, and the words scale with the
+   screen's height, not the text size, so 200 % text still shows both placards whole (review 4c508e). */
+.lastCall {
+  font-size: min(1.3rem, 3.4vh);
+}
+
+.body[data-phase='vote'] .title {
+  font-size: min(1.35rem, 4.2vh);
+}
+
+.body[data-phase='vote'] .placardMark {
+  font-size: min(3rem, 7vh);
+}
+
+.body[data-phase='vote'] .placardWord {
+  font-size: min(2.6rem, 6.5vh);
+}
+
 /* A short phone (SE 568): the choice itself stays above the fold. Last in the file, so it wins
    over the rules it resizes. */
 @media (max-height: 640px) {
@@ -402,7 +420,7 @@ button.rowHint {
   }
   .lastCall {
     padding: 0.25rem;
-    font-size: 1.1rem;
+    font-size: min(1.1rem, 3.2vh);
   }
   /* With the Last call bar showing, the placards give up its height. */
   .lastCall ~ * .placard {

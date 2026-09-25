@@ -11,7 +11,6 @@ import type { Input } from '../server/types';
 import type { ShControllerView } from '../server/views';
 import { MaskEmblem, PartyEmblem, Stamp } from './art';
 import { FlipCard } from './Card';
-import { Countdown } from './Countdown';
 import { CREDIT, endingBanner, roleName, winnerLine } from './labels';
 import { phaseLines } from './lines';
 import { PhoneAct } from './PhoneAct';
@@ -150,9 +149,6 @@ export function Controller({
       data-phase={view.phaseId}
       data-paused={view.paused || undefined}
     >
-      {view.phaseId === 'seating' && view.startAt !== undefined ? (
-        <Countdown key={view.startAt} until={view.startAt} paused={view.paused} size="phone" />
-      ) : null}
       {view.lastCall && act ? (
         <div className={styles.lastCall}>{L('Last call! Choose now.')}</div>
       ) : null}

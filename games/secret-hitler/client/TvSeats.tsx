@@ -109,7 +109,9 @@ export function TvSeats({ view }: { view: ShTvView }): JSX.Element {
                 </span>
               ) : null}
               {phase === 'seating' && seat.tags.includes('ready') ? (
-                <span className={styles.ready}>{L('✓ Ready')}</span>
+                <span className={styles.ready} role="img" aria-label={L('Has read the dossier')}>
+                  ✓
+                </span>
               ) : null}
               {over && seat.role ? (
                 <span className={styles.dossier} data-role={seat.role}>

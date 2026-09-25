@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { stepMs } from '../server/rules';
 import { controllerView, tvView } from '../server/views';
-import { COUNTDOWN_MS, SEATING_PATIENCE_MS, SEATING_SAFETY_MS } from '../server/types';
+import { SEATING_PATIENCE_MS, SEATING_SAFETY_MS } from '../server/types';
 import type { Party } from '../server/types';
 import {
   T0,
@@ -25,53 +25,52 @@ const vetoTable = (): ReturnType<typeof rig> =>
   seated(rig(5, { deck: FF, patch: { board: { L: 0, F: 5 }, vetoUnlocked: true } }));
 
 describe('D1 · deadlines and timeouts', () => {
-  it('D1 seating (owner pacing rule): no clock; every connected seat readies, then 3 · 2 · 1', () => {
+  it('D1 seating (ADR-053): no clock; round 1 once every connected seat has read its dossier', () => {
     let s = rig(5);
     expect(s.phase.id).toBe('seating');
     expect(tvView(s).timerMode).toBe('hidden'); // no clock to rush anyone
     for (const id of ['p1', 'p2', 'p3', 'p4']) s = send(s, id, { type: 'ready' });
-    expect(s.startAt).toBeNull();
+    expect(s.phase.id).toBe('seating');
     expect(tvView(s).seats[0]?.tags).toContain('ready');
-    s = send(s, 'p5', { type: 'ready' }, T0 + 1_000);
-    expect(s.phase).toMatchObject({ id: 'seating', deadline: T0 + 1_000 + COUNTDOWN_MS });
-    expect(tvView(s).startAt).toBe(T0 + 1_000 + COUNTDOWN_MS);
-    expect(timeout(s).phase.id).toBe('nominate');
+    s = send(s, 'p5', { type: 'ready' });
+    expect(s.phase.id).toBe('nominate'); // no second count-in after the shell's 3 · 2 · 1
   });
 
   it('D1 seating: the hidden net starts only an idle table (nobody tapped)', () => {
-    const s = timeout(rig(5));
-    expect(s.phase.id).toBe('seating');
-    expect(s.startAt).toBe(s.phase.deadline);
-    expect(timeout(s).phase.id).toBe('nominate');
+    expect(timeout(rig(5)).phase.id).toBe('nominate');
   });
 
-  it('D1 seating: with 4 of 5 ready, the net re-arms and the table keeps waiting', () => {
+  it('D1 seating: with 4 of 5 read, the net re-arms and the table keeps waiting', () => {
     let s = rig(5);
     for (const id of ['p1', 'p2', 'p3', 'p4']) s = send(s, id, { type: 'ready' });
     const first = s.phase.deadline ?? 0;
     s = timeout(s);
     expect(s.phase.id).toBe('seating');
-    expect(s.startAt).toBeNull();
     expect(s.phase.deadline).toBe(first + SEATING_SAFETY_MS);
     s = timeout(s);
-    expect(s.startAt).toBeNull();
+    expect(s.phase.id).toBe('seating');
     s = send(s, 'p5', { type: 'ready' });
-    expect(s.startAt).not.toBeNull();
+    expect(s.phase.id).toBe('nominate');
   });
 
-  it('D1 seating: a phone left connected untapped still starts after 10 minutes', () => {
+  it('D1 seating: a phone left connected untapped still starts after exactly 10 minutes', () => {
     let s = rig(5);
     for (const id of ['p1', 'p2', 'p3', 'p4']) s = send(s, id, { type: 'ready' });
-    while (s.startAt === null) s = timeout(s);
-    expect((s.startAt ?? 0) - COUNTDOWN_MS - s.phase.startedAt).toBe(SEATING_PATIENCE_MS);
-    expect(timeout(s).phase.id).toBe('nominate');
+    const start = s.phase.startedAt;
+    let last = s;
+    while (s.phase.id === 'seating') {
+      last = s;
+      s = timeout(s);
+    }
+    expect(last.phase.deadline).toBe(start + SEATING_PATIENCE_MS);
+    expect(s.phase.id).toBe('nominate');
   });
 
-  it('D1 seating: a dropped phone never holds up the start; bots are ready from the start', () => {
+  it('D1 seating: a dropped phone never holds up round 1; bots have read from the start', () => {
     let s = rig(5);
     for (const id of ['p1', 'p2', 'p3', 'p4']) s = send(s, id, { type: 'ready' });
     s = reduce(s, { type: 'player', now: T0 + 500, playerId: 'p5', connected: false });
-    expect(s.startAt).toBe(T0 + 500 + COUNTDOWN_MS);
+    expect(s.phase.id).toBe('nominate');
     const bots = game.init({
       players: makePlayers(5).map((p, i) => ({ ...p, bot: i > 0 })),
       settings: {},
@@ -81,20 +80,9 @@ describe('D1 · deadlines and timeouts', () => {
     expect(bots.ready).toEqual(['p2', 'p3', 'p4', 'p5']);
   });
 
-  it('D1 seating: a pause during the 3 · 2 · 1 moves the count with it', () => {
-    let s = vip(rig(5), 'skip', T0 + 2_000);
-    s = vip(s, 'pause', T0 + 3_000);
-    s = vip(s, 'resume', T0 + 8_000);
-    expect(tvView(s).startAt).toBe(T0 + 2_000 + COUNTDOWN_MS + 5_000);
-    expect(tvView(s).startAt).toBe(s.phase.deadline);
-  });
-
-  it("D1 seating: the VIP's Start now begins the count at once; a second does nothing", () => {
-    let s = vip(rig(5), 'skip', T0 + 2_000);
-    expect(s.startAt).toBe(T0 + 2_000 + COUNTDOWN_MS);
-    expect(tvView(s).vipSkipHidden).toBe(true);
-    s = vip(s, 'skip', T0 + 3_000);
-    expect(s.startAt).toBe(T0 + 2_000 + COUNTDOWN_MS);
+  it("D1 seating: the VIP's Start now begins round 1 at once", () => {
+    expect(tvView(rig(5)).vipSkipLabel).toBe('Start now');
+    expect(vip(rig(5), 'skip', T0 + 2_000).phase.id).toBe('nominate');
   });
 
   it('D1 nominate: a random eligible nominee', () => {

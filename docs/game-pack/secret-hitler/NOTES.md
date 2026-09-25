@@ -114,14 +114,16 @@ Proposed in #plans `1fe99b` at 19:35; no objections by 20:07; Imposter agreed (`
   `localeCompare` anywhere in the server (only numeric sorts).
 - Narrator (`toSpeakable`, clips) and presence PhoneStage: not needed until M3/M4.
 
-## The owner's pacing rule (2026-09-24, hub #decisions cc45f4)
+## The start is the shell's (ADR-053, main bc3f879c)
 
-Overrides SPEC D1 for seating. Seating has no clock: the TV shows a briefing (secret roles, electing
-a government, how to win) and who has tapped Got it (a READY stamp on each seat and "5 of 7
-ready"). Nothing starts until every connected seat is ready. Bots are ready from the start, and a
-dropped phone doesn't block. **Conflict:** the platform needs every table to end. The contract suite seats players who never tap, and the sim's mixed tables keep an idle phone connected. So a hidden net fires at 3 minutes (`SEATING_SAFETY_MS`). If nobody has tapped, it starts the count. If anyone has, it re-arms and keeps waiting, up to 10 minutes of seating in all (`SEATING_PATIENCE_MS`), so no slow reader is ever started on (hub review, 2026-09-25). Then comes a 3.6 s count (`startAt`: a breath, then 3 · 2 · 1 with a
-tick each) on the TV and every phone. The VIP's skip reads "Start now" and starts the count at
-once. Tests: `D1 seating …` in digital.test.ts. Swap for the shared SDK ready-up when it lands.
+The shell's start stage shows the manifest's three `howToPlay` steps, takes everyone's READY and
+counts 3 · 2 · 1. The game's own briefing, READY stamps and count-in are gone. Seating is game
+content only: each player reads their secret dossier and taps "I've read it". The TV shows the front
+page, "n of m have read their dossier" and a ✓ seal per seat. Round 1 begins as soon as every
+connected seat has read theirs (bots at once; a drop doesn't block). The VIP's "Start now" begins
+round 1. The group-standard hidden net (hub e67ec9) ends idle tables: at 3 min with nobody tapped it
+starts; if someone has, it re-arms up to 10 min in all. A pause holds any leave or drop; the phase
+settles at resume (`recheckOnResume`).
 
 ## Screenshots
 

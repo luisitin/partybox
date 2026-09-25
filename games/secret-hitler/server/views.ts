@@ -88,8 +88,6 @@ export interface PublicView {
   };
   announce: { who: string | null } | null;
   lastCall: boolean;
-  /** Seating: when the 3 · 2 · 1 ends (absent until everyone is ready; the view budget). */
-  startAt?: number;
   /** D6: a legislative session is running; the President and Chancellor may not speak. */
   silence: boolean;
   /** The newspaper's latest headline (§19), public. */
@@ -189,10 +187,6 @@ export function publicView(state: State): PublicView {
     },
     announce: state.announce ? { who: state.announce.who } : null,
     lastCall: r.lastCall,
-    // The count ends at the phase's deadline, which a pause/resume shifts (startAt does not).
-    ...(state.startAt !== null && phase === 'seating'
-      ? { startAt: state.phase.deadline ?? state.startAt }
-      : {}),
     silence: SECRET_CARD_PHASES.has(phase),
     headline: state.headline,
     history: state.history.slice(-7).map(({ president, chancellor, ...row }) => ({
@@ -226,10 +220,8 @@ function timing(
   const out: Pick<TvView, 'timerMode' | 'vipSkipLabel' | 'vipSkipHidden'> = {
     timerMode: tv || HIDDEN_TIMER.has(phase) ? 'hidden' : quiet ? 'quiet' : 'normal',
   };
-  if (phase === 'seating') {
-    if (state.startAt !== null) out.vipSkipHidden = true;
-    else out.vipSkipLabel = 'Start now';
-  } else if (CHOOSING.includes(phase)) {
+  if (phase === 'seating') out.vipSkipLabel = 'Start now';
+  else if (CHOOSING.includes(phase)) {
     if (state.round.lastCall) out.vipSkipHidden = true;
     else out.vipSkipLabel = 'Last call';
   }

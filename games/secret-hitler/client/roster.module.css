@@ -113,6 +113,12 @@
   color: var(--sh-paper);
 }
 
+.roster[data-faces] .name,
+.roster[data-faces] .nh,
+.roster[data-faces] .next {
+  display: none;
+}
+
 .name {
   max-width: 100%;
   overflow: hidden;

@@ -22,24 +22,15 @@ export const STRINGS: Strings = {
     'Hitler is Chancellor: the Fascists win!': 'Hitler es Canciller: ¡ganan los Fascistas!',
     'Too few left: the Liberals win!': 'Quedan muy pocos: ¡ganan los Liberales!',
     'Too few left: the Fascists win!': 'Quedan muy pocos: ¡ganan los Fascistas!',
-    // seating: the rules, the ready-up and the 3 · 2 · 1 (the owner's pacing rule)
-    'How to play': 'Cómo se juega',
-    Briefing: 'Informe',
-    'Secret roles': 'Roles secretos',
-    'Everyone has a secret role. The Fascists know each other; the Liberals know no one.':
-      'Todos tienen un rol secreto. Los Fascistas se conocen entre sí; los Liberales no conocen a nadie.',
-    'Elect a government': 'Elijan un gobierno',
-    'The President names a Chancellor and everyone votes Ja! or Nein! If it passes, the two secretly pass one law.':
-      'El Presidente nombra a un Canciller y todos votan Ja! o Nein! Si se aprueba, los dos aprueban en secreto una ley.',
-    'How to win': 'Cómo ganar',
-    'Liberals: 5 Liberal laws, or execute Hitler. Fascists: 6 Fascist laws, or Hitler elected Chancellor after 3.':
-      'Liberales: 5 leyes liberales, o ejecutar a Hitler. Fascistas: 6 leyes fascistas, o Hitler elegido Canciller después de 3.',
-    '{ready} of {total} ready': '{ready} de {total} listos',
-    'Read your dossier, then tap Got it': 'Lee tu expediente y luego toca Entendido',
-    '✓ Ready': '✓ Listo',
+    // seating: reading the dossier after the shell's start stage (ADR-053)
+    '{read} of {total} have read their dossier': '{read} de {total} leyeron su expediente',
+    'Round 1 begins when everyone has read theirs':
+      'La ronda 1 empieza cuando todos hayan leído el suyo',
+    'Has read the dossier': 'Leyó el expediente',
+    'Read ✓': 'Leído ✓',
+    'I’ve read it': 'Ya lo leí',
     Voted: 'Votó',
     'Waiting for the others': 'Esperando a los demás',
-    'The session opens': 'Se abre la sesión',
     // roles, parties, powers
     Liberal: 'Liberal',
     Fascist: 'Fascista',
@@ -153,7 +144,6 @@ export const STRINGS: Strings = {
     'Round {n}: the top three were {cards}': 'Ronda {n}: las tres de arriba eran {cards}',
     'Round {n}: the top three': 'Ronda {n}: las tres de arriba',
     Ready: 'Listo',
-    'Got it': 'Entendido',
     'Choose your Chancellor': 'Elige a tu Canciller',
     'Choose a player': 'Elige a un jugador',
     'Nominate {name}': 'Nominar a {name}',

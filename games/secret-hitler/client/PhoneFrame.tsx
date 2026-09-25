@@ -38,11 +38,11 @@ export function PhoneFrame({
       footer={
         <div className={styles.dock}>
           {actions ? <div className={styles.actions}>{actions}</div> : null}
-          <Roster view={view} showTeam={dossierOpen} />
+          <Roster view={view} showTeam={dossierOpen} facesOnly={view.phaseId === 'vote'} />
         </div>
       }
     >
-      <div className={styles.body}>
+      <div className={styles.body} data-phase={view.phaseId}>
         <PhoneDossier
           view={view}
           open={dossierOpen}

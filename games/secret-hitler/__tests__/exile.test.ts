@@ -121,15 +121,15 @@ describe('D10 · a pause holds what a leave or drop would do until resume', () =
     expect(s.phase.id).toBe('voteReveal');
   });
 
-  it('D10 a drop completes the ready-up during a pause: the count starts at resume', () => {
+  it('D10 a drop completes the dossier reading during a pause: round 1 starts at resume', () => {
     let s = rig(5);
     for (const id of ['p1', 'p2', 'p3', 'p4']) s = send(s, id, { type: 'ready' });
     const at = s.phase.startedAt + 1_000;
     s = vip(s, 'pause', at);
     s = drop(s, 'p5', at + 500);
-    expect(s.startAt).toBeNull();
+    expect(s.phase.id).toBe('seating');
     s = vip(s, 'resume', at + 4_000);
-    expect(s.startAt).not.toBeNull();
+    expect(s.phase.id).toBe('nominate');
   });
 });
 

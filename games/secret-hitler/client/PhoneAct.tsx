@@ -1,4 +1,4 @@
-// The phone's "do something now" panels (SPEC §9.4): Got it, the nominee picker, the JA! / NEIN!
+// The phone's "do something now" panels (SPEC §9.4): I've read it, the nominee picker, the JA! / NEIN!
 // placards, the discard and enact card rows, the veto answer, the power target picker (execution
 // confirms twice) and the peek. There is no undo after a confirm (§11).
 import { useState } from 'react';
@@ -85,13 +85,13 @@ export function PhoneAct({ frame, act, send }: Props): JSX.Element {
           title={act.done ? L('Waiting for the others') : L('Read your dossier')}
           actions={
             <PrimaryButton done={act.done} onClick={() => send({ type: 'ready' })}>
-              {act.done ? L('Ready') : L('Got it')}
+              {act.done ? L('Read ✓') : L('I’ve read it')}
             </PrimaryButton>
           }
         >
           <p className={styles.hint}>{L('Keep it secret. Tap the folder to open or close it.')}</p>
           <p className={styles.readyCount}>
-            {L('{ready} of {total} ready', { ready, total: here.length })}
+            {L('{read} of {total} have read their dossier', { read: ready, total: here.length })}
           </p>
         </PhoneFrame>
       );

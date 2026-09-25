@@ -15,14 +15,17 @@ import styles from './roster.module.css';
 export function Roster({
   view,
   showTeam,
+  facesOnly = false,
 }: {
   view: ShControllerView;
   showTeam: boolean;
+  /** The ballot needs the height: faces only (names stay in each seat's label). */
+  facesOnly?: boolean;
 }): JSX.Element {
   const L = useT(STRINGS);
   const team = new Map((showTeam ? (view.dossier?.team ?? []) : []).map((t) => [t.id, t.role]));
   return (
-    <ol className={styles.roster} aria-label={L('Seat order')}>
+    <ol className={styles.roster} aria-label={L('Seat order')} data-faces={facesOnly || undefined}>
       {view.seats.map((seat) => {
         const p = view.players.find((x) => x.id === seat.id);
         const gone = seat.tags.includes('executed') || seat.tags.includes('exiled');
