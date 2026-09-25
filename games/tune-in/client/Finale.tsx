@@ -16,23 +16,41 @@ import { useReading } from './useReading';
 
 type Room = GameFinaleProps<TuneTvView>['room'];
 
-/** The game's awards, as the shell would show them: title, who, why. */
+/** The game's awards: title, who, why — one card per award, a shared one naming everyone. */
 function Awards({ room }: { room: Room }): JSX.Element | null {
   const L = useT(STRINGS);
   const awards = room.results?.results.awards ?? [];
   if (awards.length === 0) return null;
   const who = (id: string): string => room.results?.players.find((p) => p.id === id)?.name ?? '?';
+  const cards: { id: string; title: string; description: string; names: string[] }[] = [];
+  for (const a of awards) {
+    const card = cards.find((c) => c.id === a.id);
+    if (card) card.names.push(who(a.playerId));
+    else
+      cards.push({
+        id: a.id,
+        title: a.title,
+        description: a.description,
+        names: [who(a.playerId)],
+      });
+  }
   return (
     <ul className={styles.awards}>
-      {awards.map((a, i) => (
-        <li key={a.id} className={styles.award} style={{ animationDelay: `${600 + i * 120}ms` }}>
-          <span className={styles.awardTitle}>{L.sent(a.title)}</span>
-          <span className={styles.awardWho}>{who(a.playerId)}</span>
-          <span className={styles.awardWhy}>{L.sent(a.description)}</span>
+      {cards.map((c, i) => (
+        <li key={c.id} className={styles.award} style={{ animationDelay: `${600 + i * 120}ms` }}>
+          <span className={styles.awardTitle}>{L.sent(c.title)}</span>
+          <span className={styles.awardWho}>{joinNames(L, c.names)}</span>
+          <span className={styles.awardWhy}>{L.sent(c.description)}</span>
         </li>
       ))}
     </ul>
   );
+}
+
+/** "Lu", "Lu & Sam", "Lu, Sam & Bo". */
+function joinNames(L: ReturnType<typeof useT>, names: readonly string[]): string {
+  if (names.length <= 1) return names[0] ?? '';
+  return L('{names} & {last}', { names: names.slice(0, -1).join(', '), last: names.at(-1) ?? '' });
 }
 
 export function Finale({ lastView, room }: GameFinaleProps<TuneTvView>): JSX.Element | null {

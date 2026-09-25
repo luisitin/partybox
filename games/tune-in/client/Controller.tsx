@@ -42,12 +42,20 @@ export function PhoneIntro({ view }: { view: TuneControllerView }): JSX.Element 
 
 function WaitClue({ view }: { view: TuneControllerView }): JSX.Element {
   const L = useT(STRINGS);
+  const name = nameOf(view.players, view.turn.psychic);
+  // The psychic's phone dropped: the clue waits a moment for it, and the phones say so (as the TV).
+  const away = view.players.find((p) => p.id === view.turn.psychic)?.connected === false;
   return (
     <WaitingScreen
-      title={L('{name} is thinking of a clue…', { name: nameOf(view.players, view.turn.psychic) })}
+      title={
+        away
+          ? L('Waiting for {name} to reconnect…', { name })
+          : L('{name} is thinking of a clue…', { name })
+      }
       hint={<span className={styles.roomy}>{L('Where would it land? Get ready to slide.')}</span>}
     >
       <DialStrip
+        className={styles.waitStrip}
         left={view.turn.left}
         right={view.turn.right}
         target={null}

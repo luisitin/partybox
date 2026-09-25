@@ -256,7 +256,8 @@
   align-self: end;
   /* Its last line sits on the dial's baseline (the pivot is 40 of 560 units above the box's foot). */
   padding-bottom: calc(min(calc(100cqw - 2 * min(360px, 22cqw)), calc(100cqh * 1000 / 560)) * 0.03);
-  font-size: var(--pb-font-h2);
+  /* The size follows the dial's (a small demo dial on the intro card broke "Cold" in two). */
+  font-size: clamp(var(--pb-font-body), 5cqw, var(--pb-font-h2));
   font-weight: 900;
   line-height: 1.1;
   color: var(--pb-text);

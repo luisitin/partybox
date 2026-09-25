@@ -19,8 +19,8 @@ function band(L: Translator, pts: number): string {
 function needleLine(L: Translator, view: TuneControllerView, pts: number): string {
   if (pts === 0)
     return view.turn.mode === 'coop'
-      ? L('The group needle missed.')
-      : L("Your team's needle missed.");
+      ? L('The group needle missed')
+      : L("Your team's needle missed");
   return view.turn.mode === 'coop'
     ? L('The group needle scored +{pts}', { pts })
     : L("Your team's needle scored +{pts}", { pts });
@@ -53,7 +53,8 @@ function lines(L: Translator, view: TuneControllerView): { big: string; line: st
     if (view.turn.mode === 'solo')
       return { big: plus(mine.pts), line: `${band(L, mine.pts)} ${away}` };
     // The needle scored, not this dial: "Bullseye! You were 3 away" read as a contradiction.
-    return { big: plus(mine.pts), line: `${needleLine(L, view, mine.pts)} · ${away}` };
+    // The separator sticks to the first half: a wrap never starts a line with "·".
+    return { big: plus(mine.pts), line: `${needleLine(L, view, mine.pts)}\u00a0· ${away}` };
   }
   const calls = reveal.revealCalls;
   if (view.turn.mode === 'teams' && view.myTeam !== view.turn.team && calls) {

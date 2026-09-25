@@ -193,8 +193,19 @@
   text-align: center;
 }
 
+/* The bubble's line in a void round, where the thinking dots stood. */
+.noClue {
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
 .noSignal {
   display: grid;
+  justify-items: center;
+  width: max-content;
+  max-width: 90%;
+  text-align: center;
   gap: var(--pb-space-2);
   padding: var(--pb-space-5) var(--pb-space-7);
   border-radius: var(--pb-radius-lg);
@@ -340,9 +351,13 @@
 
 .introTop {
   display: grid;
-  grid-template-columns: 1fr 560px;
+  grid-template-columns: 1fr 720px;
   align-items: center;
   gap: var(--pb-space-6);
+}
+
+.introTopTeams {
+  grid-template-columns: 1fr;
 }
 
 .introTitle {
@@ -402,6 +417,46 @@
 
 .rosterMoon {
   --team: var(--pb-team-moon);
+}
+
+/* The intro: the side that plays first pulses gently (the card is never still). Opacity only, on
+   its own layer. */
+/* The tint paints over the card's own background and under its faces and names. */
+.roster {
+  position: relative;
+  isolation: isolate;
+}
+
+.rosterFirst::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--team);
+  opacity: 0.12;
+  pointer-events: none;
+  animation: tune-roster-pulse calc(var(--pb-motion-pulse) * 2) ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rosterFirst::after {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .rosterFirst::after {
+  animation: none;
+}
+
+@keyframes tune-roster-pulse {
+  0%,
+  100% {
+    opacity: 0.05;
+  }
+  50% {
+    opacity: 0.2;
+  }
 }
 
 /* The finale's winners: the card lit in its team's colour. */

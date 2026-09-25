@@ -1,5 +1,6 @@
-// The intro card (once): the title, the mode, the three steps told for that mode, a small dial
-// tuning back and forth so the card is never still, and in teams both rosters under their banners.
+// The intro card (once): the title, the mode, the three steps told for that mode, and beside the
+// title a small dial tuning back and forth so the card is never still. Teams drop the dial (sixteen
+// players ran off the card) for both rosters under the steps, the side that plays first pulsing.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { BigText, Stage, useReducedMotion, useT } from '@partybox/game-sdk/ui';
@@ -32,24 +33,26 @@ export function TvIntro({ view }: GameTvProps<TuneTvView>): JSX.Element {
   const mode = view.turn.mode;
   return (
     <Stage className={styles.intro}>
-      <div className={styles.introTop}>
+      <div className={`${styles.introTop} ${mode === 'teams' ? styles.introTopTeams : ''}`}>
         <div className={styles.introTitle}>
           <BigText level="display">{L('📻 Tune In')}</BigText>
           <BigText level="h2" tone="accent">
             {modeLine(L, mode)}
           </BigText>
         </div>
-        <div className={styles.introDial} aria-hidden>
-          <Dial
-            left={L('Cold')}
-            right={L('Hot')}
-            target={null}
-            bands={view.turn.bands}
-            open={false}
-            needle={needle}
-            entrance
-          />
-        </div>
+        {mode === 'teams' ? null : (
+          <div className={styles.introDial} aria-hidden>
+            <Dial
+              left={L('Cold')}
+              right={L('Hot')}
+              target={null}
+              bands={view.turn.bands}
+              open={false}
+              needle={needle}
+              entrance
+            />
+          </div>
+        )}
       </div>
       <ol className={styles.steps}>
         {steps(L, mode).map((s, i) => (
@@ -60,7 +63,7 @@ export function TvIntro({ view }: GameTvProps<TuneTvView>): JSX.Element {
         ))}
       </ol>
       {mode === 'teams' && view.teams ? (
-        <Rosters teams={view.teams} players={view.players} />
+        <Rosters teams={view.teams} players={view.players} first={view.turn.team} />
       ) : null}
     </Stage>
   );

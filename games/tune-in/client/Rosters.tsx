@@ -14,16 +14,17 @@ function Roster(props: {
   ids: readonly string[];
   players: readonly ViewPlayer[];
   won: boolean;
+  first: boolean;
 }): JSX.Element {
   const L = useT(STRINGS);
-  const { team, ids, players, won } = props;
+  const { team, ids, players, won, first } = props;
   return (
     <div
-      className={`${styles.roster} ${team === 'moon' ? styles.rosterMoon : ''} ${won ? styles.rosterWon : ''}`}
+      className={`${styles.roster} ${team === 'moon' ? styles.rosterMoon : ''} ${won ? styles.rosterWon : ''} ${first ? styles.rosterFirst : ''}`}
     >
       <span className={styles.rosterName}>
         {teamName(L, team)}
-        {won ? ` · ${L('Winners!')}` : ''}
+        {won ? ` · ${L('Winners!')}` : first ? ` · ${L('first up')}` : ''}
       </span>
       <ul className={styles.rosterList}>
         {ids.map((id, i) => (
@@ -42,12 +43,22 @@ export function Rosters(props: {
   players: readonly ViewPlayer[];
   /** The finale: the winning side (null on a shared win). */
   winner?: Team | null;
+  /** The intro: the side that plays first. */
+  first?: Team | null;
 }): JSX.Element {
-  const { teams, players, winner = null } = props;
+  const { teams, players, winner = null, first = null } = props;
   return (
     <div className={styles.rosters}>
-      <Roster team="sun" ids={teams.sun} players={players} won={winner === 'sun'} />
-      <Roster team="moon" ids={teams.moon} players={players} won={winner === 'moon'} />
+      {(['sun', 'moon'] as const).map((team) => (
+        <Roster
+          key={team}
+          team={team}
+          ids={teams[team]}
+          players={players}
+          won={winner === team}
+          first={first === team}
+        />
+      ))}
     </div>
   );
 }

@@ -154,7 +154,12 @@ function leaders(
   return ids.filter((id) => better(state.stats[id] ?? emptyStats(), top) === 0);
 }
 
+/** Ties share an award (spec §5.7), up to this many: a bigger tie is no honour, and the results
+ *  listed the same card over and over (p10: six Sharpshooters at 16 players). */
+export const MAX_SHARED_AWARD = 3;
+
 function award(ids: string[], id: string, title: string, description: string): GameAward[] {
+  if (ids.length > MAX_SHARED_AWARD) return [];
   return ids.map((playerId) => ({ id, title, description, playerId }));
 }
 

@@ -93,6 +93,8 @@ function Bubble({ view, landed }: { view: TuneTvView; landed: boolean }): JSX.El
   const phase = view.phaseId;
   const psychic = nameOf(view.players, turn.psychic);
   const clue = turn.clue !== null && (phase !== 'dial' || landed);
+  // The psychic's phone dropped: the clue waits a moment for it (flow.psychicLink), and says so.
+  const away = view.players.find((p) => p.id === turn.psychic)?.connected === false;
   const caption =
     turn.clue === null
       ? L('{name} is the psychic', { name: psychic })
@@ -110,8 +112,13 @@ function Bubble({ view, landed }: { view: TuneTvView; landed: boolean }): JSX.El
           <span key="clue" className={`${styles.clue} ${phase === 'dial' ? styles.clueLands : ''}`}>
             “{turn.clue}”
           </span>
+        ) : phase === 'reveal' ? (
+          // A void round: the overlay says No signal; the bubble stops thinking.
+          <span className={styles.noClue}>{L('No clue this round')}</span>
         ) : phase === 'dial' ? (
           <Thinking text={L('Tuning in')} />
+        ) : away ? (
+          <Thinking text={L('Waiting for {name} to reconnect', { name: psychic })} />
         ) : (
           <Thinking text={L('{name} is thinking', { name: psychic })} />
         )}
@@ -209,8 +216,10 @@ export function TvRound({ view }: Props): JSX.Element {
     : (view.huddleMarks ?? []).map((m) => ({ id: m.id, pos: m.pos, avatarId: avatar(m.id) }));
   const needle = revealing ? reveal.needle : view.needle;
   const showPoints = revealing && reveal.step === 1;
+  const pts = reveal?.needlePts ?? null;
+  // "+3", but a plain "0" — never "+0".
   const badge =
-    showPoints && reveal.needlePts !== null && turn.mode !== 'solo' ? `+${reveal.needlePts}` : null;
+    showPoints && pts !== null && turn.mode !== 'solo' ? (pts > 0 ? `+${pts}` : '0') : null;
   return (
     <Stage className={styles.round}>
       {turn.mode === 'solo' ? null : <TvHeader view={view} />}

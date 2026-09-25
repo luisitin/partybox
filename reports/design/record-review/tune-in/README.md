@@ -136,3 +136,29 @@ double-tap Lock in; callers tap a side; Priya's phone (iPhone SE, 320 × 568) ge
   each ring's clearance from the ends — `faceLayout`, tested); the points are a small pill on the
   face's chin, inside its footprint. A new `reveal-edge` fixture (target 5, seven dials 0–8)
   re-shot on a 1080p and a 720p TV: every face distinct, the labels clear.
+
+## p10 — teams at 16 players (3 real phones + 13 bots, seed 33)
+
+- TV dead-air: 153.7 s, **0 dead spans, 0 hard cuts**.
+- Found: the strip wraps to three chip rows and the dial loses ~136 px of height (platform: a
+  size-aware compact strip proposed on the hub, #plans 89234f); the results listed six
+  "Sharpshooter" cards (a six-way tie, spec "ties share") and ran off the stage; the 16-player
+  teams intro ran its rosters off the card.
+- Fixed: an award shared by more than three is skipped (tested), and the finale shows a shared
+  award as one card ("Lu & Bot 2"); the teams intro drops the demo dial (its fixed 340 px was the
+  overflow) and the rosters sit full width under the steps, the side that plays first pulsing
+  behind its names (so the card is never still). Re-shot at 16 players in English and Spanish.
+
+## Edge scenarios (tunein-edge probe)
+
+- VIP skip: intro, dial (→ reveal when no needle yet, as the spec's "no dials" row), call, both
+  reveal beats and scores all advance cleanly on the TV and the VIP's phone.
+- The psychic drops for 4 s: the clue waits; found the TV and the phones still said "P3 is
+  thinking…". Fixed: both say "Waiting for P3 to reconnect…". Dropped for good: "No signal!" —
+  found the bubble still showing thinking dots above it and the title breaking in two. Fixed:
+  "No clue this round" in the bubble, the title on one line.
+- A late joiner sees "Waiting for the next game"; the TV shows them as a dimmed spectator chip.
+- 2 players (co-op) and 3 (solo) play through; found the intro's demo dial breaking "Cold" in two
+  (its labels were TV-sized in a 560 px column) and "+0" on the co-op needle. Fixed: the ends'
+  size follows the dial's (never below body size), the demo dial column is 720 px, a miss reads
+  "0". The waiting phone's strip was a 140 px stub; it now spans the screen.
