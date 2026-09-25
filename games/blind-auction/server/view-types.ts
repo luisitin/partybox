@@ -111,6 +111,9 @@ export interface BlindAuctionControllerView extends ControllerView, Common {
   myShare: number;
   /** Keno: your three numbers (empty until you pick). */
   mySpots: number[];
+  /** The peek twist: the wrong option you paid to rule out, and the price (0: no peek here). */
+  myPeek: number | null;
+  peekPrice: number;
   /** Shell game `cups`: you staked (so you pick), and the cup you picked. */
   myStake: number;
   /** Shell game: the swaps, only in a phone-only room (no TV to watch). */

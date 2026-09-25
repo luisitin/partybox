@@ -22,9 +22,11 @@ export function TwistNote({
       ? L('⏰ Early bird: bet now for up to ×1.25 more — it slides to ×1.00 at the buzzer.')
       : twist === 'insure'
         ? L("🛟 Insurance: pay 10 % more to get half your stake back if you're wrong.")
-        : L(
-            '🧮 The crowd sets the odds: right calls split the whole pot — back the unpopular pick!',
-          );
+        : twist === 'peek'
+          ? L('👁 Peek: pay to rule out one wrong answer, on your phone only.')
+          : L(
+              '🧮 The crowd sets the odds: right calls split the whole pot — back the unpopular pick!',
+            );
   return (
     <p className={`${styles.twist} ${size === 'phone' ? styles.twistPhone : ''}`}>
       <span className={styles.twistTag}>{L('Twist')}</span> {text}
@@ -56,6 +58,35 @@ export function InsureSwitch({
       {on
         ? L('🛟 Insured (+{coin} {n})', { coin: COIN, n: insuranceFee(amount) })
         : L('🛟 Add insurance')}
+    </button>
+  );
+}
+
+/** The phone's peek button (the peek twist): pay once to rule out one wrong option. */
+export function PeekButton({
+  price,
+  done,
+  onPeek,
+}: {
+  price: number;
+  done: boolean;
+  onPeek: () => void;
+}): JSX.Element {
+  const L = useT(STRINGS);
+  return (
+    <button
+      type="button"
+      disabled={done}
+      aria-pressed={done}
+      className={`${styles.insure} ${done ? styles.insureOn : ''}`}
+      onClick={() => {
+        buzz(10);
+        onPeek();
+      }}
+    >
+      {done
+        ? L('👁 Ruled out: the struck card')
+        : L('👁 Peek: rule one out ({coin} {n})', { coin: COIN, n: price })}
     </button>
   );
 }

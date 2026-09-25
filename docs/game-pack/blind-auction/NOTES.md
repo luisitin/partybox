@@ -86,3 +86,11 @@ best play was never to bet. Payouts are now fair odds rounded **up** to the tent
 sitting out, and the long shot still pays big. Keno's table is 0 / back / ×2.2 / ×30 (≈1.01);
 the doors stay ×2 (switching wins 2 in 3, the Monty Hall lesson); the shell game is a shared pot.
 Decided by the game session under the owner's "decide and document" instruction.
+
+## Peek twist (2026-09-25)
+
+Pay to rule out one wrong option, on your own phone only (it shows struck and can't be bet on).
+The price is known before you tap: max(2, ceil(25 / (options − 1))) coins, so ruling out one of
+two wrong options costs 13 and one of five costs 7. It scales with how strong the hint is. Pricing
+by the option actually drawn would leak which one it is. The price is paid at the reveal whether
+or not you bet, and it counts against your stake while betting.

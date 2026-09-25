@@ -24,6 +24,13 @@ export function payout(amount: number, pay: number, grand: boolean): number {
 }
 
 /** Insurance twist: 10 % of the stake (at least 1), paid for half the stake back if wrong. */
+/** Peek twist: the price of ruling out one wrong option, scaled to how strong that hint is —
+ *  one of two wrong options is worth far more than one of five (LIVE-EVENTS.md). Known up front:
+ *  pricing by the option actually ruled out would leak which one it is. */
+export function peekPrice(options: number): number {
+  return Math.max(2, Math.ceil(25 / Math.max(1, options - 1)));
+}
+
 export function insuranceFee(amount: number): number {
   return amount > 0 ? Math.max(1, Math.ceil(amount / 10)) : 0;
 }

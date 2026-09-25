@@ -12,7 +12,7 @@ import type { BlindAuctionControllerView } from '../server/views';
 import { COIN, iconOf, nameOf } from './copy';
 import { OptionBoard } from './Options';
 import { KenoPad } from './Keno';
-import { InsureSwitch, TwistNote } from './Twist';
+import { InsureSwitch, PeekButton, TwistNote } from './Twist';
 import { LotTitle } from './PhoneLot';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
@@ -70,7 +70,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
   return (
     <BidPad
       value={amount}
-      max={view.coins}
+      max={Math.max(0, view.coins - (view.myPeek !== null ? view.peekPrice : 0))}
       placed={placed}
       onChange={setAmount}
       onConfirm={(n) => {
@@ -83,7 +83,12 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
         if (box.event !== 'tug' && box.event !== 'shells' && box.event !== 'keno') setOption(null);
         send({ type: 'bet', option: option ?? 0, amount: 0 });
       }}
-      blocked={option === null || self || (box.event === 'keno' && view.mySpots.length !== 3)}
+      blocked={
+        option === null ||
+        self ||
+        option === view.myPeek ||
+        (box.event === 'keno' && view.mySpots.length !== 3)
+      }
       texts={{
         place: (n) =>
           box.event === 'shells'
@@ -129,7 +134,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
                   ? view.mySeat
                   : box.event === 'tug' && view.myTeam !== null
                     ? 1 - view.myTeam
-                    : null
+                    : view.myPeek
               }
               hideLocked={box.event === 'tug'}
             />
@@ -139,6 +144,12 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       below={
         box.twist === 'insure' ? (
           <InsureSwitch on={insured} amount={amount} onToggle={() => setInsured((v) => !v)} />
+        ) : box.twist === 'peek' ? (
+          <PeekButton
+            price={view.peekPrice}
+            done={view.myPeek !== null}
+            onPeek={() => send({ type: 'peek' })}
+          />
         ) : undefined
       }
       notice={notice}

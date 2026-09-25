@@ -2,7 +2,8 @@
 // early bet, insurance gives half back on a miss for a 10 % fee, the pool splits the pot.
 import { describe, expect, it } from 'vitest';
 import { drawEvent } from '../server/events';
-import { insuranceFee } from '../server/odds';
+import { game } from '../server/index';
+import { insuranceFee, peekPrice } from '../server/odds';
 import { seedRng } from '@partybox/game-sdk';
 import type { Twist } from '../server/types';
 import { send, start, walkTo } from './helpers';
@@ -78,5 +79,37 @@ describe('twists', () => {
     expect(gained.reduce((a, b) => a + b, 0)).toBe(0);
     expect(gained[0]).toBe(30);
     expect(gained[1]).toBe(10);
+  });
+
+  it('peek: rules out a wrong option for that phone only, and the price is paid whatever the bet', () => {
+    let s = twisted('peek');
+    const round = s.boxes[s.r.idx];
+    const price = peekPrice(round?.box.options.length ?? 0);
+    const before = { ...s.coins };
+    const peek = (st: typeof s, id: string) =>
+      send(st, {
+        type: 'input',
+        now: st.phase.startedAt + 50,
+        playerId: id,
+        input: { type: 'peek' },
+      });
+    s = peek(s, 'p1');
+    const out = s.r.peeks?.['p1'];
+    expect(out).toBeDefined();
+    expect(out).not.toBe(round?.outcome);
+    // Once only; nobody else sees it.
+    expect(peek(s, 'p1').r.peeks).toEqual(s.r.peeks);
+    const view = (id: string) =>
+      game.controllerView(s, id) as unknown as { myPeek: number | null; peekPrice: number };
+    expect(view('p1').myPeek).toBe(out);
+    expect(view('p2').myPeek).toBeNull();
+    expect(view('p2').peekPrice).toBe(price);
+    // The price counts against the stake.
+    const all = before['p1'] ?? 0;
+    expect(betAt(s, 'p1', 0, all, 100).notices['p1']?.code).toBe('over');
+    s = betAt(betAt(betAt(s, 'p1', 0, 0, 100), 'p2', 0, 0, 100), 'p3', 0, 0, 100);
+    s = walkTo(s, 'box');
+    expect((before['p1'] ?? 0) - (s.coins['p1'] ?? 0)).toBe(price);
+    expect(s.coins['p2']).toBe(before['p2']);
   });
 });

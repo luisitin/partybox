@@ -2,10 +2,10 @@
 // (0 = sit this one out); a resend changes it. A player who is broke is topped up to 10 coins so
 // nobody spends the game watching. Ends when every connected player has bet, at `betSeconds`, or
 // on the VIP's skip. A stake above your coins, or a content the box doesn't have, is refused.
-import { allConnectedDone, enterPhase, isTimerFor } from '@partybox/game-sdk';
+import { allConnectedDone, enterPhase, isTimerFor, nextFloat } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { PITY_COINS } from '../timing';
-import { insuranceFee } from '../odds';
+import { insuranceFee, peekPrice } from '../odds';
 import type { Input, State, Transition } from '../types';
 import { teamOf } from './tug';
 
@@ -29,8 +29,32 @@ export function betsAllIn(state: State): boolean {
   return allConnectedDone(state, Object.keys(state.r.bets));
 }
 
+/** What this player has paid to peek on the current box (0 if they didn't). */
+export function peekPaid(state: State, id: string): number {
+  const box = state.boxes[state.r.idx]?.box;
+  return box && Object.hasOwn(state.r.peeks ?? {}, id) ? peekPrice(box.options.length) : 0;
+}
+
+/** The peek twist: rule out one wrong option at random, for this player only, if they can pay. */
+function peek(state: State, id: string, now: number): State {
+  const round = state.boxes[state.r.idx];
+  if (!inGame(state, id) || round?.box.twist !== 'peek' || Object.hasOwn(state.r.peeks ?? {}, id))
+    return state;
+  const have = state.coins[id] ?? 0;
+  const bet = state.r.bets[id];
+  const staked = (bet?.amount ?? 0) + (bet?.insured ? insuranceFee(bet.amount) : 0);
+  if (staked + peekPrice(round.box.options.length) > have)
+    return { ...state, notices: { ...state.notices, [id]: { code: 'over', have, at: now } } };
+  const wrong = round.box.options.map((_, i) => i).filter((i) => i !== round.outcome);
+  const [f, rng] = nextFloat(state.rng);
+  const out = wrong[Math.min(wrong.length - 1, Math.floor(f * wrong.length))] ?? 0;
+  return { ...state, rng, r: { ...state.r, peeks: { ...state.r.peeks, [id]: out } } };
+}
+
 export function reduceBet(state: State, event: GameEvent<Input>, next: Transition): State {
   if (isTimerFor(state, event)) return next(state, event.now);
+  if (event.type === 'input' && event.input.type === 'peek')
+    return peek(state, event.playerId, event.now);
   if (event.type === 'input' && event.input.type === 'spots') {
     const id = event.playerId;
     const spots = [...new Set(event.input.spots)];
@@ -53,7 +77,7 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
   // Keno: pick your three numbers before you stake.
   const noSpots = box?.event === 'keno' && amount > 0 && (state.r.spots?.[id]?.length ?? 0) !== 3;
   const code =
-    amount + (insured ? insuranceFee(amount) : 0) > have
+    amount + (insured ? insuranceFee(amount) : 0) + peekPaid(state, id) > have
       ? 'over'
       : !box || option >= box.options.length || wrongSide
         ? 'option'

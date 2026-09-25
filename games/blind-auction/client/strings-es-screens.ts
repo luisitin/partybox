@@ -82,6 +82,10 @@ export const ES_SCREENS: Record<string, string> = {
     '🧮 El público fija las cuotas: los aciertos se reparten todo el bote. ¡Apuesta por lo impopular!',
   '🛟 Insured (+{coin} {n})': '🛟 Asegurado (+{coin} {n})',
   '🛟 Add insurance': '🛟 Añadir seguro',
+  '👁 Peek: pay to rule out one wrong answer, on your phone only.':
+    '👁 Espiar: paga para descartar una respuesta equivocada, solo en tu celular.',
+  '👁 Ruled out: the struck card': '👁 Descartada: la carta tachada',
+  '👁 Peek: rule one out ({coin} {n})': '👁 Espiar: descarta una ({coin} {n})',
   'A goat behind door {n}! You are switching to door {m}.':
     '¡Una cabra tras la puerta {n}! Vas a cambiar a la puerta {m}.',
   Blackjack: 'Blackjack',

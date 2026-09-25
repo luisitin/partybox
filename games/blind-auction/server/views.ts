@@ -4,6 +4,7 @@
 // event's `run` (its winner and how it plays out) is public from `open` step 0 — bets are closed,
 // and the TV needs it to play the event before the payouts.
 import { controllerEnvelope, envelope } from '@partybox/game-sdk';
+import { peekPrice } from './odds';
 import type { PlayerStatus } from '@partybox/game-sdk';
 import { inGame } from './phases/bet';
 import { swappers } from './phases/swap';
@@ -308,6 +309,11 @@ export function controllerView(state: State, playerId: string): BlindAuctionCont
     myShare: playing && state.phase.id === 'tug' ? shareOf(state, playerId) : 0,
     myStake: playing ? (state.r.bets[playerId]?.amount ?? 0) : 0,
     mySpots: playing ? (state.r.spots?.[playerId] ?? []) : [],
+    myPeek: playing ? (state.r.peeks?.[playerId] ?? null) : null,
+    peekPrice:
+      playing && state.boxes[state.r.idx]?.box.twist === 'peek'
+        ? peekPrice(state.boxes[state.r.idx]?.box.options.length ?? 0)
+        : 0,
     myCup: playing && state.phase.id === 'cups' ? (state.r.picks?.[playerId] ?? null) : null,
     // A phone-only room has no TV: the phones must see the shuffle to follow the ball.
     shellSwaps:

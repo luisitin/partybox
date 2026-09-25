@@ -7,6 +7,7 @@ import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { tierOf } from '../odds';
 import { returned } from '../returns';
+import { peekPaid } from './bet';
 import { fixedRequest, lineOf, openRequest } from '../speech';
 import {
   EVENT_MS,
@@ -27,6 +28,8 @@ export function settle(state: State): State {
   const { box } = round;
   const coins = { ...state.coins };
   const stats: Record<string, Stats> = { ...state.stats };
+  for (const id of Object.keys(state.r.peeks ?? {}))
+    if (Object.hasOwn(coins, id)) coins[id] = Math.max(0, (coins[id] ?? 0) - peekPaid(state, id));
   for (const [id, bet] of Object.entries(state.r.bets)) {
     if (bet.amount <= 0 || !Object.hasOwn(coins, id)) continue;
     const s = stats[id] ?? { biggestBet: 0, biggestWin: 0, longShots: 0, calls: 0, lost: 0 };

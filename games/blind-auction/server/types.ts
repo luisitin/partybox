@@ -116,7 +116,7 @@ export interface Bet {
 }
 
 /** The twists (LIVE-EVENTS.md): each event with odds may get one. */
-export const TWISTS = ['early', 'insure', 'pool'] as const;
+export const TWISTS = ['early', 'insure', 'pool', 'peek'] as const;
 export type Twist = (typeof TWISTS)[number];
 
 export interface RoundState {
@@ -160,6 +160,8 @@ export interface RoundState {
   hands?: Record<string, number[]>;
   stood?: string[];
   dealer?: number[];
+  /** The peek twist: the wrong option each peeker paid to rule out (their own phone only). */
+  peeks?: Record<string, number>;
 }
 
 export interface Stats {
@@ -206,6 +208,8 @@ export const inputSchema = z.discriminatedUnion('type', [
   // Blackjack: another card, or stand.
   z.object({ type: z.literal('hit') }),
   z.object({ type: z.literal('stand') }),
+  // The peek twist: pay to rule out one wrong option.
+  z.object({ type: z.literal('peek') }),
   // Keno: your three numbers.
   z.object({
     type: z.literal('spots'),
