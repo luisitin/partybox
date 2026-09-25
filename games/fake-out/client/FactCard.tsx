@@ -27,7 +27,7 @@ export function FactCard({ fact, size, filled = false, className }: FactCardProp
     >
       {fact.before}
       {truth ? (
-        <mark className={styles.truthMark}>{truth}</mark>
+        <mark className={styles.truthMark}>{truth.toUpperCase()}</mark>
       ) : (
         <span className={styles.blank} role="img" aria-label={L('blank')} />
       )}

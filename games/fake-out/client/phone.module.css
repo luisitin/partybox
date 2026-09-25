@@ -39,6 +39,13 @@
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
+/* The lie screen's fact stays compact at large text (session-c [9fee27] #2): capped by the phone's
+   width, so a 200 % phone keeps the typed lie and 💡 Suggest in view. */
+p.fact {
+  font-size: min(var(--pb-font-h2), 5.4vw);
+  padding: min(var(--pb-space-4), 3.4vw);
+}
+
 .factSmall {
   font-size: var(--pb-font-body);
   padding: var(--pb-space-3) var(--pb-space-4);

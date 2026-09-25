@@ -118,6 +118,7 @@
   /* call + tray + count read as one block under the card, clear of it and of the host bar
      (reviewer [a62642] #2): content that is too tall must never centre up over the card */
   margin-top: var(--pb-space-5);
+  padding-bottom: calc(var(--pb-space-7) * 2);
 }
 
 .lieBody .callout {
@@ -127,9 +128,9 @@
 /* Face-down slips pile up as lies come in; each drops in from above and settles skewed. */
 .pile {
   position: relative;
-  flex: none;
+  flex: 0 1 210px;
+  min-height: 120px;
   width: 420px;
-  height: 210px;
 }
 
 /* The tray the lies land in: visible before the first one, so the space reads as a place. */
@@ -603,10 +604,16 @@
   gap: var(--pb-space-4);
   padding: var(--pb-space-3) var(--pb-space-5);
   border-radius: var(--pb-radius-lg);
-  background: var(--pb-surface);
-  border: 2px solid var(--pb-border);
-  animation: slide-in var(--pb-motion-base) var(--pb-ease) both;
-  animation-delay: calc(var(--i) * var(--pb-motion-fast));
+  background: #f6f1e6;
+  color: #16171c;
+  border: 3px solid rgb(0 0 0 / 22%);
+  /* slides in, then breathes while the strip holds (no still span on the TV) */
+  animation:
+    slide-in var(--pb-motion-base) var(--pb-ease) both,
+    card-breathe calc(var(--pb-motion-pulse) * 2.4) ease-in-out infinite;
+  animation-delay:
+    calc(var(--i) * var(--pb-motion-fast)),
+    calc(var(--pb-motion-base) + var(--i) * var(--pb-motion-fast) * 3);
 }
 
 @keyframes slide-in {
@@ -653,6 +660,15 @@
   list-style: none;
 }
 
+.how {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  /* the reasons breathe once the board has climbed, so the scores never sit still */
+  animation: card-breathe calc(var(--pb-motion-pulse) * 2.4) ease-in-out infinite;
+  animation-delay: calc(var(--pb-motion-slow) * 3 + var(--i) * var(--pb-motion-fast) * 3);
+}
+
 .howName {
   font-size: var(--pb-font-caption);
   font-weight: 800;
@@ -697,4 +713,51 @@
 .pickedBy .caption,
 .pickedBy .faceName {
   font-size: var(--pb-font-h3);
+}
+
+/* With no read-along, the card on stage keeps a slow breath while the voice reads and the room
+   takes it in, audio on or off (session-c [9fee27] #1: the dead-air gate). Transform + shadow on
+   the card only; still under reduced motion. */
+.questionCard > p {
+  animation: card-breathe calc(var(--pb-motion-pulse) * 3.2) ease-in-out var(--pb-motion-slow)
+    infinite;
+}
+
+.completed > p {
+  animation:
+    card-tip var(--pb-motion-slow) var(--pb-ease) both,
+    card-breathe calc(var(--pb-motion-pulse) * 3.2) ease-in-out var(--pb-motion-slow) infinite;
+}
+
+@keyframes card-breathe {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 14%),
+      0 12px 32px rgb(0 0 0 / 40%);
+  }
+
+  50% {
+    transform: translateY(-4px) scale(1.012);
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 22%),
+      0 20px 44px rgb(0 0 0 / 50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .how,
+  .unpickedItem,
+  .questionCard > p,
+  .completed > p {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .how,
+:global(:root[data-motion='off']) .unpickedItem,
+:global(:root[data-motion='off']) .questionCard > p,
+:global(:root[data-motion='off']) .completed > p {
+  animation: none;
 }
