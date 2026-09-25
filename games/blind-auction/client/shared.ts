@@ -6,8 +6,8 @@ import { STRINGS } from './strings';
 export const shared: GameShared = {
   id: 'blind-auction',
   strings: STRINGS,
-  // The game plays its own cues on the frame they belong to (TvTable, TvRules): the dealt box, the
-  // `phase` chime under "Place your bets!", the reveal's cue as the box finishes turning, the 3·2·1.
+  // The game plays its own cues on the frame they belong to (TvTable): the dealt box, the
+  // `phase` chime under "Place your bets!", the reveal's cue as the box finishes turning.
   // Mapped phases re-chime whenever their deadline moves, so every phase maps to `silence`.
   sounds: {
     box: 'silence',

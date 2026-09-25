@@ -7,8 +7,7 @@ import { shared } from './shared';
 export const phone: GamePhoneModule = {
   ...shared,
   Controller,
-  // P00 §3.6 / S-005: a phone with no TV gets the reveal (the rules stay the phone's own screen:
-  // it carries the Ready button).
+  // P00 §3.6 / S-005: a phone with no TV gets the TV's moments (the box, the event, the reveal).
   PhoneStage: lazy(() =>
     import('./PhoneStage').then((m) => ({ default: m.PhoneStage })),
   ) as unknown as GamePhoneModule['PhoneStage'],
