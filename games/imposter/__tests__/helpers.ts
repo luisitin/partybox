@@ -1,6 +1,6 @@
 // Test driver: a game with named players and helpers to push events through `reduce`.
 import { createRng } from '@partybox/game-sdk';
-import type { GameEvent, PlayerInfo, Settings } from '@partybox/game-sdk';
+import type { GameEvent, GamePresence, PlayerInfo, Settings } from '@partybox/game-sdk';
 import { wordById } from '../server/content';
 import { game } from '../server/index';
 import type { Input, State } from '../server/types';
@@ -34,7 +34,7 @@ export function players(n: number): PlayerInfo[] {
   }));
 }
 
-export function start(n = 6, settings: Settings = {}, seed = 7, presence?: unknown): State {
+export function start(n = 6, settings: Settings = {}, seed = 7, presence?: GamePresence): State {
   const ctx = { players: players(n), settings, seed, now: T0, ...(presence ? { presence } : {}) };
   return game.init(ctx);
 }

@@ -17,7 +17,7 @@ export interface GameDefinition<
   manifest: GameManifest; // must deep-equal games/<id>/manifest.json (contract test)
   phases: readonly string[]; // every phase id, in typical order; each needs fixtures/<id>.json
   inputSchema: z.ZodType<I>; // validated at the socket BEFORE reduce sees the input
-  init(ctx: InitContext): S; // { players, settings, seed, now }
+  init(ctx: InitContext): S; // { players, settings, seed, now, presence? } — presence (ADR-047): { mode: 'together' | 'remote-voice' | 'remote-text', phoneOnly }, fixed for the game; absent = together with a TV
   reduce(state: S, event: GameEvent<I>): S; // PURE + TOTAL — never throws
   tvView(state: S): TV; // JSON; identical for every TV
   controllerView(state: S, playerId: string): CV; // JSON; per player
@@ -32,7 +32,7 @@ export interface GameDefinition<
 interface GameStateBase {
   phase: { id: string; startedAt: number; deadline: number | null; paused?: { at: number } };
   rng: RngState; // { seed, step } — pure PRNG state lives IN the state
-  players: Record<string, PlayerInfo>; // { id, name, avatarId, connected, bot? } — who is playing; bot: true for a bot (ADR-028) so a game can act for it where a person taps (Bingo's ready-up); avatarId is a face id or `photo:<id>` for a photo avatar (ADR-037) — pass it to `Avatar` as is
+  players: Record<string, PlayerInfo>; // { id, name, avatarId, connected, bot?, canSeeTv? } — who is playing; bot: true for a bot (ADR-028) so a game can act for it where a person taps (Bingo's ready-up); avatarId is a face id or `photo:<id>` for a photo avatar (ADR-037) — pass it to `Avatar` as is; canSeeTv (ADR-047) is whether the player could see the TV at start (bots always) — switch features with it and with ctx.presence, never branch view content on it (a remote phone needs every input phase on its own screen)
 }
 ```
 

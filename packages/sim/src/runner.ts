@@ -4,11 +4,12 @@
 import type {
   AnyGameDefinition,
   GameEvent,
+  GamePresence,
   GameStateBase,
   PlayerInfo,
   Settings,
 } from '@partybox/shared';
-import { createRng } from '@partybox/shared';
+import { PRESENCE_MODES, createRng } from '@partybox/shared';
 import { T0, defaultSettingsOf, hashState, makePlayers, replay } from '@partybox/game-sdk/testing';
 import { checkResults, checkState, checkViews } from './invariants';
 import { assignStrategies, chaosAction, reactionDelay } from './strategies';
@@ -36,6 +37,19 @@ export interface RunInit {
   settings: Settings;
   seed: number;
   now: number;
+  presence?: GamePresence;
+}
+
+/**
+ * ADR-047: every run plays in a presence of its own, picked by the seed — the three modes × phone
+ * only, the last seat remote whenever the room says some are. A game may switch features on it;
+ * it must never stall or diverge.
+ */
+export function presenceForSeed(seed: number): GamePresence {
+  return {
+    mode: PRESENCE_MODES[seed % PRESENCE_MODES.length] ?? 'together',
+    phoneOnly: Math.floor(seed / PRESENCE_MODES.length) % 2 === 1,
+  };
 }
 
 export interface RunResult {
@@ -68,9 +82,13 @@ const keyOf = (s: GameStateBase): string => `${s.phase.id}:${s.phase.startedAt}`
 
 export function runGame(game: AnyGameDefinition, options: RunOptions): RunResult {
   const rng = createRng(options.seed);
-  const players = makePlayers(options.players);
+  const presence = presenceForSeed(options.seed);
+  const players = makePlayers(options.players).map((p, i) => ({
+    ...p,
+    canSeeTv: presence.mode === 'together' || i < options.players - 1,
+  }));
   const settings = defaultSettingsOf(game, options.settings);
-  const init: RunInit = { players, settings, seed: options.seed, now: T0 };
+  const init: RunInit = { players, settings, seed: options.seed, now: T0, presence };
   const initIds = players.map((p) => p.id);
   // A stuck-guard, not a length check: 4× the estimate (an untimed Blanks with a slow seat and a
   // sudden-death round ran 2707 s against the old 3× — 2700 s — without being stuck, 2026-09-23).
