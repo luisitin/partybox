@@ -3,7 +3,7 @@ import type { JSX } from 'react';
 import { Avatar, useT } from '@partybox/game-sdk/ui';
 import type { Translator } from '@partybox/game-sdk/ui';
 import type { WagerOption } from '../server/scoring';
-import type { LightningControllerView, RevealRow } from '../server/views';
+import type { MyPlace, LightningControllerView, RevealRow } from '../server/views';
 import styles from './Controller.module.css';
 import { STRINGS } from './strings';
 
@@ -112,6 +112,8 @@ export function Outcome({ view, streakBefore }: OutcomeProps): JSX.Element {
         {L('{delta} this round', { delta: deltaText(outcome.delta, true) })}
       </span>
       <span className={styles.bandTotal}>{L('{total} total', { total: view.myScore })}</span>
+      {/* I-540 A: where that leaves me */}
+      {view.myPlace ? <span className={styles.myPlace}>{placeLine(view.myPlace, L)}</span> : null}
     </div>
   );
 }
@@ -137,4 +139,20 @@ export function RoomRows({ rows }: { rows: RevealRow[] }): JSX.Element {
       ))}
     </ol>
   );
+}
+
+/** I-540 A: "#4 of 6 · 89 behind Bot 3" — the place and the nearest rival. */
+function placeLine(place: MyPlace, L: Translator): string {
+  const where = L('#{rank} of {count}', { rank: place.rank, count: place.count });
+  const rival =
+    place.relation === 'behind'
+      ? L('{gap} behind {name}', { gap: place.gap, name: place.rival })
+      : place.relation === 'ahead'
+        ? L('{gap} ahead of {name}', { gap: place.gap, name: place.rival })
+        : place.relation === 'tied'
+          ? L('tied with {name}', { name: place.rival })
+          : '';
+  // I-540 B: the move this question made
+  const moved = place.moved > 0 ? `▲ ${place.moved} · ` : place.moved < 0 ? `▼ ${-place.moved} · ` : '';
+  return rival ? `${moved}${where} · ${rival}` : `${moved}${where}`;
 }

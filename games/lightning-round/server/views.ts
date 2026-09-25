@@ -92,6 +92,8 @@ export interface LightningControllerView extends ControllerView {
   worth?: { base: number; speedMax: number; bonus: number; windowMs: number };
   /** I-550 A: `wager`: the final question's topic. */
   finalTopic?: Topic | null;
+  /** I-540 A: `reveal`: where I stand — rank, of how many, and the nearest rival. */
+  myPlace?: MyPlace;
   /** `wager`: the buttons for this player (0-score players only see 0). */
   wagerChoices?: WagerOption[];
   /** Own wager once placed (from `wager` through the final reveal). */
@@ -272,6 +274,7 @@ export function controllerView(
       };
       view.rows = revealRows(state, q.answerIndex, final);
     }
+    if (me) view.myPlace = placeOf(state, playerId); // I-540 A
   }
   // I-791 D: the phone coming back after a drop names the question ("question 3 of 10"); the
   // final question has its own card, so it is not counted.
@@ -298,4 +301,40 @@ function finalTopicOf(state: State): Topic | null {
     subcategoryLabel: labelOf(q.subcategory),
     difficulty: q.difficulty,
   };
+}
+
+/** I-540 A: my place in the race, and the gap to the nearest rival (null gap: alone). */
+export interface MyPlace {
+  rank: number;
+  count: number;
+  /** Ahead (I lead) or behind (someone is ahead of me), and by how much; `tied` for level. */
+  relation: 'ahead' | 'behind' | 'tied' | 'alone';
+  gap: number;
+  rival: string;
+  /** I-540 B: places gained (+) or lost (−) at this question. */
+  moved: number;
+}
+
+export function placeOf(state: State, playerId: string): MyPlace | undefined {
+  const rows = standingsOf(state);
+  const mine = rows.find((r) => r.playerId === playerId);
+  if (!mine) return undefined;
+  const others = rows.filter((r) => r.playerId !== playerId);
+  const level = others.find((r) => r.score === mine.score);
+  const above = others.filter((r) => r.score > mine.score).at(-1);
+  const below = others.find((r) => r.score < mine.score);
+  const base = { rank: mine.rank, count: rows.length };
+  // I-540 B: the ranks before this question — the scores less its points
+  const before = rank(
+    Object.fromEntries(Object.entries(state.scores).map(([id, s]) => [id, s - (state.lastDelta[id] ?? 0)])),
+  );
+  const was = before.find((r) => r.playerId === playerId)?.rank ?? mine.rank;
+  // nobody had a point before this question (the first one): there was no place to move from
+  const anyBefore = Object.entries(state.scores).some(([id, sc]) => sc - (state.lastDelta[id] ?? 0) !== 0);
+  const moved = anyBefore ? was - mine.rank : 0;
+  const extra = { moved };
+  if (level) return { ...base, ...extra, relation: 'tied', gap: 0, rival: level.name };
+  if (above) return { ...base, ...extra, relation: 'behind', gap: above.score - mine.score, rival: above.name };
+  if (below) return { ...base, ...extra, relation: 'ahead', gap: mine.score - below.score, rival: below.name };
+  return { ...base, ...extra, relation: 'alone', gap: 0, rival: '' };
 }
