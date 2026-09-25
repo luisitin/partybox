@@ -121,7 +121,6 @@ export const STRINGS: Strings = {
     'Next: the final round — double points!': 'Viene la ronda final: ¡puntos dobles!',
     "It's a tie": 'Hay empate',
     'And the winner is': 'Y el ganador es',
-    'Next round coming up…': 'Ya viene otra ronda…',
     // Pacing rule (2026-09-25): the board between rounds waits for the VIP's Next.
     'Next round': 'Próxima ronda',
     'Moving on…': 'Avanzando…',
