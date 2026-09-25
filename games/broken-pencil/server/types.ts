@@ -125,13 +125,25 @@ export const SHOW_MS = { word: 12_000, draw: 20_000, guess: 12_000 } as const;
  * page, so a bot that "sometimes" sent Next left its pages on the 12–20 s fallbacks).
  */
 export const BOT_SHOW_MS = { word: 5_000, draw: 8_000, guess: 5_000 } as const;
+/** Owner's pacing rule (Agent Hub #decisions cc45f4, 2026-09-25): "Enough time to read" — a
+ *  screen of words stays up 1.5 s + 1/3 s a word, x1.3 because a Spanish phone or 200 % text
+ *  reads longer (the server cannot see the phones' languages, so the margin is always on). */
+export function readMs(words: number): number {
+  return Math.round((1_500 + words * 333) * 1.3);
+}
+export function wordCount(text: string): number {
+  return text.split(/\s+/).filter((w) => w.length > 0).length;
+}
 /** I-512 B: a book's last page can't be turned in its first this-many ms — the verdict's beat. */
 export const VERDICT_BEAT_MS = 2_500;
 /** I-512 B: an UNBROKEN verdict (the rarer reveal) lands a second later on the TV (Tv.tsx `Beat`),
  *  so its page holds Next that long — a turn never skips a verdict the room has not seen. */
 export const VERDICT_BEAT_INTACT_MS = 3_500;
-/** The closing screen (every word → last guess) before the engine's results take over. */
-export const SUMMARY_MS = 15_000;
+/** The closing screen (every word → last guess) before the engine's results take over: the VIP's
+ *  Next, or this fallback — at least SUMMARY_MS, longer when the books take longer to read
+ *  (~8 words a book: owner, word, guess, verdict). Was a flat 15 s (pacing rule 2026-09-25). */
+export const SUMMARY_MS = 40_000;
+export const SUMMARY_WORDS_PER_BOOK = 8;
 /** `passes` at this value (the manifest max) means "everyone" — always capped to N − 1. */
 export const EVERYONE = 15;
 

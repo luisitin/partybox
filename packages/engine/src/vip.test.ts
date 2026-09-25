@@ -8,6 +8,7 @@ import {
   playingRoom,
   roomWith,
   T0,
+  throughStage,
   toasts,
   vip,
 } from './test-utils.helper';
@@ -96,17 +97,17 @@ describe('VIP validation', () => {
       ok: false,
       reason: 'Fake needs at least 2 players (1 here).',
     });
-    expect(errorsOf(vip(one, { action: 'start' }).effects)).toEqual(['cannot_start']);
+    expect(errorsOf(vip(one, { action: 'startNow' }).effects)).toEqual(['cannot_start']);
     const five = vip(roomWith(5), { action: 'selectGame', gameId: 'fake' }).room;
     expect(canStart(five, deps)).toEqual({
       ok: false,
       reason: 'Fake takes at most 4 players (5 here).',
     });
     expect(canStart(roomWith(2), deps)).toEqual({ ok: false, reason: 'Pick a game first.' });
-    expect(errorsOf(vip(roomWith(2), { action: 'start' }).effects)).toEqual(['cannot_start']);
+    expect(errorsOf(vip(roomWith(2), { action: 'startNow' }).effects)).toEqual(['cannot_start']);
     const ok = vip(roomWith(3), { action: 'selectGame', gameId: 'fake' }).room;
     expect(canStart(ok, deps)).toEqual({ ok: true });
-    const started = vip(ok, { action: 'start' }, T0 + 100, 'p1', 7);
+    const started = vip(ok, { action: 'startNow' }, T0 + 100, 'p1', 7);
     expect(started.room.status).toBe('playing');
     expect(started.room.game?.seed).toBe(7);
     expect(canStart(started.room, deps)).toEqual({
@@ -180,9 +181,12 @@ describe('VIP validation', () => {
   it('playAgain replays the last game; toLobby resets', () => {
     const ended = vip(playingRoom(3), { action: 'end' }, T0 + 300).room;
     expect(errorsOf(vip(roomWith(2), { action: 'playAgain' }).effects)).toEqual(['cannot_start']);
+    // ADR-053: Play again opens the start stage with the seed it was given
     const again = vip(ended, { action: 'playAgain' }, T0 + 400, 'p1', 9);
-    expect(again.room.status).toBe('playing');
-    expect(again.room.game?.seed).toBe(9);
+    expect(again.room.starting).toMatchObject({ gameId: 'fake', seed: 9, ready: [] });
+    const playing = throughStage(again.room);
+    expect(playing.status).toBe('playing');
+    expect(playing.game?.seed).toBe(9);
     const lobby = vip(ended, { action: 'toLobby' }, T0 + 400).room;
     expect(lobby.status).toBe('lobby');
     // I-073: the results stay with the room in the lobby (the "last up" card); the next game's

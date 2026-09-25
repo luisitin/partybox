@@ -59,7 +59,7 @@ describe('what the game sees', () => {
   const spyDeps: EngineDeps = { games: { fake: fakeGame, spy } };
   const start = (room: RoomState): RoomState => {
     const chosen = applyRoomEvent(room, { type: 'vip', now: T0 + 100, playerId: 'p1', action: { action: 'selectGame', gameId: 'spy' } }, spyDeps).room; // prettier-ignore
-    return applyRoomEvent(chosen, { type: 'vip', now: T0 + 101, playerId: 'p1', action: { action: 'start' }, seed: 7 }, spyDeps).room; // prettier-ignore
+    return applyRoomEvent(chosen, { type: 'vip', now: T0 + 101, playerId: 'p1', action: { action: 'startNow' }, seed: 7 }, spyDeps).room; // prettier-ignore
   };
 
   it('gets the room’s presence and each player’s view of the TV at start', () => {
