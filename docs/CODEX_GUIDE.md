@@ -216,9 +216,10 @@ Three roles, each writing only its own files. `README.md` there is the contract,
   (`python sort-ideas.py`); find entries by id.
 - The owner picks options on the Idea Forge site (`http://localhost:42080`). Picks and notes land in
   `options/picks.json`, and **the notes are binding** on top of the spec.
-- **Session A's unfinished work**, open to anyone: the 1-5 value audit of un-optioned ideas (266 of
-  630 left). Steps, tools and gotchas are in `C:/dev/partybox-ideas/HANDOFF-SESSION-A.md`. (Its phone
-  design review item is stale: A-K have shipped since, see §11.)
+- **Session A's unfinished work** (the 1-5 value audit of un-optioned ideas, 266 of 630 left) is
+  **on hold**: the owner (2026-09-25) wants nobody to take it over until they hand it over explicitly.
+  Its steps, tools and gotchas are in `C:/dev/partybox-ideas/HANDOFF-SESSION-A.md` (its phone design
+  review item is stale: A-K have shipped, see §11).
 - Writing an idea: grep every UI string you quote, run the shipped function rather than counting raw
   content, check `git log -S` for "already shipped", and cite files rather than line numbers. The
   2026-09-22 audit found most idea errors were details like these.
