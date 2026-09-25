@@ -694,6 +694,9 @@
 }
 
 .nextFinal {
+  display: inline-block;
+  margin-left: var(--pb-space-3);
+  color: var(--pb-accent);
   animation: final-throb calc(var(--pb-motion-pulse) * 1.6) ease-in-out infinite;
 }
 

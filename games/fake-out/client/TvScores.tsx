@@ -40,14 +40,14 @@ export function TvScores({ view }: Props): JSX.Element {
         {last
           ? L('After the Final Fake-Out')
           : L('After question {n} of {total}', { n: view.n, total: view.total })}
+        {nextFinal ? (
+          <span className={styles.nextFinal}>
+            {' '}
+            · {L('Next: the Final Fake-Out — double points!')}
+          </span>
+        ) : null}
       </p>
       <BigText level="h1">{last ? L('Final scores') : L('Scores so far')}</BigText>
-      {/* above the board, so it never runs under the host bar (session-c [90140d] A) */}
-      {nextFinal ? (
-        <BigText level="h2" tone="accent" className={styles.nextFinal}>
-          {L('Next: the Final Fake-Out — double points!')}
-        </BigText>
-      ) : null}
       <div className={styles.board}>
         <Scoreboard rows={rows} noTrophy stagger="climb" climbFrom={climbFrom} />
       </div>
