@@ -11,6 +11,7 @@ import type { ShTvView } from '../server/views';
 import { MaskEmblem, Stamp } from './art';
 import { PlateIcon } from './icons';
 import { FlipCard } from './Card';
+import { CREDIT } from './labels';
 import { Newspaper } from './Newspaper';
 import { STRINGS } from './strings';
 import styles from './moments.module.css';
@@ -25,7 +26,7 @@ function useCueAt(cue: SoundCue | null, delayMs: number, key: string): void {
   }, [cue, delayMs, key, play]);
 }
 
-/** The centre of a seat, in the root's own (unscaled) pixels. */
+/** The top centre of a seat's avatar, in the root's own (unscaled) pixels. */
 function useSeatPoint(
   root: RefObject<HTMLElement | null>,
   id: string | null,
@@ -36,7 +37,8 @@ function useSeatPoint(
     const measure = (): void => {
       // Read at measure time: a child's layout effect runs before the parent's ref is attached.
       const el = root.current;
-      const seat = el?.querySelector(`[data-seat="${CSS.escape(id)}"]`);
+      // The avatar, not the seat: the seat row keeps one height, so its top is empty space.
+      const seat = el?.querySelector(`[data-seat="${CSS.escape(id)}"] [data-anchor]`);
       if (!el || !seat) return;
       const box = el.getBoundingClientRect();
       const scale = box.width / (el.offsetWidth || 1);
@@ -157,7 +159,7 @@ export function TvMoments({
       {spotSeat && spotAt ? (
         <div
           className={styles.dimmer}
-          style={{ '--x': `${spotAt.x}px`, '--y': `${spotAt.y + 70}px` } as CSSProperties}
+          style={{ '--x': `${spotAt.x}px`, '--y': `${spotAt.y + 32}px` } as CSSProperties}
         />
       ) : null}
       {session ? (
@@ -227,6 +229,7 @@ export function TvMoments({
             headline={view.headline}
             session={r.n}
             kicker={L('Final edition')}
+            footer={L(CREDIT)}
             delayMs={2600}
           />
         </div>

@@ -74,8 +74,19 @@ function Moment({ view }: { view: ShControllerView }): JSX.Element | null {
         </div>
       );
     case 'powerReveal':
-      return r.power?.kind === 'execute' ? (
-        <Stamped text={L('EXECUTED')} tone="alarm" delay={1200} />
+      if (r.power?.kind === 'execute')
+        return <Stamped text={L('EXECUTED')} tone="alarm" delay={1200} />;
+      return r.power?.kind === 'investigate' ? (
+        <div className={styles.fileMoment} aria-hidden="true">
+          <span>{L('CLASSIFIED')}</span>
+        </div>
+      ) : null;
+    case 'claims':
+      // The law they just passed, face-up, while the table argues about it.
+      return r.enacted ? (
+        <div className={styles.momentCard}>
+          <FlipCard party={r.enacted} up />
+        </div>
       ) : null;
     default:
       return null;
@@ -126,7 +137,7 @@ export function Controller({
       data-paused={view.paused || undefined}
     >
       {view.phaseId === 'seating' && view.startAt !== undefined ? (
-        <Countdown until={view.startAt} paused={view.paused} size="phone" />
+        <Countdown key={view.startAt} until={view.startAt} paused={view.paused} size="phone" />
       ) : null}
       {view.lastCall && act ? (
         <div className={styles.lastCall}>{L('Last call! Choose now.')}</div>

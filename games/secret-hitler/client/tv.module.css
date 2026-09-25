@@ -61,7 +61,9 @@
   display: flex;
   align-items: center;
   gap: 24px;
-  min-height: 84px;
+  /* One height in every phase (a title and two lines), so the boards below never move. */
+  height: 136px;
+  overflow: hidden;
   padding: 6px 24px;
   border-radius: 12px;
   background: linear-gradient(180deg, var(--sh-night-2), var(--sh-night));
@@ -90,7 +92,7 @@
   margin: 0;
   font-family: var(--sh-font-display);
   font-weight: 400;
-  font-size: 56px;
+  font-size: 52px;
   line-height: 1;
   letter-spacing: 0.03em;
   color: var(--sh-text);
@@ -105,24 +107,26 @@
 
 .line {
   margin: 0;
-  font-size: 30px;
+  font-size: 28px;
+  line-height: 1.25;
   color: var(--sh-text-muted);
   animation: global(sh-rise) 450ms var(--sh-ease) both;
+}
+
+.clockWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
 .lastCall {
   margin: 0;
   font-family: var(--sh-font-display);
-  font-size: 36px;
+  font-size: 26px;
   letter-spacing: 0.08em;
   color: var(--sh-alarm);
   animation: global(sh-pulse) 800ms ease-in-out infinite;
-}
-
-.credit {
-  margin: 0;
-  font-size: 24px;
-  color: var(--sh-text-muted);
 }
 
 .clock {

@@ -189,7 +189,10 @@ export function publicView(state: State): PublicView {
     },
     announce: state.announce ? { who: state.announce.who } : null,
     lastCall: r.lastCall,
-    ...(state.startAt !== null && phase === 'seating' ? { startAt: state.startAt } : {}),
+    // The count ends at the phase's deadline, which a pause/resume shifts (startAt does not).
+    ...(state.startAt !== null && phase === 'seating'
+      ? { startAt: state.phase.deadline ?? state.startAt }
+      : {}),
     silence: SECRET_CARD_PHASES.has(phase),
     headline: state.headline,
     history: state.history.slice(-7).map(({ president, chancellor, ...row }) => ({
@@ -212,15 +215,16 @@ function statusOf(state: State): (id: string) => PlayerStatus {
   };
 }
 
-/** The TV draws its own clock in the banner, so its shell timer is the quiet bar only. */
+/** The TV draws its own clock in the banner, so its shell timer is hidden in every phase (a bar
+ *  in some phases only moved the whole TV down and back between phases). */
 function timing(
   state: State,
   tv = false,
 ): Pick<TvView, 'timerMode' | 'vipSkipLabel' | 'vipSkipHidden'> {
   const phase = state.phase.id;
-  const quiet = tv || phase === 'presDraw' || phase === 'chanEnact';
+  const quiet = phase === 'presDraw' || phase === 'chanEnact';
   const out: Pick<TvView, 'timerMode' | 'vipSkipLabel' | 'vipSkipHidden'> = {
-    timerMode: HIDDEN_TIMER.has(phase) ? 'hidden' : quiet ? 'quiet' : 'normal',
+    timerMode: tv || HIDDEN_TIMER.has(phase) ? 'hidden' : quiet ? 'quiet' : 'normal',
   };
   if (phase === 'seating') {
     if (state.startAt !== null) out.vipSkipHidden = true;

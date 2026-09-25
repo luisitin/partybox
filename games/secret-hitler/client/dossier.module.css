@@ -106,6 +106,17 @@
 
 /* A small phone (SE 320): each section's label sits above it, so the words get the full width. */
 @media (max-width: 380px) {
+  /* The folder's cover stays one row: a smaller tab and stamp leave room for the hint. */
+  .cover {
+    gap: 0.2rem 0.45rem;
+    padding: 0.35rem 0.6rem;
+  }
+  .tab {
+    font-size: 1.15rem;
+  }
+  .stampMark {
+    font-size: 0.75rem;
+  }
   .row {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.15rem;

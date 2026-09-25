@@ -9,12 +9,15 @@ export function Newspaper({
   headline,
   session,
   kicker,
+  footer,
   spin = true,
   delayMs = 0,
 }: {
   headline: string;
   session: number;
   kicker?: string;
+  /** Fine print under the columns (the final edition's credit line). */
+  footer?: string;
   spin?: boolean;
   delayMs?: number;
 }): JSX.Element {
@@ -45,6 +48,7 @@ export function Newspaper({
           </div>
         ))}
       </div>
+      {footer ? <p className={styles.fine}>{footer}</p> : null}
     </article>
   );
 }

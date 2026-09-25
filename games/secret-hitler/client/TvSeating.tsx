@@ -17,14 +17,14 @@ export function TvSeating({ view }: { view: ShTvView }): JSX.Element {
   const ready = here.filter((s) => s.tags.includes('ready')).length;
   const rules = [
     {
-      art: <MaskEmblem size={60} />,
+      art: <MaskEmblem size={48} />,
       title: L('Secret roles'),
       text: L(
         'Everyone has a secret role. The Fascists know each other; the Liberals know no one.',
       ),
     },
     {
-      art: <PlateIcon kind="president" size={52} />,
+      art: <PlateIcon kind="president" size={42} />,
       title: L('Elect a government'),
       text: L(
         'The President names a Chancellor and everyone votes Ja! or Nein! If it passes, the two secretly pass one law.',
@@ -33,8 +33,8 @@ export function TvSeating({ view }: { view: ShTvView }): JSX.Element {
     {
       art: (
         <span className={styles.pair}>
-          <PartyEmblem party="L" size={44} />
-          <PartyEmblem party="F" size={44} />
+          <PartyEmblem party="L" size={36} />
+          <PartyEmblem party="F" size={36} />
         </span>
       ),
       title: L('How to win'),

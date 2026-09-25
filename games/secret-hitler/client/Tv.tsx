@@ -8,7 +8,6 @@ import { useSecondsLeft, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { ShTvView } from '../server/views';
 import { Countdown } from './Countdown';
-import { CREDIT } from './labels';
 import { phaseLines } from './lines';
 import './sh-global.css';
 import { STRINGS } from './strings';
@@ -32,16 +31,21 @@ const CLOCKED = new Set([
 ]);
 
 function Clock({ view }: { view: ShTvView }): JSX.Element | null {
+  const L = useT(STRINGS);
   const left = useSecondsLeft(view.deadline, view.paused);
   if (left === null || !CLOCKED.has(view.phaseId)) return null;
   const quiet = view.phaseId === 'presDraw' || view.phaseId === 'chanEnact';
+  // Last call rides on the clock (a tag above the digits), so the banner keeps its height.
   return (
-    <span
-      className={styles.clock}
-      data-urgent={(left <= 5 && !quiet) || undefined}
-      data-quiet={quiet || undefined}
-    >
-      {quiet ? '' : left}
+    <span className={styles.clockWrap}>
+      {view.lastCall ? <span className={styles.lastCall}>{L('Last call!')}</span> : null}
+      <span
+        className={styles.clock}
+        data-urgent={((left <= 5 || view.lastCall) && !quiet) || undefined}
+        data-quiet={quiet || undefined}
+      >
+        {quiet ? '' : left}
+      </span>
     </span>
   );
 }
@@ -85,8 +89,6 @@ export function Tv({ view }: GameTvProps<ShTvView>): JSX.Element {
                 {line}
               </p>
             ))}
-            {view.lastCall ? <p className={styles.lastCall}>{L('Last call!')}</p> : null}
-            {over ? <p className={styles.credit}>{L(CREDIT)}</p> : null}
           </div>
           <Clock view={view} />
         </header>
@@ -105,7 +107,7 @@ export function Tv({ view }: GameTvProps<ShTvView>): JSX.Element {
       </div>
       <TvMoments view={view} root={root} />
       {phase === 'seating' && view.startAt !== undefined ? (
-        <Countdown until={view.startAt} paused={view.paused} size="tv" />
+        <Countdown key={view.startAt} until={view.startAt} paused={view.paused} size="tv" />
       ) : null}
     </div>
   );

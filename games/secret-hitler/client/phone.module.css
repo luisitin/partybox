@@ -42,12 +42,6 @@
   grid-template-columns: 1fr 1fr;
 }
 
-@media (max-height: 640px) {
-  .body {
-    gap: 0.45rem;
-  }
-}
-
 .roleReveal {
   display: flex;
   flex-direction: column;
@@ -310,6 +304,31 @@ button.rowHint {
   animation: global(sh-deal) 400ms var(--sh-ease) both;
 }
 
+/* The investigation's file on a waiting phone: a folder stamped CLASSIFIED. */
+.fileMoment {
+  display: grid;
+  place-items: center;
+  width: 9.5rem;
+  height: 6.6rem;
+  border-radius: 4px 12px 4px 4px;
+  background: var(--sh-paper-2);
+  box-shadow:
+    inset 0 0 0 2px var(--sh-brass-2),
+    0 12px 22px var(--sh-shadow);
+  font-family: var(--sh-font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  color: var(--sh-fascist);
+  animation: global(sh-deal) 500ms var(--sh-ease) 300ms both;
+}
+
+.fileMoment span {
+  padding: 0 0.5rem;
+  border: 2px solid currentColor;
+  border-radius: 3px;
+  transform: rotate(-6deg);
+}
+
 .envelope {
   position: relative;
   width: 9rem;
@@ -340,4 +359,43 @@ button.rowHint {
   border-radius: 50%;
   background: var(--sh-fascist);
   box-shadow: 0 0 0 3px var(--sh-alarm);
+}
+
+/* A short phone (SE 568): the choice itself stays above the fold. Last in the file, so it wins
+   over the rules it resizes. */
+@media (max-height: 640px) {
+  .body {
+    gap: 0.45rem;
+  }
+  .placard {
+    min-height: 23vh;
+  }
+  .placardMark {
+    font-size: 2.2rem;
+  }
+  .placardWord {
+    font-size: 2rem;
+  }
+  .momentCard {
+    --sh-card-w: 6rem;
+    --sh-card-h: 8.4rem;
+  }
+  .roleReveal {
+    padding: 0.6rem 1.2rem 0.5rem;
+  }
+  .roleReveal {
+    gap: 0.15rem;
+  }
+  .roleReveal svg {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+  .lastCall {
+    padding: 0.25rem;
+    font-size: 1.1rem;
+  }
+  /* With the Last call bar showing, the placards give up its height. */
+  .lastCall ~ * .placard {
+    min-height: 20vh;
+  }
 }

@@ -35,6 +35,7 @@ export const STRINGS: Strings = {
     '{ready} of {total} ready': '{ready} de {total} listos',
     'Read your dossier, then tap Got it': 'Lee tu expediente y luego toca Entendido',
     '✓ Ready': '✓ Listo',
+    Voted: 'Votó',
     'Waiting for the others': 'Esperando a los demás',
     'The session opens': 'Se abre la sesión',
     // roles, parties, powers

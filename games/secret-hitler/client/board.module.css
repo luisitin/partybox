@@ -140,6 +140,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
+  align-content: start;
+  /* Room for both chips (veto, next slot) from the start, so nothing above or beside it moves
+     when one appears. */
+  min-height: 206px;
   gap: 8px 18px;
   padding: 10px 14px;
   border-radius: 12px;
@@ -218,11 +222,26 @@
   box-shadow: none;
 }
 
+.pileText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
 .pileText b {
   font-family: var(--sh-font-display);
-  font-size: 34px;
+  font-size: 40px;
   font-weight: 400;
   color: var(--sh-brass);
+}
+
+.pileLabel {
+  white-space: nowrap;
+  font-family: var(--sh-font-display);
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sh-text-muted);
 }
 
 .chip {

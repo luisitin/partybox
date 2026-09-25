@@ -96,7 +96,8 @@ function Pile({ count, label }: { count: number; label: string }): JSX.Element {
         {count > 0 ? <CardBack size="sm" /> : null}
       </span>
       <span className={styles.pileText}>
-        <b>{count}</b> {label}
+        <b>{count}</b>
+        <span className={styles.pileLabel}>{label}</span>
       </span>
     </span>
   );

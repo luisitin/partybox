@@ -18,11 +18,14 @@ function Placard({
   vote,
   delayMs,
   label,
+  back,
   settled,
 }: {
   vote: 'ja' | 'nein';
   delayMs: number;
   label: string;
+  /** The back's word ("Voted"): a sealed ballot, the same for Ja and Nein. */
+  back: string;
   /** Already revealed (the phase after the reveal): face-up at once, no second wave. */
   settled: boolean;
 }): JSX.Element {
@@ -39,7 +42,7 @@ function Placard({
       data-settled={settled || undefined}
     >
       <span className={styles.placardTurn}>
-        <span className={styles.placardBack} />
+        <span className={styles.placardBack}>{back}</span>
         <span className={styles.placardFace}>{label}</span>
       </span>
     </span>
@@ -98,10 +101,11 @@ export function TvSeats({ view }: { view: ShTvView }): JSX.Element {
                   vote={seat.vote}
                   delayMs={500 + i * 40}
                   label={seat.vote === 'ja' ? L('✓ JA!') : L('✗ NEIN!')}
+                  back={L('Voted')}
                 />
               ) : seat.tags.includes('voted') ? (
                 <span className={styles.voted} role="img" aria-label={L('✓ voted')}>
-                  <span className={styles.placardBack} />
+                  <span className={styles.placardBack}>{L('Voted')}</span>
                 </span>
               ) : null}
               {phase === 'seating' && seat.tags.includes('ready') ? (
@@ -118,7 +122,7 @@ export function TvSeats({ view }: { view: ShTvView }): JSX.Element {
                 </span>
               ) : null}
             </div>
-            <span className={styles.avatar}>
+            <span className={styles.avatar} data-anchor>
               <Avatar avatarId={p?.avatarId ?? ''} size={64} dim={gone || p?.connected === false} />
               {seat.tags.includes('executed') ? <span className={styles.ghost}>👻</span> : null}
             </span>
@@ -135,14 +139,15 @@ export function TvSeats({ view }: { view: ShTvView }): JSX.Element {
             ) : seat.tags.includes('next') && !over ? (
               <span className={styles.next}>{L('Next')}</span>
             ) : null}
-            {tags.slice(0, 1).map((t) => (
-              <span key={t} className={styles.tag}>
-                {t}
-              </span>
-            ))}
             {p?.connected === false && !gone ? (
               <span className={styles.tag}>{L('reconnecting…')}</span>
-            ) : null}
+            ) : (
+              tags.slice(0, 1).map((t) => (
+                <span key={t} className={styles.tag}>
+                  {t}
+                </span>
+              ))
+            )}
             {i < view.seats.length - 1 ? (
               <span className={styles.arrow} aria-hidden="true">
                 ›

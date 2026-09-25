@@ -59,6 +59,14 @@ describe('D1 · deadlines and timeouts', () => {
     expect(bots.ready).toEqual(['p2', 'p3', 'p4', 'p5']);
   });
 
+  it('D1 seating: a pause during the 3 · 2 · 1 moves the count with it', () => {
+    let s = vip(rig(5), 'skip', T0 + 2_000);
+    s = vip(s, 'pause', T0 + 3_000);
+    s = vip(s, 'resume', T0 + 8_000);
+    expect(tvView(s).startAt).toBe(T0 + 2_000 + COUNTDOWN_MS + 5_000);
+    expect(tvView(s).startAt).toBe(s.phase.deadline);
+  });
+
   it("D1 seating: the VIP's Start now begins the count at once; a second does nothing", () => {
     let s = vip(rig(5), 'skip', T0 + 2_000);
     expect(s.startAt).toBe(T0 + 2_000 + COUNTDOWN_MS);
