@@ -1,0 +1,21 @@
+{
+  "video": "C:\\dev\\partybox-game-echo\\reports\\design\\record-review\\echo\\p09-spicy-nocheck\\video\\tv\\round.webm",
+  "bytes": 16892809,
+  "durationS": 147.8,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [],
+  "deadMsTotal": 0,
+  "hardCuts": [],
+  "samples": 1476,
+  "motion": {
+    "p50": 0.0004,
+    "p90": 0.0048,
+    "p99": 0.0624,
+    "max": 0.1156
+  }
+}
