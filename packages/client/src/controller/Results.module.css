@@ -1,6 +1,8 @@
 .winner {
   display: block;
-  font-size: var(--pb-font-h1);
+  /* a phone width caps it: at 200 % text a three-name tie took 4–5 lines of the sticky title and
+     the board could not be reached (session-c) */
+  font-size: min(var(--pb-font-h1), 12vw);
   font-weight: 900;
   color: var(--pb-accent-2);
   text-align: center;
@@ -103,7 +105,20 @@
   container-type: inline-size;
   font-size: var(--pb-font-caption);
 }
+/* Two copies of the chips, one shown: under your place in the sticky title, or — when the row is
+   under ~16 caption ems (200 % text on a phone), where the title would fill the screen — under the
+   board, where they scroll with it (session-c: the board could not be reached). */
+.chipsBody {
+  display: none;
+}
 @container (max-width: 16em) {
+  .chipsTitle {
+    display: none;
+  }
+  .chipsBody {
+    display: flex;
+    margin: var(--pb-space-3) 0 var(--pb-space-2);
+  }
   .awardChips {
     flex-wrap: wrap;
     justify-content: center;

@@ -56,6 +56,24 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
     const others = a.playerIds.filter((id) => id !== me.id).map(nameOf);
     return others.length > 0 ? ` · ${t.results.sharedWith(joinNames(others))}` : '';
   };
+  // The award chips: under your place in the title, or (200 % text on a phone, where the title
+  // would fill the screen) under the board — CSS picks the copy (session-c, results-ties).
+  const chips = awardsForMe.length ? (
+    <>
+      {awardsForMe.map((a) =>
+        mineIn(a) ? (
+          <span key={`${a.id}|${a.title}`} className={`${styles.awardChip} ${styles.awardMine}`}>
+            <strong>{t.results.yourAward(serverText(a.title, lang, room.results?.gameId))}</strong>
+            {sharedWith(a)}
+          </span>
+        ) : (
+          <span key={`${a.id}|${a.title}`} className={styles.awardChip}>
+            <strong>{serverText(a.title, lang, room.results?.gameId)}</strong> {winnersOf(a)}
+          </span>
+        ),
+      )}
+    </>
+  ) : null;
   // I-155 C: votes received per round, straight off the results payload.
   const myVotes = (
     (room.results?.results as { perRoundVotes?: Record<string, number[]> } | undefined)
@@ -82,26 +100,7 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
               yours first, and reading as yours */}
           {awardsForMe.length ? (
             <span className={styles.chipsBox}>
-              <span className={styles.awardChips}>
-                {awardsForMe.map((a) =>
-                  mineIn(a) ? (
-                    <span
-                      key={`${a.id}|${a.title}`}
-                      className={`${styles.awardChip} ${styles.awardMine}`}
-                    >
-                      <strong>
-                        {t.results.yourAward(serverText(a.title, lang, room.results?.gameId))}
-                      </strong>
-                      {sharedWith(a)}
-                    </span>
-                  ) : (
-                    <span key={`${a.id}|${a.title}`} className={styles.awardChip}>
-                      <strong>{serverText(a.title, lang, room.results?.gameId)}</strong>{' '}
-                      {winnersOf(a)}
-                    </span>
-                  ),
-                )}
-              </span>
+              <span className={`${styles.awardChips} ${styles.chipsTitle}`}>{chips}</span>
             </span>
           ) : null}
         </>
@@ -152,6 +151,11 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
           <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over} />
         </div>
       )}
+      {chips ? (
+        <div className={styles.chipsBox}>
+          <div className={`${styles.awardChips} ${styles.chipsBody}`}>{chips}</div>
+        </div>
+      ) : null}
       {/* (I-456 C: the awards are chips under your place; the long list only for a screen reader)
           I-155 B: your own awards come first — a receipt opens with you on it. */}
       {room.results?.results.awards.length ? (

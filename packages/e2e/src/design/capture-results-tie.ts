@@ -104,6 +104,10 @@ async function run(
     await settle(4500); // the board lands, the headline and awards follow
     if (device === 'iphone-se') await tv.screenshot({ path: join(OUT, `${lang}-tv-${scenario}.png`) }); // prettier-ignore
     await page.screenshot({ path: join(OUT, `${lang}-${device}-${scenario}.png`) });
+    // and scrolled to the end (at 200 % the chips move under the board)
+    await page.evaluate(`[...document.querySelectorAll('*')].filter((e) => /(auto|scroll)/.test(getComputedStyle(e).overflowY) && e.scrollHeight > e.clientHeight).forEach((e) => { e.scrollTop = e.scrollHeight; })`); // prettier-ignore
+    await settle(600);
+    await page.screenshot({ path: join(OUT, `${lang}-${device}-${scenario}-end.png`) });
   } finally {
     for (const p of [page, tv]) await p.context().close();
   }
