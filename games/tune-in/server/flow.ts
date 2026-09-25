@@ -108,6 +108,23 @@ function onLink(state: State, event: Extract<GameEvent<Input>, { type: 'player' 
   return after;
 }
 
+/** What a drop or a leave would have done while the room was paused, run on resume (reviewer
+ *  [12ea6b]): paused, onLink only records the drop, so a phase whose last outstanding player (or
+ *  its psychic) dropped mid-pause would otherwise sit until its timer. */
+function recheck(state: State, now: number): State {
+  const phase = state.phase.id;
+  if (phase === 'intro') return checkReady(state, now);
+  if (phase === 'clue') {
+    const psychic = state.turn.psychic;
+    if (state.left.includes(psychic)) return afterClue(state, now);
+    if (state.players[psychic]?.connected === false) return psychicLink(state, false, now);
+    return state;
+  }
+  if (phase === 'dial' && dialDone(state)) return afterDial(state, now);
+  if (phase === 'call' && callDone(state)) return afterCall(state, now);
+  return state;
+}
+
 export function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') return onLink(state, event);
   if (event.type === 'speech') {
@@ -115,7 +132,7 @@ export function reduce(state: State, event: GameEvent<Input>): State {
     return { ...state, speechMs: { ...state.speechMs, [event.key]: event.ms } };
   }
   const vip = applyVip(state, event, { skip, end: enterDone });
-  if (vip) return vip;
+  if (vip) return state.phase.paused && !vip.phase.paused ? recheck(vip, event.now) : vip;
   if (state.phase.paused) return state;
   switch (state.phase.id) {
     case 'intro':

@@ -85,6 +85,16 @@ describe('the ready-up', () => {
     expect(game.controllerView(s, 'p1').timerMode).toBe('hidden');
   });
 
+  it('starts the count on resume when the last unready phone dropped during a pause', () => {
+    let s = room(2, 1);
+    s = send(s, 'p1', { type: 'ready' }, T0 + 1000);
+    s = vip(s, 'pause', T0 + 2000);
+    s = link(s, 'p2', false);
+    expect(s.startAt).toBeNull();
+    s = vip(s, 'resume', T0 + 5000);
+    expect(s.startAt).toBe(T0 + 5000 + READY_BREATH_MS + COUNTDOWN_MS);
+  });
+
   it('keeps the 3 · 2 · 1 in step with a pause: the views follow the shifted deadline', () => {
     let s = room(1, 1);
     s = send(s, 'p1', { type: 'ready' }, T0 + 1000);
