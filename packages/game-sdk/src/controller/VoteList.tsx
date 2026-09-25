@@ -33,6 +33,11 @@ export interface VoteListProps {
   disabled?: boolean;
   onVote: (id: string) => void;
   footer?: ReactNode;
+  /**
+   * I-168: a tap PICKS instead of voting — the list stays open (tap another to change) and the
+   * caller sends the pick from its own button. `votedId` still locks the list once it lands.
+   */
+  pick?: { selectedId: string | null; onSelect: (id: string) => void };
   /** `large` for 2–3 options: tall lettered cards instead of compact rows. */
   size?: 'compact' | 'large';
   /**
@@ -72,6 +77,7 @@ export function VoteList(props: VoteListProps): JSX.Element {
     size = 'compact',
     promptKey,
     lockedLabel,
+    pick,
   } = props;
   const [pending, setPending] = useState<Pending | null>(null);
   // "Adjust state when a prop changes": a new vote clears the optimistic lock.
@@ -86,8 +92,8 @@ export function VoteList(props: VoteListProps): JSX.Element {
     );
     return () => clearTimeout(handle);
   }, [pendingId, echoed]);
-  const shownId = votedId ?? pendingId;
-  const locked = shownId !== null || disabled;
+  const shownId = votedId ?? (pick ? pick.selectedId : pendingId);
+  const locked = pick ? votedId !== null || disabled === true : shownId !== null || disabled;
   const large = size === 'large';
   const vote = (id: string): void => {
     buzz(15);
@@ -121,7 +127,12 @@ export function VoteList(props: VoteListProps): JSX.Element {
               aria-checked={isVoted}
               className={classes}
               disabled={locked || option.mine}
-              onClick={() => vote(option.id)}
+              onClick={() => {
+                if (pick && votedId === null) {
+                  buzz(10);
+                  pick.onSelect(option.id);
+                } else vote(option.id);
+              }}
             >
               {large ? (
                 <span className={styles.letter} aria-hidden>

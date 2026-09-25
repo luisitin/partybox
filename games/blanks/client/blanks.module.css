@@ -1850,3 +1850,28 @@
   font-size: var(--pb-font-caption);
   font-weight: 700;
 }
+
+/* ── I-168 B: the Crown button fills over 3 s, then crowns by itself. */
+.crownTimed {
+  position: relative;
+  overflow: hidden;
+}
+.crownTimed::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 5px;
+  width: 100%;
+  background: color-mix(in srgb, var(--pb-on-accent, #fff) 70%, transparent);
+  transform-origin: left center;
+  animation: crown-fill 3s linear both;
+}
+@keyframes crown-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}

@@ -220,4 +220,7 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   // I-159 B
   Fan: 'Abanico',
   List: 'Lista',
+  // I-168: the judge crowns
+  '👑 Crown {letter}': '👑 Coronar la {letter}',
+  'Tap another card to change your mind': 'Toca otra carta para cambiar de idea',
 };
