@@ -91,6 +91,7 @@ export function reduceShow(state: State, event: GameEvent<Input>, next: Transiti
       if (verdict && event.now - state.phase.startedAt < beat) return state;
       return turnPage(state, event.now, next);
     }
+    if (event.input.type === 'laugh') return laugh(state, event.playerId);
     return veto(state, event);
   }
   if (isTimerFor(state, event)) return turnPage(state, event.now, next);
@@ -109,4 +110,15 @@ export function reduceSummary(state: State, event: GameEvent<Input>, next: Trans
 
 export function enterDone(state: State, now: number): State {
   return enterPhase(state, 'done', now, null);
+}
+
+/** I-202 B: a laugh at the page on stage — once per player, never the page's own author. */
+function laugh(state: State, playerId: string): State {
+  const s = state.showing;
+  const page = s ? state.books[s.book]?.pages[s.page] : undefined;
+  if (!s || !page || page.authorId === playerId || !Object.hasOwn(state.players, playerId)) return state;
+  const key = `${s.book}:${s.page}`;
+  const who = state.laughs?.[key] ?? [];
+  if (who.includes(playerId)) return state;
+  return { ...state, laughs: { ...state.laughs, [key]: [...who, playerId] } };
 }

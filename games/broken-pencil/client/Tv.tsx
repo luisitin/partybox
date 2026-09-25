@@ -309,6 +309,12 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
           </div>
           <div className={styles.current}>
             {current ? <CurrentPage page={current} /> : null}
+            {/* I-202 B: the room's laughs at this page */}
+            {s.laughs > 0 ? (
+              <span key={s.laughs} className={`${styles.laughs} pb-pop`}>
+                😂 {s.laughs}
+              </span>
+            ) : null}
             {/* I-512 A: the guess alone first — the verdict lands a beat later (Verdict.tsx) */}
             {last ? <Verdict showing={s} current={current} /> : null}
           </div>

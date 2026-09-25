@@ -39,6 +39,8 @@ export interface PencilTvView extends TvView, Common {
     pages: PageView[];
     verdict: 'intact' | 'broken' | null;
     verdictLine: string | null;
+    /** I-202 B: laughs at the page on stage. */
+    laughs: number;
   };
   /** summary / done. */
   summary: BookSummary[] | null;
@@ -76,6 +78,9 @@ export interface PencilControllerView extends ControllerView, Common {
     /** True on the last page of the book / the last book. */
     lastPage: boolean;
     lastBook: boolean;
+    /** I-202 B: the page on stage's laughs, and whether I may laugh (not mine, not yet). */
+    laughs: number;
+    canLaugh: boolean;
     /** The page on stage, as the TV shows it — a "phone only" room reads the book on the phone
      *  (the owner, 2026-09-21). Only the shown page, never the unshown ones. */
     current: PageView | null;
@@ -151,6 +156,7 @@ export function tvView(state: State, gameId: string): PencilTvView {
               .map((p) => ({ ...p, authorName: nameOf(state, p.authorId) })),
             verdict: showing.verdict,
             verdictLine: showing.line,
+            laughs: state.laughs?.[`${showing.book}:${showing.page}`]?.length ?? 0,
           }
         : null,
     summary: closing(state) ? summary(state) : null,
@@ -235,6 +241,12 @@ export function controllerView(
             presenting: shownBook.ownerId === playerId,
             lastPage: showing.page >= shownBook.pages.length - 1,
             lastBook: showing.book >= state.books.length - 1,
+            laughs: state.laughs?.[`${showing.book}:${showing.page}`]?.length ?? 0,
+            canLaugh: (() => {
+              const p = shownBook.pages[showing.page];
+              const who = state.laughs?.[`${showing.book}:${showing.page}`] ?? [];
+              return p !== undefined && p.authorId !== playerId && !who.includes(playerId);
+            })(),
             verdict: showing.verdict,
             current: (() => {
               const p = shownBook.pages[showing.page];

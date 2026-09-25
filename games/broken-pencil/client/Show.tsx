@@ -52,9 +52,20 @@ export function Show({
         {L('close enough ✓ — count it')}
       </button>
     ) : null;
+  // I-202 B: a laugh at the page on stage — once each, never at your own page
+  const laughButton = (
+    <button
+      type="button"
+      className={styles.laugh}
+      disabled={!s.canLaugh}
+      onClick={() => send({ type: 'laugh' })}
+    >
+      😂{s.laughs > 0 ? ` ${s.laughs}` : ''}
+    </button>
+  );
   if (!s.presenting)
     return page || vetoButton ? (
-      <Screen title={L('{name} is presenting', { name: s.ownerName })}>
+      <Screen title={L('{name} is presenting', { name: s.ownerName })} footer={laughButton}>
         <p className={styles.kicker}>
           {L("{name}'s book · page {page} of {pages}", { name: s.ownerName, ...at })}
         </p>

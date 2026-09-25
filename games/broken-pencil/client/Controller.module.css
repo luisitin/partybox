@@ -321,3 +321,20 @@
   font-size: var(--pb-font-h2);
   overflow-wrap: normal;
 }
+
+/* ── I-202 B: the laugh — a round thumb target under the page. */
+.laugh {
+  display: block;
+  margin: 0 auto;
+  min-width: 120px;
+  /* 44 px, not 56: the footer takes that much from the page, and a first take pushed the drawing's
+     lower edge under the scroll fade on an SE-height phone */
+  min-height: 44px;
+  padding: 0 var(--pb-space-4);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-h2);
+}
+.laugh:disabled {
+  opacity: 0.6;
+}

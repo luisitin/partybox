@@ -490,3 +490,19 @@
   background: var(--pb-surface);
   color: var(--pb-accent-2);
 }
+
+/* ── I-202 B: the laugh count, a pill in the page area's top corner (the drawing fills the
+   area's height, so nothing may sit under it). */
+.current {
+  position: relative;
+}
+.laughs {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+}
