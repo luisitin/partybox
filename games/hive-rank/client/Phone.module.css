@@ -282,6 +282,10 @@
   letter-spacing: 0.08em;
 }
 
+.legendPhone span {
+  white-space: nowrap;
+}
+
 .legendPhone {
   font-size: var(--pb-font-caption);
   font-weight: 800;

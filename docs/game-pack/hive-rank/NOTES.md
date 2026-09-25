@@ -50,6 +50,14 @@ game rather than ahead of it.
 9. **Change is armed 700 ms after a lock**: the server's echo swaps Lock for Change under the
    finger, and a triple tap used to lock twice.
 
+10. **Bots vary more than SPEC §6.9** (nightfall's play-test, 2026-09-25): 1–4 neighbour swaps
+    (drawn from 1, 1, 2, 2, 3, 4) plus a 35 % chance of one far swap, instead of 0–3. With 0–3 the
+    bots clustered on `expected`, so in a small room they were the hive and humans couldn't win.
+    Sim baselines shift accordingly.
+11. **The shell stage (ADR-053) carries the rules, READY and 3·2·1**; `intro` is a 2.5 s title beat.
+12. **Change rearranges by swapping** (the owner's play-test): a full order swaps two tapped rows;
+    rows never move under a finger.
+
 ## Stand-ins (swap when the foundation lands)
 
 - `server/speech.ts` `speakable()` — a thin stand-in for F6 `toSpeakable` (quotes, the game's

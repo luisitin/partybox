@@ -70,7 +70,10 @@ export function PhoneScore({
       {result?.queen ? <p className={styles.queenBanner}>{L('👑 You’re the Queen Bee!')}</p> : null}
       {result?.perfect ? <p className={styles.perfectBanner}>{L('PERFECT HIVE')}</p> : null}
       {result ? (
-        <p className={styles.legendPhone}>{L('✓ exact +2 · ±1 one off +1 · all five +2')}</p>
+        <p className={styles.legendPhone}>
+          <span>{L('✓ exact +2')}</span> · <span>{L('±1 one off +1')}</span> ·{' '}
+          <span>{L('all five +2')}</span>
+        </p>
       ) : null}
       {result ? (
         <ol className={styles.marks} aria-label={L('Your order against the hive')}>

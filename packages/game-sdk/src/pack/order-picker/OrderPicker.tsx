@@ -75,6 +75,12 @@ export function OrderPicker(props: OrderPickerProps): JSX.Element {
   // A full order rearranges by swapping: tap a row (it lifts), then the row to trade places with.
   // Taking a row out of a full order read as "Change deletes my answers" (the owner's play-test).
   const [lifted, setLifted] = useState<string | null>(null);
+  // Locking drops whatever was picked up, so Change never reopens with a row still lifted.
+  const [wasDisabled, setWasDisabled] = useState(disabled);
+  if (wasDisabled !== disabled) {
+    setWasDisabled(disabled);
+    if (disabled) setLifted(null);
+  }
   const full = value.length === items.length;
   const liftedNow = full && !disabled && lifted !== null && value.includes(lifted) ? lifted : null;
   const tap = (id: string, at: number): void => {
