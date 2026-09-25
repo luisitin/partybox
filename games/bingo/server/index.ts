@@ -242,5 +242,7 @@ export const game: GameDefinition<State, Input, BingoTvView, BingoControllerView
   tvView: (state) => tvView(state, manifest.id),
   controllerView: (state, playerId) => controllerView(state, manifest.id, playerId),
   results,
+  // I-546 B: where the game is, for an early end's results
+  progress: (state) => ({ at: state.round.number, total: state.settings.rounds, unit: 'round' }),
   bot: { sampleInput },
 };

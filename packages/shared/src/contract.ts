@@ -295,6 +295,13 @@ export interface RecapContext<S> {
 
 // ─── The definition ─────────────────────────────────────────────────────────────────────────────
 
+/** I-546 B: where a game is: `at` of `total` questions or rounds (1-based; 0 = not started). */
+export interface GameProgress {
+  at: number;
+  total: number;
+  unit: 'question' | 'round';
+}
+
 export interface GameBot<S, I> {
   /** A valid input for this player right now, or null when there is nothing to do. */
   sampleInput(state: S, playerId: string, rng: Rng): I | null;
@@ -319,6 +326,11 @@ export interface GameDefinition<
   controllerView(state: S, playerId: string): CV;
   results(state: S): GameResults | null;
   bot: GameBot<S, I>;
+  /**
+   * Optional (I-546 B): how far the game has got — "question 2 of 5" — read when the VIP ends it
+   * early, so the results can say where it stopped. Pure.
+   */
+  progress?(state: S): GameProgress | null;
   /**
    * Optional: what the host writes to disk for the owner's feedback (ADR-035) — a markdown recap and
    * any files it references. Pure like every other method; `null` means "just the state".

@@ -118,3 +118,8 @@
 :global(:root[data-motion='off']) .tiedFace {
   animation: none;
 }
+
+/* ── I-546: "Ended early by Sam" — clear of the board's column labels below it. */
+.endedLine {
+  margin: var(--pb-space-1) 0 var(--pb-space-6);
+}

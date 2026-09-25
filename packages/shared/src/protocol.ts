@@ -1,7 +1,7 @@
 // Socket.IO protocol (docs/PROTOCOL.md): every client → server payload has a zod schema here; the
 // server → client shapes are plain types (the server builds them, clients trust them).
 import { z } from 'zod';
-import type { GameResults, PlayerInfo, SettingSpec, Settings } from './contract';
+import type { GameProgress, GameResults, PlayerInfo, SettingSpec, Settings } from './contract';
 import { settingsSchema } from './contract';
 
 export const LIMITS = {
@@ -133,6 +133,8 @@ export interface RoomResults {
   results: GameResults;
   /** Names/avatars of everyone who played, including players who left. */
   players: PlayerInfo[];
+  /** I-546: the VIP (or the TV: `by` null) ended the game — a result, not a finish. */
+  endedEarly?: { by: string | null; progress?: GameProgress | null };
 }
 
 export interface RoomSnapshot {

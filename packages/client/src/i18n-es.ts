@@ -138,6 +138,11 @@ export const es: Texts = {
     waitingFor: (name) => `Esperando a ${name}…`,
     youWin: '¡Ganaste! 🏆',
     youTie: '¡Empataste en primer lugar! 🏆',
+    stoppedLeading: (name) => `Partida detenida: iba ganando ${name}`,
+    stoppedLevel: 'Partida detenida: empate arriba',
+    endedBy: (name) => (name ? `${name} la terminó antes de tiempo` : 'Terminó antes de tiempo'),
+    endedIn: (line, unit, at, total) =>
+      `${line}, en la ${unit === 'question' ? 'pregunta' : 'ronda'} ${at} de ${total}`,
     yourPlace: (rank, score) => `Quedaste ${rank}.º · ${score} pts`,
     yourAward: (title) => `Tu ${title.charAt(0).toLowerCase()}${title.slice(1)}`,
     myVotes: (list) => `tus votos: ${list}`,

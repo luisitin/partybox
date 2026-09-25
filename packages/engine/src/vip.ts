@@ -151,6 +151,26 @@ export function applyVip(
       // A game that ignores `end` still has to stop: fall back to aborting without a scoreboard.
       if (action.action === 'end' && result.room.status === 'playing')
         return abortGame(result.room);
+      // I-546: an ended game's results say so — who stopped it, and where (the game's own
+      // progress, read from the state before the end)
+      if (action.action === 'end' && result.room.status === 'results' && result.room.results) {
+        const by = host ? null : (sender?.name ?? null);
+        const running = room.game;
+        const def = running ? deps.games[running.gameId] : undefined;
+        let progress = null;
+        try {
+          progress = running && def?.progress ? def.progress(running.state) : null;
+        } catch {
+          progress = null;
+        }
+        return {
+          ...result,
+          room: {
+            ...result.room,
+            results: { ...result.room.results, endedEarly: { by, progress } },
+          },
+        };
+      }
       return result;
     }
     case 'kick': {

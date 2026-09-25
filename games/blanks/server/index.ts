@@ -108,6 +108,8 @@ export const game: GameDefinition<State, Input> = {
   tvView: (state) => tvView(state, manifest.id),
   controllerView: (state, playerId) => controllerView(state, manifest.id, playerId),
   results,
+  // I-546 B: where the game is, for an early end's results
+  progress: (state) => ({ at: state.round, total: state.settings.rounds, unit: 'round' }),
   bot: { sampleInput: botInput },
   speech, // READER-VOICES (ADR-045)
 };

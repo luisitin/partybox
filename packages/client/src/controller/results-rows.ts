@@ -44,6 +44,11 @@ export function winnerLine(room: RoomSnapshot, scoreless = false): string {
   if (nobodyScored(room)) return results.gameId === 'bingo' ? t.results.noBingos : t.results.nobody;
   const ids = results.results.winnerIds;
   if (ids.length === 0) return '';
+  // I-546: a stopped game names who was ahead — nobody "wins" it
+  if (results.endedEarly) {
+    if (ids.length !== 1) return t.results.stoppedLevel;
+    return t.results.stoppedLeading(results.players.find((p) => p.id === ids[0])?.name ?? '?');
+  }
   if (ids.length >= results.players.length && ids.length > 1) return t.results.tie;
   // I-153 A: people first. Tied winners still read alphabetically (numeric-aware) within their
   // group, but a bot never takes a naming slot from someone who was actually in the room — "Bot 1,
@@ -85,10 +90,20 @@ export function myRow(room: RoomSnapshot, meId: string): ScoreboardRow | undefin
 export function winnerLineFor(room: RoomSnapshot, meId: string, scoreless = false): string {
   const results = room.results;
   if (!results) return '';
-  if (scoreless || nobodyScored(room)) return winnerLine(room, scoreless);
+  if (scoreless || nobodyScored(room) || results.endedEarly) return winnerLine(room, scoreless);
   const ids = results.results.winnerIds;
   if (!ids.includes(meId)) return winnerLine(room);
   if (ids.length === 1) return t.results.youWin;
   if (ids.length >= results.players.length) return t.results.tie;
   return t.results.youTie;
+}
+
+/** I-546: "Ended early by Sam in question 2 of 5" — null for a game that finished. */
+export function endedLine(room: RoomSnapshot): string | null {
+  const early = room.results?.endedEarly;
+  if (!early) return null;
+  const line = t.results.endedBy(early.by);
+  const p = early.progress;
+  if (p && p.at > 0 && p.total > 0) return t.results.endedIn(line, p.unit, Math.min(p.at, p.total), p.total);
+  return line;
 }
