@@ -88,6 +88,10 @@ lands, `git merge main` here needs: the ADR-050 layout (`client/shared.ts`, `pho
 description ≤ 300 (it is 244), and `rotation` / `majorityPick` from `@partybox/game-sdk` where
 they fit (seat rotation stays game code: R16's return rule is game-specific).
 
+When `results-kinds` (ADR-052, stacked on foundation) lands: set `results().outcome` to
+`{ kind: 'teams', winner: 'liberals' | 'fascists' | null, teams }` and `headline` to the ending
+("Hitler is dead"), so the results screen stops calling the winning side a tie.
+
 ## Screenshots
 
 `reports/design/record-review/secret-hitler/shots/` (gitignored). Main's `/preview` rejects
