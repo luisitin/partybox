@@ -3,7 +3,18 @@
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 
-export const PHASES = ['rules', 'box', 'bet', 'swap', 'potato', 'tug', 'open', 'done'] as const;
+export const PHASES = [
+  'rules',
+  'box',
+  'bet',
+  'swap',
+  'potato',
+  'tug',
+  'shuffle',
+  'cups',
+  'open',
+  'done',
+] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export const READERS = ['george', 'fable', 'jessica', 'sky', 'original', 'none'] as const;
@@ -28,7 +39,7 @@ export interface Cfg {
 }
 
 /** The live events (the owner's picks, docs/game-pack/blind-auction/LIVE-EVENTS.md). */
-export const LIVE_KINDS = ['race', 'dice', 'wheel', 'doors', 'potato', 'tug'] as const;
+export const LIVE_KINDS = ['race', 'dice', 'wheel', 'doors', 'potato', 'tug', 'shells'] as const;
 export type LiveKind = (typeof LIVE_KINDS)[number];
 
 /** What a box can hold. Each kind has its icon and words on the client (EN + ES). */
@@ -108,6 +119,11 @@ export interface RoundState {
   rope?: number;
   lastTap?: Record<string, number>;
   draw?: boolean;
+  /** Shell game: the speed tier the pot reached (0 … 5), the shuffle (`moves`: cup pairs swapped, in order;
+   *  the ball starts under `detail[0]` of the round), and each staker's picked cup (`cups`). */
+  tier?: number;
+  moves?: [number, number][];
+  picks?: Record<string, number>;
 }
 
 export interface Stats {
@@ -154,6 +170,8 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('pass') }),
   // Tug of war: one pull.
   z.object({ type: z.literal('tug') }),
+  // Shell game: the cup you think hides the ball.
+  z.object({ type: z.literal('cup'), cup: z.number().int().min(0).max(2) }),
   z.object({
     type: z.literal('bet'),
     // Up to 16 for hot potato (one option per player).

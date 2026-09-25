@@ -88,7 +88,9 @@ export function OptionBoard({
                   <span className={styles.nowrap}>{tierWord(L, o.tier)}</span>{' '}
                   <span className={styles.nowrap}>· {o.chance}%</span>
                 </span>
-                <span className={styles.pay}>{L('pays {x}', { x: payText(L, o.pay) })}</span>
+                <span className={styles.pay}>
+                  {o.pay > 0 ? L('pays {x}', { x: payText(L, o.pay) }) : L('splits the pot')}
+                </span>
               </>
             )}
             {bets ? (

@@ -31,7 +31,8 @@ describe('live events: the draw', () => {
         ).toBe(100);
         for (const o of box.options) {
           expect(o.label?.name, kind).toBeTruthy();
-          expect(o.pay, kind).toBeGreaterThan(1);
+          // The shell game is a shared pot (pay 0), not odds.
+          if (kind !== 'shells') expect(o.pay, kind).toBeGreaterThan(1);
         }
         expect(outcome).toBeGreaterThanOrEqual(0);
         expect(outcome).toBeLessThan(box.options.length);
@@ -241,5 +242,63 @@ describe('live events: tug of war', () => {
     s = walkTo(s, 'open');
     expect(s.r.draw).toBe(true);
     expect(s.coins).toEqual(before);
+  });
+});
+
+describe('live events: the shell game', () => {
+  const shellsAt = (): ReturnType<typeof start> => {
+    let s = start(4, { rounds: 5 });
+    const [round] = drawEvent('shells', seedRng(6), 1);
+    s = { ...s, boxes: s.boxes.map((b, i) => (i === 1 ? round : b)) };
+    return walkTo(walkTo(walkTo(s, 'bet'), 'box'), 'bet');
+  };
+  const cup = (s: ReturnType<typeof start>, id: string, c: number) =>
+    send(s, {
+      type: 'input',
+      now: s.phase.startedAt + 100,
+      playerId: id,
+      input: { type: 'cup', cup: c },
+    });
+
+  it('the pot sets the speed; the shuffle moves the ball to the outcome; phones never see the swaps', () => {
+    let s = shellsAt();
+    s = bet(bet(bet(bet(s, 'p1', 0, 50), 'p2', 0, 50), 'p3', 0, 50), 'p4', 0, 50);
+    expect(s.phase.id).toBe('shuffle');
+    expect(s.r.tier).toBe(4); // 200 of 400: half the room's coins → ×8
+    let ball = s.boxes[s.r.idx]?.detail?.[0] ?? 0;
+    for (const [a, b] of s.r.moves ?? []) ball = ball === a ? b : ball === b ? a : ball;
+    expect(s.boxes[s.r.idx]?.outcome).toBe(ball);
+    expect(tvView(s).shellSwaps).toEqual(s.r.moves);
+    expect(controllerView(s, 'p1').shellSwaps).toBeNull();
+  });
+
+  it('right calls split the whole pot by stake; all wrong → stakes back', () => {
+    let s = shellsAt();
+    s = bet(bet(bet(bet(s, 'p1', 0, 50), 'p2', 0, 25), 'p3', 0, 25), 'p4', 0, 0);
+    s = walkTo(s, 'cups');
+    const ball = s.boxes[s.r.idx]?.outcome ?? 0;
+    const wrong = (ball + 1) % 3;
+    const before = { ...s.coins };
+    s = cup(cup(cup(s, 'p1', ball), 'p2', wrong), 'p3', ball);
+    expect(s.phase.id).toBe('open');
+    // The owner's example: 50 + 25 right, 25 wrong → 2/3 and 1/3 of 100.
+    expect(s.coins['p1']).toBe((before['p1'] ?? 0) - 50 + 66);
+    expect(s.coins['p3']).toBe((before['p3'] ?? 0) - 25 + 33);
+    expect(s.coins['p2']).toBe((before['p2'] ?? 0) - 25);
+
+    let t = shellsAt();
+    t = bet(bet(bet(bet(t, 'p1', 0, 50), 'p2', 0, 25), 'p3', 0, 25), 'p4', 0, 0);
+    t = walkTo(t, 'cups');
+    const miss = ((t.boxes[t.r.idx]?.outcome ?? 0) + 1) % 3;
+    const was = { ...t.coins };
+    t = cup(cup(cup(t, 'p1', miss), 'p2', miss), 'p3', miss);
+    expect(t.coins).toEqual(was);
+    expect(controllerView(t, 'p1').line?.kind).toBe(t.r.step === 1 ? 'back' : undefined);
+  });
+
+  it('nobody staked: no shuffle, straight to open', () => {
+    let s = shellsAt();
+    for (const id of ['p1', 'p2', 'p3', 'p4']) s = bet(s, id, 0, 0);
+    expect(s.phase.id).toBe('open');
   });
 });

@@ -36,7 +36,27 @@ export const EVENT_MS = {
   potato: 600,
   // Tug of war is pulled live (`tug`): the reveal only names the winning side.
   tug: 600,
+  // The shell game's cups lift at `open`: the ball shows under the right one.
+  shells: 1_400,
 } as const;
+/** Shell game: speed tiers by how much of the room's coins went into the pot (share of seats ×
+ *  start coins): ×1, ×2, ×3, ×5, ×8, ×10 — the owner's breakpoints. */
+export const SHELL_TIER_AT = [0, 0.1, 0.2, 0.35, 0.5, 0.7] as const;
+export const SHELL_SPEED = [1, 2, 3, 5, 8, 10] as const;
+/** One swap at ×1; the lead (ball shown, cups down) and the tail before the pick. */
+export const SHELL_SWAP_MS = 560;
+export const SHELL_LEAD_MS = 2_200;
+export const SHELL_TAIL_MS = 600;
+/** Swaps per shuffle: a base, plus more at higher tiers. */
+export function shellSwaps(tier: number): number {
+  return 8 + tier * 3;
+}
+export function shuffleMs(tier: number): number {
+  const speed = SHELL_SPEED[tier] ?? 1;
+  return SHELL_LEAD_MS + Math.ceil((shellSwaps(tier) * SHELL_SWAP_MS) / speed) + SHELL_TAIL_MS;
+}
+/** `cups`: everyone who staked picks a cup. */
+export const CUPS_MS = 10_000;
 /** Tug of war: the pull lasts this long at most; a counted tap moves the rope TUG_STEP × your
  *  share of your team's stake; taps closer than TUG_TAP_MS are one tap. */
 export const TUG_MS = 12_000;

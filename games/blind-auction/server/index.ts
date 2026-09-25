@@ -20,6 +20,16 @@ import { enterBet, reduceBet } from './phases/bet';
 import { closeSwap, enterSwap, isDoors, reduceSwap, swappers, swapsIn } from './phases/swap';
 import { enterPotato, isPotato, pop, potatoDropped, reducePotato } from './phases/potato';
 import { enterTug, finishTug, isTug, reduceTug } from './phases/tug';
+import {
+  closeCups,
+  cupsIn,
+  enterCups,
+  enterShuffle,
+  isShells,
+  reduceCups,
+  reduceShuffle,
+  stakers,
+} from './phases/shells';
 import { drawEvent, potatoOptions } from './events';
 import { boxSpeech, enterBox, reduceBox } from './phases/box';
 import { enterOpen, openSpeech, reduceOpen } from './phases/open';
@@ -134,6 +144,8 @@ export function advance(state: State, now: number): State {
       // Doors: the host opens a goat door and the bettors stay or switch first.
       if (isPotato(state)) return enterPotato(state, now);
       if (isTug(state)) return enterTug(state, now);
+      // The shell game: nobody staked, nothing to shuffle for.
+      if (isShells(state) && stakers(state).length > 0) return enterShuffle(state, now);
       return isDoors(state) && swappers(state).length > 0
         ? enterSwap(state, now)
         : enterOpen(state, now);
@@ -141,6 +153,10 @@ export function advance(state: State, now: number): State {
       return enterOpen(pop(state), now);
     case 'tug':
       return enterOpen(finishTug(state), now);
+    case 'shuffle':
+      return enterCups(state, now);
+    case 'cups':
+      return enterOpen(closeCups(state), now);
     case 'swap':
       return enterOpen(closeSwap(state), now);
     case 'open':
@@ -163,6 +179,7 @@ function onPlayer(state: State, event: Extract<GameEvent<Input>, { type: 'player
   if (next.phase.id === 'bet' && allConnectedDone(next, Object.keys(next.r.bets)))
     return advance(next, event.now);
   if (next.phase.id === 'swap' && swapsIn(next)) return advance(next, event.now);
+  if (next.phase.id === 'cups' && cupsIn(next)) return advance(next, event.now);
   return next;
 }
 
@@ -190,6 +207,10 @@ function reduce(state: State, event: GameEvent<Input>): State {
       return reducePotato(state, event, advance);
     case 'tug':
       return reduceTug(state, event, advance);
+    case 'shuffle':
+      return reduceShuffle(state, event, advance);
+    case 'cups':
+      return reduceCups(state, event, advance);
     case 'open':
       return reduceOpen(state, event, advance);
     default:

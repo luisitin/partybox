@@ -12,6 +12,7 @@ import { Doors, LiveStage } from './LiveStage';
 import { LotCard } from './LotCard';
 import { PotatoRing } from './Potato';
 import { TugRope } from './Tug';
+import { ShellStage } from './Shells';
 import { OptionBoard } from './Options';
 import { LotTitle, PhoneRules } from './PhoneLot';
 import { OwnLineCard, insideWords } from './PhoneResult';
@@ -37,7 +38,15 @@ function StageOpen({ view }: { view: View }): JSX.Element | null {
       <LotTitle box={view.box} />
       {view.run ? (
         <div className={liveStyles.phoneStage}>
-          {view.run.kind === 'tug' ? (
+          {view.run.kind === 'shells' && view.shells ? (
+            <ShellStage
+              start={view.shells.start}
+              moves={view.shellSwaps}
+              tier={view.shells.tier}
+              reveal={view.outcome}
+              settled
+            />
+          ) : view.run.kind === 'tug' ? (
             <TugRope view={view} live={false} />
           ) : view.run.kind === 'potato' ? (
             <PotatoRing view={view} popped />

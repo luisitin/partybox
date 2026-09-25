@@ -5,7 +5,8 @@
 // A reading ("Two winners!") plays after the fixed line if ready in time; the box waits for it.
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { payout, tierOf } from '../odds';
+import { tierOf } from '../odds';
+import { returned } from '../returns';
 import { fixedRequest, lineOf, openRequest } from '../speech';
 import {
   EVENT_MS,
@@ -31,7 +32,7 @@ export function settle(state: State): State {
     const s = stats[id] ?? { biggestBet: 0, biggestWin: 0, longShots: 0, calls: 0, lost: 0 };
     const option = box.options[bet.option];
     const won = bet.option === outcome && option !== undefined;
-    const back = won ? payout(bet.amount, option.pay, box.grand) : 0;
+    const back = returned(state, id);
     coins[id] = Math.max(0, (coins[id] ?? 0) - bet.amount + back);
     stats[id] = {
       biggestBet: Math.max(s.biggestBet, bet.amount),

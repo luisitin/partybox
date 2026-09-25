@@ -77,6 +77,11 @@ const DOORS: readonly Label[] = [
 export const DOOR_PAY = 2;
 
 const EVENT_BOX: Record<LiveKind, { name: string; icon: string; flavour: string }> = {
+  shells: {
+    name: 'Shell Game',
+    icon: '🥤',
+    flavour: 'Stake the pot, follow the ball. The bigger the pot, the faster the cups.',
+  },
   tug: {
     name: 'Tug of War',
     icon: '🪢',
@@ -150,6 +155,20 @@ function doors(rng: RngState, n: number): [Round, RngState] {
   return [{ box: eventBox('doors', n, options), outcome }, s1];
 }
 
+/** Shell game: three cups; everyone stakes into one pot first, picks a cup after the shuffle. */
+const CUPS: readonly Label[] = [
+  { icon: '🥤', name: 'Cup 1' },
+  { icon: '🥤', name: 'Cup 2' },
+  { icon: '🥤', name: 'Cup 3' },
+];
+
+function shells(rng: RngState, n: number): [Round, RngState] {
+  // pay 0: a shared pot, split by stake (returns.ts), not odds.
+  const options = CUPS.map((c, i) => ({ ...option(c, i === 2 ? 34 : 33), pay: 0 }));
+  const [start, s1] = int(rng, 3);
+  return [{ box: eventBox('shells', n, options), outcome: start, detail: [start] }, s1];
+}
+
 /** Tug of war: bet on your own team (▲ Sun or ● Moon, dealt at `init`), even odds. */
 const TEAMS: readonly Label[] = [
   { icon: '▲', name: 'Sun' },
@@ -182,5 +201,6 @@ export function drawEvent(kind: LiveKind, rng: RngState, n: number): [Round, Rng
   if (kind === 'doors') return doors(rng, n);
   if (kind === 'potato') return potato(rng, n);
   if (kind === 'tug') return tug(rng, n);
+  if (kind === 'shells') return shells(rng, n);
   return wheel(rng, n);
 }

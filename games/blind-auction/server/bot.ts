@@ -12,6 +12,11 @@ export function decide(view: BlindAuctionControllerView, factor: number, rng: Rn
   // Hot potato: pass it on the moment it lands (the server makes you hold it a beat first).
   if (view.phaseId === 'potato')
     return view.potato?.holder === view.me.id ? { type: 'pass' } : null;
+  // Shell game: a bot 'follows the ball' about as well as a person — right more often than chance.
+  if (view.phaseId === 'cups') {
+    if (view.myStake <= 0 || view.myCup !== null) return null;
+    return { type: 'cup', cup: Math.floor(rng.float() * 3) };
+  }
   // Tug of war: pull (the server counts at most one tap every 80 ms).
   if (view.phaseId === 'tug') return view.myTeam === null ? null : { type: 'tug' };
   if (view.phaseId === 'swap') {

@@ -21,7 +21,8 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
   const L = useT(STRINGS);
   // Tug of war: you back your own team, picked for you.
   const [option, setOption] = useState<number | null>(
-    view.myBet?.option ?? (view.box?.event === 'tug' ? view.myTeam : null),
+    view.myBet?.option ??
+      (view.box?.event === 'tug' ? view.myTeam : view.box?.event === 'shells' ? 0 : null),
   );
   const [amount, setAmount] = useState(view.myBet?.amount ?? 0);
   const box = view.box;
@@ -70,7 +71,10 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       }}
       blocked={option === null || self}
       texts={{
-        place: (n) => L('Bet {coin} {n} on {what}', { coin: COIN, n, what: label }),
+        place: (n) =>
+          box.event === 'shells'
+            ? L('Put {coin} {n} in the pot', { coin: COIN, n })
+            : L('Bet {coin} {n} on {what}', { coin: COIN, n, what: label }),
         change: (n) => L('Change to {coin} {n} on {what}', { coin: COIN, n, what: label }),
         placed: (n) => L('✓ {coin} {n} on {what}', { coin: COIN, n, what: label }),
         zero:
@@ -92,20 +96,28 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
             <LotTitle box={box} />
             <Purse coins={view.coins} />
           </div>
-          <OptionBoard
-            options={box.options}
-            size="phone"
-            selected={option}
-            onSelect={setOption}
-            locked={
-              box.event === 'potato'
-                ? view.mySeat
-                : box.event === 'tug' && view.myTeam !== null
-                  ? 1 - view.myTeam
-                  : null
-            }
-          />
-          {option === null ? (
+          {box.event === 'shells' ? (
+            <p className={styles.betHint}>
+              {L(
+                'Put coins in the pot. You pick a cup after the shuffle; the bigger the pot, the faster it goes!',
+              )}
+            </p>
+          ) : (
+            <OptionBoard
+              options={box.options}
+              size="phone"
+              selected={option}
+              onSelect={setOption}
+              locked={
+                box.event === 'potato'
+                  ? view.mySeat
+                  : box.event === 'tug' && view.myTeam !== null
+                    ? 1 - view.myTeam
+                    : null
+              }
+            />
+          )}
+          {option === null && box.event !== 'shells' ? (
             // Review: a first-timer didn't know to tap a card or where the stake goes.
             <p className={styles.betHint}>{L('Tap a card, then choose your coins')}</p>
           ) : null}

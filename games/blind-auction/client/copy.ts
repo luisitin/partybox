@@ -102,6 +102,11 @@ export function ownLineText(
         big: L('Not this time: −{n}', { n: line.amount }),
         small: L('It was {what}.', { what: inside }),
       };
+    case 'back':
+      return {
+        big: L('Stake back: {coin} {n}', { coin: COIN, n: line.amount }),
+        small: L('Everyone called it the same way. It was {what}.', { what: inside }),
+      };
     case 'sat':
       return { big: L('You sat this one out'), small: L('It was {what}.', { what: inside }) };
   }
