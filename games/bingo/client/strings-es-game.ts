@@ -59,8 +59,7 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   'Nothing left to play for on these cards — the scores in a moment.':
     'Ya no queda nada por jugar en estos cartones: enseguida, los puntos.',
   'dealing the cards…': 'repartiendo cartones…',
-  'everyone is ready': 'todos listos',
-  'first number in': 'primer número en',
+  'everyone has picked': 'todos eligieron',
   'get your thumbs ready': 'prepara los pulgares',
   'call {n}': 'bola {n}',
   'before that': 'antes',

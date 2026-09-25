@@ -76,6 +76,9 @@ export function wordCount(text: string): number {
 }
 /** The round card: "Round r of R" and its line (~10 words): readMs(10) ≈ 6.3 s (was 5 s). */
 export const INTRO_MS = 7_000;
+/** ADR-053: round 1's card follows the shell's start stage (rules, READY, 3 · 2 · 1), so it is a
+ *  short title beat — "Round 1 of R" and its kicker — not a second read. Later rounds keep INTRO_MS. */
+export const FIRST_INTRO_MS = 2_000;
 export const VOTE_MS = 20_000;
 /** A reveal: the TV's four beats land over 1.8 s, then the time to read what they brought — both
  *  answers again, two authors, every voter's name, the counts and points (~4 words) — at least

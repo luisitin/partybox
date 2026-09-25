@@ -209,8 +209,14 @@
   border-color: var(--pb-accent);
   color: var(--pb-on-accent);
 }
+/* review 6c24ba (3): Place with no value reads as off — flat, outlined, muted, no accent — and
+   turns accent-filled the moment a stake is typed (never opacity alone). */
 .place:disabled {
-  opacity: 0.5;
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--pb-border);
+  color: var(--pb-text-muted);
+  cursor: not-allowed;
 }
 
 /* A "phone only" room (S-005, the owner): the TV's reveal rows on the phone — one line each,
@@ -388,4 +394,20 @@
   .wagerPrompt {
     font-size: var(--pb-font-body);
   }
+}
+
+/* The content-language marker (EnglishNote.tsx): a quiet pill under English deck text on a phone
+   in another language. */
+.englishNote {
+  display: block;
+  width: fit-content;
+  margin: var(--pb-space-1) auto 0;
+  padding: 0 var(--pb-space-2);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
 }

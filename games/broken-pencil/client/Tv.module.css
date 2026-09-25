@@ -16,15 +16,6 @@
   white-space: nowrap;
 }
 
-.howto {
-  margin: 0;
-  padding-left: 1.2em;
-  font-size: var(--pb-font-body);
-  color: var(--pb-text-muted);
-  text-align: left;
-  line-height: 1.5;
-}
-
 /* Draw / pass / guess: the tile block sits in the vertical middle of a long wait (review-loop #8). */
 .waiting {
   justify-content: center;
