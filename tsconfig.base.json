@@ -29,6 +29,8 @@
       "@partybox/game-sdk/speech": ["./packages/game-sdk/src/speech.ts"],
       "@partybox/game-sdk/ui/secret-card": ["./packages/game-sdk/src/ui-secret-card.ts"],
       "@partybox/game-sdk/ui/face-picker": ["./packages/game-sdk/src/ui-face-picker.ts"],
+      "@partybox/game-sdk/ui/dial": ["./packages/game-sdk/src/ui-dial.ts"],
+      "@partybox/game-sdk/ui/team-banner": ["./packages/game-sdk/src/ui-team-banner.ts"],
       "@partybox/game-sdk/ui/word-grid": ["./packages/game-sdk/src/ui-word-grid.ts"],
       "@partybox/game-sdk/ui/order-picker": ["./packages/game-sdk/src/ui-order-picker.ts"],
       "@partybox/game-sdk/ui/bid-pad": ["./packages/game-sdk/src/ui-bid-pad.ts"],
