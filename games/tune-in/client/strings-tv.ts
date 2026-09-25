@@ -59,6 +59,9 @@ export const STRINGS_TV: Record<string, string> = {
     'Lee las reglas y toca Estoy listo en tu teléfono',
   '{n} of {total} ready': '{n} de {total} listos',
   'Here we go!': '¡Allá vamos!',
+  '★ {name} taps Next round when everyone’s ready':
+    '★ {name} toca Siguiente ronda cuando todos estén listos',
+  '★ {name} taps See results': '★ {name} toca Ver resultados',
   'first up': 'empieza',
   'No clue this round': 'Sin pista esta ronda',
   'Waiting for {name} to reconnect': 'Esperando a que {name} vuelva',

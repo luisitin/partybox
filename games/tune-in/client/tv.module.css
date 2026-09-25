@@ -727,6 +727,41 @@
   animation-delay: var(--pb-motion-slow);
 }
 
+/* Who moves the game on: it breathes, so the stage is never still while the room reads. */
+.nextHint {
+  margin: var(--pb-space-3) 0 0;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  text-align: center;
+  animation:
+    global(pb-fade-in) var(--pb-motion-slow) var(--pb-ease) both,
+    tune-hint-breathe calc(var(--pb-motion-pulse) * 2.4) ease-in-out calc(var(--pb-motion-slow) * 2)
+      infinite;
+}
+
+@keyframes tune-hint-breathe {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.72;
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nextHint {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .nextHint {
+  animation: none;
+}
+
 /* Co-op's "+3 for the group" lands as the meter finishes growing. */
 .gainLine {
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;

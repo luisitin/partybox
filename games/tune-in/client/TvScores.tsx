@@ -31,6 +31,21 @@ function soloRows(view: TuneTvView): { rows: ScoreboardRow[]; before: string[] }
   return { rows: ranked, before };
 }
 
+/** Who moves the game on, breathing (the scores wait for the VIP's tap [cc45f4]; the line keeps
+ *  the stage alive while the room reads). */
+function NextHint({ view }: { view: GameTvProps<TuneTvView>['view'] }): JSX.Element | null {
+  const L = useT(STRINGS);
+  const vip = view.players.find((p) => p.id === view.vip);
+  if (!vip) return null;
+  return (
+    <p className={styles.nextHint}>
+      {view.last
+        ? L('★ {name} taps See results', { name: vip.name })
+        : L('★ {name} taps Next round when everyone’s ready', { name: vip.name })}
+    </p>
+  );
+}
+
 export function TvScores({ view }: GameTvProps<TuneTvView>): JSX.Element {
   const L = useT(STRINGS);
   useReading(view.reading);
@@ -62,6 +77,7 @@ export function TvScores({ view }: GameTvProps<TuneTvView>): JSX.Element {
             {L('Next up: {team}', { team: teamName(L, other) })}
           </BigText>
         )}
+        <NextHint view={view} />
       </Stage>
     );
   }
@@ -79,6 +95,7 @@ export function TvScores({ view }: GameTvProps<TuneTvView>): JSX.Element {
         <BigText level="h2" tone="muted">
           {ratingText(L, view.coop.rating)}
         </BigText>
+        <NextHint view={view} />
       </Stage>
     );
   }
@@ -89,6 +106,7 @@ export function TvScores({ view }: GameTvProps<TuneTvView>): JSX.Element {
       <div className={styles.board}>
         <Scoreboard rows={rows} stagger="climb" climbFrom={before} />
       </div>
+      <NextHint view={view} />
     </Stage>
   );
 }
