@@ -454,10 +454,14 @@ button.option:focus-visible {
 }
 
 .phone.picked .option:not(.selected) .name {
+  /* Two lines, never cut to a letter (review [e303ad] nit): the options stay tellable apart. */
+  display: -webkit-box;
   overflow: hidden;
   font-size: var(--pb-font-caption);
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 /* Every option pays the same (a uniform board): once one is picked, that shared line was read. */

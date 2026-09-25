@@ -44,6 +44,9 @@ export interface BidPadProps {
   /** Show "You have 🪙 N" above the dial (default). Off when the caller shows the coins itself,
    *  e.g. pinned in a header that never scrolls under a fade. */
   showHave?: boolean;
+  /** Pin the dial and chips in the footer above the confirm (they never scroll under a fade);
+   *  the body then holds only `header` and `below`. E.g. once the thing to bet on is picked. */
+  pinPad?: boolean;
   className?: string;
 }
 
@@ -103,6 +106,7 @@ export function BidPad({
   texts = {},
   blocked = false,
   showHave = true,
+  pinPad = false,
   className,
 }: BidPadProps): JSX.Element {
   const L = useT(BID_PAD_STRINGS);
@@ -155,11 +159,62 @@ export function BidPad({
       </button>
     );
   };
+  const pad = (
+    <div className={styles.pad} onContextMenu={(e) => e.preventDefault()}>
+      {showHave ? (
+        <p className={styles.have}>{L('You have {coin} {n}', { coin, n: max })}</p>
+      ) : null}
+      <div className={styles.dial}>
+        {stepper(-1, down)}
+        <output
+          className={styles.amount}
+          aria-live="polite"
+          aria-label={L('Your bid: {n}', { n: bid })}
+        >
+          <span className={styles.coin} aria-hidden>
+            {coin}
+          </span>
+          <span key={bid} className={styles.digits}>
+            {bid}
+          </span>
+        </output>
+        {stepper(1, up)}
+      </div>
+      <div className={styles.chips}>
+        {chipTargets(bid, chips, max).map((c) => (
+          <button
+            key={c.amount}
+            type="button"
+            className={styles.chip}
+            aria-disabled={!c.live}
+            aria-label={L('Add {n}', { n: c.amount })}
+            onClick={() => set(c.to)}
+          >
+            +{c.amount}
+          </button>
+        ))}
+        <button
+          type="button"
+          className={`${styles.chip} ${styles.allIn}`}
+          aria-disabled={bid >= max || max <= 0}
+          onClick={() => set(max)}
+        >
+          {L('All in')}
+        </button>
+      </div>
+      {notice ? (
+        <p className={styles.notice} role="status">
+          {notice}
+        </p>
+      ) : null}
+    </div>
+  );
   return (
     <Screen
       className={`${styles.screen} ${className ?? ''}`}
       footer={
         <div className={styles.footer}>
+          {pinPad ? pad : null}
           <PrimaryButton
             done={sent && !passed && !blocked}
             disabled={bid === 0 || blocked}
@@ -186,54 +241,7 @@ export function BidPad({
     >
       {header}
       <div className={styles.layout}>
-        <div className={styles.pad} onContextMenu={(e) => e.preventDefault()}>
-          {showHave ? (
-            <p className={styles.have}>{L('You have {coin} {n}', { coin, n: max })}</p>
-          ) : null}
-          <div className={styles.dial}>
-            {stepper(-1, down)}
-            <output
-              className={styles.amount}
-              aria-live="polite"
-              aria-label={L('Your bid: {n}', { n: bid })}
-            >
-              <span className={styles.coin} aria-hidden>
-                {coin}
-              </span>
-              <span key={bid} className={styles.digits}>
-                {bid}
-              </span>
-            </output>
-            {stepper(1, up)}
-          </div>
-          <div className={styles.chips}>
-            {chipTargets(bid, chips, max).map((c) => (
-              <button
-                key={c.amount}
-                type="button"
-                className={styles.chip}
-                aria-disabled={!c.live}
-                aria-label={L('Add {n}', { n: c.amount })}
-                onClick={() => set(c.to)}
-              >
-                +{c.amount}
-              </button>
-            ))}
-            <button
-              type="button"
-              className={`${styles.chip} ${styles.allIn}`}
-              aria-disabled={bid >= max || max <= 0}
-              onClick={() => set(max)}
-            >
-              {L('All in')}
-            </button>
-          </div>
-          {notice ? (
-            <p className={styles.notice} role="status">
-              {notice}
-            </p>
-          ) : null}
-        </div>
+        {pinPad ? null : pad}
         {below ? <div className={styles.below}>{below}</div> : null}
       </div>
     </Screen>

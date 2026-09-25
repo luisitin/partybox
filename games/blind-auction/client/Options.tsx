@@ -141,6 +141,8 @@ export function OptionBoard({
             aria-checked={on}
             aria-disabled={locked === i}
             className={`${cls} ${locked === i ? styles.locked : ''}`}
+            // Each card morphs to its folded place (a view transition per card, not a page dissolve).
+            style={{ viewTransitionName: `ba-opt-${i}` } as CSSProperties}
             onClick={() => {
               if (locked !== i) onSelect?.(i);
             }}

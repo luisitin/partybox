@@ -1,7 +1,7 @@
 // `bet` on the phone: pick what you think is inside (the box's contents are big tappable cards
 // with their odds and payouts), then how much — the shared BidPad, 0 up to all your coins. A resend
 // changes the bet. "Sit this one out" bets nothing. A broke player is told they got 10 to play with.
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
@@ -63,6 +63,14 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
   const [insured, setInsured] = useState(view.myBet?.insured === true);
   const [also, setAlso] = useState<number | null>(view.myBet?.also ?? null);
   const [doubled, setDoubled] = useState(view.myBet?.doubled === true);
+  const headRef = useRef<HTMLDivElement>(null);
+  // A pick folds the cards and pins the stake: the body is short again, so it starts at its top
+  // (the title never left under the timer bar; review [e303ad] #1).
+  useEffect(() => {
+    let el: HTMLElement | null = headRef.current?.parentElement ?? null;
+    while (el && el.scrollHeight <= el.clientHeight + 1) el = el.parentElement;
+    if (el) el.scrollTop = 0;
+  }, [option]);
   const box = view.box;
   if (!box) return null;
   const what = option !== null ? box.options[option] : undefined;
@@ -175,8 +183,11 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       }}
       // The coins sit pinned in the header, never under the scroll fade (review [39e0f5eb] #1).
       showHave={false}
+      // Once a card is picked the stake rides in the footer: always on screen, at any text size
+      // (review [e303ad]); before a pick the cards have the whole body.
+      pinPad={option !== null}
       header={
-        <div className={styles.betHead}>
+        <div className={styles.betHead} ref={headRef}>
           <LotTitle box={box} coins={view.coins} />
           {option === null || !control ? (
             <TwistNote twist={box.twist} size="phone" short={option !== null} />

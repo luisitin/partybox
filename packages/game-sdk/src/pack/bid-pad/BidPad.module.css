@@ -226,3 +226,9 @@
     padding: var(--pb-space-1);
   }
 }
+
+/* pinPad: the dial and chips ride in the footer, tight above the confirm. */
+.footer .pad {
+  margin-top: 0;
+  gap: var(--pb-space-2);
+}
