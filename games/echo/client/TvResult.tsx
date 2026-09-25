@@ -87,13 +87,7 @@ export function TvResult({ view }: GameTvProps<EchoTvView>): JSX.Element | null 
               below={beat >= 2 ? <AuthorTag player={byId(c.by)} /> : null}
               label={c.echo && beat < 2 ? L('echo') : c.text}
             >
-              {c.echo ? (
-                <span className={styles.struck}>
-                  <ClueText text={c.text} />
-                </span>
-              ) : (
-                <ClueText text={c.text} />
-              )}
+              <ClueText text={c.text} struck={c.echo} />
             </Card>
           ))}
           {r.clues.length === 0 ? <span className={res.burn}>{L('No clues!')}</span> : null}

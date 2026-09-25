@@ -21,15 +21,8 @@ function Count({ n }: { n: number }): JSX.Element {
 }
 
 function Pile({ kind, n, label }: { kind: PileKind; n: number; label: string }): JSX.Element {
-  const shown = Math.min(3, n);
   return (
     <div className={styles.pile} data-kind={kind}>
-      <span className={styles.pileCards} aria-hidden>
-        {shown === 0 ? <span className={styles.pileEmpty} /> : null}
-        {Array.from({ length: shown }, (_, k) => (
-          <span key={k} className={styles.pileCard} style={{ '--k': k } as CSSProperties} />
-        ))}
-      </span>
       <Count n={n} />
       <span className={styles.pileLabel}>{label}</span>
     </div>
@@ -118,9 +111,9 @@ export function fitOf(text: string): 's' | 'm' | 'l' {
 }
 
 /** A clue in card size: long words step down a size so they never spill. */
-export function ClueText({ text }: { text: string }): JSX.Element {
+export function ClueText({ text, struck }: { text: string; struck?: boolean }): JSX.Element {
   return (
-    <span className={styles.clueText} data-len={fitOf(text)}>
+    <span className={`${styles.clueText} ${struck ? styles.struck : ''}`} data-len={fitOf(text)}>
       {text}
     </span>
   );

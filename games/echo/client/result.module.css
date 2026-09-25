@@ -24,7 +24,7 @@
   font-size: var(--pb-font-display);
   font-weight: 1000;
   line-height: 1;
-  letter-spacing: 0.02em;
+  font-kerning: normal;
   text-transform: uppercase;
   color: var(--pb-accent-2);
 }

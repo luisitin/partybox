@@ -32,9 +32,8 @@
 
 .pile {
   display: grid;
-  grid-template-columns: auto auto;
-  align-items: center;
-  gap: 0 var(--pb-space-3);
+  justify-items: center;
+  gap: 0;
 }
 
 .pileCards {
@@ -81,7 +80,6 @@
 }
 
 .pileLabel {
-  grid-column: 2;
   font-size: var(--pb-font-caption);
   font-weight: 700;
   color: var(--pb-text-muted);
