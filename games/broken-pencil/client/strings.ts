@@ -177,6 +177,9 @@ export const STRINGS: Strings = {
     'Your book broke': 'Tu libro se rompió',
     'That was Broken Pencil': 'Eso fue Broken Pencil',
     'close enough ✓': 'casi igual ✓',
+    // Pacing rule (2026-09-25): the summary waits for the VIP's Next.
+    'Finish the game': 'Terminar el juego',
+    'Moving on…': 'Avanzando…',
     Unbroken: 'Intacto',
     '“{word}” survived {n} players': '“{word}” sobrevivió a {n} jugadores',
   },

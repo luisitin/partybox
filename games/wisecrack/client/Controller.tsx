@@ -3,7 +3,7 @@
 // with inputSchema before reduce sees the input.
 import { useState } from 'react';
 import type { JSX } from 'react';
-import { Scoreboard, Screen, WaitingScreen, useT } from '@partybox/game-sdk/ui';
+import { PrimaryButton, Scoreboard, Screen, WaitingScreen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { WisecrackControllerView } from '../server/index';
 import type { Input } from '../server/types';
@@ -23,9 +23,25 @@ const COUNT_MS = 600;
 // the ceremony — only the dev fixture preview renders that phase, as the final-scores screen.
 // The board is the point of this screen, so no mood disc: the round's delta is the hero, then my
 // rank, then the compact board with a numeric rank (the crown is the results screen's).
-function ControllerScores({ view, me }: Props): JSX.Element {
+function ControllerScores({ view, me, skip }: Props): JSX.Element {
   const L = useT(STRINGS);
   const final = view.round >= view.rounds;
+  // Pacing rule (2026-09-25): between rounds the board waits for the VIP's Next (a long fallback
+  // on the server); one tap locks the button so a double tap never skips two phases.
+  const [sent, setSent] = useState(false);
+  const next =
+    !final && view.phaseId === 'scores' && skip ? (
+      <PrimaryButton
+        done={sent}
+        onClick={() => {
+          if (sent) return;
+          setSent(true);
+          skip();
+        }}
+      >
+        {sent ? L('Moving on…') : L('Next round')}
+      </PrimaryButton>
+    ) : undefined;
   // The delta counts up from 0 and the total from the previous score (one --pb-motion-slow).
   const delta = useCountUp(view.myDelta, 0, COUNT_MS);
   const score = useCountUp(view.myScore, view.myScore - view.myDelta, COUNT_MS);
@@ -39,7 +55,7 @@ function ControllerScores({ view, me }: Props): JSX.Element {
     ? L('Final: {place} · {score} points', { place, score })
     : L('{place} · {score} points', { place, score });
   return (
-    <Screen>
+    <Screen footer={next}>
       <div className={styles.scoresHero} role="status" aria-live="polite">
         {view.myDelta === 0 ? (
           // Nothing to count up: the rank is the news, and a giant grey "+0" is not (review-loop #31).

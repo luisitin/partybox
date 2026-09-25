@@ -39,9 +39,22 @@ export const BINGO_MS = 10_000;
 export const BINGO_ABANDONED_MS = 5 * 60_000;
 /** I-400 A: after the verdict is read, nobody picking for this long moves the room on. */
 export const NO_PICK_MS = 20_000;
-/** I-105 A: the vote after a bingo runs this long from its first choice (the note's six seconds). */
-export const VOTE_MS = 6_000;
-export const SCOREBOARD_MS = 6_000;
+/** Owner's pacing rule (Agent Hub #decisions cc45f4, 2026-09-25): "Enough time to read" — a
+ *  screen of words stays up 1.5 s + 1/3 s a word, x1.3 because a Spanish phone or 200 % text
+ *  reads longer (the server cannot see the phones' languages, so the margin is always on). */
+export function readMs(words: number): number {
+  return Math.round((1_500 + words * 333) * 1.3);
+}
+/** I-105 A: the vote after a bingo runs this long from its first choice — three options and the
+ *  hint to read, then a moment to choose (was the note's six seconds; pacing rule 2026-09-25).
+ *  Everyone voting still closes it at once. */
+export const VOTE_MS = 15_000;
+/** The between-rounds board: "Points", the next pattern's line (~8 words) and a name, place and
+ *  score a player — 4 players ≈ 10.6 s, 12 ≈ 21 s (was a flat 6 s). Never under 10 s. */
+export const SCOREBOARD_MIN_MS = 10_000;
+export function scoreboardMs(players: number): number {
+  return Math.max(SCOREBOARD_MIN_MS, readMs(8 + 3 * players));
+}
 export const DECK = 75;
 export const FREE = 12;
 

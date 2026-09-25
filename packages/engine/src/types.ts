@@ -85,8 +85,22 @@ export interface RoomState {
   votes?: Record<string, string>;
   /** Part 00 §1.4: the game whose About sheet the VIP (`by`) has open — the TV shows it big. */
   highlight?: { gameId: string; by: string };
+  /** ADR-053: the start stage between Start and the game (rules, READY, 3·2·1). */
+  starting?: StartStage;
   /** Ruling 2: when each player's last "👍 … suggests …" toast went out (the 10 s throttle). */
   suggestedAt?: Record<string, number>;
+}
+
+/** ADR-053: what Start fixed (game, settings, seed) and who has tapped READY. */
+export interface StartStage {
+  gameId: string;
+  settings: Settings;
+  seed: number;
+  ready: string[];
+  /** When the 3·2·1 began (server clock), or null while the room is still reading. */
+  countdownAt: number | null;
+  /** The VIP said Wait during the count: no count until their Start now. */
+  held?: boolean;
 }
 
 /** I-652 B: one finished game, as the lobby remembers it. */
@@ -134,6 +148,8 @@ export type RoomEvent =
   | { type: 'vote'; now: number; playerId: string; gameId: string | null }
   /** ADR-047: a phone flips its "I can see the TV". */
   | { type: 'presence'; now: number; playerId: string; canSeeTv: boolean }
+  /** ADR-053: a person has read the rules. */
+  | { type: 'ready'; now: number; playerId: string }
   | {
       type: 'vip';
       now: number;

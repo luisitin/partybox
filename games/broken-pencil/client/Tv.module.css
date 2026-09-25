@@ -156,6 +156,29 @@
   container-type: size;
 }
 
+/* The pacing rule holds a page up to ~10 s; an empty drawing then left the TV with no pixel moving
+   for 5 s (dead-air, c/pacing-5). The held page breathes like a leaf on a table: a slow drift in
+   the individual `scale`/`translate` properties, so it never fights the flip's `transform`. */
+@media (prefers-reduced-motion: no-preference) {
+  .current {
+    animation: pb-bp-held calc(var(--pb-motion-confetti) * 2) ease-in-out infinite;
+  }
+}
+:global(:root[data-motion='off']) .current {
+  animation: none;
+}
+@keyframes pb-bp-held {
+  0%,
+  100% {
+    scale: 1;
+    translate: 0 0;
+  }
+  50% {
+    scale: 1.012;
+    translate: 0 calc(-1 * var(--pb-space-1));
+  }
+}
+
 .page {
   display: flex;
   flex-direction: column;

@@ -98,6 +98,7 @@ function setup(): {
   recorder: ReturnType<typeof createRecorder>;
   code: string;
   vip: string;
+  clock: ReturnType<typeof createClock>;
 } {
   const dir = mkdtempSync(join(tmpdir(), 'pb-rec-'));
   dirs.push(dir);
@@ -108,7 +109,7 @@ function setup(): {
   const code = host.house().code;
   const { playerId, token } = host.mintPlayer();
   host.dispatch(code, { type: 'join', playerId, token, name: 'Sam', avatarId: 'fox' });
-  return { dir, host, recorder, code, vip: playerId };
+  return { dir, host, recorder, code, vip: playerId, clock };
 }
 
 function sessionDirs(dir: string): string[] {
@@ -128,7 +129,7 @@ describe('recorder', () => {
       playerId: vip,
       action: { action: 'selectGame', gameId: 'tiny' },
     });
-    host.dispatch(code, { type: 'vip', playerId: vip, action: { action: 'start' }, seed: 1 });
+    host.dispatch(code, { type: 'vip', playerId: vip, action: { action: 'startNow' }, seed: 1 });
     host.dispatch(code, { type: 'input', playerId: vip, input: { hit: true } });
     host.dispatch(code, { type: 'input', playerId: vip, input: { hit: true } });
     host.dispatch(code, { type: 'vip', playerId: vip, action: { action: 'skip' } });
@@ -158,7 +159,7 @@ describe('recorder', () => {
       playerId: vip,
       action: { action: 'selectGame', gameId: 'tiny' },
     });
-    host.dispatch(code, { type: 'vip', playerId: vip, action: { action: 'start' }, seed: 1 });
+    host.dispatch(code, { type: 'vip', playerId: vip, action: { action: 'startNow' }, seed: 1 });
     host.dispatch(code, { type: 'input', playerId: vip, input: { hit: true } });
     host.dispatch(code, { type: 'vip', playerId: vip, action: { action: 'end' } });
     await recorder.flush();
@@ -170,7 +171,7 @@ describe('recorder', () => {
   });
 
   it('writes nothing while recording is off, and records again once it is back on', async () => {
-    const { dir, host, recorder, code, vip } = setup();
+    const { dir, host, recorder, code, vip, clock } = setup();
     host.dispatch(code, {
       type: 'vip',
       playerId: vip,
@@ -181,7 +182,7 @@ describe('recorder', () => {
       playerId: vip,
       action: { action: 'selectGame', gameId: 'tiny' },
     });
-    host.dispatch(code, { type: 'vip', playerId: vip, action: { action: 'start' }, seed: 1 });
+    host.dispatch(code, { type: 'vip', playerId: vip, action: { action: 'startNow' }, seed: 1 });
     host.dispatch(code, { type: 'vip', playerId: vip, action: { action: 'skip' } });
     await recorder.flush();
     expect(sessionDirs(dir)).toEqual([]);
@@ -191,6 +192,10 @@ describe('recorder', () => {
       action: { action: 'setRecording', on: true },
     });
     host.dispatch(code, { type: 'vip', playerId: vip, action: { action: 'playAgain' }, seed: 2 });
+    // ADR-053: Play again goes through the start stage — Start now, then the count's end
+    host.dispatch(code, { type: 'vip', playerId: vip, action: { action: 'startNow' } });
+    clock.set(clock.now() + 3000);
+    host.dispatch(code, { type: 'tick' });
     host.dispatch(code, { type: 'vip', playerId: vip, action: { action: 'skip' } });
     await recorder.flush();
     expect(sessionDirs(dir)).toHaveLength(1);
