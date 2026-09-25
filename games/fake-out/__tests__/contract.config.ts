@@ -6,7 +6,7 @@ import type { GameStateBase } from '@partybox/game-sdk';
 import type { State } from '../server/types';
 
 function beforeOptions(state: State): boolean {
-  return ['intro', 'question', 'lie'].includes(state.phase.id);
+  return ['question', 'lie'].includes(state.phase.id);
 }
 
 /** Text the viewer legitimately holds: the fact, their own lie, their own Suggest fakes. A secret
