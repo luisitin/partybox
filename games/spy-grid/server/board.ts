@@ -5,7 +5,7 @@ import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import type { Word } from '../content/schema';
 import { LANG, poolFor } from './content';
-import { normalize, sameAnswer } from './match';
+import { normalize, sameAnswer } from '@partybox/game-sdk/match';
 import type { Card, Kind, Mode, Team } from './types';
 
 export const BOARD_SIZE = 25;

@@ -2,7 +2,7 @@
 
 Session: worktree `C:/dev/partybox-game-spy-grid`, branch `game/spy-grid`, harness port 42390.
 Started 2026-09-24 from `main` @ 4bfd10eb. The Foundation's F0 + F2 are on branch `foundation` only;
-F1, F3–F7 are not built yet, so everything below that needs them runs on a stand-in.
+Foundation landed on main 2026-09-24 (00331644); the stand-ins still in use are listed below.
 
 ## Where it stands (2026-09-24)
 
@@ -25,9 +25,9 @@ F1, F3–F7 are not built yet, so everything below that needs them runs on a sta
 
 1. **Co-op failed mission crowns nobody (SPEC §9.11, P03 §5.7) vs the platform.** The sim invariant
    requires `winnerIds` non-empty, and `GameClientModule` has no per-game results headline. Today a
-   failed mission ties everyone (all score the agents found); the TV's win banner and every phone
-   say "Mission failed". _Proposed fix (platform):_ allow empty `winnerIds` for games tagged co-op,
-   and let a game name its results headline.
+   failed mission tied everyone. **Resolved by ADR-052 (results-kinds, on main 2026-09-24):** a lost
+   mission now has empty `winnerIds` + `outcome {kind:'coop', won:false}` + headline "Mission failed";
+   team games report `outcome {kind:'teams'}` with ▲/● marks.
 2. **TV guess timer.** Spec: normal digits during `guess`. The shell's normal timer adds a ~140 px
    row, so the whole board jumped down when guessing opened and back up at the next clue. All board
    phases use `quiet` (one shell height); the guess seconds are drawn in the clue bar with the same
@@ -46,8 +46,8 @@ F1, F3–F7 are not built yet, so everything below that needs them runs on a sta
 
 | Piece                                                            | Owner                  | Stand-in                                                                                                                                |
 | ---------------------------------------------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `match` (normalize, stem, sameAnswer, isLegalClue)               | Foundation F5          | `games/spy-grid/server/match.ts` — written to audit errata #15/#16/#25–#27/#31                                                          |
-| `teamsFromSeed`, `majorityPick`, `rotation`                      | Foundation F7          | `server/helpers.ts` (`[value, rng]` returns)                                                                                            |
+| `match` (normalize, stem, sameAnswer, isLegalClue)               | Foundation F5          | **swapped** 2026-09-24: `@partybox/game-sdk/match`                                                                                      |
+| `teamsFromSeed`, `majorityPick`, `rotation`                      | Foundation F7          | **swapped** 2026-09-24: `teamsFromSeed` from `@partybox/game-sdk`                                                                       |
 | `toSpeakable` + fixed-clip pipeline                              | Foundation F6          | `server/speech.ts`: fixed lines are live readings prefetched at start (≤ 10 pending)                                                    |
 | presence (`ctx.presence`, `canSeeTv`, per-player stage)          | Foundation F4          | none: phone-only rooms use PhoneStage; remote phones wait for F4                                                                        |
 | manifest `icon` 🗂️, `howToPlay`, `presence: anywhere`, `addedOn` | Foundation F2          | not in `manifest.json` (main's schema would strip them) — add on merge                                                                  |

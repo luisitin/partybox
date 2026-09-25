@@ -2,7 +2,7 @@
 // joiners" are the tail; seat order (`state.seats`) decides rotation and replacements.
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
-import { teamsFromSeed } from './helpers';
+import { teamsFromSeed } from '@partybox/game-sdk';
 import type { State, Team } from './types';
 import { TEAMS } from './types';
 
@@ -47,8 +47,8 @@ function seatOrder(state: State, team: Team): string[] {
 export function initialTeams(state: State, rng: RngState): [Record<Team, string[]>, RngState] {
   const players = state.seats.map((id) => state.players[id]).filter((p) => p !== undefined);
   if (state.mode === 'coop') return [{ sun: [...state.seats], moon: [] }, rng];
-  const [[a, b], next] = teamsFromSeed(players, rng);
-  return [{ sun: a, moon: b }, next];
+  const [dealt, next] = teamsFromSeed(players, rng);
+  return [{ sun: dealt.sun, moon: dealt.moon }, next];
 }
 
 export function join(state: State, id: string, team: Team): State {

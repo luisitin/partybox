@@ -1,7 +1,7 @@
 // The clue rules (SPEC §9.8), shared by the server and the spymaster's phone so both judge a clue
 // the same way while it is typed. Pure; the board words' roots come in as data (the phone gets
 // them through the spymaster's view), so nothing here touches content.
-import { isLegalClue, normalize } from './match';
+import { isLegalClue, normalize } from '@partybox/game-sdk/match';
 import type { ClueReason } from './types';
 
 export const CLUE_MAX = 20;

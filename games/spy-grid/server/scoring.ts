@@ -1,5 +1,5 @@
 // Results and awards (SPEC §9.10, §9.11). Teams: each player scores their team's round wins, so a
-// team ranks together and a draw crowns both. Co-op: everyone scores the agents found and ties.
+// team ranks together and a draw crowns both. Co-op: everyone scores the agents found; a lost mission has no winner (ADR-052).
 import { buildResults } from '@partybox/game-sdk';
 import type { GameAward, GameResults } from '@partybox/game-sdk';
 import { teamOf } from './teams';
@@ -75,15 +75,35 @@ export function results(state: State): GameResults | null {
   if (state.mode === 'coop') {
     const found = agentsFound(state);
     for (const id of Object.keys(state.players)) scores[id] = found;
-    // SPEC wants a failed mission to crown nobody (P03 §5.7), but the platform requires a winner
-    // (sim invariant "no winner"): everyone ties, and the mission line tells the truth (NOTES.md).
-    return buildResults(state, scores, awards(state));
+    // ADR-052: a failed mission crowns nobody (P03 §5.7); a complete one crowns everyone.
+    const won = state.winner === 'sun';
+    const base = buildResults(state, scores, awards(state));
+    return {
+      ...base,
+      winnerIds: won ? Object.keys(state.players) : [],
+      outcome: { kind: 'coop', won },
+      headline: won ? 'Mission complete! 🕶️' : 'Mission failed',
+    };
   }
   for (const id of Object.keys(state.players)) {
     const team = teamOf(state, id);
     scores[id] = team ? state.roundWins[team] : 0;
   }
-  return buildResults(state, scores, awards(state));
+  const base = buildResults(state, scores, awards(state));
+  const sun = state.roundWins.sun;
+  const moon = state.roundWins.moon;
+  const winner = sun === moon ? null : sun > moon ? 'sun' : 'moon';
+  return {
+    ...base,
+    outcome: {
+      kind: 'teams',
+      winner,
+      teams: [
+        { id: 'sun', name: 'Sun', mark: '▲', members: [...state.teams.sun] },
+        { id: 'moon', name: 'Moon', mark: '●', members: [...state.teams.moon] },
+      ],
+    },
+  };
 }
 
 /** "Mission complete with 2 clues to spare 🕶️" or "Agents found: 6 of 9" (co-op finale). */

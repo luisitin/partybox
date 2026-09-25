@@ -6,7 +6,7 @@ import type { Rng } from '@partybox/game-sdk';
 import type { Theme } from '../content/schema';
 import { clueProblem } from './clue-rules';
 import { LANG, SPICY_WORDS, poolFor, wordEntry } from './content';
-import { sameAnswer } from './match';
+import { sameAnswer } from '@partybox/game-sdk/match';
 import { controllerView } from './views';
 import type { SpyControllerView } from './views';
 import type { Input, Pointer, State } from './types';

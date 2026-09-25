@@ -10,7 +10,7 @@ import {
   SPICY_WORDS,
   wordEntry,
 } from '../server/content';
-import { isLegalClue, normalize } from '../server/match';
+import { isLegalClue, normalize } from '@partybox/game-sdk/match';
 import type { Theme, Word } from '../content/schema';
 
 const ALL = [...FAMILY_WORDS, ...SPICY_WORDS];
