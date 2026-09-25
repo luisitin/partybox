@@ -3,6 +3,8 @@
 
 /** `rules`: nobody is hurried (no clock shown); after this long an idle phone stops holding the room. */
 export const RULES_SAFETY_MS = 180_000;
+/** …and once someone is ready it waits for the rest, but not past this: that phone has gone. */
+export const RULES_GIVE_UP_MS = 600_000;
 /** `rules` step 1: the 3·2·1 once everyone is ready. */
 export const COUNTDOWN_MS = 3_000;
 

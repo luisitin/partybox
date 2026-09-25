@@ -4,7 +4,7 @@
 // VIP's skip — a 3·2·1 (step 1, ADR-033) and the first box.
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { COUNTDOWN_MS, RULES_SAFETY_MS } from '../timing';
+import { COUNTDOWN_MS, RULES_GIVE_UP_MS, RULES_SAFETY_MS } from '../timing';
 import type { Input, State, Transition } from '../types';
 
 export function enterRules(state: State, now: number): State {
@@ -37,8 +37,9 @@ export function reduceRules(state: State, event: GameEvent<Input>, next: Transit
   if (isTimerFor(state, event)) {
     if (state.rulesStep === 1) return next(state, event.now);
     // The safety net only ends a room where no person has done anything (the contract's idle
-    // players); once anyone is ready, it keeps waiting for the rest (reviewer [a9623e]).
-    if (anyHumanReady(state))
+    // players); once anyone is ready, it keeps waiting for the rest (reviewer [a9623e]) — up to
+    // RULES_GIVE_UP_MS, after which a phone that still hasn't tapped has walked away.
+    if (anyHumanReady(state) && event.now - state.phase.startedAt < RULES_GIVE_UP_MS)
       return { ...state, phase: { ...state.phase, deadline: event.now + RULES_SAFETY_MS } };
     return countDown(state, event.now);
   }

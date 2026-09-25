@@ -63,6 +63,12 @@ describe('rules and ready-up', () => {
     expect(s.rulesStep).toBe(1);
   });
 
+  it('a phone that never taps is given up on after 10 minutes', () => {
+    let s = ready(start(3), 'p1');
+    for (let i = 0; i < 4; i++) s = timer(s);
+    expect([s.phase.id, s.rulesStep]).toEqual(['rules', 1]);
+  });
+
   it('nobody touched anything: the safety net starts the countdown', () => {
     const s = timer(start(3));
     expect([s.phase.id, s.rulesStep]).toEqual(['rules', 1]);
