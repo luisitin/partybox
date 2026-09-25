@@ -1,49 +1,53 @@
-// Typed access to content/*.json and the draw (P00 §2.5): `init` takes exactly the lots this game
-// plays, with each one's outcome, and nothing else of the packs ever enters state or a view.
+// Typed access to content/*.json and the draw (P00 §2.5): `init` takes exactly the boxes this game
+// plays, with each one's outcome, and nothing else of the packs ever enters state or a view. A lot
+// from the packs becomes a box: each possible outcome is something the box might hold.
 import { nextFloat, shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { lotPackSchema, pronunciationsSchema } from '../content/schema';
-import type { Chaos, Lot, Outcome, Pronunciations } from '../content/schema';
+import type { Lot, Outcome, Pronunciations } from '../content/schema';
 import grandJson from '../content/grand.json' with { type: 'json' };
 import lotsJson from '../content/lots.json' with { type: 'json' };
 import pronunciationsJson from '../content/pronunciations.json' with { type: 'json' };
 import spicyJson from '../content/spicy.json' with { type: 'json' };
-import type { Cfg, LotItem } from './types';
+import { payOf } from './odds';
+import type { Box, BoxOption, Cfg, ContentKind } from './types';
 
-const LOTS = lotPackSchema.parse(lotsJson);
-export const NORMAL_POOL: readonly Lot[] = LOTS.filter((l) => l.chaos !== 'wild');
-export const WILD_POOL: readonly Lot[] = LOTS.filter((l) => l.chaos === 'wild');
+export const LOT_POOL: readonly Lot[] = lotPackSchema.parse(lotsJson);
 export const GRAND_POOL: readonly Lot[] = lotPackSchema.parse(grandJson);
 export const SPICY_POOL: readonly Lot[] = lotPackSchema.parse(spicyJson);
 export const PRONUNCIATIONS: Pronunciations = pronunciationsSchema.parse(pronunciationsJson);
 
-/** Share of the ordinary slots that come from the wild pool, per `chaos` setting. */
-const WILD_SHARE: Record<Chaos, number> = { calm: 0, normal: 0.2, wild: 0.5 };
-
-/** A coin amount at `startCoins`: the packs assume 100, rounded to 5 (never below 5). */
-export function scaleAmount(amount: number, startCoins: number): number {
-  return Math.max(5, Math.round((amount * startCoins) / 100 / 5) * 5);
+/** What each outcome is as a thing in the box. Two gains in one box: the bigger is the jackpot. */
+function kindOf(o: Outcome, all: readonly Outcome[]): ContentKind {
+  switch (o.type) {
+    case 'gain': {
+      const gains = all.filter((x): x is Extract<Outcome, { type: 'gain' }> => x.type === 'gain');
+      return gains.length > 1 && o.amount === Math.max(...gains.map((g) => g.amount))
+        ? 'jackpot'
+        : 'treasure';
+    }
+    case 'lose':
+      return 'trap';
+    case 'steal':
+      return 'raccoon';
+    case 'swap':
+      return 'mirror';
+    case 'double':
+      return 'twins';
+    case 'refund':
+      return 'receipt';
+    case 'dud':
+      return 'empty';
+  }
 }
 
-function scaleOutcome(o: Outcome, startCoins: number): Outcome {
-  return o.type === 'gain' || o.type === 'lose'
-    ? { ...o, amount: scaleAmount(o.amount, startCoins) }
-    : o;
-}
-
-function toItem(lot: Lot, startCoins: number, grand: boolean): LotItem {
-  return {
-    id: lot.id,
-    name: lot.name,
-    icon: lot.icon,
-    flavour: lot.flavour,
-    outcomes: lot.outcomes.map((o) => scaleOutcome(o, startCoins)),
-    grand,
-  };
-}
-
-function allowed(lot: Lot, chaos: Chaos): boolean {
-  return chaos === 'calm' ? lot.chaos === 'calm' : true;
+export function boxOf(lot: Lot, grand: boolean): Box {
+  const options: BoxOption[] = lot.outcomes.map((o) => ({
+    kind: kindOf(o, lot.outcomes),
+    chance: o.chance,
+    pay: payOf(o.chance),
+  }));
+  return { id: lot.id, name: lot.name, icon: lot.icon, flavour: lot.flavour, options, grand };
 }
 
 /** `count` distinct lots from `pool` (fewer if the pool is short), not already in `taken`. */
@@ -63,59 +67,40 @@ function take(
 }
 
 /** Draws the chance-weighted outcome index. */
-function drawOutcome(rng: RngState, outcomes: readonly Outcome[]): [number, RngState] {
+function drawOutcome(rng: RngState, options: readonly BoxOption[]): [number, RngState] {
   const [f, next] = nextFloat(rng);
   let roll = f * 100;
-  for (let i = 0; i < outcomes.length; i++) {
-    roll -= outcomes[i]?.chance ?? 0;
+  for (let i = 0; i < options.length; i++) {
+    roll -= options[i]?.chance ?? 0;
     if (roll < 0) return [i, next];
   }
-  return [outcomes.length - 1, next];
+  return [options.length - 1, next];
 }
 
-/**
- * The game's lots in play order. Wild lots are spread among the ordinary ones by the shuffle; with
- * `spicy`, half the ordinary slots come from the spicy pool; the Grand Lot (if on) is always last.
- */
-export function drawLots(
-  cfg: Cfg,
-  rng: RngState,
-): [{ item: LotItem; outcome: number }[], RngState] {
+/** Boxes with a single possible content would be a sure thing: never drawn. */
+const bettable = (l: Lot): boolean => l.outcomes.length >= 2;
+
+/** The game's boxes in play order; with `spicy`, half come from the spicy pack; the grand box last. */
+export function drawBoxes(cfg: Cfg, rng: RngState): [{ box: Box; outcome: number }[], RngState] {
   const taken = new Set<string>();
-  const slots = cfg.lots - (cfg.grandLot ? 1 : 0);
-  const wildCount = Math.round(slots * WILD_SHARE[cfg.chaos]);
-  const ordinary = slots - wildCount;
+  const ordinary = cfg.rounds - (cfg.grand ? 1 : 0);
   const spicyCount = cfg.spicy ? Math.ceil(ordinary / 2) : 0;
   let state = rng;
-  const spicyOrdinary = SPICY_POOL.filter((l) => l.chaos !== 'wild' && allowed(l, cfg.chaos));
-  const [fromSpicy, s1] = take(state, spicyOrdinary, spicyCount, taken);
-  state = s1;
-  const normals = NORMAL_POOL.filter((l) => allowed(l, cfg.chaos));
-  const [fromNormal, s2] = take(state, normals, ordinary - fromSpicy.length, taken);
-  state = s2;
-  const wilds = cfg.spicy
-    ? [...WILD_POOL, ...SPICY_POOL.filter((l) => l.chaos === 'wild')]
-    : WILD_POOL;
-  const [fromWild, s3] = take(state, wilds, wildCount, taken);
+  const [fromSpicy, s1] = take(state, SPICY_POOL.filter(bettable), spicyCount, taken);
+  const [fromLots, s2] = take(s1, LOT_POOL.filter(bettable), ordinary - fromSpicy.length, taken);
+  const [order, s3] = shuffle(s2, [...fromSpicy, ...fromLots]);
   state = s3;
-  const [order, s4] = shuffle(state, [...fromSpicy, ...fromNormal, ...fromWild]);
-  state = s4;
-  const items = order.map((l) => toItem(l, cfg.startCoins, false));
-  if (cfg.grandLot) {
-    const [grand, s5] = take(
-      state,
-      GRAND_POOL.filter((l) => allowed(l, cfg.chaos)),
-      1,
-      taken,
-    );
-    state = s5;
-    for (const g of grand) items.push(toItem(g, cfg.startCoins, true));
+  const boxes = order.map((l) => boxOf(l, false));
+  if (cfg.grand) {
+    const [grand, s4] = take(state, GRAND_POOL.filter(bettable), 1, taken);
+    state = s4;
+    for (const g of grand) boxes.push(boxOf(g, true));
   }
-  const out: { item: LotItem; outcome: number }[] = [];
-  for (const item of items) {
-    const [outcome, next] = drawOutcome(state, item.outcomes);
+  const out: { box: Box; outcome: number }[] = [];
+  for (const box of boxes) {
+    const [outcome, next] = drawOutcome(state, box.options);
     state = next;
-    out.push({ item, outcome });
+    out.push({ box, outcome });
   }
   return [out, state];
 }

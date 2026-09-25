@@ -1,168 +1,86 @@
 // Words for Blind Auction's screens, shared by the TV, the phone and PhoneStage. Every sentence goes
-// through the device's language (`L`); icons always travel with a word (never colour alone).
+// through the device's language (`L`); every content travels with its icon and its word (never
+// colour alone).
 import type { Translator } from '@partybox/game-sdk/ui';
-import type { Hint, Tier } from '../server/hints';
-import type { Effect, EffectKind } from '../server/types';
+import type { Tier } from '../server/odds';
+import type { ContentKind } from '../server/types';
 import type { OwnLine } from '../server/views';
 
 export const COIN = '🪙';
 
-export const ICON: Record<Hint['type'], string> = {
-  gain: '💰',
-  lose: '💀',
-  steal: '🦝',
-  swap: '🔄',
-  double: '✖️2',
-  refund: '↩️',
-  dud: '🕳️',
+export const KIND_ICON: Record<ContentKind, string> = {
+  treasure: '💰',
+  jackpot: '💎',
+  trap: '💀',
+  raccoon: '🦝',
+  mirror: '🪞',
+  twins: '👯',
+  receipt: '🧾',
+  empty: '🕳️',
 };
 
-/** Tone per outcome for styling (always paired with the icon and a word). */
-export type Tone = 'good' | 'bad' | 'chaos' | 'flat';
-export function toneOf(type: Hint['type'] | EffectKind): Tone {
-  if (type === 'gain' || type === 'double') return 'good';
-  if (type === 'lose') return 'bad';
-  if (type === 'steal' || type === 'swap') return 'chaos';
-  return 'flat';
+export function kindName(L: Translator, kind: ContentKind): string {
+  switch (kind) {
+    case 'treasure':
+      return L('Treasure');
+    case 'jackpot':
+      return L('Jackpot');
+    case 'trap':
+      return L('A trap');
+    case 'raccoon':
+      return L('A raccoon');
+    case 'mirror':
+      return L('A magic mirror');
+    case 'twins':
+      return L('Twins');
+    case 'receipt':
+      return L('A receipt');
+    case 'empty':
+      return L('Nothing');
+  }
+}
+
+/** Tone per content, for styling only (always paired with the icon and the word). */
+export type Tone = 'good' | 'bad' | 'odd';
+export function toneOf(kind: ContentKind): Tone {
+  if (kind === 'treasure' || kind === 'jackpot' || kind === 'twins') return 'good';
+  if (kind === 'trap' || kind === 'empty') return 'bad';
+  return 'odd';
 }
 
 export function tierWord(L: Translator, tier: Tier): string {
   return tier === 'LIKELY' ? L('LIKELY') : tier === 'MAYBE' ? L('MAYBE') : L('RARE');
 }
 
-/** The outcome part of a hint chip: "+120", "−60", "Heist 30 %", "Swap"… */
-export function hintText(L: Translator, h: Pick<Hint, 'type' | 'n'>): string {
-  switch (h.type) {
-    case 'gain':
-      return `+${h.n}`;
-    case 'lose':
-      return `−${h.n}`;
-    case 'steal':
-      return L('Heist {n}%', { n: h.n });
-    case 'swap':
-      return L('Swap');
-    case 'double':
-      return L('Double');
-    case 'refund':
-      return L('Refund');
-    case 'dud':
-      return L('Dud');
-  }
+/** "×1.5" — a payout multiplier, with the decimal comma in Spanish. */
+export function payText(L: Translator, pay: number): string {
+  const n = Number.isInteger(pay) ? String(pay) : pay.toFixed(1);
+  return `×${L.lang === 'es' ? n.replace('.', ',') : n}`;
 }
 
-/** A one-line reading of a whole chip, for screen readers: "Likely: plus 120 coins". */
-export function hintLabel(L: Translator, h: Hint): string {
-  return `${tierWord(L, h.tier)}: ${ICON[h.type]} ${hintText(L, h)}`;
-}
-
-/** The flip's headline on the TV (and PhoneStage), under its kicker ("🦝 HEIST"): the story only. */
-export function effectHeadline(L: Translator, e: Effect, winner: string, other: string): string {
-  switch (e.kind) {
-    case 'gain':
-    case 'double':
-      return L('+{n}!', { n: e.amount });
-    case 'lose':
-      return e.amount > 0 ? `−${e.amount}` : L('Nothing left to lose');
-    case 'steal':
-      return e.amount > 0
-        ? L('{a} steals {n} from {b}', { a: winner, b: other, n: e.amount })
-        : L('Nothing to steal!');
-    case 'swap':
-      return `${winner} ⇄ ${other}`;
-    case 'refund':
-      return L('+{n} back', { n: e.amount });
-    case 'dud':
-      return L('Nothing inside.');
-    case 'none':
-      return L('Nobody bought it.');
-  }
-}
-
-/** The one word for what the flip was: "JACKPOT", "TRAP"… */
-export function kickerWord(L: Translator, kind: EffectKind): string {
-  switch (kind) {
-    case 'gain':
-      return L('JACKPOT');
-    case 'double':
-      return L('DOUBLE');
-    case 'lose':
-      return L('TRAP');
-    case 'steal':
-      return L('HEIST');
-    case 'swap':
-      return L('SWAP');
-    case 'refund':
-      return L('REFUND');
-    case 'dud':
-      return L('DUD');
-    case 'none':
-      return L('UNSOLD');
-  }
-}
-
-const KICKER_ICON: Record<EffectKind, string> = { ...ICON, none: '📦' };
-
-/** The kicker over the headline: "💰 JACKPOT" etc. */
-export function effectKicker(L: Translator, kind: EffectKind): string {
-  return `${KICKER_ICON[kind]} ${kickerWord(L, kind)}`;
-}
-
-/** A player's own line, once the TV has shown it. */
-export function ownLineText(L: Translator, line: OwnLine): { big: string; small?: string } {
+/** A player's own line, once the TV has shown the box open. */
+export function ownLineText(
+  L: Translator,
+  line: OwnLine,
+  inside: string,
+): { big: string; small: string } {
   switch (line.kind) {
     case 'won':
-      return { big: L('You won it for {coin} {n}!', { coin: COIN, n: line.amount }) };
-    case 'outbid':
-      return { big: L('Outbid by {name}', { name: line.name }), small: `${COIN} ${line.amount}` };
-    case 'watched':
       return {
-        big: L('{name} won it for {coin} {n}', { name: line.name, coin: COIN, n: line.amount }),
+        big: L('You called it! +{n}', { n: line.back - line.amount }),
+        small: L('It was {what}. Your {coin} {bet} paid {coin} {back}.', {
+          what: inside,
+          coin: COIN,
+          bet: line.amount,
+          back: line.back,
+        }),
       };
-    case 'unsold':
-      return { big: L('No takers!') };
-    case 'stolen':
-      return { big: L('{name} stole {n} from you', { name: line.name, n: line.amount }) };
-    case 'swapped':
-      return { big: L('{name} swapped coins with you', { name: line.name }) };
-    case 'theirs':
-      return { big: `${line.name}: ${theirText(L, line.effect, line.amount)}` };
-    case 'mine':
-      return { big: mineText(L, line.effect, line.amount, line.name) };
-  }
-}
-
-function mineText(L: Translator, kind: EffectKind, n: number, other: string): string {
-  switch (kind) {
-    case 'gain':
-    case 'double':
-      return L('+{n} coins!', { n });
-    case 'lose':
-      return n > 0 ? L('A trap! −{n} coins', { n }) : L('A trap! Nothing left to lose');
-    case 'steal':
-      return n > 0 ? L('You stole {n} from {name}!', { n, name: other }) : L('Nothing to steal!');
-    case 'swap':
-      return L('You swapped with {name}', { name: other });
-    case 'refund':
-      return L('Money back: +{n}', { n });
-    default:
-      return L('A dud. Nothing inside.');
-  }
-}
-
-function theirText(L: Translator, kind: EffectKind, n: number): string {
-  switch (kind) {
-    case 'gain':
-    case 'double':
-      return `+${n}`;
-    case 'lose':
-      return L('a trap (−{n})', { n });
-    case 'steal':
-      return L('a heist (+{n})', { n });
-    case 'swap':
-      return L('a swap');
-    case 'refund':
-      return L('money back');
-    default:
-      return L('a dud');
+    case 'lost':
+      return {
+        big: L('Not this time: −{n}', { n: line.amount }),
+        small: L('It was {what}.', { what: inside }),
+      };
+    case 'sat':
+      return { big: L('You sat this one out'), small: L('It was {what}.', { what: inside }) };
   }
 }

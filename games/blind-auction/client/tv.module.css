@@ -453,12 +453,8 @@
   --ba-tone: var(--pb-danger);
 }
 
-.chaos {
+.odd {
   --ba-tone: var(--pb-info);
-}
-
-.flat {
-  --ba-tone: var(--pb-text-muted);
 }
 
 .flipKicker {
@@ -641,7 +637,7 @@
 }
 
 .stepItem,
-.startCoins {
+.readyRow {
   opacity: 0;
   transform: translateY(16px);
   transition:
@@ -689,6 +685,155 @@
   color: var(--pb-text-muted);
 }
 
+/* ── open: the reveal and the payouts ── */
+.insideLine {
+  margin: 0;
+  font-size: min(72px, 9cqh);
+  font-weight: 1000;
+  line-height: 1.05;
+  color: var(--ba-tone);
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.payouts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) 250ms both;
+}
+
+.winners {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2) var(--pb-space-4);
+  margin: 0;
+}
+
+.winner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.winner b {
+  color: var(--pb-accent-3);
+  font-weight: 1000;
+  font-variant-numeric: tabular-nums;
+}
+
+.winnerFace {
+  display: block;
+  width: min(48px, 6cqh);
+  height: min(48px, 6cqh);
+}
+
+.nobody {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+.losers {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+
+/* ── rules ── */
+.rules {
+  gap: var(--pb-space-5);
+}
+
+.rulesRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-7);
+  --ba-card-h: min(400px, 44cqh);
+}
+
+.rulesCard {
+  flex: none;
+}
+
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+}
+
+.sampleBoard {
+  max-width: 760px;
+}
+
+.readyRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-3);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--pb-motion-slow) var(--pb-ease),
+    transform var(--pb-motion-slow) var(--pb-ease);
+}
+
+.readyLine {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.readyFaces {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-2);
+  max-width: 1400px;
+}
+
+.readyFace {
+  position: relative;
+  display: block;
+  width: 56px;
+  height: 56px;
+  opacity: 0.4;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+.isReady {
+  opacity: 1;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.readyTick {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  font-size: 16px;
+  font-weight: 1000;
+}
+
+.countdown {
+  display: block;
+  font-size: min(200px, 22cqh);
+  font-weight: 1000;
+  line-height: 1;
+  color: var(--pb-accent-2);
+  animation: global(pb-tick) var(--pb-motion-base) var(--pb-ease);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .grandKicker,
   .shake,
@@ -712,7 +857,12 @@
   .purseWinner,
   .flyCoin,
   .swapArrows,
-  .title {
+  .title,
+  .insideLine,
+  .payouts,
+  .winner,
+  .isReady,
+  .countdown {
     animation: none;
   }
   .stepItem,

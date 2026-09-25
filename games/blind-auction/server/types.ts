@@ -1,9 +1,9 @@
-// State and input types for Blind Auction (SPEC §8.9, §8.10). Everything JSON-serializable.
+// State and input types for Blind Auction — "Bet on the box" (the owner's redesign, 2026-09-24:
+// everyone bets on what's inside, paid by the odds). Everything JSON-serializable.
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
-import type { Chaos, Outcome } from '../content/schema';
 
-export const PHASES = ['intro', 'lot', 'bid', 'live', 'sold', 'flip', 'done'] as const;
+export const PHASES = ['rules', 'box', 'bet', 'open', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export const READERS = ['george', 'fable', 'jessica', 'sky', 'original', 'none'] as const;
@@ -17,72 +17,74 @@ export interface Presence {
 }
 
 export interface Cfg {
-  lots: number;
+  rounds: number;
   startCoins: number;
-  bidSeconds: number;
-  /** Live mode in effect: asked for AND everyone is in one room (§8.15). */
-  live: boolean;
-  /** The VIP asked for Live but the room is not `together` — the TV says why it is sealed. */
-  liveRefused: boolean;
-  chaos: Chaos;
-  grandLot: boolean;
+  betSeconds: number;
+  grand: boolean;
   spicy: boolean;
   reader: Reader;
 }
 
-/** A drawn lot, amounts already scaled to `startCoins`. */
-export interface LotItem {
+/** What a box can hold. Each kind has its icon and words on the client (EN + ES). */
+export const CONTENT_KINDS = [
+  'treasure',
+  'jackpot',
+  'trap',
+  'raccoon',
+  'mirror',
+  'twins',
+  'receipt',
+  'empty',
+] as const;
+export type ContentKind = (typeof CONTENT_KINDS)[number];
+
+/** One thing the box might hold: its chance (whole %) and what a right call pays (× the stake). */
+export interface BoxOption {
+  kind: ContentKind;
+  chance: number;
+  pay: number;
+}
+
+export interface Box {
   id: string;
   name: string;
   icon: string;
   flavour: string;
-  outcomes: Outcome[];
+  options: BoxOption[];
+  /** The last box: payouts doubled. */
   grand: boolean;
 }
 
-export type EffectKind = 'gain' | 'lose' | 'steal' | 'swap' | 'double' | 'refund' | 'dud' | 'none';
-
-/** What the flip did (filled at `flip`). `amount` is what changed hands; `other` the victim/partner. */
-export interface Effect {
-  kind: EffectKind;
+export interface Bet {
+  option: number;
   amount: number;
-  other: string | null;
-  /** The winner's and the other player's coins before the flip (the TV animates from them). */
-  before: { winner: number; other: number };
 }
 
-export interface LotState {
+export interface RoundState {
   idx: number;
-  /** Sealed bids, SECRET until `sold`. */
-  bids: Record<string, number>;
-  /** Live: the standing bid (public). */
-  high: { by: string; amount: number } | null;
-  /** Live: 0 after a bid, 1 "Going once…", 2 "Going twice…". */
-  stage: 0 | 1 | 2;
-  openedAt: number;
-  winner: string | null;
-  price: number;
-  /** Sealed: the top bid was tied (fewer coins won, then the rng). */
-  tie: boolean;
-  /** `sold` / `flip`: 0 while the stage builds, 1 once it has landed (own lines go out then). */
+  /** SECRET until `open`: each phone sees only its own. */
+  bets: Record<string, Bet>;
+  /** `open`: 0 while the bets land on the table, 1 once the box is open (payouts, own lines). */
   step: 0 | 1;
-  effect: Effect | null;
-  /** `lot`: when the TV starts the reading (null = no voice for this lot). */
+  /** `box`: when the TV starts the reading (null = no voice this round). */
   voiceAt: number | null;
+  /** `open` step 1: when the box turned (server time). */
+  turnedAt: number | null;
+  /** Players topped up to the pity stake this round (they were broke). */
+  topped: string[];
 }
 
 export interface Stats {
-  biggestBid: number;
-  bestProfit: number | null;
-  thief: number;
-  trapped: number;
-  traps: number;
-  spent: number;
+  biggestBet: number;
+  biggestWin: number;
+  longShots: number;
+  calls: number;
+  lost: number;
 }
 
-/** A rejected input, shown on that phone (§8.9); `at` keys the toast so a repeat shows again. */
+/** A refused input, shown on that phone; `at` keys the toast so a repeat shows again. */
 export interface Notice {
-  code: 'over' | 'outbid' | 'winning';
+  code: 'over' | 'option';
   have: number;
   at: number;
 }
@@ -92,12 +94,16 @@ export interface State extends GameStateBase {
   presence: Presence;
   seats: string[];
   left: string[];
-  /** Each lot's outcome index is SECRET until its flip. */
-  lots: { item: LotItem; outcome: number }[];
-  l: LotState;
+  /** Each box's outcome index is SECRET until it opens. */
+  boxes: { box: Box; outcome: number }[];
+  r: RoundState;
+  /** `rules`: who has tapped Ready (bots are ready from the start). */
+  ready: string[];
+  /** `rules`: 0 while everyone reads, 1 = the 3·2·1 before the first box. */
+  rulesStep: 0 | 1;
   coins: Record<string, number>;
   stats: Record<string, Stats>;
-  /** Bot personalities (0.5 cautious … 1.1 reckless), drawn at init. */
+  /** Bot personalities: 0 cautious (likely, small) … 1 reckless (long shots, big). */
   factors: Record<string, number>;
   notices: Record<string, Notice>;
   /** READER-VOICES: key → length in ms (−1 = could not be made). */
@@ -105,8 +111,12 @@ export interface State extends GameStateBase {
 }
 
 export const inputSchema = z.discriminatedUnion('type', [
-  z.object({ type: z.literal('bid'), amount: z.number().int().min(0).max(100000) }),
-  z.object({ type: z.literal('raise'), amount: z.number().int().min(1).max(100000) }),
+  z.object({ type: z.literal('ready') }),
+  z.object({
+    type: z.literal('bet'),
+    option: z.number().int().min(0).max(3),
+    amount: z.number().int().min(0).max(100000),
+  }),
 ]);
 export type Input = z.infer<typeof inputSchema>;
 

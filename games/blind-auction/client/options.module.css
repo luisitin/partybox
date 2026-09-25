@@ -1,0 +1,258 @@
+/* The option board: what the box might hold. Tokens only; transform / opacity motion only. Every
+   content keeps its icon and its word, so the tone colours are never the only signal. */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(var(--ba-n, 3), minmax(0, 1fr));
+  gap: var(--pb-space-3);
+  width: 100%;
+}
+
+.option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-1);
+  min-width: 0;
+  padding: var(--pb-space-3) var(--pb-space-2);
+  border: 0;
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  box-shadow: inset 0 0 0 3px var(--ba-tone);
+  color: var(--pb-text);
+  font: inherit;
+  text-align: center;
+  /* backwards, not both: once risen the card's own transform (lifted, won) takes over. */
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease)
+    calc(var(--ba-i, 0) * 120ms + 150ms) backwards;
+  transition:
+    transform var(--pb-motion-base) var(--pb-ease),
+    opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+.good {
+  --ba-tone: var(--pb-accent-3);
+}
+
+.bad {
+  --ba-tone: var(--pb-danger);
+}
+
+.odd {
+  --ba-tone: var(--pb-info);
+}
+
+.icon {
+  line-height: 1;
+}
+
+.name {
+  font-weight: 900;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.odds {
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: var(--pb-text-muted);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.pay {
+  font-weight: 1000;
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.bets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-1);
+  width: 100%;
+  min-height: 40px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 8px 2px 2px;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.face {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+.chipAmount {
+  white-space: nowrap;
+}
+
+.won {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow:
+    inset 0 0 0 5px var(--ba-tone),
+    0 0 0 4px var(--pb-accent-2);
+}
+
+.dim {
+  opacity: 0.4;
+}
+
+.inside {
+  position: absolute;
+  top: -14px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-weight: 1000;
+  letter-spacing: 0.1em;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── TV ── */
+.tv .option {
+  padding: var(--pb-space-4) var(--pb-space-3);
+}
+
+.tv .icon {
+  font-size: min(64px, 7cqh);
+}
+
+.tv .name {
+  font-size: var(--pb-font-h2);
+}
+
+.tv .odds {
+  font-size: var(--pb-font-caption);
+}
+
+.tv .pay {
+  font-size: var(--pb-font-h2);
+}
+
+.tv .inside {
+  font-size: var(--pb-font-caption);
+}
+
+/* ── phone ── */
+.phone {
+  gap: var(--pb-space-2);
+}
+
+.phone .option {
+  padding: var(--pb-space-2) var(--pb-space-1);
+  border-radius: var(--pb-radius);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.phone .icon {
+  font-size: 1.75rem;
+}
+
+.phone .name {
+  font-size: var(--pb-font-body);
+}
+
+.phone .odds {
+  font-size: 0.6875rem;
+}
+
+.phone .pay {
+  font-size: var(--pb-font-body);
+}
+
+.phone .face {
+  width: 22px;
+  height: 22px;
+}
+
+.phone .chip {
+  font-size: var(--pb-font-caption);
+}
+
+.phone .bets {
+  min-height: 26px;
+}
+
+.phone .inside {
+  top: -10px;
+  font-size: 0.6875rem;
+}
+
+button.option {
+  cursor: pointer;
+}
+
+button.option:active {
+  transform: scale(0.96);
+}
+
+button.option:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+
+.selected {
+  background: var(--pb-surface-2);
+  box-shadow:
+    inset 0 0 0 4px var(--ba-tone),
+    0 0 0 3px var(--pb-accent-2);
+  transform: translateY(-3px);
+}
+
+.selected::after {
+  content: '✓';
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-weight: 1000;
+  font-size: 14px;
+}
+
+.compact .option {
+  gap: 0;
+  padding: var(--pb-space-1);
+}
+
+.compact .icon {
+  font-size: 1.25rem;
+}
+
+.compact .name {
+  font-size: var(--pb-font-caption);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .option,
+  .chip,
+  .inside {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) :is(.option, .chip, .inside) {
+  animation: none;
+}

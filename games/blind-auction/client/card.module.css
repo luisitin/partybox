@@ -262,12 +262,8 @@
   --ba-tone: var(--pb-danger);
 }
 
-.chaos {
+.odd {
   --ba-tone: var(--pb-info);
-}
-
-.flat {
-  --ba-tone: var(--pb-text-muted);
 }
 
 /* ── the SOLD stamp across the card ── */
@@ -280,95 +276,7 @@
   transform: translateZ(40px);
 }
 
-/* ── hint chips ── */
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--pb-space-3);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.chip {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--pb-space-1);
-  border-radius: var(--pb-radius);
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease)
-    calc(var(--ba-i, 0) * 180ms + 250ms) both;
-  background: var(--pb-surface);
-  box-shadow: inset 0 0 0 3px var(--ba-tone, var(--pb-surface-2));
-  text-align: center;
-}
-
-.tier {
-  font-size: var(--pb-font-caption);
-  font-weight: 900;
-  letter-spacing: 0.14em;
-  color: var(--pb-text-muted);
-}
-
-.what {
-  font-weight: 900;
-  color: var(--pb-text);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-.chips-tv .chip {
-  min-width: 250px;
-  padding: var(--pb-space-3) var(--pb-space-5);
-}
-
-.chips-tv .what {
-  font-size: var(--pb-font-h2);
-}
-
-.chips-phone {
-  gap: var(--pb-space-2);
-}
-
-.chips-phone .chip {
-  flex: 1 1 5.5rem;
-  min-width: 0;
-  padding: var(--pb-space-2) var(--pb-space-1);
-}
-
-.chips-phone .tier {
-  font-size: 0.75rem;
-}
-
-.chips-phone .what {
-  font-size: var(--pb-font-body);
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
-
-.compact {
-  flex-wrap: nowrap;
-  gap: var(--pb-space-1);
-}
-
-.compact .chip {
-  flex: 1 1 0;
-  gap: 0;
-  padding: var(--pb-space-1);
-}
-
-.compact .what {
-  font-size: var(--pb-font-caption);
-}
-
-.compact .tier {
-  font-size: 0.625rem;
-  letter-spacing: 0.04em;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .chip,
   .deal,
   .sway,
   .back::after,
@@ -377,7 +285,6 @@
   }
 }
 
-:global(:root[data-motion='off']) .chip,
 :global(:root[data-motion='off']) .deal,
 :global(:root[data-motion='off']) .sway,
 :global(:root[data-motion='off']) .back::after,

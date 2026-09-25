@@ -1,122 +1,69 @@
-// PhoneStage (S-005, P00 §3.6): what the TV shows, on a phone that has no TV — the intro, the
-// ladder and stamp, the flip. Same beats as the TV (timing.ts), same readings and fixed lines, and
-// the player's own line once the moment has landed.
+// PhoneStage (S-005, P00 §3.6): what the TV shows, on a phone that has no TV — the rules and the
+// reveal: the bets on the table, the box turning, what was inside, your own line. Same beats as
+// the TV (timing.ts), same readings and fixed lines.
 import type { JSX } from 'react';
-import { Avatar, Screen, useSequence, useT } from '@partybox/game-sdk/ui';
+import { Screen, useSequence, useT } from '@partybox/game-sdk/ui';
 import type { PushedView } from '@partybox/game-sdk/ui';
-import { FLIP_LINE_AT_MS, LADDER_LEAD_MS, ladderStepMs } from '../server/timing';
+import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS } from '../server/timing';
 import type { BlindAuctionControllerView } from '../server/views';
-import { COIN, ICON, effectHeadline, hintText, kickerWord, toneOf } from './copy';
+import { KIND_ICON, kindName, payText, toneOf } from './copy';
 import { LotCard } from './LotCard';
-import { HowTo } from './PhoneLot';
-import { OwnLineCard } from './PhoneResult';
+import { OptionBoard } from './Options';
+import { LotTitle, PhoneRules } from './PhoneLot';
+import { OwnLineCard, insideWords } from './PhoneResult';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 import { useLine, useReading } from './useVoice';
 
 type View = PushedView<BlindAuctionControllerView>;
 
-function StageSold({ view }: { view: View }): JSX.Element {
+function StageOpen({ view }: { view: View }): JSX.Element | null {
   const L = useT(STRINGS);
-  const sale = view.sale;
-  const rungs = (sale?.ladder ?? []).slice(-6);
-  const hidden = (sale?.ladder.length ?? 0) - rungs.length;
-  const step = ladderStepMs(sale?.ladder.length ?? 0);
-  const seq = useSequence(
-    view.live ? [0] : [0, ...rungs.map((_, i) => LADDER_LEAD_MS + (hidden + i) * step)],
-  );
-  const shown = view.live ? rungs.length : Math.max(0, seq);
-  const stamped = view.step === 1;
-  const winner = view.players.find((p) => p.id === sale?.winner);
-  useLine(view.clips.closed, !view.live);
-  useReading(stamped ? view.voice : null);
-  useLine(view.clips.sold, stamped && Boolean(winner) && !view.voice, 120);
-  useLine(view.clips.none, stamped && !winner, 120);
+  const bets = view.bets ?? [];
+  const seq = useSequence([0, ...bets.map((_, i) => BETS_LEAD_MS + i * BET_STEP_MS)]);
+  const opened = view.step === 1 && view.outcome !== null;
+  const landed = useSequence(opened ? [0, OPEN_LINE_AT_MS] : [0]) >= 1 && opened;
+  const inside = opened && view.box ? view.box.options[view.outcome ?? 0] : undefined;
+  useLine(view.clips.closed, true);
+  useLine(inside ? view.clips[inside.kind] : undefined, landed);
+  useReading(landed ? view.voice : null);
+  if (!view.box) return null;
   return (
     <Screen className={styles.screen}>
+      <LotTitle box={view.box} />
       <div className={styles.stageTop}>
-        {view.lot ? (
-          <LotCard
-            icon={view.lot.icon}
-            grand={view.lot.grand}
-            face={null}
-            flipped={false}
-            size="phone"
-          />
-        ) : null}
-        <ol className={styles.miniLadder}>
-          {rungs.slice(0, shown).map((r) => {
-            const p = view.players.find((x) => x.id === r.id);
-            return (
-              <li
-                key={r.id}
-                className={`${styles.miniRung} ${stamped && r.id === sale?.winner ? styles.miniWon : ''}`}
-              >
-                {p ? <Avatar avatarId={p.avatarId} size={24} /> : null}
-                <span className={styles.miniName}>{p?.name ?? '?'}</span>
-                <span className={styles.miniAmount}>
-                  {COIN} {r.amount}
-                </span>
-              </li>
-            );
-          })}
-        </ol>
+        <LotCard
+          icon={view.box.icon}
+          grand={view.box.grand}
+          flipped={Boolean(inside)}
+          size="phone"
+          face={
+            inside
+              ? {
+                  icon: KIND_ICON[inside.kind],
+                  kicker: kindName(L, inside.kind),
+                  big: payText(L, inside.pay),
+                  tone: toneOf(inside.kind),
+                }
+              : null
+          }
+        />
       </div>
-      {stamped ? (
-        <p className={styles.stageSold}>
-          {winner
-            ? L('SOLD to {name} for {coin} {n}!', {
-                name: winner.name,
-                coin: COIN,
-                n: sale?.price ?? 0,
-              })
-            : L('No takers!')}
-        </p>
-      ) : sale?.tie && shown >= rungs.length ? (
-        <p className={styles.stageTie}>{L('Tie: fewer coins wins')}</p>
-      ) : null}
-      {stamped && view.line ? (
-        <OwnLineCard line={view.line} coins={view.coins} from={view.coins} />
-      ) : null}
-    </Screen>
-  );
-}
-
-function StageFlip({ view }: { view: View }): JSX.Element {
-  const L = useT(STRINGS);
-  const beat = useSequence([0, FLIP_LINE_AT_MS]);
-  const e = view.effect;
-  const o = view.outcome;
-  const winner = view.players.find((p) => p.id === view.sale?.winner);
-  const other = view.players.find((p) => p.id === e?.other);
-  useLine(Object.values(view.clips)[0], beat >= 1);
-  useReading(view.voice);
-  const kind = e && e.kind !== 'none' ? e.kind : (o?.type ?? 'dud');
-  const face =
-    o && view.lot
-      ? {
-          icon: ICON[o.type],
-          kicker: kickerWord(L, kind),
-          big:
-            e && e.kind !== 'none' && e.kind !== 'dud' && e.kind !== 'swap'
-              ? `${e.kind === 'lose' ? '−' : '+'}${e.amount}`
-              : hintText(L, o),
-          tone: toneOf(o.type),
-        }
-      : null;
-  return (
-    <Screen className={styles.screen}>
-      <div className={styles.stageTop}>
-        {view.lot ? (
-          <LotCard icon={view.lot.icon} grand={view.lot.grand} face={face} flipped size="phone" />
-        ) : null}
-        {/* Always there, so the card never slides when the words land beside it. */}
-        <p key={beat >= 1 ? 'on' : 'off'} className={styles.stageHeadline} aria-live="polite">
-          {beat >= 1 && e ? effectHeadline(L, e, winner?.name ?? '?', other?.name ?? '?') : ' '}
-        </p>
-      </div>
-      {view.step === 1 && view.line ? (
-        <OwnLineCard line={view.line} coins={view.coins} from={view.coins} />
+      <OptionBoard
+        options={view.box.options}
+        size="phone"
+        bets={bets}
+        shown={Math.max(0, seq)}
+        players={view.players}
+        outcome={landed ? view.outcome : null}
+      />
+      {landed && view.line ? (
+        <OwnLineCard
+          line={view.line}
+          inside={insideWords(L, view)}
+          coins={view.coins}
+          from={view.coins}
+        />
       ) : null}
     </Screen>
   );
@@ -124,12 +71,10 @@ function StageFlip({ view }: { view: View }): JSX.Element {
 
 export function PhoneStage({ view }: { view: View }): JSX.Element | null {
   switch (view.phaseId) {
-    case 'intro':
-      return <HowTo view={view} />;
-    case 'sold':
-      return <StageSold key={view.lot?.n ?? 0} view={view} />;
-    case 'flip':
-      return <StageFlip key={view.lot?.n ?? 0} view={view} />;
+    case 'rules':
+      return <PhoneRules view={view} />;
+    case 'open':
+      return <StageOpen key={view.box?.n ?? 0} view={view} />;
     default:
       return null;
   }

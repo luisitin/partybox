@@ -1,8 +1,7 @@
-// Test kit: a room of named players, hand-driven events, and a helper that walks to a phase.
+// Test kit: a room of named players, hand-driven events, and helpers that walk to a phase.
 import { createRng } from '@partybox/game-sdk';
 import type { GameEvent, Settings } from '@partybox/game-sdk';
 import { game } from '../server/index';
-import type { Outcome } from '../content/schema';
 import type { Input, State } from '../server/types';
 
 export const T0 = 1_000_000;
@@ -40,31 +39,31 @@ export const timer = (s: State): State =>
     startedAt: s.phase.startedAt,
   });
 
-export const bid = (
+export const ready = (s: State, playerId: string, now = s.phase.startedAt + 100): State =>
+  send(s, { type: 'input', now, playerId, input: { type: 'ready' } });
+
+export const bet = (
   s: State,
   playerId: string,
+  option: number,
   amount: number,
   now = s.phase.startedAt + 100,
-): State => send(s, { type: 'input', now, playerId, input: { type: 'bid', amount } });
+): State => send(s, { type: 'input', now, playerId, input: { type: 'bet', option, amount } });
 
-export const raise = (s: State, playerId: string, amount: number, now: number): State =>
-  send(s, { type: 'input', now, playerId, input: { type: 'raise', amount } });
-
-/** VIP-skips until the phase is `id` (at most 40 steps). */
+/** VIP-skips until the phase is `id` (at most 60 steps). */
 export function walkTo(state: State, id: string): State {
   let s = state;
-  for (let i = 0; i < 40 && s.phase.id !== id; i++) s = skip(s);
+  for (let i = 0; i < 60 && s.phase.id !== id; i++) s = skip(s);
   if (s.phase.id !== id) throw new Error(`never reached ${id}`);
   return s;
 }
 
-/** The current lot now holds exactly `outcome` (tests set up a flip). */
-export function setOutcome(state: State, outcome: Outcome): State {
-  const lot = state.lots[state.l.idx];
-  if (!lot) return state;
-  const lots = [...state.lots];
-  lots[state.l.idx] = { item: { ...lot.item, outcomes: [outcome] }, outcome: 0 };
-  return { ...state, lots };
+/** The current box now holds option `outcome`. */
+export function setOutcome(state: State, outcome: number): State {
+  const boxes = [...state.boxes];
+  const round = boxes[state.r.idx];
+  if (round) boxes[state.r.idx] = { ...round, outcome };
+  return { ...state, boxes };
 }
 
 /** Sets everyone's coins (by seat order). */
@@ -84,7 +83,7 @@ export function playThrough(
   const rng = createRng(seed);
   let s = start(n, settings, seed, n);
   const seen: State[] = [s];
-  for (let guard = 0; guard < 2000 && s.phase.id !== 'done'; guard++) {
+  for (let guard = 0; guard < 3000 && s.phase.id !== 'done'; guard++) {
     const acts = s.seats
       .map((id) => ({ id, input: game.bot.sampleInput(s, id, rng) }))
       .filter((a) => a.input !== null);

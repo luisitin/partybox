@@ -1,15 +1,11 @@
-// The lot card (SPEC §8.5) and its hint chips, shared by the TV and PhoneStage. Face down: a
+// The mystery box as a card, shared by the TV, the phone and PhoneStage. Face down: a
 // patterned back in tokens (surface-2 with accent-2 trim, gold for the Grand Lot) with the lot's
 // icon in a medallion, a slow 3D sway and a shimmer — the table is never still. Face up: the
 // outcome, big. The flip is transform-only (pb-flip), so the 3D context never flattens.
 import { useState } from 'react';
 import type { CSSProperties, JSX, ReactNode } from 'react';
-import { useT } from '@partybox/game-sdk/ui';
-import type { Hint } from '../server/hints';
-import { ICON, hintLabel, hintText, tierWord, toneOf } from './copy';
 import type { Tone } from './copy';
 import styles from './card.module.css';
-import { STRINGS } from './strings';
 
 /** The idle sway's period; its phase follows the wall clock so a remount never jumps. */
 const SWAY_MS = 6000;
@@ -75,40 +71,5 @@ export function LotCard({
       </div>
       {stamp ? <div className={styles.stamp}>{stamp}</div> : null}
     </div>
-  );
-}
-
-export function HintChips({
-  hints,
-  size = 'tv',
-  compact = false,
-  className,
-}: {
-  hints: readonly Hint[];
-  size?: 'tv' | 'phone';
-  /** One row that never wraps (the bid screen). */
-  compact?: boolean;
-  className?: string;
-}): JSX.Element {
-  const L = useT(STRINGS);
-  return (
-    <ul
-      className={`${styles.chips} ${styles[`chips-${size}`]} ${compact ? styles.compact : ''} ${className ?? ''}`}
-      aria-label={L('What might be inside')}
-    >
-      {hints.map((h, i) => (
-        <li
-          key={`${h.type}-${h.n}-${i}`}
-          className={`${styles.chip} ${styles[toneOf(h.type)]}`}
-          style={{ '--ba-i': i } as CSSProperties}
-          aria-label={hintLabel(L, h)}
-        >
-          <span className={styles.tier}>{tierWord(L, h.tier)}</span>
-          <span className={styles.what}>
-            <span aria-hidden>{ICON[h.type]}</span> {hintText(L, h)}
-          </span>
-        </li>
-      ))}
-    </ul>
   );
 }

@@ -1,36 +1,33 @@
-// READER-VOICES (ADR-045, SPEC §8.13): the auctioneer. Fixed lines ("Going once…") are requested
-// early and cached by the host, so they start the instant they are needed; live readings (the lot,
-// the price, the amount) are requested only once their words are public — the flip's amount only
-// when the flip begins. At most 10 keys are ever pending (P00 §5.7). Keys never reach a view before
+// READER-VOICES (ADR-045): the auctioneer. Fixed lines ("Place your bets!", "It's a trap!") are
+// requested early and cached by the host, so they start the instant they are needed; readings (the
+// box, the winners) are requested only once their words are public — the winners' line only once
+// the box is open. At most 10 keys are ever pending (P00 §5.7). Keys never reach a view before
 // their line plays.
 import type { SpeechRequest } from '@partybox/game-sdk';
 import { PRONUNCIATIONS } from './content';
 import { numberWords, toSpeakable } from './speak';
-import type { Reader, State } from './types';
+import type { ContentKind, Reader, State } from './types';
 
 export const FIXED_LINES = {
-  bids: 'Place your bids!',
-  once: 'Going once…',
-  twice: 'Going twice…',
-  sold: 'Sold!',
-  none: 'No takers!',
-  closed: 'Bidding is closed.',
-  trap: "It's a trap!",
+  bets: 'Place your bets!',
+  closed: 'Bets are closed.',
+  grand: 'The grand box!',
+  treasure: 'Treasure!',
   jackpot: 'Jackpot!',
-  heist: 'A heist!',
-  swap: 'Swap!',
-  double: 'Double it!',
-  refund: 'Money back.',
-  dud: 'A dud.',
-  grand: 'The grand lot!',
-} as const;
+  trap: "It's a trap!",
+  raccoon: 'A raccoon!',
+  mirror: 'A magic mirror!',
+  twins: 'Twins!',
+  receipt: 'Just a receipt.',
+  empty: "It's empty!",
+} as const satisfies Record<string, string> & Record<ContentKind, string>;
 export type FixedLine = keyof typeof FIXED_LINES;
 
 const MAX_PENDING = 10;
 
 /** A stable short key (FNV-1a twice → 64 bits; the host accepts [a-z0-9]{6,40}). */
 export function speechKey(voice: string, text: string): string {
-  const s = `ba1|${voice}|${text}`;
+  const s = `ba2|${voice}|${text}`;
   let a = 0x811c9dc5;
   let b = 0x01000193;
   for (let i = 0; i < s.length; i++) {
@@ -50,73 +47,51 @@ function request(voice: string, text: string): SpeechRequest {
   return { key: speechKey(voice, said), voice, parts: [{ text: said }] };
 }
 
-export function fixedRequest(state: State, line: FixedLine): SpeechRequest | null {
+export function fixedRequest(state: State, line: FixedLine | null): SpeechRequest | null {
   const voice = voiceOf(state);
-  return voice ? request(voice, FIXED_LINES[line]) : null;
+  return voice && line ? request(voice, FIXED_LINES[line]) : null;
 }
 
-/** "Lot three: the Pirate's Chest. Found under a palm tree…" — public from `lot` on. */
-export function lotText(state: State, idx: number): string | null {
-  const lot = state.lots[idx];
-  if (!lot) return null;
-  const opener = lot.item.grand ? 'The grand lot!' : `Lot ${numberWords(idx + 1)}:`;
-  return `${opener} The ${lot.item.name}. ${lot.item.flavour}`;
+/** "Box three: the Pirate's Chest. Found under a palm tree…" — public from `box` on. */
+export function boxText(state: State, idx: number): string | null {
+  const round = state.boxes[idx];
+  if (!round) return null;
+  const opener = round.box.grand ? 'The grand box!' : `Box ${numberWords(idx + 1)}:`;
+  return `${opener} The ${round.box.name}. ${round.box.flavour} What's inside?`;
 }
 
-export function lotRequest(state: State, idx: number): SpeechRequest | null {
+export function boxRequest(state: State, idx: number): SpeechRequest | null {
   const voice = voiceOf(state);
-  const text = lotText(state, idx);
+  const text = boxText(state, idx);
   return voice && text ? request(voice, text) : null;
 }
 
-/** "Sold, for ninety coins." — only once the price is public (`sold`, Live's hammer included). */
-export function soldRequest(state: State): SpeechRequest | null {
-  const voice = voiceOf(state);
-  if (!voice || !state.l.winner || (state.phase.id !== 'sold' && state.phase.id !== 'flip'))
-    return null;
-  return request(voice, `Sold, for ${numberWords(state.l.price)} coins.`);
+/** The content the open box shows: its fixed line. */
+export function lineOf(state: State): FixedLine | null {
+  const round = state.boxes[state.r.idx];
+  return round ? (round.box.options[round.outcome]?.kind ?? null) : null;
 }
 
-/** The flip's amount ("Plus three hundred!") — requested only once `flip` has begun (§8.8). */
-export function flipRequest(state: State): SpeechRequest | null {
-  const voice = voiceOf(state);
-  const effect = state.l.effect;
-  if (!voice || state.phase.id !== 'flip' || !effect) return null;
-  switch (effect.kind) {
-    case 'gain':
-    case 'double':
-      return request(voice, `Plus ${numberWords(effect.amount)}!`);
-    case 'lose':
-      return effect.amount > 0 ? request(voice, `Minus ${numberWords(effect.amount)}.`) : null;
-    case 'steal':
-      return effect.amount > 0
-        ? request(voice, `${numberWords(effect.amount)} coins, stolen!`)
-        : null;
-    default:
-      return null;
-  }
+/** How many called it right (with a stake): only once the box is open (step 1). */
+export function winners(state: State): number {
+  const round = state.boxes[state.r.idx];
+  if (!round) return 0;
+  return Object.values(state.r.bets).filter((b) => b.amount > 0 && b.option === round.outcome)
+    .length;
 }
 
-/** The fixed line the flip opens with. */
-export function flipLine(state: State): FixedLine | null {
-  switch (state.l.effect?.kind) {
-    case 'gain':
-      return 'jackpot';
-    case 'double':
-      return 'double';
-    case 'lose':
-      return 'trap';
-    case 'steal':
-      return 'heist';
-    case 'swap':
-      return 'swap';
-    case 'refund':
-      return 'refund';
-    case 'dud':
-      return 'dud';
-    default:
-      return null;
-  }
+/** "Two winners!" — requested only once the box has opened (§8.8's rule for the outcome line). */
+export function openRequest(state: State): SpeechRequest | null {
+  const voice = voiceOf(state);
+  if (!voice || state.phase.id !== 'open' || state.r.step !== 1) return null;
+  const n = winners(state);
+  const text =
+    n === 0
+      ? 'Nobody saw that coming!'
+      : n === 1
+        ? 'One lucky winner!'
+        : `${numberWords(n)} winners!`;
+  return request(voice, text);
 }
 
 /** Every reading this state wants, most urgent first, never more than 10 still pending. */
@@ -124,15 +99,11 @@ export function speech(state: State): SpeechRequest[] {
   if (!voiceOf(state) || state.phase.id === 'done') return [];
   const want: (SpeechRequest | null)[] = [];
   const phase = state.phase.id;
-  const idx = state.l.idx;
-  if (phase === 'intro') want.push(lotRequest(state, 0));
-  if (phase === 'lot') want.push(lotRequest(state, idx));
-  if (phase === 'sold' || phase === 'flip') want.push(soldRequest(state));
-  if (phase === 'flip') want.push(flipRequest(state), lotRequest(state, idx + 1));
-  const soon: FixedLine[] = state.cfg.live
-    ? ['once', 'twice', 'sold', 'none', 'bids']
-    : ['bids', 'closed', 'sold', 'none'];
-  for (const line of soon) want.push(fixedRequest(state, line));
+  const idx = state.r.idx;
+  if (phase === 'rules') want.push(boxRequest(state, 0));
+  if (phase === 'box') want.push(boxRequest(state, idx));
+  if (phase === 'open') want.push(openRequest(state), boxRequest(state, idx + 1));
+  for (const line of ['bets', 'closed'] as FixedLine[]) want.push(fixedRequest(state, line));
   for (const line of Object.keys(FIXED_LINES) as FixedLine[]) want.push(fixedRequest(state, line));
   const seen = new Set<string>();
   const out: SpeechRequest[] = [];

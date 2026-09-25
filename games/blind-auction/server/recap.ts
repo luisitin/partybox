@@ -1,28 +1,9 @@
-// Recap (SPEC §8.19): "Blind Auction · <date>" — per lot its name and hint, every bid, the winner and
-// price, the outcome and the coins afterwards; then the final coins and awards. Read from the
-// states each `flip` began with (ADR-035 history), so state keeps no per-lot log.
+// Recap: "Blind Auction · <date>" — per box its name and odds, every bet, what was inside, who
+// called it and the coins afterwards; then the final coins and awards. Read from the states each
+// `open` began with (ADR-035 history), so state keeps no per-round log.
 import type { GameRecap, RecapContext } from '@partybox/game-sdk';
-import { hintsOf } from './hints';
-import type { Hint } from './hints';
+import { payout, tierOf } from './odds';
 import type { State } from './types';
-
-function hintText(h: Hint): string {
-  const what =
-    h.type === 'gain'
-      ? `💰 +${h.n}`
-      : h.type === 'lose'
-        ? `💀 −${h.n}`
-        : h.type === 'steal'
-          ? `🦝 steal ${h.n}%`
-          : h.type === 'swap'
-            ? '🔄 swap'
-            : h.type === 'double'
-              ? '✖️2 double'
-              : h.type === 'refund'
-                ? '↩️ refund'
-                : '🕳️ dud';
-  return `${h.tier} ${what}`;
-}
 
 /** YYYY-MM-DD (UTC) from epoch ms, without the Date API (pure server code). */
 function date(at: number): string {
@@ -41,38 +22,35 @@ function date(at: number): string {
 }
 
 export function recap(state: State, ctx: RecapContext<State>): GameRecap {
-  const name = (id: string | null): string => (id && state.players[id]?.name) || '—';
+  const name = (id: string): string => state.players[id]?.name ?? '—';
   const lines = [`# Blind Auction · ${date(ctx.history[0]?.at ?? state.phase.startedAt)}`, ''];
-  const mode = state.cfg.live ? 'Live' : 'Sealed';
   lines.push(
-    `${mode} bids · ${state.lots.length} lots · ${state.cfg.startCoins} coins each · chaos ${state.cfg.chaos}`,
+    `Bet on the box · ${state.boxes.length} boxes · ${state.cfg.startCoins} coins each${state.cfg.spicy ? ' · spicy' : ''}`,
     '',
   );
   for (const entry of ctx.history) {
-    if (entry.phase !== 'flip') continue;
+    if (entry.phase !== 'open') continue;
     const s = entry.state;
-    const lot = s.lots[s.l.idx];
-    if (!lot) continue;
-    const { item } = lot;
-    const outcome = item.outcomes[lot.outcome];
-    lines.push(`## ${s.l.idx + 1}. ${item.icon} ${item.name}${item.grand ? ' (Grand Lot)' : ''}`);
-    lines.push(`Hint: ${hintsOf(item.outcomes).map(hintText).join(' · ')}`);
-    const bids = s.cfg.live
-      ? s.l.high
-        ? `final bid ${s.l.high.amount} by ${name(s.l.high.by)}`
-        : 'no bids'
-      : s.seats.map((id) => `${name(id)} ${s.l.bids[id] ?? '—'}`).join(', ');
-    lines.push(`Bids: ${bids}`);
+    const round = s.boxes[s.r.idx];
+    if (!round) continue;
+    const { box, outcome } = round;
     lines.push(
-      s.l.winner
-        ? `Sold to ${name(s.l.winner)} for ${s.l.price}${s.l.tie ? ' (tie: fewer coins won)' : ''}`
-        : 'No takers',
+      `## ${s.r.idx + 1}. ${box.icon} ${box.name}${box.grand ? ' (grand box, pays ×2)' : ''}`,
     );
-    const effect = s.l.effect;
-    const other = effect?.other ? ` (${name(effect.other)})` : '';
     lines.push(
-      `Outcome: ${outcome ? hintText(hintsOf([outcome])[0] as Hint) : '?'} → ${effect?.kind ?? 'none'} ${effect?.amount ?? 0}${other}`,
+      `Odds: ${box.options.map((o) => `${o.kind} ${tierOf(o.chance)} ${o.chance}% ×${o.pay}`).join(' · ')}`,
     );
+    const bets = s.seats
+      .filter((id) => (s.r.bets[id]?.amount ?? 0) > 0)
+      .map((id) => {
+        const bet = s.r.bets[id];
+        const option = bet ? box.options[bet.option] : undefined;
+        const won = bet?.option === outcome && option;
+        const back = won && bet ? payout(bet.amount, option.pay, box.grand) : 0;
+        return `${name(id)} ${bet?.amount ?? 0} on ${option?.kind ?? '?'}${won ? ` → +${back - (bet?.amount ?? 0)}` : ''}`;
+      });
+    lines.push(`Bets: ${bets.join(', ') || 'nobody bet'}`);
+    lines.push(`Inside: ${box.options[outcome]?.kind ?? '?'}`);
     lines.push(`Coins: ${s.seats.map((id) => `${name(id)} ${s.coins[id] ?? 0}`).join(', ')}`, '');
   }
   lines.push('## Final coins');

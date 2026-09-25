@@ -1,8 +1,8 @@
 {
   "phase": {
-    "id": "done",
-    "startedAt": 1012400,
-    "deadline": null
+    "id": "open",
+    "startedAt": 1001400,
+    "deadline": 1009000
   },
   "rng": {
     "seed": 21,
@@ -268,11 +268,32 @@
     }
   ],
   "r": {
-    "idx": 7,
-    "bets": {},
-    "step": 0,
+    "idx": 0,
+    "bets": {
+      "p2": {
+        "option": 0,
+        "amount": 40
+      },
+      "p4": {
+        "option": 1,
+        "amount": 25
+      },
+      "p1": {
+        "option": 1,
+        "amount": 60
+      },
+      "p3": {
+        "option": 2,
+        "amount": 15
+      },
+      "p5": {
+        "option": 0,
+        "amount": 0
+      }
+    },
+    "step": 1,
     "voiceAt": null,
-    "turnedAt": null,
+    "turnedAt": 1003500,
     "topped": []
   },
   "ready": ["p2", "p4"],

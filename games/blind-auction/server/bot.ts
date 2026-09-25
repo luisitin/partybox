@@ -1,57 +1,31 @@
-// The bot (SPEC §8.11): it reads the same hint everyone reads — from its own phone's view, never
-// the stored outcome — turns it into an expected value, and bids around it with a personality
-// (0.5 cautious … 1.1 reckless, drawn at init). Sealed: EV × factor ± 10 %, to the nearest 5.
-// Live: it keeps raising by the smallest step while that stays within EV × factor and its coins.
+// The bot: it reads the same box everyone reads — from its own phone's view, never the stored
+// outcome — and bets with a personality (0 cautious … 1 reckless, drawn at init): a cautious bot
+// backs the likely content with a small stake, a reckless one chases long shots with a big one.
+// Every content pays a little under fair odds, so no pick is "right": the personality is the play.
 import type { Rng } from '@partybox/game-sdk';
-import { TIER_CHANCE } from './hints';
-import type { Hint } from './hints';
-import type { BlindAuctionControllerView } from './views';
 import type { Input } from './types';
+import type { BlindAuctionControllerView } from './views';
 
-function valueOf(hint: Hint, view: BlindAuctionControllerView): number {
-  const scale = view.startCoins / 100;
-  const others = view.players.filter((p) => p.id !== view.me.id).map((p) => p.score ?? 0);
-  switch (hint.type) {
-    case 'gain':
-      return hint.n;
-    case 'lose':
-      return -hint.n;
-    case 'steal':
-      return others.length ? (Math.max(...others) * hint.n) / 100 : 0;
-    case 'swap':
-      return others.length ? others.reduce((a, b) => a + b, 0) / others.length - view.coins : 0;
-    case 'double':
-      return 100 * scale;
-    case 'refund':
-      return 50 * scale;
-    case 'dud':
-      return 0;
-  }
-}
-
-/** The lot's expected value to this player, from the hint's tier words. */
-export function expectedValue(view: BlindAuctionControllerView): number {
-  const hints = view.lot?.hints ?? [];
-  const total = hints.reduce((sum, h) => sum + TIER_CHANCE[h.tier], 0);
-  if (total <= 0) return 0;
-  return hints.reduce((sum, h) => sum + (TIER_CHANCE[h.tier] / total) * valueOf(h, view), 0);
-}
-
-/** What the bot sends, decided from its controller view alone. */
 export function decide(view: BlindAuctionControllerView, factor: number, rng: Rng): Input | null {
   if (view.me.role !== 'player') return null;
-  const ev = expectedValue(view);
-  if (view.phaseId === 'bid') {
-    if (view.myBid !== null) return null;
-    if (ev <= 0) return { type: 'bid', amount: 0 };
-    const noisy = ev * factor * (0.9 + rng.float() * 0.2);
-    const amount = Math.min(view.coins, Math.max(0, Math.round(noisy / 5) * 5));
-    return { type: 'bid', amount };
+  if (view.phaseId === 'rules') return view.ready ? null : { type: 'ready' };
+  if (view.phaseId !== 'bet' || view.myBet !== null || !view.box) return null;
+  const options = view.box.options;
+  if (options.length === 0) return null;
+  // Weight each content by its chance, bent by the personality toward the long shots.
+  const weights = options.map((o) => Math.pow(o.chance / 100, 1.6 - 1.4 * factor));
+  let roll = rng.float() * weights.reduce((a, b) => a + b, 0);
+  let option = options.length - 1;
+  for (let i = 0; i < weights.length; i++) {
+    roll -= weights[i] ?? 0;
+    if (roll < 0) {
+      option = i;
+      break;
+    }
   }
-  if (view.phaseId === 'live' && view.auction) {
-    const next = view.auction.options[0];
-    if (!next || !next.ok || next.amount > ev * factor) return null;
-    return { type: 'raise', amount: next.amount };
-  }
-  return null;
+  // Now and then a bot sits a box out.
+  if (rng.float() < 0.08) return { type: 'bet', option, amount: 0 };
+  const share = 0.1 + factor * 0.4 + (rng.float() - 0.5) * 0.1;
+  const amount = Math.min(view.coins, Math.max(5, Math.round((view.coins * share) / 5) * 5));
+  return { type: 'bet', option, amount: view.coins <= 0 ? 0 : amount };
 }

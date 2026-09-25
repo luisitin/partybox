@@ -36,7 +36,21 @@ export interface BidPadProps {
   notice?: ReactNode;
   /** Glyph before every amount. */
   coin?: string;
+  /** The game's own words for the buttons (already translated); BidPad's are the default. A
+   *  betting game says "Bet 🪙 40 on 💀 Trap" where an auction says "Place bid". */
+  texts?: BidPadTexts;
+  /** The confirm stays off (with `notice` saying why) — e.g. nothing picked yet to bet on. */
+  blocked?: boolean;
   className?: string;
+}
+
+export interface BidPadTexts {
+  place?: (amount: number) => string;
+  change?: (amount: number) => string;
+  placed?: (amount: number) => string;
+  zero?: string;
+  pass?: string;
+  passed?: string;
 }
 
 const REPEAT_AFTER_MS = 420;
@@ -83,6 +97,8 @@ export function BidPad({
   below,
   notice,
   coin = '🪙',
+  texts = {},
+  blocked = false,
   className,
 }: BidPadProps): JSX.Element {
   const L = useT(BID_PAD_STRINGS);
@@ -105,12 +121,12 @@ export function BidPad({
   const passed = placed === 0;
   const confirmLabel =
     bid === 0
-      ? L('Choose an amount')
+      ? (texts.zero ?? L('Choose an amount'))
       : sent
-        ? L('Bid placed: {coin} {n}', { coin, n: bid })
+        ? (texts.placed?.(bid) ?? L('Bid placed: {coin} {n}', { coin, n: bid }))
         : placed !== null && placed > 0
-          ? L('Change bid to {coin} {n}', { coin, n: bid })
-          : L('Place bid: {coin} {n}', { coin, n: bid });
+          ? (texts.change?.(bid) ?? L('Change bid to {coin} {n}', { coin, n: bid }))
+          : (texts.place?.(bid) ?? L('Place bid: {coin} {n}', { coin, n: bid }));
   const stepper = (dir: 1 | -1, handlers: ReturnType<typeof useRepeat>): JSX.Element => {
     const inert = dir < 0 ? bid <= 0 : bid >= max;
     return (
@@ -141,10 +157,10 @@ export function BidPad({
       footer={
         <div className={styles.footer}>
           <PrimaryButton
-            done={sent && !passed}
-            disabled={bid === 0}
+            done={sent && !passed && !blocked}
+            disabled={bid === 0 || blocked}
             onClick={() => {
-              if (bid > 0 && !sent) onConfirm(bid);
+              if (bid > 0 && !sent && !blocked) onConfirm(bid);
             }}
           >
             {confirmLabel}
@@ -158,7 +174,7 @@ export function BidPad({
                 if (!passed) onPass();
               }}
             >
-              {passed ? L('✓ Passed') : L('Pass (bid 0)')}
+              {passed ? (texts.passed ?? L('✓ Passed')) : (texts.pass ?? L('Pass (bid 0)'))}
             </button>
           ) : null}
         </div>

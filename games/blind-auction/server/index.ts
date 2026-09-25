@@ -1,6 +1,6 @@
-// Blind Auction — bid on mystery lots (docs/game-pack/blind-auction/SPEC.md). `game` is what the
-// registry imports. One file per phase under ./phases; this file wires init / reduce / views /
-// results / bot / speech / recap together and owns the phase order (`advance`).
+// Blind Auction — "Bet on the box" (docs/game-pack/blind-auction/, the owner's redesign 2026-09-24).
+// `game` is what the registry imports. One file per phase under ./phases; this file wires init /
+// reduce / views / results / bot / speech / recap together and owns the phase order (`advance`).
 import {
   allConnectedDone,
   applyVip,
@@ -13,16 +13,12 @@ import {
 } from '@partybox/game-sdk';
 import type { GameDefinition, GameEvent, InitContext, Settings } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
-import { CHAOS } from '../content/schema';
-import type { Chaos } from '../content/schema';
 import { decide } from './bot';
-import { drawLots } from './content';
-import { enterBid, reduceBid } from './phases/bid';
-import { enterFlip, flipSpeech, reduceFlip } from './phases/flip';
-import { enterIntro, reduceIntro } from './phases/intro';
-import { enterLive, reduceLive } from './phases/live';
-import { enterLot, lotSpeech, reduceLot } from './phases/lot';
-import { enterSold, reduceSold } from './phases/sold';
+import { drawBoxes } from './content';
+import { enterBet, reduceBet } from './phases/bet';
+import { boxSpeech, enterBox, reduceBox } from './phases/box';
+import { enterOpen, openSpeech, reduceOpen } from './phases/open';
+import { allReady, countDown, enterRules, reduceRules } from './phases/rules';
 import { recap } from './recap';
 import { results } from './scoring';
 import { speech } from './speech';
@@ -48,18 +44,13 @@ function presenceOf(ctx: InitContext): Presence {
   };
 }
 
-function cfgOf(settings: Settings, presence: Presence): Cfg {
-  const wantsLive = settings['style'] === 'live';
-  const chaos = String(settings['chaos'] ?? 'normal');
+function cfgOf(settings: Settings): Cfg {
   const reader = String(settings['reader'] ?? 'george');
   return {
-    lots: num(settings, 'lots', 8, 5, 12),
+    rounds: num(settings, 'rounds', 8, 5, 12),
     startCoins: Math.round(num(settings, 'startCoins', 100, 50, 300) / 50) * 50,
-    bidSeconds: num(settings, 'bidSeconds', 20, 10, 40),
-    live: wantsLive && presence.mode === 'together',
-    liveRefused: wantsLive && presence.mode !== 'together',
-    chaos: (CHAOS as readonly string[]).includes(chaos) ? (chaos as Chaos) : 'normal',
-    grandLot: settings['grandLot'] !== false,
+    betSeconds: num(settings, 'betSeconds', 20, 10, 40),
+    grand: settings['grand'] !== false,
     spicy: settings['spicy'] === true,
     reader: (READERS as readonly string[]).includes(reader) ? (reader as Reader) : 'george',
   };
@@ -69,51 +60,38 @@ function init(ctx: InitContext): State {
   const players: State['players'] = {};
   for (const p of ctx.players) players[p.id] = p;
   const seats = ctx.players.map((p) => p.id);
-  const presence = presenceOf(ctx);
-  const cfg = cfgOf(ctx.settings, presence);
-  const [lots, afterDraw] = drawLots(cfg, seedRng(ctx.seed));
+  const cfg = cfgOf(ctx.settings);
+  const [boxes, afterDraw] = drawBoxes(cfg, seedRng(ctx.seed));
   let rng = afterDraw;
   const factors: Record<string, number> = {};
   for (const p of ctx.players) {
     if (p.bot !== true) continue;
     const [f, next] = nextFloat(rng);
     rng = next;
-    factors[p.id] = Math.round((0.5 + f * 0.6) * 100) / 100;
+    factors[p.id] = Math.round(f * 100) / 100;
   }
   const base: State = {
-    phase: { id: 'intro', startedAt: ctx.now, deadline: null },
+    phase: { id: 'rules', startedAt: ctx.now, deadline: null },
     rng,
     players,
     cfg,
-    presence,
+    presence: presenceOf(ctx),
     seats,
     left: [],
-    lots,
-    l: {
-      idx: 0,
-      bids: {},
-      high: null,
-      stage: 0,
-      openedAt: ctx.now,
-      winner: null,
-      price: 0,
-      tie: false,
-      step: 0,
-      effect: null,
-      voiceAt: null,
-    },
+    boxes,
+    r: { idx: 0, bets: {}, step: 0, voiceAt: null, turnedAt: null, topped: [] },
+    // Bots have read the rules.
+    ready: ctx.players.filter((p) => p.bot === true).map((p) => p.id),
+    rulesStep: 0,
     coins: Object.fromEntries(seats.map((id) => [id, cfg.startCoins])),
     stats: Object.fromEntries(
-      seats.map((id) => [
-        id,
-        { biggestBid: 0, bestProfit: null, thief: 0, trapped: 0, traps: 0, spent: 0 },
-      ]),
+      seats.map((id) => [id, { biggestBet: 0, biggestWin: 0, longShots: 0, calls: 0, lost: 0 }]),
     ),
     factors,
     notices: {},
     speechMs: {},
   };
-  return enterIntro(base, ctx.now);
+  return enterRules(base, ctx.now);
 }
 
 function enterDone(state: State, now: number): State {
@@ -123,41 +101,37 @@ function enterDone(state: State, now: number): State {
 /** The phase order: what a deadline does — and what a VIP skip does. */
 export function advance(state: State, now: number): State {
   switch (state.phase.id) {
-    case 'intro':
-      return enterLot(state, now, 0);
-    case 'lot':
-      return state.cfg.live ? enterLive(state, now) : enterBid(state, now);
-    case 'bid':
-    case 'live':
-      return enterSold(state, now);
-    case 'sold':
-      return enterFlip(state, now);
-    case 'flip':
-      return state.l.idx + 1 < state.lots.length
-        ? enterLot(state, now, state.l.idx + 1)
+    case 'rules':
+      return enterBox(state, now, 0);
+    case 'box':
+      return enterBet(state, now);
+    case 'bet':
+      return enterOpen(state, now);
+    case 'open':
+      return state.r.idx + 1 < state.boxes.length
+        ? enterBox(state, now, state.r.idx + 1)
         : enterDone(state, now);
     default:
       return state;
   }
 }
 
-/** Connections (and leaving for good, ADR-046); a drop can complete the sealed round. */
+/** Connections (and leaving for good, ADR-046); a drop can complete the ready-up or the betting. */
 function onPlayer(state: State, event: Extract<GameEvent<Input>, { type: 'player' }>): State {
   let next = setConnected(state, event);
   if (event.gone && hasPlayer(state, event.playerId) && !state.left.includes(event.playerId))
     next = { ...next, left: [...next.left, event.playerId] };
-  if (
-    next.phase.id === 'bid' &&
-    !next.phase.paused &&
-    allConnectedDone(next, Object.keys(next.l.bids))
-  )
+  if (next.phase.paused) return next;
+  if (next.phase.id === 'rules' && next.rulesStep === 0 && allReady(next))
+    return countDown(next, event.now);
+  if (next.phase.id === 'bet' && allConnectedDone(next, Object.keys(next.r.bets)))
     return advance(next, event.now);
   return next;
 }
 
 function onSpeech(state: State, key: string, ms: number, now: number): State {
   const stored: State = { ...state, speechMs: { ...state.speechMs, [key]: ms } };
-  return flipSpeech(lotSpeech(stored, key, ms, now), key, ms, now);
+  return openSpeech(boxSpeech(stored, key, ms, now), key, ms, now);
 }
 
 function reduce(state: State, event: GameEvent<Input>): State {
@@ -167,18 +141,14 @@ function reduce(state: State, event: GameEvent<Input>): State {
   if (vip) return vip;
   if (state.phase.paused) return state;
   switch (state.phase.id) {
-    case 'intro':
-      return reduceIntro(state, event, advance);
-    case 'lot':
-      return reduceLot(state, event, advance);
-    case 'bid':
-      return reduceBid(state, event, advance);
-    case 'live':
-      return reduceLive(state, event, advance);
-    case 'sold':
-      return reduceSold(state, event, advance);
-    case 'flip':
-      return reduceFlip(state, event, advance);
+    case 'rules':
+      return reduceRules(state, event, advance);
+    case 'box':
+      return reduceBox(state, event, advance);
+    case 'bet':
+      return reduceBet(state, event, advance);
+    case 'open':
+      return reduceOpen(state, event, advance);
     default:
       return state;
   }
@@ -197,7 +167,7 @@ export const game: GameDefinition<State, Input, BlindAuctionTvView, BlindAuction
     // Honest by construction (P00 §7.9): the bot sees only its own phone's view.
     sampleInput(state, playerId, rng) {
       if (!hasPlayer(state, playerId) || state.left.includes(playerId)) return null;
-      return decide(controllerView(state, playerId), state.factors[playerId] ?? 0.8, rng);
+      return decide(controllerView(state, playerId), state.factors[playerId] ?? 0.5, rng);
     },
   },
   speech,
