@@ -149,6 +149,12 @@ function Spotlight(p: {
         <p className={styles.reader}>
           <Avatar avatarId={p.reader.avatarId} size={36} />
           {p.readingLine}
+          {/* The VIP is still reading: dots rise in turn, so the stage never sits still. */}
+          <span className={styles.dots} aria-hidden>
+            <span />
+            <span />
+            <span />
+          </span>
         </p>
       ) : null}
       <span className={styles.spotHead}>
