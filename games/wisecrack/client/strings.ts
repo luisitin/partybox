@@ -1,6 +1,6 @@
 // Wisecrack's words in other languages, keyed by the English sentence (the owner, 2026-09-22: every
 // screen translatable to Spanish). Screens read them through `useT(STRINGS)` as `L('…')`; the
-// shell's game picker reads the manifest's tagline, description and setting labels from here too.
+// manifest's own sentences (the picker, About, the settings form) live in manifest.es.json (ADR-049).
 // `{name}` marks a placeholder. Content (cards, prompts, questions) stays in the deck's language.
 // "Prompt" is "pregunta" throughout (short, and what a party player expects), "sweep" is "unánime".
 import type { Strings } from '@partybox/game-sdk/ui';
@@ -15,20 +15,6 @@ export const STRINGS: Strings = {
     'Unanimous wins: {n}': 'Victorias unánimes: {n}',
     'Speed writer': 'Pluma veloz',
     'Answers in before half time: {n}': 'Respuestas antes de la mitad del tiempo: {n}',
-
-    // The game picker (manifest.json).
-    "Write the funniest answer. Win the room's votes.":
-      'Escribe la respuesta más graciosa. Gánate los votos de la sala.',
-    'Everyone gets two prompts and writes a one-liner for each. Each prompt then goes on the TV with its two answers, anonymously; everyone else votes for the funnier one. 100 points per vote, a bonus for a clean sweep, and with two or more rounds the last one counts double.':
-      'Cada jugador recibe dos preguntas y escribe una ocurrencia para cada una. Luego cada pregunta sale en la TV con sus dos respuestas, anónimas; los demás votan por la más graciosa. 100 puntos por voto, puntos extra por ganar por unanimidad y, con dos o más rondas, la última vale doble.',
-    Rounds: 'Rondas',
-    'Rounds to play; with 2 or more, the last one is worth double':
-      'Rondas a jugar; con 2 o más, la última vale doble',
-    'Writing time': 'Tiempo para escribir',
-    'Seconds to answer both prompts': 'Segundos para responder las dos preguntas',
-    'Spicy prompts': 'Preguntas picantes',
-    'Mix in explicit adult prompts (18+, as wild as the Blanks WILD deck)':
-      'Incluye preguntas explícitas para adultos (18+, tan salvajes como el mazo WILD de Blanks)',
 
     // Shared by phone and TV.
     'Round {round} of {rounds}': 'Ronda {round} de {rounds}',

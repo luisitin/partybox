@@ -195,10 +195,44 @@ export function awardsFor(state: State): GameAward[] {
   ];
 }
 
-/** Co-op crowns everyone either way: the contract suite requires a winner (contract.test.ts
- *  "winnerIds.length > 0"), so the finale board carries the verdict — the spec's own fallback
- *  (§5.7), reported to the owner in NOTES.md. */
+/** The results screen's line for each co-op rating (English; Tune In's strings carry the Spanish,
+ *  the way the shell translates awards). */
+const RATING_HEADLINE: Record<Rating, string> = {
+  meld: '🧠 Mind meld!',
+  clear: '📡 Crystal clear!',
+  tuning: '📻 Tuning in.',
+  static: '📺 Static.',
+};
+
+/** ADR-052: how the game ended. Co-op: Crystal clear or better crowns everyone and anything less
+ *  crowns nobody (spec §5.7), the rating is the headline. Teams: the team with more points, or a
+ *  draw on equal totals (every player carries their team's score, so the team ranks together). */
 export function results(state: State): GameResults | null {
   if (state.phase.id !== 'done') return null;
-  return buildResults(state, state.scores, awardsFor(state));
+  const base = buildResults(state, state.scores, awardsFor(state));
+  if (state.mode === 'coop') {
+    const rating = coopRating(state.coopTotal, state.played);
+    const won = rating === 'clear' || rating === 'meld';
+    return {
+      ...base,
+      winnerIds: won ? base.winnerIds : [],
+      outcome: { kind: 'coop', won },
+      headline: RATING_HEADLINE[rating],
+    };
+  }
+  if (state.mode === 'teams' && state.teams) {
+    const { sun, moon } = state.team;
+    return {
+      ...base,
+      outcome: {
+        kind: 'teams',
+        winner: sun === moon ? null : sun > moon ? 'sun' : 'moon',
+        teams: [
+          { id: 'sun', name: 'Sun', mark: '▲', members: state.teams.sun },
+          { id: 'moon', name: 'Moon', mark: '●', members: state.teams.moon },
+        ],
+      },
+    };
+  }
+  return base;
 }

@@ -2,7 +2,7 @@
 // the verdict at the points beat; never the target; a key reaches a view only when its line plays.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
-import { readableName, speakableText, speechKey } from '../server/speakable';
+import { SPEECH_KEY_PATTERN } from '@partybox/game-sdk/speech';
 import { announceReading, clueReading, speech } from '../server/speech';
 import { dialAll, send, start, timer, toClue, toDial } from './helpers';
 
@@ -31,10 +31,10 @@ describe('what the reader says', () => {
     let s = toClue(start(4, { mode: 'solo' }));
     s = send(s, s.turn.psychic, { type: 'clue', text: 'LAVA LAMP!!!' });
     expect(s.phase.id).toBe('dial');
-    expect(said(clueReading(s)?.parts ?? [])).toBe('Lava lamp!');
-    expect(speakableText('an FBI agent', true)).toBe('an F B I agent');
-    expect(speakableText('a NASA rocket', true)).toBe('a NASA rocket');
-    expect(readableName('BEN')).toBe('Ben');
+    expect(said(clueReading(s)?.parts ?? []).toLowerCase()).toBe('lava lamp!');
+    s = toClue(start(4, { mode: 'solo' }));
+    s = send(s, s.turn.psychic, { type: 'clue', text: 'a warm bath' });
+    expect(said(clueReading(s)?.parts ?? [])).toBe('a warm bath.');
   });
 
   it('never speaks the target, and never with the reader off', () => {
@@ -48,11 +48,13 @@ describe('what the reader says', () => {
 });
 
 describe('keys', () => {
-  it('fit the host’s key pattern and are stable per voice and text', () => {
-    const k = speechKey('sky', [{ text: 'Coffee.' }]);
-    expect(k).toMatch(/^[a-z0-9]{6,40}$/);
-    expect(speechKey('sky', [{ text: 'Coffee.' }])).toBe(k);
-    expect(speechKey('george', [{ text: 'Coffee.' }])).not.toBe(k);
+  it('fit the host’s key pattern, name the game, and are stable per voice and text', () => {
+    const s = toClue(start(4, { mode: 'solo' }));
+    const k = announceReading(s)?.key ?? '';
+    expect(k).toMatch(SPEECH_KEY_PATTERN);
+    expect(k.startsWith('tune-in-')).toBe(true);
+    expect(announceReading(s)?.key).toBe(k);
+    expect(announceReading({ ...s, cfg: { ...s.cfg, reader: 'george' } })?.key).not.toBe(k);
   });
 
   it('reach a view only once made, and only in the phase that plays them', () => {
@@ -66,7 +68,12 @@ describe('keys', () => {
       ms: 2100,
     });
     expect(game.tvView(s).reading?.key).toBe(want?.key);
-    s = game.reduce(s, { type: 'speech', now: s.phase.startedAt + 400, key: 'tifailed', ms: -1 });
+    s = game.reduce(s, {
+      type: 'speech',
+      now: s.phase.startedAt + 400,
+      key: 'tune-in-0000000000000000',
+      ms: -1,
+    });
     expect(game.tvView(s).reading?.key).toBe(want?.key);
     s = timer(s); // void → reveal: the announcement is gone
     expect(game.tvView(s).reading).toBeNull();
@@ -75,18 +82,5 @@ describe('keys', () => {
   it('asks for at most 10 at once', () => {
     for (const phase of [start(6, { mode: 'teams' }), toClue(start(6, { mode: 'teams' }))])
       expect(speech(phase).length).toBeLessThanOrEqual(10);
-  });
-});
-
-describe('speakable text', () => {
-  it('straightens quotes, reads symbols, calms shouting and stretched words', () => {
-    expect(speakableText('Rock & roll', true)).toBe('Rock and roll');
-    expect(speakableText('SOOOO HOT', true)).toBe('soo hot');
-    expect(speakableText('it’s 🔥', true)).toBe("it's");
-  });
-  it('skips names with no vowels or mostly symbols', () => {
-    expect(readableName('Ana')).toBe('Ana');
-    expect(readableName('xkcd')).toBeNull();
-    expect(readableName('__99__')).toBeNull();
   });
 });

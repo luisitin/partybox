@@ -1,6 +1,6 @@
 // Patterns and claim checking. A pattern is a list of "completions" (sets of card indices); a claim
 // is valid when some completion is entirely green (daubed AND called). FREE always counts.
-import { FREE } from './types';
+import { FREE } from './constants';
 import type { Claim, Pattern } from './types';
 
 export const PATTERN_LABEL: Record<Pattern, string> = {

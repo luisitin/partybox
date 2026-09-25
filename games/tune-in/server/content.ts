@@ -5,13 +5,14 @@ import type { RngState } from '@partybox/game-sdk';
 import familyJson from '../content/family.json' with { type: 'json' };
 import pronunciationsJson from '../content/pronunciations.json' with { type: 'json' };
 import spicyJson from '../content/spicy.json' with { type: 'json' };
-import { pronunciationsSchema, spectrumPackSchema } from '../content/schema';
+import { parsePronunciations } from '@partybox/game-sdk/speech';
+import { spectrumPackSchema } from '../content/schema';
 import type { SpectrumItem } from '../content/schema';
 
 // Parsed once; a broken pack fails at import time (and in the contract suite).
 export const FAMILY = spectrumPackSchema.parse(familyJson);
 export const SPICY = spectrumPackSchema.parse(spicyJson);
-export const PRONUNCIATIONS = pronunciationsSchema.parse(pronunciationsJson);
+export const PRONUNCIATIONS = parsePronunciations(pronunciationsJson);
 
 const BY_ID = new Map<string, SpectrumItem>(
   [...FAMILY.spectra, ...SPICY.spectra].map((s) => [s.id, s]),

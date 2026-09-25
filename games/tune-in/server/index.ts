@@ -1,7 +1,7 @@
 // Tune In — a clue on a dial between two opposites (docs/game-pack/tune-in/SPEC.md). `game` is
 // what the registry imports; phases live under ./phases, wired by ./flow; views, bot and speech in
 // their own files. This one only assembles the definition.
-import { gameManifestSchema, seedRng, shuffle } from '@partybox/game-sdk';
+import { gameManifestSchema, seedRng, shuffle, teamsFromSeed } from '@partybox/game-sdk';
 import type { GameDefinition, InitContext } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
 import { decide } from './bot';
@@ -14,7 +14,7 @@ import { recap } from './recap';
 import { results } from './scoring';
 import { readPresence, readSettings } from './settings';
 import { speech } from './speech';
-import { coin, teamsFromSeed } from './teams';
+import { coin } from './teams';
 import { plannedTurns, planTurn, turnZero } from './turn';
 import { tvView } from './tv-view';
 import type { TuneTvView } from './tv-view';

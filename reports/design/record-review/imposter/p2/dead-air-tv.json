@@ -1,0 +1,36 @@
+{
+  "video": "C:\\dev\\partybox-game-imposter\\reports\\design\\record-review\\imposter\\p2\\video\\tv\\round.webm",
+  "bytes": 13891071,
+  "durationS": 133.9,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 1.5,
+      "toS": 3.2,
+      "ms": 1700,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 107.9,
+      "toS": 110.3,
+      "ms": 2400,
+      "during": "accuse",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 4100,
+  "hardCuts": [],
+  "samples": 1338,
+  "motion": {
+    "p50": 0.0003,
+    "p90": 0.003,
+    "p99": 0.0396,
+    "max": 0.1183
+  }
+}

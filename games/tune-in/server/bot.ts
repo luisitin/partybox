@@ -4,7 +4,7 @@
 import type { Rng } from '@partybox/game-sdk';
 import { spectrumById } from './content';
 import type { TuneControllerView } from './controller-view';
-import { sameAnswer } from './text';
+import { sameAnswer } from '@partybox/game-sdk/match';
 import type { Input } from './types';
 
 /** Where the bot believes the clue sits: a bank clue it recognises, else nothing. */
@@ -12,7 +12,7 @@ export function estimate(view: TuneControllerView): number | null {
   const spectrum = spectrumById(view.turn.spectrumId);
   const clue = view.turn.clue;
   if (!spectrum || !clue) return null;
-  const known = spectrum.clues.find((c) => sameAnswer(c.text, clue));
+  const known = spectrum.clues.find((c) => sameAnswer(c.text, clue, 'en'));
   return known ? known.pos : null;
 }
 

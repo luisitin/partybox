@@ -11,8 +11,11 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
    the headings, in this order — also checked: `## Overview`, `## Players`, `## Phases`, `## Inputs`,
    `## Scoring`, `## Edge cases`, `## Settings`, `## Content`. This README is _the_ spec: the
    stress-test session treats it as truth, so say explicitly when a score can go down.
-3. **Manifest**: `manifest.json` — `id` (must equal the folder), `name`, `tagline`, `description`,
-   `version`, `minPlayers`, `maxPlayers`, `estimatedMinutes`, `tags`, `settings[]`. `server/index.ts`
+3. **Manifest**: `manifest.json` — `id` (must equal the folder), `name`, `icon` (one emoji),
+   `tagline` (≤ 60), `description` (≤ 300, shown only in About), `howToPlay` (three steps ≤ 90),
+   `version`, `minPlayers`, `maxPlayers`, `estimatedMinutes`, `tags` (1–3 of `GAME_TAGS`; `quick` is
+   derived), `presence.needs`, `addedOn` (`pnpm new-game` stamps today), `settings[]`. Every one of its
+   sentences also goes in `manifest.es.json`, keyed by the English (ADR-049). `server/index.ts`
    imports it and parses it with `gameManifestSchema` (as the template does); the contract test asserts
    `game.manifest` deep-equals the file.
    Optional `estimate` (I-189): the game's measured pace, so the picker's "~N min" follows the
@@ -25,7 +28,8 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
    `reduceX(state, event, next: Transition)`. **Phase files never import each other** (dependency-cruiser
    forbids cycles, and real games loop): `server/index.ts` owns the order in `advance(state, now)` and passes
    it in as `next` — the same `advance` is what a VIP skip runs. Declare `phases: [...]` in typical order.
-   Server code imports only `@partybox/game-sdk` (pure helpers). Use `hasPlayer(state, id)` / `Object.hasOwn`
+   Server code imports only `@partybox/game-sdk` (pure helpers), plus `@partybox/game-sdk/speech` for a
+   game with a reader voice (`docs/GAME_CONTRACT.md` "Speech"). Use `hasPlayer(state, id)` / `Object.hasOwn`
    rather than `state.players[id]` truthiness (`'__proto__'` is a sender the contract suite tries).
    Scoring math lives in `server/scoring.ts`, content access in `server/content.ts`.
 5. **Content**: JSON packs in `content/*.json`; the zod schema in `content/schema.ts`. Family-friendly
@@ -35,7 +39,9 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
    with the first state seen per phase, so re-run it after any change to the state shape and hand-edit
    the JSON where you want a more interesting moment). Fixtures feed `/preview` and the contract tests.
 7. **Client**: `client/Tv.tsx` and `client/Controller.tsx` built from `@partybox/game-sdk/ui` primitives;
-   `client/index.ts` exports `clientModule`. No sockets, no game logic, no global state.
+   `client/phone-entry.ts` exports `phone`, `client/tv-entry.ts` exports `tv`, both spreading
+   `client/shared.ts` (ADR-050: each is its own download; the phone side never imports a TV file).
+   No sockets, no game logic, no global state.
 8. **Bot**: `bot.sampleInput` must return a valid input in every phase (or `null`). The sim, e2e and the
    contract tests all depend on it. When the bot is a fair opponent (acts in every input phase, varied
    inputs), declare `"supportsBots": true` in `manifest.json` so players can add bot seats in the lobby
@@ -73,6 +79,7 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
 | File                                                                 | Purpose                                                                                                        |
 | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | `manifest.json`                                                      | metadata, player bounds, settings spec, `supportsBots` (parsed with `gameManifestSchema` in `server/index.ts`) |
+| `manifest.es.json`                                                   | the manifest's sentences in Spanish, keyed by the English: the catalog, About and the settings form (ADR-049)  |
 | `README.md`                                                          | the spec (required headings above)                                                                             |
 | `CLAUDE.md`                                                          | ≤ 30 lines: local rules and commands for this game                                                             |
 | `server/index.ts`                                                    | exports `game: GameDefinition<State, Input>`: `init`, `reduce` (composes the phases), views, `results`, `bot`  |
@@ -81,7 +88,8 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
 | `server/scoring.ts`                                                  | pure scoring + `results()`                                                                                     |
 | `server/content.ts`                                                  | typed, validated access to `content/*.json`                                                                    |
 | `content/schema.ts`, `content/words.json`                            | `packs` (pack name → zod schema) + the pack itself                                                             |
-| `client/index.ts`, `client/Tv.tsx`, `client/Controller.tsx`          | lazy `clientModule` + the two dumb views (they import `@partybox/game-sdk/ui`)                                 |
+| `client/phone-entry.ts`, `client/tv-entry.ts`, `client/shared.ts`    | the phone and TV downloads (ADR-050) and what both carry (sounds, music, strings)                              |
+| `client/Tv.tsx`, `client/Controller.tsx`                             | the two dumb views (they import `@partybox/game-sdk/ui`)                                                       |
 | `client/strings.ts`                                                  | the game's Spanish, keyed by the English sentence (`useT(STRINGS)` → `L('…')`, ADR-044)                        |
 | `fixtures/answer.json`, `fixtures/reveal.json`, `fixtures/done.json` | one full state per phase                                                                                       |
 | `__tests__/game.test.ts`                                             | unit tests pinning the README rules                                                                            |

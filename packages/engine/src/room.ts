@@ -4,6 +4,7 @@
 import { LIMITS } from '@partybox/shared';
 import type { GameEvent, GameStateBase } from '@partybox/shared';
 import { addBot, removeBot } from './bots';
+import { suggestToast } from './picker';
 import { disconnect, expirePlayers, join, removePlayer } from './players';
 import { ASLEEP_END_MS, abortGame, applyGameEvent, fireDueTimer } from './runner';
 import type { ApplyResult, Effect, EngineDeps, RoomEvent, RoomState } from './types';
@@ -187,7 +188,12 @@ function dispatch(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyRes
       const votes = { ...room.votes };
       if (event.gameId === null) delete votes[who.id];
       else votes[who.id] = event.gameId;
-      return { room: { ...room, votes }, effects: [{ type: 'push' }] };
+      // Ruling 2: a vote is the picker's 👍 Suggest — the room hears it, at most every 10 s each.
+      const heard =
+        event.gameId === null
+          ? { room: { ...room, votes }, effects: [] }
+          : suggestToast({ ...room, votes }, who.id, event.gameId, event.now, deps);
+      return { room: heard.room, effects: [...heard.effects, { type: 'push' }] };
     }
     case 'dev:loadState': {
       const game = deps.games[event.gameId];

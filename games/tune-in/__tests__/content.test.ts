@@ -6,7 +6,7 @@ import { estimate } from '../server/bot';
 import { checkClue } from '../server/clue';
 import { FAMILY, SPICY } from '../server/content';
 import { game } from '../server/index';
-import { sameAnswer } from '../server/text';
+import { sameAnswer } from '@partybox/game-sdk/match';
 import { dialAll, guessers, start, timer, toClue, toDial, withTarget } from './helpers';
 
 const ALL = [...FAMILY.spectra, ...SPICY.spectra];
@@ -43,7 +43,7 @@ describe('the packs', () => {
       expect(Math.min(...fifths), s.id).toBeGreaterThanOrEqual(2);
       s.clues.forEach((c, i) => {
         for (const d of s.clues.slice(i + 1))
-          expect(sameAnswer(c.text, d.text), `${s.id}: ${c.text}`).toBe(false);
+          expect(sameAnswer(c.text, d.text, 'en'), `${s.id}: ${c.text}`).toBe(false);
       });
     }
   });

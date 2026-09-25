@@ -1,13 +1,11 @@
 // The results stage keeps Tune In's own last board for teams and co-op (spec §5.7): the final
-// banner with both teams (the winners' card lit), or co-op's rating and meter — the verdict the
-// headline cannot give. The shell drops its scoreboard and awards for a kept board, so the awards
-// ride here too.
+// banner with both teams (the winners' card lit), or co-op's meter under the rating headline
+// (ADR-052). The shell drops its scoreboard and awards for a kept board, so the awards ride here.
 import type { JSX } from 'react';
-import { BigText, useT } from '@partybox/game-sdk/ui';
+import { useT } from '@partybox/game-sdk/ui';
 import type { GameFinaleProps } from '@partybox/game-sdk/ui';
 import { TeamBanner } from '@partybox/game-sdk/ui/team-banner';
 import type { TuneTvView } from '../server/index';
-import { ratingText } from './copy';
 import { Rosters } from './Rosters';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
@@ -82,11 +80,9 @@ export function Finale({ lastView, room }: GameFinaleProps<TuneTvView>): JSX.Ele
     );
   }
   if (!lastView.coop) return null;
+  // The rating is the results' headline (ADR-052), so the board shows the meter it came from.
   return (
     <div className={styles.finale}>
-      <BigText level="display" className={styles.rating}>
-        {ratingText(L, lastView.coop.rating)}
-      </BigText>
       <div className={styles.bigMeter}>
         <CoopMeter total={lastView.coop.total} max={lastView.coop.max} />
       </div>

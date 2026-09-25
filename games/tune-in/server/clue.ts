@@ -1,7 +1,7 @@
 // The clue rules (spec §5.8). The server checks every clue and the psychic's phone runs the same
 // check as they type; the psychic already knows the labels, so the messages leak nothing. Pure and
 // content-free, so the phone chunk can import it.
-import { normalize, stem } from './text';
+import { normalize, stem } from '@partybox/game-sdk/match';
 
 export const CLUE_MAX_CHARS = 30;
 
@@ -30,7 +30,7 @@ const POSITION_WORDS = [
   'spectrum',
   'dial',
 ];
-const POSITION_STEMS = new Set(POSITION_WORDS.map(stem));
+const POSITION_STEMS = new Set(POSITION_WORDS.map((w) => stem(w, 'en')));
 /** Number words past ninety-nine: the rule is "no numbers", and "a million bucks" is one. */
 const BIG_NUMBERS = new Set([
   'hundred',
@@ -69,13 +69,19 @@ export interface LabelIndex {
   forms: Set<string>;
 }
 
+/** The normalized words of a phrase (the shared matcher, English: content is English). */
+function wordsOf(text: string): string[] {
+  const { norm } = normalize(text, 'en');
+  return norm === '' ? [] : norm.split(' ');
+}
+
 /** The banned words of a spectrum's two labels (3+ letters, whole words). */
 export function labelIndex(left: string, right: string): LabelIndex {
   const stems = new Set<string>();
   const forms = new Set<string>();
-  for (const word of [...normalize(left).words, ...normalize(right).words]) {
+  for (const word of [...wordsOf(left), ...wordsOf(right)]) {
     if (word.length < 3 || LABEL_STOP.has(word)) continue;
-    stems.add(stem(word));
+    stems.add(stem(word, 'en'));
     for (const form of labelForms(word)) forms.add(form);
   }
   return { stems, forms };
@@ -84,13 +90,14 @@ export function labelIndex(left: string, right: string): LabelIndex {
 /** Spec §5.8, in the table's order; the first failing rule is the one the player sees. */
 export function checkClue(text: string, left: string, right: string): ClueCheck {
   const trimmed = text.trim().replace(/\s+/g, ' ');
-  const { words } = normalize(trimmed);
+  const words = wordsOf(trimmed);
   if (words.length === 0) return { ok: false, reason: 'empty' };
   if ([...trimmed].length > CLUE_MAX_CHARS) return { ok: false, reason: 'too-long' };
   if (words.some((w) => /\d/.test(w) || BIG_NUMBERS.has(w))) return { ok: false, reason: 'number' };
   const labels = labelIndex(left, right);
-  if (words.some((w) => labels.forms.has(w) || labels.stems.has(stem(w))))
+  if (words.some((w) => labels.forms.has(w) || labels.stems.has(stem(w, 'en'))))
     return { ok: false, reason: 'label-word' };
-  if (words.some((w) => POSITION_STEMS.has(stem(w)))) return { ok: false, reason: 'position-word' };
+  if (words.some((w) => POSITION_STEMS.has(stem(w, 'en'))))
+    return { ok: false, reason: 'position-word' };
   return { ok: true, text: trimmed };
 }

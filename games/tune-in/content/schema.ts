@@ -2,6 +2,7 @@
 // suite validates every pack with it. The clue rules (legal against its own labels, a spread across
 // every fifth of the dial) are pinned by __tests__/content.test.ts.
 import { z } from '@partybox/game-sdk';
+import { pronunciationsSchema } from '@partybox/game-sdk/speech';
 
 export const LABEL_MAX_CHARS = 18;
 export const BANK_CLUES = 12;
@@ -26,13 +27,6 @@ export const spectrumPackSchema = z.object({
   spectra: z.array(spectrumSchema).min(1),
 });
 export type SpectrumPack = z.infer<typeof spectrumPackSchema>;
-
-const overrideSchema = z.object({
-  say: z.string().min(1),
-  ipa: z.string().min(1).optional(),
-  anyCase: z.boolean().optional(),
-});
-export const pronunciationsSchema = z.record(z.string(), overrideSchema);
 
 export const packs = {
   family: spectrumPackSchema,

@@ -22,7 +22,7 @@ import {
   DEAL_STEP_MS,
   RESUME_MS,
   dealDoneMs,
-} from '../server/types';
+} from '../server/constants';
 import styles from './Tv.module.css';
 
 /**

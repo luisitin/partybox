@@ -7,16 +7,22 @@ primitives, and hosts the contract tests that run against every game.
 
 - `src/index.ts` — the PURE public surface: contract types, `z`, rng, reducer/view helpers (what `games/*/server` imports).
 - `src/ui.ts` — `@partybox/game-sdk/ui`: the React primitives (what `games/*/client` and the client shells import, ADR-023).
-- `src/client-module.ts` — `GameClientModule`, `GameTvProps`, `GameControllerProps` (what `games/<id>/client/index.ts` exports).
+- `src/match.ts` — `@partybox/game-sdk/match` (ADR-048), pure, no zod/React (server and phone share it): `normalize`, `stem`,
+  `matchAnswer` (`exact`/`stem`/`fuzzy`/`none`), `sameAnswer`, `groupAnswers`, `isLegalClue` (reason codes); every call takes `lang`.
+- `src/answer-pack.ts` — `answerItemSchema`, `answerPackSchema`, `checkAnswerPack` (the pack test); `src/compare.ts` — `compareCodeUnits`
+  (the locale-free sort game servers use instead of `localeCompare`). Both from the pure entry.
+- `src/speech.ts` — `@partybox/game-sdk/speech` (server-only, pure; ADR-045): `toSpeakable` (Part 00 §5.3), `speakableName`,
+  `parsePronunciations` + `pronunciationsSchema`, `speechKey`, `SPEECH_ENGINE_VERSION`, `pendingCap`, `unknownPhonemes`.
+- `src/client-module.ts` — `GameShared`, `GamePhoneModule`, `GameTvModule`, `GameSettingsModule`, `GameLoaders`, `GameTvProps`, `GameControllerProps` (what `games/<id>/client/*-entry.ts` export, ADR-050).
 - `src/ui/` — `Avatar` (16 inline SVGs), `PlayerChip`, `ServerClockProvider` + `useServerNow` / `useSecondsLeft` / `useServerOffset` (server-time-aware timers).
 - `src/rng.ts` — `nextFloat`, `nextInt`, `shuffle`, `pick` on `RngState` (`[value, next]`), `createRng` for bots.
 - `src/timer.ts` — `enterPhase`, `isTimerFor`, `applyVip` (pause/resume + skip/end handlers), `setConnected`, `allConnectedDone`, `connectedIds`.
+- `src/turns.ts` — `teamsFromSeed` (▲ Sun / ● Moon, even sizes, bots spread), `majorityPick` (seeded tie-break, `null` with no votes), `rotation` (whose turn, skipping who left). Pure, never throw.
 - `src/scoring.ts` — `rank` (shared ranks on ties), `buildResults`, `speedPoints`, `addScores`. `src/views.ts` — `envelope`, `controllerEnvelope`, `viewPlayers`.
-- `src/controller/` — `Screen` (safe-area frame + sticky footer), `PrimaryButton`, `WaitingScreen`; Phase 3 adds `TextAnswer`, `ChoiceGrid`, `VoteList`.
-  `usePhoneOnly()` (S-005, 2026-09-22) is true in a "phone only" room — the shell provides it —
-  and the three controls above use it for their default lines, so none of them says "look at the
-  TV" when there is no TV. A game's own copy should do the same (or read `view.phoneOnly`).
-- `src/tv/` — `Stage` (overscan frame), `BigText`, `Timer` (last-5-s urgency + `onTick`), `PlayerChips`, `Scoreboard`; Phase 3 adds `Reveal`.
+- `src/controller/` — `Screen` (safe-area frame + sticky footer), `PrimaryButton`, `WaitingScreen`, `TextAnswer`, `ChoiceGrid`, `VoteList`.
+  `usePhoneOnly()` (S-005) is true in a "phone only" room (the shell provides it); those controls use it so none says
+  "look at the TV" when there is no TV. A game's own copy should do the same (or read `view.phoneOnly`).
+- `src/tv/` — `Stage` (overscan frame), `BigText`, `Timer` (last-5-s urgency + `onTick`), `PlayerChips`, `Scoreboard`, `Reveal`.
 - `src/contract-tests/` — the suite every game must pass: `contract.test.ts` (rules), `play.ts` (headless runner), `fuzz.ts`, `hash.ts`, `load.ts` (docs/TESTING.md).
 
 ## Test
@@ -27,33 +33,20 @@ primitives, and hosts the contract tests that run against every game.
 
 Engine or server imports, sockets, game-specific logic, anything a game shouldn't be allowed to call.
 
-`GameClientModule` strip flags (I-131, 2026-09-22): `stripCompact` (phase ids) drops the TV strip to
-faces only on those phases — the claimant's chip (`PlayerChips` `leadId`) keeps its name and is drawn
-a size up — and `stripHidden` removes the strip entirely so the stage takes the room. Bingo uses both
-for a claim and its verdict.
+## Notes
 
-Language (ADR-044, 2026-09-22): `useLang()` / `setLang()` / `getLang()` are the device's language;
-`useT(table)` returns `L`, where `L('English {name}', { name })` answers in that language from an
-English-keyed `Strings` table and `L.sent(text)` translates a sentence the server wrote.
-`translate` / `translateSent` are the same outside React. The SDK's own components translate through
-`controller/strings.ts` and `tv/strings.ts`.
-
-`spectator` on a view (I-134 A, 2026-09-23): optional `{ line }` a game fills for a phone that is
-waiting for the next game; the shell's waiting screen shows it (in the phone's language through the
-game's table). Bingo sends the live call ("N 34 — Thirty-four — ask for more").
-
-Avatar ids may carry a colour (I-086, 2026-09-23): `fox#3` is the fox in player colour 4
-(`avatarFace` / `avatarTint` in `@partybox/shared`); `Avatar` and `avatarColorVar` read both, and an
-id without `#` behaves as before.
-
-A manifest setting may declare `impliedBy: { key, value, note }` (I-112 A, 2026-09-23): while the
-sibling `key` has `value`, the picker (phone and TV) greys the field out, checked, with `note`.
-
-`PlayerChip` takes `compact` (I-792 E, 2026-09-24): for a tight grid cell — no "you" tag (the label
-keeps "(you)"), the VIP tag is its ★ alone, and the glyph slot exists only while a glyph shows.
-
-`LeadMark` (I-268, 2026-09-24): the one "in the lead" mark — a "1st" tag ("1.º") in a ring of the
-text's colour, aria "leading"; the caller sets size and colour. `PlayerChip` `leader` draws it where
-the ▲ was, and a chip whose `score` rises floats "+N" over the number for 2 s (not while `scoreMuted`).
-The phone bench and Lightning's reveal rows use it too, with the roster's rule: no mark while nobody
-has scored or everyone is tied. 🏆 stays "won", 👑 the VIP handover.
+- `GameTvModule` strip flags (I-131): `stripCompact` (phase ids) drops the TV strip to faces only — the claimant's
+  chip (`PlayerChips` `leadId`) keeps its name, a size up — and `stripHidden` removes it. Bingo uses both for a claim.
+- Language (ADR-044): `useLang()` / `setLang()` / `getLang()` are the device's language; `useT(table)` returns `L`
+  (`L('English {name}', { name })` from an English-keyed `Strings` table; `L.sent(text)` for a sentence the server
+  wrote); `translate` / `translateSent` outside React. The SDK's own components use `controller/` and `tv/strings.ts`.
+- `spectator` on a view (I-134 A): optional `{ line }` for a phone waiting for the next game; the shell's waiting
+  screen shows it through the game's table (Bingo sends the live call).
+- Avatar ids may carry a colour (I-086): `fox#3` is the fox in player colour 4 (`avatarFace` / `avatarTint` in
+  `@partybox/shared`); `Avatar` and `avatarColorVar` read both; an id without `#` behaves as before.
+- A manifest setting may declare `impliedBy: { key, value, note }` (I-112 A): while the sibling `key` has `value`,
+  the picker greys the field out, checked, with `note`.
+- `PlayerChip` `compact` (I-792 E): a tight grid cell — no "you" tag (the label keeps "(you)"), the VIP tag is its ★
+  alone, the glyph slot only while a glyph shows. `leader` draws `LeadMark` (I-268: the one "1st" / "1.º" tag, aria
+  "leading") where the ▲ was, and a rising `score` floats "+N" for 2 s (not while `scoreMuted`). The phone bench and
+  Lightning's reveal rows use it too: no mark while nobody has scored or everyone is tied. 🏆 = won, 👑 = VIP handover.

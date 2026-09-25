@@ -20,7 +20,7 @@ never writes specs, options, IDEAS or captures; it appends to `SHIPPED.md` only.
 3. **Strings:** every new player-facing string through the i18n tables with Spanish
    (`scripts/i18n-coverage.test.ts`). README line per option letter (game READMEs ≤ 120 lines).
 4. `pnpm verify` GREEN (registry, typecheck, lint max-lines 300, lint:deps, format, unit+contract,
-   sim smoke, build, doc drift). Python on Windows writes CRLF — edit code with Edit/Write.
+   sim smoke, build, bundle, doc drift). Python on Windows writes CRLF — edit code with Edit/Write.
 5. **Prove** headlessly: a probe `packages/e2e/src/design/<name>.tmp.ts` on your own port (never
    42069); look at every screenshot; for motion/sound use the `record-review` skill. Move probes
    and outputs to the scratchpad `c-capture/` afterwards.

@@ -2,7 +2,6 @@
 // rejected; a legal compound like "hotdog" is accepted. The server re-checks what the phone checked.
 import { describe, expect, it } from 'vitest';
 import { checkClue } from '../server/clue';
-import { normalize, sameAnswer, stem } from '../server/text';
 import { send, start, toClue } from './helpers';
 
 const hot = (text: string): string => {
@@ -50,33 +49,6 @@ describe('clue rules (Cold ↔ Hot)', () => {
     expect(checkClue('  coffee  ', 'Cold', 'Hot')).toEqual({ ok: true, text: 'coffee' });
     expect(checkClue('a'.repeat(30), 'Cold', 'Hot').ok).toBe(true);
     expect(checkClue('a'.repeat(31), 'Cold', 'Hot').ok).toBe(false);
-  });
-});
-
-describe('the matcher stand-in', () => {
-  it('normalizes quotes, accents, articles and number words', () => {
-    expect(normalize("Don't").norm).toBe('dont');
-    expect(normalize('Café crème').norm).toBe('cafe creme');
-    expect(normalize('The Moon').norm).toBe('moon');
-    expect(normalize('the').norm).toBe('the');
-    expect(normalize('twenty one').norm).toBe('21');
-  });
-  it('stems singular and plural to meet', () => {
-    for (const [a, b] of [
-      ['movie', 'movies'],
-      ['horse', 'horses'],
-      ['knife', 'knives'],
-      ['berry', 'berries'],
-      ['box', 'boxes'],
-    ])
-      expect(stem(a as string)).toBe(stem(b as string));
-  });
-  it('sameAnswer: compact, stems, one edit at 6+ letters', () => {
-    expect(sameAnswer('ice cream', 'icecream')).toBe(true);
-    expect(sameAnswer('Coffees', 'coffee')).toBe(true);
-    expect(sameAnswer('snowmen', 'snowman')).toBe(true);
-    expect(sameAnswer('cat', 'car')).toBe(false);
-    expect(sameAnswer('lava', 'java')).toBe(false);
   });
 });
 

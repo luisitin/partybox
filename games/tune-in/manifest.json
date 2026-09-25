@@ -1,13 +1,23 @@
 {
   "id": "tune-in",
   "name": "Tune In",
+  "icon": "📻",
   "tagline": "One clue. Everyone guesses where it lands.",
   "description": "A dial runs between two opposites, like Cold and Hot. Only the psychic sees the secret target; they give a one-line clue, and everyone slides a dial to where they think it lands. The closer, the more points, for you and the psychic. Play solo, in two teams, or together against the dial.",
+  "howToPlay": [
+    "The psychic secretly sees a target on a dial between two opposites.",
+    "They give one clue; everyone else slides a dial to where it lands.",
+    "The closer your dial, the more points, for you and the psychic."
+  ],
   "version": "0.1.0",
   "minPlayers": 2,
   "maxPlayers": 16,
   "estimatedMinutes": 12,
   "tags": ["words", "co-op", "teams"],
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-24",
   "settings": [
     {
       "key": "mode",
@@ -16,10 +26,22 @@
       "type": "select",
       "default": "auto",
       "options": [
-        { "value": "auto", "label": "Auto" },
-        { "value": "solo", "label": "Solo" },
-        { "value": "teams", "label": "Teams" },
-        { "value": "coop", "label": "Co-op" }
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "solo",
+          "label": "Solo"
+        },
+        {
+          "value": "teams",
+          "label": "Teams"
+        },
+        {
+          "value": "coop",
+          "label": "Co-op"
+        }
       ]
     },
     {
@@ -29,17 +51,50 @@
       "type": "select",
       "default": "auto",
       "options": [
-        { "value": "auto", "label": "Auto" },
-        { "value": "3", "label": "3" },
-        { "value": "4", "label": "4" },
-        { "value": "5", "label": "5" },
-        { "value": "6", "label": "6" },
-        { "value": "7", "label": "7" },
-        { "value": "8", "label": "8" },
-        { "value": "9", "label": "9" },
-        { "value": "10", "label": "10" },
-        { "value": "11", "label": "11" },
-        { "value": "12", "label": "12" }
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        },
+        {
+          "value": "7",
+          "label": "7"
+        },
+        {
+          "value": "8",
+          "label": "8"
+        },
+        {
+          "value": "9",
+          "label": "9"
+        },
+        {
+          "value": "10",
+          "label": "10"
+        },
+        {
+          "value": "11",
+          "label": "11"
+        },
+        {
+          "value": "12",
+          "label": "12"
+        }
       ]
     },
     {
@@ -99,9 +154,18 @@
       "type": "select",
       "default": "normal",
       "options": [
-        { "value": "narrow", "label": "Narrow" },
-        { "value": "normal", "label": "Normal" },
-        { "value": "wide", "label": "Wide" }
+        {
+          "value": "narrow",
+          "label": "Narrow"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
       ]
     },
     {
@@ -125,12 +189,30 @@
       "type": "select",
       "default": "sky",
       "options": [
-        { "value": "none", "label": "No reader" },
-        { "value": "george", "label": "Old British Man" },
-        { "value": "fable", "label": "Young British Man" },
-        { "value": "jessica", "label": "American Woman" },
-        { "value": "sky", "label": "Soft-Spoken Woman" },
-        { "value": "original", "label": "Original" }
+        {
+          "value": "none",
+          "label": "No reader"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        }
       ]
     }
   ],

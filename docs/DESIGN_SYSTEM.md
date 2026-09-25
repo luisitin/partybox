@@ -146,7 +146,7 @@ The results headline (`winnerLine`, I-153) names people before bots: tied with p
 does, scaling every note and sample (I-024: a game's `play(cue, { quiet, gain })` reaches the engine through the
 shell, the `card` pluck under Broken Pencil's hand-off is `{ quiet: true, gain: 0.5 }`). A `clip` counts like a cue: a game that speaks
 into a phase (Bingo's first number) keeps the chime off its voice.
-`clientModule.sounds` maps phase ids to cues; unmapped phases play `phase`, reserved for moments where the phone needs
+A game's `shared.sounds` maps phase ids to cues; unmapped phases play `phase`, reserved for moments where the phone needs
 the player (so 'pick up your phone' and 'look at the TV' never sound the same). A mapped phase that re-enters itself
 (a new deadline with the same id — Blanks reads one card per instance) chimes again; unmapped ones and pauses do not.
 `silence` is a valid cue for a phase the game cues itself later; `cheer` (results, a bingo) is the one sampled cue — a
@@ -154,7 +154,7 @@ party horn + crowd from `packages/client/public/sfx/` (Mixkit licence).
 TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay for the autoplay policy.
 
 **Music beds** (ADR-032, `packages/client/src/beds.ts`): looping backgrounds synthesized like the cues, one per phase via
-`clientModule.beds[phaseId]` (or a list of ids, which the shell rotates through — the next one each time that phase begins, loop #197; the count starts over with every game) — `warm` (e-piano groove), `bossa`, `latenight` (held chords, no drums), `marimba` (16th-note
+a game's `shared.beds[phaseId]` (or a list of ids, which the shell rotates through — the next one each time that phase begins, loop #197; the count starts over with every game) — `warm` (e-piano groove), `bossa`, `latenight` (held chords, no drums), `marimba` (16th-note
 pulse), `lofi` (swung dusty beat, soft kick + brushed snare), `lounge` (vibraphone swing with a
 walking bass) and `pulse` (a 120 bpm quiz-show tension bed: eighth-note bass, a clock tick per beat;
 `beds-library-more.ts`). The voices they are built from live in `beds-voices.ts`. The shell crossfades beds over 1.5 s as phases change, resumes a returning bed where it stopped, holds it on pause,

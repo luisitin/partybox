@@ -5,7 +5,7 @@
 import type { SpeechRequest } from '@partybox/game-sdk';
 import { PRONUNCIATIONS } from './content';
 import { bandPoints, coopRating, isPerfectTune, roundedAverage } from './scoring';
-import { readableName, speakableText, speechKey, toParts } from './speakable';
+import { pendingCap, speakableName, speechKey, toSpeakable } from '@partybox/game-sdk/speech';
 import { earnsCatchUp, guessersOf, isOver, planTurn } from './turn';
 import type { Reader, State } from './types';
 
@@ -26,16 +26,25 @@ export const FIXED = {
 } as const;
 export type LineId = keyof typeof FIXED;
 
-/** P00 §5.7: never more than this many readings pending at once. */
-const MAX_PENDING = 10;
-
 export function voiceOf(state: State): Reader | null {
   return state.cfg.reader === 'none' ? null : state.cfg.reader;
 }
 
-function request(voice: Reader, text: string): SpeechRequest {
-  const parts = toParts(text, PRONUNCIATIONS);
-  return { key: speechKey(voice, parts), voice, parts };
+/** A whole line through the shared rules (F6) and Tune In's own list; nothing when it is empty.
+ *  A player's words (the clue) get the player-text rules: a shout is calmed, not spelled. */
+function request(
+  voice: Reader,
+  text: string,
+  from: { itemId?: string; playerText?: boolean } = {},
+): SpeechRequest | null {
+  const parts = toSpeakable(text, {
+    voice,
+    lang: 'en',
+    overrides: PRONUNCIATIONS,
+    ...(from.itemId ? { itemId: from.itemId } : {}),
+    ...(from.playerText ? { playerText: true } : {}),
+  });
+  return parts.length > 0 ? { key: speechKey('tune-in', voice, parts), voice, parts } : null;
 }
 
 export function fixedReading(state: State, line: LineId): SpeechRequest | null {
@@ -48,19 +57,19 @@ export function announceReading(state: State): SpeechRequest | null {
   const voice = voiceOf(state);
   const spectrum = state.spectra[state.turn.spectrum];
   if (!voice || !spectrum || !state.turn.psychic) return null;
-  const name = readableName(state.players[state.turn.psychic]?.name ?? '');
+  const name = speakableName(state.players[state.turn.psychic]?.name ?? '');
   const who = name ? `${name} is the psychic.` : FIXED.newPsychic;
-  const ends = `From ${speakableText(spectrum.left, false)}, to ${speakableText(spectrum.right, false)}.`;
-  return request(voice, `${who} ${ends}`);
+  return request(voice, `${who} From ${spectrum.left}, to ${spectrum.right}.`, {
+    itemId: spectrum.id,
+  });
 }
 
 /** The clue itself ("Coffee."), asked for the moment the psychic sends it. */
 export function clueReading(state: State): SpeechRequest | null {
   const voice = voiceOf(state);
-  const clue = state.turn.clue ? speakableText(state.turn.clue, true) : '';
+  const clue = state.turn.clue?.trim() ?? '';
   if (!voice || !clue) return null;
-  const said = clue.charAt(0).toUpperCase() + clue.slice(1);
-  return request(voice, /[.!?]$/.test(said) ? said : `${said}.`);
+  return request(voice, /[.!?]$/.test(clue) ? clue : `${clue}.`, { playerText: true });
 }
 
 /** The reveal's verdict: Perfect tune (solo), else the best dial's (or the needle's) band. */
@@ -136,7 +145,7 @@ export function speech(state: State): SpeechRequest[] {
   return wanted
     .filter((r): r is SpeechRequest => r !== null)
     .filter((r) => !seen.has(r.key) && seen.add(r.key) && state.speechMs[r.key] === undefined)
-    .slice(0, MAX_PENDING);
+    .slice(0, pendingCap(state.seats.length));
 }
 
 /** A reading a view may carry: only once the host has made it (a failed one is never offered). */

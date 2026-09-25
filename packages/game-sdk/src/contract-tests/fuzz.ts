@@ -26,7 +26,13 @@ export function fuzzEvents(
     }
   }
   for (const sender of senders) {
-    for (const input of samples) events.push({ type: 'input', now, playerId: sender, input });
+    for (const input of samples) {
+      events.push({ type: 'input', now, playerId: sender, input });
+      // ADR-042 stamps the VIP's inputs; a game that reserves an input for the VIP ("That
+      // counts", Broken Pencil's veto) must also survive the stamp on any sender, in any phase.
+      events.push({ type: 'input', now, playerId: sender, input, vip: true });
+    }
+    events.push({ type: 'input', now, playerId: sender, input: samples[0] ?? {}, vip: false });
     events.push({ type: 'input', now: now - 5000, playerId: sender, input: samples[0] ?? {} });
   }
   // Timers: current, stale, future, wrong phase, twice.

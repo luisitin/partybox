@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import type { RoomSnapshot, RoomStatus } from '@partybox/shared';
+import { setCatalog } from '../catalog';
 import { createStore } from '../net/store';
 import type { TvClient, TvState } from '../net/tv';
 import { HostBar } from './HostBar';
@@ -31,7 +32,6 @@ const room = (status: RoomStatus): RoomSnapshot => ({
   vip: null,
   selectedGameId: null,
   settings: {},
-  games: [],
   results: null,
   canStart: { ok: false, reason: 'Pick a game first.' },
   recording: false,
@@ -52,11 +52,8 @@ describe('HostBar language switch', () => {
 describe('I-682 C: no "Pick a game" for a room of nobody', () => {
   const player = (id: string, bot: boolean) =>
     ({ id, name: id, avatarId: 'fox', bot, connected: true, isVip: !bot }) as never;
-  const lobby = (players: never[]): RoomSnapshot => ({
-    ...room('lobby'),
-    players,
-    games: [{ id: 'bingo', name: 'Bingo' }] as never,
-  });
+  setCatalog({ rev: 'test', games: [{ id: 'bingo', name: 'Bingo', icon: '🎱' }] as never });
+  const lobby = (players: never[]): RoomSnapshot => ({ ...room('lobby'), players });
   const html = (r: RoomSnapshot): string =>
     renderToStaticMarkup(<HostBar client={client} room={r} view={null} />);
   it('an empty room and a bots-only room offer Add a bot, not a game', () => {
