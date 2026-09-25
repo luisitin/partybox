@@ -177,8 +177,11 @@ export function Playing({
   const module = game.module;
   if (!module) return <DelayedWaiting title={t.connection.loadingGame} />;
   // S-005 A: a "phone only" room hands the phones the TV's moment for the phases the game names.
+  // ADR-047: the engine stamps the stage per phone — the room is phone-only, or this player can't
+  // see the TV — so a remote phone in a TV room gets the stage too.
+  const stage = view.phoneOnly ?? room.phoneOnly;
   const PhoneStage =
-    room.phoneOnly && module.PhoneStage && module.phoneStagePhases?.includes(view.phaseId)
+    stage && module.PhoneStage && module.phoneStagePhases?.includes(view.phaseId)
       ? module.PhoneStage
       : null;
   const GameController = module.Controller as unknown as (props: {
@@ -190,7 +193,7 @@ export function Playing({
   return (
     <GameErrorBoundary key={view.gameId}>
       <Suspense fallback={<DelayedWaiting title={t.connection.loadingGame} />}>
-        <PhoneOnlyProvider value={room.phoneOnly}>
+        <PhoneOnlyProvider value={stage}>
           <SoundProvider
             play={play}
             clip={audio ? (src, opts) => audio.clip(src, opts) : undefined}

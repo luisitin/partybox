@@ -321,18 +321,32 @@
   transition: none;
 }
 
-.toasts {
+/* The one lasting card (take the VIP back) waits above the sticky footer — the primary button plus
+   the results screen's row of links under it (review-loop #75) — never over the thumb. */
+.pinned {
   position: fixed;
   left: var(--pb-space-4);
   right: var(--pb-space-4);
-  /* above the sticky footer — the primary button plus the results screen's row of links under
-     it (a VIP toast used to land on Play again, review-loop #75) — never over the thumb */
   bottom: calc(
     var(--pb-space-8) + var(--pb-space-7) + var(--pb-touch) + env(safe-area-inset-bottom)
   );
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-2);
+  pointer-events: none;
+}
+
+/* S2 (three design reviews): toasts sat over rules, inputs and "Add a bot". One at a time, they
+   now drop over the header bar (room code and badges, back in a few seconds; a tap dismisses), so
+   nothing the player reads or types is ever covered. */
+.toasts {
+  position: fixed;
+  top: env(safe-area-inset-top);
+  left: 0;
+  right: 0;
+  /* over the sheets' backdrops (10): the VIP's own switch toast read dimmed under its menu */
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
   pointer-events: none;
 }
 
@@ -346,6 +360,27 @@
   text-align: left;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
   box-shadow: 0 6px 20px rgb(0 0 0 / 40%);
+}
+
+.toasts .toast {
+  /* never blocks a tap: in landscape a sheet reaches the top and its buttons sit under the toast */
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  border-radius: 0 0 var(--pb-radius) var(--pb-radius);
+  animation-name: toast-drop;
+}
+
+@keyframes toast-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .success {

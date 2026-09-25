@@ -188,7 +188,11 @@ describe('sockets', () => {
     const codes: string[] = [];
     a.on('error', (e: ErrorPayload) => codes.push(e.code));
     for (let i = 0; i < 40; i++) a.emit('input', { seq: i, input: {} });
-    await new Promise((r) => setTimeout(r, 300));
+    // every input is answered (not_playing or rate_limited): wait for the flood's answers, not a
+    // fixed 300 ms — a loaded box answered only 17 of 40 by then and the test failed on timing
+    const until = Date.now() + 5000;
+    while (codes.length < 40 && !codes.includes('rate_limited') && Date.now() < until)
+      await new Promise((r) => setTimeout(r, 25));
     expect(codes).toContain('rate_limited');
   });
 
