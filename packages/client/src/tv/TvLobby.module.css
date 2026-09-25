@@ -509,3 +509,10 @@
   align-items: flex-start;
   width: 320px;
 }
+
+/* ── I-663 A: the VIP's phone is gone — the line the room reads, in the accent. */
+.awayLine {
+  margin: 0;
+  color: var(--pb-accent-2);
+  font-weight: 800;
+}
