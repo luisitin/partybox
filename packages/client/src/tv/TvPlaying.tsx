@@ -174,6 +174,7 @@ export function TvPlaying({
             scoresMuted={frozen}
             size="sm"
             facesOnly={module?.stripCompact?.includes(view.phaseId) ?? false}
+            autoFacesPastRows={2}
             leadId={
               view.phaseId === 'check' || view.phaseId === 'bingo'
                 ? ((view as { claim?: { playerId?: string } }).claim?.playerId ?? null)

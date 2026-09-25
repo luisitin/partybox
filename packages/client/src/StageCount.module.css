@@ -52,6 +52,12 @@
   font-size: 420px;
 }
 
+.number.past {
+  opacity: 0.15;
+  transform: scale(0.92);
+  animation: none;
+}
+
 @keyframes count-dim {
   from {
     opacity: 0;
