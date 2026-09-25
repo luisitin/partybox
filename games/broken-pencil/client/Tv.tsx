@@ -223,6 +223,8 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
                   })}
           </li>
           <li>{L('Then everyone presents their own book on the TV, page by page.')}</li>
+          {/* I-496 A: the one rule, while every head is up */}
+          <li>{L('No letters, no numbers: the pencil has to do the talking.')}</li>
         </ol>
         {/* I-507 B: the book as it will be — the word, then drawing, guess, drawing… */}
         <p className={styles.chain} aria-label={L('{n} pages', { n: view.pageCount })}>
@@ -309,6 +311,12 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
           </div>
           <div className={styles.current}>
             {current ? <CurrentPage page={current} /> : null}
+            {/* I-496 B: the room called it */}
+            {s.writing ? (
+              <span className={`${styles.writingStamp} pb-pop`}>{L('✍ WRITING')}</span>
+            ) : s.writingCalls > 0 ? (
+              <span className={styles.writingCall}>{L('Someone says that’s writing…')}</span>
+            ) : null}
             {/* I-512 A: the guess alone first — the verdict lands a beat later (Verdict.tsx) */}
             {last ? <Verdict showing={s} current={current} /> : null}
           </div>

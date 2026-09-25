@@ -321,3 +321,14 @@
   font-size: var(--pb-font-h2);
   overflow-wrap: normal;
 }
+
+/* ── I-496 B: "That's writing", a quiet red pill. */
+.writingButton {
+  align-self: center;
+  margin-top: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: 999px;
+  border: 1px solid var(--pb-danger);
+  color: var(--pb-danger);
+  font-weight: 700;
+}

@@ -490,3 +490,34 @@
   background: var(--pb-surface);
   color: var(--pb-accent-2);
 }
+
+/* ── I-496 B: the stamp across the drawing, and the first call under it. */
+.current {
+  position: relative;
+}
+.writingStamp {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  translate: -50% -50%;
+  rotate: -12deg;
+  padding: 8px 28px;
+  border: 6px solid var(--pb-danger);
+  border-radius: 12px;
+  color: var(--pb-danger);
+  background: color-mix(in srgb, var(--pb-bg) 70%, transparent);
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+.writingCall {
+  /* under the drawing without moving it (a first build's line pushed the page up into the header) */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 12px;
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  text-align: center;
+}

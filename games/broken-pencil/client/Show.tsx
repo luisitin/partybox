@@ -52,14 +52,21 @@ export function Show({
         {L('close enough ✓ — count it')}
       </button>
     ) : null;
+  // I-496 B: anyone but the drawing's author can call it
+  const writingButton = s.canCallWriting ? (
+    <button type="button" className={styles.writingButton} onClick={() => send({ type: 'writing' })}>
+      {L('🚫 That’s writing')}
+    </button>
+  ) : null;
   if (!s.presenting)
-    return page || vetoButton ? (
+    return page || vetoButton || writingButton ? (
       <Screen title={L('{name} is presenting', { name: s.ownerName })}>
         <p className={styles.kicker}>
           {L("{name}'s book · page {page} of {pages}", { name: s.ownerName, ...at })}
         </p>
         {page}
         {vetoButton}
+        {writingButton}
         {tvOff ? null : <p className={styles.hint}>{L('Your turn comes when your book is up.')}</p>}
       </Screen>
     ) : (

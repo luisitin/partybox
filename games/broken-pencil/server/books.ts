@@ -82,9 +82,14 @@ export function normalizeText(text: string): string {
 
 /** The book survived: its last page is a guess that matches the word. Empty books never do. */
 /** Intact by the rule, or by the VIP's veto (the owner, 2026-09-21: "Adolf Hitler" → "Adolf"). */
-export function bookIntact(state: { books: Book[]; vetoed?: number[] }, b: number): boolean {
+export function bookIntact(
+  state: { books: Book[]; vetoed?: number[]; writing?: Record<string, string[]> },
+  b: number,
+): boolean {
   const book = state.books[b];
-  return book !== undefined && (isIntact(book) || (state.vetoed ?? []).includes(b));
+  // I-496 B: a page the room stamped WRITING breaks the book (the VIP's veto still overrides)
+  const stamped = book?.pages.some((_, p) => (state.writing?.[`${b}:${p}`]?.length ?? 0) >= 2) ?? false;
+  return book !== undefined && ((isIntact(book) && !stamped) || (state.vetoed ?? []).includes(b));
 }
 
 export function isIntact(book: Book): boolean {
@@ -93,7 +98,10 @@ export function isIntact(book: Book): boolean {
   const last = book.pages[book.pages.length - 1];
   if (!first || first.kind !== 'word' || !last || last.kind !== 'guess' || last.text === null)
     return false;
-  return normalizeText(last.text) === normalizeText(first.text);
+  // I-496: a word or guess with no letters or digits left ("🍕", "Привет", "???") normalises to
+  // "" — two empties are not a match
+  const word = normalizeText(first.text);
+  return word !== '' && normalizeText(last.text) === word;
 }
 
 export function wordOf(book: Book): string {

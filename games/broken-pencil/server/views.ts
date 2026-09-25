@@ -39,6 +39,9 @@ export interface PencilTvView extends TvView, Common {
     pages: PageView[];
     verdict: 'intact' | 'broken' | null;
     verdictLine: string | null;
+    /** I-496 B: "that's writing" calls on the page on stage, and whether it's stamped. */
+    writingCalls: number;
+    writing: boolean;
   };
   /** summary / done. */
   summary: BookSummary[] | null;
@@ -76,6 +79,8 @@ export interface PencilControllerView extends ControllerView, Common {
     /** True on the last page of the book / the last book. */
     lastPage: boolean;
     lastBook: boolean;
+    /** I-496 B: I may call "that's writing" on the drawing on stage (not mine, not called yet). */
+    canCallWriting: boolean;
     /** The page on stage, as the TV shows it — a "phone only" room reads the book on the phone
      *  (the owner, 2026-09-21). Only the shown page, never the unshown ones. */
     current: PageView | null;
@@ -151,6 +156,8 @@ export function tvView(state: State, gameId: string): PencilTvView {
               .map((p) => ({ ...p, authorName: nameOf(state, p.authorId) })),
             verdict: showing.verdict,
             verdictLine: showing.line,
+            writingCalls: state.writing?.[`${showing.book}:${showing.page}`]?.length ?? 0,
+            writing: (state.writing?.[`${showing.book}:${showing.page}`]?.length ?? 0) >= 2,
           }
         : null,
     summary: closing(state) ? summary(state) : null,
@@ -235,6 +242,11 @@ export function controllerView(
             presenting: shownBook.ownerId === playerId,
             lastPage: showing.page >= shownBook.pages.length - 1,
             lastBook: showing.book >= state.books.length - 1,
+            canCallWriting: (() => {
+              const p = shownBook.pages[showing.page];
+              const calls = state.writing?.[`${showing.book}:${showing.page}`] ?? [];
+              return p?.kind === 'draw' && p.authorId !== playerId && !calls.includes(playerId);
+            })(),
             verdict: showing.verdict,
             current: (() => {
               const p = shownBook.pages[showing.page];

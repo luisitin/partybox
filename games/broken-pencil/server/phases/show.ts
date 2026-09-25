@@ -23,7 +23,8 @@ export function showPage(state: State, b: number, page: number, now: number): St
   let rng = state.rng;
   let intactBooks = state.intactBooks;
   if (book && page === book.pages.length - 1) {
-    const intact = isIntact(book);
+    // I-496 B: a book with a page stamped WRITING can't survive
+    const intact = isIntact(book) && !stampedBook(state, b);
     verdict = intact ? 'intact' : 'broken';
     if (intact) intactBooks++;
     [line, rng] = pick(rng, intact ? LINES.intact : LINES.broken);
@@ -91,6 +92,7 @@ export function reduceShow(state: State, event: GameEvent<Input>, next: Transiti
       if (verdict && event.now - state.phase.startedAt < beat) return state;
       return turnPage(state, event.now, next);
     }
+    if (event.input.type === 'writing') return callWriting(state, event.playerId);
     return veto(state, event);
   }
   if (isTimerFor(state, event)) return turnPage(state, event.now, next);
@@ -109,4 +111,28 @@ export function reduceSummary(state: State, event: GameEvent<Input>, next: Trans
 
 export function enterDone(state: State, now: number): State {
   return enterPhase(state, 'done', now, null);
+}
+
+/** I-496 B: two calls from different players stamp a drawing "WRITING". */
+export const WRITING_CALLS = 2;
+
+export function stampedPage(state: State, b: number, page: number): boolean {
+  return (state.writing?.[`${b}:${page}`]?.length ?? 0) >= WRITING_CALLS;
+}
+
+/** I-496 B: any page of the book stamped — the book can't survive. */
+export function stampedBook(state: State, b: number): boolean {
+  const book = state.books[b];
+  return book !== undefined && book.pages.some((_, page) => stampedPage(state, b, page));
+}
+
+/** I-496 B: a "that's writing" call on the drawing on stage — never its author's, once each. */
+function callWriting(state: State, playerId: string): State {
+  const s = state.showing;
+  const page = s ? state.books[s.book]?.pages[s.page] : undefined;
+  if (!s || !page || page.kind !== 'draw' || page.authorId === playerId) return state;
+  const key = `${s.book}:${s.page}`;
+  const callers = state.writing?.[key] ?? [];
+  if (callers.includes(playerId)) return state;
+  return { ...state, writing: { ...state.writing, [key]: [...callers, playerId] } };
 }

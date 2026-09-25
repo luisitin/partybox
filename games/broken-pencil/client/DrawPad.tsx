@@ -38,6 +38,8 @@ export interface DrawPadProps {
   /** Strokes to start from: the draft the server kept when this phone reloaded mid-drawing. */
   initial?: readonly Stroke[];
   disabled?: boolean;
+  /** I-496 A: a quiet line inside the empty sheet (the game's rule), gone with the first stroke. */
+  hint?: string;
 }
 
 interface Live extends DecodedStroke {
@@ -63,7 +65,7 @@ function inkUsed(strokes: Live[], current: Live | null): number {
   return total;
 }
 
-export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProps): JSX.Element {
+export function DrawPad({ onChange, onProgress, initial, disabled, hint }: DrawPadProps): JSX.Element {
   const L = useT(STRINGS);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
@@ -208,6 +210,11 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
           onPointerLeave={onUp}
           aria-label={L('drawing sheet')}
         />
+        {hint && strokes.length === 0 && livePoints === 0 ? (
+          <span className={styles.hint} style={{ width: size, height: size }} aria-hidden>
+            {hint}
+          </span>
+        ) : null}
       </div>
       {swatches}
       <div className={styles.bottom}>

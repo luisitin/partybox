@@ -292,3 +292,24 @@
 :global(:root[data-motion='off']) .swatchOn {
   animation-delay: 0ms;
 }
+
+/* ── I-496 A: the rule, faint inside the empty sheet; the finger draws straight through it. */
+.box {
+  position: relative;
+}
+.hint {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  padding: var(--pb-space-4);
+  box-sizing: border-box;
+  text-align: center;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: rgba(40, 40, 60, 0.45);
+  pointer-events: none;
+  text-wrap: balance;
+}

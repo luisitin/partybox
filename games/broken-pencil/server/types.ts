@@ -68,6 +68,8 @@ export interface State extends GameStateBase {
   offers: Record<string, string[]>;
   showing: Showing | null;
   intactBooks: number;
+  /** I-496 B: "that's writing" calls — "book:page" → who called it; two stamp the page. */
+  writing?: Record<string, string[]>;
   /** Books the VIP called "close enough" (the owner, 2026-09-21): intact by veto. Absent in
    *  older states and fixtures. */
   vetoed?: number[];
@@ -107,6 +109,7 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('pick'), option: z.number().int().min(0).max(2) }),
   /** show: the book's owner turns the page from their phone. */
   z.object({ type: z.literal('turn') }),
+  z.object({ type: z.literal('writing') }), // I-496 B: "that's writing" on the drawing on stage
   z.object({ type: z.literal('pickCustom'), text: z.string().trim().min(1).max(30) }),
   z.object({ type: z.literal('draw'), strokes: strokesSchema }),
   /** The sheet so far, while still drawing: what the deadline keeps if "Done" never comes. */
