@@ -1,0 +1,739 @@
+{
+  "phases": [
+    {
+      "t": 1790282505656,
+      "phase": "intro"
+    },
+    {
+      "t": 1790282513660,
+      "phase": "answer"
+    },
+    {
+      "t": 1790282528671,
+      "phase": "herd"
+    },
+    {
+      "t": 1790282533171,
+      "phase": "score"
+    },
+    {
+      "t": 1790282538183,
+      "phase": "answer"
+    },
+    {
+      "t": 1790282553184,
+      "phase": "herd"
+    },
+    {
+      "t": 1790282557690,
+      "phase": "score"
+    },
+    {
+      "t": 1790282562692,
+      "phase": "answer"
+    },
+    {
+      "t": 1790282577702,
+      "phase": "herd"
+    },
+    {
+      "t": 1790282582204,
+      "phase": "score"
+    },
+    {
+      "t": 1790282587214,
+      "phase": "answer"
+    },
+    {
+      "t": 1790282602229,
+      "phase": "herd"
+    },
+    {
+      "t": 1790282606731,
+      "phase": "score"
+    },
+    {
+      "t": 1790282611740,
+      "phase": "answer"
+    },
+    {
+      "t": 1790282626746,
+      "phase": "herd"
+    },
+    {
+      "t": 1790282631254,
+      "phase": "score"
+    },
+    {
+      "t": 1790282637794,
+      "phase": "results"
+    }
+  ],
+  "rows": [
+    {
+      "at": 1790282502975,
+      "phase": "intro",
+      "offsetMs": -2681,
+      "kind": "cue",
+      "what": "ready"
+    },
+    {
+      "at": 1790282504681,
+      "phase": "intro",
+      "offsetMs": -975,
+      "kind": "cue",
+      "what": "join"
+    },
+    {
+      "at": 1790282504838,
+      "phase": "intro",
+      "offsetMs": -818,
+      "kind": "cue",
+      "what": "join"
+    },
+    {
+      "at": 1790282505759,
+      "phase": "intro",
+      "offsetMs": 103,
+      "kind": "cue",
+      "what": "start"
+    },
+    {
+      "at": 1790282513675,
+      "phase": "answer",
+      "offsetMs": 15,
+      "kind": "cue",
+      "what": "phase"
+    },
+    {
+      "at": 1790282513675,
+      "phase": "answer",
+      "offsetMs": 15,
+      "kind": "bed:duck",
+      "what": "phase"
+    },
+    {
+      "at": 1790282515218,
+      "phase": "answer",
+      "offsetMs": 1558,
+      "kind": "cue",
+      "what": "lock"
+    },
+    {
+      "at": 1790282516080,
+      "phase": "answer",
+      "offsetMs": 2420,
+      "kind": "cue",
+      "what": "lock"
+    },
+    {
+      "at": 1790282523677,
+      "phase": "answer",
+      "offsetMs": 10017,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282524678,
+      "phase": "answer",
+      "offsetMs": 11018,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282525678,
+      "phase": "answer",
+      "offsetMs": 12018,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282526677,
+      "phase": "answer",
+      "offsetMs": 13017,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282527677,
+      "phase": "answer",
+      "offsetMs": 14017,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282528682,
+      "phase": "herd",
+      "offsetMs": 11,
+      "kind": "cue",
+      "what": "tally"
+    },
+    {
+      "at": 1790282528682,
+      "phase": "herd",
+      "offsetMs": 11,
+      "kind": "bed:duck",
+      "what": "tally"
+    },
+    {
+      "at": 1790282528938,
+      "phase": "herd",
+      "offsetMs": 267,
+      "kind": "clip",
+      "what": "hm19rr41a2bw51s.wav"
+    },
+    {
+      "at": 1790282530582,
+      "phase": "herd",
+      "offsetMs": 1911,
+      "kind": "cue",
+      "what": "bust"
+    },
+    {
+      "at": 1790282530582,
+      "phase": "herd",
+      "offsetMs": 1911,
+      "kind": "bed:duck",
+      "what": "bust"
+    },
+    {
+      "at": 1790282533183,
+      "phase": "score",
+      "offsetMs": 12,
+      "kind": "cue",
+      "what": "silence"
+    },
+    {
+      "at": 1790282533183,
+      "phase": "score",
+      "offsetMs": 12,
+      "kind": "bed:duck",
+      "what": "silence"
+    },
+    {
+      "at": 1790282538201,
+      "phase": "answer",
+      "offsetMs": 18,
+      "kind": "cue",
+      "what": "phase"
+    },
+    {
+      "at": 1790282538201,
+      "phase": "answer",
+      "offsetMs": 18,
+      "kind": "bed:duck",
+      "what": "phase"
+    },
+    {
+      "at": 1790282539903,
+      "phase": "answer",
+      "offsetMs": 1720,
+      "kind": "cue",
+      "what": "lock"
+    },
+    {
+      "at": 1790282540353,
+      "phase": "answer",
+      "offsetMs": 2170,
+      "kind": "cue",
+      "what": "lock"
+    },
+    {
+      "at": 1790282548206,
+      "phase": "answer",
+      "offsetMs": 10023,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282549201,
+      "phase": "answer",
+      "offsetMs": 11018,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282550202,
+      "phase": "answer",
+      "offsetMs": 12019,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282551202,
+      "phase": "answer",
+      "offsetMs": 13019,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282552203,
+      "phase": "answer",
+      "offsetMs": 14020,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282553192,
+      "phase": "herd",
+      "offsetMs": 8,
+      "kind": "cue",
+      "what": "tally"
+    },
+    {
+      "at": 1790282553192,
+      "phase": "herd",
+      "offsetMs": 8,
+      "kind": "bed:duck",
+      "what": "tally"
+    },
+    {
+      "at": 1790282553445,
+      "phase": "herd",
+      "offsetMs": 261,
+      "kind": "clip",
+      "what": "hm19rr41a2bw51s.wav"
+    },
+    {
+      "at": 1790282555088,
+      "phase": "herd",
+      "offsetMs": 1904,
+      "kind": "clip",
+      "what": "hm1rfud541on21gu.wav"
+    },
+    {
+      "at": 1790282555089,
+      "phase": "herd",
+      "offsetMs": 1905,
+      "kind": "cue",
+      "what": "bust"
+    },
+    {
+      "at": 1790282555089,
+      "phase": "herd",
+      "offsetMs": 1905,
+      "kind": "bed:duck",
+      "what": "bust"
+    },
+    {
+      "at": 1790282557700,
+      "phase": "score",
+      "offsetMs": 10,
+      "kind": "cue",
+      "what": "silence"
+    },
+    {
+      "at": 1790282557700,
+      "phase": "score",
+      "offsetMs": 10,
+      "kind": "bed:duck",
+      "what": "silence"
+    },
+    {
+      "at": 1790282562705,
+      "phase": "answer",
+      "offsetMs": 13,
+      "kind": "cue",
+      "what": "phase"
+    },
+    {
+      "at": 1790282562705,
+      "phase": "answer",
+      "offsetMs": 13,
+      "kind": "bed:duck",
+      "what": "phase"
+    },
+    {
+      "at": 1790282563155,
+      "phase": "answer",
+      "offsetMs": 463,
+      "kind": "clip",
+      "what": "hm728rnh36do6n.wav"
+    },
+    {
+      "at": 1790282563853,
+      "phase": "answer",
+      "offsetMs": 1161,
+      "kind": "cue",
+      "what": "lock"
+    },
+    {
+      "at": 1790282565912,
+      "phase": "answer",
+      "offsetMs": 3220,
+      "kind": "cue",
+      "what": "lock"
+    },
+    {
+      "at": 1790282572706,
+      "phase": "answer",
+      "offsetMs": 10014,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282573707,
+      "phase": "answer",
+      "offsetMs": 11015,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282574707,
+      "phase": "answer",
+      "offsetMs": 12015,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282575706,
+      "phase": "answer",
+      "offsetMs": 13014,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282576706,
+      "phase": "answer",
+      "offsetMs": 14014,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282577711,
+      "phase": "herd",
+      "offsetMs": 9,
+      "kind": "cue",
+      "what": "tally"
+    },
+    {
+      "at": 1790282577711,
+      "phase": "herd",
+      "offsetMs": 9,
+      "kind": "bed:duck",
+      "what": "tally"
+    },
+    {
+      "at": 1790282577963,
+      "phase": "herd",
+      "offsetMs": 261,
+      "kind": "clip",
+      "what": "hm19rr41a2bw51s.wav"
+    },
+    {
+      "at": 1790282579607,
+      "phase": "herd",
+      "offsetMs": 1905,
+      "kind": "clip",
+      "what": "hm1rfud541on21gu.wav"
+    },
+    {
+      "at": 1790282579607,
+      "phase": "herd",
+      "offsetMs": 1905,
+      "kind": "cue",
+      "what": "bust"
+    },
+    {
+      "at": 1790282579607,
+      "phase": "herd",
+      "offsetMs": 1905,
+      "kind": "bed:duck",
+      "what": "bust"
+    },
+    {
+      "at": 1790282582216,
+      "phase": "score",
+      "offsetMs": 12,
+      "kind": "cue",
+      "what": "silence"
+    },
+    {
+      "at": 1790282582216,
+      "phase": "score",
+      "offsetMs": 12,
+      "kind": "bed:duck",
+      "what": "silence"
+    },
+    {
+      "at": 1790282587229,
+      "phase": "answer",
+      "offsetMs": 15,
+      "kind": "cue",
+      "what": "phase"
+    },
+    {
+      "at": 1790282587229,
+      "phase": "answer",
+      "offsetMs": 15,
+      "kind": "bed:duck",
+      "what": "phase"
+    },
+    {
+      "at": 1790282587681,
+      "phase": "answer",
+      "offsetMs": 467,
+      "kind": "clip",
+      "what": "hm1sqq64d16w9bd3.wav"
+    },
+    {
+      "at": 1790282590157,
+      "phase": "answer",
+      "offsetMs": 2943,
+      "kind": "cue",
+      "what": "lock"
+    },
+    {
+      "at": 1790282590724,
+      "phase": "answer",
+      "offsetMs": 3510,
+      "kind": "cue",
+      "what": "lock"
+    },
+    {
+      "at": 1790282597231,
+      "phase": "answer",
+      "offsetMs": 10017,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282598231,
+      "phase": "answer",
+      "offsetMs": 11017,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282599231,
+      "phase": "answer",
+      "offsetMs": 12017,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282600231,
+      "phase": "answer",
+      "offsetMs": 13017,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282601230,
+      "phase": "answer",
+      "offsetMs": 14016,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282602236,
+      "phase": "herd",
+      "offsetMs": 7,
+      "kind": "cue",
+      "what": "tally"
+    },
+    {
+      "at": 1790282602236,
+      "phase": "herd",
+      "offsetMs": 7,
+      "kind": "bed:duck",
+      "what": "tally"
+    },
+    {
+      "at": 1790282602489,
+      "phase": "herd",
+      "offsetMs": 260,
+      "kind": "clip",
+      "what": "hm19rr41a2bw51s.wav"
+    },
+    {
+      "at": 1790282604131,
+      "phase": "herd",
+      "offsetMs": 1902,
+      "kind": "clip",
+      "what": "hm1rfud541on21gu.wav"
+    },
+    {
+      "at": 1790282604131,
+      "phase": "herd",
+      "offsetMs": 1902,
+      "kind": "cue",
+      "what": "bust"
+    },
+    {
+      "at": 1790282604131,
+      "phase": "herd",
+      "offsetMs": 1902,
+      "kind": "bed:duck",
+      "what": "bust"
+    },
+    {
+      "at": 1790282606743,
+      "phase": "score",
+      "offsetMs": 12,
+      "kind": "cue",
+      "what": "silence"
+    },
+    {
+      "at": 1790282606743,
+      "phase": "score",
+      "offsetMs": 12,
+      "kind": "bed:duck",
+      "what": "silence"
+    },
+    {
+      "at": 1790282611752,
+      "phase": "answer",
+      "offsetMs": 12,
+      "kind": "cue",
+      "what": "phase"
+    },
+    {
+      "at": 1790282611752,
+      "phase": "answer",
+      "offsetMs": 12,
+      "kind": "bed:duck",
+      "what": "phase"
+    },
+    {
+      "at": 1790282612202,
+      "phase": "answer",
+      "offsetMs": 462,
+      "kind": "clip",
+      "what": "hm3rsio6imua0e.wav"
+    },
+    {
+      "at": 1790282614209,
+      "phase": "answer",
+      "offsetMs": 2469,
+      "kind": "cue",
+      "what": "lock"
+    },
+    {
+      "at": 1790282614519,
+      "phase": "answer",
+      "offsetMs": 2779,
+      "kind": "cue",
+      "what": "lock"
+    },
+    {
+      "at": 1790282621753,
+      "phase": "answer",
+      "offsetMs": 10013,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282622753,
+      "phase": "answer",
+      "offsetMs": 11013,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282623754,
+      "phase": "answer",
+      "offsetMs": 12014,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282624754,
+      "phase": "answer",
+      "offsetMs": 13014,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282625754,
+      "phase": "answer",
+      "offsetMs": 14014,
+      "kind": "cue",
+      "what": "countdown"
+    },
+    {
+      "at": 1790282626754,
+      "phase": "herd",
+      "offsetMs": 8,
+      "kind": "cue",
+      "what": "tally"
+    },
+    {
+      "at": 1790282626754,
+      "phase": "herd",
+      "offsetMs": 8,
+      "kind": "bed:duck",
+      "what": "tally"
+    },
+    {
+      "at": 1790282627006,
+      "phase": "herd",
+      "offsetMs": 260,
+      "kind": "clip",
+      "what": "hm19rr41a2bw51s.wav"
+    },
+    {
+      "at": 1790282628648,
+      "phase": "herd",
+      "offsetMs": 1902,
+      "kind": "clip",
+      "what": "hm1rfud541on21gu.wav"
+    },
+    {
+      "at": 1790282628648,
+      "phase": "herd",
+      "offsetMs": 1902,
+      "kind": "cue",
+      "what": "bust"
+    },
+    {
+      "at": 1790282628648,
+      "phase": "herd",
+      "offsetMs": 1902,
+      "kind": "bed:duck",
+      "what": "bust"
+    },
+    {
+      "at": 1790282631264,
+      "phase": "score",
+      "offsetMs": 10,
+      "kind": "cue",
+      "what": "silence"
+    },
+    {
+      "at": 1790282631264,
+      "phase": "score",
+      "offsetMs": 10,
+      "kind": "bed:duck",
+      "what": "silence"
+    },
+    {
+      "at": 1790282633569,
+      "phase": "score",
+      "offsetMs": 2315,
+      "kind": "clip",
+      "what": "hmv2d6t41w8k280.wav"
+    },
+    {
+      "at": 1790282633570,
+      "phase": "score",
+      "offsetMs": 2316,
+      "kind": "cue",
+      "what": "fanfare"
+    },
+    {
+      "at": 1790282633570,
+      "phase": "score",
+      "offsetMs": 2316,
+      "kind": "bed:duck",
+      "what": "fanfare"
+    },
+    {
+      "at": 1790282637779,
+      "phase": "score",
+      "offsetMs": 6525,
+      "kind": "cue",
+      "what": "leave"
+    }
+  ]
+}
