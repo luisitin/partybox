@@ -1,0 +1,113 @@
+{
+  "video": "C:\\dev\\partybox-game-echo\\reports\\design\\record-review\\echo\\p11-idle\\video\\phone\\round.webm",
+  "bytes": 5680080,
+  "durationS": 406.7,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 1.9,
+      "toS": 3.4,
+      "ms": 1500,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 143.4,
+      "toS": 145.6,
+      "ms": 2200,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 145.7,
+      "toS": 151,
+      "ms": 5300,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 151.1,
+      "toS": 157.8,
+      "ms": 6700,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 157.9,
+      "toS": 160.4,
+      "ms": 2500,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 160.5,
+      "toS": 167.4,
+      "ms": 6900,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 167.5,
+      "toS": 170.4,
+      "ms": 2900,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 170.5,
+      "toS": 175.8,
+      "ms": 5300,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 271.2,
+      "toS": 278.6,
+      "ms": 7400,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 278.7,
+      "toS": 280.6,
+      "ms": 1900,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 280.7,
+      "toS": 284.4,
+      "ms": 3700,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 284.5,
+      "toS": 286,
+      "ms": 1500,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 400.6,
+      "toS": 404.8,
+      "ms": 4200,
+      "during": "results",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 52000,
+  "hardCuts": [],
+  "samples": 4066,
+  "motion": {
+    "p50": 0,
+    "p90": 0.0008,
+    "p99": 0.0313,
+    "max": 0.1315
+  }
+}

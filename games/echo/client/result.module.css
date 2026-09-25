@@ -1,0 +1,306 @@
+/* Echo's result stage, intro and finale board. Tokens only; transform + opacity animation only. */
+
+.stage {
+  position: relative;
+  gap: var(--pb-space-5);
+}
+
+.head {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-1);
+  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.was {
+  font-size: var(--pb-font-h2);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.word {
+  display: inline-block;
+  animation: echo-hold 2.6s ease-in-out 1s infinite;
+  font-size: var(--pb-font-display);
+  font-weight: 1000;
+  line-height: 1;
+  font-kerning: normal;
+  text-transform: uppercase;
+  color: var(--pb-accent-2);
+}
+
+.guessRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-4);
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity var(--pb-motion-base) var(--pb-ease),
+    transform var(--pb-motion-base) var(--pb-ease);
+}
+
+.guessRow[data-on='1'] {
+  opacity: 1;
+  transform: none;
+}
+
+.guess {
+  font-size: var(--pb-font-h2);
+  font-weight: 700;
+}
+
+.mark {
+  padding: var(--pb-space-2) var(--pb-space-5);
+  border-radius: 999px;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+}
+
+.guessRow[data-on='1'] .mark {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.mark[data-outcome='right'] {
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+}
+
+.mark[data-outcome='wrong'] {
+  background: var(--pb-danger);
+  color: var(--pb-on-accent);
+}
+
+.vip {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.burn {
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  color: var(--pb-danger);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The word breathes while the room takes it in (transform only; still under reduced motion). */
+@keyframes echo-hold {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .word {
+  animation: none;
+}
+
+/* The word's card flies from the stage to its pile in the deck counter (top right). */
+.flyer {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  width: 180px;
+  height: 116px;
+  margin: -58px 0 0 -90px;
+  border-radius: var(--pb-radius);
+  display: grid;
+  place-items: center;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  pointer-events: none;
+  animation: echo-fly 900ms var(--pb-ease) both;
+}
+
+.flyer[data-to='won'] {
+  background: var(--pb-surface);
+  border: 3px solid var(--pb-accent-3);
+  color: var(--pb-accent-3);
+}
+
+.flyer[data-to='lost'] {
+  background: var(--pb-surface-2);
+  border: 3px dashed var(--pb-danger);
+  color: var(--pb-danger);
+}
+
+@keyframes echo-fly {
+  0% {
+    opacity: 0;
+    transform: translate(0, 40px) scale(0.6) rotate(-6deg);
+  }
+  25% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(640px, -330px) scale(0.3) rotate(12deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flyer {
+    display: none;
+  }
+}
+
+:global(:root[data-motion='off']) .flyer {
+  display: none;
+}
+
+/* ── Intro ─────────────────────────────────────────────────────────────────────────────────── */
+.intro {
+  gap: var(--pb-space-6);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-5);
+  font-size: calc(var(--pb-font-display) * 1.2);
+  font-weight: 1000;
+  line-height: 1;
+  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+/* "Echo" said twice, the second fainter and further: the name explains itself. */
+.titleEcho {
+  color: var(--pb-text-muted);
+  opacity: 0.45;
+  transform: scale(0.8);
+  transform-origin: left center;
+  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: var(--pb-motion-slow);
+}
+
+.tagline {
+  font-size: var(--pb-font-h2);
+  font-weight: 700;
+  color: var(--pb-accent-2);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: 250ms;
+}
+
+.steps {
+  display: grid;
+  gap: var(--pb-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 1400px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-5);
+  padding: var(--pb-space-4) var(--pb-space-6);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  text-align: left;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(1500ms + var(--i) * 700ms);
+}
+
+.stepNum {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+.deckLine {
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: 500ms;
+}
+
+/* ── Finale board ──────────────────────────────────────────────────────────────────────────── */
+.finale {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-5);
+  width: 100%;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+  font-size: var(--pb-font-h1);
+  font-weight: 1000;
+  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.score {
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  max-width: 1600px;
+  perspective: 1400px;
+}
+
+.mini {
+  display: grid;
+  place-items: center;
+  min-width: 200px;
+  height: 84px;
+  padding: 0 var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: calc(400ms + var(--i) * 110ms);
+}
+
+.miniWon {
+  background: var(--pb-surface);
+  border: 3px solid var(--pb-accent-3);
+}
+
+.miniLost {
+  background:
+    repeating-linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--pb-danger) 14%, transparent) 0 12px,
+      transparent 12px 24px
+    ),
+    var(--pb-surface-2);
+  border: 3px dashed var(--pb-border);
+  color: var(--pb-text-muted);
+}
