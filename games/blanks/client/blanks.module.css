@@ -1919,3 +1919,14 @@
   border-color: var(--pb-accent);
   color: var(--pb-text);
 }
+
+/* ── I-179 A: the question once, a wide black strip above the answers. */
+.judgeQuestion {
+  width: 100%;
+  margin-bottom: var(--pb-space-3);
+}
+
+/* I-179 B: the words around the blank in grey; the answer (the fill) keeps its cream strip. */
+.anchored .sentence {
+  color: var(--pb-text-muted);
+}
