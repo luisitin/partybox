@@ -1,0 +1,18 @@
+(node:20684) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+pass 18: echo normal 5p — 14 phase changes, 43 cues, tv long frames 100 (worst 150 ms), 100 s → reports/design/record-review/echo/p18-se
+  +0.0s playing/intro (timer 1 s)
+  +2.0s playing/clue (timer 34 s)
+  +6.2s playing/check (timer 12 s)
+  +10.4s playing/guess (timer 25 s)
+  +14.0s playing/result (timer 6 s)
+  +20.5s playing/clue (timer 35 s)
+  +24.7s playing/check (timer 12 s)
+  +28.9s playing/guess (timer 25 s)
+  +32.3s playing/result (timer 6 s)
+  +38.8s playing/clue (timer 35 s)
+  +41.7s playing/check (timer 12 s)
+  +45.7s playing/guess (timer 25 s)
+  +49.9s playing/result (timer 6 s)
+  +56.3s playing/clue (timer 35 s)
+  note: budget reached while playing; skipped to results

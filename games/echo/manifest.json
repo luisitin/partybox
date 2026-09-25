@@ -1,0 +1,156 @@
+{
+  "id": "echo",
+  "name": "Echo",
+  "icon": "🔁",
+  "tagline": "One clue each. Same clue? Both vanish.",
+  "howToPlay": [
+    "One player guesses; everyone else sees the secret word and writes a one-word clue.",
+    "Clues that match each other vanish before the guesser sees them.",
+    "Guess the word from what's left. The whole group wins or loses together."
+  ],
+  "description": "A co-op word game. One player guesses; everyone else sees the word and writes a one-word clue. Matching clues cancel out before the guesser sees them, so be clever, not obvious. A wrong guess burns the next word too.",
+  "version": "0.1.0",
+  "minPlayers": 3,
+  "maxPlayers": 10,
+  "estimatedMinutes": 12,
+  "estimate": {
+    "fixedSeconds": 12,
+    "perRoundSeconds": 70,
+    "perPlayerPerRoundSeconds": 0,
+    "roundsSetting": "words"
+  },
+  "tags": ["co-op", "words"],
+  "settings": [
+    {
+      "key": "words",
+      "label": "Words",
+      "description": "How many words are in the deck",
+      "type": "number",
+      "default": 10,
+      "min": 6,
+      "max": 13,
+      "step": 1
+    },
+    {
+      "key": "clueSeconds",
+      "label": "Clue time",
+      "description": "Seconds to write a clue",
+      "type": "number",
+      "default": 35,
+      "min": 20,
+      "max": 60,
+      "step": 5
+    },
+    {
+      "key": "guessSeconds",
+      "label": "Guess time",
+      "description": "Seconds for the guesser",
+      "type": "number",
+      "default": 25,
+      "min": 15,
+      "max": 45,
+      "step": 5
+    },
+    {
+      "key": "check",
+      "label": "Echo check",
+      "description": "Clue-givers review the echoes before the guesser sees the clues",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "categories",
+      "label": "Categories",
+      "description": "Tick the kinds of words to play; nothing ticked plays them all",
+      "type": "multiselect",
+      "default": "",
+      "options": [
+        {
+          "value": "animals",
+          "label": "Animals"
+        },
+        {
+          "value": "food",
+          "label": "Food"
+        },
+        {
+          "value": "objects",
+          "label": "Objects"
+        },
+        {
+          "value": "places",
+          "label": "Places"
+        },
+        {
+          "value": "jobs",
+          "label": "Jobs"
+        },
+        {
+          "value": "nature",
+          "label": "Nature"
+        },
+        {
+          "value": "activities",
+          "label": "Activities"
+        },
+        {
+          "value": "fantasy",
+          "label": "Fantasy"
+        },
+        {
+          "value": "sports",
+          "label": "Sports"
+        },
+        {
+          "value": "house",
+          "label": "Around the house"
+        }
+      ]
+    },
+    {
+      "key": "spicy",
+      "label": "Spicy words",
+      "description": "Adds grown-up words (hangovers, first dates), never explicit",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "reader",
+      "label": "Reader",
+      "description": "Who reads the surviving clues aloud",
+      "type": "select",
+      "default": "george",
+      "options": [
+        {
+          "value": "none",
+          "label": "No reader"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        }
+      ]
+    }
+  ],
+  "supportsBots": true,
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-24"
+}

@@ -1,0 +1,474 @@
+[
+  {
+    "t": 1790304765185,
+    "surface": "tv",
+    "freqs": [523, 784],
+    "dur": 100,
+    "cue": "ready",
+    "phase": "lobby"
+  },
+  {
+    "t": 1790304765966,
+    "surface": "tv",
+    "freqs": [523, 659],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby"
+  },
+  {
+    "t": 1790304766834,
+    "surface": "tv",
+    "freqs": [587, 740],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby"
+  },
+  {
+    "t": 1790304767591,
+    "surface": "tv",
+    "freqs": [659, 830],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby"
+  },
+  {
+    "t": 1790304767660,
+    "surface": "tv",
+    "freqs": [698, 880],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby"
+  },
+  {
+    "t": 1790304768576,
+    "surface": "tv",
+    "freqs": [392, 523, 659, 784],
+    "dur": 120,
+    "cue": "start",
+    "phase": "intro"
+  },
+  {
+    "t": 1790304776509,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "intro"
+  },
+  {
+    "t": 1790304780425,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "clue"
+  },
+  {
+    "t": 1790304782945,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304783634,
+    "surface": "phone",
+    "freqs": [660, 880],
+    "dur": 70,
+    "cue": "submit",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304783644,
+    "surface": "tv",
+    "freqs": [1760],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304791658,
+    "surface": "tv",
+    "freqs": [2217],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304794259,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304797862,
+    "surface": "tv",
+    "freqs": [784, 988, 1175, 1568],
+    "dur": 80,
+    "cue": "jackpot",
+    "phase": "reveal"
+  },
+  {
+    "t": 1790304800861,
+    "surface": "tv",
+    "freqs": [1319, 1760],
+    "dur": 70,
+    "cue": "tally",
+    "phase": "reveal"
+  },
+  {
+    "t": 1790304806870,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "scores"
+  },
+  {
+    "t": 1790304812204,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "clue"
+  },
+  {
+    "t": 1790304814863,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304816069,
+    "surface": "phone",
+    "freqs": [660, 880],
+    "dur": 70,
+    "cue": "submit",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304816079,
+    "surface": "tv",
+    "freqs": [1760],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304816567,
+    "surface": "tv",
+    "freqs": [1976],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304816892,
+    "surface": "tv",
+    "freqs": [2217],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304818921,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304825537,
+    "surface": "tv",
+    "freqs": [1319, 1760],
+    "dur": 70,
+    "cue": "tally",
+    "phase": "reveal"
+  },
+  {
+    "t": 1790304829128,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "scores"
+  },
+  {
+    "t": 1790304833827,
+    "surface": "phone",
+    "freqs": [660, 880],
+    "dur": 70,
+    "cue": "submit",
+    "phase": "clue"
+  },
+  {
+    "t": 1790304833847,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "clue"
+  },
+  {
+    "t": 1790304835648,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304836329,
+    "surface": "tv",
+    "freqs": [1760],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304838082,
+    "surface": "tv",
+    "freqs": [2217],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304841034,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304847658,
+    "surface": "tv",
+    "freqs": [1319, 1760],
+    "dur": 70,
+    "cue": "tally",
+    "phase": "reveal"
+  },
+  {
+    "t": 1790304851194,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "scores"
+  },
+  {
+    "t": 1790304852109,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "clue"
+  },
+  {
+    "t": 1790304854946,
+    "surface": "phone",
+    "freqs": [660, 880],
+    "dur": 70,
+    "cue": "submit",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304854956,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304855454,
+    "surface": "tv",
+    "freqs": [1760],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304855785,
+    "surface": "tv",
+    "freqs": [1976],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304857783,
+    "surface": "tv",
+    "freqs": [2217],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304860523,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304867143,
+    "surface": "tv",
+    "freqs": [1319, 1760],
+    "dur": 70,
+    "cue": "tally",
+    "phase": "reveal"
+  },
+  {
+    "t": 1790304873152,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "scores"
+  },
+  {
+    "t": 1790304877309,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "clue"
+  },
+  {
+    "t": 1790304880500,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304881121,
+    "surface": "phone",
+    "freqs": [660, 880],
+    "dur": 70,
+    "cue": "submit",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304881131,
+    "surface": "tv",
+    "freqs": [1760],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304881756,
+    "surface": "tv",
+    "freqs": [1976],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304882667,
+    "surface": "tv",
+    "freqs": [2217],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304884142,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304887755,
+    "surface": "tv",
+    "freqs": [784, 988, 1175, 1568],
+    "dur": 80,
+    "cue": "jackpot",
+    "phase": "reveal"
+  },
+  {
+    "t": 1790304890751,
+    "surface": "tv",
+    "freqs": [1319, 1760],
+    "dur": 70,
+    "cue": "tally",
+    "phase": "reveal"
+  },
+  {
+    "t": 1790304896767,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "clue"
+  },
+  {
+    "t": 1790304900061,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "clue"
+  },
+  {
+    "t": 1790304902948,
+    "surface": "phone",
+    "freqs": [660, 880],
+    "dur": 70,
+    "cue": "submit",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304903875,
+    "surface": "tv",
+    "freqs": [1760],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304905691,
+    "surface": "tv",
+    "freqs": [2217],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304908416,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "dial"
+  },
+  {
+    "t": 1790304912021,
+    "surface": "tv",
+    "freqs": [784, 988, 1175, 1568],
+    "dur": 80,
+    "cue": "jackpot",
+    "phase": "reveal"
+  },
+  {
+    "t": 1790304915032,
+    "surface": "tv",
+    "freqs": [1319, 1760],
+    "dur": 70,
+    "cue": "tally",
+    "phase": "reveal"
+  }
+]

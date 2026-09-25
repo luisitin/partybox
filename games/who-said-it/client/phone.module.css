@@ -1,0 +1,465 @@
+/* Who Said It — phone. Designed at 320 × 568 first; rem type so 200 % text scales the words.
+   Tokens only; transform/opacity motion; nothing a finger can select, zoom or leave pressed. */
+
+.kicker {
+  margin: 0 0 var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pb-accent-2);
+}
+.prompt {
+  margin: 0 0 var(--pb-space-3);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.promptBig {
+  margin: var(--pb-space-4) 0;
+  padding: var(--pb-space-5) var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.swing {
+  transform-origin: 50% 0;
+  animation: ws-swing var(--pb-motion-slow) var(--pb-ease) both;
+}
+.hint {
+  margin: var(--pb-space-2) 0 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+/* ── write ─────────────────────────────────────────────────────────────────────────────────── */
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(var(--pb-touch) * 1.8);
+  padding: var(--pb-space-3);
+  border: 2px solid var(--pb-surface-2);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  /* ≥ 16 px: iOS zooms the page into a smaller field on focus. */
+  font-size: max(16px, var(--pb-font-body));
+  line-height: 1.35;
+  resize: none;
+}
+.input:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 1px;
+}
+.underBox {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--pb-space-3);
+  margin: var(--pb-space-1) 0 var(--pb-space-3);
+  font-size: var(--pb-font-caption);
+}
+.boxHint {
+  color: var(--pb-text-muted);
+}
+.nudge {
+  color: var(--pb-danger);
+  font-weight: 800;
+}
+.counter {
+  flex: none;
+  color: var(--pb-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.ideaBtn,
+.chip {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--pb-touch);
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border: 2px dashed var(--pb-accent-2);
+  border-radius: var(--pb-radius);
+  background: transparent;
+  color: var(--pb-text);
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+.ideaBtn:disabled {
+  opacity: 0.6;
+}
+.ideas {
+  display: grid;
+  gap: var(--pb-space-2);
+  /* Scrolled into view clear of the body's bottom fade. */
+  scroll-margin-bottom: var(--pb-space-7);
+}
+.ideasLabel {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+.chip {
+  border-style: solid;
+  border-color: var(--pb-surface-2);
+  background: var(--pb-surface);
+  font-weight: 700;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+.chipOn {
+  border-color: var(--pb-accent);
+}
+.locked {
+  display: grid;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  text-align: center;
+}
+.lockedLabel {
+  font-weight: 900;
+  color: var(--pb-accent-3);
+}
+.lockedText {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+.lockedHint {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+
+/* ── guess ─────────────────────────────────────────────────────────────────────────────────── */
+.quote {
+  position: relative;
+  margin: 0 0 var(--pb-space-2);
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border: 2px solid var(--pb-accent);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
+}
+.quoteText {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.quoteText::before {
+  content: '“';
+  color: var(--pb-accent);
+}
+.quoteText::after {
+  content: '”';
+  color: var(--pb-accent);
+}
+.guessFoot {
+  margin: var(--pb-space-3) 0 0;
+  min-height: var(--pb-touch);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+.faces {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pb-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.facesThree {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.faceBtn {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  width: 100%;
+  min-height: calc(var(--pb-touch) + var(--pb-space-2));
+  padding: var(--pb-space-1) var(--pb-space-2);
+  border: 3px solid transparent;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+.faceBtn:active {
+  transform: scale(0.96);
+}
+.faceBtn:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+.facePicked {
+  border-color: var(--pb-accent);
+  background: var(--pb-surface-2);
+}
+.faceArt {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  pointer-events: none;
+}
+/* Above eight faces: three columns of small stacked tiles, so 15 fit a 320 × 568 phone. */
+.facesThree {
+  gap: 6px;
+}
+.facesThree .faceBtn {
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  min-height: var(--pb-touch);
+  padding: 2px var(--pb-space-1);
+}
+.facesThree .faceArt {
+  width: 22px;
+  height: 22px;
+}
+.facesThree .faceName {
+  font-size: 0.8125rem;
+  line-height: 1.15;
+  text-align: center;
+}
+.faceTick {
+  position: absolute;
+  right: -6px;
+  bottom: -4px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font-size: 13px;
+  font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-fast) var(--pb-ease) both;
+}
+.faceName {
+  min-width: 0;
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+/* ── reveal (own line) + scores ────────────────────────────────────────────────────────────── */
+.result {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-2);
+  margin-top: var(--pb-space-6);
+  padding: var(--pb-space-5) var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 3px solid var(--pb-surface-2);
+  text-align: center;
+}
+.right {
+  border-color: var(--pb-accent-3);
+}
+.wrong {
+  border-color: var(--pb-danger);
+}
+.mine {
+  border-color: var(--pb-accent-2);
+}
+.resultMark {
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  line-height: 1;
+}
+.right .resultMark {
+  color: var(--pb-accent-3);
+}
+.wrong .resultMark {
+  color: var(--pb-danger);
+}
+.resultText {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+.resultSub {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  overflow-wrap: anywhere;
+}
+.scoresHero {
+  display: grid;
+  justify-items: center;
+  margin-bottom: var(--pb-space-4);
+  text-align: center;
+}
+.nobody {
+  margin: 0 0 var(--pb-space-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent);
+  text-align: center;
+}
+.delta {
+  margin: 0;
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--pb-accent-3);
+  font-variant-numeric: tabular-nums;
+}
+.deltaLabel {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+.rankLine {
+  margin: var(--pb-space-2) 0 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+/* ── intro steps ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── phone stage (reveal as a list) ────────────────────────────────────────────────────────── */
+.picks {
+  display: grid;
+  gap: var(--pb-space-2);
+  margin: var(--pb-space-3) 0;
+  padding: 0;
+  list-style: none;
+}
+.pick {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border: 2px solid transparent;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  transition: transform var(--pb-motion-base) var(--pb-ease);
+}
+.pickAuthor {
+  border-color: var(--pb-accent-2);
+  transform: scale(1.03);
+}
+.pickName {
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+.pickers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--pb-space-1);
+}
+.picker {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--i) * var(--pb-motion-fast) * 0.5);
+}
+.flipArea {
+  perspective: 900px;
+  min-height: 7.5rem;
+  margin-bottom: var(--pb-space-4);
+  display: grid;
+  place-items: center;
+}
+.flipCard {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-2);
+  width: 100%;
+  padding: var(--pb-space-4);
+  border: 3px solid var(--pb-accent-2);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  animation: global(pb-flip) var(--pb-motion-slow) var(--pb-ease) both;
+}
+.flipFaces {
+  display: flex;
+  gap: var(--pb-space-2);
+}
+.flipName {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.itWas {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-text-muted);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-slow) * 2.8);
+}
+
+@keyframes ws-swing {
+  0% {
+    transform: rotateX(-70deg);
+  }
+  70% {
+    transform: rotateX(5deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+/* A sideways phone has width to spare and no height: more columns, so the faces fit without a
+   scroll (record-review p09). */
+@media (orientation: landscape) and (min-width: 560px) {
+  .faces {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .facesThree {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .quote {
+    padding: var(--pb-space-2) var(--pb-space-4);
+  }
+}
