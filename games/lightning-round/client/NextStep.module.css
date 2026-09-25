@@ -10,8 +10,9 @@
   padding: var(--pb-space-2) var(--pb-space-5);
   border-radius: 999px;
   border: 0;
-  background: var(--pb-accent);
-  color: var(--pb-on-accent);
+  /* review 6c24ba (4): a hint, not a call to action — no fill, the accent in the text */
+  background: transparent;
+  color: var(--pb-accent);
   font: inherit;
   font-weight: 800;
   letter-spacing: inherit;

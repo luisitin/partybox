@@ -82,7 +82,7 @@ describe('draw', () => {
 describe('phase flow', () => {
   it('starts in intro with a 4 s deadline and results null', () => {
     const s = start();
-    expect(s.phase).toEqual({ id: 'intro', startedAt: T0, deadline: T0 + 9_000 });
+    expect(s.phase).toEqual({ id: 'intro', startedAt: T0, deadline: T0 + 2_000 }); // ADR-053: a title beat
     expect(s.index).toBe(-1);
     expect(game.results(s)).toBeNull();
     expect(s.scores).toEqual({ a: 0, b: 0, c: 0 });
