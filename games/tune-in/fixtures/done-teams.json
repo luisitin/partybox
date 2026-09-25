@@ -1,7 +1,7 @@
 {
   "phase": {
     "id": "done",
-    "startedAt": 1700000224920,
+    "startedAt": 1700000210923,
     "deadline": null
   },
   "rng": {
@@ -804,24 +804,24 @@
     "catchUp": false,
     "spectrum": 4,
     "target": 50,
-    "clue": "a Renaissance fair",
-    "clueAt": 1700000182798,
-    "clueDeadline": 1700000227538,
+    "clue": "a fortune cookie",
+    "clueAt": 1700000175811,
+    "clueDeadline": 1700000219980,
     "rejected": null,
     "dials": {
-      "p6": 54,
-      "p4": 64
+      "p4": 38,
+      "p6": 41
     },
     "locked": ["p4", "p6"],
-    "needle": 59,
+    "needle": 40,
     "calls": {
-      "p1": "left",
-      "p3": "left",
-      "p5": "left"
+      "p1": "right",
+      "p3": "right",
+      "p5": "right"
     },
     "points": {
       "p4": 2,
-      "p6": 4
+      "p6": 3
     },
     "teamPoints": {
       "sun": 1,
@@ -833,34 +833,32 @@
   "nextTeam": "moon",
   "scores": {
     "p1": 9,
-    "p2": 10,
+    "p2": 11,
     "p3": 9,
-    "p4": 10,
+    "p4": 11,
     "p5": 9,
-    "p6": 10
+    "p6": 11
   },
   "turnStartScores": {
     "p1": 8,
-    "p2": 7,
+    "p2": 8,
     "p3": 8,
-    "p4": 7,
+    "p4": 8,
     "p5": 8,
-    "p6": 7
+    "p6": 8
   },
   "team": {
     "sun": 9,
-    "moon": 10
+    "moon": 11
   },
   "coopTotal": 0,
   "played": 5,
   "voidStreak": 0,
-  "ready": ["p1", "p6", "p3", "p4", "p5", "p2"],
-  "startAt": 1700000011836,
   "stats": {
     "p2": {
       "bulls": 1,
       "dials": 2,
-      "dist": 8,
+      "dist": 10,
       "zeros": 0,
       "psyTurns": 1,
       "psyPts": 3
@@ -868,15 +866,15 @@
     "p4": {
       "bulls": 0,
       "dials": 2,
-      "dist": 21,
+      "dist": 19,
       "zeros": 0,
       "psyTurns": 1,
       "psyPts": 4
     },
     "p6": {
-      "bulls": 1,
+      "bulls": 0,
       "dials": 2,
-      "dist": 11,
+      "dist": 21,
       "zeros": 0,
       "psyTurns": 1,
       "psyPts": 3
@@ -884,15 +882,15 @@
     "p3": {
       "bulls": 0,
       "dials": 1,
-      "dist": 11,
+      "dist": 12,
       "zeros": 0,
       "psyTurns": 1,
       "psyPts": 4
     },
     "p5": {
-      "bulls": 1,
+      "bulls": 2,
       "dials": 2,
-      "dist": 18,
+      "dist": 1,
       "zeros": 0,
       "psyTurns": 0,
       "psyPts": 0
@@ -900,7 +898,7 @@
     "p1": {
       "bulls": 0,
       "dials": 1,
-      "dist": 12,
+      "dist": 8,
       "zeros": 0,
       "psyTurns": 1,
       "psyPts": 3

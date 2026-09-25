@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "scores",
-    "startedAt": 1700000075368,
-    "deadline": 1700000095368
+    "startedAt": 1700000074684,
+    "deadline": 1700000094684
   },
   "rng": {
     "seed": 1,
@@ -309,22 +309,22 @@
     "catchUp": false,
     "spectrum": 1,
     "target": 61,
-    "clue": "a rubber duck",
-    "clueAt": 1700000053296,
-    "clueDeadline": 1700000096226,
+    "clue": "a snow globe",
+    "clueAt": 1700000050140,
+    "clueDeadline": 1700000092957,
     "rejected": null,
     "dials": {
-      "p1": 78,
-      "p3": 51,
-      "p4": 61
+      "p1": 45,
+      "p3": 59,
+      "p4": 53
     },
     "locked": ["p1", "p4", "p3"],
-    "needle": 63,
+    "needle": 52,
     "calls": {},
     "points": {
       "p1": 0,
-      "p3": 3,
-      "p4": 4
+      "p3": 4,
+      "p4": 3
     },
     "teamPoints": {
       "sun": 0,
@@ -335,31 +335,29 @@
   },
   "nextTeam": "moon",
   "scores": {
-    "p1": 4,
-    "p2": 4,
-    "p3": 4,
-    "p4": 4
+    "p1": 5,
+    "p2": 5,
+    "p3": 5,
+    "p4": 5
   },
   "turnStartScores": {
-    "p1": 0,
-    "p2": 0,
-    "p3": 0,
-    "p4": 0
+    "p1": 2,
+    "p2": 2,
+    "p3": 2,
+    "p4": 2
   },
   "team": {
     "sun": 0,
     "moon": 0
   },
-  "coopTotal": 4,
+  "coopTotal": 5,
   "played": 2,
   "voidStreak": 0,
-  "ready": ["p4", "p2", "p3", "p1"],
-  "startAt": 1700000010739,
   "stats": {
     "p1": {
       "bulls": 0,
       "dials": 2,
-      "dist": 32,
+      "dist": 26,
       "zeros": 1,
       "psyTurns": 0,
       "psyPts": 0
@@ -367,26 +365,26 @@
     "p2": {
       "bulls": 0,
       "dials": 1,
-      "dist": 34,
+      "dist": 19,
       "zeros": 1,
       "psyTurns": 1,
-      "psyPts": 4
+      "psyPts": 3
     },
     "p4": {
-      "bulls": 1,
+      "bulls": 0,
       "dials": 2,
-      "dist": 16,
-      "zeros": 1,
+      "dist": 18,
+      "zeros": 0,
       "psyTurns": 0,
       "psyPts": 0
     },
     "p3": {
-      "bulls": 0,
+      "bulls": 1,
       "dials": 1,
-      "dist": 10,
+      "dist": 2,
       "zeros": 0,
       "psyTurns": 1,
-      "psyPts": 0
+      "psyPts": 2
     }
   },
   "speechMs": {}

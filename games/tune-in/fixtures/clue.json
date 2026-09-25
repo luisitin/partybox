@@ -1,12 +1,12 @@
 {
   "phase": {
     "id": "clue",
-    "startedAt": 1700000011054,
-    "deadline": 1700000056054
+    "startedAt": 1700000048318,
+    "deadline": 1700000093318
   },
   "rng": {
     "seed": 7,
-    "step": 156
+    "step": 157
   },
   "players": {
     "p1": {
@@ -68,7 +68,7 @@
   "mode": "solo",
   "teams": null,
   "psychicBag": {
-    "all": ["p3", "p6", "p2", "p4", "p1"],
+    "all": ["p6", "p2", "p4", "p1"],
     "sun": [],
     "moon": []
   },
@@ -435,15 +435,15 @@
     }
   ],
   "turn": {
-    "n": 1,
-    "psychic": "p5",
+    "n": 2,
+    "psychic": "p3",
     "team": null,
     "catchUp": false,
-    "spectrum": 0,
-    "target": 25,
+    "spectrum": 1,
+    "target": 35,
     "clue": null,
     "clueAt": null,
-    "clueDeadline": 1700000056054,
+    "clueDeadline": 1700000093318,
     "rejected": null,
     "dials": {},
     "locked": [],
@@ -459,30 +459,77 @@
   },
   "nextTeam": "sun",
   "scores": {
-    "p1": 0,
-    "p2": 0,
-    "p3": 0,
-    "p4": 0,
-    "p5": 0,
-    "p6": 0
+    "p1": 4,
+    "p2": 4,
+    "p3": 4,
+    "p4": 3,
+    "p5": 4,
+    "p6": 4
   },
   "turnStartScores": {
-    "p1": 0,
-    "p2": 0,
-    "p3": 0,
-    "p4": 0,
-    "p5": 0,
-    "p6": 0
+    "p1": 4,
+    "p2": 4,
+    "p3": 4,
+    "p4": 3,
+    "p5": 4,
+    "p6": 4
   },
   "team": {
     "sun": 0,
     "moon": 0
   },
   "coopTotal": 0,
-  "played": 0,
+  "played": 1,
   "voidStreak": 0,
-  "ready": ["p1", "p2", "p4", "p3", "p5", "p6"],
-  "startAt": 1700000011054,
-  "stats": {},
+  "stats": {
+    "p1": {
+      "bulls": 1,
+      "dials": 1,
+      "dist": 2,
+      "zeros": 0,
+      "psyTurns": 0,
+      "psyPts": 0
+    },
+    "p2": {
+      "bulls": 1,
+      "dials": 1,
+      "dist": 2,
+      "zeros": 0,
+      "psyTurns": 0,
+      "psyPts": 0
+    },
+    "p3": {
+      "bulls": 1,
+      "dials": 1,
+      "dist": 5,
+      "zeros": 0,
+      "psyTurns": 0,
+      "psyPts": 0
+    },
+    "p4": {
+      "bulls": 0,
+      "dials": 1,
+      "dist": 10,
+      "zeros": 0,
+      "psyTurns": 0,
+      "psyPts": 0
+    },
+    "p6": {
+      "bulls": 1,
+      "dials": 1,
+      "dist": 5,
+      "zeros": 0,
+      "psyTurns": 0,
+      "psyPts": 0
+    },
+    "p5": {
+      "bulls": 0,
+      "dials": 0,
+      "dist": 0,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 4
+    }
+  },
   "speechMs": {}
 }

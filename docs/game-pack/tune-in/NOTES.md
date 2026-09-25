@@ -29,7 +29,6 @@ returns `ctx.presence` (the SDK's `GamePresence`), else all in one room. Still l
 | ------------------------------- | ---------- | ----------------------------------------------------------------------------------- |
 | F6 fixed clips (`render-clips`) | Foundation | fixed lines go through the live speech path; the host caches each key, renders once |
 | `SecretCard` (hold to see)      | Imposter   | a local hold-to-see card in `client/`, same behaviour; swap when Imposter ships it  |
-| The shell's ready-up stage      | Foundation | the game's own intro ready-up (below); drop it when ready-up [303ec0] lands         |
 
 ## Decisions (made, noted, easy to change)
 
@@ -66,27 +65,22 @@ returns `ctx.presence` (the SDK's `GamePresence`), else all in one room. Still l
 - **Awards shared by more than three are skipped** (spec: "ties share"): a six-way Sharpshooter
   at 16 players is no honour and filled the results. A tie of up to three sends one award per
   player; the shell's results-ties ([304c6e]) draws them as one card naming everyone.
-- **The teams intro has no demo dial**: at 16 players its fixed height ran the rosters off the
-  card; the rosters sit under the steps and the side that plays first pulses behind its names.
 - **Faces follow the dial's drawn size** (`faceLayout`): spacing, ring distance and each ring's
   clearance from the end labels; the points are a pill on the face's chin.
-- **Rules, I'm ready, 3 · 2 · 1** (the owner's [cc45f4]): bots are ready from the start; the count
-  starts when every connected player has tapped (a dropped phone or a leaver never holds it) or on
-  the VIP's Start now. The INTRO_MS (60 s) net starts only a room where nobody has tapped; once
-  anyone has, it re-arms and waits for the rest, giving up INTRO_GIVE_UP_MS (10 min) after the rules
-  came up (the group standard [e67ec9], reviewer [ba045e] #1). The rules show no clock (timerMode
-  `hidden`). The digits follow the live `phase.deadline`, so a pause during the count keeps them in
-  step ([a9623e]).
+- **The start is the shell's** (ADR-053, ready-up): its stage shows the manifest's three steps,
+  takes everyone's READY and plays the 3 · 2 · 1 before `init` (the owner's [cc45f4]). Tune In has
+  no rules, READY, count or idle net of its own any more. Solo and co-op start at turn 1's clue;
+  teams first see a 7 s roster card (TEAMS_CARD_MS: both sides, the side that plays first pulsing,
+  who reads the first dial, "Tune in!") with no READY and no clock, which the VIP can skip; it also
+  gives the first reading time to be made. The per-mode rules (teams' LEFT/RIGHT call, co-op's group
+  needle) no longer show before the game: per-mode steps in the manifest are proposed in [cafab2].
 - **The dial ends are Spanish on a Spanish screen** (decision [196a9e] rule 2): every dial carries
   `es: { left, right }` in content (Latin American, ≤ 18 characters, tests pin all 200), the view
   header sends both, and `client/ends.ts` swaps them in once at each root. The clue rule bans the
   Spanish ends' words too (Spanish stems, accents folded); every bank clue still passes. The bots'
-  clues and the voice stay English, and Spanish rules say so (`EnglishNote`, TV + phone, and
-  `manifest.es.json`; reviewer [ba045e] #5). No 🇬🇧: Windows browsers (a PC driving the TV) draw
-  it as the letters "GB". The rules' demo dial reads "Frío ◀ ▶ Calor": "Caliente ▶" broke in two
-  in its narrow end column.
-- **The rules' demo dial is 260 px tall** so the ready faces end ~40 px above the host bar
-  (reviewer [ba045e] #4: the bar cut their ✓s).
+  clues and the voice stay English, and the Spanish how-to-play (step 2 in `manifest.es.json`,
+  shown by the shell's stage) says so (reviewer [ba045e] #5). No 🇬🇧: Windows browsers (a PC
+  driving the TV) draw it as the letters "GB".
 - **Relabelled five weak dials** the clue writers flagged: Fleeting ↔ Everlasting, Easy to learn ↔
   Hard to learn, Angelic ↔ Pure evil, Tidy to eat ↔ Messy to eat, The bigger person ↔ Petty, and
   Great date topic ↔ Mood killer. Replaced the near-duplicate "Let it go ↔ Petty revenge"
@@ -127,13 +121,13 @@ so do Nice ↔ Naughty, Prude ↔ Shameless and Wholesome ↔ Twisted in the spi
   `{kind:'coop', won: rating ≥ Crystal clear}` with the rating as the headline.
 - `results-ties` ([304c6e], Foundation): one award card naming every tied winner, three tied names in
   the headline, the gold outline on a tie's last row (reviewer [ba045e] #3). Tune In needs no change.
-- The shell's ready-up stage ([46be3c], Foundation): then Tune In drops its intro ready-up and keeps
-  a teams-only roster card ([4d6fb9]).
+- The shell's ready-up stage (ADR-053): adopted (above). Per-mode how-to-play steps for the stage:
+  proposed [cafab2].
 - The strip's scores frozen at 0 (TvPlaying.tsx:137, reported [ac5036] with a one-line fix).
 - The shell goes faces-only when the strip's chips would take more than two rows (Foundation, after
   its branch lands) — gives the dial back ~136 px at 16 players.
 
 ## Left to do
 
-Phone-only rooms and remote players on F4 presence; the speech-lab pass; drop the intro ready-up
-when the shell's stage lands; 4 APPROVEs (2 DESIGN) on the current head, then merge.
+Phone-only rooms and remote players on F4 presence; the speech-lab pass; per-mode steps once the
+stage can show them; 4 APPROVEs (2 DESIGN) on the current head, then merge.

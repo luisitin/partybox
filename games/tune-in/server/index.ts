@@ -9,6 +9,7 @@ import { drawSpectra } from './content';
 import { controllerView } from './controller-view';
 import type { TuneControllerView } from './controller-view';
 import { reduce } from './flow';
+import { startTurn } from './flow';
 import { enterIntro } from './phases/intro';
 import { recap } from './recap';
 import { results } from './scoring';
@@ -66,13 +67,13 @@ function init(ctx: InitContext): State {
     coopTotal: 0,
     played: 0,
     voidStreak: 0,
-    ready: [],
-    startAt: null,
     stats: {},
     speechMs: {},
   };
-  // The first turn is planned now, so the intro can read its psychic ahead (P00 §5.7).
-  return enterIntro(planTurn(base, false), ctx.now);
+  // The shell's start stage (ADR-053) had the rules, READY and the 3 · 2 · 1: solo and co-op start
+  // at turn 1; teams first see their sides (the card also gives the first reading time, P00 §5.7).
+  const planned = planTurn(base, false);
+  return cfg.mode === 'teams' ? enterIntro(planned, ctx.now) : startTurn(planned, ctx.now);
 }
 
 export const game: GameDefinition<State, Input, TuneTvView, TuneControllerView> = {

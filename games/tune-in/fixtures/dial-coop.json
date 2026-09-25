@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "dial",
-    "startedAt": 1700000011044,
-    "deadline": 1700000036044
+    "startedAt": 1700000002103,
+    "deadline": 1700000027103
   },
   "rng": {
     "seed": 1,
@@ -310,12 +310,12 @@
     "spectrum": 0,
     "target": 63,
     "clue": "a Renaissance fair",
-    "clueAt": 1700000011044,
-    "clueDeadline": 1700000055739,
+    "clueAt": 1700000002103,
+    "clueDeadline": 1700000045000,
     "rejected": null,
     "dials": {
-      "p1": 48,
-      "p4": 28
+      "p4": 62,
+      "p1": 27
     },
     "locked": [],
     "needle": null,
@@ -348,8 +348,6 @@
   "coopTotal": 0,
   "played": 0,
   "voidStreak": 0,
-  "ready": ["p4", "p2", "p3", "p1"],
-  "startAt": 1700000010739,
   "stats": {},
   "speechMs": {}
 }
