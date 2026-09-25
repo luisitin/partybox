@@ -1,0 +1,106 @@
+/* The 3 · 2 · 1 (Countdown.tsx). TV sizes in px (the TV root font is scaled); the phone's in rem. */
+.countdown {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--sh-u, 1rem) * 1.25);
+  background: radial-gradient(circle at 50% 45%, rgba(8, 8, 12, 0.8), rgba(8, 8, 12, 0.94) 65%);
+  animation: global(sh-fade) 500ms var(--sh-ease) both;
+  pointer-events: none;
+}
+
+.countdown[data-size='tv'] {
+  position: absolute;
+}
+
+.dial {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: calc(var(--sh-u, 1rem) * 14);
+  height: calc(var(--sh-u, 1rem) * 14);
+}
+
+.countdown[data-size='tv'] .dial {
+  width: 340px;
+  height: 340px;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  filter: drop-shadow(0 0 18px rgba(200, 162, 74, 0.35));
+}
+
+.track {
+  fill: rgba(13, 14, 19, 0.96);
+  stroke: var(--sh-brass-2);
+  stroke-width: 3;
+}
+
+.fill {
+  fill: none;
+  stroke: var(--sh-brass);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 327;
+  stroke-dashoffset: 0;
+  animation: drain 3600ms linear var(--drain-from, 0ms) forwards;
+}
+
+@keyframes drain {
+  to {
+    stroke-dashoffset: 327;
+  }
+}
+
+.digit {
+  position: relative;
+  font-family: var(--sh-font-display);
+  font-size: calc(var(--sh-u, 1rem) * 8.5);
+  line-height: 1;
+  color: var(--sh-brass);
+  text-shadow:
+    0 3px 0 var(--sh-brass-2),
+    0 10px 30px rgba(0, 0, 0, 0.6);
+  animation: global(sh-stamp) 420ms var(--sh-ease-slam) both;
+}
+
+.countdown[data-size='tv'] .digit {
+  font-size: 220px;
+}
+
+.line {
+  margin: 0;
+  font-family: var(--sh-font-type);
+  font-size: calc(var(--sh-u, 1rem) * 1.15);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #efe5cf;
+  animation: global(sh-rise) 600ms var(--sh-ease) 150ms both;
+}
+
+.countdown[data-size='tv'] .line {
+  font-size: 34px;
+  margin-top: 10px;
+}
+
+/* Reduced motion: the theme shortens every animation; the ring then holds half full, not drained. */
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    animation: none !important;
+    stroke-dashoffset: 163;
+  }
+}
+
+:global(:root[data-motion='off']) .fill {
+  animation: none !important;
+  stroke-dashoffset: 163;
+}

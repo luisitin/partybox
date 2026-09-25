@@ -24,7 +24,7 @@ import { reduceVote } from './phases/vote';
 import { reduceVoteReveal } from './phases/voteReveal';
 import { dealRoles, newDeck } from './rules';
 import { results } from './scoring';
-import { PHASES, inputSchema } from './types';
+import { PHASES, SEATING_SAFETY_MS, inputSchema } from './types';
 import type { Input, Pace, State } from './types';
 import { controllerView, tvView } from './views';
 import type { ShControllerView, ShTvView } from './views';
@@ -47,7 +47,7 @@ function init(ctx: InitContext): State {
   const paceSetting = String(ctx.settings['pace'] ?? 'normal');
   const pace = PACES.find((p) => p === paceSetting) ?? 'normal';
   const state: State = {
-    phase: { id: 'seating', startedAt: ctx.now, deadline: null },
+    phase: { id: 'seating', startedAt: ctx.now, deadline: ctx.now + SEATING_SAFETY_MS },
     rng,
     players,
     cfg: { pace },
@@ -57,7 +57,8 @@ function init(ctx: InitContext): State {
     executed: [],
     exiled: [],
     droppedAt: {},
-    ready: [],
+    ready: ctx.players.filter((p) => p.bot).map((p) => p.id),
+    startAt: null,
     deck,
     discards: [],
     board: { L: 0, F: 0 },

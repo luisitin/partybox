@@ -7,21 +7,21 @@ import type { JSX } from 'react';
 import { useSecondsLeft, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { ShTvView } from '../server/views';
+import { Countdown } from './Countdown';
 import { CREDIT } from './labels';
 import { phaseLines } from './lines';
-import { Newspaper } from './Newspaper';
 import './sh-global.css';
 import { STRINGS } from './strings';
 import { TvBackdrop } from './TvBackdrop';
 import { TvBand, TvBoard } from './TvBoard';
 import { TvMoments } from './TvMoments';
 import { TvRecord } from './TvRecord';
+import { TvSeating } from './TvSeating';
 import { TvSeats } from './TvSeats';
 import theme from './theme.module.css';
 import styles from './tv.module.css';
 
 const CLOCKED = new Set([
-  'seating',
   'nominate',
   'vote',
   'vetoAsk',
@@ -91,9 +91,7 @@ export function Tv({ view }: GameTvProps<ShTvView>): JSX.Element {
           <Clock view={view} />
         </header>
         {phase === 'seating' ? (
-          <div className={styles.special}>
-            <Newspaper headline={L('A new parliament')} session={0} kicker={L('Special edition')} />
-          </div>
+          <TvSeating view={view} />
         ) : (
           <div className={styles.main}>
             <TvBoard view={view} />
@@ -106,6 +104,9 @@ export function Tv({ view }: GameTvProps<ShTvView>): JSX.Element {
         <TvSeats view={view} />
       </div>
       <TvMoments view={view} root={root} />
+      {phase === 'seating' && view.startAt !== undefined ? (
+        <Countdown until={view.startAt} paused={view.paused} size="tv" />
+      ) : null}
     </div>
   );
 }

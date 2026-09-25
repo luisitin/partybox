@@ -68,6 +68,20 @@
 
 /* A placard: face-down while the vote runs, turned over in a wave at the reveal. */
 .placard,
+.ready {
+  padding: 4px 12px;
+  border: 3px solid var(--sh-liberal);
+  border-radius: 6px;
+  background: var(--sh-paper);
+  font-family: var(--sh-font-display);
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  color: var(--sh-liberal);
+  box-shadow: 0 4px 10px var(--sh-shadow);
+  transform: rotate(-4deg);
+  animation: global(sh-stamp) var(--sh-dur-stamp) var(--sh-ease-slam) both;
+}
+
 .voted {
   position: relative;
   width: 112px;

@@ -16,6 +16,7 @@ const SECRET_CARD_PHASES = new Set(['presDraw', 'chanEnact', 'vetoAsk']);
 const VOTES_SHOWN = new Set(['voteReveal', 'hitlerCheck']);
 const OVER = new Set(['gameOver', 'done']);
 const HIDDEN_TIMER = new Set([
+  'seating',
   'voteReveal',
   'hitlerCheck',
   'chaos',
@@ -38,6 +39,7 @@ export type SeatTag =
   | 'lastChancellor'
   | 'lastPresident'
   | 'next'
+  | 'ready'
   | 'voted';
 
 /** Absent fields are left out rather than null, to keep ten seats inside the view budget. */
@@ -86,6 +88,8 @@ export interface PublicView {
   };
   announce: { who: string | null } | null;
   lastCall: boolean;
+  /** Seating: when the 3 · 2 · 1 ends (absent until everyone is ready; the view budget). */
+  startAt?: number;
   /** D6: a legislative session is running; the President and Chancellor may not speak. */
   silence: boolean;
   /** The newspaper's latest headline (§19), public. */
@@ -145,6 +149,7 @@ function seatView(state: State, id: string, nextId: string | null): SeatView {
   if (limit === 'lastChancellor' || limit === 'lastPresident') tags.push(limit);
   if (id === nextId) tags.push('next');
   if (phase === 'vote' && Object.hasOwn(r.votes, id)) tags.push('voted');
+  if (phase === 'seating' && state.ready.includes(id)) tags.push('ready');
   const seat: SeatView = { id, tags };
   if (plate) seat.plate = plate;
   if (VOTES_SHOWN.has(phase) && state.alive.includes(id))
@@ -184,6 +189,7 @@ export function publicView(state: State): PublicView {
     },
     announce: state.announce ? { who: state.announce.who } : null,
     lastCall: r.lastCall,
+    ...(state.startAt !== null && phase === 'seating' ? { startAt: state.startAt } : {}),
     silence: SECRET_CARD_PHASES.has(phase),
     headline: state.headline,
     history: state.history.slice(-7).map(({ president, chancellor, ...row }) => ({
@@ -216,7 +222,10 @@ function timing(
   const out: Pick<TvView, 'timerMode' | 'vipSkipLabel' | 'vipSkipHidden'> = {
     timerMode: HIDDEN_TIMER.has(phase) ? 'hidden' : quiet ? 'quiet' : 'normal',
   };
-  if (CHOOSING.includes(phase)) {
+  if (phase === 'seating') {
+    if (state.startAt !== null) out.vipSkipHidden = true;
+    else out.vipSkipLabel = 'Start now';
+  } else if (CHOOSING.includes(phase)) {
     if (state.round.lastCall) out.vipSkipHidden = true;
     else out.vipSkipLabel = 'Last call';
   }

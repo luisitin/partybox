@@ -99,6 +99,8 @@ export interface State extends GameStateBase {
   /** D7: when a seat dropped (the game exiles it after EXILE_MS). */
   droppedAt: Record<string, number>;
   ready: string[];
+  /** When the 3 · 2 · 1 after the ready-up ends (the owner's pacing rule, 2026-09-24). */
+  startAt: number | null;
   /** SECRET order (R3). */
   deck: Party[];
   /** SECRET contents; the count is public. */
@@ -144,7 +146,6 @@ export type Input = z.infer<typeof inputSchema>;
 
 /** D1: seconds at `normal` pace; `pace` scales them (rounded to 5 s). */
 export const BASE_SECONDS = {
-  seating: 30,
   nominate: 90,
   vote: 45,
   presDraw: 45,
@@ -175,6 +176,13 @@ export const REVEAL_MS = {
 
 /** D4 "Last call". */
 export const LAST_CALL_MS = 10_000;
+/** After the last ready: a breath, then 3 · 2 · 1 (the owner's pacing rule, 2026-09-24). */
+export const COUNTDOWN_MS = 3_600;
+/**
+ * The contract suite needs a game with idle players to end, so a table where someone connected
+ * never taps still gets its count after this long (hidden: nobody sees a clock at seating).
+ */
+export const SEATING_SAFETY_MS = 180_000;
 /** D7: a dropped seat is exiled after the brief's hold (game-side, the owner's call 2026-09-24). */
 export const EXILE_MS = 120_000;
 

@@ -65,12 +65,14 @@ export function PhoneAct({ frame, act, send }: Props): JSX.Element {
   const chan = nameIn(view.players, view.round.nominee);
   const pres = nameIn(view.players, view.round.president);
   switch (act.kind) {
-    case 'ready':
+    case 'ready': {
+      const here = view.seats.filter((s) => !s.tags.includes('exiled'));
+      const ready = here.filter((s) => s.tags.includes('ready')).length;
       return (
         <PhoneFrame
           frame={frame}
           kicker={L('A new parliament')}
-          title={L('Read your dossier')}
+          title={act.done ? L('Waiting for the others') : L('Read your dossier')}
           actions={
             <PrimaryButton done={act.done} onClick={() => send({ type: 'ready' })}>
               {act.done ? L('Ready') : L('Got it')}
@@ -78,8 +80,12 @@ export function PhoneAct({ frame, act, send }: Props): JSX.Element {
           }
         >
           <p className={styles.hint}>{L('Keep it secret. Tap the folder to open or close it.')}</p>
+          <p className={styles.readyCount}>
+            {L('{ready} of {total} ready', { ready, total: here.length })}
+          </p>
         </PhoneFrame>
       );
+    }
     case 'nominate':
       return (
         <PhoneFrame

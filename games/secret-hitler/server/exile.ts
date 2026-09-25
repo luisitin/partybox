@@ -7,7 +7,7 @@ import { advance, chooserOf, endTooFew, nextRound, resolveNow } from './flow';
 import { withRound, without } from './phase';
 import { enterGameOver } from './phases/gameOver';
 import { enterNominate } from './phases/nominate';
-import { allReady } from './phases/seating';
+import { checkReady } from './phases/seating';
 import { everyoneVoted } from './phases/vote';
 import { EXILE_MS } from './types';
 import type { Input, State } from './types';
@@ -34,7 +34,7 @@ function exile(state: State, id: string, now: number): State {
   const r = s.round;
   switch (s.phase.id) {
     case 'seating':
-      return allReady(s) ? advance(s, now) : s;
+      return checkReady(s, now);
     case 'nominate':
       return r.president === id ? nextRound(s, now) : s;
     case 'vote': {
@@ -71,5 +71,6 @@ export function onPlayer(state: State, event: GameEvent<Input>): State {
     return { ...s, droppedAt };
   }
   if (s.exiled.includes(id) || Object.hasOwn(s.droppedAt, id)) return s;
-  return { ...s, droppedAt: { ...s.droppedAt, [id]: event.now } };
+  // A dropped phone never holds up the start.
+  return checkReady({ ...s, droppedAt: { ...s.droppedAt, [id]: event.now } }, event.now);
 }

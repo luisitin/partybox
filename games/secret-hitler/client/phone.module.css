@@ -107,6 +107,15 @@
   text-align: center;
 }
 
+.readyCount {
+  margin: 0;
+  font-family: var(--sh-font-display);
+  font-size: calc(var(--sh-u, 1rem) * 1.5);
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: var(--sh-brass);
+}
+
 .waiting {
   display: flex;
   flex-direction: column;

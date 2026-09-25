@@ -104,6 +104,9 @@ export function TvSeats({ view }: { view: ShTvView }): JSX.Element {
                   <span className={styles.placardBack} />
                 </span>
               ) : null}
+              {phase === 'seating' && seat.tags.includes('ready') ? (
+                <span className={styles.ready}>{L('✓ Ready')}</span>
+              ) : null}
               {over && seat.role ? (
                 <span className={styles.dossier} data-role={seat.role}>
                   {seat.role === 'hitler' ? (

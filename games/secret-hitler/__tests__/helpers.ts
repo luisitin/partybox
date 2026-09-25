@@ -101,9 +101,11 @@ export function elect(state: State, chancellor: string, ja = true): State {
   return voteAll(s, ja);
 }
 
-/** Out of seating into round 1's nominate. */
+/** Everyone taps Got it, the 3 · 2 · 1 runs out: round 1's nominate. */
 export function seated(state: State): State {
-  return until(state, 'nominate');
+  let s = state;
+  for (const id of state.alive) if (s.phase.id === 'seating') s = send(s, id, { type: 'ready' });
+  return until(s, 'nominate');
 }
 
 /** From nominate: elect, discard index `d`, enact index `e`, land on the phase after enactReveal. */
