@@ -12,7 +12,7 @@ import { shareOf, teamOf } from './phases/tug';
 import { stakers } from './phases/shells';
 import { isBlackjack as isBlackjackRound } from './phases/hands';
 import { tierOf } from './odds';
-import { returned } from './returns';
+import { deltaOf, opened, ownLine } from './own-line';
 import { FIXED_LINES, boxRequest, fixedRequest, lineOf, openRequest } from './speech';
 import type { FixedLine } from './speech';
 import type { State } from './types';
@@ -37,7 +37,6 @@ import type {
   ResultView,
   VoiceView,
   BlindAuctionTvView,
-  OwnLine,
   BlindAuctionControllerView,
   Common,
 } from './view-types';
@@ -120,16 +119,6 @@ function tugView(state: State): Common['tug'] {
   const round = state.boxes[state.r.idx];
   if (!round?.teams || state.phase.id === 'done') return null;
   return { ...round.teams, rope: state.r.rope ?? 0, draw: state.r.draw === true };
-}
-
-function opened(state: State): boolean {
-  return state.phase.id === 'open' && state.r.step === 1;
-}
-
-function deltaOf(state: State, id: string): number {
-  const bet = state.r.bets[id];
-  if (!bet || bet.amount <= 0) return 0;
-  return returned(state, id) - bet.amount;
 }
 
 function resultsView(state: State): ResultView[] | null {
@@ -273,19 +262,6 @@ export function tvView(state: State): BlindAuctionTvView {
     shellSwaps:
       ['shuffle', 'cups', 'open'].includes(state.phase.id) && state.r.moves ? state.r.moves : null,
   };
-}
-
-function ownLine(state: State, me: string): OwnLine | null {
-  if (!opened(state)) return null;
-  const bet = state.r.bets[me];
-  if (!bet || bet.amount <= 0) return { kind: 'sat' };
-  const back = deltaOf(state, me) + bet.amount;
-  const inside = state.boxes[state.r.idx]?.outcome;
-  if ((bet.option === inside || bet.also === inside) && back > bet.amount)
-    return { kind: 'won', option: inside ?? bet.option, amount: bet.amount, back };
-  // The shell game's all-right / all-wrong pot: every stake goes back.
-  if (back === bet.amount) return { kind: 'back', amount: bet.amount };
-  return { kind: 'lost', option: bet.option, amount: bet.amount };
 }
 
 export function controllerView(state: State, playerId: string): BlindAuctionControllerView {

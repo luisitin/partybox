@@ -67,6 +67,7 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
   if (!inGame(state, id)) return state;
   const { option, amount } = event.input;
   const insured = event.input.insured === true && state.boxes[state.r.idx]?.box.twist === 'insure';
+  const doubled = event.input.doubled === true && state.boxes[state.r.idx]?.box.twist === 'double';
   // Split: a second pick, only on its twist, never the first pick again, and 2+ coins to halve.
   const also =
     state.boxes[state.r.idx]?.box.twist === 'split' &&
@@ -109,6 +110,7 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
           at: event.now,
           ...(insured ? { insured } : {}),
           ...(also !== undefined ? { also } : {}),
+          ...(doubled ? { doubled } : {}),
         },
       },
     },

@@ -12,7 +12,7 @@ import type { BlindAuctionControllerView } from '../server/views';
 import { COIN, iconOf, nameOf } from './copy';
 import { OptionBoard } from './Options';
 import { KenoPad } from './Keno';
-import { InsureSwitch, PeekButton, TwistNote } from './Twist';
+import { DoubleSwitch, InsureSwitch, PeekButton, TwistNote } from './Twist';
 import { LotTitle } from './PhoneLot';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
@@ -35,6 +35,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
   const [amount, setAmount] = useState(view.myBet?.amount ?? 0);
   const [insured, setInsured] = useState(view.myBet?.insured === true);
   const [also, setAlso] = useState<number | null>(view.myBet?.also ?? null);
+  const [doubled, setDoubled] = useState(view.myBet?.doubled === true);
   const box = view.box;
   if (!box) return null;
   const what = option !== null ? box.options[option] : undefined;
@@ -50,7 +51,8 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       ? 0
       : view.myBet.option === option &&
           (view.myBet.insured === true) === insured &&
-          (view.myBet.also ?? null) === (box.twist === 'split' ? also : null)
+          (view.myBet.also ?? null) === (box.twist === 'split' ? also : null) &&
+          (view.myBet.doubled === true) === (box.twist === 'double' && doubled)
         ? view.myBet.amount
         : null;
   // Hot potato: you cannot back yourself (you could just keep it).
@@ -87,6 +89,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
             amount: n,
             ...(box.twist === 'insure' ? { insured } : {}),
             ...(box.twist === 'split' && also !== null ? { also } : {}),
+            ...(box.twist === 'double' ? { doubled } : {}),
           });
       }}
       onPass={() => {
@@ -166,6 +169,8 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       below={
         box.twist === 'insure' ? (
           <InsureSwitch on={insured} amount={amount} onToggle={() => setInsured((v) => !v)} />
+        ) : box.twist === 'double' ? (
+          <DoubleSwitch on={doubled} onToggle={() => setDoubled((v) => !v)} />
         ) : box.twist === 'peek' ? (
           <PeekButton
             price={view.peekPrice}

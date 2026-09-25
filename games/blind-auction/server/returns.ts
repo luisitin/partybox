@@ -88,5 +88,7 @@ export function returned(state: State, id: string): number {
     return fee > 0 ? Math.floor(bet.amount / 2) - fee : 0;
   const base = payout(bet.amount, option.pay, round.box.grand);
   if (twist === 'early') return Math.floor(base * earlyBonus(state, bet.at));
+  // Double or nothing: the coin flipped at `open` (heads ×2, tails nothing).
+  if (twist === 'double' && bet.doubled) return state.r.flips?.[id] === true ? base * 2 : 0;
   return base - fee;
 }

@@ -3,7 +3,7 @@
 // trap!"), right calls are paid stake × the odds (× 2 for the grand box), wrong ones lose their
 // stake. Coins are settled on entry but the room sees them move only at step 1 (views gate it).
 // A reading ("Two winners!") plays after the fixed line if ready in time; the box waits for it.
-import { enterPhase, isTimerFor } from '@partybox/game-sdk';
+import { enterPhase, isTimerFor, nextFloat } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { tierOf } from '../odds';
 import { returned } from '../returns';
@@ -54,12 +54,29 @@ export function staked(state: State): number {
   return Object.values(state.r.bets).filter((b) => b.amount > 0).length;
 }
 
+/** Double or nothing: a coin for every doubled right call, flipped as the box opens. */
+function flipCoins(state: State): State {
+  const round = state.boxes[state.r.idx];
+  if (round?.box.twist !== 'double') return state;
+  let rng = state.rng;
+  const flips: Record<string, boolean> = {};
+  for (const [id, bet] of Object.entries(state.r.bets)) {
+    if (!bet.doubled || bet.amount <= 0 || bet.option !== round.outcome) continue;
+    const [f, next] = nextFloat(rng);
+    rng = next;
+    flips[id] = f < 0.5;
+  }
+  return { ...state, rng, r: { ...state.r, flips } };
+}
+
 export function enterOpen(state: State, now: number): State {
-  const settled = settle({
-    ...state,
-    notices: {},
-    r: { ...state.r, step: 0, voiceAt: null, turnedAt: null },
-  });
+  const settled = settle(
+    flipCoins({
+      ...state,
+      notices: {},
+      r: { ...state.r, step: 0, voiceAt: null, turnedAt: null },
+    }),
+  );
   // A live event runs once the bets are down: the payouts wait for its finish.
   const kind = state.boxes[state.r.idx]?.box.event;
   return enterPhase(settled, 'open', now, betsMs(staked(state)) + (kind ? EVENT_MS[kind] : 0));

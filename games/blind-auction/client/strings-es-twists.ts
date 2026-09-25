@@ -15,4 +15,11 @@ export const ES_TWISTS: Record<string, string> = {
   '✂️ Split: tap two answers to put half your stake on each.':
     '✂️ Dividir: toca dos respuestas para poner la mitad de tu apuesta en cada una.',
   '👁 Peek: rule one out ({coin} {n})': '👁 Espiar: descarta una ({coin} {n})',
+  '🪙 Double or nothing: a right call flips a coin, twice the win or nothing.':
+    '🪙 Doble o nada: si aciertas se lanza una moneda, el doble del premio o nada.',
+  '🪙 Double or nothing: on': '🪙 Doble o nada: activado',
+  '🪙 Go double or nothing': '🪙 Ir a doble o nada',
+  'Doubled! +{n}': '¡Doblado! +{n}',
+  'Right call, but the coin said nothing: −{n}': 'Acertaste, pero la moneda dijo nada: −{n}',
+  'It was {what}. Double or nothing came up tails.': 'Era {what}. El doble o nada salió cruz.',
 };

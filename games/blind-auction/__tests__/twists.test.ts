@@ -142,4 +142,36 @@ describe('twists', () => {
     );
     expect((before['p2'] ?? 0) - (s.coins['p2'] ?? 0)).toBe(20);
   });
+
+  it('double or nothing: a doubled right call pays twice or nothing on a coin; a miss is a miss', () => {
+    let heads = 0;
+    let tails = 0;
+    for (let k = 0; k < 12; k++) {
+      let s = twisted('double');
+      s = { ...s, rng: seedRng(100 + k) };
+      const round = s.boxes[s.r.idx];
+      const win = round?.outcome ?? 0;
+      const miss = (win + 1) % (round?.box.options.length ?? 2);
+      const before = { ...s.coins };
+      const dbl = (st: typeof s, id: string, option: number) =>
+        send(st, {
+          type: 'input',
+          now: st.phase.startedAt + 100,
+          playerId: id,
+          input: { type: 'bet', option, amount: 10, doubled: true },
+        });
+      s = betAt(dbl(dbl(s, 'p1', win), 'p2', miss), 'p3', win, 10, 100);
+      s = walkTo(s, 'box');
+      const plain = (s.coins['p3'] ?? 0) - (before['p3'] ?? 0) + 10;
+      const got = (s.coins['p1'] ?? 0) - (before['p1'] ?? 0) + 10;
+      if (got === plain * 2) heads++;
+      else {
+        expect(got).toBe(0);
+        tails++;
+      }
+      expect((before['p2'] ?? 0) - (s.coins['p2'] ?? 0)).toBe(10);
+    }
+    expect(heads).toBeGreaterThan(0);
+    expect(tails).toBeGreaterThan(0);
+  });
 });

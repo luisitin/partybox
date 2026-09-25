@@ -89,8 +89,8 @@ export interface BlindAuctionTvView extends TvView, Common {
 }
 
 export type OwnLine =
-  | { kind: 'won'; option: number; amount: number; back: number }
-  | { kind: 'lost'; option: number; amount: number }
+  | { kind: 'won'; option: number; amount: number; back: number; doubled?: boolean }
+  | { kind: 'lost'; option: number; amount: number; busted?: boolean }
   | { kind: 'back'; amount: number }
   | { kind: 'sat' };
 

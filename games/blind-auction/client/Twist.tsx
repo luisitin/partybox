@@ -26,9 +26,11 @@ export function TwistNote({
           ? L('👁 Peek: pay to rule out one wrong answer, on your phone only.')
           : twist === 'split'
             ? L('✂️ Split: tap two answers to put half your stake on each.')
-            : L(
-                '🧮 The crowd sets the odds: right calls split the whole pot — back the unpopular pick!',
-              );
+            : twist === 'double'
+              ? L('🪙 Double or nothing: a right call flips a coin, twice the win or nothing.')
+              : L(
+                  '🧮 The crowd sets the odds: right calls split the whole pot — back the unpopular pick!',
+                );
   return (
     <p className={`${styles.twist} ${size === 'phone' ? styles.twistPhone : ''}`}>
       <span className={styles.twistTag}>{L('Twist')}</span> {text}
@@ -89,6 +91,24 @@ export function PeekButton({
       {done
         ? L('👁 Ruled out: the struck card')
         : L('👁 Peek: rule one out ({coin} {n})', { coin: COIN, n: price })}
+    </button>
+  );
+}
+
+/** The phone's double-or-nothing switch (the double twist). */
+export function DoubleSwitch({ on, onToggle }: { on: boolean; onToggle: () => void }): JSX.Element {
+  const L = useT(STRINGS);
+  return (
+    <button
+      type="button"
+      aria-pressed={on}
+      className={`${styles.insure} ${on ? styles.insureOn : ''}`}
+      onClick={() => {
+        buzz(10);
+        onToggle();
+      }}
+    >
+      {on ? L('🪙 Double or nothing: on') : L('🪙 Go double or nothing')}
     </button>
   );
 }

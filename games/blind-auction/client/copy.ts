@@ -89,7 +89,9 @@ export function ownLineText(
   switch (line.kind) {
     case 'won':
       return {
-        big: L('You called it! +{n}', { n: line.back - line.amount }),
+        big: line.doubled
+          ? L('Doubled! +{n}', { n: line.back - line.amount })
+          : L('You called it! +{n}', { n: line.back - line.amount }),
         // Coin and number glued (NBSP): never an orphaned number on its own line.
         small: L('It was {what}. Your {bet} paid {back}.', {
           what: inside,
@@ -99,8 +101,12 @@ export function ownLineText(
       };
     case 'lost':
       return {
-        big: L('Not this time: −{n}', { n: line.amount }),
-        small: L('It was {what}.', { what: inside }),
+        big: line.busted
+          ? L('Right call, but the coin said nothing: −{n}', { n: line.amount })
+          : L('Not this time: −{n}', { n: line.amount }),
+        small: line.busted
+          ? L('It was {what}. Double or nothing came up tails.', { what: inside })
+          : L('It was {what}.', { what: inside }),
       };
     case 'back':
       return {

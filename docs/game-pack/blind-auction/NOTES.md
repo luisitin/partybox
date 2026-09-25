@@ -100,3 +100,10 @@ or not you bet, and it counts against your stake while betting.
 Tap two answers: the stake is halved between them (the odd coin on the first pick), and each half
 is paid at its own pick's odds, so a split backs two outcomes at the price of a smaller win. On the
 reveal a split bet shows as two chips. A second tap on a lit card lets it go.
+
+## Double-or-nothing twist (2026-09-25)
+
+A switch on the phone while betting. As the box opens, every doubled right call flips a coin from
+the game's rng: heads pays twice the normal win, tails pays nothing (stake lost). A wrong call is
+simply lost. Same expected value, twice the swing. The phone's line says which way the coin went.
+That completes the six twists in LIVE-EVENTS.md.
