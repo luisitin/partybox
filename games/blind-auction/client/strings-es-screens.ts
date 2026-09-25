@@ -72,5 +72,5 @@ export const ES_SCREENS: Record<string, string> = {
   // waiting
   'One moment…': 'Un momento…',
   'Look at the TV': 'Mira la TV',
-  "That's the auction!": '¡Y así termina la subasta!',
+  "That's the last box!": '¡Esa fue la última caja!',
 };

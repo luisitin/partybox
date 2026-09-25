@@ -20,7 +20,7 @@ export function Tv({ view }: GameTvProps<BlindAuctionTvView>): JSX.Element {
     default:
       return (
         <Stage center>
-          <BigText level="h1">{L("That's the auction!")}</BigText>
+          <BigText level="h1">{L("That's the last box!")}</BigText>
         </Stage>
       );
   }
