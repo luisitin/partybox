@@ -1,4 +1,4 @@
-// Phase "intro": a 4 s title card. Exits on the deadline (or VIP skip) into the first question.
+// Phase "intro": a 2 s title beat after the shell's start stage (ADR-053). Exits on the deadline (or VIP skip) into the first question.
 // `next` is injected by server/index.ts so phase files never import each other (no cycles).
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';

@@ -5,7 +5,7 @@ import { game } from '../server/index';
 import type { State } from '../server/types';
 import { revealMs } from '../server/phases/reveal';
 import { currentPrompt } from '../server/round';
-import { INTRO_MS, REVEAL_MIN_MS, SCORES_MS, VOTE_MS } from '../server/types';
+import { FIRST_INTRO_MS, INTRO_MS, REVEAL_MIN_MS, SCORES_MS, VOTE_MS } from '../server/types';
 import {
   answer,
   answerAll,
@@ -25,9 +25,10 @@ import {
 } from './helpers';
 
 describe('phase flow', () => {
-  it('intro (7 s) → answer (answerSeconds) → vote (20 s) → reveal (time to read) → … → scores (Next, 45 s fallback)', () => {
+  it('intro (2 s title beat in round 1, ADR-053) → answer (answerSeconds) → vote (20 s) → reveal (time to read) → … → scores (Next, 45 s fallback)', () => {
     let s = start({ answerSeconds: 90 });
-    expect(s.phase).toMatchObject({ id: 'intro', deadline: s.phase.startedAt + INTRO_MS });
+    expect(s.phase).toMatchObject({ id: 'intro', deadline: s.phase.startedAt + FIRST_INTRO_MS });
+    expect(FIRST_INTRO_MS).toBeLessThan(INTRO_MS);
     s = timer(s);
     expect(s.phase).toMatchObject({ id: 'answer', deadline: s.phase.startedAt + 90_000 });
     s = answerAll(s);
