@@ -219,6 +219,17 @@ async function main(): Promise<void> {
       vip.page.getByRole('button', { name: /^(start|empezar|comenzar)/i }),
     ]);
     if (!started) notes.push('start: no Start button');
+    // ADR-053: the start stage — everyone reads the rules, then each phone taps READY in turn (the
+    // TV's faces light one by one), then the 3·2·1
+    await stage('rules', 3000);
+    for (const s of surfaces.filter((x) => x.id !== 'tv')) {
+      // on a short screen the button first scrolls to the last step (reviewer D1)
+      if (await clickFirst([s.page.getByRole('button', { name: /^↓ (read all|lee los)/i })])) await settle(900); // prettier-ignore
+      const tapped = await clickFirst([s.page.getByRole('button', { name: /^(i.m ready|¡listo!)/i })]); // prettier-ignore
+      if (!tapped) notes.push(`ready: no READY button on ${s.id}`);
+      await settle(1500);
+    }
+    await stage('count', 50);
     const until = Date.now() + 15_000;
     while (Date.now() < until && (await api.state()).room?.status !== 'playing') await settle(150);
     await stage('play', 4000);

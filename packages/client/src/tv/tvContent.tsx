@@ -9,6 +9,7 @@ import { TvLobby } from './TvLobby';
 import { TvPlaying } from './TvPlaying';
 import { TvResults } from './TvResults';
 import { TvSelecting } from './TvSelecting';
+import { TvStartStage } from './TvStartStage';
 
 export interface TvContentArgs {
   room: RoomSnapshot | null;
@@ -28,6 +29,9 @@ export function tvContent(a: TvContentArgs): JSX.Element {
     return (
       <TvLobby room={room} nudgeIds={a.toasts.flatMap((t) => (t.playerId ? [t.playerId] : []))} />
     );
+  // ADR-053: between Start and the game, the start stage (rules, READY faces, 3·2·1)
+  if (room.status === 'selecting' && room.starting)
+    return <TvStartStage room={room} audio={a.audio} />;
   if (room.status === 'selecting') return <TvSelecting room={room} client={a.client} />;
   if (room.status === 'playing')
     return (

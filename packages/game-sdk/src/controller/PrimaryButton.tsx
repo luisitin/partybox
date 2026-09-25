@@ -49,7 +49,7 @@ export function PrimaryButton({
     >
       {done ? (
         <span className={styles.check} aria-hidden>
-          ✓{' '}
+          ✓
         </span>
       ) : null}
       {children}

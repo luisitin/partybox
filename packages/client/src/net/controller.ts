@@ -281,6 +281,9 @@ export function createController(url?: string): Controller {
     nudge() {
       socket.emit('nudge', {});
     },
+    ready() {
+      socket.emit('ready', {});
+    },
     vote(gameId) {
       socket.emit('vote', { gameId });
     },

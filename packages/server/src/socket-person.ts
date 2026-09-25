@@ -1,4 +1,4 @@
-// A person's small room messages — nudge, vote, presence: each checks the seat, validates its
+// A person's small room messages — nudge, vote, presence, ready: each checks the seat, validates its
 // payload, pays its rate-limit tokens and hands the host one event. Split from sockets.ts.
 import type { Socket } from 'socket.io';
 import type { ErrorPayload } from '@partybox/shared';
@@ -55,5 +55,13 @@ export function registerPersonMessages(
       playerId: me.playerId,
       canSeeTv: parsed.data.canSeeTv,
     });
+  });
+
+  // ADR-053: "I've read the rules" in the start stage — 1 token; the engine ignores it elsewhere.
+  socket.on('ready', () => {
+    const me = seated();
+    if (!me) return;
+    if (!limiter.take(1)) return sendError('rate_limited', 'Slow down.');
+    host.dispatch(me.code, { type: 'ready', playerId: me.playerId });
   });
 }

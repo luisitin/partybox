@@ -44,7 +44,12 @@ export const vipPayloadSchema = z.discriminatedUnion('action', [
   /** Part 00 §1.4: the VIP opened a game's About (its id) or closed it (null): the TV mirrors it. */
   z.object({ action: z.literal('highlight'), gameId: z.string().max(32).nullable() }),
   z.object({ action: z.literal('updateSettings'), settings: settingsSchema }),
+  /** ADR-053: opens the start stage (rules, everyone's READY, 3·2·1). */
   z.object({ action: z.literal('start') }),
+  /** ADR-053: in the stage, the count begins now; outside one, the game starts at once. */
+  z.object({ action: z.literal('startNow') }),
+  /** ADR-053: from the stage back to the picker. */
+  z.object({ action: z.literal('back') }),
   z.object({ action: z.literal('skip') }),
   z.object({ action: z.literal('pause') }),
   z.object({ action: z.literal('resume') }),
@@ -215,9 +220,21 @@ export interface RoomSnapshot {
   votes?: Record<string, string>;
   /** Part 00 §1.4: the game the VIP is reading about on the open list; the TV shows it big. */
   highlightedGameId?: string;
+  /** ADR-053: the start stage, between Start and the game. */
+  starting?: StartingSnapshot;
   /** The owner (2026-09-22): a listed ("public") room appears in the join page's room list; a
    *  private one can still be joined by anyone who knows its code. */
   listed: boolean;
+}
+
+/** ADR-053: who has read the rules, and when the 3·2·1 began (server clock; null while reading).
+ *  The TV's and phones' count derive every number from `countdownAt`, so they land together. */
+export interface StartingSnapshot {
+  gameId: string;
+  ready: string[];
+  countdownAt: number | null;
+  /** The VIP said Wait during the count; only their Start now counts again. */
+  held?: boolean;
 }
 
 export interface WelcomePayload {

@@ -4,11 +4,13 @@ import type { Texts } from './i18n-en';
 import { esPhone } from './i18n-es-phone';
 import { esPicker } from './i18n-es-picker';
 import { esPresence } from './i18n-es-presence';
+import { esStage } from './i18n-es-stage';
 
 export const es: Texts = {
   ...esPhone,
   ...esPicker,
   ...esPresence,
+  ...esStage,
   appName: 'PartyBox',
   appShort: 'PB',
   join: {
