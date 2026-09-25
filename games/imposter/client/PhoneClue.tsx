@@ -98,46 +98,48 @@ export function PhoneClue({ view, send }: Props): JSX.Element {
       }
     >
       <PhoneSecret view={view} mini />
-      <p className={styles.prompt}>{L('One word about the secret word')}</p>
-      {open ? (
-        <input
-          ref={input}
-          className={styles.clueBox}
-          value={text}
-          onChange={(e) => setText(e.target.value.slice(0, MAX + 4))}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              submit();
-            }
-          }}
-          maxLength={MAX + 4}
-          autoCapitalize="none"
-          autoCorrect="off"
-          autoComplete="off"
-          spellCheck={false}
-          enterKeyHint="done"
-          placeholder={L('one word')}
-          aria-label={L('Your clue')}
-          aria-invalid={shown !== null}
-          aria-describedby="imp-clue-line"
-        />
-      ) : (
-        <p className={styles.locked} role="status">
-          <span>{L('Locked in:')}</span> <b>“{locked}”</b>
+      <div className={styles.clueStack}>
+        <p className={styles.prompt}>{L('One word about the secret word')}</p>
+        {open ? (
+          <input
+            ref={input}
+            className={styles.clueBox}
+            value={text}
+            onChange={(e) => setText(e.target.value.slice(0, MAX + 4))}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                submit();
+              }
+            }}
+            maxLength={MAX + 4}
+            autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="off"
+            spellCheck={false}
+            enterKeyHint="done"
+            placeholder={L('one word')}
+            aria-label={L('Your clue')}
+            aria-invalid={shown !== null}
+            aria-describedby="imp-clue-line"
+          />
+        ) : (
+          <p className={styles.locked} role="status">
+            <span>{L('Locked in:')}</span> <b>“{locked}”</b>
+          </p>
+        )}
+        <p
+          id="imp-clue-line"
+          className={`${styles.legal} ${shown ? styles.bad : ''}`}
+          aria-live="polite"
+        >
+          {open
+            ? shown
+              ? `⚠ ${reasonText(L, shown)}`
+              : `${[...text.trim()].length} / ${MAX}`
+            : L('Waiting for the others…')}
         </p>
-      )}
-      <p
-        id="imp-clue-line"
-        className={`${styles.legal} ${shown ? styles.bad : ''}`}
-        aria-live="polite"
-      >
-        {open
-          ? shown
-            ? `⚠ ${reasonText(L, shown)}`
-            : `${[...text.trim()].length} / ${MAX}`
-          : L('Waiting for the others…')}
-      </p>
+      </div>
       {earlier.length > 0 ? (
         <details className={styles.soFar} open={window.innerHeight >= 600}>
           <summary>{L('Clues so far')}</summary>

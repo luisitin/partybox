@@ -35,18 +35,22 @@ export function PhoneStageBody({ view }: { view: View }): JSX.Element | null {
       const dealt = s.board.filter((c) => c.dealt > 0).sort((a, b) => a.dealt - b.dealt);
       const latest = dealt[dealt.length - 1]?.by;
       return (
-        <ul className={styles.clueList}>
-          {dealt.map((c) => (
-            <li
-              key={c.by}
-              className={`${styles.dealt} ${c.by === latest ? styles.speakingRow : ''}`}
-            >
-              <Avatar avatarId={who.get(c.by)?.avatarId ?? ''} size="2.25rem" />
-              <span className={styles.rowName}>{name(c.by)}</span>
-              <span className={styles.rowClue}>{c.now || '—'}</span>
-            </li>
-          ))}
-        </ul>
+        <>
+          <p className={styles.kicker}>{L('Round {n} of {of}', { n: s.round, of: s.rounds })}</p>
+          <h2 className={styles.title}>{L('Clues are in')}</h2>
+          <ul className={styles.clueList}>
+            {dealt.map((c) => (
+              <li
+                key={c.by}
+                className={`${styles.dealt} ${c.by === latest ? styles.speakingRow : ''}`}
+              >
+                <Avatar avatarId={who.get(c.by)?.avatarId ?? ''} size="2.25rem" />
+                <span className={styles.rowName}>{name(c.by)}</span>
+                <span className={styles.rowClue}>{c.now || '—'}</span>
+              </li>
+            ))}
+          </ul>
+        </>
       );
     }
     case 'voteReveal': {
