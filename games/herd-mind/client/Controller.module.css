@@ -640,3 +640,20 @@
   animation: none;
   transition: none;
 }
+
+/* A short phone (an SE is 667 px tall): eight tiles and a Spanish kicker must clear the body's
+   fade, or the last row sits under it with no "more below" cue (design review 74a3bb). */
+@media (max-height: 700px) {
+  .kicker {
+    letter-spacing: 0;
+  }
+
+  .tiles {
+    gap: 6px;
+  }
+
+  .tile {
+    min-height: 46px;
+    padding-block: 6px;
+  }
+}
