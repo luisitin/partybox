@@ -3,6 +3,7 @@
 // backs the likely content with a small stake, a reckless one chases long shots with a big one.
 // Every content pays a little under fair odds, so no pick is "right": the personality is the play.
 import type { Rng } from '@partybox/game-sdk';
+import { total as handTotal } from './phases/hands';
 import type { Input } from './types';
 import type { BlindAuctionControllerView } from './views';
 
@@ -12,6 +13,12 @@ export function decide(view: BlindAuctionControllerView, factor: number, rng: Rn
   // Hot potato: pass it on the moment it lands (the server makes you hold it a beat first).
   if (view.phaseId === 'potato')
     return view.potato?.holder === view.me.id ? { type: 'pass' } : null;
+  // Blackjack: hit below 16, else stand (the house's own rule, near enough).
+  if (view.phaseId === 'hands') {
+    const hand = view.blackjack?.hands[view.me.id];
+    if (!hand || view.blackjack?.stood.includes(view.me.id)) return null;
+    return handTotal(hand) < 16 ? { type: 'hit' } : { type: 'stand' };
+  }
   // Shell game: a bot 'follows the ball' about as well as a person — right more often than chance.
   if (view.phaseId === 'cups') {
     if (view.myStake <= 0 || view.myCup !== null) return null;

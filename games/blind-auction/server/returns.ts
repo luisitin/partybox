@@ -3,6 +3,7 @@
 // game (the owner's spec) is a shared pot: the right calls split everything staked, in proportion
 // to their stakes; if everyone is wrong, or everyone is right, every stake goes back.
 import { payout } from './odds';
+import { blackjackReturn } from './phases/hands';
 import { KENO_PAY } from './timing';
 import type { State } from './types';
 
@@ -19,6 +20,7 @@ export function returned(state: State, id: string): number {
     const rightTotal = right.reduce((s, b) => s + b.amount, 0);
     return Math.floor((pot * bet.amount) / rightTotal);
   }
+  if (round.box.event === 'blackjack') return blackjackReturn(state, id, bet.amount);
   if (round.box.event === 'keno') {
     const drawn = round.detail ?? [];
     const matches = (state.r.spots?.[id] ?? []).filter((n) => drawn.includes(n)).length;

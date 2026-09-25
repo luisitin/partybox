@@ -30,6 +30,7 @@ import {
   reduceShuffle,
   stakers,
 } from './phases/shells';
+import { enterHands, finishHands, handsIn, isBlackjack, reduceHands } from './phases/hands';
 import { drawEvent, potatoOptions } from './events';
 import { boxSpeech, enterBox, reduceBox } from './phases/box';
 import { enterOpen, openSpeech, reduceOpen } from './phases/open';
@@ -146,6 +147,7 @@ export function advance(state: State, now: number): State {
       if (isTug(state)) return enterTug(state, now);
       // The shell game: nobody staked, nothing to shuffle for.
       if (isShells(state) && stakers(state).length > 0) return enterShuffle(state, now);
+      if (isBlackjack(state) && stakers(state).length > 0) return enterHands(state, now);
       return isDoors(state) && swappers(state).length > 0
         ? enterSwap(state, now)
         : enterOpen(state, now);
@@ -157,6 +159,8 @@ export function advance(state: State, now: number): State {
       return enterCups(state, now);
     case 'cups':
       return enterOpen(closeCups(state), now);
+    case 'hands':
+      return enterOpen(finishHands(state), now);
     case 'swap':
       return enterOpen(closeSwap(state), now);
     case 'open':
@@ -186,6 +190,7 @@ function recheck(next: State, now: number): State {
     return advance(next, now);
   if (next.phase.id === 'swap' && swapsIn(next)) return advance(next, now);
   if (next.phase.id === 'cups' && cupsIn(next)) return advance(next, now);
+  if (next.phase.id === 'hands' && handsIn(next)) return advance(next, now);
   return next;
 }
 
@@ -218,6 +223,8 @@ function reduce(state: State, event: GameEvent<Input>): State {
       return reduceShuffle(state, event, advance);
     case 'cups':
       return reduceCups(state, event, advance);
+    case 'hands':
+      return reduceHands(state, event, advance);
     case 'open':
       return reduceOpen(state, event, advance);
     default:

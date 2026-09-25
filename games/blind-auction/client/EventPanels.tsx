@@ -103,3 +103,25 @@ export function CupsPanel({ view }: { view: View }): JSX.Element | null {
     </div>
   );
 }
+
+export function HandsPanel({ view }: { view: View }): JSX.Element | null {
+  const L = useT(STRINGS);
+  const play = useSound();
+  useEffect(() => play('phase'), [play]);
+  const bj = view.blackjack;
+  if (!bj) return null;
+  const n = Object.keys(bj.hands).length;
+  return (
+    <div className={styles.panel}>
+      <h1 className={styles.call}>{L('Hit or stand on your phone!')}</h1>
+      <p className={styles.flavour}>
+        {L(
+          'Beat the dealer without going over 21. Win ×2, blackjack ×2.5, a tie gives the stake back.',
+        )}
+      </p>
+      <p className={styles.count} aria-live="polite">
+        {L('{n} of {total} have chosen', { n: bj.stood.length, total: n })}
+      </p>
+    </div>
+  );
+}

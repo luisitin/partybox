@@ -12,6 +12,7 @@ export const ES_GAME: Record<string, string> = {
   'Stop the pull': 'Parar el jalón',
   'Skip to the pick': 'Ir a elegir',
   'Lift the cups': 'Levantar los vasos',
+  'Dealer plays': 'Juega la banca',
   // awards
   '🎲 High Roller': '🎲 Gran Apostador',
   'The biggest single bet': 'La apuesta más grande',

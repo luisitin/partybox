@@ -11,6 +11,7 @@ import { Doors, LiveStage } from './LiveStage';
 import { PotatoRing } from './Potato';
 import { ShellStage } from './Shells';
 import { TugRope } from './Tug';
+import { BlackjackTable } from './Blackjack';
 
 export function PhoneEvent({
   view,
@@ -23,7 +24,9 @@ export function PhoneEvent({
   const bets = view.bets?.length ?? 0;
   return (
     <div className={liveStyles.phoneStage}>
-      {run.kind === 'shells' && view.shells ? (
+      {run.kind === 'blackjack' ? (
+        <BlackjackTable view={view} />
+      ) : run.kind === 'shells' && view.shells ? (
         <ShellStage
           start={view.shells.start}
           moves={view.shellSwaps}

@@ -25,7 +25,9 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
     view.myBet?.option ??
       (view.box?.event === 'tug'
         ? view.myTeam
-        : view.box?.event === 'shells' || view.box?.event === 'keno'
+        : view.box?.event === 'shells' ||
+            view.box?.event === 'keno' ||
+            view.box?.event === 'blackjack'
           ? 0
           : null),
   );

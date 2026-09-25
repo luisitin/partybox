@@ -1218,3 +1218,134 @@
     animation: none;
   }
 }
+
+/* ── blackjack ── */
+.felt21 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+  width: min(720px, calc(var(--ba-card-h) * 1.35));
+  height: var(--ba-card-h);
+  padding: var(--pb-space-3);
+  box-sizing: border-box;
+  border-radius: var(--pb-radius-lg);
+  background: radial-gradient(ellipse at 50% 20%, #1f6b3f, #0f3a22 80%);
+  overflow: hidden;
+  --ba-pcard: calc(var(--ba-card-h) * 0.13);
+}
+
+.dealerRow,
+.hand21 {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+}
+
+.dealerRow {
+  justify-content: center;
+  padding-bottom: var(--pb-space-2);
+  border-bottom: 2px dashed rgb(255 255 255 / 20%);
+}
+
+.handsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pb-space-2);
+}
+
+.hand21 {
+  padding: 4px 8px;
+  border-radius: var(--pb-radius);
+  background: rgb(0 0 0 / 20%);
+  min-width: 0;
+}
+
+.bust {
+  opacity: 0.5;
+}
+
+.seatLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 900;
+  color: var(--pb-text-muted);
+}
+
+.handWho {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: 30%;
+  overflow: hidden;
+  font-weight: 800;
+  font-size: calc(var(--ba-pcard) * 0.3);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.handFace {
+  flex: none;
+  width: calc(var(--ba-pcard) * 0.45);
+  height: calc(var(--ba-pcard) * 0.45);
+}
+
+.cardsRow {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.handTotal {
+  margin-left: auto;
+  font-weight: 1000;
+  font-size: calc(var(--ba-pcard) * 0.38);
+  color: var(--pb-accent-2);
+}
+
+.pcard {
+  display: inline-grid;
+  place-items: center;
+  width: calc(var(--ba-pcard) * 0.72);
+  height: var(--ba-pcard);
+  border-radius: 6px;
+  background: #fbfbff;
+  color: #1a0b12;
+  font-weight: 900;
+  font-size: calc(var(--ba-pcard) * 0.34);
+  line-height: 0.9;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 40%);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.pcard small {
+  font-size: 0.8em;
+}
+
+.pcardRed {
+  color: #d11d4f;
+}
+
+.pcardBack {
+  background: repeating-linear-gradient(45deg, #b3122a 0 6px, #8a0e20 6px 12px);
+  box-shadow: inset 0 0 0 3px #fbfbff;
+}
+
+.pcardPhone {
+  --ba-pcard: 64px;
+}
+
+.cardsBig {
+  justify-content: center;
+  --ba-pcard: 110px;
+}
+
+.cardsBig .pcard {
+  --ba-pcard: 110px;
+}
+
+.hitStand {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pb-space-3);
+}

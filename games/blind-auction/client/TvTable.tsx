@@ -14,8 +14,16 @@ import type { Tone } from './copy';
 import { Doors, LiveStage } from './LiveStage';
 import { PotatoRing } from './Potato';
 import { TugRope } from './Tug';
+import { BlackjackTable } from './Blackjack';
 import { ShellStage } from './Shells';
-import { CupsPanel, PotatoPanel, ShufflePanel, SwapPanel, TugPanel } from './EventPanels';
+import {
+  CupsPanel,
+  HandsPanel,
+  PotatoPanel,
+  ShufflePanel,
+  SwapPanel,
+  TugPanel,
+} from './EventPanels';
 import { PayTable } from './Keno';
 import { LotCard } from './LotCard';
 import { OptionBoard } from './Options';
@@ -125,27 +133,29 @@ function OpenPanel({ view }: { view: View }): JSX.Element | null {
                   ? L('Doors are final. Where is the car?')
                   : view.run.kind === 'coins'
                     ? L('Bets are closed. Flip it!')
-                    : view.run.kind === 'ghost'
-                      ? L('Bets are closed. Flashlights on!')
-                      : view.run.kind === 'wires'
-                        ? L('Bets are closed. Snip… snip…')
-                        : view.run.kind === 'penalty'
-                          ? L('Bets are closed. Here comes the kick!')
-                          : view.run.kind === 'keno'
-                            ? L('Bets are closed. Here come the balls!')
-                            : view.run.kind === 'shells'
-                              ? L('Cups up! Where is the ball?')
-                              : view.run.kind === 'tug' && view.tug?.draw
-                                ? L('Dead heat! Every stake goes back.')
-                                : view.run.kind === 'tug'
-                                  ? L('Time! Which side held on?')
-                                  : view.run.kind === 'potato'
-                                    ? L('POP! {name} got burnt', {
-                                        name:
-                                          view.players.find((p) => p.id === view.potato?.holder)
-                                            ?.name ?? '?',
-                                      })
-                                    : L('Bets are closed. Spin the wheel!')
+                    : view.run.kind === 'blackjack'
+                      ? L('The dealer plays…')
+                      : view.run.kind === 'ghost'
+                        ? L('Bets are closed. Flashlights on!')
+                        : view.run.kind === 'wires'
+                          ? L('Bets are closed. Snip… snip…')
+                          : view.run.kind === 'penalty'
+                            ? L('Bets are closed. Here comes the kick!')
+                            : view.run.kind === 'keno'
+                              ? L('Bets are closed. Here come the balls!')
+                              : view.run.kind === 'shells'
+                                ? L('Cups up! Where is the ball?')
+                                : view.run.kind === 'tug' && view.tug?.draw
+                                  ? L('Dead heat! Every stake goes back.')
+                                  : view.run.kind === 'tug'
+                                    ? L('Time! Which side held on?')
+                                    : view.run.kind === 'potato'
+                                      ? L('POP! {name} got burnt', {
+                                          name:
+                                            view.players.find((p) => p.id === view.potato?.holder)
+                                              ?.name ?? '?',
+                                        })
+                                      : L('Bets are closed. Spin the wheel!')
             : bets.length
               ? L('Bets are closed. What’s inside?')
               : L('Nobody bet. What’s inside?')}
@@ -212,9 +222,11 @@ export function TvTable({ view }: { view: View }): JSX.Element {
           <div
             className={`${styles.cardCol} ${inside && toneOf(inside.kind) === 'bad' ? styles.shake : ''}`}
           >
-            {box?.event === 'shells' &&
-            ['shuffle', 'cups', 'open'].includes(phase) &&
-            view.shells ? (
+            {box?.event === 'blackjack' && (phase === 'hands' || phase === 'open') ? (
+              <BlackjackTable view={view} />
+            ) : box?.event === 'shells' &&
+              ['shuffle', 'cups', 'open'].includes(phase) &&
+              view.shells ? (
               <ShellStage
                 start={view.shells.start}
                 moves={view.shellSwaps}
@@ -257,6 +269,7 @@ export function TvTable({ view }: { view: View }): JSX.Element {
           {phase === 'tug' ? <TugPanel view={view} /> : null}
           {phase === 'shuffle' ? <ShufflePanel view={view} /> : null}
           {phase === 'cups' ? <CupsPanel view={view} /> : null}
+          {phase === 'hands' ? <HandsPanel view={view} /> : null}
           {phase === 'open' ? <OpenPanel view={view} /> : null}
         </div>
       </Stage>

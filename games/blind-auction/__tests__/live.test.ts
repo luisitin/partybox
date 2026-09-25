@@ -32,7 +32,8 @@ describe('live events: the draw', () => {
         for (const o of box.options) {
           expect(o.label?.name, kind).toBeTruthy();
           // The shell game is a shared pot (pay 0), not odds.
-          if (kind !== 'shells' && kind !== 'keno') expect(o.pay, kind).toBeGreaterThan(1);
+          if (kind !== 'shells' && kind !== 'keno' && kind !== 'blackjack')
+            expect(o.pay, kind).toBeGreaterThan(1);
         }
         expect(outcome).toBeGreaterThanOrEqual(0);
         expect(outcome).toBeLessThan(box.options.length);
@@ -374,5 +375,42 @@ describe('live events: every word the server writes has its Spanish', () => {
       }
     }
     expect([...new Set(missing)]).toEqual([]);
+  });
+});
+
+describe('live events: blackjack', () => {
+  const bjAt = (): ReturnType<typeof start> => {
+    let s = start(3, { rounds: 5 });
+    const [round] = drawEvent('blackjack', seedRng(4), 1);
+    s = { ...s, boxes: s.boxes.map((b, i) => (i === 1 ? round : b)) };
+    return walkTo(walkTo(walkTo(s, 'bet'), 'box'), 'bet');
+  };
+  const act = (s: ReturnType<typeof start>, id: string, type: 'hit' | 'stand') =>
+    send(s, { type: 'input', now: s.phase.startedAt + 100, playerId: id, input: { type } });
+
+  it('stakers are dealt two cards, the dealer one up; the hole card only shows at open', () => {
+    let s = bjAt();
+    s = bet(bet(bet(s, 'p1', 0, 10), 'p2', 0, 10), 'p3', 0, 0);
+    expect(s.phase.id).toBe('hands');
+    expect(s.r.hands?.['p1']).toHaveLength(2);
+    expect(s.r.hands?.['p3']).toBeUndefined();
+    expect(tvView(s).blackjack?.dealer).toHaveLength(1);
+    s = act(act(s, 'p1', 'stand'), 'p2', 'stand');
+    expect(s.phase.id).toBe('open');
+    expect((tvView(s).blackjack?.dealer.length ?? 0) >= 2).toBe(true);
+  });
+
+  it('pays: bust 0, beat the dealer ×2, push back, natural ×2.5', async () => {
+    const { blackjackReturn, total } = await import('../server/phases/hands');
+    const base = bjAt();
+    const at = (hand: number[], dealer: number[]) =>
+      blackjackReturn({ ...base, r: { ...base.r, hands: { p1: hand }, dealer } }, 'p1', 10);
+    // cards: rank = n % 13 (0 = A, 9 = 10, 12 = K)
+    expect(total([0, 12])).toBe(21);
+    expect(at([9, 12, 4], [9, 7])).toBe(0); // 25: bust
+    expect(at([9, 8], [9, 6])).toBe(20); // 19 beats 17
+    expect(at([9, 7], [9, 7])).toBe(10); // push
+    expect(at([0, 12], [9, 8])).toBe(25); // natural
+    expect(at([9, 6], [9, 5, 9])).toBe(20); // dealer busts
   });
 });

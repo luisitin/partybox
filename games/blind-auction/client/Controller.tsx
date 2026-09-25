@@ -13,6 +13,7 @@ import { PhoneSwap } from './PhoneSwap';
 import { PhonePotato } from './Potato';
 import { PhoneTug } from './Tug';
 import { PhoneCups, PhoneShuffle } from './Shells';
+import { PhoneHand } from './Blackjack';
 import { STRINGS } from './strings';
 
 type Props = GameControllerProps<BlindAuctionControllerView, Input>;
@@ -42,6 +43,8 @@ export function Controller(props: Props): JSX.Element {
       return <PhoneShuffle {...props} />;
     case 'cups':
       return <PhoneCups {...props} />;
+    case 'hands':
+      return <PhoneHand {...props} />;
     case 'potato':
       return spectator ? (
         <WaitingScreen title={L('Look at the TV')} mood="watch" />

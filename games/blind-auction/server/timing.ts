@@ -47,7 +47,13 @@ export const EVENT_MS = {
   // A room / a wire every REVEAL_STEP_MS until the ghost / the bomb's fate, then a beat.
   ghost: 5_400,
   wires: 5_400,
+  // The dealer turns the hole card and draws, a card at a time.
+  blackjack: 4_200,
 } as const;
+/** Blackjack: time to hit or stand. */
+export const HANDS_MS = 20_000;
+/** Blackjack at `open`: one dealer card every DEAL_MS. */
+export const DEAL_MS = 700;
 /** Ghost hunt and defuse the bomb: one room or wire checked per step. */
 export const REVEAL_STEP_MS = 1_100;
 /** Coin-flip streak: one flip on the TV. */

@@ -71,6 +71,9 @@ export interface Common {
   /** Shell game, from `shuffle` on: the pot, its speed tier, where the ball started, and how
    *  many stakers have picked a cup (`cups`). The swaps are TV-only (BlindAuctionTvView). */
   shells: { pot: number; tier: number; start: number; picked: number; pickers: number } | null;
+  /** Blackjack, from `hands` on: every hand (face up), who has stood, and the dealer's cards —
+   *  only the up card until `open`. */
+  blackjack: { hands: Record<string, number[]>; stood: string[]; dealer: number[] } | null;
   results: ResultView[] | null;
   voice: VoiceView | null;
   clips: Partial<Record<FixedLine, string>>;

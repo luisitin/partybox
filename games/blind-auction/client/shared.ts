@@ -18,6 +18,7 @@ export const shared: GameShared = {
     tug: 'silence',
     shuffle: 'silence',
     cups: 'silence',
+    hands: 'silence',
     open: 'silence',
   },
   // The owner (2026-09-24): the music never stops — one low, continuous caper playlist under the

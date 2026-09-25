@@ -73,6 +73,27 @@ export const ES_SCREENS: Record<string, string> = {
   "That's the last box!": '¡Esa fue la última caja!',
   'Tap a card, then choose your coins': 'Toca una carta y luego elige tus monedas',
   // live events
+  Blackjack: 'Blackjack',
+  'Beat the dealer without going over 21. Win ×2, blackjack ×2.5.':
+    'Gánale a la banca sin pasarte de 21. Ganas ×2, blackjack ×2.5.',
+  'Your hand': 'Tu mano',
+  Dealer: 'Banca',
+  Bust: 'Te pasaste',
+  'No stake on this hand: watch the table.': 'Sin apuesta en esta mano: mira la mesa.',
+  HIT: 'PEDIR',
+  STAND: 'PLANTARSE',
+  'Dealer shows': 'La banca muestra',
+  'Bust! {n}': '¡Te pasaste! {n}',
+  '21!': '¡21!',
+  'You have {n}': 'Tienes {n}',
+  'Standing. The dealer plays when everyone is done.':
+    'Te plantaste. La banca juega cuando todos terminen.',
+  'Hit for another card, or stand.': 'Pide otra carta o plántate.',
+  'The dealer plays…': 'Juega la banca…',
+  'Hit or stand on your phone!': '¡Pidan o plántense en el teléfono!',
+  'Beat the dealer without going over 21. Win ×2, blackjack ×2.5, a tie gives the stake back.':
+    'Gánenle a la banca sin pasarse de 21. Ganan ×2, blackjack ×2.5; el empate devuelve lo apostado.',
+  'Your stake came back. It was {what}.': 'Recuperaste lo apostado. Fue {what}.',
   'Your pull: {n}% of your team': 'Tu jalón: {n}% de tu equipo',
   'Ghost Hunt': 'Cazafantasmas',
   'A ghost hides in one of four rooms. Right room pays ×4.':

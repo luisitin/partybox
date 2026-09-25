@@ -9,6 +9,7 @@ import { inGame } from './phases/bet';
 import { swappers } from './phases/swap';
 import { shareOf, teamOf } from './phases/tug';
 import { stakers } from './phases/shells';
+import { isBlackjack as isBlackjackRound } from './phases/hands';
 import { tierOf } from './odds';
 import { returned } from './returns';
 import { FIXED_LINES, boxRequest, fixedRequest, lineOf, openRequest } from './speech';
@@ -94,6 +95,19 @@ function shellsView(state: State): Common['shells'] {
   };
 }
 
+function blackjackView(state: State): Common['blackjack'] {
+  const phase = state.phase.id;
+  if (!isBlackjackRound(state) || (phase !== 'hands' && phase !== 'open') || !state.r.hands)
+    return null;
+  const dealer = state.r.dealer ?? [];
+  return {
+    hands: state.r.hands,
+    stood: state.r.stood ?? [],
+    // The hole card stays down until the dealer plays (`open`).
+    dealer: phase === 'open' ? dealer : dealer.slice(0, 1),
+  };
+}
+
 function tugView(state: State): Common['tug'] {
   const round = state.boxes[state.r.idx];
   if (!round?.teams || state.phase.id === 'rules' || state.phase.id === 'done') return null;
@@ -169,6 +183,10 @@ function statusOf(state: State): (id: string) => PlayerStatus {
     if (state.phase.id === 'bet') return Object.hasOwn(state.r.bets, id) ? 'submitted' : 'active';
     if (state.phase.id === 'potato') return state.r.holder === id ? 'active' : 'waiting';
     if (state.phase.id === 'tug') return teamOf(state, id) === null ? 'waiting' : 'active';
+    if (state.phase.id === 'hands')
+      return !Object.hasOwn(state.r.hands ?? {}, id) || (state.r.stood ?? []).includes(id)
+        ? 'submitted'
+        : 'active';
     if (state.phase.id === 'cups')
       return !stakers(state).includes(id) || Object.hasOwn(state.r.picks ?? {}, id)
         ? 'submitted'
@@ -199,6 +217,8 @@ function skipLabel(state: State): string | undefined {
       return 'Skip to the pick';
     case 'cups':
       return 'Lift the cups';
+    case 'hands':
+      return 'Dealer plays';
     case 'open':
       return state.r.idx + 1 < state.boxes.length ? 'Next box' : 'See results';
     default:
@@ -207,7 +227,7 @@ function skipLabel(state: State): string | undefined {
 }
 
 function timerMode(state: State): 'normal' | 'quiet' | 'hidden' {
-  if (['bet', 'swap', 'tug', 'cups'].includes(state.phase.id)) return 'normal';
+  if (['bet', 'swap', 'tug', 'cups', 'hands'].includes(state.phase.id)) return 'normal';
   // The rules' safety net is never shown: nobody should feel hurried while reading.
   return 'hidden';
 }
@@ -226,6 +246,7 @@ function common(state: State): Common {
       state.phase.id === 'swap' || state.phase.id === 'open' ? (state.r.opened ?? null) : null,
     tug: tugView(state),
     shells: shellsView(state),
+    blackjack: blackjackView(state),
     potato:
       (state.phase.id === 'potato' || state.phase.id === 'open') && state.r.holder
         ? { holder: state.r.holder, passes: state.r.passes ?? 0, ring: state.seats }

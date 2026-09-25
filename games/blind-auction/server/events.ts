@@ -78,6 +78,11 @@ const DOORS: readonly Label[] = [
 export const DOOR_PAY = 2;
 
 const EVENT_BOX: Record<LiveKind, { name: string; icon: string; flavour: string }> = {
+  blackjack: {
+    name: 'Blackjack',
+    icon: '🃏',
+    flavour: 'Beat the dealer without going over 21. Win ×2, blackjack ×2.5.',
+  },
   ghost: {
     name: 'Ghost Hunt',
     icon: '👻',
@@ -254,6 +259,12 @@ function fourWay(kind: 'ghost' | 'wires', rng: RngState, n: number): [Round, Rng
   return [{ box: eventBox(kind, n, options), outcome, detail: order }, s2];
 }
 
+/** Blackjack: one "option" (you play your hand, not a card); the deal happens at `hands`. */
+function blackjack(n: number): Round {
+  const options = [{ ...option({ icon: '🃏', name: 'Your hand' }, 100), pay: 0 }];
+  return { box: eventBox('blackjack', n, options), outcome: 0 };
+}
+
 /** Keno: one "option" (you play your numbers, not a card); the draw is `detail`. */
 function keno(rng: RngState, n: number): [Round, RngState] {
   const [pool, next] = shuffle(
@@ -315,6 +326,7 @@ export function drawEvent(kind: LiveKind, rng: RngState, n: number): [Round, Rng
   if (kind === 'coins') return coins(rng, n);
   if (kind === 'keno') return keno(rng, n);
   if (kind === 'penalty') return penalty(rng, n);
+  if (kind === 'blackjack') return [blackjack(n), rng];
   if (kind === 'ghost' || kind === 'wires') return fourWay(kind, rng, n);
   return wheel(rng, n);
 }

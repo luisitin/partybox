@@ -20,6 +20,7 @@ export function Tv({ view }: GameTvProps<BlindAuctionTvView>): JSX.Element {
     case 'tug':
     case 'shuffle':
     case 'cups':
+    case 'hands':
     case 'open':
       return <TvTable view={view} />;
     default:

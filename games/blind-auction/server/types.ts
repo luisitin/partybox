@@ -12,6 +12,7 @@ export const PHASES = [
   'tug',
   'shuffle',
   'cups',
+  'hands',
   'open',
   'done',
 ] as const;
@@ -52,6 +53,7 @@ export const LIVE_KINDS = [
   'penalty',
   'ghost',
   'wires',
+  'blackjack',
 ] as const;
 export type LiveKind = (typeof LIVE_KINDS)[number];
 
@@ -139,6 +141,12 @@ export interface RoundState {
   picks?: Record<string, number>;
   /** Keno: each bettor's three numbers (1 … KENO_NUMBERS), secret until `open`. */
   spots?: Record<string, number[]>;
+  /** Blackjack (`hands`): the round's shoe (SECRET), each staker's cards, who has stood, and the
+   *  dealer's cards (the second is the SECRET hole card until `open`). */
+  shoe?: number[];
+  hands?: Record<string, number[]>;
+  stood?: string[];
+  dealer?: number[];
 }
 
 export interface Stats {
@@ -187,6 +195,9 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('tug') }),
   // Shell game: the cup you think hides the ball.
   z.object({ type: z.literal('cup'), cup: z.number().int().min(0).max(2) }),
+  // Blackjack: another card, or stand.
+  z.object({ type: z.literal('hit') }),
+  z.object({ type: z.literal('stand') }),
   // Keno: your three numbers.
   z.object({
     type: z.literal('spots'),
