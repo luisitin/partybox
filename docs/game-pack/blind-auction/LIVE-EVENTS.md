@@ -81,3 +81,8 @@ is), split your stake, double or nothing, insurance. Only twists that fit the ev
   server); +250 ms per pass; holder burnt −10. Tug: teams dealt at `init` (teamsFromSeed), shown
   from `box`; you bet on your own side; each tap pulls 0.06 × your share of your team's stake; the
   rope over the line or 12 s ends it; a dead heat refunds. Recorded in reports/design/loop/24–26.
+- 2026-09-25: **Shell game** (phases `shuffle` + `cups`): stakes first into one pot; the pot's
+  share of the room's coins sets the speed tier (×1/2/3/5/8/10) with a taunt per tier; picks after
+  the shuffle; right calls split the pot by stake, all right / all wrong refund (server/returns.ts).
+  Phones never get the swaps unless the room is phone-only. **Coin-flip streak**: bet on the heads
+  streak before tails (tails first / 1–2 / 3+). Every phone now plays the event during the reveal.
