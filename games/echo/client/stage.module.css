@@ -1,0 +1,271 @@
+/* Echo's TV stages: the guesser hero, the slots, the listening rings, the result and the intro. */
+
+.stage {
+  gap: var(--pb-space-6);
+}
+
+/* Everything under the header row sits in the middle of the space that is left. */
+.body {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-6);
+  /* The TV's host bar sits over the bottom overscan: keep the table clear of it. */
+  padding-bottom: var(--pb-space-7);
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-6);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.heroFace {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 176px;
+  height: 176px;
+  border-radius: 50%;
+}
+
+.heroFace[data-size='s'] {
+  width: 116px;
+  height: 116px;
+}
+
+/* The guesser's ring breathes slowly: the room knows whose turn it is without a word. */
+.heroRing {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 6px solid var(--pb-accent-2);
+  animation: echo-pulse 2.4s ease-in-out infinite;
+}
+
+.heroText {
+  display: grid;
+  gap: var(--pb-space-2);
+}
+
+.heroLine {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.heroHint {
+  font-size: var(--pb-font-body);
+  color: var(--pb-text-muted);
+}
+
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-5) var(--pb-space-5);
+  width: 100%;
+  perspective: 1600px;
+  padding-bottom: var(--pb-space-5);
+}
+
+.slot {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-3);
+}
+
+.slotHole {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 240px;
+  height: 152px;
+  border-radius: var(--pb-radius-lg);
+  border: 3px dashed color-mix(in srgb, var(--pb-text-muted) 55%, transparent);
+  background: color-mix(in srgb, var(--pb-surface) 60%, transparent);
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-h2);
+}
+
+.slot[data-many='1'] .slotHole {
+  width: 180px;
+  height: 116px;
+}
+
+/* Three dots take turns while a clue is being written. */
+.dots {
+  display: flex;
+  gap: 10px;
+}
+
+.dots span {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--pb-text-muted);
+  animation: echo-bob 1.2s ease-in-out infinite;
+}
+
+.dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.slotCard {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--pb-radius-lg);
+  background:
+    repeating-linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--pb-accent) 16%, transparent) 0 14px,
+      transparent 14px 28px
+    ),
+    var(--pb-surface-2);
+  border: 2px solid var(--pb-border);
+  color: color-mix(in srgb, var(--pb-accent) 70%, var(--pb-text));
+  font-size: var(--pb-font-h2);
+  animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.slotTick {
+  position: absolute;
+  top: calc(-1 * var(--pb-space-3));
+  right: calc(-1 * var(--pb-space-3));
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.slotName {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  max-width: 220px;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* check: rings spread from the table while the clue-givers listen for echoes. */
+.listen {
+  position: relative;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 420px;
+  height: 420px;
+  margin: -210px 0 0 -210px;
+  border-radius: 50%;
+  border: 4px solid color-mix(in srgb, var(--pb-info) 60%, transparent);
+  opacity: 0;
+  animation: echo-ring 2.7s ease-out infinite;
+  pointer-events: none;
+}
+
+.ring:nth-child(2) {
+  animation-delay: 0.9s;
+}
+
+.ring:nth-child(3) {
+  animation-delay: 1.8s;
+}
+
+/* Transform-only idling: visible from the couch, cheap for the TV. */
+@keyframes echo-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.6;
+  }
+}
+
+@keyframes echo-bob {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes echo-ring {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.3);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+.banner {
+  align-self: center;
+  padding: var(--pb-space-3) var(--pb-space-6);
+  border-radius: 999px;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.line {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  text-align: center;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroRing,
+  .dots span,
+  .ring {
+    animation: none;
+  }
+  .ring {
+    opacity: 0.35;
+    transform: scale(1.2);
+  }
+}
+
+:global(:root[data-motion='off']) .heroRing,
+:global(:root[data-motion='off']) .dots span,
+:global(:root[data-motion='off']) .ring {
+  animation: none;
+}

@@ -1,0 +1,43 @@
+{
+  "video": "C:\\dev\\partybox-game-herd-mind\\reports\\design\\record-review\\herd-mind\\p03\\video\\phone\\round.webm",
+  "bytes": 3962522,
+  "durationS": 109.2,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 1.8,
+      "toS": 3.8,
+      "ms": 2000,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 98.6,
+      "toS": 103.5,
+      "ms": 4900,
+      "during": "herd",
+      "cueInside": false
+    },
+    {
+      "fromS": 105.4,
+      "toS": 109.1,
+      "ms": 3700,
+      "during": "results",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 10600,
+  "hardCuts": [],
+  "samples": 1091,
+  "motion": {
+    "p50": 0.0002,
+    "p90": 0.0071,
+    "p99": 0.0704,
+    "max": 0.1382
+  }
+}
