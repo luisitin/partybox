@@ -11,7 +11,7 @@ import type {
   ViewPush,
   WelcomePayload,
 } from '@partybox/shared';
-import { getLang } from '@partybox/game-sdk/ui';
+import { getLang, subscribeLang } from '@partybox/game-sdk/ui';
 import { createLinkWatch } from './link-watch';
 import { dropRoomFromUrl } from './leave-url';
 import { storeCanSeeTv, storedCanSeeTv } from '../presence';
@@ -103,6 +103,10 @@ export function createController(url?: string): Controller {
       lang: getLang() === 'es' ? 'es' : 'en',
     });
   };
+
+  // ADR-054: a phone that changes its language (🎨) says so; the server ignores it until seated
+  // (herd-mind 07b839: the VIP's switch in the lobby must move the room's default at once).
+  subscribeLang(() => socket.emit('lang', { lang: getLang() === 'es' ? 'es' : 'en' }));
 
   const restarts = createRestartWatch();
   // I-755 A: set when another tab holds the seat; cleared by "Play here"

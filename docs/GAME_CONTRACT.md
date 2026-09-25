@@ -216,6 +216,14 @@ const req = { key: speechKey('fake-out', voice, parts), voice, parts };
 - `speakableName(name)`: the name to read, or `null` to skip it. `speechKey(gameId, voice, parts)`:
   `<gameId>-<16 hex>`, a hash of `SPEECH_ENGINE_VERSION`, the voice and the parts.
 
+### Content languages (`manifest.contentLangs`, ADR-054)
+
+`"contentLangs": ["en", "es"]` declares the languages the game's deck, bot lines and reader ship in
+(absent = English only). The engine tells the game `ctx.contentLang` = the room's language when the
+game ships it, else the first listed; the picker's chip is honest about it. A game that ships Spanish
+loads its ES pack by that value, passes it to the SDK matcher and `toSpeakable`, and defaults its
+reader to a Spanish voice (`dora` / `alex` / `santa`).
+
 ### Bots (`manifest.supportsBots`)
 
 Every game ships `bot.sampleInput` (sim, e2e and the contract suite need it). Setting

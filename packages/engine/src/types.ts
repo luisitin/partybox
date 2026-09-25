@@ -158,6 +158,8 @@ export type RoomEvent =
   | { type: 'vote'; now: number; playerId: string; gameId: string | null }
   /** ADR-047: a phone flips its "I can see the TV". */
   | { type: 'presence'; now: number; playerId: string; canSeeTv: boolean }
+  /** ADR-054: a phone's language changed (🎨). */
+  | { type: 'lang'; now: number; playerId: string; lang: ContentLang }
   /** ADR-053: a person has read the rules. */
   | { type: 'ready'; now: number; playerId: string }
   | {

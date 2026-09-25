@@ -2,7 +2,7 @@
 // payload, pays its rate-limit tokens and hands the host one event. Split from sockets.ts.
 import type { Socket } from 'socket.io';
 import type { ErrorPayload } from '@partybox/shared';
-import { presencePayloadSchema, votePayloadSchema } from '@partybox/shared';
+import { langPayloadSchema, presencePayloadSchema, votePayloadSchema } from '@partybox/shared';
 import type { Host } from './host';
 import type { RateLimiter } from './rate-limit';
 
@@ -55,6 +55,16 @@ export function registerPersonMessages(
       playerId: me.playerId,
       canSeeTv: parsed.data.canSeeTv,
     });
+  });
+
+  // ADR-054: the phone's language changed (🎨) — 2 tokens, a toggle; the VIP's is the room's default.
+  socket.on('lang', (raw: unknown) => {
+    const me = seated();
+    if (!me) return;
+    const parsed = langPayloadSchema.safeParse(raw);
+    if (!parsed.success) return sendError('invalid_payload', 'Bad lang payload.');
+    if (!limiter.take(2)) return sendError('rate_limited', 'Slow down.');
+    host.dispatch(me.code, { type: 'lang', playerId: me.playerId, lang: parsed.data.lang });
   });
 
   // ADR-053: "I've read the rules" in the start stage — 1 token; the engine ignores it elsewhere.

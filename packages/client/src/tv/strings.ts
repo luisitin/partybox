@@ -23,8 +23,8 @@ export const STRINGS: Strings = {
     '{opened} opened · {joined} in': '{opened} abrieron · {joined} dentro',
     'phones that opened the join page · joined':
       'teléfonos que abrieron la página para entrar · los que entraron',
-    'Switch the TV to Spanish': 'Cambiar la TV a español',
-    'Switch the TV to English': 'Cambiar la TV a inglés',
+    'Switch the TV and the cards to Spanish': 'Cambiar la TV y las cartas a español',
+    'Switch the TV and the cards to English': 'Cambiar la TV y las cartas a inglés',
     // I-187 C
     '{mark} {deck} deck': '{mark} mazo {deck}',
     // I-646: the tunnel's QR on the TV

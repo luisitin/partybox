@@ -140,6 +140,8 @@ export const enPhone = {
     phoneOnly: '📱 Phone only',
     /** ADR-054: the language of the game's cards, bot lines and reader (Session C's note). */
     cards: (lang: 'en' | 'es') => (lang === 'es' ? '🗣 Cards in Spanish' : '🗣 Cards in English'),
+    /** The room asks for Spanish, but this game has no Spanish deck yet (herd-mind 07b839). */
+    cardsOnlyEnglish: '🗣 Cards in English (no Spanish version yet)',
     cardsSwitch: 'Cards and voice in Spanish',
     cardsOn: 'Decks, bot lines and the reader in Spanish, where a game has them',
     cardsOff: 'Decks, bot lines and the reader in English',

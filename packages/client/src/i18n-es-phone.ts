@@ -124,6 +124,7 @@ export const esPhone: Pick<Texts, keyof typeof enPhone> = {
     music: '🎵 Música en teléfonos',
     phoneOnly: '📱 Solo teléfonos',
     cards: (lang) => (lang === 'es' ? '🗣 Cartas en español' : '🗣 Cartas en inglés'),
+    cardsOnlyEnglish: '🗣 Cartas en inglés (aún sin versión en español)',
     cardsSwitch: 'Cartas y voz en español',
     cardsOn: 'Mazos, frases de los bots y el lector en español, donde el juego los tiene',
     cardsOff: 'Mazos, frases de los bots y el lector en inglés',

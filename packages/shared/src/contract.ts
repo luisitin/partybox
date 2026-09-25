@@ -1,6 +1,7 @@
 // The game contract (docs/GAME_CONTRACT.md). Games implement `GameDefinition`; the engine drives it.
 // Changing anything here changes every game — write an ADR first (docs/DECISIONS.md).
 import { z } from 'zod';
+import { CONTENT_LANGS } from './constants';
 import type { ContentLang, GamePresence } from './constants';
 import type { Rng, RngState } from './rng';
 
@@ -145,6 +146,9 @@ export const gameManifestSchema = z
      * while bots are in the room (ADR-028).
      */
     supportsBots: z.boolean().optional(),
+    /** ADR-054: the content languages the game ships (its deck, bot lines, reader); absent = ['en'].
+     *  A room in a language the game lacks plays it in the first one listed (herd-mind 07b839). */
+    contentLangs: z.array(z.enum(CONTENT_LANGS)).min(1).max(CONTENT_LANGS.length).optional(),
   })
   .refine((m) => m.minPlayers <= m.maxPlayers, { message: 'minPlayers must be <= maxPlayers' });
 export type GameManifest = z.infer<typeof gameManifestSchema>;

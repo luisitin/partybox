@@ -46,7 +46,7 @@ describe('HostBar language switch', () => {
     const html = renderToStaticMarkup(<HostBar client={client} room={room(s)} view={null} />);
     // Rendered on the server the device language reads as English: the switch offers Spanish.
     expect(html).toContain('🌐 Español');
-    expect(html).toContain('aria-label="Switch the TV to Spanish"');
+    expect(html).toContain('aria-label="Switch the TV and the cards to Spanish"');
   });
 });
 

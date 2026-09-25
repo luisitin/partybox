@@ -38,6 +38,9 @@ export type InputPayload = z.infer<typeof inputPayloadSchema>;
 
 /** ADR-047: a phone flips its "I can see the TV" (any time; a running game keeps its start value). */
 export const presencePayloadSchema = z.object({ canSeeTv: z.boolean() });
+/** ADR-054: the phone's language changed (🎨); the VIP's is the room's content language by default. */
+export const langPayloadSchema = z.object({ lang: z.enum(CONTENT_LANGS) });
+export type LangPayload = z.infer<typeof langPayloadSchema>;
 export type PresencePayload = z.infer<typeof presencePayloadSchema>;
 
 export const vipPayloadSchema = z.discriminatedUnion('action', [
@@ -156,6 +159,8 @@ export interface CatalogEntry {
   phoneSettings?: true;
   /** The tagline in the other languages the game ships (the picker's only per-row sentence). */
   i18n?: Partial<Record<string, { tagline: string }>>;
+  /** ADR-054: the content languages the game ships, when more than English. */
+  contentLangs?: ContentLang[];
 }
 
 export interface Catalog {

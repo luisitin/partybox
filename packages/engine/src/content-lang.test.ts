@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import type { ContentLang, InitContext } from '@partybox/shared';
 import { createRoom } from './room';
+import { gameContentLang } from './content-lang';
 import { fakeGame } from './fake-game.helper';
 import { applyRoomEvent } from './room';
 import type { EngineDeps, RoomState } from './types';
@@ -42,6 +43,34 @@ describe('the default', () => {
   });
 });
 
+describe("a phone's language changes (🎨)", () => {
+  it("the VIP's change moves the room's default at once; a guest's changes nothing on screen", () => {
+    const room = roomIn('en', 'en');
+    const vipFlip = applyRoomEvent(room, { type: 'lang', now: T0 + 50, playerId: 'p1', lang: 'es' }, deps); // prettier-ignore
+    expect(vipFlip.effects).toContainEqual({ type: 'push' });
+    expect(snapshot(vipFlip.room, deps).contentLang).toBe('es');
+    const guestFlip = applyRoomEvent(room, { type: 'lang', now: T0 + 50, playerId: 'p2', lang: 'es' }, deps); // prettier-ignore
+    expect(guestFlip.effects).toEqual([]);
+    expect(guestFlip.room.players['p2']?.lang).toBe('es');
+  });
+
+  it('after an explicit choice, the VIP phone no longer moves it', () => {
+    const chosen = vip(roomIn('en'), { action: 'setContentLang', lang: 'en' }).room;
+    const flip = applyRoomEvent(chosen, { type: 'lang', now: T0 + 150, playerId: 'p1', lang: 'es' }, deps); // prettier-ignore
+    expect(flip.effects).toEqual([]);
+    expect(snapshot(flip.room, deps).contentLang).toBe('en');
+  });
+});
+
+describe('a game plays in a language it ships', () => {
+  it("absent contentLangs = English only; the room's language when the game ships it", () => {
+    const m = fakeGame.manifest;
+    expect(gameContentLang(m, 'es')).toBe('en');
+    expect(gameContentLang({ ...m, contentLangs: ['en', 'es'] }, 'es')).toBe('es');
+    expect(gameContentLang({ ...m, contentLangs: ['es'] }, 'en')).toBe('es');
+  });
+});
+
 describe('the switch', () => {
   it("the VIP's choice wins over their phone, and sticks through a handover", () => {
     const chosen = vip(roomIn('es', 'en'), { action: 'setContentLang', lang: 'en' });
@@ -62,7 +91,7 @@ describe('the switch', () => {
 
 describe('what the game is told', () => {
   const seen: InitContext[] = [];
-  const spy = { ...fakeGame, manifest: { ...fakeGame.manifest, id: 'spy' }, init: (ctx: InitContext) => (seen.push(ctx), fakeGame.init(ctx)) }; // prettier-ignore
+  const spy = { ...fakeGame, manifest: { ...fakeGame.manifest, id: 'spy', contentLangs: ['en', 'es'] as ContentLang[] }, init: (ctx: InitContext) => (seen.push(ctx), fakeGame.init(ctx)) }; // prettier-ignore
   const spyDeps: EngineDeps = { games: { fake: fakeGame, spy } };
   const start = (room: RoomState): RoomState => {
     const chosen = applyRoomEvent(room, { type: 'vip', now: T0 + 100, playerId: 'p1', action: { action: 'selectGame', gameId: 'spy' } }, spyDeps).room; // prettier-ignore

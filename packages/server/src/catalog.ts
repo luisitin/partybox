@@ -45,6 +45,7 @@ function entryOf(m: GameManifest, texts: GameTexts, now: number): CatalogEntry {
     ...(e ? { pace: paceOf(e, rounds) } : {}),
     tags: [...m.tags, ...(m.estimatedMinutes <= QUICK_MINUTES ? ['quick'] : [])],
     presence: m.presence.needs,
+    ...(m.contentLangs?.some((l) => l !== 'en') ? { contentLangs: [...m.contentLangs] } : {}),
     supportsBots: m.supportsBots === true,
     ...(isNew ? { isNew: true as const } : {}),
     ...(m.phoneSettings ? { phoneSettings: true as const } : {}),

@@ -103,7 +103,10 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
   // The owner (2026-09-22): the room's screen speaks Spanish too. The button offers the other
   // language in its own words; a browser in de / fr / pt counts as English here.
   const spanish = L.lang === 'es';
-  const switchLabel = spanish ? L('Switch the TV to English') : L('Switch the TV to Spanish');
+  // ADR-054: the TV's switch sets the cards' language too; the label says so (herd-mind 07b839)
+  const switchLabel = spanish
+    ? L('Switch the TV and the cards to English')
+    : L('Switch the TV and the cards to Spanish');
 
   const botButtons = (
     <>
