@@ -166,7 +166,7 @@ async function main(): Promise<void> {
     const nameRe = new RegExp(GAME.replace('-', '[ -]'), 'i');
     await stage('about', 50);
     const opened = await clickFirst([
-      vip.page.getByRole('button', { name: new RegExp(`^(about|acerca de|info) .*${nameRe.source}`, 'i') }),
+      vip.page.getByRole('button', { name: new RegExp(`^(about|sobre|acerca de|info) .*${nameRe.source}`, 'i') }),
     ]); // prettier-ignore
     notes.push(opened ? 'about: opened the sheet' : 'about: no ⓘ button (old picker)');
     await settle(1500);
