@@ -22,9 +22,12 @@ const AFTER_STAMP_MS = 250;
 function Faces({
   ids,
   players,
+  big = false,
 }: {
   ids: readonly string[];
   players: readonly ViewPlayer[];
+  /** The spotlight's "picked by" reads at the answer's scale; elsewhere faces keep their size. */
+  big?: boolean;
 }): JSX.Element {
   return (
     <span className={styles.faces}>
@@ -32,7 +35,10 @@ function Faces({
         const p = players.find((x) => x.id === id);
         return (
           <span key={id} className={styles.face} style={{ ['--i' as string]: i }}>
-            <Avatar avatarId={p?.avatarId ?? 'ghost'} size="calc(var(--pb-space-8) * 1.35)" />
+            <Avatar
+              avatarId={p?.avatarId ?? 'ghost'}
+              size={big ? 'calc(var(--pb-space-8) * 1.35)' : 'var(--pb-space-8)'}
+            />
             <span className={styles.faceName}>{p?.name ?? '?'}</span>
           </span>
         );
@@ -95,8 +101,8 @@ function Spotlight({ view, option }: { view: FakeOutTvView; option: RevealedOpti
       <div className={styles.pickedBy}>
         {option.pickers.length > 0 ? (
           <>
-            <span className={styles.caption}>{L('picked by')}</span>
-            <Faces ids={option.pickers} players={view.players} />
+            <span className={`${styles.caption} ${styles.captionWithFaces}`}>{L('picked by')}</span>
+            <Faces ids={option.pickers} players={view.players} big />
           </>
         ) : (
           <span className={styles.caption}>{L('Nobody picked it')}</span>

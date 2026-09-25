@@ -637,6 +637,8 @@
 
 .scores {
   gap: var(--pb-space-4);
+  /* the reasons row stays clear of the host bar (session-c [592e6f] #2) */
+  padding-bottom: calc(var(--pb-space-7) * 2);
 }
 
 .board {
@@ -715,6 +717,12 @@
   font-size: var(--pb-font-h3);
 }
 
+/* "picked by" lands with its first face, never alone over an empty space (session-c [592e6f]) */
+.captionWithFaces {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: var(--pb-motion-base);
+}
+
 /* With no read-along, the card on stage keeps a slow breath while the voice reads and the room
    takes it in, audio on or off (session-c [9fee27] #1: the dead-air gate). Transform + shadow on
    the card only; still under reduced motion. */
@@ -782,4 +790,13 @@
 :global(:root[data-motion='off']) .questionCard > p,
 :global(:root[data-motion='off']) .completed > p {
   animation: none;
+}
+
+/* A stamped card makes room on its right so the LIE ✗ / TRUTH ✓ stamp never covers the answer's
+   last letter (reviewer [85dc79]: 'ALL SOULS DA[Y]'). */
+.spotlight[data-stamp] .spotCard {
+  padding-right: calc(var(--pb-space-8) + 4.5em);
+  transition:
+    border-color var(--pb-motion-base) var(--pb-ease),
+    padding var(--pb-motion-base) var(--pb-ease);
 }

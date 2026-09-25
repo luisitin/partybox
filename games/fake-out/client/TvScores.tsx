@@ -47,7 +47,7 @@ export function TvScores({ view }: Props): JSX.Element {
       </div>
       {scorers.length > 0 ? (
         <ul className={styles.howList} aria-label={L('How the points came')}>
-          {scorers.slice(0, 6).map((r, i) => (
+          {scorers.slice(0, 4).map((r, i) => (
             <li key={r.playerId} className={styles.how} style={{ ['--i' as string]: i }}>
               <Avatar avatarId={r.avatarId} size="var(--pb-space-7)" />
               <span className={styles.howName}>{r.name}</span>
