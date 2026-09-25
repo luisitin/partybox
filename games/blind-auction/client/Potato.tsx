@@ -4,19 +4,10 @@
 // potato to tap; everyone else sees who has it.
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import {
-  Avatar,
-  PrimaryButton,
-  Screen,
-  WaitingScreen,
-  buzz,
-  useSound,
-  useT,
-} from '@partybox/game-sdk/ui';
+import { Avatar, PrimaryButton, Screen, buzz, useSound, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, PushedView } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BlindAuctionControllerView, BlindAuctionTvView } from '../server/views';
-import { usePhoneOnly } from '@partybox/game-sdk/ui';
 import styles from './live.module.css';
 import { STRINGS } from './strings';
 
@@ -76,6 +67,11 @@ export function PotatoRing({ view, popped }: { view: RingView; popped: boolean }
   );
 }
 
+/** "No passes yet" · "1 pass" · "5 passes". */
+export function passWords(L: ReturnType<typeof useT>, n: number): string {
+  return n === 0 ? L('No passes yet') : n === 1 ? L('1 pass') : L('{n} passes', { n });
+}
+
 type PhoneProps = GameControllerProps<BlindAuctionControllerView, Input>;
 
 /** The phone: the holder gets the potato to tap; the rest see who has it. */
@@ -83,7 +79,6 @@ export function PhonePotato({ view, send }: PhoneProps): JSX.Element {
   const L = useT(STRINGS);
   const holder = view.potato?.holder ?? null;
   const mine = holder === view.me.id;
-  const phoneOnly = usePhoneOnly();
   const [sentAt, setSentAt] = useState(-1);
   const passes = view.potato?.passes ?? 0;
   // A buzz as it lands in your hands.
@@ -91,24 +86,17 @@ export function PhonePotato({ view, send }: PhoneProps): JSX.Element {
     if (mine) buzz([60, 40, 60]);
   }, [mine, passes]);
   const name = view.players.find((p) => p.id === holder)?.name ?? '?';
-  // A phone-only room has no TV: everyone not holding it watches the ring here.
-  if (!mine && phoneOnly)
+  // Everyone not holding it watches the ring on their phone too (a phone-only room has no TV, and
+  // at a TV a glance down should still say who has it).
+  if (!mine)
     return (
-      <Screen className={styles.screen}>
+      <Screen className={`${styles.screen} ${styles.potatoScreen}`}>
         <p className={styles.potatoTitle}>{L('{name} has the potato', { name })}</p>
         <div className={styles.phoneStage}>
           <PotatoRing view={view} popped={false} />
         </div>
-        <p className={styles.potatoHint}>{L('{n} passes', { n: passes })}</p>
+        <p className={styles.potatoHint}>{passWords(L, passes)}</p>
       </Screen>
-    );
-  if (!mine)
-    return (
-      <WaitingScreen
-        title={L('{name} has the potato', { name })}
-        hint={L('{n} passes', { n: passes })}
-        mood="watch"
-      />
     );
   return (
     <Screen

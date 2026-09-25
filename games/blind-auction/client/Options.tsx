@@ -20,6 +20,7 @@ export function OptionBoard({
   onSelect,
   compact = false,
   className,
+  locked = null,
 }: {
   options: readonly OptionView[];
   size?: 'tv' | 'phone';
@@ -34,6 +35,8 @@ export function OptionBoard({
   onSelect?: (option: number) => void;
   compact?: boolean;
   className?: string;
+  /** Phone: an option you may not pick (hot potato: yourself). */
+  locked?: number | null;
 }): JSX.Element {
   const L = useT(STRINGS);
   const picker = Boolean(onSelect);
@@ -43,13 +46,29 @@ export function OptionBoard({
   const n = options.length;
   const many = n >= 4;
   const cols = size === 'tv' ? (n <= 4 ? n : 3) : n <= 3 ? n : n === 4 ? 2 : 3;
+  // Every option the same odds (hot potato: one per player): the odds are said once, above, and
+  // the cards carry only who — small enough for a whole room on an SE.
+  const first = options[0];
+  const uniform =
+    many &&
+    first !== undefined &&
+    options.every((o) => o.pay === first.pay && o.tier === first.tier);
   return (
     <div
-      className={`${styles.board} ${styles[size]} ${compact ? styles.compact : ''} ${many ? styles.many : ''} ${className ?? ''}`}
+      className={`${styles.board} ${styles[size]} ${compact ? styles.compact : ''} ${many ? styles.many : ''} ${uniform ? styles.uniformBoard : ''} ${className ?? ''}`}
       role={picker ? 'radiogroup' : 'list'}
       aria-label={L("What's inside?")}
       style={{ '--ba-n': cols } as CSSProperties}
     >
+      {uniform && first ? (
+        <p className={styles.uniform}>
+          {L('Everyone: {tier} · {n}% · pays {x}', {
+            tier: tierWord(L, first.tier),
+            n: first.chance,
+            x: payText(L, first.pay),
+          })}
+        </p>
+      ) : null}
       {options.map((o, i) => {
         const on = selected === i;
         const won = outcome === i;
@@ -62,10 +81,15 @@ export function OptionBoard({
               {iconOf(o)}
             </span>
             <span className={styles.name}>{nameOf(L, o)}</span>
-            <span className={styles.odds}>
-              {tierWord(L, o.tier)} · {o.chance}%
-            </span>
-            <span className={styles.pay}>{L('pays {x}', { x: payText(L, o.pay) })}</span>
+            {locked === i ? <span className={styles.odds}>{L('You')}</span> : null}
+            {uniform ? null : (
+              <>
+                <span className={styles.odds}>
+                  {tierWord(L, o.tier)} · {o.chance}%
+                </span>
+                <span className={styles.pay}>{L('pays {x}', { x: payText(L, o.pay) })}</span>
+              </>
+            )}
             {bets ? (
               <span className={styles.bets}>
                 {here.map((b) => {
@@ -95,8 +119,11 @@ export function OptionBoard({
             type="button"
             role="radio"
             aria-checked={on}
-            className={cls}
-            onClick={() => onSelect?.(i)}
+            aria-disabled={locked === i}
+            className={`${cls} ${locked === i ? styles.locked : ''}`}
+            onClick={() => {
+              if (locked !== i) onSelect?.(i);
+            }}
           >
             {body}
           </button>

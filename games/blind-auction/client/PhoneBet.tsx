@@ -44,7 +44,11 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
         {L('You only have {coin} {n}', { coin: COIN, n: view.notice.have })}
       </span>
     ) : option === null && amount > 0 ? (
-      L('Pick what is inside first')
+      box.event === 'potato' ? (
+        L('Pick who will be holding it first')
+      ) : (
+        L('Pick what is inside first')
+      )
     ) : view.topped ? (
       L('You ran out of coins: here are {coin} {n} to play with', { coin: COIN, n: PITY_COINS })
     ) : null;
@@ -66,14 +70,27 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
         place: (n) => L('Bet {coin} {n} on {what}', { coin: COIN, n, what: label }),
         change: (n) => L('Change to {coin} {n} on {what}', { coin: COIN, n, what: label }),
         placed: (n) => L('✓ {coin} {n} on {what}', { coin: COIN, n, what: label }),
-        zero: option === null ? L('Pick what is inside') : L('Choose your stake'),
+        zero:
+          option === null
+            ? box.event === 'potato'
+              ? L('Pick who will be holding it')
+              : box.event
+                ? L('Pick what will happen')
+                : L('Pick what is inside')
+            : L('Choose your stake'),
         pass: L('Sit this one out'),
         passed: L('✓ Sitting this one out'),
       }}
       header={
         <div className={styles.betHead}>
           <LotTitle box={box} />
-          <OptionBoard options={box.options} size="phone" selected={option} onSelect={setOption} />
+          <OptionBoard
+            options={box.options}
+            size="phone"
+            selected={option}
+            onSelect={setOption}
+            locked={box.event === 'potato' ? view.mySeat : null}
+          />
         </div>
       }
       notice={notice}

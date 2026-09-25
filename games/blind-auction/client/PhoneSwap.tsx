@@ -6,7 +6,7 @@ import { PrimaryButton, Screen, WaitingScreen, buzz, useT } from '@partybox/game
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BlindAuctionControllerView } from '../server/views';
-import { LotTitle, Purse } from './PhoneLot';
+import { LotTitle } from './PhoneLot';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 
@@ -34,10 +34,7 @@ export function PhoneSwap({ view, send }: Props): JSX.Element {
   const choices = forced ? closed : [mine, ...closed.filter((d) => d !== mine)];
   return (
     <Screen className={styles.screen}>
-      <div className={styles.topRow}>
-        {view.box ? <LotTitle box={view.box} /> : <span />}
-        <Purse coins={view.coins} />
-      </div>
+      <div className={styles.topRow}>{view.box ? <LotTitle box={view.box} /> : <span />}</div>
       <div className={styles.doorRow} aria-hidden>
         {[0, 1, 2].map((d) => (
           <span

@@ -12,7 +12,7 @@ import type { BlindAuctionTvView } from '../server/views';
 import { COIN, iconOf, kindName, nameOf as optionName, payText, toneOf } from './copy';
 import type { Tone } from './copy';
 import { Doors, LiveStage } from './LiveStage';
-import { PotatoRing } from './Potato';
+import { PotatoRing, passWords } from './Potato';
 import { LotCard } from './LotCard';
 import { OptionBoard } from './Options';
 import { STRINGS } from './strings';
@@ -107,7 +107,7 @@ function PotatoPanel({ view }: { view: View }): JSX.Element | null {
       <h1 className={styles.call}>{L('Pass it on before it pops!')}</h1>
       <p className={styles.plate}>{L('{name} has the potato', { name })}</p>
       <p className={styles.count} aria-live="polite">
-        {L('{n} passes', { n: view.potato?.passes ?? 0 })}
+        {passWords(L, view.potato?.passes ?? 0)}
       </p>
     </div>
   );

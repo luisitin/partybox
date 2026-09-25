@@ -74,6 +74,13 @@ export const ES_SCREENS: Record<string, string> = {
   'Look at the TV': 'Mira la TV',
   "That's the last box!": '¡Esa fue la última caja!',
   // live events
+  'No passes yet': 'Aún sin pases',
+  '1 pass': '1 pase',
+  'Everyone: {tier} · {n}% · pays {x}': 'Todos: {tier} · {n}% · paga {x}',
+  You: 'Tú',
+  'Pick who will be holding it': 'Elige quién la tendrá',
+  'Pick who will be holding it first': 'Primero elige quién la tendrá',
+  'Pick what will happen': 'Elige qué pasará',
   'You can’t bet on yourself: pick someone else': 'No puedes apostar por ti: elige a otra persona',
   'Hot Potato': 'Papa caliente',
   'Tap to pass it on. Who is holding it when it pops?':

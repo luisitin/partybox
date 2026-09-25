@@ -270,3 +270,37 @@ button.option:focus-visible {
 :global(:root[data-motion='off']) :is(.option, .chip, .inside) {
   animation: none;
 }
+
+/* Hot potato: the odds once, above cards that carry only who. */
+.uniform {
+  grid-column: 1 / -1;
+  margin: 0;
+  text-align: center;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: var(--pb-accent-2);
+}
+
+.tv .uniform {
+  font-size: var(--pb-font-h2);
+}
+
+.phone .uniform {
+  font-size: var(--pb-font-caption);
+}
+
+/* An option you may not pick (yourself, on hot potato). */
+.locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Uniform boards on a phone (a whole room of names): one line per card, no icon row. */
+.phone.uniformBoard .option {
+  padding: var(--pb-space-2) var(--pb-space-1);
+  gap: 0;
+}
+
+.phone.uniformBoard .icon {
+  display: none;
+}
