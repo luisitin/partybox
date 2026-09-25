@@ -13,6 +13,13 @@ function Thinking({ view }: { view: SpyTvView }): JSX.Element {
   const team = view.turnTeam;
   const spy = view.spymaster[team];
   const face = spy ? faceOf(view, spy) : null;
+  const thinking =
+    view.mode === 'coop'
+      ? L('The spymaster is thinking…')
+      : L("{shape} {team}'s spymaster is thinking…", {
+          shape: SHAPE[team],
+          team: teamName(team, L),
+        });
   return (
     <div className={styles.thinking}>
       {face ? (
@@ -25,7 +32,7 @@ function Thinking({ view }: { view: SpyTvView }): JSX.Element {
           </span>
         </span>
       ) : null}
-      <div>
+      <div className={styles.thinkingText}>
         {view.turnN === 1 ? (
           <div className={styles.kicker}>
             {view.mode === 'coop'
@@ -40,13 +47,8 @@ function Thinking({ view }: { view: SpyTvView }): JSX.Element {
             {L('{name} is the new spymaster', { name: nameOf(view, view.newSpymaster) })}
           </div>
         ) : null}
-        <div className={styles.thinkingLine}>
-          {view.mode === 'coop'
-            ? L('The spymaster is thinking…')
-            : L("{shape} {team}'s spymaster is thinking…", {
-                shape: SHAPE[team],
-                team: teamName(team, L),
-              })}
+        <div className={styles.thinkingLine} style={{ '--n': thinking.length } as CSSProperties}>
+          {thinking}
         </div>
       </div>
     </div>

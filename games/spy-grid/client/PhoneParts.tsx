@@ -36,7 +36,9 @@ export function Scores({ view }: { view: SpyControllerView }): JSX.Element {
       ))}
       {view.cluesLeft !== null ? (
         <span className={`${styles.score} ${styles.scoreOn}`}>
-          <span className={styles.nowrap}>{L('🗝 {n} clues', { n: view.cluesLeft })}</span>
+          <span className={styles.nowrap} aria-label={L('{n} clues left', { n: view.cluesLeft })}>
+            🗝 {view.cluesLeft}
+          </span>
         </span>
       ) : null}
     </div>

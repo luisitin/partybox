@@ -232,9 +232,15 @@
   color: var(--pb-accent-2);
 }
 
+.thinkingText {
+  container-type: inline-size;
+  flex: 1;
+  min-width: 0;
+}
+
 .thinkingLine {
-  /* one line in the clue slot, even for 'Sun's spymaster is thinking…' (session-c) */
-  font-size: min(var(--pb-font-h2), 40px);
+  /* one line that fits the slot in any language: sized by its length (session-c: ES was cut) */
+  font-size: min(40px, calc(100cqw / (var(--n, 30) * 0.5)));
   white-space: nowrap;
   font-weight: 800;
 }
@@ -496,9 +502,10 @@
 }
 
 .memberName {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* a long name wraps to a second line rather than losing letters ('Maxim…', session-c) */
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.1;
 }
 
 .badge {

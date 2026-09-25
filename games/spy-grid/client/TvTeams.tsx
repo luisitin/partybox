@@ -59,6 +59,9 @@ export function TvTeams({ view }: { view: SpyTvView }): JSX.Element {
         )}
       </div>
       <aside className={styles.howTo}>
+        {!coop && Math.abs(view.teams.sun.length - view.teams.moon.length) > 1 ? (
+          <p className={styles.evenHint}>{L('Teams even out at the start: bots move first.')}</p>
+        ) : null}
         <h2 className={styles.howTitle}>{coop ? L('A co-op mission') : L('How to play')}</h2>
         <TvDemo />
         <p className={styles.callToAction}>
@@ -66,9 +69,6 @@ export function TvTeams({ view }: { view: SpyTvView }): JSX.Element {
             ? L('📱 On your phone: want to give the clues? Tap “I’ll be spymaster”')
             : L('📱 On your phone: pick ▲ Sun or ● Moon')}
         </p>
-        {!coop && Math.abs(view.teams.sun.length - view.teams.moon.length) > 1 ? (
-          <p className={styles.evenHint}>{L('Teams even out at the start: bots move first.')}</p>
-        ) : null}
         {L('The board words are in English.') !== 'The board words are in English.' ? (
           <p className={styles.boardNote}>{L('The board words are in English.')}</p>
         ) : null}
