@@ -3,23 +3,38 @@
 // 1200 ms; the strip used to hold its old numbers for the whole result, retro 0ac5d8).
 import { useEffect, useState } from 'react';
 
-/** Pure core: whether the strip shows scores `msInPhase` after the phase started on this TV. */
-export function stripScoresShown(rule: boolean | number, msInPhase: number): boolean {
-  return typeof rule === 'boolean' ? rule : msInPhase >= rule;
+/** One phase's hold: which phase it is for, and whether its delay has run out. */
+export interface StripHold {
+  key: string;
+  released: boolean;
+}
+
+/** A new phase starts a new hold; the same phase keeps its own. Pure, so every round's result is
+ *  held afresh — round 2's result never inherits round 1's release (foundation 8e00d0). */
+export function holdFor(prev: StripHold, phaseKey: string): StripHold {
+  return prev.key === phaseKey ? prev : { key: phaseKey, released: false };
+}
+
+/** The delay ran out: release the hold only if it is still the same phase. */
+export function releaseHold(prev: StripHold, phaseKey: string): StripHold {
+  return prev.key === phaseKey ? { ...prev, released: true } : prev;
 }
 
 /**
- * The rule held against this TV's own clock: a delay starts when `phaseKey` changes and one timer
- * re-renders when it runs out. A boolean rule passes straight through.
+ * The rule held against this TV's own clock: a delay starts when `phaseKey` changes (or when the
+ * TV mounts mid-phase — a TV that reloads during a result holds another `rule` ms from then) and
+ * one timer releases it. A boolean rule passes straight through.
  */
 export function useStripScores(phaseKey: string, rule: boolean | number): boolean {
-  const [released, setReleased] = useState<string | null>(null);
+  const [hold, setHold] = useState<StripHold>({ key: phaseKey, released: false });
+  const current = holdFor(hold, phaseKey);
+  if (current !== hold) setHold(current); // render-time reset, as TvApp does for gameReady
   const delay = typeof rule === 'number' ? Math.max(0, rule) : null;
   useEffect(() => {
     if (delay === null) return;
-    const handle = setTimeout(() => setReleased(phaseKey), delay);
+    const handle = setTimeout(() => setHold((h) => releaseHold(h, phaseKey)), delay);
     return () => clearTimeout(handle);
   }, [phaseKey, delay]);
   if (delay === null) return rule === true;
-  return released === phaseKey || delay === 0;
+  return current.released || delay === 0;
 }
