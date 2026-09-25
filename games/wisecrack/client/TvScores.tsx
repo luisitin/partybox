@@ -46,7 +46,13 @@ export function TvScores({ view }: Props): JSX.Element {
         <BigText level="h2" tone="accent">
           {L('Next: the final round — double points!')}
         </BigText>
-      ) : null}
+      ) : final ? null : (
+        // Pacing rule (2026-09-25): the board waits for the VIP's Next — say whose phone, under the
+        // heading, where it is clear of the host bar (review d0daab).
+        <BigText level="h2" tone="muted">
+          {vipName ? L("Next on {name}'s phone", { name: vipName }) : L("Next on the VIP's phone")}
+        </BigText>
+      )}
       <div className={styles.board}>
         <Scoreboard rows={view.standings} noTrophy stagger="climb" climbFrom={climbFrom} />
       </div>
@@ -57,13 +63,7 @@ export function TvScores({ view }: Props): JSX.Element {
             …
           </span>
         </BigText>
-      ) : finalNext ? null : (
-        // Pacing rule (2026-09-25): the board waits for the VIP's Next — say whose phone (not under
-        // the final-round hook: at 5–6 players the bottom slot is the first thing clipped).
-        <BigText level="h2" tone="muted">
-          {vipName ? L("Next on {name}'s phone", { name: vipName }) : L("Next on the VIP's phone")}
-        </BigText>
-      )}
+      ) : null}
     </Stage>
   );
 }

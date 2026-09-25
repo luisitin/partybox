@@ -32,7 +32,6 @@ function ControllerScores({ view, me, skip }: Props): JSX.Element {
   const next =
     !final && view.phaseId === 'scores' && skip ? (
       <PrimaryButton
-        tone="neutral"
         done={sent}
         onClick={() => {
           if (sent) return;
