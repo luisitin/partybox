@@ -25,7 +25,7 @@ import { CrossfadeSwap } from '../CrossfadeSwap';
 import { STRINGS } from './strings';
 import styles from './TvPlaying.module.css';
 import { gameEntry } from '../catalog';
-import { useStripScores } from './stripScores';
+import { stripRuleFor, useStripScores } from './stripScores';
 
 export interface TvPlayingProps {
   room: RoomSnapshot;
@@ -111,7 +111,9 @@ export function TvPlaying({
   // showed, muted: the tally is not spoiled and the row does not reflow (review-loop #32).
   const [held, setHeld] = useState<Record<string, number>>({});
   // A game may hold the strip for part of a phase (a number of ms: the stage's reveal beat).
-  const stripRule = view ? (module?.stripScores?.(view) ?? true) : true;
+  // Until the game's TV module has loaded its rule is unknown: hold the strip, so `held` is never
+  // seeded from that window (a game whose rule is false showed muted zeros all game — foundation 1fe902).
+  const stripRule = stripRuleFor(view, module?.stripScores, module !== undefined);
   const stripOpen = useStripScores(view?.phaseId ?? '', stripRule);
   if (!view) {
     return (

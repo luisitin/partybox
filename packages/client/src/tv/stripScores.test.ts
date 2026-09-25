@@ -1,8 +1,19 @@
 // The TV strip's score hold (retro 0ac5d8): a game's rule may be a delay into the phase, so the
 // running totals land on the stage's own beat instead of waiting for the next phase.
 import { describe, expect, it } from 'vitest';
-import { holdFor, releaseHold } from './stripScores';
+import { holdFor, releaseHold, stripRuleFor } from './stripScores';
 import type { StripHold } from './stripScores';
+
+describe('the strip rule', () => {
+  it('holds the strip until the game module has loaded (foundation 1fe902)', () => {
+    const view = { phaseId: 'clue' };
+    expect(stripRuleFor(view, () => true, false)).toBe(false);
+    expect(stripRuleFor(null, () => true, true)).toBe(false);
+    expect(stripRuleFor(view, () => false, true)).toBe(false);
+    expect(stripRuleFor(view, () => 1200, true)).toBe(1200);
+    expect(stripRuleFor(view, undefined, true)).toBe(true); // a game with no rule shows scores
+  });
+});
 
 describe('the strip hold', () => {
   it('holds each phase afresh: result → answer → result is held again (foundation 8e00d0)', () => {

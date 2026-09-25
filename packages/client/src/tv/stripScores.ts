@@ -3,6 +3,17 @@
 // 1200 ms; the strip used to hold its old numbers for the whole result, retro 0ac5d8).
 import { useEffect, useState } from 'react';
 
+/** The strip rule for this view: the game's own once its TV module has loaded (no rule = show);
+ *  held while it loads or before the first view, so nothing is stored from a guessed rule. */
+export function stripRuleFor<V>(
+  view: V | null | undefined,
+  rule: ((view: V) => boolean | number) | undefined,
+  loaded: boolean,
+): boolean | number {
+  if (!view || !loaded) return false;
+  return rule ? rule(view) : true;
+}
+
 /** One phase's hold: which phase it is for, and whether its delay has run out. */
 export interface StripHold {
   key: string;
