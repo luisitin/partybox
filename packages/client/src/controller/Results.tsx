@@ -43,6 +43,8 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   ).map(String);
   return (
     <Screen
+      // fill1: the award chips end on the body's clip line — a scrolled row fades before them
+      fadeTop
       // The winner line is the sticky title: on a long board the body scrolls to your own row and a
       // hero inside the body scrolled off the top (review-loop #76).
       title={

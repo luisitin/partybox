@@ -1,0 +1,15 @@
+at rest tops: ["HEADER:0/60","SECTION:90/478","DIV:90/398","H2:102/47.8","OL:203.6/254","DIV:488/80"]
+at rest scrollers: []
+PASS mash: a double tap keeps the row placed (2 placed)
+PASS long-press: no text selected ("")
+PASS drags place nothing (3 vs 3)
+PASS drags scroll nothing (0px)
+PASS pinch / double-tap: no zoom (scale 1)
+after tops: ["HEADER:0/60","SECTION:90/478","DIV:90/398","H2:102/47.8","OL:203.6/254","DIV:488/80"]
+after scrollers: []
+PASS after every gesture the rows are exactly where they were (0,0 0,0 0,0 0,0 0,0)
+PASS all five placed
+PASS triple-tap Lock sends once (1 sent)
+PASS server holds the order (owl,knock,sneeze,stair,giggle)
+PASS Change + relock replaces the order (knock,sneeze,stair,giggle,owl)
+PASS sideways: nothing wider than the screen

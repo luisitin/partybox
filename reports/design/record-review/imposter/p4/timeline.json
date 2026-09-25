@@ -1,0 +1,145 @@
+{
+  "pass": "4",
+  "game": "imposter",
+  "players": 5,
+  "scenario": "phone-only",
+  "focus": "phone",
+  "started": "21:40:27.260",
+  "tvVideoT0": "21:39:53.017",
+  "phoneVideoT0": "21:40:20.391",
+  "changes": [
+    {
+      "t": 1790286027272,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1790286035208,
+      "bed": "lounge",
+      "at": "21:40:27.272",
+      "sinceStartS": 0,
+      "videoS": 34.3,
+      "phoneVideoS": 6.9
+    },
+    {
+      "t": 1790286035288,
+      "status": "playing",
+      "phase": "deal",
+      "deadline": 1790286047222,
+      "bed": "lounge",
+      "at": "21:40:35.288",
+      "sinceStartS": 8,
+      "videoS": 42.3,
+      "phoneVideoS": 14.9
+    },
+    {
+      "t": 1790286039431,
+      "status": "playing",
+      "phase": "clue",
+      "deadline": 1790286079315,
+      "bed": "marimba",
+      "at": "21:40:39.431",
+      "sinceStartS": 12.2,
+      "videoS": 46.4,
+      "phoneVideoS": 19
+    },
+    {
+      "t": 1790286043594,
+      "status": "playing",
+      "phase": "clueReveal",
+      "deadline": 1790286045242,
+      "bed": null,
+      "at": "21:40:43.594",
+      "sinceStartS": 16.3,
+      "videoS": 50.6,
+      "phoneVideoS": 23.2
+    },
+    {
+      "t": 1790286063934,
+      "status": "playing",
+      "phase": "talk",
+      "deadline": 1790286123903,
+      "bed": "latenight",
+      "at": "21:41:03.934",
+      "sinceStartS": 36.7,
+      "videoS": 70.9,
+      "phoneVideoS": 43.5
+    },
+    {
+      "t": 1790286123939,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1790286153906,
+      "bed": "pulse",
+      "at": "21:42:03.939",
+      "sinceStartS": 96.7,
+      "videoS": 130.9,
+      "phoneVideoS": 103.5
+    },
+    {
+      "t": 1790286128108,
+      "status": "playing",
+      "phase": "voteReveal",
+      "deadline": 1790286131990,
+      "bed": null,
+      "at": "21:42:08.108",
+      "sinceStartS": 100.8,
+      "videoS": 135.1,
+      "phoneVideoS": 107.7
+    },
+    {
+      "t": 1790286132078,
+      "status": "playing",
+      "phase": "accuse",
+      "deadline": 1790286133496,
+      "bed": null,
+      "at": "21:42:12.078",
+      "sinceStartS": 104.8,
+      "videoS": 139.1,
+      "phoneVideoS": 111.7
+    },
+    {
+      "t": 1790286137098,
+      "status": "playing",
+      "phase": "lastChance",
+      "deadline": 1790286157007,
+      "bed": "pulse",
+      "at": "21:42:17.098",
+      "sinceStartS": 109.8,
+      "videoS": 144.1,
+      "phoneVideoS": 116.7
+    },
+    {
+      "t": 1790286140953,
+      "status": "playing",
+      "phase": "wordReveal",
+      "deadline": 1790286143874,
+      "bed": null,
+      "at": "21:42:20.953",
+      "sinceStartS": 113.7,
+      "videoS": 147.9,
+      "phoneVideoS": 120.6
+    },
+    {
+      "t": 1790286149250,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1790286157215,
+      "bed": "warm",
+      "at": "21:42:29.250",
+      "sinceStartS": 122,
+      "videoS": 156.2,
+      "phoneVideoS": 128.9
+    },
+    {
+      "t": 1790286157293,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "21:42:37.293",
+      "sinceStartS": 130,
+      "videoS": 164.3,
+      "phoneVideoS": 136.9
+    }
+  ],
+  "notes": []
+}

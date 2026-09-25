@@ -1,0 +1,78 @@
+{
+  "video": "C:\\dev\\partybox-game-imposter\\reports\\design\\record-review\\imposter\\p1\\video\\tv\\round.webm",
+  "bytes": 12332355,
+  "durationS": 131.2,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 9.1,
+      "toS": 13.3,
+      "ms": 4200,
+      "during": "intro",
+      "cueInside": false
+    },
+    {
+      "fromS": 21.8,
+      "toS": 23.3,
+      "ms": 1500,
+      "during": "clueReveal",
+      "cueInside": false
+    },
+    {
+      "fromS": 30,
+      "toS": 32.7,
+      "ms": 2700,
+      "during": "clueReveal",
+      "cueInside": false
+    },
+    {
+      "fromS": 98.7,
+      "toS": 100.8,
+      "ms": 2100,
+      "during": "voteReveal",
+      "cueInside": false
+    },
+    {
+      "fromS": 102.9,
+      "toS": 105.8,
+      "ms": 2900,
+      "during": "accuse",
+      "cueInside": false
+    },
+    {
+      "fromS": 111.3,
+      "toS": 112.8,
+      "ms": 1500,
+      "during": "wordReveal",
+      "cueInside": false
+    },
+    {
+      "fromS": 113.1,
+      "toS": 114.6,
+      "ms": 1500,
+      "during": "wordReveal",
+      "cueInside": false
+    },
+    {
+      "fromS": 115,
+      "toS": 117.6,
+      "ms": 2600,
+      "during": "wordReveal",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 19000,
+  "hardCuts": [],
+  "samples": 1311,
+  "motion": {
+    "p50": 0.0002,
+    "p90": 0.0028,
+    "p99": 0.0404,
+    "max": 0.1138
+  }
+}
