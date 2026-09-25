@@ -31,28 +31,6 @@ export function modeLine(L: Translator, mode: TurnHeader['mode']): string {
   return L('Solo · everyone for themselves');
 }
 
-/** The three steps, told for the mode being played. */
-export function steps(L: Translator, mode: TurnHeader['mode']): [string, string, string] {
-  const first = L('The psychic secretly sees a target on a dial between two opposites.');
-  if (mode === 'teams')
-    return [
-      first,
-      L('They give one clue; their team argues and sets one needle.'),
-      L('The other team calls LEFT or RIGHT of the needle. First to the target wins.'),
-    ];
-  if (mode === 'coop')
-    return [
-      first,
-      L('They give one clue; everyone else slides a dial, and the group needle is the average.'),
-      L('Closer scores more for the group. Can the room reach a mind meld?'),
-    ];
-  return [
-    first,
-    L('They give one clue; everyone else slides their own dial, in secret.'),
-    L('The closer to the target, the more points — for you and for the psychic.'),
-  ];
-}
-
 export function clueMessage(L: Translator, reason: ClueReason): string {
   switch (reason) {
     case 'empty':

@@ -60,12 +60,9 @@ export function withTarget(state: State, target: number): State {
   return { ...state, turn: { ...state.turn, target } };
 }
 
-/** From the intro into the first clue. */
-/** Past the intro's ready-up and its 3 · 2 · 1 (two deadlines) to turn 1's clue. */
+/** Past the teams card (teams only; solo and co-op start at turn 1's clue). */
 export function toClue(state: State): State {
-  let s = state;
-  for (let i = 0; i < 3 && s.phase.id === 'intro'; i += 1) s = timer(s);
-  return s;
+  return state.phase.id === 'intro' ? timer(state) : state;
 }
 
 /** A legal clue from this turn's psychic (a bank clue of the spectrum on the dial). */

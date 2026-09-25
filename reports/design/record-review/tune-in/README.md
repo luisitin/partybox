@@ -190,3 +190,25 @@ double-tap Lock in; callers tap a side; Priya's phone (iPhone SE, 320 × 568) ge
   200 % text. Fixed: each zone sizes its own digit to its width, with a 2 px seam between zones.
 - Sims on the final code: 700 games (12 players ×200, 3 ×100, 2–16 varied ×200, 16 random ×100,
   16 idle ×100), 0 failed.
+
+## p13 / p13b — the owner's pacing rule [cc45f4] (2026-09-25)
+
+- p13: the game's own rules + I'm ready + 3 · 2 · 1, and a 20 s scores beat that waits for the
+  VIP's Next round. Found: the TV's scores beat held still once the board settled (dead air).
+- Fixed: a breathing "★ {VIP} taps Next round when everyone's ready" / "taps See results" line
+  on the TV's scores in all three modes. p13b: **0 dead spans** on the TV.
+
+## p14 — the shell's start stage (ADR-053, ready-up), recorded from the adoption branch
+
+- Recorded on my own spare port 42351 (6 players: Sam, Priya on an SE and Lu + 3 bots) through
+  the shell's stage: Tune In's three how-to-play steps, each phone's READY (Sam taps twice, the
+  second tap is the VIP's Start now), the 3 · 2 · 1, then turn 1's clue at once (solo starts at
+  turn 1; only teams keep a short roster card).
+- TV: 239 s, **0 dead spans, 0 hard cuts**; 10 958 frames, none over 100 ms.
+- Found: the phones held still for 6 s on "✓ Locked in" while the last dial came in, and 5 s on
+  the final scores while the room waited for the VIP.
+- Fixed (41464d80): the faces still to lock breathe, the VIP's Next round / See results
+  breathes, and every other phone breathes "★ Sam taps …" as the TV does (all off under reduced
+  motion).
+- p14c: TV 246 s, 0 dead spans, 0 hard cuts; phones 0 dead spans in the game. The only still
+  left starts after the results arrive (the shell's results screen on the phones).

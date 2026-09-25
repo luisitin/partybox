@@ -2,15 +2,13 @@
 // the server re-checks everything. Each input screen is keyed by the turn, so a new turn starts
 // clean (no draft, no thumb) and rises in as a new card.
 import type { JSX } from 'react';
-import { PrimaryButton, Screen, WaitingScreen, buzz, useSound, useT } from '@partybox/game-sdk/ui';
+import { WaitingScreen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import { DialStrip } from '@partybox/game-sdk/ui/dial';
 import type { TuneControllerView } from '../server/index';
 import type { Input } from '../server/types';
-import { modeLine, nameOf, steps, teamName } from './copy';
-import { Countdown } from './Countdown';
+import { nameOf, teamName } from './copy';
 import { useEnds } from './ends';
-import { EnglishNote } from './EnglishNote';
 import { LockRow } from './LockRow';
 import { PhoneCall } from './PhoneCall';
 import { PhoneDial } from './PhoneDial';
@@ -21,66 +19,32 @@ import { STRINGS } from './strings';
 
 type Props = GameControllerProps<TuneControllerView, Input>;
 
-export function PhoneIntro({
-  view,
-  send,
-}: {
-  view: TuneControllerView;
-  send: (input: Input) => void;
-}): JSX.Element {
+export function PhoneIntro({ view }: { view: TuneControllerView }): JSX.Element {
   const L = useT(STRINGS);
-  const play = useSound();
-  const counting = view.startAt !== null;
-  const ready = (): void => {
-    if (view.ready || counting) return;
-    play('submit');
-    buzz(12);
-    send({ type: 'ready' });
-  };
+  const { turn } = view;
+  // Names stay whole across a line break ("Player 4", "Mary Ann")
+  const whole = (name: string): string => name.replace(/ /g, ' ');
   return (
-    <Screen
-      className={styles.screen}
-      footer={
-        counting ? undefined : (
-          <PrimaryButton
-            className={view.ready ? undefined : styles.breathe}
-            done={view.ready}
-            onClick={ready}
-          >
-            {view.ready ? L('Ready!') : L('I’m ready')}
-          </PrimaryButton>
-        )
+    <WaitingScreen
+      mood="watch"
+      title={L('👀 Watch the TV')}
+      hint={
+        turn.team
+          ? L('{team} plays first · {name} reads the first dial', {
+              team: teamName(L, turn.team),
+              name: whole(nameOf(view.players, turn.psychic)),
+            })
+          : undefined
       }
     >
-      <h2 className={styles.title}>{L('📻 Tune In')}</h2>
-      <p className={styles.kicker}>{modeLine(L, view.turn.mode)}</p>
-      <EnglishNote className={styles.englishNote} />
       {view.myTeam ? (
-        <p className={`${styles.teamBadge} ${view.myTeam === 'sun' ? styles.sun : styles.moon}`}>
+        <p
+          className={`${styles.teamBadge} ${styles.teamBadgeCentred} ${view.myTeam === 'sun' ? styles.sun : styles.moon}`}
+        >
           {L("You're on {team}", { team: teamName(L, view.myTeam) })}
         </p>
       ) : null}
-      <ol className={styles.steps}>
-        {steps(L, view.turn.mode).map((s, i) => (
-          <li key={s} className={styles.step} style={{ animationDelay: `${i * 120}ms` }}>
-            {s}
-          </li>
-        ))}
-      </ol>
-      <p className={styles.readyNote} role="status">
-        {view.ready
-          ? L('Waiting for the others · {n} of {total} ready', {
-              n: view.readyCount,
-              total: view.readyHere,
-            })
-          : L('Read the rules, then tap I’m ready')}
-      </p>
-      {counting && view.startAt !== null ? (
-        <div className={styles.countOverlay}>
-          <Countdown startAt={view.startAt} paused={view.paused} size="phone" />
-        </div>
-      ) : null}
-    </Screen>
+    </WaitingScreen>
   );
 }
 
@@ -135,7 +99,7 @@ export function Controller({ view: raw, send, skip }: Props): JSX.Element {
     return <WaitingScreen mood="watch" title={L("You're in as soon as this one ends")} />;
   switch (view.phaseId) {
     case 'intro':
-      return <PhoneIntro view={view} send={send} />;
+      return <PhoneIntro view={view} />;
     case 'clue':
       return view.role === 'psychic' ? (
         <PsychicClue key={key} view={view} send={send} />
@@ -159,7 +123,14 @@ export function Controller({ view: raw, send, skip }: Props): JSX.Element {
         <WatchTv key={`${key}w`} />
       );
     case 'scores':
-      return <PhoneResult key={`${key}s`} view={view} skip={skip} />;
+      return (
+        <PhoneResult
+          key={`${key}s`}
+          view={view}
+          skip={skip}
+          vipName={view.vip ? nameOf(view.players, view.vip) : null}
+        />
+      );
     default:
       return <WaitingScreen mood="done" title={L('Thanks for playing!')} />;
   }

@@ -5,24 +5,6 @@ export const STRINGS_TV: Record<string, string> = {
   'Solo · everyone for themselves': 'Solo · cada quien por su cuenta',
   'Teams · ▲ Sun against ● Moon': 'Equipos · ▲ Sol contra ● Luna',
   'Co-op · the whole room against the dial': 'Cooperativo · toda la sala contra el dial',
-  'The psychic secretly sees a target on a dial between two opposites.':
-    'El vidente ve en secreto un objetivo en un dial entre dos opuestos.',
-  'They give one clue; everyone else slides their own dial, in secret.':
-    'Da una pista; los demás mueven su propio dial, en secreto.',
-  'The closer to the target, the more points — for you and for the psychic.':
-    'Cuanto más cerca del objetivo, más puntos, para ti y para el vidente.',
-  'They give one clue; their team argues and sets one needle.':
-    'Da una pista; su equipo discute y coloca una sola aguja.',
-  'The other team calls LEFT or RIGHT of the needle. First to the target wins.':
-    'El otro equipo dice IZQUIERDA o DERECHA de la aguja. Gana el primero en llegar a la meta.',
-  'They give one clue; everyone else slides a dial, and the group needle is the average.':
-    'Da una pista; los demás mueven un dial y la aguja del grupo es el promedio.',
-  'Closer scores more for the group. Can the room reach a mind meld?':
-    'Más cerca, más puntos para el grupo. ¿Logrará la sala una conexión mental?',
-  Cold: 'Frío',
-  // Calor, not Caliente: the rules' demo dial gives each end a narrow column ("Caliente ▶" broke
-  // in two on the Spanish TV).
-  Hot: 'Calor',
   '▲ Sun': '▲ Sol',
   '● Moon': '● Luna',
   Sun: 'Sol',
@@ -57,16 +39,11 @@ export const STRINGS_TV: Record<string, string> = {
   'After round {n}': 'Tras la ronda {n}',
   'After turn {n}': 'Tras el turno {n}',
   'Winners!': '¡Ganadores!',
-  'Read the rules, then tap I’m ready on your phone':
-    'Lee las reglas y toca Estoy listo en tu teléfono',
-  '{n} of {total} ready': '{n} de {total} listos',
-  'Here we go!': '¡Allá vamos!',
-  'The bots’ clues and the voice are in English.':
-    'Las pistas de los bots y la voz están en inglés.',
   '★ {name} taps Next round when everyone’s ready':
     '★ {name} toca Siguiente ronda cuando todos estén listos',
   '★ {name} taps See results': '★ {name} toca Ver resultados',
   'first up': 'empieza',
+  '{team} plays first · {name} reads the first dial': '{team} empieza · {name} lee el primer dial',
   'No clue this round': 'Sin pista esta ronda',
   'Waiting for {name} to reconnect': 'Esperando a que {name} vuelva',
   '{names} & {last}': '{names} y {last}',

@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "call",
-    "startedAt": 1700000014831,
-    "deadline": 1700000029831
+    "startedAt": 1700000013359,
+    "deadline": 1700000028359
   },
   "rng": {
     "seed": 11,
@@ -805,18 +805,18 @@
     "spectrum": 0,
     "target": 82,
     "clue": "Dracula",
-    "clueAt": 1700000010974,
-    "clueDeadline": 1700000055576,
+    "clueAt": 1700000008298,
+    "clueDeadline": 1700000052000,
     "rejected": null,
     "dials": {
-      "p6": 95,
-      "p3": 77
+      "p3": 78,
+      "p6": 100
     },
-    "locked": ["p3", "p6"],
-    "needle": 86,
+    "locked": ["p6", "p3"],
+    "needle": 89,
     "calls": {
-      "p4": "right",
-      "p2": "right"
+      "p2": "left",
+      "p4": "left"
     },
     "points": {},
     "teamPoints": {
@@ -850,8 +850,6 @@
   "coopTotal": 0,
   "played": 0,
   "voidStreak": 0,
-  "ready": ["p5", "p2", "p3", "p1", "p6", "p4"],
-  "startAt": 1700000010576,
   "stats": {},
   "speechMs": {}
 }

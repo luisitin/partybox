@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "scores",
-    "startedAt": 1700000122609,
-    "deadline": 1700000142609
+    "startedAt": 1700000112449,
+    "deadline": 1700000132449
   },
   "rng": {
     "seed": 1,
@@ -805,23 +805,23 @@
     "spectrum": 2,
     "target": 3,
     "clue": "a teddy bear picnic",
-    "clueAt": 1700000101160,
-    "clueDeadline": 1700000144074,
+    "clueAt": 1700000092660,
+    "clueDeadline": 1700000136181,
     "rejected": null,
     "dials": {
-      "p2": 2,
-      "p6": 10
+      "p2": 0,
+      "p6": 15
     },
-    "locked": ["p6", "p2"],
-    "needle": 6,
+    "locked": ["p2", "p6"],
+    "needle": 8,
     "calls": {
-      "p1": "right",
-      "p5": "left",
-      "p3": "right"
+      "p3": "left",
+      "p1": "left",
+      "p5": "left"
     },
     "points": {
       "p2": 4,
-      "p6": 3
+      "p6": 2
     },
     "teamPoints": {
       "sun": 0,
@@ -833,34 +833,32 @@
   "nextTeam": "moon",
   "scores": {
     "p1": 4,
-    "p2": 7,
+    "p2": 8,
     "p3": 4,
-    "p4": 7,
+    "p4": 8,
     "p5": 4,
-    "p6": 7
+    "p6": 8
   },
   "turnStartScores": {
     "p1": 4,
-    "p2": 3,
+    "p2": 4,
     "p3": 4,
-    "p4": 3,
+    "p4": 4,
     "p5": 4,
-    "p6": 3
+    "p6": 4
   },
   "team": {
     "sun": 4,
-    "moon": 7
+    "moon": 8
   },
   "coopTotal": 0,
   "played": 3,
   "voidStreak": 0,
-  "ready": ["p1", "p6", "p3", "p4", "p5", "p2"],
-  "startAt": 1700000011836,
   "stats": {
     "p2": {
       "bulls": 1,
       "dials": 2,
-      "dist": 8,
+      "dist": 10,
       "zeros": 0,
       "psyTurns": 0,
       "psyPts": 0
@@ -876,7 +874,7 @@
     "p6": {
       "bulls": 0,
       "dials": 1,
-      "dist": 7,
+      "dist": 12,
       "zeros": 0,
       "psyTurns": 1,
       "psyPts": 3
@@ -884,7 +882,7 @@
     "p3": {
       "bulls": 0,
       "dials": 1,
-      "dist": 11,
+      "dist": 12,
       "zeros": 0,
       "psyTurns": 0,
       "psyPts": 0
@@ -892,7 +890,7 @@
     "p5": {
       "bulls": 1,
       "dials": 1,
-      "dist": 3,
+      "dist": 1,
       "zeros": 0,
       "psyTurns": 0,
       "psyPts": 0

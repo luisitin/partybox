@@ -12,18 +12,6 @@
   letter-spacing: 0.04em;
 }
 
-/* Spanish rooms: the dials are English content (EnglishNote). */
-.englishNote {
-  margin: 0;
-  padding: var(--pb-space-1) var(--pb-space-3);
-  border-radius: 999px;
-  background: var(--pb-surface-2);
-  color: var(--pb-text-muted);
-  font-size: var(--pb-font-caption);
-  font-weight: 700;
-  text-align: center;
-}
-
 .title {
   font-size: var(--pb-font-h1);
   font-weight: 900;
@@ -258,6 +246,23 @@
   height: 32px;
 }
 
+/* Still to lock in: the face breathes, like the start stage's unready faces. */
+.lockWaiting {
+  animation: tune-wait-breathe calc(var(--pb-motion-pulse) * 2) ease-in-out infinite;
+}
+
+@keyframes tune-wait-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+
 .lockTick {
   position: absolute;
   right: -4px;
@@ -281,8 +286,8 @@
   width: min(100%, 360px);
 }
 
-/* ── the ready-up [cc45f4] ── */
-/* I'm ready breathes until it is tapped: the next action is the thing that moves. */
+/* ── the scores beat waits for the VIP ── */
+/* Their Next round / See results breathes: the next action is the thing that moves. */
 .breathe {
   animation: tune-ready-breathe calc(var(--pb-motion-pulse) * 2) ease-in-out infinite;
 }
@@ -291,39 +296,48 @@
   0%,
   100% {
     transform: scale(1);
+    filter: brightness(1);
   }
   50% {
-    transform: scale(1.03);
+    transform: scale(1.05);
+    filter: brightness(1.15);
   }
 }
 
-.readyNote {
+/* Every other phone: whose tap moves it on, breathing in opacity (no dead phone, p14). */
+.nextHint {
   margin: 0;
   font-size: var(--pb-font-body);
   font-weight: 800;
   color: var(--pb-text-muted);
   text-align: center;
   text-wrap: balance;
+  animation: tune-hint-breathe calc(var(--pb-motion-pulse) * 2) ease-in-out infinite;
 }
 
-/* The 3 · 2 · 1 over the whole phone. */
-.countOverlay {
-  position: fixed;
-  inset: 0;
-  z-index: 5;
-  display: grid;
-  place-items: center;
-  background: color-mix(in oklab, var(--pb-bg) 86%, transparent);
-  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+@keyframes tune-hint-breathe {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .breathe {
+  .breathe,
+  .nextHint,
+  .lockWaiting {
     animation: none;
   }
 }
 
-:global(:root[data-motion='off']) .breathe {
+:global(:root[data-motion='off']) .breathe,
+:global(:root[data-motion='off']) .nextHint,
+:global(:root[data-motion='off']) .lockWaiting {
   animation: none;
 }
 
@@ -389,6 +403,11 @@
   border-left: 8px solid var(--team);
   background: var(--pb-surface);
   font-weight: 900;
+}
+
+/* The teams card centres its badge under the waiting line. */
+.teamBadgeCentred {
+  align-self: center;
 }
 
 .sun {

@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "reveal",
-    "startedAt": 1700000068974,
-    "deadline": 1700000079074
+    "startedAt": 1700000061081,
+    "deadline": 1700000071181
   },
   "rng": {
     "seed": 1,
@@ -804,20 +804,20 @@
     "catchUp": false,
     "spectrum": 1,
     "target": 33,
-    "clue": "a pickup truck",
-    "clueAt": 1700000054242,
-    "clueDeadline": 1700000097139,
+    "clue": "a small town diner",
+    "clueAt": 1700000049104,
+    "clueDeadline": 1700000091609,
     "rejected": null,
     "dials": {
-      "p3": 22,
-      "p5": 30
+      "p3": 45,
+      "p5": 32
     },
     "locked": ["p3", "p5"],
-    "needle": 26,
+    "needle": 39,
     "calls": {
-      "p2": "left",
+      "p4": "left",
       "p6": "left",
-      "p4": "left"
+      "p2": "left"
     },
     "points": {
       "p3": 2,
@@ -825,7 +825,7 @@
     },
     "teamPoints": {
       "sun": 3,
-      "moon": 0
+      "moon": 1
     },
     "void": false,
     "step": 1
@@ -833,11 +833,11 @@
   "nextTeam": "sun",
   "scores": {
     "p1": 4,
-    "p2": 3,
+    "p2": 4,
     "p3": 4,
-    "p4": 3,
+    "p4": 4,
     "p5": 4,
-    "p6": 3
+    "p6": 4
   },
   "turnStartScores": {
     "p1": 1,
@@ -849,13 +849,11 @@
   },
   "team": {
     "sun": 4,
-    "moon": 3
+    "moon": 4
   },
   "coopTotal": 0,
   "played": 2,
   "voidStreak": 0,
-  "ready": ["p1", "p6", "p3", "p4", "p5", "p2"],
-  "startAt": 1700000011836,
   "stats": {
     "p2": {
       "bulls": 0,
@@ -884,7 +882,7 @@
     "p3": {
       "bulls": 0,
       "dials": 1,
-      "dist": 11,
+      "dist": 12,
       "zeros": 0,
       "psyTurns": 0,
       "psyPts": 0
@@ -892,7 +890,7 @@
     "p5": {
       "bulls": 1,
       "dials": 1,
-      "dist": 3,
+      "dist": 1,
       "zeros": 0,
       "psyTurns": 0,
       "psyPts": 0

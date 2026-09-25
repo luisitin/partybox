@@ -30,15 +30,14 @@ Branch `game/tune-in` (not merged). Try it: `pnpm dev --port 42350` in
 - **main merged in** (Foundation + results-kinds, ADR-050 lazy entries): the SDK's match, speech
   and teams replace Tune In's stand-ins; results send an outcome (teams: the winning side or a
   draw; co-op: won at Crystal clear or better, the rating as the headline).
-- **The owner's pacing rule [cc45f4]:** rules on every screen, each phone taps I'm ready (the faces
-  still to tap breathe; bots are ready), then a 3 · 2 · 1 on the TV and every phone. No clock on
-  the rules: the room waits for every connected player; a room where nobody taps starts after
-  60 s, and a phone that never taps stops holding the room at 10 minutes. The scores beat says who
-  moves it on ("★ Tess taps Next round when everyone's ready").
-- **The reviewer's DESIGN CHANGES [ba045e]:** the rules' ready faces clear the host bar; Spanish
-  rooms are told the dials are in English (TV + phone rules, the Spanish manifest); a pause during
-  the 3 · 2 · 1 keeps the digits in step; ties share an award and the shell's results-ties draws
-  one card naming everyone.
+- **The owner's pacing rule [cc45f4]:** the shell's start stage (ADR-053) now shows the rules, takes
+  every READY and plays the 3 · 2 · 1; Tune In starts at turn 1 (teams: a 7 s roster card first,
+  with no READY). The scores beat says who moves it on ("★ Tess taps Next round when everyone's
+  ready").
+- **The reviewer's DESIGN CHANGES [ba045e]** and the Spanish decision [196a9e]: the dial ends are
+  Spanish on Spanish screens (all 200, Latin American); the Spanish how-to-play says the bots'
+  clues and the voice are English; ties share an award and the shell's results-ties draws one card
+  naming everyone.
 
 ## Screens
 
@@ -81,5 +80,4 @@ Clips (TV + two phones each, voice on): `p12/video/*/round.webm` (solo, 6 player
 Also noted, not mine: at 16 players the TV strip takes three chip rows (the Foundation will make
 the shell go faces-only past two rows, #plans 3c6fba); the stage countdown ticks one pitch because
 a game's `PlayCueOptions` has no `semitones` (the shell's own countdown rises); phone-only rooms
-and remote players wait for F4 (presence) — the game reads it the moment it lands. When the
-shell's own ready-up stage lands ([46be3c]), Tune In drops its intro ready-up for it.
+and remote players wait for F4 (presence) — the game reads it the moment it lands.

@@ -2,13 +2,14 @@
 // rounds; drops, leaves and returns; the huddle's lock/unlock; one connected player; everyone idle.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
-import { DROP_GRACE_MS, INTRO_MS, REVEAL_OPEN_MS } from '../server/types';
+import { DROP_GRACE_MS, REVEAL_OPEN_MS } from '../server/types';
 import { dialAll, guessers, link, send, start, T0, timer, toClue, toDial, vip } from './helpers';
 
 describe('the round', () => {
-  it('intro (8 s) → clue → dial → reveal (two beats) → scores → the next clue', () => {
+  it("clue (turn 1, straight after the shell's start) → dial → reveal (two beats) → scores", () => {
     let s = start(4, { mode: 'solo' });
-    expect(s.phase).toEqual({ id: 'intro', startedAt: T0, deadline: T0 + INTRO_MS });
+    expect(s.phase.id).toBe('clue');
+    expect(s.phase.startedAt).toBe(T0);
     s = toDial(s, 60);
     expect(s.phase.id).toBe('dial');
     s = dialAll(s, [60, 61, 62]);
@@ -75,11 +76,7 @@ describe('the round', () => {
 
 describe('the VIP', () => {
   it('skips every phase, and a dial skip locks the dials where they are', () => {
-    // Start now: the 3 · 2 · 1 at once, and a second skip goes straight to turn 1.
-    let s = vip(start(4, { mode: 'solo' }), 'skip');
-    expect(s.phase.id).toBe('intro');
-    expect(s.startAt).not.toBeNull();
-    s = vip(s, 'skip');
+    let s = start(4, { mode: 'solo' });
     expect(s.phase.id).toBe('clue');
     s = vip(s, 'skip');
     expect(s.turn.void).toBe(true);

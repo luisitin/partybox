@@ -116,9 +116,12 @@ function standing(L: Translator, view: TuneControllerView): string {
 export function PhoneResult({
   view,
   skip,
+  vipName = null,
 }: {
   view: TuneControllerView;
   skip?: () => void;
+  /** The scores beat waits for the VIP: the other phones say whose tap moves it on. */
+  vipName?: string | null;
 }): JSX.Element {
   const L = useT(STRINGS);
   const { big, line } = lines(L, view);
@@ -128,10 +131,18 @@ export function PhoneResult({
     <Screen
       className={`${styles.screen} ${scores ? styles.atScores : ''}`}
       footer={
+        // The scores beat waits for the VIP (p14: a phone held still for 5 s): their button breathes,
+        // and every other phone breathes whose tap moves it on, as the TV does.
         scores && skip ? (
-          <PrimaryButton onClick={skip}>
+          <PrimaryButton className={styles.breathe} onClick={skip}>
             {view.last ? L('See results') : L('Next round')}
           </PrimaryButton>
+        ) : scores && vipName ? (
+          <p className={styles.nextHint}>
+            {view.last
+              ? L('★ {name} taps See results', { name: vipName })
+              : L('★ {name} taps Next round when everyone’s ready', { name: vipName })}
+          </p>
         ) : undefined
       }
     >
