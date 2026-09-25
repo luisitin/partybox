@@ -5,6 +5,7 @@ import { LIMITS } from '@partybox/shared';
 import type { GameEvent, GameStateBase } from '@partybox/shared';
 import { addBot, removeBot } from './bots';
 import { suggestToast } from './picker';
+import { setCanSeeTv, withJoinPresence } from './presence';
 import { disconnect, expirePlayers, join, removePlayer } from './players';
 import { ASLEEP_END_MS, abortGame, applyGameEvent, fireDueTimer } from './runner';
 import type { ApplyResult, Effect, EngineDeps, RoomEvent, RoomState } from './types';
@@ -145,7 +146,9 @@ function isStateBase(value: unknown): value is GameStateBase {
 function dispatch(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyResult {
   switch (event.type) {
     case 'join':
-      return join(room, event, deps);
+      return withJoinPresence(join(room, event, deps), event.canSeeTv);
+    case 'presence':
+      return setCanSeeTv(room, event.playerId, event.canSeeTv);
     case 'bot-add':
       return addBot(room, event);
     case 'bot-remove':

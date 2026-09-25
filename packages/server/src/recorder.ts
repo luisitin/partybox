@@ -7,7 +7,13 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { EngineDeps, RoomState } from '@partybox/engine';
-import type { GameResults, GameStateBase, PlayerInfo, Settings } from '@partybox/shared';
+import type {
+  GamePresence,
+  GameResults,
+  GameStateBase,
+  PlayerInfo,
+  Settings,
+} from '@partybox/shared';
 import type { Host } from './host';
 
 export interface RecorderOptions {
@@ -49,6 +55,8 @@ interface Session {
   startedAt: number;
   seed: number;
   settings: Settings;
+  /** ADR-047: where everyone was when the game started (a same-room game played anyway shows here). */
+  presence: GamePresence;
   players: PlayerInfo[];
   timeline: TimelineEntry[];
   /** The state as each phase instance began, oldest first (what a recap reads). The closing phase
@@ -82,7 +90,14 @@ function sessionJson(s: Session): string {
       lastPhase: s.lastState.phase.id,
       seed: s.seed,
       settings: s.settings,
-      players: s.players.map((p) => ({ id: p.id, name: p.name, avatar: p.avatarId, bot: !!p.bot })),
+      presence: s.presence,
+      players: s.players.map((p) => ({
+        id: p.id,
+        name: p.name,
+        avatar: p.avatarId,
+        bot: !!p.bot,
+        ...(p.canSeeTv === false ? { remote: true } : {}),
+      })),
       timeline: s.timeline,
       results:
         s.results === null
@@ -141,6 +156,7 @@ export function createRecorder(options: RecorderOptions): Recorder {
       startedAt: running.startedAt,
       seed: running.seed,
       settings: running.settings,
+      presence: { mode: room.presenceMode ?? 'together', phoneOnly: room.phoneOnly },
       players,
       timeline: [],
       history: [],

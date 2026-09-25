@@ -5,6 +5,7 @@ import type {
   BotStrategy,
   ErrorCode,
   GameStateBase,
+  PresenceMode,
   RoomResults,
   RoomStatus,
   Settings,
@@ -26,6 +27,8 @@ export interface RoomPlayer {
   spectator: boolean;
   /** Bots are room players driven by the host from `game.bot.sampleInput` (ADR-028). Never VIP. */
   bot?: { ownerId: string | null; strategy: BotStrategy };
+  /** ADR-047: this person can't see the TV (stored only when false; bots always can). */
+  canSeeTv?: false;
 }
 
 export interface RunningGame {
@@ -67,6 +70,8 @@ export interface RoomState {
   listed: boolean;
   /** S-005: "phone only" — the TV's moments go to the phones. */
   phoneOnly: boolean;
+  /** ADR-047: where everyone is (absent = together; optional so saved rooms still load). */
+  presenceMode?: PresenceMode;
   /** I-746 B: when the last person's phone dropped mid-game (the game is paused until one is back). */
   asleepSince?: number;
   /** I-746: the game was already paused (by the VIP) when everyone dropped — waking leaves it paused. */
@@ -108,6 +113,8 @@ export type RoomEvent =
       existingToken?: string;
       /** I-741 C: "That's me — take my seat": claim the seat of this name even if it reads connected. */
       takeOver?: boolean;
+      /** ADR-047: the phone's own "I can see the TV", else the host's guess from its address. */
+      canSeeTv?: boolean;
     }
   | {
       /** A player (or the dev API, ownerId null) adds a bot; the host mints id + token. */
@@ -125,6 +132,8 @@ export type RoomEvent =
   | { type: 'nudge'; now: number; playerId: string }
   /** I-650: a person votes for the next game (null takes the vote back). */
   | { type: 'vote'; now: number; playerId: string; gameId: string | null }
+  /** ADR-047: a phone flips its "I can see the TV". */
+  | { type: 'presence'; now: number; playerId: string; canSeeTv: boolean }
   | {
       type: 'vip';
       now: number;

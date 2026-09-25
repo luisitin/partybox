@@ -4,8 +4,10 @@ import type { GameManifest, VipAction } from '@partybox/shared';
 import { removePlayer } from './players';
 import { abortGame, applyGameEvent, startGame } from './runner';
 import { applyHighlight } from './picker';
+import { setPresenceMode } from './presence';
 import { coerceSettings, defaultSettings } from './settings';
-import type { ApplyResult, Effect, EngineDeps, RoomState } from './types';
+import { switchToast } from './switch-toast';
+import type { ApplyResult, EngineDeps, RoomState } from './types';
 
 function reject(
   room: RoomState,
@@ -240,7 +242,10 @@ export function applyVip(
       return {
         room: { ...room, recording: action.on },
         effects: [
-          switchToast(action.on ? '📼 Saving a recap of each game' : '📼 Not saving recaps'),
+          ...switchToast(
+            room,
+            action.on ? '📼 Saving a recap of each game' : '📼 Not saving recaps',
+          ),
           { type: 'push' },
         ],
       };
@@ -251,7 +256,8 @@ export function applyVip(
       return {
         room: { ...room, musicOnPhones: action.on },
         effects: [
-          switchToast(
+          ...switchToast(
+            room,
             action.on
               ? '🎵 Music on every phone'
               : '🎵 Music on the TV only — a phone can turn its own on',
@@ -273,7 +279,8 @@ export function applyVip(
       return {
         room: { ...room, phoneOnly: action.on },
         effects: [
-          switchToast(
+          ...switchToast(
+            room,
             action.on
               ? '📱 Phone-only room — the phones show what the TV would'
               : '📺 The TV is the stage again',
@@ -281,6 +288,12 @@ export function applyVip(
           { type: 'push' },
         ],
       };
+    }
+    case 'setPresenceMode': {
+      const done = setPresenceMode(room, action.mode);
+      return done === 'mid-game'
+        ? reject(room, playerId, 'cannot_start', 'Change that before the next game.')
+        : done;
     }
     case 'highlight':
       return applyHighlight(room, action.gameId, playerId, deps);
@@ -291,9 +304,4 @@ export function applyVip(
       return { room: { ...room, status: 'lobby' }, effects: [{ type: 'push' }] };
     }
   }
-}
-
-/** I-642 C: a room switch changed — everyone is told what it means. */
-function switchToast(text: string): Effect {
-  return { type: 'toast', to: 'all', kind: 'info', text };
 }
