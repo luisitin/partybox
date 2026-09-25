@@ -61,45 +61,6 @@
   text-align: center;
 }
 
-/* ── intro ─────────────────────────────────────────────────────────────────────────────── */
-
-.introMask {
-  margin: 0;
-  font-size: var(--pb-font-display);
-  line-height: 1;
-  text-align: center;
-}
-
-.introTitle {
-  margin: 0;
-  font-size: var(--pb-font-h1);
-  font-weight: 900;
-  text-align: center;
-}
-
-.how {
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-3);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.howStep {
-  display: flex;
-  gap: var(--pb-space-3);
-  align-items: flex-start;
-  padding: var(--pb-space-3);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-  font-size: var(--pb-font-body);
-  font-weight: 700;
-  line-height: 1.35;
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
-  animation-delay: calc(var(--i) * var(--pb-motion-fast));
-}
-
 .howNo {
   flex: none;
   display: grid;
@@ -656,31 +617,6 @@
   .legality:not([data-bad]) {
     display: none;
   }
-
-  .introMask {
-    font-size: var(--pb-font-h1);
-  }
-
-  .introTitle {
-    font-size: var(--pb-font-h2);
-  }
-
-  .how {
-    gap: var(--pb-space-2);
-  }
-
-  .howStep {
-    padding: var(--pb-space-2) var(--pb-space-3);
-    font-size: var(--pb-font-caption);
-  }
-}
-
-.readyWait {
-  margin: 0;
-  padding: var(--pb-space-3);
-  text-align: center;
-  font-weight: 700;
-  color: var(--pb-text-muted);
 }
 
 .countdownScreen {

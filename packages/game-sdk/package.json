@@ -12,8 +12,11 @@
     "./match": "./src/match.ts",
     "./ui": "./src/ui.ts",
     "./speech": "./src/speech.ts",
+    "./reading": "./src/reading.ts",
     "./ui/secret-card": "./src/ui-secret-card.ts",
     "./ui/face-picker": "./src/ui-face-picker.ts",
+    "./ui/dial": "./src/ui-dial.ts",
+    "./ui/team-banner": "./src/ui-team-banner.ts",
     "./ui/word-grid": "./src/ui-word-grid.ts",
     "./ui/order-picker": "./src/ui-order-picker.ts",
     "./testing": "./src/testing.ts"

@@ -1,5 +1,6 @@
 // Bingo's pacing and board constants: pure numbers the server, the phones and the TV all read.
 // No zod here (types.ts holds the input schemas), so the client entries stay free of it (ADR-050).
+import { readingMs } from '@partybox/game-sdk/reading';
 
 /** The card-pick step's longest wait (loop 344); everyone ready ends it sooner. */
 export const INTRO_MS = 15_000;
@@ -43,7 +44,7 @@ export const NO_PICK_MS = 20_000;
  *  screen of words stays up 1.5 s + 1/3 s a word, x1.3 because a Spanish phone or 200 % text
  *  reads longer (the server cannot see the phones' languages, so the margin is always on). */
 export function readMs(words: number): number {
-  return Math.round((1_500 + words * 333) * 1.3);
+  return readingMs(words, { ui: true });
 }
 /** I-105 A: the vote after a bingo runs this long from its first choice — three options and the
  *  hint to read, then a moment to choose (was the note's six seconds; pacing rule 2026-09-25).

@@ -1,7 +1,7 @@
 {
   "phase": {
     "id": "done",
-    "startedAt": 1700000371036,
+    "startedAt": 1700000360549,
     "deadline": null
   },
   "rng": {
@@ -13,25 +13,29 @@
       "id": "p1",
       "name": "Player 1",
       "avatarId": "fox",
-      "connected": true
+      "connected": true,
+      "canSeeTv": true
     },
     "p2": {
       "id": "p2",
       "name": "Player 2",
       "avatarId": "owl",
-      "connected": true
+      "connected": true,
+      "canSeeTv": true
     },
     "p3": {
       "id": "p3",
       "name": "Player 3",
       "avatarId": "frog",
-      "connected": true
+      "connected": true,
+      "canSeeTv": true
     },
     "p4": {
       "id": "p4",
       "name": "Player 4",
       "avatarId": "cat",
-      "connected": true
+      "connected": true,
+      "canSeeTv": false
     }
   },
   "cfg": {
@@ -292,22 +296,22 @@
       "verified": true,
       "hardWords": ["Turkmenistan"]
     },
-    "readAt": 1700000319753,
+    "readAt": 1700000309972,
     "lies": {
-      "p1": "february",
-      "p3": "may",
-      "p2": "june",
-      "p4": "december"
+      "p2": "february",
+      "p3": "december",
+      "p4": "march",
+      "p1": "october"
     },
     "truthTyped": [],
     "rejected": {},
     "suggestions": {
-      "p1": ["february", "september"],
-      "p3": ["august", "may"],
-      "p4": ["march", "december"],
-      "p2": ["june", "october"]
+      "p2": ["february", "september"],
+      "p4": ["august", "march"],
+      "p3": ["may", "december"],
+      "p1": ["june", "october"]
     },
-    "claimed": ["february", "september", "august", "may", "march", "december", "june", "october"],
+    "claimed": ["february", "september", "august", "march", "may", "december", "june", "october"],
     "options": [
       {
         "display": "April",
@@ -317,28 +321,28 @@
         "id": "o71"
       },
       {
-        "display": "February",
+        "display": "October",
         "authors": ["p1"],
         "house": false,
         "truth": false,
         "id": "o33"
       },
       {
-        "display": "May",
+        "display": "December",
         "authors": ["p3"],
         "house": false,
         "truth": false,
         "id": "o31"
       },
       {
-        "display": "December",
+        "display": "March",
         "authors": ["p4"],
         "house": false,
         "truth": false,
         "id": "o56"
       },
       {
-        "display": "June",
+        "display": "February",
         "authors": ["p2"],
         "house": false,
         "truth": false,
@@ -346,32 +350,23 @@
       }
     ],
     "picks": {
-      "p4": "o33",
-      "p2": "o31",
-      "p3": "o56",
-      "p1": "o56"
+      "p1": "o36",
+      "p2": "o71",
+      "p3": "o33",
+      "p4": "o71"
     },
     "likes": {},
-    "revealOrder": ["o33", "o31", "o56", "o71"],
-    "step": 5,
-    "stepAt": 1700000358036,
+    "revealOrder": ["o33", "o36", "o71"],
+    "step": 4,
+    "stepAt": 1700000347549,
     "delta": {
-      "p1": {
-        "pts": 1000,
+      "p2": {
+        "pts": 3000,
         "why": [
           {
-            "k": "fooled",
-            "n": 1,
-            "pts": 1000
+            "k": "truth",
+            "pts": 2000
           },
-          {
-            "k": "final"
-          }
-        ]
-      },
-      "p3": {
-        "pts": 1000,
-        "why": [
           {
             "k": "fooled",
             "n": 1,
@@ -386,9 +381,21 @@
         "pts": 2000,
         "why": [
           {
-            "k": "fooled",
-            "n": 2,
+            "k": "truth",
             "pts": 2000
+          },
+          {
+            "k": "final"
+          }
+        ]
+      },
+      "p1": {
+        "pts": 1000,
+        "why": [
+          {
+            "k": "fooled",
+            "n": 1,
+            "pts": 1000
           },
           {
             "k": "final"
@@ -398,166 +405,155 @@
     }
   },
   "scores": {
-    "p1": 4000,
-    "p2": 3500,
-    "p3": 4500,
-    "p4": 7500
+    "p1": 6000,
+    "p2": 7500,
+    "p3": 1500,
+    "p4": 7000
   },
   "stats": {
     "p1": {
-      "fooled": 5,
-      "truths": 1,
-      "likes": 4,
+      "fooled": 7,
+      "truths": 2,
+      "likes": 0,
       "truthTyped": 0,
       "house": 0
     },
     "p2": {
-      "fooled": 3,
-      "truths": 2,
-      "likes": 1,
+      "fooled": 6,
+      "truths": 3,
+      "likes": 3,
       "truthTyped": 0,
       "house": 0
     },
     "p3": {
-      "fooled": 4,
-      "truths": 2,
+      "fooled": 1,
+      "truths": 1,
       "likes": 2,
       "truthTyped": 0,
       "house": 0
     },
     "p4": {
-      "fooled": 9,
-      "truths": 2,
-      "likes": 4,
+      "fooled": 4,
+      "truths": 4,
+      "likes": 6,
       "truthTyped": 0,
       "house": 0
     }
   },
   "offered": {
-    "p1": [
+    "p4": [
       "sausage",
       "gingerbread",
       "dancing",
       "thinking",
-      "smoke",
-      "ink",
-      "milky way",
-      "mars",
-      "explosives",
-      "glue",
-      "fox",
-      "parrot",
-      "february",
-      "september"
-    ],
-    "p3": [
-      "pudding",
-      "cake",
-      "friendship",
-      "march",
-      "radio waves",
-      "static",
-      "venus",
-      "jupiter",
-      "bandages",
-      "toothpaste",
-      "wolf",
-      "raccoon",
-      "august",
-      "may"
-    ],
-    "p4": [
-      "pie",
-      "butter",
-      "metal",
-      "silence",
       "electricity",
       "glitter",
       "north pole",
       "saturn",
       "leather",
       "plastic",
-      "badger",
-      "pig",
-      "march",
-      "december"
+      "fox",
+      "parrot",
+      "august",
+      "march"
     ],
     "p2": [
-      "hay",
-      "ham",
+      "pudding",
+      "cake",
       "obedience",
       "smile",
+      "radio waves",
+      "static",
+      "venus",
+      "jupiter",
+      "chewing gum",
+      "silk",
+      "badger",
+      "pig",
+      "february",
+      "september"
+    ],
+    "p1": [
+      "pie",
+      "butter",
+      "metal",
+      "silence",
+      "smoke",
+      "ink",
+      "milky way",
+      "mars",
+      "explosives",
+      "glue",
+      "wolf",
+      "raccoon",
+      "june",
+      "october"
+    ],
+    "p3": [
+      "hay",
+      "ham",
+      "friendship",
+      "march",
       "fog",
       "steam",
       "halley's comet",
       "moon",
-      "chewing gum",
-      "silk",
+      "bandages",
+      "toothpaste",
       "monkey",
       "goat",
-      "june",
-      "october"
+      "may",
+      "december"
     ]
   },
   "speechMs": {
     "fake-out-392e93e73353fd0d": -1,
-    "fake-out-5232f80954c39f06": -1,
-    "fake-out-6f1e24fb4a569594": -1,
-    "fake-out-102522184e8bdeec": -1,
-    "fake-out-66d48250cfb9d932": -1,
-    "fake-out-512f39705a64471f": -1,
-    "fake-out-8b77cba91500e3de": -1,
-    "fake-out-017416ce83a6e883": -1,
-    "fake-out-d6433bec2601394c": -1,
-    "fake-out-fe616111a6785742": -1,
-    "fake-out-f55076209682b62f": -1,
-    "fake-out-a2ade1d1879e0396": -1,
+    "fake-out-5b56a843caea8e67": -1,
     "fake-out-673688a451dabea6": -1,
-    "fake-out-47eb4bb64c727047": -1,
+    "fake-out-a2ade1d1879e0396": -1,
+    "fake-out-f55076209682b62f": -1,
+    "fake-out-62926285faecbc87": -1,
     "fake-out-afd18848c29c6c72": -1,
     "fake-out-13b70fce6af45dea": -1,
     "fake-out-b25181fb16321519": -1,
-    "fake-out-c9fce41e443af684": -1,
-    "fake-out-b5da521f3f552011": -1,
-    "fake-out-237617b3947fa7ec": -1,
+    "fake-out-2917edcba7fc95a1": -1,
+    "fake-out-f1de8a240c79a90a": -1,
+    "fake-out-574b77cd6d930afb": -1,
     "fake-out-110c3f15527e6811": -1,
     "fake-out-f4a2cc365d822331": -1,
     "fake-out-f6d2706d8fe3dcb5": -1,
     "fake-out-c906557ab9caf3c3": -1,
-    "fake-out-c8d05cfa044bb625": -1,
+    "fake-out-7d4dd1744b54b212": -1,
     "fake-out-02e8f39a263274ff": -1,
     "fake-out-7ce899c96c2e42d9": -1,
-    "fake-out-55628baa69e2f56b": -1,
+    "fake-out-3617f11ccbb93232": -1,
     "fake-out-43f10475b2fb1655": -1,
     "fake-out-1c04dc533f67cfba": -1,
     "fake-out-c2129bec962417ab": -1,
     "fake-out-411e954e6058b7f1": -1,
+    "fake-out-a500d74369b114d0": -1,
+    "fake-out-ac2400a71a203267": -1,
     "fake-out-70c52dc854ca4e66": -1,
-    "fake-out-de26fd19bfd4ca15": -1,
-    "fake-out-b660ff967f92ab8e": -1,
     "fake-out-16db35c21f7b5c9a": -1,
     "fake-out-b948cc2a67b2934f": -1,
-    "fake-out-74f0cdaef35f6a09": -1,
+    "fake-out-6eb90e1ad5dbf1f6": -1,
     "fake-out-b85f184b904b6086": -1,
-    "fake-out-bc088d6a27c46ae3": -1,
+    "fake-out-db97e0f0abc4c1f8": -1,
     "fake-out-1b01d519c15fe392": -1,
     "fake-out-a04d6fcabff32af5": -1,
     "fake-out-04db07c7eeff0c52": -1,
     "fake-out-5e24b21c35ed624b": -1,
-    "fake-out-3ec8966d2c6332ce": -1,
-    "fake-out-0fe079b58104080e": -1,
     "fake-out-457281f0189e685d": -1,
-    "fake-out-4e5f43f9866fd1e0": -1,
+    "fake-out-3ec8966d2c6332ce": -1,
     "fake-out-0c2a08072cf4c8da": -1,
+    "fake-out-4e5f43f9866fd1e0": -1,
+    "fake-out-0fe079b58104080e": -1,
     "fake-out-42d2a1035e4766b3": -1,
     "fake-out-42a3c646f7948caa": -1,
     "fake-out-bf66c05a5bde106f": -1,
-    "fake-out-102a272871055bf8": -1,
-    "fake-out-f599fcca26c9ab2c": -1,
+    "fake-out-e88081818651c88e": -1,
     "fake-out-b18b33a55d694949": -1,
-    "fake-out-8273b1c65ba6618b": -1,
+    "fake-out-102a272871055bf8": -1,
     "fake-out-e3da91a10108d773": -1
-  },
-  "ready": ["p1", "p4", "p2", "p3"],
-  "goAt": 1700000008638
+  }
 }

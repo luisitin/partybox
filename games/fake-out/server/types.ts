@@ -5,7 +5,7 @@ import type { FactItem } from '../content/schema';
 
 export type { FactItem } from '../content/schema';
 
-export const PHASES = ['intro', 'question', 'lie', 'pick', 'reveal', 'scores', 'done'] as const;
+export const PHASES = ['question', 'lie', 'pick', 'reveal', 'scores', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export const READERS = ['george', 'fable', 'jessica', 'sky', 'original'] as const;
@@ -100,16 +100,11 @@ export interface State extends GameStateBase {
   offered: Record<string, string[]>;
   /** Speech key → length in ms (−1 = could not be made). */
   speechMs: Record<string, number>;
-  /** Intro ready-up (owner, [cc45f4]): who has tapped I'm ready (bots from the start). */
-  ready: string[];
-  /** The 3 · 2 · 1 is running: it ends on the intro's deadline, which a pause shifts. */
-  counting: boolean;
 }
 
 export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('lie'), text: z.string().min(1).max(80) }),
   z.object({ type: z.literal('suggest') }),
-  z.object({ type: z.literal('ready') }),
   z.object({ type: z.literal('pick'), option: z.string().max(16) }),
   z.object({ type: z.literal('like'), option: z.string().max(16), on: z.boolean() }),
 ]);
@@ -119,13 +114,6 @@ export type LieInput = Extract<Input, { type: 'lie' }>;
 /** "Leave the current phase now": injected into phase reducers by server/flow.ts. */
 export type Transition = (state: State, now: number) => State;
 
-/** The rules wait for everyone's I'm ready; this only stops a room of idle phones hanging. */
-export const INTRO_MS = 90_000;
-/** Once a human has tapped Ready the rules keep waiting for the rest, up to this long. */
-export const READY_WAIT_MAX_MS = 600_000;
-/** A breath after the last Ready, then the 3 · 2 · 1. */
-export const READY_BREATH_MS = 700;
-export const COUNTDOWN_MS = 3_000;
 /** Long enough for a slow reader to take in the board and the reason chips (owner, [cc45f4]). */
 export const SCORES_MS = 10_000;
 /** The question card holds for its reading plus this beat, at most QUESTION_MAX_MS. */
