@@ -4,6 +4,7 @@ import { game as bingo } from '../../../games/bingo/server/index';
 import { game as blanks } from '../../../games/blanks/server/index';
 import { game as blindAuction } from '../../../games/blind-auction/server/index';
 import { game as brokenPencil } from '../../../games/broken-pencil/server/index';
+import { game as fakeOut } from '../../../games/fake-out/server/index';
 import { game as hiveRank } from '../../../games/hive-rank/server/index';
 import { game as imposter } from '../../../games/imposter/server/index';
 import { game as lightningRound } from '../../../games/lightning-round/server/index';
@@ -13,6 +14,7 @@ import bingoEs from '../../../games/bingo/manifest.es.json' with { type: 'json' 
 import blanksEs from '../../../games/blanks/manifest.es.json' with { type: 'json' };
 import blindAuctionEs from '../../../games/blind-auction/manifest.es.json' with { type: 'json' };
 import brokenPencilEs from '../../../games/broken-pencil/manifest.es.json' with { type: 'json' };
+import fakeOutEs from '../../../games/fake-out/manifest.es.json' with { type: 'json' };
 import hiveRankEs from '../../../games/hive-rank/manifest.es.json' with { type: 'json' };
 import imposterEs from '../../../games/imposter/manifest.es.json' with { type: 'json' };
 import lightningRoundEs from '../../../games/lightning-round/manifest.es.json' with { type: 'json' };
@@ -24,6 +26,7 @@ export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'blanks': blanks,
   'blind-auction': blindAuction,
   'broken-pencil': brokenPencil,
+  'fake-out': fakeOut,
   'hive-rank': hiveRank,
   'imposter': imposter,
   'lightning-round': lightningRound,
@@ -36,6 +39,7 @@ export const serverGameText: Readonly<Record<string, Readonly<Record<string, Rea
   'blanks': { es: blanksEs },
   'blind-auction': { es: blindAuctionEs },
   'broken-pencil': { es: brokenPencilEs },
+  'fake-out': { es: fakeOutEs },
   'hive-rank': { es: hiveRankEs },
   'imposter': { es: imposterEs },
   'lightning-round': { es: lightningRoundEs },
