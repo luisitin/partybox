@@ -88,6 +88,19 @@ Foundation work lives on branch `foundation` and does not merge until the owner 
    `Finale` owns the headline (e.g. a `coop: true` client-module flag), done once for Echo and
    Tune In. Until then the finale board carries the verdict.
 
+## Balance (all-bot teams, 300 seeds, 3–8 players, 10 words)
+
+Words won: 1:4 · 2:11 · 3:18 · 4:44 · 5:52 · 6:53 · 7:52 · 8:33 · 9:25 · 10:8 — centred near 6, every
+rating reachable. Bots echo 40 % of their clues (they lean on the obvious end of each bank, by
+design); turns: 1804 right, 364 wrong, 505 passed.
+
+## Still to do
+
+- Phone-only room recording (the Controller's own result stage) once port 42370 is free of the
+  owner's play-test build (the dev reset would kick their room).
+- Swap the stand-ins (match, speakable, SecretCard) and adopt ADR-050's layout when foundation
+  reaches main; then the speech-lab pass and render-clips for the 14 fixed lines.
+
 ## Content notes
 
 - Warnings (fewer than 6 accepted forms) remain only where no honest form exists: fog, key, map,
