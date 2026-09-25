@@ -90,5 +90,13 @@ export function winnerLineFor(room: RoomSnapshot, meId: string, scoreless = fals
   if (!ids.includes(meId)) return winnerLine(room);
   if (ids.length === 1) return t.results.youWin;
   if (ids.length >= results.players.length) return t.results.tie;
-  return t.results.youTie;
+  // I-476: "You share first with Sam!" — the others, alphabetical like every list
+  const others = ids
+    .filter((id) => id !== meId)
+    .map((id) => results.players.find((p) => p.id === id)?.name ?? '?')
+    .sort((x, y) => x.localeCompare(y, undefined, { numeric: true, sensitivity: 'base' }));
+  const first = others[0] ?? '?';
+  return t.results.youTie(
+    others.length === 1 ? first : t.results.andOthers(first, others.length - 1),
+  );
 }
