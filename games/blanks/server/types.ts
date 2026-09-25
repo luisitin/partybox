@@ -168,6 +168,9 @@ export function wordCount(text: string): number {
 /** The round card: up to ~12 words over three beats (title, judge line, leader line at ~1.2 s):
  *  1.2 s + readMs(12) ≈ 8.3 s (was 5 s). */
 export const INTRO_MS = 8_000;
+/** ADR-053: round 1's card follows the shell's start stage (rules, READY, 3 · 2 · 1), so it is a
+ *  short title beat — the round title, then the judge's name on its 400 ms beat, read in time — not a second read. Later rounds keep INTRO_MS. */
+export const FIRST_INTRO_MS = 2_500;
 /** czar mode: how many black cards the judge chooses between, and how long they get (timed; a
  *  hidden 60 s fallback untimed — the default is the first card, so an idle judge never stalls). */
 export const BLACK_CHOICES = 3;
