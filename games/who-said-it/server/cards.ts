@@ -3,7 +3,7 @@
 // chips are dealt here too. Pure.
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
-import { sameAnswer } from './match';
+import { sameAnswer } from '@partybox/game-sdk/match';
 import type { Card } from './types';
 
 /** Cards for `answers` (authors in seat order), shuffled with the state's PRNG. */

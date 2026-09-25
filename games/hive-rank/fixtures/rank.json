@@ -1,0 +1,269 @@
+{
+  "phase": {
+    "id": "rank",
+    "startedAt": 1700000008000,
+    "deadline": 1700000038000
+  },
+  "rng": {
+    "seed": 1,
+    "step": 203
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    }
+  },
+  "settings": {
+    "rounds": 6,
+    "rankSeconds": 30,
+    "spicy": false,
+    "reader": "jessica"
+  },
+  "questions": [
+    {
+      "id": "hr-robot-330",
+      "kind": "hypothetical",
+      "prompt": "Best to worst job to hand to a robot",
+      "say": "You get a robot helper. Rank these jobs to give it, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "dog",
+          "label": "Walking the dog"
+        },
+        {
+          "id": "homework",
+          "label": "Doing homework"
+        },
+        {
+          "id": "toilet",
+          "label": "Scrubbing the toilet"
+        },
+        {
+          "id": "toys",
+          "label": "Picking up toys"
+        },
+        {
+          "id": "laundry",
+          "label": "Folding laundry"
+        }
+      ],
+      "expected": ["toilet", "laundry", "homework", "toys", "dog"]
+    },
+    {
+      "id": "hr-tech-135",
+      "kind": "preference",
+      "prompt": "Best to worst invention ever",
+      "say": "Rank these inventions, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "bread",
+          "label": "Sliced bread"
+        },
+        {
+          "id": "ac",
+          "label": "Air conditioning"
+        },
+        {
+          "id": "wrap",
+          "label": "Bubble wrap"
+        },
+        {
+          "id": "plumbing",
+          "label": "Indoor plumbing"
+        },
+        {
+          "id": "toaster",
+          "label": "Pop-up toaster"
+        }
+      ],
+      "expected": ["plumbing", "ac", "bread", "toaster", "wrap"]
+    },
+    {
+      "id": "hr-home-337",
+      "kind": "preference",
+      "prompt": "Best to worst part of bedtime",
+      "say": "Rank these parts of bedtime, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "teeth",
+          "label": "Brushing teeth"
+        },
+        {
+          "id": "story",
+          "label": "Bedtime story"
+        },
+        {
+          "id": "tidy",
+          "label": "Tidying up toys"
+        },
+        {
+          "id": "bath",
+          "label": "Warm bath"
+        },
+        {
+          "id": "pajamas",
+          "label": "Fresh pajamas"
+        }
+      ],
+      "expected": ["story", "pajamas", "bath", "teeth", "tidy"]
+    },
+    {
+      "id": "hr-alien-329",
+      "kind": "hypothetical",
+      "prompt": "Best to worst thing to show a visiting alien",
+      "say": "An alien is visiting. Rank these things to show it, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "traffic",
+          "label": "A traffic jam"
+        },
+        {
+          "id": "coaster",
+          "label": "A roller coaster"
+        },
+        {
+          "id": "dentist",
+          "label": "A dentist visit"
+        },
+        {
+          "id": "catvideo",
+          "label": "A cat video"
+        },
+        {
+          "id": "pizza",
+          "label": "A pizza"
+        }
+      ],
+      "expected": ["coaster", "pizza", "catvideo", "traffic", "dentist"]
+    },
+    {
+      "id": "hr-music-345",
+      "kind": "preference",
+      "prompt": "Best to worst instrument to learn",
+      "say": "Rank these instruments to learn, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "violin",
+          "label": "Violin"
+        },
+        {
+          "id": "guitar",
+          "label": "Guitar"
+        },
+        {
+          "id": "recorder",
+          "label": "Recorder"
+        },
+        {
+          "id": "drums",
+          "label": "Drums"
+        },
+        {
+          "id": "piano",
+          "label": "Piano"
+        }
+      ],
+      "expected": ["guitar", "piano", "drums", "violin", "recorder"]
+    },
+    {
+      "id": "hr-fight-302",
+      "kind": "hypothetical",
+      "prompt": "Most to least likely to win a snowball fight",
+      "say": "Who would win a snowball fight? Rank them from most to least likely.",
+      "top": "Wins",
+      "bottom": "Loses",
+      "items": [
+        {
+          "id": "penguin",
+          "label": "A penguin"
+        },
+        {
+          "id": "yeti",
+          "label": "A yeti"
+        },
+        {
+          "id": "plow",
+          "label": "A snowplow driver"
+        },
+        {
+          "id": "kid",
+          "label": "A kid on a snow day"
+        },
+        {
+          "id": "polar",
+          "label": "A polar bear"
+        }
+      ],
+      "expected": ["yeti", "kid", "polar", "plow", "penguin"]
+    }
+  ],
+  "q": {
+    "n": 1,
+    "orders": {},
+    "hive": null,
+    "totals": {},
+    "step": 0,
+    "voiced": [],
+    "hold": false,
+    "delta": {},
+    "queens": [],
+    "lows": [],
+    "short": false,
+    "sayOk": false,
+    "applied": false
+  },
+  "scores": {
+    "p1": 0,
+    "p2": 0,
+    "p3": 0,
+    "p4": 0,
+    "p5": 0,
+    "p6": 0
+  },
+  "stats": {},
+  "pairs": {},
+  "speechMs": {}
+}

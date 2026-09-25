@@ -12,17 +12,14 @@ Branch `game/who-said-it`, worktree `C:/dev/partybox-game-who-said-it`, harness 
 | 4 Record → review | 23 passes, see REVIEW.md; frame timing to re-measure on a quiet machine                                                                                                   |
 | 5 Review package  | REVIEW.md written; waiting for the owner                                                                                                                                  |
 
-## Stand-ins (swap when the owner's piece lands on main)
+## Platform pieces (all real since main 19bc87b6 — the stand-ins are gone)
 
-| Needed                                                                  | Owner            | Stand-in                                                                                                                                                                        |
-| ----------------------------------------------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sameAnswer` (`@partybox/game-sdk/match`)                               | Foundation F5    | `games/who-said-it/server/match.ts` (same rules + audit errata)                                                                                                                 |
-| `toSpeakable` + overrides                                               | Foundation F6    | `games/who-said-it/server/speakable.ts`                                                                                                                                         |
-| `speechKey` / engine version                                            | Foundation F6    | `server/speech.ts` (`ws` + FNV over version, voice, parts)                                                                                                                      |
-| Fixed clips (render-clips pipeline)                                     | Foundation F6    | the five fixed lines are live readings with constant text (cached forever by key)                                                                                               |
-| `FacePicker`                                                            | Imposter session | `client/FacePicker.tsx` (2 / 3 columns, 4 / 5 sideways)                                                                                                                         |
-| Manifest `icon`, `howToPlay`, `presence`, `addedOn`; `manifest.es.json` | Foundation F2    | not added yet: the schema on main strips them and the contract deep-equals the JSON (audit #58). Values ready: 🗣️; the three spec steps; `{ needs: 'anywhere' }`; `2026-09-24`. |
-| Per-phone stage (`canSeeTv`, P1/P2)                                     | Foundation F4    | PhoneStage works for phone-only rooms today                                                                                                                                     |
+`sameAnswer` from `@partybox/game-sdk/match`; `toSpeakable`, `speechKey`, `speakableName`,
+`pendingCap`, `parsePronunciations` from `@partybox/game-sdk/speech`; `FacePicker` from
+`@partybox/game-sdk/ui/face-picker` (a tap on the current pick is ignored: a guess can't be taken
+back). ADR-050 layout: `client/{shared,phone-entry,tv-entry}.ts`, `manifest.es.json`, manifest
+`icon` 🗣️ / `howToPlay` / `presence: anywhere` / `addedOn`. Phone download 11.5 KB gz (budget 33).
+The fixed lines are still live readings (no render-clips pipeline for new games yet).
 
 ## Decisions and deviations (each with the reason)
 

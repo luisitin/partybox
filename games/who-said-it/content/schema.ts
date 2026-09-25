@@ -2,6 +2,7 @@
 // suite validates every pack with it. A prompt carries the bots' answer bank (12+, ≤ 60 characters,
 // mixed styles) and a `kind` so the pack test can hold the 60 / 30 / 10 mix.
 import { z } from '@partybox/game-sdk';
+import { pronunciationsSchema } from '@partybox/game-sdk/speech';
 
 export const BOT_ANSWER_MAX = 60;
 
@@ -22,17 +23,6 @@ export const promptPackSchema = z.object({
   prompts: z.array(promptItemSchema).min(1).refine(uniqueIds, { message: 'duplicate prompt id' }),
 });
 export type PromptPack = z.infer<typeof promptPackSchema>;
-
-/** Pronunciation overrides (foundation §5.4 as amended by ruling 17): case-sensitive by default. */
-export const pronunciationsSchema = z.record(
-  z.string().min(1),
-  z.object({
-    say: z.string().min(1),
-    ipa: z.string().min(1).optional(),
-    anyCase: z.boolean().optional(),
-  }),
-);
-export type Pronunciations = z.infer<typeof pronunciationsSchema>;
 
 export const packs = {
   family: promptPackSchema,

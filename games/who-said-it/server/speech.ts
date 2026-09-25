@@ -3,15 +3,12 @@
 // author); a name line "It was Ben!" is made for EVERY seated player then too, so the flip never
 // waits for the voice and the set of lines reveals nothing (NOTES.md: why not "only at reveal");
 // a merged card's "It was both Ana and Eli!" is asked for at its reveal. Pure.
-import type { SpeechPart, SpeechRequest } from '@partybox/game-sdk';
+import type { SpeechRequest } from '@partybox/game-sdk';
+import { pendingCap, speakableName, speechKey, toSpeakable } from '@partybox/game-sdk/speech';
 import { PRONUNCIATIONS } from './content';
-import { speakableName, toSpeakable } from './speakable';
 import type { Card, State } from './types';
 
-/** Bumped when the text rules change, so no cached reading outlives them (ruling 17). */
-export const SPEECH_ENGINE_VERSION = 1;
-/** At most this many readings asked for at once (foundation §5.7, audit #48). */
-export const PENDING_CAP = 10;
+const GAME_ID = 'who-said-it';
 
 export const FIXED = {
   write: 'Time to write.',
@@ -22,23 +19,10 @@ export const FIXED = {
 } as const;
 export type FixedLine = keyof typeof FIXED;
 
-/** Key = game prefix + a hash of engine version, voice and parts; the server allows [a-z0-9]. */
-export function speechKey(voice: string, parts: readonly SpeechPart[]): string {
-  const text = `${SPEECH_ENGINE_VERSION}|${voice}|${JSON.stringify(parts)}`;
-  let a = 0x811c9dc5;
-  let b = 0x01000193;
-  for (let i = 0; i < text.length; i++) {
-    const c = text.charCodeAt(i);
-    a = Math.imul(a ^ c, 0x01000193) >>> 0;
-    b = Math.imul(b ^ c, 0x5bd1e995) >>> 0;
-  }
-  return `ws${a.toString(36)}${b.toString(36)}`;
-}
-
-function request(voice: string, text: string, player: boolean): SpeechRequest | null {
-  const parts = toSpeakable(text, { player, overrides: PRONUNCIATIONS });
+function request(voice: string, text: string, playerText: boolean): SpeechRequest | null {
+  const parts = toSpeakable(text, { voice, lang: 'en', playerText, overrides: PRONUNCIATIONS });
   if (parts.length === 0) return null;
-  return { key: speechKey(voice, parts), voice, parts };
+  return { key: speechKey(GAME_ID, voice, parts), voice, parts };
 }
 
 export function voiceOf(state: State): string | null {
@@ -109,7 +93,7 @@ function wanted(state: State): (SpeechRequest | null)[] {
   return [];
 }
 
-/** The readings to ask the host for now: unmade ones, deduped, at most PENDING_CAP. */
+/** The readings to ask the host for now: unmade ones, deduped, at most pendingCap (foundation §5.7). */
 export function speech(state: State): SpeechRequest[] {
   if (!voiceOf(state)) return [];
   const seen = new Set<string>();
@@ -118,7 +102,7 @@ export function speech(state: State): SpeechRequest[] {
     if (!r || seen.has(r.key) || state.speechMs[r.key] !== undefined) continue;
     seen.add(r.key);
     out.push(r);
-    if (out.length >= PENDING_CAP) break;
+    if (out.length >= pendingCap(state.seats.length)) break;
   }
   return out;
 }

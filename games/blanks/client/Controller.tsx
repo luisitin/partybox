@@ -23,7 +23,7 @@ import { ControllerPick } from './ControllerPick';
 import { ControllerJudge, ControllerReveal } from './ControllerJudge';
 import { NextButton } from './NextButton';
 import { useReading } from './useReading';
-import { RESULT_BEATS_MS } from './TvResult';
+import { RESULT_BEATS_MS } from './timing';
 import { rankLine } from './rankLine';
 import { list, votesLabel, winnerLine } from './resultLines';
 import { STRINGS } from './strings';

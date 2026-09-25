@@ -1,0 +1,695 @@
+/* Hive Rank on the TV (1920 x 1080, 10-foot). Tokens only; transform/opacity animations only;
+   every duration from a motion token, so reduced motion and "motion off" collapse them. */
+.root {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+/* ── the honeycomb behind everything ─────────────────────────────────────────────────────── */
+.comb {
+  position: absolute;
+  inset: -160px;
+  z-index: -1;
+  color: var(--pb-surface-2);
+  opacity: 0.45;
+  pointer-events: none;
+  animation: drift calc(var(--pb-motion-slow) * 24) linear infinite;
+}
+
+.combSvg {
+  display: block;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(84px, 145.5px, 0);
+  }
+}
+
+/* ── shared header ───────────────────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  text-align: center;
+}
+
+.kicker {
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.prompt {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.1;
+  text-wrap: balance;
+  max-width: 1500px;
+}
+
+.promptSmall {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.ends {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+/* ── intro ───────────────────────────────────────────────────────────────────────────────── */
+.introStage {
+  gap: var(--pb-space-5);
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-5);
+}
+
+.bee,
+.bigBee {
+  display: inline-block;
+  font-size: var(--pb-font-display);
+  line-height: 1;
+  animation: buzz calc(var(--pb-motion-pulse) * 2.4) var(--pb-ease) infinite alternate;
+}
+
+.bigBee {
+  font-size: calc(var(--pb-font-display) * 1.4);
+}
+
+@keyframes buzz {
+  0% {
+    transform: translate3d(0, 6px, 0) rotate(-6deg);
+  }
+  50% {
+    transform: translate3d(10px, -10px, 0) rotate(4deg);
+  }
+  100% {
+    transform: translate3d(-6px, -2px, 0) rotate(-2deg);
+  }
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--pb-space-5);
+  max-width: 1640px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-4);
+  padding: var(--pb-space-6) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 3px solid var(--pb-border);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  line-height: 1.3;
+  animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) backwards;
+  animation-delay: calc(var(--pb-motion-base) * (var(--i) + 1));
+}
+
+.stepNum {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+.introNote {
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+/* The game's own Next (and its reserved slot, so nothing shifts when it arrives). */
+.tvButton,
+.buttonSlot {
+  min-height: 88px;
+}
+
+.tvButton {
+  padding: 0 var(--pb-space-7);
+  border-radius: 999px;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.tvButton:hover:not(:disabled) {
+  transform: scale(1.04);
+}
+
+.tvButton:disabled {
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
+}
+
+.buttonSlot {
+  display: block;
+}
+
+/* ── rank ────────────────────────────────────────────────────────────────────────────────── */
+.rankStage {
+  justify-content: space-evenly;
+}
+
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--pb-space-5);
+}
+
+.card {
+  display: flex;
+  animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) backwards;
+  animation-delay: calc(var(--pb-motion-fast) * var(--i));
+}
+
+.cardInner {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  min-height: 240px;
+  padding: var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 3px solid var(--pb-border);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  animation: bob calc(var(--pb-motion-pulse) * 3) var(--pb-ease) infinite alternate;
+  animation-delay: calc(var(--pb-motion-pulse) * -0.6 * var(--i));
+}
+
+@keyframes bob {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+.lockLine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-1);
+}
+
+.lockCount {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease);
+}
+
+.lockHint {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+/* ── hive: the ladder ────────────────────────────────────────────────────────────────────── */
+.hiveStage {
+  position: relative;
+  gap: var(--pb-space-2);
+}
+
+/* The scout bee flies over the ladder (positioned against the ladder's box: see .ladder). */
+.scout {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  font-size: var(--pb-font-h1);
+  line-height: 1;
+  transform: translate3d(1500px, -120px, 0); /* off to the right until measured */
+  transition: transform calc(var(--pb-motion-slow) * 2.3) cubic-bezier(0.45, 0, 0.25, 1);
+  transition-delay: calc(var(--pb-motion-slow) * 0.7);
+}
+
+.scoutInner {
+  display: inline-block;
+  animation: flutter calc(var(--pb-motion-pulse) * 1.1) ease-in-out infinite;
+}
+
+@keyframes flutter {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-8deg);
+  }
+  25% {
+    transform: translate3d(14px, -12px, 0) rotate(6deg);
+  }
+  50% {
+    transform: translate3d(0, -4px, 0) rotate(-4deg);
+  }
+  75% {
+    transform: translate3d(-14px, -12px, 0) rotate(8deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-8deg);
+  }
+}
+
+.hivePrompt {
+  text-align: center;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.decided {
+  text-align: center;
+  min-height: 1.3em;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
+}
+
+.ladder {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--pb-space-2);
+}
+
+.rung {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 620px) minmax(0, 1fr) 280px;
+  align-items: center;
+  gap: var(--pb-space-5);
+  min-height: 92px;
+  padding: var(--pb-space-1) var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  border: 3px solid transparent;
+  perspective: 1400px;
+  position: relative;
+  transition:
+    background-color var(--pb-motion-slow) var(--pb-ease),
+    border-color var(--pb-motion-slow) var(--pb-ease);
+}
+
+.latest {
+  background: var(--pb-surface);
+  border-color: var(--pb-border);
+}
+
+.place {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 4px dashed var(--pb-text-muted);
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  transition:
+    background-color var(--pb-motion-base) var(--pb-ease),
+    border-color var(--pb-motion-base) var(--pb-ease),
+    color var(--pb-motion-base) var(--pb-ease);
+}
+
+.landed .place {
+  border: 4px solid var(--pb-accent-2);
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+}
+
+.slot,
+.thing {
+  display: flex;
+  align-items: center;
+  min-height: 76px;
+  padding: var(--pb-space-2) var(--pb-space-5);
+  border-radius: var(--pb-radius);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.slot {
+  justify-content: center;
+  grid-column: 2 / 3;
+  border: 3px dashed var(--pb-text-muted);
+  color: var(--pb-text-muted);
+  opacity: 0.6;
+}
+
+/* A thing flies in from the right, turning face-on as it lands (transform only: 3D + opacity
+   flattens in Chromium). Its text is readable from the first frame, with its voice. */
+.thing {
+  background: var(--pb-surface-2);
+  border: 3px solid var(--pb-accent);
+  transform-origin: left center;
+  animation: arrive var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+@keyframes arrive {
+  0% {
+    transform: translate3d(320px, 0, 0) rotateY(-55deg) scale(0.86);
+  }
+  65% {
+    transform: translate3d(-8px, 0, 0) rotateY(6deg) scale(1.03);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+/* Number one: the moment. A larger card and a warm lift once it lands. */
+.top .thing {
+  font-size: var(--pb-font-h2);
+  min-height: 84px;
+  border-color: var(--pb-accent-2);
+}
+
+.top.landed .place {
+  animation: global(pb-crown) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: var(--pb-motion-base);
+}
+
+.faces {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.face {
+  display: inline-flex;
+  margin-left: -12px;
+  border-radius: 50%;
+  border: 3px solid var(--pb-bg);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) backwards;
+  animation-delay: calc(var(--pb-motion-slow) + var(--pb-motion-fast) * 0.4 * var(--i));
+}
+
+.face:first-child {
+  margin-left: 0;
+}
+
+.more,
+.nobody {
+  margin-left: var(--pb-space-3);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) backwards;
+  animation-delay: var(--pb-motion-slow);
+}
+
+.track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+}
+
+.trackLine {
+  position: relative;
+  display: block;
+  width: 240px;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--pb-surface-2);
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--pb-text-muted) 0 2px,
+    transparent 2px 25%
+  );
+}
+
+.trackDot {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--at) * 100%);
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border-radius: 50%;
+  background: var(--pb-accent-2);
+  border: 3px solid var(--pb-bg);
+  /* It glides from the 1 end to the room's average once the thing has landed. */
+  animation: glide calc(var(--pb-motion-slow) * 2) var(--pb-ease) backwards;
+  animation-delay: var(--pb-motion-slow);
+}
+
+@keyframes glide {
+  from {
+    transform: translate3d(calc(var(--at) * -240px), 0, 0) scale(0.6);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* The spot that just landed breathes while it is held (the room is looking at it). */
+.latest .thing {
+  animation:
+    arrive var(--pb-motion-slow) var(--pb-ease) both,
+    breathe calc(var(--pb-motion-pulse) * 1.4) var(--pb-ease) calc(var(--pb-motion-slow)) infinite
+      alternate;
+}
+
+@keyframes breathe {
+  from {
+    transform: none;
+  }
+  to {
+    transform: scale(1.025);
+  }
+}
+
+.trackText {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.unanimous {
+  position: absolute;
+  left: 560px;
+  top: -6px;
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  animation: stamp var(--pb-motion-base) var(--pb-ease) backwards;
+  animation-delay: var(--pb-motion-slow);
+}
+
+@keyframes stamp {
+  0% {
+    opacity: 0;
+    transform: scale(1.8) rotate(-10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-4deg);
+  }
+}
+
+.shortLine {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+}
+
+.shortHint {
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+/* ── score ───────────────────────────────────────────────────────────────────────────────── */
+.scoreStage {
+  position: relative;
+  gap: var(--pb-space-4);
+}
+
+.scoreHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 88px;
+}
+
+.perfect {
+  padding: var(--pb-space-1) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  border: 4px solid var(--pb-accent-2);
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  transform: rotate(-2deg);
+  animation: stamp var(--pb-motion-slow) var(--pb-ease) backwards;
+}
+
+.scoreBody {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 540px minmax(0, 1fr);
+  gap: var(--pb-space-6);
+  align-items: start;
+}
+
+.queen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 3px solid var(--pb-accent-2);
+  text-align: center;
+}
+
+.queenTitle {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+}
+
+.queenFaces {
+  display: flex;
+  gap: var(--pb-space-4);
+  padding-top: 56px;
+}
+
+.queenFace {
+  position: relative;
+  display: inline-flex;
+  animation: global(pb-crown) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-slow) + var(--pb-motion-fast) * var(--i));
+}
+
+.crown {
+  position: absolute;
+  left: 50%;
+  top: -72px;
+  margin-left: -40px;
+  width: 80px;
+  font-size: var(--pb-font-h1);
+  line-height: 1;
+  text-align: center;
+  animation: crownDrop var(--pb-motion-slow) var(--pb-ease) backwards;
+  animation-delay: calc(var(--pb-motion-slow) * 1.5 + var(--pb-motion-fast) * var(--i));
+}
+
+@keyframes crownDrop {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -90px, 0) rotate(-20deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(0, 6px, 0) rotate(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.queenName {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.queenPts {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  color: var(--pb-accent-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.queenNone {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.board {
+  min-width: 0;
+}
+
+.doneLine {
+  margin: auto;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+}
+
+/* Loops stop outright under reduced motion / motion off (their token-based durations collapse to
+   0; this makes it explicit). */
+@media (prefers-reduced-motion: reduce) {
+  .comb,
+  .bee,
+  .bigBee,
+  .cardInner,
+  .scoutInner {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .comb,
+:global(:root[data-motion='off']) .bee,
+:global(:root[data-motion='off']) .bigBee,
+:global(:root[data-motion='off']) .cardInner,
+:global(:root[data-motion='off']) .scoutInner {
+  animation: none;
+}

@@ -7,7 +7,7 @@ import { buzz } from '@partybox/game-sdk/ui';
 import type { SoundApi } from '@partybox/game-sdk/ui';
 import type { PlayCue } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
-import { DEAL_BOUNCE_MS, DEAL_START_MS, DEAL_STEP_MS } from '../server/types';
+import { DEAL_BOUNCE_MS, DEAL_START_MS, DEAL_STEP_MS } from '../server/constants';
 import { BALL_LAND_MS, speakCall } from './caller';
 import { wantedCells } from './close';
 

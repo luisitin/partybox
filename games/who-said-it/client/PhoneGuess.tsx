@@ -7,8 +7,8 @@ import { Screen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { WsPhoneView } from '../server/views';
-import { FacePicker } from './FacePicker';
-import type { Face } from './FacePicker';
+import { FacePicker } from '@partybox/game-sdk/ui/face-picker';
+import type { FaceOption } from '@partybox/game-sdk/ui/face-picker';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
@@ -21,10 +21,10 @@ export function PhoneGuess({ view, send }: GameControllerProps<WsPhoneView, Inpu
   const mine = tapped && tapped.card === number ? tapped.id : null;
   const picked = view.myGuess ?? mine;
   const byId = new Map(view.players.map((p) => [p.id, p]));
-  const faces: Face[] = view.candidates
+  const faces: FaceOption[] = view.candidates
     .map((id) => byId.get(id))
     .filter((p): p is NonNullable<typeof p> => p !== undefined)
-    .map((p) => ({ id: p.id, name: p.name, avatarId: p.avatarId, connected: p.connected }));
+    .map((p) => ({ id: p.id, name: p.name, avatarId: p.avatarId }));
   // The owner's rule (2026-09-24): the author sits out their own card.
   if (view.mine)
     return (
@@ -64,11 +64,14 @@ export function PhoneGuess({ view, send }: GameControllerProps<WsPhoneView, Inpu
         <p className={styles.quoteText}>{card?.text ?? ''}</p>
       </div>
       <FacePicker
-        faces={faces}
-        picked={picked}
+        options={faces}
+        selected={picked ? [picked] : []}
         label={L('Who said it?')}
-        itemLabel={(f, on) => (on ? L('{name}, picked', { name: f.name }) : L('Pick {name}', { name: f.name }))} // prettier-ignore
-        onPick={(id) => {
+        // A tap on another face changes the guess; a tap on the pick keeps it (a guess can't be
+        // taken back, so the SDK picker's un-pick is ignored).
+        onChange={(ids) => {
+          const id = ids[0];
+          if (!id || id === picked) return;
           setTapped({ card: number, id });
           send({ type: 'guess', target: id });
         }}

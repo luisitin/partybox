@@ -2,8 +2,8 @@
 // (≤ 60 characters, mixed styles, no two the same answer), prompts that anyone can answer.
 import { describe, expect, it } from 'vitest';
 import { FAMILY, SPICY } from '../server/content';
-import { sameAnswer } from '../server/match';
-import { toSpeakable } from '../server/speakable';
+import { sameAnswer } from '@partybox/game-sdk/match';
+import { toSpeakable } from '@partybox/game-sdk/speech';
 
 const ALL = [...FAMILY, ...SPICY];
 
@@ -35,7 +35,7 @@ describe('packs', () => {
     for (const p of ALL) {
       expect(p.prompt.length, p.id).toBeLessThanOrEqual(90);
       expect(p.prompt, p.id).not.toMatch(/[‘’“”]/);
-      expect(toSpeakable(p.prompt).length, p.id).toBeGreaterThan(0);
+      expect(toSpeakable(p.prompt, { voice: 'sky', lang: 'en' }).length, p.id).toBeGreaterThan(0);
     }
   });
 });
@@ -48,7 +48,7 @@ describe('bot answers', () => {
       for (let i = 0; i < p.botAnswers.length; i += 1)
         for (let j = i + 1; j < p.botAnswers.length; j += 1)
           expect(
-            sameAnswer(p.botAnswers[i] as string, p.botAnswers[j] as string),
+            sameAnswer(p.botAnswers[i] as string, p.botAnswers[j] as string, 'en'),
             `${p.id}: "${p.botAnswers[i]}" ≈ "${p.botAnswers[j]}"`,
           ).toBe(false);
     }

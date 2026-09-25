@@ -1,110 +1,9 @@
-.games {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-3);
-}
-
-.card {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-1);
-  padding: var(--pb-space-4);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-  /* --pb-border is transparent except in High Contrast, where every card gets a white edge and
-     the selected one turns accent + ✓, so the state never rests on colour alone. */
-  border: 3px solid var(--pb-border);
-  text-align: left;
-  transition:
-    transform var(--pb-motion-fast) var(--pb-ease),
-    border-color var(--pb-motion-fast) var(--pb-ease);
-}
-
-.card:active {
-  transform: scale(0.98);
-}
-
-.selected {
-  border-color: var(--pb-accent);
-  background: var(--pb-surface-2);
-}
-
 /* Title + a 28 px ✓ disc: a long title wraps under the disc instead of colliding with it. */
-.cardHead {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--pb-space-3);
-}
-
-.cardTitle {
-  min-width: 0;
-  font-size: var(--pb-font-h2);
-  font-weight: 800;
-}
-
-.check {
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: var(--pb-font-body);
-  font-weight: 900;
-  line-height: 1;
-  border: 2px solid var(--pb-text-muted);
-  color: transparent;
-}
-
-.selected .check {
-  background: var(--pb-accent);
-  border-color: var(--pb-accent);
-  color: var(--pb-on-accent);
-}
-
-.cardTagline {
-  color: var(--pb-text-muted);
-}
-
 /* "Bots welcome" is a capability (success colour); "No bots" is a limit, not a feature. */
-.botsOk {
-  color: var(--pb-accent-3);
-}
-
-.botsNo {
-  color: var(--pb-text-muted);
-  font-weight: 600;
-}
-
-.cardMeta {
-  font-size: var(--pb-font-caption);
-  color: var(--pb-accent-2);
-  font-weight: 700;
-}
-
-.cardDescription {
-  margin-top: var(--pb-space-2);
-  font-size: var(--pb-font-caption);
-  color: var(--pb-text);
-}
-
 .settings {
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-2);
-}
-
-.settingsTitle {
-  font-size: var(--pb-font-caption);
-  font-weight: 700;
-  color: var(--pb-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
 }
 
 .footer {
@@ -119,44 +18,7 @@
   text-align: center;
 }
 
-.back {
-  min-height: var(--pb-touch);
-  color: var(--pb-text-muted);
-  font-weight: 700;
-}
-
 /* The recording toggle (ADR-035): the same row as a boolean setting, muted when off. */
-.recording {
-  margin-bottom: var(--pb-space-3);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--pb-space-3);
-  min-height: 56px;
-  padding: var(--pb-space-2) var(--pb-space-4);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-}
-
-.recordingLabel {
-  display: flex;
-  flex-direction: column;
-  font-weight: 700;
-}
-
-.recordingLabel small {
-  font-weight: 400;
-  color: var(--pb-text-muted);
-  font-size: var(--pb-font-caption);
-}
-
-.recordingBox {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  accent-color: var(--pb-accent);
-}
-
 /* ── I-187 B: the game's key setting as a chip on its card (red for the explicit deck). */
 .keyChip {
   align-self: flex-start;
@@ -172,13 +34,6 @@
   color: var(--pb-danger);
 }
 /* ── I-763 B: the tuned settings on the picker card, and the reset link on the sheet. */
-.cardTuned {
-  display: block;
-  margin-top: var(--pb-space-1);
-  font-size: var(--pb-font-caption);
-  color: var(--pb-good, #4ce0a4);
-  font-weight: 700;
-}
 .resetDefaults {
   float: right;
   background: none;
@@ -191,17 +46,6 @@
 }
 
 /* ── I-650 A: how many want this game — a pill beside the title. */
-.votes {
-  flex-shrink: 0;
-  margin-left: auto;
-  padding: 2px 10px;
-  border-radius: 999px;
-  background: var(--pb-surface-2);
-  font-weight: 800;
-  font-size: var(--pb-font-caption);
-  line-height: 24px;
-}
-
 /* ── I-667 A: the red line's fix — a pill under it. */
 .fix {
   align-self: center;
@@ -214,12 +58,6 @@
 }
 
 /* ── I-667 C: a game that doesn't fit the room, on its card. */
-.fit {
-  font-size: var(--pb-font-caption);
-  font-weight: 800;
-  color: var(--pb-accent-2);
-}
-
 /* ── I-642 B: the room's switches as one row of state chips; it opens the ★ menu. */
 .roomRow {
   display: flex;

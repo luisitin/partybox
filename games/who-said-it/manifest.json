@@ -1,13 +1,23 @@
 {
   "id": "who-said-it",
   "name": "Who Said It",
+  "icon": "🗣️",
   "tagline": "Everyone answers. Everyone guesses who wrote what.",
   "description": "Everyone answers the same question on their phone. The answers come up one at a time and everyone taps who they think wrote each one. Score for every right guess, and for every friend your answer fools. Answer honestly, or write like someone else to throw the room off.",
+  "howToPlay": [
+    "Everyone answers the same question on their phone.",
+    "The answers appear one at a time. Tap who you think wrote each one.",
+    "Score for every right guess, and for every player your answer fools."
+  ],
   "version": "0.1.0",
   "minPlayers": 3,
   "maxPlayers": 16,
   "estimatedMinutes": 10,
   "tags": ["comedy", "bluff"],
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-24",
   "settings": [
     {
       "key": "prompts",
@@ -16,11 +26,26 @@
       "type": "select",
       "default": "auto",
       "options": [
-        { "value": "auto", "label": "Auto" },
-        { "value": "1", "label": "1" },
-        { "value": "2", "label": "2" },
-        { "value": "3", "label": "3" },
-        { "value": "4", "label": "4" }
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
       ]
     },
     {
@@ -71,12 +96,30 @@
       "type": "select",
       "default": "sky",
       "options": [
-        { "value": "sky", "label": "Soft-Spoken Woman" },
-        { "value": "george", "label": "Old British Man" },
-        { "value": "fable", "label": "Young British Man" },
-        { "value": "jessica", "label": "American Woman" },
-        { "value": "original", "label": "Original" },
-        { "value": "none", "label": "No reader" }
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "none",
+          "label": "No reader"
+        }
       ]
     }
   ],

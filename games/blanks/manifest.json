@@ -1,8 +1,14 @@
 {
   "id": "blanks",
   "name": "Blanks",
+  "icon": "🃏",
   "tagline": "Fill in the blank. The worst answer wins.",
-  "description": "A black card sets up the sentence; everyone plays the white card from their hand that finishes it best (or worst). The TV reads every combination out one at a time, then the room votes — or a rotating judge picks. One point per round won. Three decks from family-safe to fully explicit; the VIP chooses.",
+  "description": "A black card sets up the sentence; everyone plays the white card from their hand that finishes it best (or worst). The TV reads every combination out, then the room votes or a rotating judge picks. One point per round won. Three decks from family-safe to fully explicit; the VIP chooses.",
+  "howToPlay": [
+    "A black card with a blank goes up on the TV.",
+    "Play the white card from your hand that fills it best, or worst.",
+    "The TV reads them all out. The room votes, or the judge picks the winner."
+  ],
   "version": "0.1.0",
   "minPlayers": 3,
   "maxPlayers": 12,
@@ -13,7 +19,9 @@
     "perPlayerPerRoundSeconds": 3,
     "roundsSetting": "rounds"
   },
-  "tags": ["cards", "voting", "comedy", "adult"],
+  "tags": ["comedy"],
+  "presence": { "needs": "anywhere" },
+  "addedOn": "2026-01-01",
   "settings": [
     {
       "key": "decks",

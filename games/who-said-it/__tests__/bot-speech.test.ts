@@ -4,7 +4,8 @@ import { createRng } from '@partybox/game-sdk';
 import { describe, expect, it } from 'vitest';
 import { decide } from '../server/bot';
 import { game } from '../server/index';
-import { PENDING_CAP, cardReading, nameLine, promptReading, speech } from '../server/speech';
+import { pendingCap } from '@partybox/game-sdk/speech';
+import { cardReading, nameLine, promptReading, speech } from '../server/speech';
 import type { State } from '../server/types';
 import { PROMPT_MAX_MS } from '../server/types';
 import { authorsNow, phone, reduce, start, timer, until, written } from './helpers';
@@ -63,7 +64,7 @@ describe('voice', () => {
   it('during the intro: the first prompt and the fixed lines, capped', () => {
     const asked = speech(voiced());
     expect(asked[0]?.key).toBe(promptReading(voiced(), 0)?.key);
-    expect(asked.length).toBeLessThanOrEqual(PENDING_CAP);
+    expect(asked.length).toBeLessThanOrEqual(pendingCap(4));
   });
 
   it('never asks for an answer before write ends; then every card and every name', () => {

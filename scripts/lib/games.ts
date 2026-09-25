@@ -10,13 +10,15 @@ export const GAMES_DIR = join(REPO_ROOT, 'games');
 /** Relative paths every game folder must contain (docs/ADDING_A_GAME.md lists the same set). */
 export const REQUIRED_GAME_FILES = [
   'manifest.json',
+  'manifest.es.json',
   'README.md',
   'CLAUDE.md',
   'server/index.ts',
   'server/scoring.ts',
   'server/content.ts',
   'server/phases',
-  'client/index.ts',
+  'client/phone-entry.ts',
+  'client/tv-entry.ts',
   'client/Tv.tsx',
   'client/Controller.tsx',
   'content',
