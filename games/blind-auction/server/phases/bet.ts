@@ -30,6 +30,13 @@ export function betsAllIn(state: State): boolean {
 
 export function reduceBet(state: State, event: GameEvent<Input>, next: Transition): State {
   if (isTimerFor(state, event)) return next(state, event.now);
+  if (event.type === 'input' && event.input.type === 'spots') {
+    const id = event.playerId;
+    const spots = [...new Set(event.input.spots)];
+    const box = state.boxes[state.r.idx]?.box;
+    if (!inGame(state, id) || box?.event !== 'keno' || spots.length !== 3) return state;
+    return { ...state, r: { ...state.r, spots: { ...state.r.spots, [id]: spots } } };
+  }
   if (event.type !== 'input' || event.input.type !== 'bet') return state;
   const id = event.playerId;
   if (!inGame(state, id)) return state;
@@ -41,6 +48,8 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
   // Tug of war: you back your own team (your taps pull for it).
   const team = box?.event === 'tug' ? teamOf(state, id) : null;
   const wrongSide = box?.event === 'tug' && amount > 0 && team !== option;
+  // Keno: pick your three numbers before you stake.
+  const noSpots = box?.event === 'keno' && amount > 0 && (state.r.spots?.[id]?.length ?? 0) !== 3;
   const code =
     amount > have
       ? 'over'
@@ -48,7 +57,9 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
         ? 'option'
         : self
           ? 'self'
-          : null;
+          : noSpots
+            ? 'spots'
+            : null;
   if (code) return { ...state, notices: { ...state.notices, [id]: { code, have, at: event.now } } };
   const { [id]: _cleared, ...notices } = state.notices;
   const after: State = {

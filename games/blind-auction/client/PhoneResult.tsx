@@ -63,6 +63,9 @@ export function insideWords(
   L: ReturnType<typeof useT>,
   view: PushedView<BlindAuctionControllerView>,
 ): string {
+  // Keno: the balls drawn, not the one "option".
+  if (view.box?.event === 'keno' && view.run)
+    return L('drawn {list}', { list: view.run.detail.join(' · ') });
   const o = view.box && view.outcome !== null ? view.box.options[view.outcome] : undefined;
   return o ? `${iconOf(o)} ${nameOf(L, o)}` : '?';
 }

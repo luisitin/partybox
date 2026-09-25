@@ -29,6 +29,16 @@ export function decide(view: BlindAuctionControllerView, factor: number, rng: Rn
     return { type: 'swap', door };
   }
   if (view.phaseId !== 'bet' || view.myBet !== null || !view.box) return null;
+  // Keno: three distinct numbers first, then the stake (next time round).
+  if (view.box.event === 'keno' && view.mySpots.length !== 3) {
+    const pool = Array.from({ length: 20 }, (_, i) => i + 1);
+    const spots: number[] = [];
+    while (spots.length < 3) {
+      const n = pool.splice(Math.floor(rng.float() * pool.length), 1)[0];
+      if (n !== undefined) spots.push(n);
+    }
+    return { type: 'spots', spots };
+  }
   const options = view.box.options;
   if (options.length === 0) return null;
   // Weight each content by its chance, bent by the personality toward the long shots.

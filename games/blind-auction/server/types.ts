@@ -48,6 +48,7 @@ export const LIVE_KINDS = [
   'tug',
   'shells',
   'coins',
+  'keno',
 ] as const;
 export type LiveKind = (typeof LIVE_KINDS)[number];
 
@@ -133,6 +134,8 @@ export interface RoundState {
   tier?: number;
   moves?: [number, number][];
   picks?: Record<string, number>;
+  /** Keno: each bettor's three numbers (1 … KENO_NUMBERS), secret until `open`. */
+  spots?: Record<string, number[]>;
 }
 
 export interface Stats {
@@ -145,7 +148,7 @@ export interface Stats {
 
 /** A refused input, shown on that phone; `at` keys the toast so a repeat shows again. */
 export interface Notice {
-  code: 'over' | 'option' | 'self';
+  code: 'over' | 'option' | 'self' | 'spots';
   have: number;
   at: number;
 }
@@ -181,6 +184,11 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('tug') }),
   // Shell game: the cup you think hides the ball.
   z.object({ type: z.literal('cup'), cup: z.number().int().min(0).max(2) }),
+  // Keno: your three numbers.
+  z.object({
+    type: z.literal('spots'),
+    spots: z.array(z.number().int().min(1).max(20)).length(3),
+  }),
   z.object({
     type: z.literal('bet'),
     // Up to 16 for hot potato (one option per player).

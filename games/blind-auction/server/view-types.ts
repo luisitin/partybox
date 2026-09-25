@@ -98,7 +98,7 @@ export interface BlindAuctionControllerView extends ControllerView, Common {
   myBet: Bet | null;
   /** Broke at the start of this bet: topped up to the pity stake. */
   topped: boolean;
-  notice: { code: 'over' | 'option' | 'self'; have: number; at: number } | null;
+  notice: { code: 'over' | 'option' | 'self' | 'spots'; have: number; at: number } | null;
   line: OwnLine | null;
   /** Doors `swap`: the door you bet on (null = no stake, nothing to choose) and where you are now. */
   myDoor: number | null;
@@ -108,6 +108,8 @@ export interface BlindAuctionControllerView extends ControllerView, Common {
   /** Tug of war: your team (0 ▲ Sun, 1 ● Moon) and your share of its stake (0…1). */
   myTeam: 0 | 1 | null;
   myShare: number;
+  /** Keno: your three numbers (empty until you pick). */
+  mySpots: number[];
   /** Shell game `cups`: you staked (so you pick), and the cup you picked. */
   myStake: number;
   /** Shell game: the swaps, only in a phone-only room (no TV to watch). */

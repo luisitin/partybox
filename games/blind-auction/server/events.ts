@@ -6,6 +6,7 @@ import { nextFloat, shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { drawOutcome } from './draw';
 import { payOf } from './odds';
+import { KENO_DRAW, KENO_NUMBERS } from './timing';
 import type { Box, BoxOption, LiveKind, Round } from './types';
 
 interface Label {
@@ -77,6 +78,11 @@ const DOORS: readonly Label[] = [
 export const DOOR_PAY = 2;
 
 const EVENT_BOX: Record<LiveKind, { name: string; icon: string; flavour: string }> = {
+  keno: {
+    name: 'Lucky Numbers',
+    icon: '🎱',
+    flavour: 'Pick three numbers. Five balls drop. Match them all for ×25!',
+  },
   coins: {
     name: 'Coin Streak',
     icon: '🪙',
@@ -185,6 +191,17 @@ function coins(rng: RngState, n: number): [Round, RngState] {
   return [{ box: eventBox('coins', n, options), outcome, detail: flips }, state];
 }
 
+/** Keno: one "option" (you play your numbers, not a card); the draw is `detail`. */
+function keno(rng: RngState, n: number): [Round, RngState] {
+  const [pool, next] = shuffle(
+    rng,
+    Array.from({ length: KENO_NUMBERS }, (_, i) => i + 1),
+  );
+  const drawn = pool.slice(0, KENO_DRAW);
+  const options = [{ ...option({ icon: '🎱', name: 'Your numbers' }, 100), pay: 0 }];
+  return [{ box: eventBox('keno', n, options), outcome: 0, detail: drawn }, next];
+}
+
 /** Shell game: three cups; everyone stakes into one pot first, picks a cup after the shuffle. */
 const CUPS: readonly Label[] = [
   { icon: '🥤', name: 'Cup 1' },
@@ -233,5 +250,6 @@ export function drawEvent(kind: LiveKind, rng: RngState, n: number): [Round, Rng
   if (kind === 'tug') return tug(rng, n);
   if (kind === 'shells') return shells(rng, n);
   if (kind === 'coins') return coins(rng, n);
+  if (kind === 'keno') return keno(rng, n);
   return wheel(rng, n);
 }

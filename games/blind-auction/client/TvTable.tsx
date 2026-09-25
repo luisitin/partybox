@@ -16,6 +16,7 @@ import { PotatoRing } from './Potato';
 import { TugRope } from './Tug';
 import { ShellStage } from './Shells';
 import { CupsPanel, PotatoPanel, ShufflePanel, SwapPanel, TugPanel } from './EventPanels';
+import { PayTable } from './Keno';
 import { LotCard } from './LotCard';
 import { OptionBoard } from './Options';
 import { STRINGS } from './strings';
@@ -52,7 +53,7 @@ function BoxPanel({ view }: { view: View }): JSX.Element | null {
     <div className={`${styles.panel} ${styles.panelRise}`}>
       <h1 className={styles.plate}>{boxWords(L, view.box).name}</h1>
       <p className={styles.flavour}>{boxWords(L, view.box).flavour}</p>
-      <OptionBoard options={view.box.options} />
+      {view.box.event === 'keno' ? <PayTable /> : <OptionBoard options={view.box.options} />}
     </div>
   );
 }
@@ -67,7 +68,7 @@ function BetPanel({ view }: { view: View }): JSX.Element | null {
   return (
     <div className={styles.panel}>
       <h1 className={styles.call}>{L('Place your bets!')}</h1>
-      <OptionBoard options={view.box.options} />
+      {view.box.event === 'keno' ? <PayTable /> : <OptionBoard options={view.box.options} />}
       <p className={styles.count} aria-live="polite">
         <span className={styles.pips} aria-hidden>
           {Array.from({ length: view.bettors }, (_, i) => (
@@ -124,31 +125,37 @@ function OpenPanel({ view }: { view: View }): JSX.Element | null {
                   ? L('Doors are final. Where is the car?')
                   : view.run.kind === 'coins'
                     ? L('Bets are closed. Flip it!')
-                    : view.run.kind === 'shells'
-                      ? L('Cups up! Where is the ball?')
-                      : view.run.kind === 'tug' && view.tug?.draw
-                        ? L('Dead heat! Every stake goes back.')
-                        : view.run.kind === 'tug'
-                          ? L('Time! Which side held on?')
-                          : view.run.kind === 'potato'
-                            ? L('POP! {name} got burnt', {
-                                name:
-                                  view.players.find((p) => p.id === view.potato?.holder)?.name ??
-                                  '?',
-                              })
-                            : L('Bets are closed. Spin the wheel!')
+                    : view.run.kind === 'keno'
+                      ? L('Bets are closed. Here come the balls!')
+                      : view.run.kind === 'shells'
+                        ? L('Cups up! Where is the ball?')
+                        : view.run.kind === 'tug' && view.tug?.draw
+                          ? L('Dead heat! Every stake goes back.')
+                          : view.run.kind === 'tug'
+                            ? L('Time! Which side held on?')
+                            : view.run.kind === 'potato'
+                              ? L('POP! {name} got burnt', {
+                                  name:
+                                    view.players.find((p) => p.id === view.potato?.holder)?.name ??
+                                    '?',
+                                })
+                              : L('Bets are closed. Spin the wheel!')
             : bets.length
               ? L('Bets are closed. What’s inside?')
               : L('Nobody bet. What’s inside?')}
         </p>
       )}
-      <OptionBoard
-        options={view.box.options}
-        bets={bets}
-        shown={Math.max(0, seq)}
-        players={view.players}
-        outcome={landed ? view.outcome : null}
-      />
+      {view.box.event === 'keno' ? (
+        <PayTable />
+      ) : (
+        <OptionBoard
+          options={view.box.options}
+          bets={bets}
+          shown={Math.max(0, seq)}
+          players={view.players}
+          outcome={landed ? view.outcome : null}
+        />
+      )}
       {landed ? (
         <div className={styles.payouts} aria-live="polite">
           {winners.length ? (

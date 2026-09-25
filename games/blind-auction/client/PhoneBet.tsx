@@ -11,6 +11,7 @@ import type { Input } from '../server/types';
 import type { BlindAuctionControllerView } from '../server/views';
 import { COIN, iconOf, nameOf } from './copy';
 import { OptionBoard } from './Options';
+import { KenoPad } from './Keno';
 import { LotTitle, Purse } from './PhoneLot';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
@@ -22,7 +23,11 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
   // Tug of war: you back your own team, picked for you.
   const [option, setOption] = useState<number | null>(
     view.myBet?.option ??
-      (view.box?.event === 'tug' ? view.myTeam : view.box?.event === 'shells' ? 0 : null),
+      (view.box?.event === 'tug'
+        ? view.myTeam
+        : view.box?.event === 'shells' || view.box?.event === 'keno'
+          ? 0
+          : null),
   );
   const [amount, setAmount] = useState(view.myBet?.amount ?? 0);
   const box = view.box;
@@ -41,7 +46,9 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
   // Hot potato: you cannot back yourself (you could just keep it).
   const self = box.event === 'potato' && option !== null && option === view.mySeat;
   const notice =
-    self || view.notice?.code === 'self' ? (
+    view.notice?.code === 'spots' ? (
+      L('Pick your three numbers first')
+    ) : self || view.notice?.code === 'self' ? (
       L('You can’t bet on yourself: pick someone else')
     ) : view.notice?.code === 'over' ? (
       <span key={view.notice.at}>
@@ -68,10 +75,10 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       onPass={() => {
         setAmount(0);
         // Sitting out is sitting out: no card stays ticked (play-test: it read as both).
-        if (box.event !== 'tug' && box.event !== 'shells') setOption(null);
+        if (box.event !== 'tug' && box.event !== 'shells' && box.event !== 'keno') setOption(null);
         send({ type: 'bet', option: option ?? 0, amount: 0 });
       }}
-      blocked={option === null || self}
+      blocked={option === null || self || (box.event === 'keno' && view.mySpots.length !== 3)}
       texts={{
         place: (n) =>
           box.event === 'shells'
@@ -98,7 +105,9 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
             <LotTitle box={box} />
             <Purse coins={view.coins} />
           </div>
-          {box.event === 'shells' ? (
+          {box.event === 'keno' ? (
+            <KenoPad spots={view.mySpots} onSpots={(spots) => send({ type: 'spots', spots })} />
+          ) : box.event === 'shells' ? (
             <p className={styles.betHint}>
               {L(
                 'Put coins in the pot. You pick a cup after the shuffle; the bigger the pot, the faster it goes!',
@@ -120,7 +129,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
               hideLocked={box.event === 'tug'}
             />
           )}
-          {option === null && box.event !== 'shells' ? (
+          {option === null && box.event !== 'shells' && box.event !== 'keno' ? (
             // Review: a first-timer didn't know to tap a card or where the stake goes.
             <p className={styles.betHint}>{L('Tap a card, then choose your coins')}</p>
           ) : null}

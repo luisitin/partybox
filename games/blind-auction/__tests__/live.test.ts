@@ -32,7 +32,7 @@ describe('live events: the draw', () => {
         for (const o of box.options) {
           expect(o.label?.name, kind).toBeTruthy();
           // The shell game is a shared pot (pay 0), not odds.
-          if (kind !== 'shells') expect(o.pay, kind).toBeGreaterThan(1);
+          if (kind !== 'shells' && kind !== 'keno') expect(o.pay, kind).toBeGreaterThan(1);
         }
         expect(outcome).toBeGreaterThanOrEqual(0);
         expect(outcome).toBeLessThan(box.options.length);
@@ -46,6 +46,10 @@ describe('live events: the draw', () => {
           expect(b).toBeLessThanOrEqual(6);
           const sum = a + b;
           expect(outcome).toBe(sum < 7 ? 0 : sum === 7 ? 1 : 2);
+        }
+        if (kind === 'keno') {
+          expect(new Set(detail).size).toBe(5);
+          expect(detail.every((n) => n >= 1 && n <= 20)).toBe(true);
         }
         if (kind === 'coins') {
           const heads = detail.filter((f) => f === 1).length;
@@ -305,5 +309,36 @@ describe('live events: the shell game', () => {
     let s = shellsAt();
     for (const id of ['p1', 'p2', 'p3', 'p4']) s = bet(s, id, 0, 0);
     expect(s.phase.id).toBe('open');
+  });
+});
+
+describe('live events: keno', () => {
+  const kenoAt = (): ReturnType<typeof start> => {
+    let s = start(3, { rounds: 5 });
+    const [round] = drawEvent('keno', seedRng(8), 1);
+    s = {
+      ...s,
+      boxes: s.boxes.map((b, i) => (i === 1 ? { ...round, detail: [1, 2, 3, 4, 5] } : b)),
+    };
+    return walkTo(walkTo(walkTo(s, 'bet'), 'box'), 'bet');
+  };
+  const spots = (s: ReturnType<typeof start>, id: string, n: number[]) =>
+    send(s, {
+      type: 'input',
+      now: s.phase.startedAt + 50,
+      playerId: id,
+      input: { type: 'spots', spots: n },
+    });
+
+  it('no numbers, no stake; the stake pays by matches (0 / back / ×2 / ×25)', () => {
+    let s = kenoAt();
+    expect(bet(s, 'p1', 0, 10).notices['p1']?.code).toBe('spots');
+    s = spots(spots(spots(s, 'p1', [1, 2, 3]), 'p2', [1, 9, 10]), 'p3', [11, 12, 13]);
+    const before = { ...s.coins };
+    s = bet(bet(bet(s, 'p1', 0, 10), 'p2', 0, 10), 'p3', 0, 10);
+    s = walkTo(s, 'box');
+    expect(s.coins['p1']).toBe((before['p1'] ?? 0) - 10 + 250);
+    expect(s.coins['p2']).toBe(before['p2']);
+    expect(s.coins['p3']).toBe((before['p3'] ?? 0) - 10);
   });
 });

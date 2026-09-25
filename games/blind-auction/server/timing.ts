@@ -40,9 +40,19 @@ export const EVENT_MS = {
   shells: 1_400,
   // The coin flips one flip at a time (COIN_FLIP_MS each) until tails, then a beat.
   coins: 5_800,
+  // Keno: five balls drop, KENO_BALL_MS apart, then a beat.
+  keno: 5_600,
 } as const;
 /** Coin-flip streak: one flip on the TV. */
 export const COIN_FLIP_MS = 900;
+/** Keno (the owner: like KENO, Bingo-style balls, a tray, the payouts clear up front): pick
+ *  KENO_PICKS of KENO_NUMBERS; KENO_DRAW balls are drawn; the stake pays KENO_PAY[matches] ×
+ *  (1 match gives the stake back; the table averages a little under 1, like the boxes' odds). */
+export const KENO_NUMBERS = 20;
+export const KENO_PICKS = 3;
+export const KENO_DRAW = 5;
+export const KENO_PAY = [0, 1, 2, 25] as const;
+export const KENO_BALL_MS = 950;
 /** Shell game: speed tiers by how much of the room's coins went into the pot (share of seats ×
  *  start coins): ×1, ×2, ×3, ×5, ×8, ×10 — the owner's breakpoints. */
 export const SHELL_TIER_AT = [0, 0.1, 0.2, 0.35, 0.5, 0.7] as const;

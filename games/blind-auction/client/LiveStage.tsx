@@ -8,6 +8,7 @@ import { useReducedMotion, useT } from '@partybox/game-sdk/ui';
 import { COIN_FLIP_MS, EVENT_MS, betsMs } from '../server/timing';
 import type { OptionView, RunView } from '../server/views';
 import { iconOf, nameOf } from './copy';
+import { KenoStage } from './Keno';
 import styles from './live.module.css';
 import { STRINGS } from './strings';
 
@@ -306,6 +307,7 @@ export function LiveStage(props: Props): JSX.Element {
   if (props.run.kind === 'race') return <Race {...props} />;
   if (props.run.kind === 'dice') return <Dice {...props} />;
   if (props.run.kind === 'coins') return <Coins {...props} />;
+  if (props.run.kind === 'keno') return <KenoStage drawn={props.run.detail} bets={props.bets} />;
   if (props.run.kind === 'doors')
     return (
       <Doors

@@ -291,6 +291,7 @@ export function controllerView(state: State, playerId: string): BlindAuctionCont
     myTeam: playing ? teamOf(state, playerId) : null,
     myShare: playing && state.phase.id === 'tug' ? shareOf(state, playerId) : 0,
     myStake: playing ? (state.r.bets[playerId]?.amount ?? 0) : 0,
+    mySpots: playing ? (state.r.spots?.[playerId] ?? []) : [],
     myCup: playing && state.phase.id === 'cups' ? (state.r.picks?.[playerId] ?? null) : null,
     // A phone-only room has no TV: the phones must see the shuffle to follow the ball.
     shellSwaps:
