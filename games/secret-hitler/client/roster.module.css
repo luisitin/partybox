@@ -1,5 +1,49 @@
 /* The phone roster: a wooden bench of faces along the bottom. Tokens only. */
 
+.offices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.office {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: 0.3rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: 8px;
+  font-size: var(--pb-font-caption);
+  line-height: 1.1;
+  color: var(--sh-ink);
+  background: var(--sh-brass);
+  box-shadow: 0 2px 5px var(--sh-shadow);
+}
+
+.office strong {
+  font-family: var(--sh-font-display);
+  letter-spacing: 0.03em;
+}
+
+.office > span {
+  grid-column: 2;
+  overflow-wrap: anywhere;
+}
+
+.office[data-office='chancellor'] {
+  color: var(--sh-paper);
+  background: var(--sh-ink);
+  box-shadow:
+    inset 0 0 0 2px var(--sh-paper),
+    0 2px 5px var(--sh-shadow);
+}
+
+.office[data-office='nominee'] {
+  color: var(--sh-brass);
+  background: var(--sh-night-2);
+  box-shadow: inset 0 0 0 2px var(--sh-brass-2);
+}
+
 .roster {
   display: flex;
   gap: 0.35rem;
@@ -78,6 +122,18 @@
   box-shadow: 0 0 0 3px var(--sh-fascist);
 }
 
+.seat[data-office='president'] .face {
+  box-shadow:
+    0 0 0 4px var(--sh-brass),
+    0 0 0 6px var(--sh-ink);
+}
+
+.seat[data-office='chancellor'] .face {
+  box-shadow:
+    0 0 0 3px var(--sh-paper),
+    0 0 0 6px var(--sh-ink);
+}
+
 .plate {
   position: absolute;
   top: -0.3rem;
@@ -90,6 +146,14 @@
   background: var(--sh-brass);
   color: var(--sh-ink);
   box-shadow: 0 1px 3px var(--sh-shadow);
+}
+
+.plate[data-plate='chancellor'] {
+  background: var(--sh-ink);
+  color: var(--sh-paper);
+  box-shadow:
+    inset 0 0 0 2px var(--sh-paper),
+    0 1px 3px var(--sh-shadow);
 }
 
 .mateMark {

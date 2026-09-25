@@ -2,7 +2,8 @@
 
 The game's working spec (≤ 120 lines). The full design, with every rule id (R1–R22, D1–D11,
 V1–V10, S1–S3), is `docs/game-pack/secret-hitler/SPEC.md`; tests are named after those ids.
-Status: **M1**, the Classic rules of record with plain screens. Adapted from Secret Hitler by Max
+Status: **M1 merged; M2 visual pass merged**. The simple discussion chat is in this follow-up;
+claims, Record input, narrator, full room-mode chat and PhoneStage remain. Adapted from Secret Hitler by Max
 Temkin, Mike Boxleiter & Tommy Maranges, CC BY-NC-SA 4.0 (free, non-commercial play only).
 
 ## Overview
@@ -23,7 +24,7 @@ spectate and see exactly the TV's information.
 
 | Phase         | TV                                                        | Phone                                            | Exit                                          |
 | ------------- | --------------------------------------------------------- | ------------------------------------------------ | --------------------------------------------- |
-| `seating`     | seat order, setup line                                    | dossier (hold to see), Got it                    | all connected ready, or 30 s                  |
+| `seating`     | seat order, dossier reading count                         | dossier (tap to read by default), I've read it   | all connected read; hidden 3–10 min net       |
 | `nominate`    | who is choosing                                           | President: picker with reasons                   | a nominee, or 90 s → random eligible (named)  |
 | `vote`        | President · Chancellor, "n of m voted"                    | JA! / NEIN! (changeable)                         | every living player voted, or 45 s            |
 | `voteReveal`  | every vote, tally, ELECTED/REJECTED                       | same words                                       | 6 s                                           |
@@ -32,7 +33,7 @@ spectate and see exactly the TV's information.
 | `chanEnact`   | silence banner                                            | Chancellor: 2 cards, enact 1; Request veto (5 F) | an enactment / veto request, or 45 s → random |
 | `vetoAsk`     | VETO REQUESTED                                            | President: Agree / Refuse                        | an answer, or 20 s → refused                  |
 | `enactReveal` | the policy lands; power tag                               | same words                                       | 6 s                                           |
-| `claims`      | Discuss…                                                  | (claim builder in M2)                            | 60 s or VIP Next                              |
+| `claims`      | Discuss…                                                  | living players: room text chat                    | 60 s or VIP Next                              |
 | `power`       | the power banner                                          | President: target picker / peek                  | a choice, or 45 s → random (named); peek 15 s |
 | `powerReveal` | the public outcome; investigation pause 3 s then the file | same words                                       | 3–7 s                                         |
 | `chaos`       | the top card enacted, term limits lifted                  | same words                                       | 8 s                                           |
@@ -53,7 +54,7 @@ chooses for anyone. Elsewhere Skip moves on. Pause freezes everything.
 `ready` · `nominate {target}` (President, eligible: R6) · `vote {ja}` (living players) ·
 `discard {index 0–2}` (President) · `enact {index 0–1}` · `vetoRequest` (Chancellor, veto unlocked,
 once per session) · `vetoAnswer {agree}` (President) · `target {target}` (valid for the power) ·
-`peekDone`. Anything else, from anyone else, or from ghosts, exiled players and spectators is
+`peekDone` · `chat {text}` (claims only, 120 characters, 3 s cooldown). Anything else, from anyone else, or from ghosts, exiled players and spectators is
 ignored. There is no undo.
 
 ## Scoring
@@ -86,10 +87,10 @@ in M4.
 | ------ | ------------------------------ | ------- | ----- |
 | `pace` | select relaxed / normal / fast | normal  | D1    |
 
-Variants, presets and conditional settings (S1) arrive in M3; chat and the reader voice in M2.
+Variants, presets and conditional settings (S1) arrive in M3; full room-mode chat and the reader voice in M2.
 
 ## Content
 
-`content/about.json`: the credit line and the three how-to-play steps (the manifest fields
-`howToPlay`/`icon`/`presence` wait for Foundation F2). No word packs: every card is a policy.
+`content/about.json`: the credit line and the three how-to-play steps; `manifest.json` carries
+`howToPlay`, `icon` and `presence`. No word packs: every card is a policy.
 Narrator lines, headlines and bot chat lines arrive with M2/M4 (SPEC §19).

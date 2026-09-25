@@ -72,6 +72,8 @@ function init(ctx: InitContext): State {
     intel: {},
     round: emptyRound(1, seats[first] ?? ''),
     history: [],
+    chat: [],
+    lastChatAt: {},
     announce: null,
     headline: null,
     winner: null,

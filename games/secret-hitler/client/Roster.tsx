@@ -25,6 +25,12 @@ export function Roster({
 }): JSX.Element {
   const L = useT(STRINGS);
   const team = new Map((showTeam ? (view.dossier?.team ?? []) : []).map((t) => [t.id, t.role]));
+  const president = view.seats.find((seat) => seat.plate === 'president');
+  const partner = view.seats.find(
+    (seat) => seat.plate === 'chancellor' || seat.plate === 'nominee',
+  );
+  const nameOf = (id: string): string =>
+    view.players.find((player) => player.id === id)?.name ?? '?';
   // More seats than fit: the strip scrolls sideways, and a fade on the hidden side says so.
   const ref = useRef<HTMLOListElement>(null);
   const [more, setMore] = useState<{ left: boolean; right: boolean }>({
@@ -49,76 +55,97 @@ export function Roster({
     };
   }, []);
   return (
-    <ol
-      ref={ref}
-      className={styles.roster}
-      aria-label={L('Seat order')}
-      data-faces={facesOnly || undefined}
-      data-more-left={more.left || undefined}
-      data-more-right={more.right || undefined}
-    >
-      {view.seats.map((seat) => {
-        const p = view.players.find((x) => x.id === seat.id);
-        const gone = seat.tags.includes('executed') || seat.tags.includes('exiled');
-        const mate = team.get(seat.id);
-        const me = seat.id === view.me.id;
-        const plate = seat.plate;
-        return (
-          <li
-            key={seat.id}
-            className={styles.seat}
-            data-gone={gone || undefined}
-            data-me={me || undefined}
-            data-mate={mate ? mate : undefined}
-            aria-label={[
-              p?.name ?? '?',
-              plate === 'president' ? L('President') : '',
-              plate === 'chancellor' ? L('Chancellor') : '',
-              plate === 'nominee' ? L('Nominee') : '',
-              mate ? roleName(L, mate) : '',
-              seat.tags.includes('executed') ? L('Executed') : '',
-              seat.tags.includes('notHitler') ? L('✓ Not Hitler') : '',
-            ]
-              .filter(Boolean)
-              .join(' · ')}
-          >
-            <span className={styles.face}>
-              <Avatar
-                avatarId={p?.avatarId ?? ''}
-                size="2.1rem"
-                dim={gone || p?.connected === false}
-              />
-              {plate === 'president' || plate === 'chancellor' ? (
-                <span className={styles.plate} data-plate={plate}>
-                  <PlateIcon kind={plate} size="0.8rem" />
-                </span>
-              ) : null}
-              {mate ? (
-                <span className={styles.mateMark} aria-hidden="true">
-                  {mate === 'hitler' ? (
-                    <MaskEmblem size="1.1rem" />
-                  ) : (
-                    <SerpentEmblem size="1.1rem" />
-                  )}
-                </span>
-              ) : null}
-              {seat.tags.includes('executed') ? <span className={styles.ghost}>👻</span> : null}
-              {seat.tags.includes('voted') || seat.vote ? (
-                <span className={styles.voted} data-vote={seat.vote ?? undefined}>
-                  {seat.vote === 'nein' ? '✗' : '✓'}
-                </span>
-              ) : null}
+    <>
+      {president || partner ? (
+        <div className={styles.offices} role="group" aria-label={L('Current government')}>
+          {president ? (
+            <span className={styles.office} data-office="president">
+              <PlateIcon kind="president" size="1rem" />
+              <strong>{L('President')}</strong>
+              <span>{nameOf(president.id)}</span>
             </span>
-            <span className={styles.name}>{me ? L('You') : (p?.name ?? '?')}</span>
-            {seat.tags.includes('notHitler') ? (
-              <span className={styles.nh}>{L('✓ Not Hitler')}</span>
-            ) : null}
-            {seat.tags.includes('next') && !plate ? (
-              <span className={styles.next}>{L('Next')}</span>
-            ) : null}
-          </li>
-        );
-      })}
-    </ol>
+          ) : null}
+          {partner ? (
+            <span className={styles.office} data-office={partner.plate}>
+              {partner.plate === 'chancellor' ? <PlateIcon kind="chancellor" size="1rem" /> : null}
+              <strong>{L(partner.plate === 'chancellor' ? 'Chancellor' : 'Nominee')}</strong>
+              <span>{nameOf(partner.id)}</span>
+            </span>
+          ) : null}
+        </div>
+      ) : null}
+      <ol
+        ref={ref}
+        className={styles.roster}
+        aria-label={L('Seat order')}
+        data-faces={facesOnly || undefined}
+        data-more-left={more.left || undefined}
+        data-more-right={more.right || undefined}
+      >
+        {view.seats.map((seat) => {
+          const p = view.players.find((x) => x.id === seat.id);
+          const gone = seat.tags.includes('executed') || seat.tags.includes('exiled');
+          const mate = team.get(seat.id);
+          const me = seat.id === view.me.id;
+          const plate = seat.plate;
+          return (
+            <li
+              key={seat.id}
+              className={styles.seat}
+              data-gone={gone || undefined}
+              data-me={me || undefined}
+              data-mate={mate ? mate : undefined}
+              data-office={plate || undefined}
+              aria-label={[
+                p?.name ?? '?',
+                plate === 'president' ? L('President') : '',
+                plate === 'chancellor' ? L('Chancellor') : '',
+                plate === 'nominee' ? L('Nominee') : '',
+                mate ? roleName(L, mate) : '',
+                seat.tags.includes('executed') ? L('Executed') : '',
+                seat.tags.includes('notHitler') ? L('✓ Not Hitler') : '',
+              ]
+                .filter(Boolean)
+                .join(' · ')}
+            >
+              <span className={styles.face}>
+                <Avatar
+                  avatarId={p?.avatarId ?? ''}
+                  size="2.1rem"
+                  dim={gone || p?.connected === false}
+                />
+                {plate === 'president' || plate === 'chancellor' ? (
+                  <span className={styles.plate} data-plate={plate}>
+                    <PlateIcon kind={plate} size="0.8rem" />
+                  </span>
+                ) : null}
+                {mate ? (
+                  <span className={styles.mateMark} aria-hidden="true">
+                    {mate === 'hitler' ? (
+                      <MaskEmblem size="1.1rem" />
+                    ) : (
+                      <SerpentEmblem size="1.1rem" />
+                    )}
+                  </span>
+                ) : null}
+                {seat.tags.includes('executed') ? <span className={styles.ghost}>👻</span> : null}
+                {seat.tags.includes('voted') || seat.vote ? (
+                  <span className={styles.voted} data-vote={seat.vote ?? undefined}>
+                    {seat.vote === 'nein' ? '✗' : '✓'}
+                  </span>
+                ) : null}
+              </span>
+              <span className={styles.name}>{me ? L('You') : (p?.name ?? '?')}</span>
+              {seat.tags.includes('notHitler') ? (
+                <span className={styles.nh}>{L('✓ Not Hitler')}</span>
+              ) : null}
+              {seat.tags.includes('next') && !plate ? (
+                <span className={styles.next}>{L('Next')}</span>
+              ) : null}
+            </li>
+          );
+        })}
+      </ol>
+    </>
   );
 }

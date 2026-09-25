@@ -43,6 +43,26 @@
   opacity: 0.45;
 }
 
+.seat[data-office='president'] {
+  box-shadow: inset 6px 0 0 var(--sh-brass);
+}
+
+.seat[data-office='chancellor'] {
+  box-shadow: inset -6px 0 0 var(--sh-paper);
+}
+
+.seat[data-office='president'] .avatar {
+  box-shadow:
+    0 0 0 5px var(--sh-brass),
+    0 0 0 8px var(--sh-ink);
+}
+
+.seat[data-office='chancellor'] .avatar {
+  box-shadow:
+    0 0 0 4px var(--sh-paper),
+    0 0 0 8px var(--sh-ink);
+}
+
 /* The spotlight: a warm cone from above, and the seat lifts. */
 .seat[data-spot] {
   transform: translateY(-6px);
@@ -237,6 +257,14 @@
   background: var(--sh-night-2);
   color: var(--sh-brass);
   box-shadow: inset 0 0 0 2px var(--sh-brass-2);
+}
+
+.plate[data-plate='chancellor'] {
+  background: var(--sh-ink);
+  color: var(--sh-paper);
+  box-shadow:
+    inset 0 0 0 3px var(--sh-paper),
+    0 3px 8px var(--sh-shadow);
 }
 
 .next {
