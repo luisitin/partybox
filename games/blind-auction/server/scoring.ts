@@ -1,5 +1,6 @@
 // Scoring: your score is your coins at the end; most coins wins, ties share. Five awards, each
-// skipped when nobody earned it and shared on a tie.
+// skipped when nobody earned it. One card per award (a play-test: a three-way tie made three cards
+// and crowded the results): a tie goes to whoever ends with more coins, then seat order.
 import { buildResults } from '@partybox/game-sdk';
 import type { GameAward, GameResults } from '@partybox/game-sdk';
 import type { State, Stats } from './types';
@@ -52,14 +53,15 @@ export function awards(state: State): GameAward[] {
       .filter((x) => x.v > 0);
     if (scored.length === 0) continue;
     const best = Math.max(...scored.map((x) => x.v));
-    for (const x of scored)
-      if (x.v === best)
-        out.push({
-          id: `${rule.id}:${x.id}`,
-          title: rule.title,
-          description: rule.description,
-          playerId: x.id,
-        });
+    const tied = scored.filter((x) => x.v === best);
+    const coins = (id: string): number => state.coins[id] ?? 0;
+    const pick = tied.reduce((a, b) => (coins(b.id) > coins(a.id) ? b : a));
+    out.push({
+      id: `${rule.id}:${pick.id}`,
+      title: rule.title,
+      description: rule.description,
+      playerId: pick.id,
+    });
   }
   return out;
 }

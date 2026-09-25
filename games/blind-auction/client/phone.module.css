@@ -106,9 +106,10 @@
   min-width: 0;
   font-size: var(--pb-font-h2);
   font-weight: 900;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.15;
+  /* A long name wraps under itself instead of being cut (play-test: 'Prenup P…'). */
+  overflow-wrap: normal;
+  text-wrap: balance;
 }
 
 /* The lot, centred in the phone's height: the dealt card over its name and hint. */
