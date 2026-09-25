@@ -50,3 +50,8 @@ export function useSay(say: ImposterStage['say'], on = true): void {
     sound.clip(url, { gain: 1, duck: false });
   }, [key, url, sound]);
 }
+
+/** The letters in a text's longest word: what a big word sizes itself by so it never breaks. */
+export function longestWord(text: string): number {
+  return Math.max(1, ...text.split(/\s+/).map((w) => [...w].length));
+}

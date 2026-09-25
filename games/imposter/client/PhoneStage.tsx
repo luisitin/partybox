@@ -2,12 +2,12 @@
 // can't see the TV — the clue cards as a list at the TV's pace, the votes grouped by target, the
 // accused and the flip, the word with the imposters' clues, a compact scoreboard. Every spoken
 // line is shown as text too, and a phone that stages also plays the reader's line.
-import type { JSX } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import { rank } from '@partybox/game-sdk';
 import { Avatar, Scoreboard, Screen, useT } from '@partybox/game-sdk/ui';
 import type { ControllerView, PushedView } from '@partybox/game-sdk/ui';
 import type { ImposterControllerView } from '../server/index';
-import { byId, cluesOf, pointsOf, useSay } from './helpers';
+import { byId, cluesOf, longestWord, pointsOf, useSay } from './helpers';
 import { EnMark } from './en';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
@@ -101,7 +101,13 @@ export function PhoneStageBody({ view }: { view: View }): JSX.Element | null {
       return (
         <div className={styles.accused}>
           <p className={styles.kicker}>{L('The word was')}</p>
-          <p className={styles.bigWord}>{r.word}</p>
+          <p
+            className={styles.bigWord}
+            // fits its longest word to the width instead of breaking it (review [238bea])
+            style={{ '--imp-len': longestWord(r.word) } as CSSProperties}
+          >
+            {r.word}
+          </p>
           <EnMark />
           {r.imposters.map((id) => (
             <p key={id} className={styles.impLine}>

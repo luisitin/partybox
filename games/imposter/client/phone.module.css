@@ -243,7 +243,9 @@
 }
 .bigWord {
   margin: 0;
-  font-size: var(--pb-font-display);
+  /* the longest word fits the phone's width (a heavy capital is ~0.72 em); a break mid-word is the
+     last resort, not the layout ('SPAGHET / TI', review [238bea]) */
+  font-size: min(var(--pb-font-display), calc((100vw - 3rem) / (var(--imp-len, 8) * 0.72)));
   font-weight: 900;
   line-height: 1.1;
   text-transform: uppercase;
