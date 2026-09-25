@@ -2,7 +2,14 @@
 import { describe, expect, it } from 'vitest';
 import type { RoomSnapshot } from '@partybox/shared';
 import { ordinal } from '../i18n';
-import { groupAwards, joinNames, myRow, winnerLine, winnerLineFor } from './results-rows';
+import {
+  groupAwards,
+  joinNames,
+  longestWord,
+  myRow,
+  winnerLine,
+  winnerLineFor,
+} from './results-rows';
 
 type Rank = { playerId: string; score: number; rank: number };
 
@@ -233,5 +240,14 @@ describe('a tie among bots', () => {
       ],
     );
     expect(winnerLine(onlyBots)).toBe('The bots tie — nobody home?');
+  });
+});
+
+describe('longestWord', () => {
+  it('counts the letters of the longest word, so a one-word name can shrink the headline', () => {
+    expect(longestWord('Wolfeschlegelste wins!')).toBe(16);
+    expect(longestWord('¡Gana Wolfeschlegelste!')).toBe(17);
+    expect(longestWord('Ana, Ben & Cleo tie!')).toBe(4);
+    expect(longestWord('')).toBe(1);
   });
 });

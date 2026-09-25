@@ -3,7 +3,7 @@
 // waits for the VIP by name. The board shows the instant the TV's does (the phone never spoils,
 // and never hides a board the TV is already showing); the cue + buzz come from the shell.
 import { useRef } from 'react';
-import type { JSX } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PrimaryButton, Scoreboard, Screen, useLang } from '@partybox/game-sdk/ui';
 import { useGame } from '../game-loader';
@@ -16,6 +16,7 @@ import {
   myRow,
   nobodyScored,
   scoreboardRows,
+  longestWord,
   winnerLineFor,
 } from './results-rows';
 import styles from './Results.module.css';
@@ -41,6 +42,7 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   const rows = scoreboardRows(room);
   const mine = myRow(room, me.id);
   const scoreless = useGame(room.results?.gameId, 'phone').module?.scoreless === true;
+  const headline = winnerLineFor(room, me.id, scoreless);
   const over = nobodyScored(room) && !scoreless;
   const vipName = room.players.find((p) => p.id === room.vip)?.name;
   // One chip per award, everyone who won it on it (a tie gave each tied player a copy); yours first.
@@ -87,8 +89,12 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       // hero inside the body scrolled off the top (review-loop #76).
       title={
         <>
-          <span className={styles.winner} data-screen="results">
-            {winnerLineFor(room, me.id, scoreless)}
+          <span
+            className={styles.winner}
+            data-screen="results"
+            style={{ '--pb-longest-word': longestWord(headline) } as CSSProperties}
+          >
+            {headline}
           </span>
           {/* I-456 B: your place stays in view over the board; a tap shows your row */}
           {mine && !over && !scoreless ? (

@@ -30,6 +30,11 @@ export function scoreboardRows(room: RoomSnapshot): ScoreboardRow[] {
   });
 }
 
+/** The longest word in a line, in letters: the phone's headline shrinks until it fits. */
+export function longestWord(line: string): number {
+  return Math.max(1, ...line.split(/\s+/).map((word) => [...word].length));
+}
+
 /** True when nobody scored anything (a game ended early): trophies and "wins" would be nonsense. */
 export function nobodyScored(room: RoomSnapshot): boolean {
   const scores = Object.values(room.results?.results.scores ?? {});
