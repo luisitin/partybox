@@ -1,6 +1,6 @@
 // The Bingo phone's card-pick step (the intro): the "who is still picking" caption and the two
 // buttons under the dealt cards. Split from Overlays.tsx (2026-09-23) to keep both under 300 lines.
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { JSX, RefObject } from 'react';
 import { PrimaryButton, buzz, useHold, useSecondsLeft, useT } from '@partybox/game-sdk/ui';
 import type { PlayCue } from '@partybox/game-sdk/ui';
@@ -131,10 +131,12 @@ export function IntroActions({
 }
 
 /**
- * The pick preview shows whole rows (2026-09-25, font200 ES): when the body cannot hold the whole
- * card, the preview window ends on a row's edge instead of cutting a row through its digits — a
- * one-line caption and a two-line one leave different heights, so the count is measured, never
- * guessed. The rest of the card scrolls inside the window.
+ * The pick preview shows whole rows (2026-09-25, font200 ES; review cb99c7): when the body cannot
+ * hold the whole card, the preview window ends on a row's edge instead of cutting a row through
+ * its digits. The room is measured (the preview's top to the body's visible foot, again on every
+ * resize or caption change), never guessed; the floor is the letters and one row — below that
+ * the body scrolls, as before.
+ * The rest of the card scrolls inside the window, with a fade while there is more.
  */
 export function useWholeRows(on: boolean): {
   body: RefObject<HTMLDivElement | null>;
@@ -146,41 +148,54 @@ export function useWholeRows(on: boolean): {
     const b = body.current;
     const c = clip.current;
     if (!b || !c || !on) return undefined;
+    const more = (): void => {
+      c.dataset.more = String(c.scrollTop + c.clientHeight < c.scrollHeight - 1);
+    };
     const fit = (): void => {
       c.style.maxHeight = '';
       const grid = c.querySelector('[role="gridcell"]')?.parentElement;
-      if (!grid) return;
-      // offsets, not rects: the deal's drop and the swap's flip transform the card mid-measure
-      let top = 0;
-      for (let el: HTMLElement | null = c; el && el !== b; el = el.offsetParent as HTMLElement)
-        top += el.offsetTop;
-      // the room under the preview, less the thumbnails still below it (and their gap)
-      const next = c.parentElement?.nextElementSibling as HTMLElement | null;
-      const room = b.clientHeight - top - (next?.offsetHeight ?? 0) * 1.2;
-      if (room >= c.offsetHeight) return;
-      // whole rows only; not even one (the whole rule open at 200 %): the letters alone
-      let edge = grid.offsetTop - 4;
-      for (const cell of Array.from(grid.children) as HTMLElement[]) {
-        const bottom = grid.offsetTop + cell.offsetTop + cell.offsetHeight;
-        if (bottom <= room) edge = bottom;
+      const natural = c.offsetHeight;
+      if (grid && natural) {
+        // the room: from the preview's top to the body's visible foot (the pick row of dealt
+        // cards may scroll under it, as before: the card read whole comes first)
+        let top = parseFloat(getComputedStyle(b).paddingBottom);
+        for (let el: HTMLElement | null = c; el && el !== b; el = el.offsetParent as HTMLElement)
+          top += el.offsetTop;
+        const room = b.clientHeight - top;
+        // offsets, not rects: the deal's drop and the swap's flip transform the card mid-measure
+        const cells = Array.from(grid.querySelectorAll<HTMLElement>('[role="gridcell"]'));
+        const bottoms = cells.map((x) => grid.offsetTop + x.offsetTop + x.offsetHeight);
+        const edge = Math.max(bottoms[0] ?? 0, ...bottoms.filter((y) => y <= room));
+        if (room < natural) c.style.maxHeight = `${Math.ceil(edge) + 1}px`;
       }
-      c.style.maxHeight = `${edge <= room ? edge + 1 : 0}px`;
+      more();
     };
-    const ro = new ResizeObserver(() => requestAnimationFrame(fit));
+    let frame = 0;
+    const ro = new ResizeObserver(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(fit);
+    });
     for (const el of [b, ...Array.from(b.children)]) ro.observe(el);
+    c.addEventListener('scroll', more, { passive: true });
     fit();
-    return () => ro.disconnect();
+    return () => {
+      cancelAnimationFrame(frame);
+      ro.disconnect();
+      c.removeEventListener('scroll', more);
+    };
   }, [on]);
   return { body, clip };
 }
 
 /** The pattern's rule: two lines, and a tap opens the whole of it (at 200 % the clamp hid it). */
 export function PatternRule({ text }: { text: string }): JSX.Element {
+  const [open, setOpen] = useState(false);
   return (
     <button
       type="button"
-      className={`${styles.hint} ${styles.hintTap}`}
-      onClick={(e) => e.currentTarget.classList.toggle(styles.hintOpen ?? '')}
+      className={`${styles.hint} ${styles.hintTap} ${open ? styles.hintOpen : ''}`}
+      aria-expanded={open}
+      onClick={() => setOpen(!open)}
     >
       {text}
     </button>
