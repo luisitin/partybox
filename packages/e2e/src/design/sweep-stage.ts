@@ -117,7 +117,7 @@ async function sweep(
     await settle(1100); // the 0.4 s breath, then into the count
     await shoot(guest.page, lang, device, 'count');
     if (tv) await shoot(tv, lang, 'tv', 'tv-count');
-    await vip.page.getByRole('button', { name: /^(wait|esperad)$/i }).click();
+    await vip.page.getByRole('button', { name: /^(wait|esperen)$/i }).click();
     await shoot(vip.page, lang, device, 'held-vip');
     await shoot(guest.page, lang, device, 'held-guest');
     if (tv) await shoot(tv, lang, 'tv', 'tv-held');

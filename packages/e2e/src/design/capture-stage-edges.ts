@@ -220,7 +220,7 @@ const SCENARIOS: Record<string, Scenario> = {
     await c.ready(guest, 'guest');
     await settle(1300);
     c.mark('wait');
-    await vip.getByRole('button', { name: /^(wait|esperad)$/i }).click();
+    await vip.getByRole('button', { name: /^(wait|esperen)$/i }).click();
     await settle(3000);
     if ((await statusOf(c.api)) !== 'starting') c.notes.push('wait: the game started anyway');
     c.mark('resume');

@@ -1,5 +1,5 @@
 // Spanish for the start stage — the twin of i18n-en-stage.ts (the compiler holds them to one shape
-// through `Texts`); "vosotros" like the rest of the shell.
+// through `Texts`); Latin American (ustedes) like the rest of the shell ([28c1e1]).
 import type { Texts } from './i18n-en';
 
 const list = (names: string[], more: number): string => {
@@ -16,9 +16,9 @@ export const esStage: Pick<Texts, 'stage'> = {
     waitingFor: (names, more) => `Esperando a ${list(names, more)}`,
     everyoneReady: '¡Todo el mundo listo!',
     everyoneElseReady: 'Los demás ya están listos',
-    wait: 'Esperad',
-    held: 'En espera: el VIP lo empieza cuando estéis todos',
-    heldVip: 'En espera: pulsa Empezar ya cuando estéis todos',
+    wait: 'Esperen',
+    held: 'En espera: el VIP lo empieza cuando estén todos',
+    heldVip: 'En espera: toca Empezar ya cuando estén todos',
     startNow: 'Empezar ya',
     back: '‹ Volver',
     startNowHint: 'Empieza la cuenta aunque alguien siga leyendo',
