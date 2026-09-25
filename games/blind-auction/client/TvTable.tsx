@@ -68,7 +68,7 @@ function BetPanel({ view }: { view: View }): JSX.Element | null {
   return (
     <div className={styles.panel}>
       <h1 className={styles.call}>{L('Place your bets!')}</h1>
-      {view.box.event === 'keno' ? <PayTable /> : <OptionBoard options={view.box.options} />}
+      {view.box.event === 'keno' ? <PayTable /> : <OptionBoard options={view.box.options} still />}
       <p className={styles.count} aria-live="polite">
         <span className={styles.pips} aria-hidden>
           {Array.from({ length: view.bettors }, (_, i) => (
@@ -155,6 +155,7 @@ function OpenPanel({ view }: { view: View }): JSX.Element | null {
         <PayTable />
       ) : (
         <OptionBoard
+          still
           options={view.box.options}
           bets={bets}
           shown={Math.max(0, seq)}

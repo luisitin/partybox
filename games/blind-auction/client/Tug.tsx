@@ -15,7 +15,7 @@ type RopeView = Pick<PushedView<BlindAuctionTvView>, 'tug' | 'players'>;
 
 const MARK = ['▲', '●'] as const;
 
-function Side({ view, team }: { view: RopeView; team: 0 | 1 }): JSX.Element {
+function Side({ view, team, faces }: { view: RopeView; team: 0 | 1; faces: boolean }): JSX.Element {
   const L = useT(STRINGS);
   const ids = (team === 0 ? view.tug?.sun : view.tug?.moon) ?? [];
   return (
@@ -23,22 +23,33 @@ function Side({ view, team }: { view: RopeView; team: 0 | 1 }): JSX.Element {
       <span className={styles.tugTeam}>
         {MARK[team]} {team === 0 ? L('Sun') : L('Moon')}
       </span>
-      <span className={styles.tugFaces}>
-        {ids.map((id) => {
-          const p = view.players.find((x) => x.id === id);
-          return p ? (
-            <span key={id} className={styles.tugFace} title={p.name}>
-              <Avatar avatarId={p.avatarId} size="100%" />
-            </span>
-          ) : null;
-        })}
-      </span>
+      {faces ? (
+        <span className={styles.tugFaces}>
+          {ids.map((id) => {
+            const p = view.players.find((x) => x.id === id);
+            return p ? (
+              <span key={id} className={styles.tugFace} title={p.name}>
+                <Avatar avatarId={p.avatarId} size="100%" />
+              </span>
+            ) : null;
+          })}
+        </span>
+      ) : null}
     </div>
   );
 }
 
 /** The rope: the knot sits at `rope` between the two teams; `live` = still pulling. */
-export function TugRope({ view, live }: { view: RopeView; live: boolean }): JSX.Element {
+export function TugRope({
+  view,
+  live,
+  faces = true,
+}: {
+  view: RopeView;
+  live: boolean;
+  /** The team faces (the TV); a phone's rope leaves them out to stay on one screen. */
+  faces?: boolean;
+}): JSX.Element {
   const play = useSound();
   const rope = view.tug?.rope ?? 0;
   const last = useRef(rope);
@@ -49,7 +60,7 @@ export function TugRope({ view, live }: { view: RopeView; live: boolean }): JSX.
   }, [rope, play]);
   return (
     <div className={styles.tug}>
-      <Side view={view} team={0} />
+      <Side view={view} team={0} faces={faces} />
       <div className={styles.rope} aria-hidden>
         <span className={styles.ropeLine} />
         <span className={styles.ropeMid} />
@@ -60,7 +71,7 @@ export function TugRope({ view, live }: { view: RopeView; live: boolean }): JSX.
           🪢
         </span>
       </div>
-      <Side view={view} team={1} />
+      <Side view={view} team={1} faces={faces} />
     </div>
   );
 }
@@ -86,7 +97,7 @@ export function PhoneTug({ view, send }: PhoneProps): JSX.Element {
         {MARK[team]} {team === 0 ? L('Team Sun') : L('Team Moon')}
       </p>
       <div className={styles.phoneStage}>
-        <TugRope view={view} live />
+        <TugRope view={view} live faces={false} />
       </div>
       <button
         type="button"
@@ -103,7 +114,7 @@ export function PhoneTug({ view, send }: PhoneProps): JSX.Element {
       <p className={styles.potatoHint}>
         {share === 0
           ? L('No stake on this one: your pulls count for nothing')
-          : L('Your pull is {n}% of your team’s', { n: share })}
+          : L('Your pull: {n}% of your team', { n: share })}
       </p>
     </Screen>
   );

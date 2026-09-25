@@ -81,12 +81,12 @@ const EVENT_BOX: Record<LiveKind, { name: string; icon: string; flavour: string 
   ghost: {
     name: 'Ghost Hunt',
     icon: '👻',
-    flavour: 'A ghost hides in one of four rooms. Right room pays ×3.5.',
+    flavour: 'A ghost hides in one of four rooms. Right room pays ×4.',
   },
   wires: {
     name: 'Defuse the Bomb',
     icon: '💣',
-    flavour: 'Four wires, one stops the bomb. Pick it: ×3.5.',
+    flavour: 'Four wires, one stops the bomb. Pick it: ×4.',
   },
   penalty: {
     name: 'Penalty Kick',
@@ -96,7 +96,7 @@ const EVENT_BOX: Record<LiveKind, { name: string; icon: string; flavour: string 
   keno: {
     name: 'Lucky Numbers',
     icon: '🎱',
-    flavour: 'Pick three numbers. Five balls drop. Match them all for ×25!',
+    flavour: 'Pick three numbers. Five balls drop. Match them all for ×30!',
   },
   coins: {
     name: 'Coin Streak',

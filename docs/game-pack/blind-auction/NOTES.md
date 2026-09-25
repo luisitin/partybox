@@ -77,3 +77,12 @@ Manifest fields to add with F2:
   that changes nothing", sockets "rate limits a flood of inputs"); both pass alone every time.
 - Mapped TV phases re-chime whenever their deadline moves: every phase that re-arms (lot, live,
   sold, flip) is mapped to `silence` or left unmapped, and the game plays its own cues.
+
+## Payouts: at or just above fair odds (decided 2026-09-25)
+
+Reviewers pointed out that every option paid a little under fair odds (0.92 / chance), so the
+best play was never to bet. Payouts are now fair odds rounded **up** to the tenth
+(`server/odds.ts payOf`): a bet returns 1.00–1.08 of its stake on average, so betting beats
+sitting out, and the long shot still pays big. Keno's table is 0 / back / ×2.2 / ×30 (≈1.01);
+the doors stay ×2 (switching wins 2 in 3, the Monty Hall lesson); the shell game is a shared pot.
+Decided by the game session under the owner's "decide and document" instruction.

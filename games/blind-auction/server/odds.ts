@@ -8,12 +8,13 @@ export function tierOf(chance: number): Tier {
   return 'RARE';
 }
 
-/** What a right call pays, × the stake: a little under fair odds (0.92 / chance), so the long
- *  shot pays big and the favourite pays little. Under ×2 to the tenth, above it to the half. */
+/** What a right call pays, × the stake: fair odds (100 / chance) rounded UP to the tenth, so a bet
+ *  returns at least its stake on average (1.00–1.08) and betting beats sitting out (review: at the
+ *  old 0.92 the best play was never to bet). The long shot still pays big, the favourite little.
+ *  Decided by the game session per the owner's "decide and document" (NOTES.md). */
 export function payOf(chance: number): number {
-  const fair = 92 / Math.max(1, chance);
-  const pay = fair < 2 ? Math.round(fair * 10) / 10 : Math.round(fair * 2) / 2;
-  return Math.max(1.1, pay);
+  const fair = 100 / Math.max(1, chance);
+  return Math.max(1.1, Math.ceil(Math.round(fair * 1000) / 100) / 10);
 }
 
 /** The winnings for a right call: the stake back plus the profit, rounded down to whole coins. */

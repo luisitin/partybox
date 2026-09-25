@@ -73,12 +73,13 @@ export const ES_SCREENS: Record<string, string> = {
   "That's the last box!": '¡Esa fue la última caja!',
   'Tap a card, then choose your coins': 'Toca una carta y luego elige tus monedas',
   // live events
+  'Your pull: {n}% of your team': 'Tu jalón: {n}% de tu equipo',
   'Ghost Hunt': 'Cazafantasmas',
-  'A ghost hides in one of four rooms. Right room pays ×3.5.':
-    'Un fantasma se esconde en uno de cuatro cuartos. El cuarto correcto paga ×3.5.',
+  'A ghost hides in one of four rooms. Right room pays ×4.':
+    'Un fantasma se esconde en uno de cuatro cuartos. El cuarto correcto paga ×4.',
   'Defuse the Bomb': 'Desactiva la bomba',
-  'Four wires, one stops the bomb. Pick it: ×3.5.':
-    'Cuatro cables, uno detiene la bomba. Adivínalo: ×3.5.',
+  'Four wires, one stops the bomb. Pick it: ×4.':
+    'Cuatro cables, uno detiene la bomba. Adivínalo: ×4.',
   Bedroom: 'Recámara',
   Kitchen: 'Cocina',
   Bathroom: 'Baño',
@@ -107,8 +108,8 @@ export const ES_SCREENS: Record<string, string> = {
   'Pick a player': 'Elige a alguien',
   'drawn {list}': 'salieron {list}',
   'Lucky Numbers': 'Números de la suerte',
-  'Pick three numbers. Five balls drop. Match them all for ×25!':
-    'Elige tres números. Caen cinco bolas. ¡Acierta los tres y gana ×25!',
+  'Pick three numbers. Five balls drop. Match them all for ×30!':
+    'Elige tres números. Caen cinco bolas. ¡Acierta los tres y gana ×30!',
   'Your numbers': 'Tus números',
   'No match: you lose it': 'Ningún acierto: lo pierdes',
   '1 match: stake back': '1 acierto: recuperas lo apostado',

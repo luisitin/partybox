@@ -21,6 +21,7 @@ export function OptionBoard({
   compact = false,
   className,
   locked = null,
+  still = false,
   hideLocked = false,
 }: {
   options: readonly OptionView[];
@@ -36,6 +37,8 @@ export function OptionBoard({
   onSelect?: (option: number) => void;
   compact?: boolean;
   className?: string;
+  /** No entrance: the cards were already dealt on the box intro (they must not re-rise). */
+  still?: boolean;
   /** Phone: an option you may not pick (hot potato: yourself). */
   locked?: number | null;
   /** …and leave it out altogether (tug of war: the other team). */
@@ -61,7 +64,7 @@ export function OptionBoard({
   const cols = size === 'tv' ? (n <= 4 ? n : 3) : compact || uniform ? Math.min(n, 3) : 1;
   return (
     <div
-      className={`${styles.board} ${styles[size]} ${compact ? styles.compact : ''} ${many ? styles.many : ''} ${uniform ? styles.uniformBoard : ''} ${className ?? ''}`}
+      className={`${styles.board} ${styles[size]} ${compact ? styles.compact : ''} ${many ? styles.many : ''} ${uniform ? styles.uniformBoard : ''} ${still ? styles.still : ''} ${className ?? ''}`}
       role={picker ? 'radiogroup' : 'list'}
       aria-label={L("What's inside?")}
       style={{ '--ba-n': cols } as CSSProperties}
@@ -93,8 +96,8 @@ export function OptionBoard({
               <>
                 {o.pay === 0 ? null : (
                   <span className={styles.odds}>
-                    <span className={styles.nowrap}>{tierWord(L, o.tier)}</span>{' '}
-                    <span className={styles.nowrap}>· {o.chance}%</span>
+                    <span className={styles.nowrap}>{tierWord(L, o.tier)} ·</span>{' '}
+                    <span className={styles.nowrap}>{o.chance}%</span>
                   </span>
                 )}
                 <span className={styles.pay}>

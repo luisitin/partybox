@@ -372,3 +372,8 @@ button.option:focus-visible {
 .phone:not(.compact):not(.uniformBoard) .bets {
   grid-area: bets;
 }
+
+/* Cards already dealt on the box intro: no second entrance in betting and after. */
+.still .option {
+  animation: none;
+}

@@ -21,10 +21,16 @@ describe('odds', () => {
     ]);
   });
 
-  it('pays a little under fair odds: the favourite little, the long shot big', () => {
+  it('pays a touch over fair odds: the favourite little, the long shot big, every bet ≥ 1.0 back on average', () => {
     expect([payOf(60), payOf(50), payOf(30), payOf(20), payOf(10), payOf(70)]).toEqual([
-      1.5, 1.8, 3, 4.5, 9, 1.3,
+      1.7, 2, 3.4, 5, 10, 1.5,
     ]);
+    // Every whole-% chance: a bet returns 1.00–1.08 of the stake on average.
+    for (let c = 5; c <= 90; c++) {
+      const ev = (payOf(c) * c) / 100;
+      expect(ev, `chance ${c}`).toBeGreaterThanOrEqual(1);
+      expect(ev, `chance ${c}`).toBeLessThanOrEqual(1.09);
+    }
     expect(payout(40, 3, false)).toBe(120);
     expect(payout(40, 3, true)).toBe(240);
     expect(payout(15, 1.5, false)).toBe(22);

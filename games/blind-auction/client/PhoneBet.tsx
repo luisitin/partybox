@@ -100,6 +100,10 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       header={
         <div className={styles.betHead}>
           <LotTitle box={box} coins={view.coins} />
+          {option === null && box.event !== 'shells' && box.event !== 'keno' ? (
+            // Above the cards, never in the fade (review). A first-timer didn't know to tap a card or where the stake goes.
+            <p className={styles.betHint}>{L('Tap a card, then choose your coins')}</p>
+          ) : null}
           {box.event === 'keno' ? (
             <KenoPad spots={view.mySpots} onSpots={(spots) => send({ type: 'spots', spots })} />
           ) : box.event === 'shells' ? (
@@ -124,10 +128,6 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
               hideLocked={box.event === 'tug'}
             />
           )}
-          {option === null && box.event !== 'shells' && box.event !== 'keno' ? (
-            // Review: a first-timer didn't know to tap a card or where the stake goes.
-            <p className={styles.betHint}>{L('Tap a card, then choose your coins')}</p>
-          ) : null}
         </div>
       }
       notice={notice}

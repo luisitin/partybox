@@ -342,14 +342,14 @@ describe('live events: keno', () => {
       input: { type: 'spots', spots: n },
     });
 
-  it('no numbers, no stake; the stake pays by matches (0 / back / ×2 / ×25)', () => {
+  it('no numbers, no stake; the stake pays by matches (0 / back / ×2.2 / ×30)', () => {
     let s = kenoAt();
     expect(bet(s, 'p1', 0, 10).notices['p1']?.code).toBe('spots');
     s = spots(spots(spots(s, 'p1', [1, 2, 3]), 'p2', [1, 9, 10]), 'p3', [11, 12, 13]);
     const before = { ...s.coins };
     s = bet(bet(bet(s, 'p1', 0, 10), 'p2', 0, 10), 'p3', 0, 10);
     s = walkTo(s, 'box');
-    expect(s.coins['p1']).toBe((before['p1'] ?? 0) - 10 + 250);
+    expect(s.coins['p1']).toBe((before['p1'] ?? 0) - 10 + 300);
     expect(s.coins['p2']).toBe(before['p2']);
     expect(s.coins['p3']).toBe((before['p3'] ?? 0) - 10);
   });

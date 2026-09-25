@@ -54,11 +54,11 @@ export const REVEAL_STEP_MS = 1_100;
 export const COIN_FLIP_MS = 900;
 /** Keno (the owner: like KENO, Bingo-style balls, a tray, the payouts clear up front): pick
  *  KENO_PICKS of KENO_NUMBERS; KENO_DRAW balls are drawn; the stake pays KENO_PAY[matches] ×
- *  (1 match gives the stake back; the table averages a little under 1, like the boxes' odds). */
+ *  (1 match gives the stake back; the table averages about 1.02, like the boxes' odds). */
 export const KENO_NUMBERS = 20;
 export const KENO_PICKS = 3;
 export const KENO_DRAW = 5;
-export const KENO_PAY = [0, 1, 2, 25] as const;
+export const KENO_PAY = [0, 1, 2.2, 30] as const;
 export const KENO_BALL_MS = 950;
 /** Shell game: speed tiers by how much of the room's coins went into the pot (share of seats ×
  *  start coins): ×1, ×2, ×3, ×5, ×8, ×10 — the owner's breakpoints. */
