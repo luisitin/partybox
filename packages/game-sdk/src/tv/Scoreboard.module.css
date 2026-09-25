@@ -92,6 +92,18 @@
 .compact .row {
   font-size: var(--pb-font-body);
   padding: var(--pb-space-2) var(--pb-space-3);
+  gap: var(--pb-space-2);
+}
+
+/* On a phone the delta and the score take the row's end: a name wraps to a second line instead of
+   losing its end to an ellipsis ("Tess's bo…", fake-out's SE play-test). */
+.compact .name {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.15;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .top {

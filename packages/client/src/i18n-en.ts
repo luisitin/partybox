@@ -131,6 +131,8 @@ export const en = {
     winners: (names: string) => `${names} win!`,
     /** Two tied winners' names, for `winners`. */
     pair: (a: string, b: string) => `${a} & ${b}`,
+    /** Three tied winners, all named ("Abuela, Kenji & Lucía tie!"). */
+    tieNamed: (names: string) => `${names} tie!`,
     tieAmong: (names: string, others: number) =>
       `${names} & ${others} ${others === 1 ? 'other' : 'others'} tie!`,
     /** I-153 B: bots tied with people take no naming slot (`names` comma-joined). */

@@ -7,7 +7,13 @@ import type { JSX } from 'react';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
 import { Avatar, BigText, Confetti, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
-import { nobodyScored, scoreboardRows, winnerLine } from '../controller/results-rows';
+import {
+  groupAwards,
+  joinNames,
+  nobodyScored,
+  scoreboardRows,
+  winnerLine,
+} from '../controller/results-rows';
 import { useGame } from '../game-loader';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
@@ -25,7 +31,8 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
   // An award is the game server's sentence: its own table carries the Spanish.
   const said = (text: string): string => serverText(text, L.lang, room.results?.gameId);
   const rows = scoreboardRows(room);
-  const awards = room.results?.results.awards ?? [];
+  // one card per award, everyone who won it named on it (a tie gave each tied player a copy)
+  const awards = groupAwards(room.results?.results.awards ?? []);
   const many = rows.length >= 7;
   const nameOf = (id: string): string =>
     room.results?.players.find((p) => p.id === id)?.name ?? '?';
@@ -114,9 +121,9 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
           {awards.length > 0 ? (
             <ul className={styles.awards} aria-label={L('awards')}>
               {awards.map((a) => (
-                <li key={a.id} className={styles.award}>
+                <li key={`${a.id}|${a.title}`} className={styles.award}>
                   <span className={styles.awardTitle}>{said(a.title)}</span>
-                  <span className={styles.awardWho}>{nameOf(a.playerId)}</span>
+                  <span className={styles.awardWho}>{joinNames(a.playerIds.map(nameOf))}</span>
                   <span className="pb-muted pb-caption">{said(a.description)}</span>
                 </li>
               ))}
@@ -124,11 +131,13 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
           ) : null}
         </div>
       )}
-      <p className={`pb-muted pb-caption ${awards.length === 0 ? styles.centredHint : ''}`}>
-        {t.vip.badge}: {t.results.playAgain} · {t.results.newGame} · {t.results.lobby}
-        {/* I-034 A: the room knows the game was kept. */}
-        {room.recording ? <> · {L('📼 Recap saved on the host PC')}</> : null}
-      </p>
+      {/* I-034 A: the room knows the game was kept. (The VIP's choices are the host bar's buttons
+          right under it; a line repeating them ran behind those buttons — tune-in's play-test.) */}
+      {room.recording ? (
+        <p className={`pb-muted pb-caption ${awards.length === 0 ? styles.centredHint : ''}`}>
+          {L('📼 Recap saved on the host PC')}
+        </p>
+      ) : null}
     </Stage>
   );
 }

@@ -221,7 +221,7 @@ export function Scoreboard({
       {rows.map((row, index) => (
         <li
           key={row.playerId}
-          className={`${styles.row} ${tieClass(index)}${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''} ${climb && from(row, index) > 0 ? styles.rose : ''} ${climb && from(row, index) < 0 ? styles.fell : ''}`}
+          className={`${styles.row} ${tieClass(index)} ${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''} ${climb && from(row, index) > 0 ? styles.rose : ''} ${climb && from(row, index) < 0 ? styles.fell : ''}`}
           aria-current={row.playerId === highlightId ? 'true' : undefined}
           style={
             staggered

@@ -1,5 +1,5 @@
 // Shared by the phone and TV results screens: results → scoreboard rows + winner sentence.
-import type { RoomSnapshot } from '@partybox/shared';
+import type { GameAward, RoomSnapshot } from '@partybox/shared';
 import type { ScoreboardRow } from '@partybox/game-sdk/ui';
 import { getLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
@@ -91,7 +91,36 @@ export function winnerLine(room: RoomSnapshot, scoreless = false): string {
   if (names.length === 1) return t.results.winner(names[0] as string);
   if (names.length === 2)
     return t.results.winners(t.results.pair(names[0] as string, names[1] as string));
+  // up to three are all named (the reviewer's "Abuela, Kenji & 1 other tie!" had room for Lucía)
+  if (names.length === 3) return t.results.tieNamed(joinNames(names));
   return t.results.tieAmong(`${names[0]}, ${names[1]}`, names.length - 2);
+}
+
+/** "Sam", "Sam & Maya", "Sam, Maya & Leo" — the language's own "&" (t.results.pair). */
+export function joinNames(names: string[]): string {
+  if (names.length <= 1) return names[0] ?? '';
+  return t.results.pair(names.slice(0, -1).join(', '), names.at(-1) as string);
+}
+
+/** One award, everyone who won it: a tie gives the award to each tied player, and a card per
+ *  player repeated the award (and collided on its key, echo/imposter play-tests). */
+export interface AwardGroup {
+  id: string;
+  title: string;
+  description: string;
+  playerIds: string[];
+}
+
+export function groupAwards(awards: readonly GameAward[]): AwardGroup[] {
+  const groups = new Map<string, AwardGroup>();
+  for (const a of awards) {
+    const key = `${a.id}|${a.title}`;
+    const group = groups.get(key);
+    if (!group)
+      groups.set(key, { id: a.id, title: a.title, description: a.description, playerIds: [a.playerId] }); // prettier-ignore
+    else if (!group.playerIds.includes(a.playerId)) group.playerIds.push(a.playerId);
+  }
+  return [...groups.values()];
 }
 
 /** My ranking entry — undefined for a spectator or a late joiner who has no row. */

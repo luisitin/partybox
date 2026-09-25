@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import type { RoomSnapshot } from '@partybox/shared';
 import { ordinal } from '../i18n';
-import { myRow, winnerLine, winnerLineFor } from './results-rows';
+import { groupAwards, joinNames, myRow, winnerLine, winnerLineFor } from './results-rows';
 
 type Rank = { playerId: string; score: number; rank: number };
 
@@ -67,7 +67,8 @@ describe('winnerLineFor', () => {
         { playerId: 'Dev', score: 10, rank: 4 },
       ],
     );
-    expect(winnerLineFor(tied, 'Dev')).toBe('Kenji, Priya & 1 other tie!');
+    // three tied: all named (tune-in's review: 'Abuela, Kenji & 1 other tie!' had room for Lucía)
+    expect(winnerLineFor(tied, 'Dev')).toBe('Kenji, Priya & Sam tie!');
     const four = room(
       { Sam: 20, Priya: 20, Kenji: 20, Dev: 20, Ana: 10 },
       ['Sam', 'Priya', 'Kenji', 'Dev'],
@@ -176,5 +177,21 @@ describe('ADR-052: co-op and team games', () => {
   it("the game's own headline wins", () => {
     const r = withOutcome({ outcome: { kind: 'coop', won: true }, headline: '📡 Crystal clear!' });
     expect(winnerLine(r)).toBe('📡 Crystal clear!');
+  });
+});
+
+describe('awards', () => {
+  it('a tie gives one card per award, with everyone who won it', () => {
+    const award = (id: string, playerId: string) => ({ id, title: id, description: 'd', playerId });
+    const groups = groupAwards([award('sharp', 'A'), award('sharp', 'B'), award('clear', 'C'), award('sharp', 'B')]); // prettier-ignore
+    expect(groups.map((g) => [g.id, g.playerIds])).toEqual([
+      ['sharp', ['A', 'B']],
+      ['clear', ['C']],
+    ]);
+  });
+  it('names read like a sentence', () => {
+    expect(joinNames(['Sam'])).toBe('Sam');
+    expect(joinNames(['Sam', 'Maya'])).toBe('Sam & Maya');
+    expect(joinNames(['Sam', 'Maya', 'Leo'])).toBe('Sam, Maya & Leo');
   });
 });

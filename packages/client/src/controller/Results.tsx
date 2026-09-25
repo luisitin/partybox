@@ -10,7 +10,14 @@ import { useGame } from '../game-loader';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
 import type { Controller } from '../net/controller';
-import { myRow, nobodyScored, scoreboardRows, winnerLineFor } from './results-rows';
+import {
+  groupAwards,
+  joinNames,
+  myRow,
+  nobodyScored,
+  scoreboardRows,
+  winnerLineFor,
+} from './results-rows';
 import styles from './Results.module.css';
 import { VoteRow } from './VoteRow';
 
@@ -33,9 +40,13 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   const scoreless = useGame(room.results?.gameId, 'phone').module?.scoreless === true;
   const over = nobodyScored(room) && !scoreless;
   const vipName = room.players.find((p) => p.id === room.vip)?.name;
-  const awardsForMe = [...(room.results?.results.awards ?? [])].sort(
-    (x, y) => Number(y.playerId === me.id) - Number(x.playerId === me.id),
+  // One chip per award, everyone who won it on it (a tie gave each tied player a copy); yours first.
+  const mineIn = (a: { playerIds: string[] }): boolean => a.playerIds.includes(me.id);
+  const awardsForMe = groupAwards(room.results?.results.awards ?? []).sort(
+    (x, y) => Number(mineIn(y)) - Number(mineIn(x)),
   );
+  const winnersOf = (a: { playerIds: string[] }): string =>
+    joinNames(a.playerIds.map((id) => room.results?.players.find((p) => p.id === id)?.name ?? '?'));
   // I-155 C: votes received per round, straight off the results payload.
   const myVotes = (
     (room.results?.results as { perRoundVotes?: Record<string, number[]> } | undefined)
@@ -63,16 +74,19 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
           {awardsForMe.length ? (
             <span className={styles.awardChips}>
               {awardsForMe.map((a) =>
-                a.playerId === me.id ? (
-                  <span key={a.id} className={`${styles.awardChip} ${styles.awardMine}`}>
+                mineIn(a) ? (
+                  <span
+                    key={`${a.id}|${a.title}`}
+                    className={`${styles.awardChip} ${styles.awardMine}`}
+                  >
                     <strong>
                       {t.results.yourAward(serverText(a.title, lang, room.results?.gameId))}
                     </strong>
                   </span>
                 ) : (
-                  <span key={a.id} className={styles.awardChip}>
+                  <span key={`${a.id}|${a.title}`} className={styles.awardChip}>
                     <strong>{serverText(a.title, lang, room.results?.gameId)}</strong>{' '}
-                    {room.results?.players.find((p) => p.id === a.playerId)?.name ?? '?'}
+                    {winnersOf(a)}
                   </span>
                 ),
               )}
@@ -132,20 +146,20 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
         <ul className={`${styles.awards} ${styles.srOnly}`}>
           {awardsForMe.map((a) => (
             <li
-              key={a.id}
-              className={`${styles.award} ${a.playerId === me.id ? styles.awardMine : ''}`.trim()}
+              key={`${a.id}|${a.title}`}
+              className={`${styles.award} ${mineIn(a) ? styles.awardMine : ''}`.trim()}
             >
               {/* The game's results() writes the award in English: its own table translates it. */}
               <span>
                 {/* I-155 A: the screen already knows whose hand it is in — the award should too. */}
-                {a.playerId === me.id ? (
+                {mineIn(a) ? (
                   <strong>
                     {t.results.yourAward(serverText(a.title, lang, room.results?.gameId))}
                   </strong>
                 ) : (
                   <>
                     <strong>{serverText(a.title, lang, room.results?.gameId)}</strong> ·{' '}
-                    {room.results?.players.find((p) => p.id === a.playerId)?.name ?? '?'}
+                    {winnersOf(a)}
                   </>
                 )}
               </span>
