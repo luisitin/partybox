@@ -136,11 +136,13 @@
 
 .row {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--pb-space-2);
 }
 
 .row > * {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: min(100%, 8em);
 }
 
 .button {
@@ -321,9 +323,15 @@
 
 .keyHead {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--pb-space-2);
+}
+
+/* 200 % text: the title keeps its line, the two buttons drop under it rather than spill */
+.keyTitle {
+  white-space: nowrap;
 }
 
 .keyTitle {

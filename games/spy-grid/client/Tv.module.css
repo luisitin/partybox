@@ -504,7 +504,8 @@
 .memberName {
   /* a long name wraps to a second line rather than losing letters ('Maxim…', session-c) */
   min-width: 0;
-  overflow-wrap: anywhere;
+  /* wraps at a space; a single long word only breaks when it truly can't fit ('Maximilia/no') */
+  overflow-wrap: break-word;
   line-height: 1.1;
 }
 
@@ -611,4 +612,12 @@
   font-size: var(--pb-font-caption);
   font-weight: 800;
   color: var(--pb-accent-2);
+}
+
+.historyEmpty {
+  font-size: 22px;
+  color: var(--pb-text-muted);
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border: 2px dashed var(--pb-border);
+  border-radius: var(--pb-radius);
 }

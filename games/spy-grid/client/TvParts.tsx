@@ -136,10 +136,13 @@ export function History({ view }: { view: SpyTvView }): JSX.Element {
   const L = useT(STRINGS);
   const fresh = view.phaseId === 'guess' && !view.canEnd;
   const last = view.history.length - 1;
+  // The clue being guessed right now has no result yet: it shows '…', not a tick.
+  const live = view.phaseId === 'guess' || view.phaseId === 'flip';
   return (
     <div className={styles.history}>
-      {view.history.length > 0 ? (
-        <div className={styles.historyTitle}>{L('Clues so far')}</div>
+      <div className={styles.historyTitle}>{L('Clues so far')}</div>
+      {view.history.length === 0 ? (
+        <div className={styles.historyEmpty}>{L('The first clue lands here')}</div>
       ) : null}
       {view.history.map((h, i) => (
         <span
@@ -150,7 +153,8 @@ export function History({ view }: { view: SpyTvView }): JSX.Element {
           <span className={styles.chipWord}>{h.word}</span>
           <span>{h.number}</span>
           <span className={styles.chipFound} role="img" aria-label={L('{n} found', { n: h.found })}>
-            <span className={styles.arrow}>→</span> {h.found} ✓
+            <span className={styles.arrow}>→</span>{' '}
+            {live && i === last ? '…' : h.found > 0 ? `${h.found} ✓` : h.found}
           </span>
         </span>
       ))}

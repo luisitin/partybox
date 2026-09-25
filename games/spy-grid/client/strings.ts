@@ -191,6 +191,7 @@ export const STRINGS: Strings = {
       'Las pistas van por el significado, no por letras ni casillas.',
     'Sending…': 'Enviando…',
     'Send clue': 'Enviar pista',
+    'The first clue lands here': 'Aquí llega la primera pista',
     'Sun wins! ▲': '¡Gana Sol! ▲',
     'Moon wins! ●': '¡Gana Luna! ●',
     '🕶️ Master Spy': '🕶️ Maestro espía',
