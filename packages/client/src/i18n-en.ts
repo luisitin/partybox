@@ -106,7 +106,7 @@ export const en = {
     recordingOff: 'Not saving this game',
     musicOnPhones: 'Music on every phone',
     musicOnPhonesHint:
-      'The room’s music plays on each phone too (each phone can still mute itself)',
+      'The room’s music plays on the phones instead of the TV (each phone can still mute itself)',
     musicOnPhonesOff: 'Music on the TV only — a phone can turn its own on in 🎨',
     less: (label: string) => `less ${label}`,
     more: (label: string) => `more ${label}`,
@@ -259,6 +259,7 @@ export const en = {
     tapHint: 'the party works without it',
     mute: 'Mute',
     unmute: 'Unmute',
+    soundOnPhones: 'Sound is on the phones',
     enableSound: 'Sound is off — tap to enable',
     soundOn: 'Sound on',
     soundOffToast: 'Sound off', // I-069 A

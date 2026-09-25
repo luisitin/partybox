@@ -98,7 +98,7 @@ export const es: Texts = {
     recordingOff: 'Este juego no se guarda',
     musicOnPhones: 'Música en todos los teléfonos',
     musicOnPhonesHint:
-      'La música de la sala suena también en cada teléfono (cada uno puede silenciarse)',
+      'La música de la sala suena en los teléfonos en vez de la TV (cada teléfono puede silenciarse)',
     musicOnPhonesOff: 'Música solo en la TV: cada teléfono puede activar la suya en 🎨',
     less: (label) => `menos ${label}`,
     more: (label) => `más ${label}`,
@@ -237,6 +237,7 @@ export const es: Texts = {
     tapHint: 'la fiesta funciona sin él',
     mute: 'Silenciar',
     unmute: 'Activar sonido',
+    soundOnPhones: 'El sonido está en los teléfonos',
     enableSound: 'El sonido está apagado: toca para activarlo',
     soundOn: 'Sonido activado',
     soundOffToast: 'Sonido apagado',

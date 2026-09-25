@@ -347,6 +347,7 @@ export function TvApp(): JSX.Element {
         audio={audio}
         music={music}
         beds={beds}
+        handedOff={room?.phoneOnly ? 'all' : room?.musicOnPhones ? 'music' : false}
         onToggle={(m) => showLocalToast({ kind: 'info', text: soundToast(m) })}
       />
       {/* I-677: the TV page on a phone offers joining as a player */}

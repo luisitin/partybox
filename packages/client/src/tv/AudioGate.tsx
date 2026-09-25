@@ -20,11 +20,19 @@ export interface AudioGateProps {
   music?: MusicEngine;
   /** The synthesized beds (ADR-032): same gate, same mute. */
   beds?: BedEngine;
+  /** The phones carry the sound: 'all' (phone-only room) or 'music' (music on the phones). */
+  handedOff?: 'all' | 'music' | false;
   /** I-069 A: a manual mute/unmute happened (true = now muted) — the shell raises a toast. */
   onToggle?: (muted: boolean) => void;
 }
 
-export function AudioGate({ audio, music, beds, onToggle }: AudioGateProps): JSX.Element {
+export function AudioGate({
+  audio,
+  music,
+  beds,
+  handedOff = false,
+  onToggle,
+}: AudioGateProps): JSX.Element {
   const [started, setStarted] = useState(false);
   const [pillGone, setPillGone] = useState(false);
   const [muted, setMuted] = useState(audio.muted());
@@ -90,11 +98,12 @@ export function AudioGate({ audio, music, beds, onToggle }: AudioGateProps): JSX
     // Before the gate the document listener has just enabled audio from this same pointerdown;
     // the click only ever toggles the persisted mute once sound is really on.
     if (!started) return;
+    if (handedOff === 'all') return; // the phones carry the sound: the pill says so, a tap changes nothing
     const next = !muted;
     audio.setMuted(next);
     // A room whose phones carry the sound keeps the TV's music quiet whatever the pill says.
-    music?.setMuted(next || audio.handedOff());
-    beds?.setMuted(next || audio.handedOff());
+    music?.setMuted(next || Boolean(handedOff));
+    beds?.setMuted(next || Boolean(handedOff));
     setMuted(next);
     setPop(true);
     if (!next) audio.play('ready');
@@ -152,9 +161,18 @@ export function AudioGate({ audio, music, beds, onToggle }: AudioGateProps): JSX
           onClick={toggleMute}
           onAnimationEnd={() => setPop(false)}
           aria-pressed={started ? muted : undefined}
-          aria-label={!started ? t.tv.enableSound : muted ? t.tv.unmute : t.tv.mute}
+          aria-label={
+            handedOff === 'all'
+              ? t.tv.soundOnPhones
+              : !started
+                ? t.tv.enableSound
+                : muted
+                  ? t.tv.unmute
+                  : t.tv.mute
+          }
+          title={handedOff === 'all' ? t.tv.soundOnPhones : undefined}
         >
-          {soundOn ? '🔊' : '🔇'}
+          {handedOff === 'all' ? '📱' : soundOn ? '🔊' : '🔇'}
         </button>
         <button
           type="button"

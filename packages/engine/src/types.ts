@@ -152,6 +152,8 @@ export type Effect =
       text: string;
       /** I-040 B: a player the toast is about (the lobby rings their chip while it shows). */
       playerId?: string;
+      /** With `to: 'all'`: skip this player (the VIP whose own tap already shows the change). */
+      except?: string;
     }
   | { type: 'kicked'; playerId: string; reason: string }
   | {

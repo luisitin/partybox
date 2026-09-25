@@ -47,12 +47,13 @@ export function useShellCues(
       playing &&
       phase !== null &&
       p.phase !== phase &&
-      // a room that asked the phones to carry the audio (phone only, or music on every phone)
-      (room?.phoneOnly || room?.musicOnPhones) &&
+      // the phones carry the stage's audio: a phone-only room, or this phone stages it (remote);
+      // music-on-phones alone leaves cues and voices on the TV (Foundation's ruling [151143])
+      (room?.phoneOnly || state.view?.phoneOnly === true) &&
       tvSoundsOn() &&
       audio
     ) {
-      const mapped = room.selectedGameId
+      const mapped = room?.selectedGameId
         ? peekGame(room.selectedGameId, 'phone')?.sounds?.[phase]
         : undefined;
       if (mapped && mapped !== 'silence') audio.play(mapped as SoundCue);
