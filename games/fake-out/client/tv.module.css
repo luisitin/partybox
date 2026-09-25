@@ -795,8 +795,15 @@
 /* A stamped card makes room on its right so the LIE ✗ / TRUTH ✓ stamp never covers the answer's
    last letter (reviewer [85dc79]: 'ALL SOULS DA[Y]'). */
 .spotlight[data-stamp] .spotCard {
-  padding-right: calc(var(--pb-space-8) + 4.5em);
+  padding-right: calc(var(--pb-space-8) + 6em); /* sized to the wider TRUTH ✓ stamp */
   transition:
     border-color var(--pb-motion-base) var(--pb-ease),
     padding var(--pb-motion-base) var(--pb-ease);
+}
+
+/* "written by": the name sits beside its face, so the payoff never grows down into the deck row
+   (session-c [90140d] B). */
+.payoff .face {
+  flex-direction: row;
+  gap: var(--pb-space-2);
 }
