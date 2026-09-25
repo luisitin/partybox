@@ -20,9 +20,9 @@ export const enPresence = {
         ? `${name} and ${more} more can't see the TV. Are they on a call with you?`
         : `${name} can't see the TV. Is ${name} on a call with you?`,
     onCall: 'On a call',
-    onCallHint: 'Talking games play as usual',
+    onCallHint: 'Games play as usual',
     noCall: 'No call',
-    noCallHint: 'Talking games warn you first; some switch to typing',
+    noCallHint: 'Talking games warn you first',
     dismiss: 'Not now',
     /** Part 00 §3.5: choosing a game the room's presence doesn't suit. */
     needsVoice: 'This game needs talking. Remote players should join a voice call.',

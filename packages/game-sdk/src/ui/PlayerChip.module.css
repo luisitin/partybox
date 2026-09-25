@@ -98,6 +98,11 @@
   max-width: 9em;
 }
 
+/* faces only (the TV strip past two rows, a claim): no empty name slot, so the chips close up */
+.name:empty {
+  display: none;
+}
+
 /* A fixed slot: empty and invisible until there is a glyph, then it scales in (no layout shift). */
 .glyph {
   display: inline-grid;
