@@ -41,13 +41,6 @@
   white-space: nowrap;
 }
 
-/* ── the lot ── */
-.lot {
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-2);
-}
-
 .kicker {
   margin: 0;
   font-size: var(--pb-font-caption);
@@ -59,17 +52,6 @@
 
 .grand {
   color: var(--pb-accent-2);
-}
-
-.lotName {
-  display: flex;
-  align-items: center;
-  gap: var(--pb-space-2);
-  margin: 0;
-  font-size: var(--pb-font-h1);
-  font-weight: 900;
-  line-height: 1.15;
-  overflow-wrap: anywhere;
 }
 
 .lotIcon {
@@ -135,162 +117,6 @@
   gap: var(--pb-space-4);
   margin-block: auto;
   padding-top: var(--pb-space-2);
-}
-
-.lotStage .lot {
-  align-self: stretch;
-}
-
-.startCoins {
-  margin: var(--pb-space-4) 0 0;
-  text-align: center;
-  font-size: var(--pb-font-h2);
-  font-weight: 1000;
-  color: var(--pb-accent-2);
-}
-
-/* ── live ── */
-.liveLot {
-  min-width: 0;
-  font-weight: 800;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.standing {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--pb-space-1);
-  margin-bottom: var(--pb-space-3);
-}
-
-.standingLabel {
-  margin: 0;
-  font-size: var(--pb-font-caption);
-  color: var(--pb-text-muted);
-}
-
-.standingAmount {
-  margin: 0;
-  font-size: var(--pb-font-display);
-  font-weight: 1000;
-  line-height: 1.05;
-  color: var(--pb-accent-2);
-  font-variant-numeric: tabular-nums;
-  animation: global(pb-tick) var(--pb-motion-fast) var(--pb-ease);
-}
-
-.standingCoin {
-  font-size: var(--pb-font-h2);
-  vertical-align: middle;
-}
-
-.standingWho {
-  display: flex;
-  align-items: center;
-  gap: var(--pb-space-2);
-  margin: 0;
-  font-weight: 800;
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.stageCall {
-  margin: 0;
-  font-size: var(--pb-font-h2);
-  font-weight: 1000;
-  color: var(--pb-accent);
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.raises {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--pb-space-2);
-}
-
-.raise {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  min-height: 4.5rem;
-  padding: var(--pb-space-2);
-  border: 0;
-  border-radius: var(--pb-radius);
-  background: var(--pb-accent);
-  color: var(--pb-on-accent);
-  font: inherit;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  cursor: pointer;
-  transition: transform var(--pb-motion-fast) var(--pb-ease);
-}
-
-.raise:active:not([aria-disabled='true']) {
-  transform: scale(0.95);
-}
-
-.raise[aria-disabled='true'] {
-  background: var(--pb-surface-2);
-  color: var(--pb-text-muted);
-  cursor: default;
-}
-
-.raiseAll:not([aria-disabled='true']) {
-  background: var(--pb-accent-2-fill);
-  color: var(--pb-on-accent-2-fill);
-}
-
-.raiseSent {
-  outline: 3px solid var(--pb-accent-2);
-  outline-offset: 2px;
-}
-
-.raiseStep {
-  font-size: var(--pb-font-caption);
-  font-weight: 900;
-  letter-spacing: 0.06em;
-}
-
-.raiseAmount {
-  font-size: var(--pb-font-h2);
-  font-weight: 1000;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-.raiseWhy {
-  font-size: 0.75rem;
-}
-
-.winning {
-  display: grid;
-  place-items: center;
-  min-height: 140px;
-  padding: var(--pb-space-4);
-  border-radius: var(--pb-radius-lg);
-  background: var(--pb-surface-2);
-  box-shadow: inset 0 0 0 3px var(--pb-accent-3);
-  color: var(--pb-accent-3);
-  font-size: var(--pb-font-h1);
-  font-weight: 1000;
-  text-align: center;
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.notice {
-  margin: var(--pb-space-2) 0 0;
-  text-align: center;
-  font-weight: 800;
-  color: var(--pb-danger);
-  animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease);
-}
-
-.liveHints {
-  margin-top: var(--pb-space-3);
 }
 
 /* ── own line ── */
@@ -364,99 +190,15 @@
   margin-top: var(--pb-space-3);
 }
 
-.miniLadder {
-  display: flex;
-  flex-direction: column-reverse;
-  gap: var(--pb-space-1);
-  flex: 1 1 auto;
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.miniRung {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: var(--pb-space-2);
-  padding: var(--pb-space-1) var(--pb-space-2);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.miniWon {
-  box-shadow: inset 0 0 0 2px var(--pb-accent-2);
-}
-
-.miniName {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-weight: 700;
-}
-
-.miniAmount {
-  font-weight: 900;
-  color: var(--pb-accent-2);
-  font-variant-numeric: tabular-nums;
-}
-
-.stageSold,
-.stageTie,
-.stageHeadline {
-  margin: var(--pb-space-3) 0 0;
-  text-align: center;
-  font-size: var(--pb-font-h2);
-  font-weight: 1000;
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.stageTie {
-  color: var(--pb-accent-2);
-}
-
-.stageHeadline {
-  flex: 1 1 auto;
-  min-width: 0;
-  text-align: left;
-  overflow-wrap: anywhere;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .soon,
-  .howStep,
-  .standingAmount,
-  .standingWho,
-  .stageCall,
-  .winning,
-  .notice,
   .ownLine,
-  .ownGlyph,
-  .miniRung,
-  .stageSold,
-  .stageTie,
-  .stageHeadline {
+  .ownGlyph {
     animation: none;
   }
 }
 
-:global(:root[data-motion='off'])
-  :is(
-    .soon,
-    .howStep,
-    .standingAmount,
-    .standingWho,
-    .stageCall,
-    .winning,
-    .notice,
-    .ownLine,
-    .miniRung,
-    .stageSold,
-    .stageTie,
-    .stageHeadline
-  ) {
+:global(:root[data-motion='off']) :is(.soon, .ownLine) {
   animation: none;
 }
 

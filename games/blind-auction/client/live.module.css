@@ -33,20 +33,6 @@
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
 
-.laneName {
-  position: absolute;
-  right: 44px;
-  font-size: var(--pb-font-caption);
-  font-weight: 800;
-  color: var(--pb-text-muted);
-  letter-spacing: 0.04em;
-}
-
-.laneNameBack {
-  opacity: 0.25;
-  transition: opacity var(--pb-motion-base) var(--pb-ease);
-}
-
 .racer {
   position: absolute;
   left: var(--pb-space-2);

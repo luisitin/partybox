@@ -261,7 +261,7 @@ function fourWay(kind: 'ghost' | 'wires', rng: RngState, n: number): [Round, Rng
 
 /** Blackjack: one "option" (you play your hand, not a card); the deal happens at `hands`. */
 function blackjack(n: number): Round {
-  const options = [{ ...option({ icon: '🃏', name: 'Your hand' }, 100), pay: 0 }];
+  const options = [{ ...option({ icon: '🃏', name: 'Beat the dealer' }, 100), pay: 0 }];
   return { box: eventBox('blackjack', n, options), outcome: 0 };
 }
 

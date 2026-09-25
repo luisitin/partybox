@@ -40,15 +40,6 @@
   animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
 }
 
-.liveTag {
-  padding: var(--pb-space-1) var(--pb-space-3);
-  border-radius: var(--pb-radius);
-  background: var(--pb-danger);
-  color: var(--pb-on-accent);
-  font-size: var(--pb-font-caption);
-  letter-spacing: 0.12em;
-}
-
 .row {
   display: flex;
   /* Safe: a board taller than the row spills down, never up over the kicker (review [2a24d2] #1). */
@@ -95,23 +86,12 @@
   color: var(--pb-accent);
 }
 
-.plateSmall {
-  margin: 0;
-  font-size: var(--pb-font-h2);
-  font-weight: 800;
-  line-height: 1.2;
-}
-
 .flavour {
   margin: 0;
   font-size: var(--pb-font-body);
   color: var(--pb-text-muted);
   font-style: italic;
   line-height: 1.4;
-}
-
-.panelChips {
-  justify-content: flex-start;
 }
 
 .count {
@@ -147,26 +127,6 @@
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
 
-/* ── the SOLD stamp across the card ── */
-.stampMark {
-  padding: var(--pb-space-2) var(--pb-space-5);
-  border: 8px solid var(--pb-danger);
-  border-radius: var(--pb-radius);
-  background: color-mix(in srgb, var(--pb-surface) 88%, transparent);
-  color: var(--pb-danger);
-  font-size: var(--pb-font-h1);
-  font-weight: 1000;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-  transform: rotate(-14deg);
-  animation: ba-stamp var(--pb-motion-base) cubic-bezier(0.3, 1.6, 0.5, 1) both;
-}
-
-.stampNone {
-  border-color: var(--pb-text-muted);
-  color: var(--pb-text-muted);
-}
-
 @keyframes ba-stamp {
   from {
     opacity: 0;
@@ -178,55 +138,10 @@
   }
 }
 
-/* ── live ── */
-.livePanel {
-  gap: var(--pb-space-3);
-}
-
-.liveRow {
-  display: flex;
-  align-items: center;
-  gap: var(--pb-space-7);
-}
-
-.ringBox {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: min(330px, 38cqh);
-  height: min(330px, 38cqh);
-  flex: none;
-}
-
 .ring {
   position: absolute;
   inset: 0;
   transform: rotate(-90deg);
-}
-
-.ringTrack,
-.ringLeft {
-  fill: none;
-  stroke-width: 18;
-}
-
-.ringTrack {
-  stroke: var(--pb-surface-2);
-}
-
-.ringLeft {
-  stroke: var(--pb-accent-2);
-  stroke-linecap: round;
-  stroke-dasharray: var(--ba-ring-len);
-  animation: ba-ring var(--ba-ring-ms) linear var(--ba-ring-delay) both;
-}
-
-.ringLast {
-  stroke: var(--pb-danger);
-}
-
-.ringHeld {
-  animation-play-state: paused;
 }
 
 @keyframes ba-ring {
@@ -236,51 +151,6 @@
   to {
     stroke-dashoffset: var(--ba-ring-len);
   }
-}
-
-.liveAmount {
-  display: flex;
-  align-items: center;
-  gap: var(--pb-space-2);
-  font-size: min(128px, 14cqh);
-  font-weight: 1000;
-  line-height: 1;
-  color: var(--pb-text);
-  font-variant-numeric: tabular-nums;
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.liveCoin {
-  font-size: var(--pb-font-h2);
-}
-
-.bidder {
-  display: grid;
-  place-items: center;
-  width: 280px;
-  min-height: 200px;
-}
-
-.bidderIn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--pb-space-3);
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.bidderName {
-  max-width: 280px;
-  font-size: var(--pb-font-h2);
-  font-weight: 900;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.bidderEmpty {
-  font-size: 120px;
-  animation: ba-bob 2.4s ease-in-out infinite;
 }
 
 @keyframes ba-bob {
@@ -293,63 +163,11 @@
   }
 }
 
-.stageLine {
-  margin: 0;
-  font-size: var(--pb-font-h2);
-  font-weight: 900;
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.stageCall {
-  font-size: min(72px, 9cqh);
-  color: var(--pb-accent);
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.liveChips {
-  justify-content: flex-start;
-}
-
-/* ── sold: the ladder ── */
-.soldPanel {
-  gap: var(--pb-space-3);
-}
-
-.unsold {
-  display: flex;
-  align-items: center;
-  gap: var(--pb-space-5);
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
 .soldHead {
   margin: 0;
   font-size: var(--pb-font-h2);
   font-weight: 900;
   color: var(--pb-text-muted);
-}
-
-.ladder {
-  display: flex;
-  flex-direction: column-reverse;
-  gap: var(--pb-space-2);
-  width: 100%;
-  max-width: 820px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.rung {
-  position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: var(--pb-space-4);
-  padding: var(--pb-space-1) var(--pb-space-5);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-  animation: ba-rung var(--pb-motion-base) var(--pb-ease) both;
 }
 
 @keyframes ba-rung {
@@ -361,93 +179,6 @@
     opacity: 1;
     transform: none;
   }
-}
-
-.rungName {
-  font-size: var(--pb-font-body);
-  font-weight: 800;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.rungAmount {
-  font-size: var(--pb-font-h2);
-  font-weight: 900;
-  color: var(--pb-accent-2);
-  font-variant-numeric: tabular-nums;
-}
-
-.ladderCompact .rung {
-  padding-block: var(--pb-space-1);
-}
-
-.ladderCompact .rungAmount {
-  font-size: var(--pb-font-body);
-}
-
-.rungWon {
-  background: var(--pb-surface-2);
-  box-shadow: inset 0 0 0 4px var(--pb-accent-2);
-  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.rungStamp {
-  position: absolute;
-  right: calc(-1 * var(--pb-space-7));
-  padding: 0 var(--pb-space-3);
-  border: 5px solid var(--pb-danger);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-  color: var(--pb-danger);
-  font-size: var(--pb-font-caption);
-  font-weight: 1000;
-  letter-spacing: 0.1em;
-  transform: rotate(-10deg);
-  animation: ba-stamp var(--pb-motion-base) cubic-bezier(0.3, 1.6, 0.5, 1) both;
-}
-
-.passes {
-  margin: 0;
-  font-size: var(--pb-font-caption);
-  color: var(--pb-text-muted);
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.tieLine {
-  margin: 0;
-  font-size: var(--pb-font-body);
-  font-weight: 900;
-  color: var(--pb-accent-2);
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.soldLine {
-  margin: 0;
-  font-size: var(--pb-font-h2);
-  font-weight: 1000;
-  line-height: 1.1;
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-/* ── flip ── */
-.flipPanel {
-  position: relative;
-}
-
-.flipSold {
-  margin: 0;
-  font-size: var(--pb-font-body);
-  font-weight: 800;
-  color: var(--pb-text-muted);
-}
-
-.story {
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-4);
-  /* Held open while the card turns, so the purses below never jump when the words land. */
-  min-height: min(250px, 30cqh);
 }
 
 .good {
@@ -462,100 +193,12 @@
   --ba-tone: var(--pb-info);
 }
 
-.flipKicker {
-  margin: 0;
-  font-size: var(--pb-font-h2);
-  font-weight: 1000;
-  letter-spacing: 0.14em;
-  color: var(--ba-tone);
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
-.flipHeadline {
-  margin: 0;
-  font-size: 80px;
-  font-weight: 1000;
-  line-height: 1.05;
-  overflow-wrap: anywhere;
-  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) 80ms both;
-}
-
-.itWas {
-  margin: 0;
-  font-size: var(--pb-font-h2);
-  font-weight: 800;
-  color: var(--pb-text-muted);
-}
-
-.purses {
-  display: flex;
-  align-items: center;
-  gap: var(--pb-space-5);
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
-}
-
 .purse {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--pb-space-2);
   min-width: 200px;
-}
-
-.purseFace,
-.bidderFace {
-  display: block;
-  width: min(104px, 13cqh);
-  height: min(104px, 13cqh);
-}
-
-.bidderFace {
-  width: min(120px, 15cqh);
-  height: min(120px, 15cqh);
-}
-
-.purseName {
-  max-width: 240px;
-  font-size: var(--pb-font-body);
-  font-weight: 800;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.purseCoins {
-  font-size: var(--pb-font-h2);
-  font-weight: 1000;
-  color: var(--pb-accent-2);
-  font-variant-numeric: tabular-nums;
-}
-
-.purseWinner {
-  animation: global(pb-bump) var(--pb-motion-slow) var(--pb-ease) 900ms both;
-}
-
-.transfer {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 220px;
-  height: 96px;
-  font-size: 48px;
-}
-
-.flyCoin {
-  position: absolute;
-  left: 0;
-  animation: ba-fly 900ms var(--pb-ease) 900ms both;
-}
-
-.flyCoin:nth-child(2) {
-  animation-delay: 1050ms;
-}
-
-.flyCoin:nth-child(3) {
-  animation-delay: 1200ms;
 }
 
 @keyframes ba-fly {
@@ -573,17 +216,6 @@
   }
 }
 
-.arrow {
-  color: var(--pb-text-muted);
-  font-size: 64px;
-}
-
-.swapArrows {
-  font-size: 80px;
-  color: var(--pb-info);
-  animation: ba-swap var(--pb-motion-slow) var(--pb-ease) 900ms both;
-}
-
 @keyframes ba-swap {
   from {
     transform: rotate(-180deg) scale(0.6);
@@ -591,101 +223,6 @@
   to {
     transform: none;
   }
-}
-
-/* ── intro ── */
-.intro {
-  flex-direction: row;
-  justify-content: center;
-  gap: var(--pb-space-8);
-}
-
-.fan {
-  position: relative;
-  flex: none;
-  width: 600px;
-  height: 600px;
-}
-
-.fanCard {
-  position: absolute;
-  left: 110px;
-  top: 34px;
-  transform: translateX(calc(var(--ba-fan) * 100px)) rotate(calc(var(--ba-fan) * 10deg)) scale(0.82);
-  transform-origin: 50% 100%;
-}
-
-.introText {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--pb-space-5);
-  max-width: 980px;
-  text-align: left;
-}
-
-.title {
-  margin: 0;
-  font-size: 88px;
-  font-weight: 1000;
-  line-height: 1;
-  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
-}
-
-.steps {
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-4);
-  max-width: 900px;
-  /* The Stage centres its text: steps read as a list, left-aligned. */
-  text-align: left;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.stepItem,
-.readyRow {
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity var(--pb-motion-slow) var(--pb-ease),
-    transform var(--pb-motion-slow) var(--pb-ease);
-}
-
-.stepItem {
-  display: flex;
-  align-items: baseline;
-  gap: var(--pb-space-4);
-  font-size: var(--pb-font-body);
-  line-height: 1.35;
-}
-
-.stepNum {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--pb-accent);
-  color: var(--pb-on-accent);
-  font-size: var(--pb-font-h2);
-  font-weight: 1000;
-  transform: translateY(8px);
-}
-
-.startCoins {
-  margin: 0;
-  font-size: var(--pb-font-h2);
-  font-weight: 1000;
-  color: var(--pb-accent-2);
-}
-
-.note {
-  margin: 0;
-  font-size: var(--pb-font-caption);
-  color: var(--pb-text-muted);
 }
 
 /* ── open: the reveal and the payouts ── */
@@ -745,84 +282,18 @@
   color: var(--pb-text-muted);
 }
 
-.stepBody {
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-3);
-}
-
-.isReady {
-  opacity: 1;
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .grandKicker,
   .shake,
   .panel,
   .pipIn,
-  .stampMark,
-  .liveAmount,
-  .bidderIn,
-  .bidderEmpty,
-  .stageLine,
-  .stageCall,
-  .rung,
-  .rungWon,
-  .rungStamp,
-  .passes,
-  .tieLine,
-  .soldLine,
-  .flipKicker,
-  .flipHeadline,
-  .purses,
-  .purseWinner,
-  .flyCoin,
-  .swapArrows,
-  .title,
   .insideLine,
   .payouts,
-  .winner,
-  .isReady,
-  .countdown {
+  .winner {
     animation: none;
   }
-  .stepItem,
-  .rulesSample,
-  .startCoins {
-    transition: none;
-  }
 }
 
-:global(:root[data-motion='off'])
-  :is(
-    .grandKicker,
-    .shake,
-    .panel,
-    .pipIn,
-    .stampMark,
-    .liveAmount,
-    .bidderIn,
-    .bidderEmpty,
-    .stageLine,
-    .stageCall,
-    .rung,
-    .rungWon,
-    .rungStamp,
-    .passes,
-    .tieLine,
-    .soldLine,
-    .flipKicker,
-    .flipHeadline,
-    .purses,
-    .purseWinner,
-    .flyCoin,
-    .swapArrows,
-    .title
-  ) {
+:global(:root[data-motion='off']) :is(.grandKicker, .shake, .panel, .pipIn) {
   animation: none;
-}
-
-:global(:root[data-motion='off']) :is(.stepItem, .startCoins) {
-  transition: none;
 }

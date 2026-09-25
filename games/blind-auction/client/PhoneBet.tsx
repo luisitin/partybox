@@ -1,7 +1,7 @@
 // `bet` on the phone: pick what you think is inside (the box's contents are big tappable cards
 // with their odds and payouts), then how much — the shared BidPad, 0 up to all your coins. A resend
 // changes the bet. "Sit this one out" bets nothing. A broke player is told they got 10 to play with.
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
@@ -20,8 +20,24 @@ import { STRINGS } from './strings';
 
 type Props = GameControllerProps<BlindAuctionControllerView, Input>;
 
+/** A short phone (an SE): the Bet button drops the pick's name, which the ticked card shows. */
+function useShortPhone(): boolean {
+  const query = '(max-height: 640px)';
+  const [short, setShort] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(query).matches,
+  );
+  useEffect(() => {
+    const m = window.matchMedia(query);
+    const on = (): void => setShort(m.matches);
+    m.addEventListener('change', on);
+    return () => m.removeEventListener('change', on);
+  }, []);
+  return short;
+}
+
 export function PhoneBet({ view, send }: Props): JSX.Element | null {
   const L = useT(STRINGS);
+  const short = useShortPhone();
   // Tug of war: you back your own team, picked for you.
   const [option, setOption] = useState<number | null>(
     view.myBet?.option ??
@@ -112,9 +128,17 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
         place: (n) =>
           box.event === 'shells'
             ? L('Put {coin} {n} in the pot', { coin: COIN, n })
-            : L('Bet {coin} {n} on {what}', { coin: COIN, n, what: label }),
-        change: (n) => L('Change to {coin} {n} on {what}', { coin: COIN, n, what: label }),
-        placed: (n) => L('{coin} {n} on {what}', { coin: COIN, n, what: label }),
+            : short
+              ? L('Bet {coin} {n}', { coin: COIN, n })
+              : L('Bet {coin} {n} on {what}', { coin: COIN, n, what: label }),
+        change: (n) =>
+          short
+            ? L('Change to {coin} {n}', { coin: COIN, n })
+            : L('Change to {coin} {n} on {what}', { coin: COIN, n, what: label }),
+        placed: (n) =>
+          short
+            ? L('{coin} {n} placed', { coin: COIN, n })
+            : L('{coin} {n} on {what}', { coin: COIN, n, what: label }),
         zero:
           option === null
             ? box.event === 'potato'

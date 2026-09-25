@@ -124,6 +124,8 @@
 
 /* ── TV ── */
 .tv .option {
+  /* Above the shell's confetti layer (z 5): the moment's text stays readable (Blanks retro [0ac5d8]). */
+  z-index: 6;
   padding: var(--pb-space-4) var(--pb-space-3);
 }
 
@@ -145,8 +147,9 @@
 
 .tv .inside {
   font-size: var(--pb-font-caption);
-  /* Sits on the card's top edge, clear of the icon (review [34ea15] nit). */
-  top: -1.3em;
+  /* On the card's bottom edge: clear of the icon and of the headline above (review [34ea15]). */
+  top: auto;
+  bottom: -0.6em;
 }
 
 /* Four to six options (live events): smaller words, never broken inside a word. */
@@ -405,5 +408,39 @@ button.option:focus-visible {
   }
   .phone .name {
     font-size: calc(var(--pb-font-body) * 0.92);
+  }
+}
+
+/* A short phone, once a card is picked: the pick stays a full row on top and the others fold to
+   one-line pills two abreast (tap one to switch), so the stake stepper and its chips sit above the
+   fold (review [14bbfe] #1 / [02ce10]). */
+@media (max-height: 640px) {
+  .phone.picked {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: row dense;
+    gap: 6px;
+  }
+  .phone.picked .selected {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+  .phone.picked .option:not(.selected) {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: 'icon name';
+    padding-block: 2px;
+    column-gap: var(--pb-space-1);
+  }
+  .phone.picked .option:not(.selected) .odds,
+  .phone.picked .option:not(.selected) .pay {
+    display: none;
+  }
+  .phone.picked .option:not(.selected) .icon {
+    font-size: 1.125rem;
+  }
+  .phone.picked .option:not(.selected) .name {
+    overflow: hidden;
+    font-size: var(--pb-font-caption);
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
