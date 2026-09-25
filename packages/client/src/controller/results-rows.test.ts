@@ -144,8 +144,10 @@ describe('winnerLine with bots in the tie (I-153)', () => {
     expect(winnerLine(tieOf(['Bot 2', 'Sam']))).toBe('Sam & the bot tie!');
   });
 
-  it('says so when only bots tie, and still names a lone bot winner', () => {
-    expect(winnerLine(tieOf(['Bot 1', 'Bot 3'], ['Sam']))).toBe('The bots tie — nobody home?');
+  it('names bots that tie over a person, and still names a lone bot winner', () => {
+    // "nobody home?" is for a room with no person at all (imposter's play-test: it read as if Sam
+    // had not played)
+    expect(winnerLine(tieOf(['Bot 1', 'Bot 3'], ['Sam']))).toBe('Bot 1 & Bot 3 win!');
     expect(winnerLine(tieOf(['Bot 1'], ['Sam']))).toBe('Bot 1 wins!');
   });
 
@@ -205,5 +207,31 @@ describe('awards', () => {
     expect(joinNames(['Sam'])).toBe('Sam');
     expect(joinNames(['Sam', 'Maya'])).toBe('Sam & Maya');
     expect(joinNames(['Sam', 'Maya', 'Leo'])).toBe('Sam, Maya & Leo');
+  });
+});
+
+describe('a tie among bots', () => {
+  it('"nobody home?" only when no person played; with people below, the bots are named', () => {
+    const botsTie = room(
+      { 'Bot 1': 10, 'Bot 2': 10, 'Bot 3': 10, Lucia: 4 },
+      ['Bot 1', 'Bot 2', 'Bot 3'],
+      [
+        { playerId: 'Bot 1', score: 10, rank: 1 },
+        { playerId: 'Bot 2', score: 10, rank: 1 },
+        { playerId: 'Bot 3', score: 10, rank: 1 },
+        { playerId: 'Lucia', score: 4, rank: 4 },
+      ],
+    );
+    expect(winnerLine(botsTie)).toBe('Bot 1, Bot 2 & Bot 3 tie!');
+    const onlyBots = room(
+      { 'Bot 1': 10, 'Bot 2': 10, 'Bot 3': 4 },
+      ['Bot 1', 'Bot 2'],
+      [
+        { playerId: 'Bot 1', score: 10, rank: 1 },
+        { playerId: 'Bot 2', score: 10, rank: 1 },
+        { playerId: 'Bot 3', score: 4, rank: 3 },
+      ],
+    );
+    expect(winnerLine(onlyBots)).toBe('The bots tie — nobody home?');
   });
 });

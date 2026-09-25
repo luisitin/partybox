@@ -79,7 +79,11 @@ export function winnerLine(room: RoomSnapshot, scoreless = false): string {
   // I-153 C: a tie nobody was there for — a TIE, not a lone bot winner, which still gets its
   // name ("Bot 1 wins!"). Recording this caught it: the first draft crowned a single bot with
   // "The bots tie — nobody home?" over a board showing Bot 1 alone on 3.
-  if (ids.length > 1 && people.length === 0 && bots.length > 0) return t.results.botTie;
+  // Only when no person played at all: with people lower down the board, "nobody home?" read as if
+  // nobody had played (imposter's three-bot tie over Lucía's 3rd place) — then the bots are named.
+  const anyPerson = results.players.some((p) => p.bot !== true);
+  if (ids.length > 1 && people.length === 0 && bots.length > 0 && !anyPerson)
+    return t.results.botTie;
   // I-153 B: bots tied with people are "the bots" — furniture does not get billing.
   if (bots.length > 0 && people.length > 0) {
     const named = people.map((p) => p.name);
