@@ -132,7 +132,10 @@ export function speech(state: State): SpeechRequest[] {
   if (p === 'voteReveal' || p === 'runoff' || p === 'accuse')
     for (const id of r.accused) want.push(accuseLine(state, id));
   if (p === 'vote' && r.n < state.cfg.rounds) want.push(dealLine(state, r.n + 1));
-  for (const id of Object.keys(FIXED) as FixedLine[]) want.push(fixedLine(state, id));
+  // The fixed lines are asked for early (intro → first clue) and are cached by then; building them
+  // on every call later cost more than the rest of the game's server work together.
+  if (p === 'intro' || p === 'deal' || p === 'clue')
+    for (const id of Object.keys(FIXED) as FixedLine[]) want.push(fixedLine(state, id));
   const seen = new Set<string>();
   const out: SpeechRequest[] = [];
   for (const l of want) {

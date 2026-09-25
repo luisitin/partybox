@@ -1,0 +1,71 @@
+{
+  "video": "C:\\dev\\partybox-game-echo\\reports\\design\\record-review\\echo\\p11-idle\\video\\tv\\round.webm",
+  "bytes": 36132905,
+  "durationS": 406.9,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 60.7,
+      "toS": 87.4,
+      "ms": 26700,
+      "during": "guess",
+      "cueInside": false
+    },
+    {
+      "fromS": 170.4,
+      "toS": 172.8,
+      "ms": 2400,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 172.9,
+      "toS": 175,
+      "ms": 2100,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 213.3,
+      "toS": 219.3,
+      "ms": 6000,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 219.4,
+      "toS": 223.3,
+      "ms": 3900,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 332.5,
+      "toS": 334.1,
+      "ms": 1600,
+      "during": "guess",
+      "cueInside": false
+    },
+    {
+      "fromS": 403.3,
+      "toS": 406.7,
+      "ms": 3400,
+      "during": "results",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 46100,
+  "hardCuts": [],
+  "samples": 4067,
+  "motion": {
+    "p50": 0.0001,
+    "p90": 0.0009,
+    "p99": 0.0079,
+    "max": 0.1155
+  }
+}
