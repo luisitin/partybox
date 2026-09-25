@@ -84,7 +84,9 @@ function checkResults(loaded: LoadedGame, state: GameStateBase, initIds: string[
   }
   expect(results.ranking.map((r) => r.playerId).sort()).toEqual(Object.keys(results.scores).sort());
   for (const row of results.ranking) expect(row.score).toBe(results.scores[row.playerId]);
-  expect(results.winnerIds.length).toBeGreaterThan(0);
+  // ADR-052: only a co-op game the players lost may crown nobody.
+  if (!(results.outcome?.kind === 'coop' && !results.outcome.won))
+    expect(results.winnerIds.length).toBeGreaterThan(0);
   for (const id of results.winnerIds)
     expect(results.ranking.find((r) => r.playerId === id)?.rank).toBe(1);
   for (const award of results.awards) expect(initIds).toContain(award.playerId);

@@ -1,8 +1,14 @@
 {
   "id": "herd-mind",
   "name": "Herd Mind",
+  "icon": "🐑",
   "tagline": "Think like the herd. Don't be the odd sheep.",
   "description": "A question appears and everyone picks the answer they think most people will pick. The biggest group scores. Alone with your answer? You take the Black Sheep, and nobody holding it can win. First to the target without the sheep wins.",
+  "howToPlay": [
+    "A question appears. Pick the answer you think most people will pick.",
+    "The biggest group scores a point each. A tie for biggest scores nothing.",
+    "Alone with your answer? You get the Black Sheep and can't win while you hold it."
+  ],
   "version": "0.1.0",
   "minPlayers": 3,
   "maxPlayers": 16,
@@ -13,7 +19,7 @@
     "perPlayerPerRoundSeconds": 0,
     "roundsSetting": "maxQuestions"
   },
-  "tags": ["quick", "words"],
+  "tags": ["words"],
   "settings": [
     {
       "key": "mode",
@@ -22,8 +28,14 @@
       "type": "select",
       "default": "tiles",
       "options": [
-        { "value": "tiles", "label": "Tiles" },
-        { "value": "typed", "label": "Typed" }
+        {
+          "value": "tiles",
+          "label": "Tiles"
+        },
+        {
+          "value": "typed",
+          "label": "Typed"
+        }
       ]
     },
     {
@@ -53,9 +65,18 @@
       "type": "select",
       "default": "normal",
       "options": [
-        { "value": "relaxed", "label": "Relaxed" },
-        { "value": "normal", "label": "Normal" },
-        { "value": "fast", "label": "Fast" }
+        {
+          "value": "relaxed",
+          "label": "Relaxed"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "fast",
+          "label": "Fast"
+        }
       ]
     },
     {
@@ -72,14 +93,36 @@
       "type": "select",
       "default": "jessica",
       "options": [
-        { "value": "jessica", "label": "American Woman" },
-        { "value": "george", "label": "Old British Man" },
-        { "value": "fable", "label": "Young British Man" },
-        { "value": "sky", "label": "Soft-Spoken Woman" },
-        { "value": "original", "label": "Original" },
-        { "value": "none", "label": "No reader" }
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "none",
+          "label": "No reader"
+        }
       ]
     }
   ],
-  "supportsBots": true
+  "supportsBots": true,
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-24"
 }

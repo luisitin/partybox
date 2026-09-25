@@ -1,18 +1,19 @@
 // Typed access to content/*.json and the draws made from it. Host-only: the client never imports
 // this (foundation §2.5); a game's state holds only the questions it drew.
 import { shuffle } from '@partybox/game-sdk';
+import { parsePronunciations } from '@partybox/game-sdk/speech';
 import type { RngState } from '@partybox/game-sdk';
 import familyJson from '../content/family.json' with { type: 'json' };
 import pronunciationsJson from '../content/pronunciations.json' with { type: 'json' };
 import spicyJson from '../content/spicy.json' with { type: 'json' };
-import { packSchema, packs } from '../content/schema';
+import { packSchema } from '../content/schema';
 import type { AnswerItem, Pack, QuestionItem } from '../content/schema';
 import type { Settings, Tile } from './types';
 
 // Parsed once at module load: a broken pack fails at import time (and in the contract suite).
 export const FAMILY: Pack = packSchema.parse(familyJson);
 export const SPICY: Pack = packSchema.parse(spicyJson);
-export const PRONUNCIATIONS = packs.pronunciations.parse(pronunciationsJson);
+export const PRONUNCIATIONS = parsePronunciations(pronunciationsJson);
 export const LANG = FAMILY.lang;
 
 /** Draws the game's questions: `maxQuestions` from the family pack, plus the spicy one when on. */

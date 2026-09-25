@@ -1,6 +1,6 @@
 // Scoring for Blanks: one point per round won (shared on a tie; Rando's wins pay nobody), locked
 // in when the result phase starts. Awards and results() live here too.
-import { buildResults, rank } from '@partybox/game-sdk';
+import { buildResults, compareCodeUnits, rank } from '@partybox/game-sdk';
 import type { GameAward, GameResults } from '@partybox/game-sdk';
 import { fillText } from './cards';
 import { blackCard, whiteText } from './content';
@@ -90,7 +90,7 @@ function leader(
       (stat[b] ?? 0) - (stat[a] ?? 0) ||
       Number(won.has(a)) - Number(won.has(b)) ||
       (state.scores[b] ?? 0) - (state.scores[a] ?? 0) ||
-      a.localeCompare(b),
+      compareCodeUnits(a, b),
   );
   const top = ids[0];
   return top === undefined ? null : claim(won, top);

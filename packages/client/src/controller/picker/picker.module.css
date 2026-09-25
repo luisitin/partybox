@@ -1,0 +1,628 @@
+/* The game picker on the phone (game pack Part 00 §1.3–1.5). Designed at 320 × 568; rows grow at
+   200 % text (the tagline may take two lines, never more) while the icon and ⓘ keep their size. */
+
+/* The title keeps its words together: when it and the pill do not fit on one line (200 % text,
+   Spanish), the pill drops under the title instead of squeezing it to a word a line. */
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-1) var(--pb-space-2);
+}
+
+.headTitle {
+  flex: 1 0 auto;
+  max-width: 100%;
+}
+
+.pill {
+  flex-shrink: 0;
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  white-space: nowrap;
+}
+
+/* One scrolling row of chips. It never drags the page sideways: the row scrolls, the page stays.
+   It never shrinks either: in the screen's scrolling column a flex item may squash to a sliver. */
+.chips {
+  flex-shrink: 0;
+  display: flex;
+  gap: var(--pb-space-2);
+  margin: 0 calc(-1 * var(--pb-space-4));
+  padding: 0 var(--pb-space-4) var(--pb-space-1);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  flex-shrink: 0;
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-4);
+  border-radius: 999px;
+  border: 2px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    background-color var(--pb-motion-fast) var(--pb-ease),
+    border-color var(--pb-motion-fast) var(--pb-ease),
+    transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+/* Selected: filled AND ticked, so the state never rests on colour alone. */
+.chip[aria-pressed='true'] {
+  background: var(--pb-accent);
+  border-color: var(--pb-accent);
+  color: var(--pb-on-accent);
+}
+
+.list {
+  flex-shrink: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+}
+
+.item {
+  display: flex;
+  align-items: stretch;
+  min-height: 72px;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 2px solid var(--pb-border);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
+  animation-delay: calc(var(--i, 0) * 30ms);
+}
+
+/* A game that does not fit the room: half strength, and the meta line says why (not colour alone). */
+.off {
+  opacity: 0.5;
+}
+
+.row {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-3) 0 var(--pb-space-3) var(--pb-space-3);
+  text-align: left;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.tile {
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  line-height: 1.15;
+  /* A long name on a 320 px phone takes a second line rather than losing its end. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  text-wrap: balance;
+}
+
+/* Under 360 px a name at h2 size wraps ("Blind / Auction") and a row grows to ~110 px, so an
+   iPhone SE saw two games; at body size every name fits one line. It still scales with text size. */
+@media (max-width: 359px) {
+  .name {
+    font-size: var(--pb-font-body);
+  }
+}
+
+/* A phone on its side (or a tablet) has the width for two columns: twice the games in view. */
+@media (min-width: 560px) {
+  .list {
+    display: grid;
+    /* minmax(0, …): a plain 1fr grows to fit a one-line tagline and widens the whole page. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.tagline {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Larger text (the OS setting, or the 200 % harness): the list measures its caption size and
+   lets a tagline take two lines, never more. */
+.big .tagline {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--pb-space-2);
+  row-gap: 2px;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-accent-2);
+  line-height: 1.3;
+}
+
+.reason {
+  color: var(--pb-text);
+}
+
+.badge {
+  padding: 0 var(--pb-space-1);
+  border-radius: 6px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.tileNew {
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  translate: -50% 0;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+}
+
+.info {
+  flex-shrink: 0;
+  align-self: center;
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  margin: 0 var(--pb-space-1);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  color: var(--pb-text-muted);
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-6) 0;
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+.textButton {
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-3);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+/* ─── The chosen game ──────────────────────────────────────────────────────────────────────── */
+
+.chosen {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-1);
+  text-align: center;
+}
+
+.tileBig {
+  width: 72px;
+  height: 72px;
+  font-size: 44px;
+  border-radius: var(--pb-radius-lg);
+  margin-bottom: var(--pb-space-2);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) backwards;
+}
+
+.chosenName {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.chosenTagline {
+  color: var(--pb-text-muted);
+  text-wrap: balance;
+}
+
+.chosen .meta {
+  justify-content: center;
+}
+
+.optionsHead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--pb-space-1);
+  min-height: var(--pb-touch);
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  text-align: left;
+}
+
+.optionsTitle {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+
+.optionsTuned {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-accent-2);
+}
+
+/* ─── The About sheet ────────────────────────────────────────────────────────────────────────── */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  background: var(--pb-scrim);
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+  overscroll-behavior: contain;
+  touch-action: none;
+}
+
+.backdropLeaving {
+  animation: global(pb-fade-out) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.sheet {
+  width: 100%;
+  max-height: 85dvh;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--pb-radius-lg) var(--pb-radius-lg) 0 0;
+  background: var(--pb-surface);
+  transform: translateY(var(--drag, 0px));
+  transition: transform var(--pb-motion-base) var(--pb-ease);
+  animation: sheetIn var(--pb-motion-base) var(--pb-ease) both;
+  touch-action: pan-y;
+}
+
+.sheetLeaving {
+  transform: translateY(100%);
+}
+
+.dragging {
+  transition: none;
+}
+
+@keyframes sheetIn {
+  from {
+    transform: translateY(40%);
+    opacity: 0.4;
+  }
+}
+
+.grab {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-3) var(--pb-space-4) var(--pb-space-2);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* The handle: a pill that says "drag me down" (swipe-to-close). */
+.grab::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: var(--pb-space-2);
+  width: 40px;
+  height: 4px;
+  margin-left: -20px;
+  border-radius: 2px;
+  background: var(--pb-surface-2);
+}
+
+.sheetTitle {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The sheet has the room: its tagline wraps instead of stopping at an ellipsis. */
+.sheetTitle .tagline {
+  white-space: normal;
+  text-wrap: balance;
+}
+
+.close {
+  flex-shrink: 0;
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.sheetBody {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--pb-space-4) var(--pb-space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
+
+.badges > span {
+  padding: var(--pb-space-1) var(--pb-space-2);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+}
+
+.label {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  counter-reset: step;
+}
+
+.steps li {
+  display: flex;
+  gap: var(--pb-space-3);
+  counter-increment: step;
+}
+
+.steps li::before {
+  content: counter(step);
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  /* 28 px beside body text, and in step with it at 200 % text (a fixed 28 px read as a superscript). */
+  width: calc(var(--pb-font-body) * 1.55);
+  height: calc(var(--pb-font-body) * 1.55);
+  border-radius: 50%;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-weight: 900;
+  font-size: var(--pb-font-caption);
+}
+
+/* Words still on their way: a shimmer the height of the steps, so nothing jumps when they land. */
+.wait {
+  min-height: 7.5em;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  opacity: 0.5;
+}
+
+.description {
+  color: var(--pb-text-muted);
+}
+
+.facts {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--pb-space-1) var(--pb-space-3);
+  font-size: var(--pb-font-caption);
+}
+
+.facts dt {
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.facts dd {
+  margin: 0;
+}
+
+.sheetFooter {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-3) var(--pb-space-4) calc(var(--pb-space-3) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--pb-surface-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .sheet,
+  .backdrop {
+    animation: none;
+  }
+  .sheet {
+    transition: none;
+  }
+}
+:global(:root[data-motion='off']) .item,
+:global(:root[data-motion='off']) .sheet,
+:global(:root[data-motion='off']) .backdrop {
+  animation: none;
+}
+:global(:root[data-motion='off']) .sheet {
+  transition: none;
+}
+
+.guestSteps {
+  width: 100%;
+  text-align: left;
+}
+
+/* The guest's steps light in turn, like the TV's (useStepCycle): the room reads together, and the
+   screen never sits still past the phone gate. Every step lit when motion is reduced. */
+.guestSteps li {
+  opacity: 0.55;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+.guestSteps li.stepLit {
+  opacity: 1;
+}
+
+/* "Sam is choosing a game" + three dots that rise in turn, the TV's thinking line on a guest's
+   list (their title: a guest does not pick). Still dots when motion is reduced. */
+.dots {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 2px;
+  vertical-align: baseline;
+}
+
+.dots span {
+  width: 0.28em;
+  height: 0.28em;
+  border-radius: 50%;
+  background: currentColor;
+  animation: dot calc(var(--pb-motion-slow) * 3) var(--pb-ease) infinite;
+}
+
+.dots span:nth-child(2) {
+  animation-delay: calc(var(--pb-motion-slow) * 0.5);
+}
+
+.dots span:nth-child(3) {
+  animation-delay: var(--pb-motion-slow);
+}
+
+@keyframes dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-0.2em);
+  }
+}
+
+/* A guest's chosen screen: the game's tile, what was picked, how it plays, and a quiet wait. */
+.guest {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  text-align: center;
+}
+
+.guest .tileBig {
+  width: 56px;
+  height: 56px;
+  font-size: 34px;
+  margin-bottom: 0;
+}
+
+.guest .chosenName {
+  font-size: var(--pb-font-h2);
+}
+
+.guestWait {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+
+.guestWait::after {
+  content: '•••';
+  letter-spacing: 2px;
+  animation: global(pb-breathe) calc(var(--pb-motion-pulse) * 2) ease-in-out infinite;
+}
+
+/* What the VIP is reading about, on the guests' list (Part 00 §1.4, mirrored on every phone). */
+.readingLine {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
+}
+
+.readingRow {
+  border-color: var(--pb-accent);
+}

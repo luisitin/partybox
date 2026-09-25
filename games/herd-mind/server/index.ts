@@ -108,7 +108,7 @@ function onPlayer(state: State, event: GameEvent<Input>): State {
 function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') return onPlayer(state, event);
   if (event.type === 'speech') {
-    if (!/^hm[a-z0-9]{4,38}$/.test(event.key)) return state;
+    if (!event.key.startsWith('herd-mind-')) return state;
     const ms = Number.isFinite(event.ms) ? Math.round(event.ms) : -1;
     return retimeHerd({ ...state, speechMs: { ...state.speechMs, [event.key]: ms } }, event.now);
   }

@@ -3,6 +3,7 @@
 // suite validates every pack with it. The deeper checks (duplicates after normalizing, accept →
 // exact, style mix) live in __tests__/content.test.ts.
 import { z } from '@partybox/game-sdk';
+import { pronunciationsSchema } from '@partybox/game-sdk/speech';
 
 const slug = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/);
 const lower = z
@@ -53,13 +54,8 @@ export const packSchema = z.object({
 });
 export type Pack = z.infer<typeof packSchema>;
 
-const pronunciationSchema = z.record(
-  z.string().min(1),
-  z.object({ say: z.string().min(1), ipa: z.string().min(1).optional() }),
-);
-
 export const packs = {
   family: packSchema,
   spicy: packSchema,
-  pronunciations: pronunciationSchema,
+  pronunciations: pronunciationsSchema,
 } as const;

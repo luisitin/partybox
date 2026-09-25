@@ -1,30 +1,12 @@
 // Broken Pencil's words in other languages, keyed by the English sentence (the owner, 2026-09-22: every
 // screen translatable to Spanish). Screens read them through `useT(STRINGS)` as `L('…')`; the
-// shell's game picker reads the manifest's tagline, description and setting labels from here too.
+// manifest's own sentences (the picker, About, the settings form) live in manifest.es.json (ADR-049).
 // `{name}` marks a placeholder. Content (cards, prompts, questions) stays in the deck's language.
 // Vocabulary: a "book" is un libro, a "guess" (the noun) una respuesta, a "page" una página.
 import type { Strings } from '@partybox/game-sdk/ui';
 
 export const STRINGS: Strings = {
   es: {
-    // The game picker (manifest.json).
-    'Draw it. Guess it. Watch it fall apart.': 'Dibújalo. Adivínalo. Mira cómo se desmorona.',
-    'Telephone with a pencil. Pick a secret word, draw it on your phone, pass the book on: the next player guesses, the one after draws that guess, and so on around the circle. Then the TV turns the pages of every book one at a time while the VIP holds the Next button. No points — the show is the game.':
-      'El juego del teléfono, con lápiz. Elige una palabra secreta, dibújala en tu teléfono y pasa el libro: el siguiente jugador adivina, el que sigue dibuja esa respuesta, y así por todo el círculo. Luego la TV pasa las páginas de cada libro, una a una, mientras el VIP controla el botón Siguiente. Sin puntos: el show es el juego.',
-    'Players per book': 'Jugadores por libro',
-    'How many other players touch each book (everyone in the room by default).':
-      'Cuántos otros jugadores tocan cada libro (por defecto, todos los de la sala).',
-    'Drawing time': 'Tiempo para dibujar',
-    'Seconds per drawing': 'Segundos por dibujo',
-    'Guessing time': 'Tiempo para adivinar',
-    'Seconds per guess': 'Segundos por respuesta',
-    'Custom words': 'Palabras propias',
-    'Let players type their own secret word':
-      'Cada jugador puede escribir su propia palabra secreta',
-    'Spicy words': 'Palabras picantes',
-    'Adds explicit adult words to the offers (18+, as wild as the Blanks WILD deck)':
-      'Añade palabras explícitas para adultos a las opciones (18+, tan salvajes como el mazo WILD de Blanks)',
-
     // Phone: picking the secret word.
     'Everyone else ({others}) will touch your book before it comes home.':
       'Tu libro pasará por las manos de todos los demás ({others}) antes de volver a ti.',

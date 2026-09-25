@@ -1,8 +1,9 @@
 // READER-VOICES (ADR-045) for Herd Mind (SPEC §2.12): the question when `answer` starts, the herd's
 // answer at the verdict, and five fixed lines. Every line is asked for ahead of its moment (the
 // next question during `score`, the tile answers while people pick) so no reveal waits for a voice.
-// `speakable` is a thin STAND-IN for the foundation's `toSpeakable` (F6) — see NOTES.md.
+// Every line goes through the SDK's toSpeakable (foundation F6) with the game's own respellings.
 import type { SpeechRequest } from '@partybox/game-sdk';
+import { speechKey, toSpeakable } from '@partybox/game-sdk/speech';
 import { answerLabel, PRONUNCIATIONS } from './content';
 import type { State } from './types';
 
@@ -18,41 +19,13 @@ export type FixedLine = keyof typeof FIXED;
 /** At most this many readings are asked for at once (foundation §5.7). */
 const MAX_PENDING = 10;
 
-/** Straight quotes, a blank for "___", no emoji, the game's respellings (whole words). */
-export function speakable(text: string): string {
-  let s = text.replace(/[’‘ʼ´`]/g, "'").replace(/[“”]/g, '');
-  s = s.replace(/_{2,}/g, 'blank');
-  s = s
-    .replace(/[^\p{L}\p{N}\p{P}\p{Zs}]/gu, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-  for (const [word, entry] of Object.entries(PRONUNCIATIONS)) {
-    const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    s = s.replace(new RegExp(`\\b${escaped}\\b`, 'g'), entry.say);
-  }
-  return s;
-}
-
-/** A stable short key (FNV-1a twice over the voice and text); the host's key rule is [a-z0-9]{6,40}. */
-export function speechKey(voice: string, text: string): string {
-  const src = `herd-mind|${voice}|${text}`;
-  let a = 0x811c9dc5;
-  let b = 0x01000193;
-  for (let i = 0; i < src.length; i++) {
-    const c = src.charCodeAt(i);
-    a = Math.imul(a ^ c, 0x01000193) >>> 0;
-    b = Math.imul(b ^ c, 0x5bd1e995) >>> 0;
-  }
-  return `hm${a.toString(36)}${b.toString(36)}`;
-}
-
 function voiceOf(state: State): string | null {
   return state.cfg.reader === 'none' ? null : state.cfg.reader;
 }
 
 function request(voice: string, text: string): SpeechRequest {
-  const said = speakable(text);
-  return { key: speechKey(voice, said), voice, parts: [{ text: said }] };
+  const parts = toSpeakable(text, { voice, lang: 'en', overrides: PRONUNCIATIONS });
+  return { key: speechKey('herd-mind', voice, parts), voice, parts };
 }
 
 export function questionReading(state: State, n: number): SpeechRequest | null {

@@ -5,9 +5,19 @@ import { game as blanks } from '../../../games/blanks/server/index';
 import { game as brokenPencil } from '../../../games/broken-pencil/server/index';
 import { game as herdMind } from '../../../games/herd-mind/server/index';
 import { game as hiveRank } from '../../../games/hive-rank/server/index';
+import { game as imposter } from '../../../games/imposter/server/index';
 import { game as lightningRound } from '../../../games/lightning-round/server/index';
 import { game as spyGrid } from '../../../games/spy-grid/server/index';
 import { game as wisecrack } from '../../../games/wisecrack/server/index';
+import bingoEs from '../../../games/bingo/manifest.es.json' with { type: 'json' };
+import blanksEs from '../../../games/blanks/manifest.es.json' with { type: 'json' };
+import brokenPencilEs from '../../../games/broken-pencil/manifest.es.json' with { type: 'json' };
+import herdMindEs from '../../../games/herd-mind/manifest.es.json' with { type: 'json' };
+import hiveRankEs from '../../../games/hive-rank/manifest.es.json' with { type: 'json' };
+import imposterEs from '../../../games/imposter/manifest.es.json' with { type: 'json' };
+import lightningRoundEs from '../../../games/lightning-round/manifest.es.json' with { type: 'json' };
+import spyGridEs from '../../../games/spy-grid/manifest.es.json' with { type: 'json' };
+import wisecrackEs from '../../../games/wisecrack/manifest.es.json' with { type: 'json' };
 
 export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'bingo': bingo,
@@ -15,7 +25,20 @@ export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'broken-pencil': brokenPencil,
   'herd-mind': herdMind,
   'hive-rank': hiveRank,
+  'imposter': imposter,
   'lightning-round': lightningRound,
   'spy-grid': spyGrid,
   'wisecrack': wisecrack,
+};
+
+export const serverGameText: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, string>>>>>> = {
+  'bingo': { es: bingoEs },
+  'blanks': { es: blanksEs },
+  'broken-pencil': { es: brokenPencilEs },
+  'herd-mind': { es: herdMindEs },
+  'hive-rank': { es: hiveRankEs },
+  'imposter': { es: imposterEs },
+  'lightning-round': { es: lightningRoundEs },
+  'spy-grid': { es: spyGridEs },
+  'wisecrack': { es: wisecrackEs },
 };
