@@ -161,8 +161,8 @@ export const en = {
     youTie: 'You tie for first! 🏆',
     yourPlace: (rank: number, score: number) => `You finished ${ordinal(rank)} · ${score} pts`,
     /** I-155 A: an award you won, on your own phone ("Your card of the night"). */
-    // the owner (2026-09-24): an award reads like everyone else's — the title, then who: "You"
-    yourAward: (title: string) => `${title} · You`,
+    // The owner: 'Your 🎲 High Roller' read wrong — say it is you.
+    yourAward: (title: string) => `${title} — that’s you!`,
     /** I-155 C: the votes your cards took, round by round ("2 · 0 · 3"). */
     myVotes: (list: string) => `your votes: ${list}`,
   },

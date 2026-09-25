@@ -145,7 +145,7 @@ export const es: Texts = {
     youWin: '¡Ganaste! 🏆',
     youTie: '¡Empataste en primer lugar! 🏆',
     yourPlace: (rank, score) => `Quedaste ${rank}.º · ${score} pts`,
-    yourAward: (title) => `${title} · Tú`,
+    yourAward: (title) => `${title}: ¡eres tú!`,
     myVotes: (list) => `tus votos: ${list}`,
   },
   vip: {
