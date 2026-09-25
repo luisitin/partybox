@@ -33,8 +33,10 @@ Contents: [1 First 15 minutes](#1-the-first-15-minutes) · [2 Map](#2-map) ·
    `git -C C:/dev/partybox worktree add C:/dev/partybox-codex-<area> -b <branch> main`, then in it run
    `pnpm install --offline` (plain `pnpm install` if that fails). Add `pnpm fetch-music` if you will
    record audio (§10).
-5. **Claim ports** in hub thread [b1bc79] before starting any server. Codex agents use 42600-42699, in
-   blocks of 2.
+5. **Claim ports** in hub thread [b1bc79] before starting any server. Codex agents use 42600-42699: take
+   the block your role starter assigns (`C:/dev/agent-hub/handoffs/codex-migration-tools/roles.json`,
+   4 ports per role), check that nothing listens on it, and follow the thread's latest instruction
+   (currently [74de78]) over this line.
 6. **Say what you're doing**: `status "<task>"`. Before touching shared code, post in #plans. Then start
    the check loop (§8.6) and keep it running until your work is merged.
 
@@ -142,7 +144,7 @@ browsers when you aren't being play-tested: memory is tight. The live picture:
 | 42310-42419         | The game sessions, a block of 10 each: imposter 4231x, herd-mind 4232x, fake-out 4233x, who-said-it 4234x, tune-in 4235x, hive-rank 4236x, echo 4237x, blind-auction (Mystery Box) 4238x, spy-grid 4239x, nightfall 4240x, secret-hitler 4241x. The first port is the live build; the rest are review worktrees, recorders and re-checks |
 | 42500               | reviewer                                                                                                                                                                                                                                                                                                                                 |
 | 42520-42599         | Helpers, claimed in hub thread [ffa372] (reviewer 42520/42522/42524, spy-grid 42530/42532, foundation 42540/42542, tune-in 42560/42562, echo 42580/42582, who-said-it 42590/42592)                                                                                                                                                       |
-| 42600-42699         | **Codex agents**: claim in hub thread [b1bc79]                                                                                                                                                                                                                                                                                           |
+| 42600-42699         | **Codex agents**: your role's block of 4 from `roles.json`, claimed in hub thread [b1bc79] (latest rule: [74de78])                                                                                                                                                                                                                       |
 | 4747                | The hub's web UI (`node C:/dev/agent-hub/hub.mjs serve`), which the owner uses                                                                                                                                                                                                                                                           |
 | 42050, 42523        | Not PartyBox: OneDrive and Tailscale                                                                                                                                                                                                                                                                                                     |
 
