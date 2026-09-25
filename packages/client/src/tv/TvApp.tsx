@@ -234,7 +234,11 @@ export function TvApp(): JSX.Element {
       else {
         music.duck(9000);
         // I-037 C: several winners — the suspended chord, not the horn.
-        audio.play((room.results?.results.winnerIds.length ?? 0) > 1 ? 'tie' : 'cheer');
+        const outcome = room.results?.results.outcome;
+        // ADR-052: co-op / teams — the cheer for a win, the tie chord for a draw or a loss.
+        const won = outcome && (outcome.kind === 'coop' ? outcome.won : outcome.winner !== null);
+        if (outcome) audio.play(won ? 'cheer' : 'tie');
+        else audio.play((room.results?.results.winnerIds.length ?? 0) > 1 ? 'tie' : 'cheer');
       }
     }
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's

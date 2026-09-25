@@ -152,3 +152,29 @@ describe('winnerLine with bots in the tie (I-153)', () => {
     expect(winnerLine(tieOf(['Sam', 'Priya']))).toBe('Priya & Sam win!');
   });
 });
+
+describe('ADR-052: co-op and team games', () => {
+  const withOutcome = (extra: Record<string, unknown>): RoomSnapshot => {
+    const base = room({ Sam: 5, Priya: 5 }, ['Sam', 'Priya'], []);
+    const r = base.results as NonNullable<RoomSnapshot['results']>;
+    return { ...base, results: { ...r, results: { ...r.results, ...extra } } } as RoomSnapshot;
+  };
+  it('a co-op mission is complete or failed, never a tie', () => {
+    expect(winnerLine(withOutcome({ outcome: { kind: 'coop', won: true } }))).toBe('Mission complete!'); // prettier-ignore
+    const lost = withOutcome({ winnerIds: [], outcome: { kind: 'coop', won: false } });
+    expect(winnerLine(lost)).toBe('Mission failed');
+    expect(winnerLineFor(lost, 'Sam')).toBe('Mission failed');
+  });
+  it('a team wins with its mark, or it is a draw', () => {
+    const teams = [
+      { id: 'sun', name: 'Sun', mark: '▲', members: ['Sam'] },
+      { id: 'moon', name: 'Moon', mark: '●', members: ['Priya'] },
+    ];
+    expect(winnerLine(withOutcome({ outcome: { kind: 'teams', winner: 'sun', teams } }))).toBe('▲ Sun wins!'); // prettier-ignore
+    expect(winnerLine(withOutcome({ outcome: { kind: 'teams', winner: null, teams } }))).toBe('A draw!'); // prettier-ignore
+  });
+  it("the game's own headline wins", () => {
+    const r = withOutcome({ outcome: { kind: 'coop', won: true }, headline: '📡 Crystal clear!' });
+    expect(winnerLine(r)).toBe('📡 Crystal clear!');
+  });
+});

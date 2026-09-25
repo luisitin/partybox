@@ -245,6 +245,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Co-op and team games end properly** (ADR-052): a game can say it was a co-op mission (complete or
+  failed) or a team game (▲ Sun wins, or a draw), with its own headline. The results screens stop
+  calling those a tie: a win gets the cheer and the confetti, a loss or a draw the quiet chord.
+
 - **A new game picker** (game pack F3, ADR-051): "Pick a game" opens a list with nothing chosen —
   a count of who is here, filter chips that only appear when they narrow the list, and one compact
   row per game (icon, NEW, tagline, players · minutes, why it doesn't fit tonight). Games that fit
