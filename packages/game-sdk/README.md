@@ -26,6 +26,14 @@ primitives, and hosts the contract tests that run against every game.
 - `src/tv/` — `Stage` (overscan frame), `BigText`, `Timer` (last-5-s urgency + `onTick`), `PlayerChips`, `Scoreboard`, `Reveal`.
 - `src/contract-tests/` — the suite every game must pass: `contract.test.ts` (rules), `play.ts` (headless runner), `fuzz.ts`, `hash.ts`, `load.ts` (docs/TESTING.md).
 
+## Reading time
+
+`readingMs(words, opts?)` and `wordCount(text)` (`src/reading.ts`; pure, no zod, also at `@partybox/game-sdk/reading`
+for zod-free constants files) are the one rule for how long a screen of words stays up — the owner's pacing
+rule [cc45f4]: `round(max(1500, 1500 + words × 333) × (ui ? 1.3 : 1) × (lang 'es…' ? 1.1 : 1) × (largeText ? 1.2 : 1))`.
+`ui` is for the UI's own (translated) words; deck text passes nothing. Reducers only know the room today, so games
+pass `{ ui: true }` and no `lang`/`largeText` yet.
+
 ## Test
 
 `pnpm vitest --project game-sdk` (helpers) · `pnpm vitest --project contract` (every game)
