@@ -7,7 +7,7 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import { DialStrip } from '@partybox/game-sdk/ui/dial';
 import type { TuneControllerView } from '../server/index';
 import type { Input } from '../server/types';
-import { nameOf, teamName } from './copy';
+import { englishClueNote, nameOf, teamName } from './copy';
 import { useEnds } from './ends';
 import { LockRow } from './LockRow';
 import { PhoneCall } from './PhoneCall';
@@ -83,7 +83,7 @@ function WaitOthers({ view }: { view: TuneControllerView }): JSX.Element {
   const hint =
     view.phaseId === 'dial' && view.myTeam && view.myTeam !== view.turn.team
       ? L('Next, your team calls LEFT or RIGHT of their needle.')
-      : L('Clue: “{clue}”', { clue: view.turn.clue ?? '' });
+      : `${L('Clue: “{clue}”', { clue: view.turn.clue ?? '' })}${englishClueNote(L, view.turn) ? ` ${englishClueNote(L, view.turn)}` : ''}`;
   return (
     <WaitingScreen title={title} hint={hint}>
       <LockRow players={view.players} phase={view.phaseId} />

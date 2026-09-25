@@ -18,7 +18,7 @@ import type { GameTvProps } from '@partybox/game-sdk/ui';
 import { Dial } from '@partybox/game-sdk/ui/dial';
 import type { DialMarker } from '@partybox/game-sdk/ui/dial';
 import type { TuneTvView } from '../server/index';
-import { avatarOf, nameOf, roundLine, teamName, verdictText } from './copy';
+import { avatarOf, englishClueNote, nameOf, roundLine, teamName, verdictText } from './copy';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
 import { TvHeader } from './TvHeader';
@@ -111,6 +111,9 @@ function Bubble({ view, landed }: { view: TuneTvView; landed: boolean }): JSX.El
         {clue ? (
           <span key="clue" className={`${styles.clue} ${phase === 'dial' ? styles.clueLands : ''}`}>
             “{turn.clue}”
+            {englishClueNote(L, turn) ? (
+              <span className={styles.clueNote}>{englishClueNote(L, turn)}</span>
+            ) : null}
           </span>
         ) : phase === 'reveal' ? (
           // A void round: the overlay says No signal; the bubble stops thinking.

@@ -6,7 +6,7 @@ import { Screen, buzz, useSound, useT } from '@partybox/game-sdk/ui';
 import { DialStrip } from '@partybox/game-sdk/ui/dial';
 import type { TuneControllerView } from '../server/index';
 import type { Input, Side } from '../server/types';
-import { teamName } from './copy';
+import { englishClueNote, teamName } from './copy';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 
@@ -45,7 +45,10 @@ export function PhoneCall({
   };
   return (
     <Screen className={styles.screen}>
-      <p className={styles.kicker}>{L('Clue: “{clue}”', { clue: view.turn.clue ?? '' })}</p>
+      <p className={styles.kicker}>
+        {L('Clue: “{clue}”', { clue: view.turn.clue ?? '' })}
+        {englishClueNote(L, view.turn) ? ` ${englishClueNote(L, view.turn)}` : ''}
+      </p>
       <h2 className={styles.role}>
         {L('{team} set their needle. Is the target LEFT or RIGHT of it?', {
           team: teamName(L, view.turn.team),

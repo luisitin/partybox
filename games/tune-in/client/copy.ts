@@ -31,6 +31,12 @@ export function modeLine(L: Translator, mode: TurnHeader['mode']): string {
   return L('Solo · everyone for themselves');
 }
 
+/** "(pista en inglés)" after a bot's clue on a Spanish screen (decision [196a9e] rule 1: English
+ *  content is marked where it appears); null in English or for a person's clue. */
+export function englishClueNote(L: Translator, turn: Pick<TurnHeader, 'botClue'>): string | null {
+  return L.lang === 'es' && turn.botClue ? L('(clue in English)') : null;
+}
+
 export function clueMessage(L: Translator, reason: ClueReason): string {
   switch (reason) {
     case 'empty':

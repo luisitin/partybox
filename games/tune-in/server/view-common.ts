@@ -28,6 +28,8 @@ export interface TurnHeader {
   /** Client only (client/ends.ts): the English ends, when a Spanish screen swapped them in. */
   en?: { left: string; right: string };
   clue: string | null;
+  /** The clue is a bot's (the English clue bank): a Spanish screen marks it (decision [196a9e]). */
+  botClue: boolean;
   size: TargetSize;
   /** The edges of the 4 / 3 / 2 bands for this target size. */
   bands: [number, number, number];
@@ -74,6 +76,7 @@ export function header(state: State): TurnHeader {
     right: spectrum?.right ?? '',
     es: spectrum?.es ?? { left: spectrum?.left ?? '', right: spectrum?.right ?? '' },
     clue: turn.clue,
+    botClue: turn.clue !== null && state.players[turn.psychic]?.bot === true,
     size: state.cfg.targetSize,
     bands: [four, three, two],
     voiced: state.cfg.reader !== 'none',

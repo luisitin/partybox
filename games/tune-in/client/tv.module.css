@@ -130,6 +130,14 @@
   overflow-wrap: anywhere;
 }
 
+/* "(pista en inglés)" under a bot's clue on a Spanish TV. */
+.clueNote {
+  display: block;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
 .clueLands {
   animation: tune-clue-land var(--pb-motion-slow) var(--pb-ease) both;
 }

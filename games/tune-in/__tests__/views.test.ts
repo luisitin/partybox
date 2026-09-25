@@ -128,3 +128,16 @@ describe('views are small and honest', () => {
     expect(worst).toBeLessThan(4096);
   });
 });
+
+describe('a bot clue on a Spanish screen', () => {
+  it('flags a bot psychic’s clue (the English bank) and never a person’s', () => {
+    const everyBot = game.init({ players: roster(4, 4), settings: {}, seed: 42, now: T0 });
+    let s = toClue(everyBot);
+    s = send(s, s.turn.psychic, { type: 'clue', text: 'a volcano' });
+    expect(game.tvView(s).turn.botClue).toBe(true);
+    let p = toClue(start(4));
+    expect(game.tvView(p).turn.botClue).toBe(false);
+    p = send(p, p.turn.psychic, { type: 'clue', text: 'a volcano' });
+    expect(game.tvView(p).turn.botClue).toBe(false);
+  });
+});

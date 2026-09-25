@@ -7,7 +7,7 @@ import { PrimaryButton, Screen, useSound, useT } from '@partybox/game-sdk/ui';
 import { DialInput, createThrottle } from '@partybox/game-sdk/ui/dial';
 import type { TuneControllerView } from '../server/index';
 import type { Input } from '../server/types';
-import { avatarOf, nameOf, roundLine } from './copy';
+import { avatarOf, englishClueNote, nameOf, roundLine } from './copy';
 import { LockRow } from './LockRow';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
@@ -74,6 +74,9 @@ export function PhoneDial({
         {L("{name}'s clue", { name: nameOf(view.players, view.turn.psychic) })}
       </p>
       <p className={styles.clue}>“{view.turn.clue}”</p>
+      {englishClueNote(L, view.turn) ? (
+        <p className={styles.clueNote}>{englishClueNote(L, view.turn)}</p>
+      ) : null}
       <DialInput
         left={view.turn.left}
         right={view.turn.right}

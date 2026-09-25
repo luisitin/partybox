@@ -33,6 +33,14 @@
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
 
+/* "(pista en inglés)" under a bot's clue on a Spanish phone. */
+.clueNote {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
 .yourClue {
   font-size: var(--pb-font-body);
   overflow-wrap: anywhere;
@@ -382,7 +390,7 @@
   font-size: var(--pb-font-body);
   font-weight: 800;
   text-align: center;
-  color: var(--pb-text-muted);
+  color: var(--pb-text);
   text-wrap: balance;
 }
 

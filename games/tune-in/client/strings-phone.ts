@@ -43,6 +43,7 @@ export const STRINGS_PHONE: Record<string, string> = {
   'Thanks for playing!': '¡Gracias por jugar!',
   'Here it comes…': 'Ahí viene…',
   '👀 Watch the TV': '👀 Mira la TV',
+  '(clue in English)': '(pista en inglés)',
   'The target is opening up.': 'El objetivo se está abriendo.',
   'No signal — nobody scores this round.': 'Sin señal: nadie puntúa en esta ronda.',
   'Nobody dialled — 0 this time.': 'Nadie movió el dial: 0 esta vez.',

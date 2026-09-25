@@ -7,7 +7,7 @@ import { Avatar, Screen, useT } from '@partybox/game-sdk/ui';
 import type { ControllerView, PushedView } from '@partybox/game-sdk/ui';
 import { DialStrip } from '@partybox/game-sdk/ui/dial';
 import type { TuneControllerView } from '../server/index';
-import { avatarOf, ratingText, roundLine, teamName, verdictText } from './copy';
+import { avatarOf, englishClueNote, ratingText, roundLine, teamName, verdictText } from './copy';
 import { useEnds } from './ends';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
@@ -65,6 +65,9 @@ export function PhoneStage({ view: raw }: { view: PushedView<ControllerView> }):
       ) : (
         <>
           <p className={styles.clue}>“{view.turn.clue}”</p>
+          {englishClueNote(L, view.turn) ? (
+            <p className={styles.clueNote}>{englishClueNote(L, view.turn)}</p>
+          ) : null}
           <DialStrip
             left={view.turn.left}
             right={view.turn.right}
