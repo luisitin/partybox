@@ -2,10 +2,11 @@
 // counted 3 · 2 · 1 (#decisions cc45f4). Here every phone holds its secret card and taps Got it;
 // the night falls when every connected player has (bots at once; a dropped phone doesn't block).
 // No visible clock. A hidden net (READY_FALLBACK_MS) starts the night only in a room where no
-// human tapped at all (the idle-room contract); while anyone is still reading it re-arms.
+// human tapped at all (the idle-room contract); while anyone is still reading it re-arms, up to
+// READY_REARMS × the net in all.
 import { allConnectedDone, enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { READY_FALLBACK_MS } from '../types';
+import { READY_FALLBACK_MS, READY_REARMS } from '../types';
 import type { Input, State, Transition } from '../types';
 
 export function enterRoles(state: State, now: number): State {
@@ -29,7 +30,11 @@ function humanTapped(state: State): boolean {
 
 export function reduceRoles(state: State, event: GameEvent<Input>, next: Transition): State {
   if (isTimerFor(state, event)) {
-    if (!humanTapped(state)) return next(state, event.now);
+    // An empty room starts at once; one where someone is still reading waits, but not forever: a
+    // player who walked off with a connected phone must not hold the room (the VIP can skip too).
+    const waited = event.now - state.phase.startedAt;
+    if (!humanTapped(state) || waited >= READY_FALLBACK_MS * READY_REARMS)
+      return next(state, event.now);
     return { ...state, phase: { ...state.phase, deadline: event.now + READY_FALLBACK_MS } };
   }
   if (event.type !== 'input' || event.input.type !== 'ready') return state;

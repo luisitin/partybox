@@ -178,6 +178,8 @@ export const POSTS_PER_DAY = 3;
 /** A room where no human taps Got it at all (everyone walked off) still starts, after 3 minutes;
  *  while anyone is reading it re-arms. */
 export const READY_FALLBACK_MS = 180_000;
+/** …but a connected phone nobody holds can't keep the room waiting past 3 nets (9 minutes). */
+export const READY_REARMS = 3;
 export const HUNTER_MS = 20_000;
 export const RUNOFF_MS = 20_000;
 export const LAST_WORDS_MS = 20_000;

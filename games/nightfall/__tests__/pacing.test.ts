@@ -44,6 +44,8 @@ describe('roles: every card read, then night', () => {
     s = timer(s);
     expect(s.phase.id).toBe('roles');
     expect(s.phase.deadline).toBe(T0 + READY_FALLBACK_MS * 2);
+    s = timer(timer(s));
+    expect(s.phase.id).toBe('night'); // 9 minutes: someone walked off with a connected phone
   });
 
   it('a drop during a pause is re-checked on resume', () => {
