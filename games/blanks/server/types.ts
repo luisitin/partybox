@@ -151,7 +151,23 @@ export const HAND_SIZE = 10;
 export const HAND_SIZES = ['7', '10', '12', '15'] as const;
 /** New hands a player may take in one game (the owner, 2026-09-21: "3x each game"). */
 export const REDRAWS_PER_GAME = 3;
-export const INTRO_MS = 5_000;
+/** Owner's pacing rule (Agent Hub #decisions cc45f4, 2026-09-25): "Enough time to read" — any
+ *  screen with words stays up long enough for a slow reader: 1.5 s plus a word every 1/3 s, and
+ *  x1.3 on screens in the UI's own words (a Spanish phone reads a longer sentence; 200% text wraps
+ *  more). The server does not know the phones' languages, so the margin is always on. */
+export const READ_BASE_MS = 1_500;
+export const READ_PER_WORD_MS = 333;
+export const READ_UI_FACTOR = 1.3;
+/** How long `words` words take a slow reader (`factor` 1 for deck text, which is never translated). */
+export function readMs(words: number, factor = READ_UI_FACTOR): number {
+  return Math.round((READ_BASE_MS + words * READ_PER_WORD_MS) * factor);
+}
+export function wordCount(text: string): number {
+  return text.split(/\s+/).filter((w) => w.length > 0).length;
+}
+/** The round card: up to ~12 words over three beats (title, judge line, leader line at ~1.2 s):
+ *  1.2 s + readMs(12) ≈ 8.3 s (was 5 s). */
+export const INTRO_MS = 8_000;
 /** czar mode: how many black cards the judge chooses between, and how long they get (timed; a
  *  hidden 60 s fallback untimed — the default is the first card, so an idle judge never stalls). */
 export const BLACK_CHOICES = 3;
@@ -167,20 +183,12 @@ export const ALL_IN_MS = 1_500;
 export const VOTES_IN_MS = 900;
 /** Extra answer seconds per white card beyond the first. */
 export const EXTRA_PICK_S = 15;
-/** A reveal card is a 2–3 s presentation (owner, review-loop #151: "they abruptly pop and take
- *  5 seconds"): the sentence lands, its whites pop in over the first 0.9 s, then it holds — 1.9 s
- *  plus 16 ms per character, capped at 4 s. Measured over live games at 2.2 s + 18 ms the median
- *  card held 3.5 s, past the 2–3 s that was asked for, so the floor and the slope came down while
- *  the cap stayed: a 200-character Pick 3 still gets its four seconds (review-loop #216). A big
- *  room (more than BIG_ROOM cards) reads faster: 1.7 s + 12 ms/char, capped at 3.2 s, so twelve
- *  cards stay well under a minute. */
-export const REVEAL_MIN_MS = 1_900;
-export const REVEAL_PER_CHAR_MS = 16;
-export const REVEAL_MAX_MS = 4_000;
+/** A reveal card stays up long enough for a slow reader to read the whole filled sentence
+ *  (owner's pacing rule 2026-09-25, superseding review-loop #151's 2–3 s): 1.5 s + 1/3 s a word,
+ *  plus the 0.9 s the whites take to drop in — REVEAL_POP_MS. No cap and no big-room discount: a
+ *  big room's VIP skips to the next card. With a reader voice on, the voice paces it instead. */
+export const REVEAL_POP_MS = 900;
 export const BIG_ROOM = 8;
-export const BIG_REVEAL_MIN_MS = 1_700;
-export const BIG_REVEAL_PER_CHAR_MS = 12;
-export const BIG_REVEAL_MAX_MS = 3_200;
 /** Voting: 30 s, 45 s for a lone judge; a big room gets 45 s to scan its cards. */
 export const JUDGE_VOTE_MS = 30_000;
 export const JUDGE_CZAR_MS = 45_000;
@@ -188,7 +196,9 @@ export const JUDGE_CZAR_MS = 45_000;
  *  before the round ends without a winner — instead of at once (review-loop #351). */
 export const JUDGE_GRACE_MS = 20_000;
 export const BIG_JUDGE_MS = 45_000;
-export const RESULT_MS = 8_000;
+/** Timed result: a tap, not a clock — the VIP taps Next (as in untimed rounds) with a long
+ *  fallback so an idle room still moves on (owner's pacing rule, 2026-09-25; was a fixed 8 s). */
+export const RESULT_MS = 40_000;
 /** The final board's drumroll ("And the winner is…") before the engine's results screen. */
 export const FINAL_MS = 4_000;
 /** Untimed rounds: no clock on the screens, but a long hidden fallback so an idle room still ends. */
