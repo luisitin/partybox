@@ -121,6 +121,8 @@ export type Transition = (state: State, now: number) => State;
 
 /** The rules wait for everyone's I'm ready; this only stops a room of idle phones hanging. */
 export const INTRO_MS = 90_000;
+/** Once a human has tapped Ready the rules keep waiting for the rest, up to this long. */
+export const READY_WAIT_MAX_MS = 600_000;
 /** A breath after the last Ready, then the 3 · 2 · 1. */
 export const READY_BREATH_MS = 700;
 export const COUNTDOWN_MS = 3_000;

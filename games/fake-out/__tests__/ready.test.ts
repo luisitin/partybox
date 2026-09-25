@@ -1,7 +1,7 @@
 // Intro ready-up + 3 · 2 · 1 (owner, [cc45f4]): the rules wait for every connected phone.
 import { describe, expect, it } from 'vitest';
-import { COUNTDOWN_MS, READY_BREATH_MS } from '../server/types';
-import { PENGUIN, PLAYERS, connect, cv, input, start, timer, tv, vip } from './helpers';
+import { COUNTDOWN_MS, READY_BREATH_MS, READY_WAIT_MAX_MS } from '../server/types';
+import { PENGUIN, PLAYERS, T0, connect, cv, input, start, timer, tv, vip } from './helpers';
 
 const ready = (s: ReturnType<typeof start>, p: string, now?: number) =>
   input(s, p, { type: 'ready' }, now);
@@ -65,5 +65,24 @@ describe('intro ready-up: pause and drops', () => {
     const view = tv(s);
     expect(view.inCount).toBeLessThanOrEqual(view.expected);
     expect(view.inCount).toBe(0);
+  });
+});
+
+describe('intro ready-up: the idle net', () => {
+  it('never starts while a human who tapped Ready waits on a slow reader', () => {
+    let s = start({ fact: PENGUIN, players: 3 });
+    const [a, b] = PLAYERS.slice(0, 3).map((p) => p.id) as [string, string];
+    s = ready(ready(s, a), b);
+    for (let i = 0; i < 3; i++) s = timer(s);
+    expect(s.phase.id).toBe('intro');
+    expect(s.counting).toBe(false);
+    // ...for ten minutes, never a clock; then an untouched phone stops holding the room
+    while (s.phase.id === 'intro') s = timer(s);
+    expect(s.phase.startedAt).toBeGreaterThanOrEqual(T0 + READY_WAIT_MAX_MS);
+  });
+
+  it('frees a room where nobody tapped Ready', () => {
+    const s = timer(start({ fact: PENGUIN, players: 3 }));
+    expect(s.phase.id).toBe('question');
   });
 });
