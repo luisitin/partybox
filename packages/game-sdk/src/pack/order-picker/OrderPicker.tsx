@@ -43,7 +43,6 @@ export const MASH_MS = 350;
 /** Labels longer than this step down a size, so a 22-character one stays on one line at 320 px. */
 const LONG = 15;
 
-/** The next list after tapping `id`: placed → out (later numbers move up), else → the next number. */
 /** Two placed ids trade places (a full order being rearranged). */
 export function swapOrder(value: readonly string[], a: string, b: string): string[] {
   const i = value.indexOf(a);
@@ -55,6 +54,7 @@ export function swapOrder(value: readonly string[], a: string, b: string): strin
   return next;
 }
 
+/** The next list after tapping `id`: placed → out (later numbers move up), else → the next number. */
 export function toggleOrder(value: readonly string[], id: string): string[] {
   return value.includes(id) ? value.filter((v) => v !== id) : [...value, id];
 }
@@ -76,7 +76,7 @@ export function OrderPicker(props: OrderPickerProps): JSX.Element {
   // Taking a row out of a full order read as "Change deletes my answers" (the owner's play-test).
   const [lifted, setLifted] = useState<string | null>(null);
   const full = value.length === items.length;
-  const liftedNow = full && lifted !== null && value.includes(lifted) ? lifted : null;
+  const liftedNow = full && !disabled && lifted !== null && value.includes(lifted) ? lifted : null;
   const tap = (id: string, at: number): void => {
     if (disabled) return;
     const prev = last.current;

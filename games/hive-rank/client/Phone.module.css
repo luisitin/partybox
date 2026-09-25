@@ -107,7 +107,9 @@
 }
 
 .scaleLong {
-  font-size: calc(var(--pb-font-caption) * 0.88);
+  /* A long pair ("1 = Más divertido · 5 = Menos divertido") stays one whole line at any text
+     size: it scales with the screen's width, never cut, never pushing the rows down. */
+  font-size: min(calc(var(--pb-font-caption) * 0.88), 3.6vw);
   white-space: nowrap;
 }
 

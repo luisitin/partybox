@@ -704,7 +704,7 @@
 }
 
 .queenCompact .queenFaces {
-  padding-top: 40px;
+  padding-top: 52px;
 }
 
 .queenHow {
@@ -717,7 +717,7 @@
 .legend {
   display: flex;
   justify-content: center;
-  gap: var(--pb-space-6);
+  gap: var(--pb-space-5);
   font-size: var(--pb-font-caption);
   font-weight: 800;
   color: var(--pb-text-muted);

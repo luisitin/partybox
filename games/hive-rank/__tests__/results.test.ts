@@ -62,6 +62,28 @@ function vip(s: State): State {
   return game.reduce(s, { type: 'vip', now: s.phase.startedAt + 1, action: 'end' });
 }
 
+describe('the Queen Bee breakdown', () => {
+  it('shows one line only when every queen scored the same way', () => {
+    const { history } = play(3);
+    const at = history[0]!.state;
+    const tie = (a: [number, number], b: [number, number]): State => ({
+      ...at,
+      q: {
+        ...at.q,
+        queens: ['a', 'b'],
+        delta: {
+          a: { pts: a[0] * 2 + a[1], exact: a[0], near: a[1], perfect: false },
+          b: { pts: b[0] * 2 + b[1], exact: b[0], near: b[1], perfect: false },
+          c: { pts: 0, exact: 0, near: 0, perfect: false },
+        },
+      },
+    });
+    // 4 points two ways: 2 exact + 0 near vs 1 exact + 2 near — no single line fits both.
+    expect(tv(tie([2, 0], [1, 2])).score?.queenDetail).toBeNull();
+    expect(tv(tie([1, 2], [1, 2])).score?.queenDetail).toEqual({ exact: 1, near: 2 });
+  });
+});
+
 describe('recap', () => {
   it('lists each question with the hive, every order and the queens', () => {
     const { final, history } = play(3);

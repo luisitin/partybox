@@ -161,8 +161,13 @@ function scoreView(state: State): ScoreView | null {
   const rows = Object.entries(q.delta)
     .map(([id, d]) => ({ id, pts: d.pts, perfect: d.perfect }))
     .sort((a, b) => b.pts - a.pts || (a.id < b.id ? -1 : 1));
-  const first = q.queens[0];
-  const d = first ? q.delta[first] : undefined;
+  // One line describes every queen only when they all scored the same way (a tie at 4 can be
+  // 2 exact + 0 near or 1 exact + 2 near).
+  const makeup = q.queens.map((id) => q.delta[id]).map((d) => (d ? `${d.exact}/${d.near}` : ''));
+  const d =
+    makeup.length > 0 && makeup.every((m) => m === makeup[0])
+      ? q.delta[q.queens[0] ?? '']
+      : undefined;
   return {
     rows,
     queens: q.queens,
