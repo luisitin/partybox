@@ -22,8 +22,14 @@ export interface Cfg {
   betSeconds: number;
   grand: boolean;
   spicy: boolean;
+  /** Live events: every other box is an event the TV runs (a race, dice, a wheel). */
+  live: boolean;
   reader: Reader;
 }
+
+/** The live events (the owner's picks, docs/game-pack/blind-auction/LIVE-EVENTS.md). */
+export const LIVE_KINDS = ['race', 'dice', 'wheel'] as const;
+export type LiveKind = (typeof LIVE_KINDS)[number];
 
 /** What a box can hold. Each kind has its icon and words on the client (EN + ES). */
 export const CONTENT_KINDS = [
@@ -35,6 +41,8 @@ export const CONTENT_KINDS = [
   'twins',
   'receipt',
   'empty',
+  // A live event's outcome (a racer, a dice call, a wheel prize): its `label` names it.
+  'pick',
 ] as const;
 export type ContentKind = (typeof CONTENT_KINDS)[number];
 
@@ -43,6 +51,8 @@ export interface BoxOption {
   kind: ContentKind;
   chance: number;
   pay: number;
+  /** A live event's outcome: its own icon and name (English; the client translates the fixed ones). */
+  label?: { icon: string; name: string };
 }
 
 export interface Box {
@@ -53,6 +63,16 @@ export interface Box {
   options: BoxOption[];
   /** The last box: payouts doubled. */
   grand: boolean;
+  /** A live event instead of a box: the TV runs it at `open`. */
+  event?: LiveKind;
+}
+
+/** A box and its SECRET outcome. `detail` is how a live event plays out (the dice, the race's
+ *  finishing order, where the wheel stops), secret like the outcome until `open`. */
+export interface Round {
+  box: Box;
+  outcome: number;
+  detail?: number[];
 }
 
 export interface Bet {
@@ -95,7 +115,7 @@ export interface State extends GameStateBase {
   seats: string[];
   left: string[];
   /** Each box's outcome index is SECRET until it opens. */
-  boxes: { box: Box; outcome: number }[];
+  boxes: Round[];
   r: RoundState;
   /** `rules`: who has tapped Ready (bots are ready from the start). */
   ready: string[];

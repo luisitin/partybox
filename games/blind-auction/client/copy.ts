@@ -4,7 +4,7 @@
 import type { Translator } from '@partybox/game-sdk/ui';
 import type { Tier } from '../server/odds';
 import type { ContentKind } from '../server/types';
-import type { OwnLine } from '../server/views';
+import type { OptionView, OwnLine } from '../server/views';
 
 export const COIN = '🪙';
 
@@ -17,6 +17,7 @@ export const KIND_ICON: Record<ContentKind, string> = {
   twins: '👯',
   receipt: '🧾',
   empty: '🕳️',
+  pick: '🏁',
 };
 
 export function kindName(L: Translator, kind: ContentKind): string {
@@ -37,7 +38,19 @@ export function kindName(L: Translator, kind: ContentKind): string {
       return L('A receipt');
     case 'empty':
       return L('Nothing');
+    case 'pick':
+      return L('A winner');
   }
+}
+
+/** An option's icon: a live event's own (🐢, 🎲 call, 🍕) or the content's. */
+export function iconOf(o: Pick<OptionView, 'kind' | 'label'>): string {
+  return o.label?.icon ?? KIND_ICON[o.kind];
+}
+
+/** An option's word: a live event's own ("Turtle", "Lucky 7") or the content's. */
+export function nameOf(L: Translator, o: Pick<OptionView, 'kind' | 'label'>): string {
+  return o.label ? L(o.label.name) : kindName(L, o.kind);
 }
 
 /** Tone per content, for styling only (always paired with the icon and the word). */

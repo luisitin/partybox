@@ -1,6 +1,8 @@
 // tvView / controllerView. No view carries a box's outcome before it opens (step 1 of `open`) —
 // nothing in a view differs by outcome until then — and bets stay on the bettor's own phone until
-// `open`. Own lines and the strip's coins move only once the TV has shown the box open.
+// `open`. Own lines and the strip's coins move only once the TV has shown the box open. A live
+// event's `run` (its winner and how it plays out) is public from `open` step 0 — bets are closed,
+// and the TV needs it to play the event before the payouts.
 import { controllerEnvelope, envelope } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { inGame } from './phases/bet';
@@ -8,7 +10,7 @@ import { payout, tierOf } from './odds';
 import type { Tier } from './odds';
 import { FIXED_LINES, boxRequest, fixedRequest, lineOf, openRequest } from './speech';
 import type { FixedLine } from './speech';
-import type { Bet, ContentKind, State } from './types';
+import type { Bet, ContentKind, LiveKind, State } from './types';
 
 const GAME_ID = 'blind-auction';
 
@@ -18,6 +20,15 @@ export interface OptionView {
   chance: number;
   /** × the stake for a right call (already doubled for the grand box). */
   pay: number;
+  /** A live event's outcome: its icon and name (English). */
+  label?: { icon: string; name: string };
+}
+
+/** A live event at `open`: which option wins and how it plays out (dice, finishing order, stop). */
+export interface RunView {
+  kind: LiveKind;
+  outcome: number;
+  detail: number[];
 }
 
 export interface BoxView {
@@ -28,6 +39,7 @@ export interface BoxView {
   icon: string;
   flavour: string;
   options: OptionView[];
+  event?: LiveKind;
 }
 
 export interface BetView {
@@ -58,6 +70,7 @@ interface Common {
   bets: BetView[] | null;
   /** `open` step 1: which content was inside. */
   outcome: number | null;
+  run: RunView | null;
   results: ResultView[] | null;
   voice: VoiceView | null;
   clips: Partial<Record<FixedLine, string>>;
@@ -100,7 +113,9 @@ function boxView(state: State): BoxView | null {
       tier: tierOf(o.chance),
       chance: o.chance,
       pay: box.grand ? o.pay * 2 : o.pay,
+      ...(o.label ? { label: o.label } : {}),
     })),
+    ...(box.event ? { event: box.event } : {}),
   };
 }
 
@@ -113,6 +128,12 @@ function betsView(state: State): BetView[] | null {
       option: state.r.bets[id]?.option ?? 0,
       amount: state.r.bets[id]?.amount ?? 0,
     }));
+}
+
+function runView(state: State): RunView | null {
+  const round = state.boxes[state.r.idx];
+  if (state.phase.id !== 'open' || !round?.box.event) return null;
+  return { kind: round.box.event, outcome: round.outcome, detail: round.detail ?? [] };
 }
 
 function opened(state: State): boolean {
@@ -217,6 +238,7 @@ function common(state: State): Common {
       state.phase.id === 'rules' ? state.ready.filter((id) => state.seats.includes(id)) : [],
     bets: betsView(state),
     outcome: opened(state) ? (state.boxes[state.r.idx]?.outcome ?? null) : null,
+    run: runView(state),
     results: resultsView(state),
     voice: voice(state),
     clips: clips(state),

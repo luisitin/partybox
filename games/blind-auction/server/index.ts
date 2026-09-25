@@ -52,6 +52,7 @@ function cfgOf(settings: Settings): Cfg {
     betSeconds: num(settings, 'betSeconds', 20, 10, 40),
     grand: settings['grand'] !== false,
     spicy: settings['spicy'] === true,
+    live: settings['live'] === true,
     reader: (READERS as readonly string[]).includes(reader) ? (reader as Reader) : 'george',
   };
 }

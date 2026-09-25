@@ -1,7 +1,7 @@
 // Typed access to content/*.json and the draw (P00 §2.5): `init` takes exactly the boxes this game
 // plays, with each one's outcome, and nothing else of the packs ever enters state or a view. A lot
 // from the packs becomes a box: each possible outcome is something the box might hold.
-import { nextFloat, shuffle } from '@partybox/game-sdk';
+import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { lotPackSchema, pronunciationsSchema } from '../content/schema';
 import type { Lot, Outcome, Pronunciations } from '../content/schema';
@@ -9,8 +9,11 @@ import grandJson from '../content/grand.json' with { type: 'json' };
 import lotsJson from '../content/lots.json' with { type: 'json' };
 import pronunciationsJson from '../content/pronunciations.json' with { type: 'json' };
 import spicyJson from '../content/spicy.json' with { type: 'json' };
+import { drawOutcome } from './draw';
 import { payOf } from './odds';
-import type { Box, BoxOption, Cfg, ContentKind } from './types';
+import { drawEvent } from './events';
+import { LIVE_KINDS } from './types';
+import type { Box, BoxOption, Cfg, ContentKind, Round } from './types';
 
 export const LOT_POOL: readonly Lot[] = lotPackSchema.parse(lotsJson);
 export const GRAND_POOL: readonly Lot[] = lotPackSchema.parse(grandJson);
@@ -66,22 +69,11 @@ function take(
   return [out, next];
 }
 
-/** Draws the chance-weighted outcome index. */
-function drawOutcome(rng: RngState, options: readonly BoxOption[]): [number, RngState] {
-  const [f, next] = nextFloat(rng);
-  let roll = f * 100;
-  for (let i = 0; i < options.length; i++) {
-    roll -= options[i]?.chance ?? 0;
-    if (roll < 0) return [i, next];
-  }
-  return [options.length - 1, next];
-}
-
 /** Boxes with a single possible content would be a sure thing: never drawn. */
 const bettable = (l: Lot): boolean => l.outcomes.length >= 2;
 
 /** The game's boxes in play order; with `spicy`, half come from the spicy pack; the grand box last. */
-export function drawBoxes(cfg: Cfg, rng: RngState): [{ box: Box; outcome: number }[], RngState] {
+export function drawBoxes(cfg: Cfg, rng: RngState): [Round[], RngState] {
   const taken = new Set<string>();
   const ordinary = cfg.rounds - (cfg.grand ? 1 : 0);
   const spicyCount = cfg.spicy ? Math.ceil(ordinary / 2) : 0;
@@ -96,11 +88,22 @@ export function drawBoxes(cfg: Cfg, rng: RngState): [{ box: Box; outcome: number
     state = s4;
     for (const g of grand) boxes.push(boxOf(g, true));
   }
-  const out: { box: Box; outcome: number }[] = [];
+  const out: Round[] = [];
   for (const box of boxes) {
     const [outcome, next] = drawOutcome(state, box.options);
     state = next;
     out.push({ box, outcome });
+  }
+  if (!cfg.live) return [out, state];
+  // Live events: every other ordinary box (the 2nd, 4th…) becomes an event, each kind in turn.
+  const [kinds, s5] = shuffle(state, LIVE_KINDS);
+  state = s5;
+  let k = 0;
+  for (let i = 1; i < ordinary; i += 2) {
+    const kind = kinds[k++ % kinds.length] ?? 'race';
+    const [round, next] = drawEvent(kind, state, i);
+    state = next;
+    out[i] = round;
   }
   return [out, state];
 }

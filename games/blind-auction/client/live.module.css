@@ -1,0 +1,289 @@
+/* Live events on the TV (LiveStage.tsx): the stage takes the card's place, same height
+   (--ba-card-h from tv.module.css), a little wider. Transform/opacity only; reduced motion shows
+   the finish (the component) and stops the loops (the end of this file). */
+
+/* ── race ── */
+.race {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--pb-space-2);
+  width: min(720px, calc(var(--ba-card-h) * 1.35));
+  height: var(--ba-card-h);
+  padding: var(--pb-space-4);
+  box-sizing: border-box;
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+}
+
+.lane {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  border-radius: var(--pb-radius);
+  background: color-mix(in srgb, var(--lane) 16%, transparent);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--lane) 40%, transparent);
+  container-type: inline-size;
+}
+
+.laneWin {
+  box-shadow: inset 0 0 0 4px var(--lane);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.laneName {
+  position: absolute;
+  right: 44px;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  letter-spacing: 0.04em;
+}
+
+.racer {
+  position: absolute;
+  left: var(--pb-space-2);
+  font-size: min(64px, 8cqh);
+  line-height: 1;
+  /* Racers face right: the emoji face left, so flip them. */
+  transform: translateX(calc(var(--x) * (100cqw - min(64px, 8cqh) - 56px))) scaleX(-1);
+  will-change: transform;
+}
+
+.gallop {
+  display: inline-block;
+  animation: ba-gallop 260ms ease-in-out infinite alternate;
+}
+
+@keyframes ba-gallop {
+  from {
+    transform: translateY(0) rotate(-4deg);
+  }
+  to {
+    transform: translateY(-10%) rotate(4deg);
+  }
+}
+
+.finish {
+  position: absolute;
+  top: var(--pb-space-4);
+  bottom: var(--pb-space-4);
+  right: calc(var(--pb-space-4) + 14px);
+  width: 10px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(0deg, var(--pb-text) 0 10px, var(--pb-bg) 10px 20px);
+  opacity: 0.85;
+}
+
+/* ── dice ── */
+.dice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-5);
+  width: min(720px, calc(var(--ba-card-h) * 1.35));
+  height: var(--ba-card-h);
+  border-radius: var(--pb-radius-lg);
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    color-mix(in srgb, var(--pb-player-3) 38%, var(--pb-surface)),
+    var(--pb-surface) 70%
+  );
+  --ba-die: min(150px, 22cqh);
+  --ba-die-half: calc(var(--ba-die) / 2);
+}
+
+.felt {
+  display: flex;
+  gap: calc(var(--ba-die) * 0.6);
+  perspective: 900px;
+}
+
+.dieSlot {
+  position: relative;
+  width: var(--ba-die);
+  height: var(--ba-die);
+}
+
+/* The throw stays on the felt (the owner's note): a short arc in, two bounces, settle. */
+.thrown {
+  animation: ba-hop 1.9s cubic-bezier(0.3, 0.6, 0.3, 1) both;
+}
+
+@keyframes ba-hop {
+  0% {
+    transform: translate(-45%, -55%) scale(1.15);
+  }
+  35% {
+    transform: translate(-10%, -30%) scale(1.08);
+  }
+  55% {
+    transform: translate(0, 0) scale(1);
+  }
+  70% {
+    transform: translate(4%, -14%);
+  }
+  84% {
+    transform: translate(6%, 0);
+  }
+  92% {
+    transform: translate(7%, -4%);
+  }
+  100% {
+    transform: translate(7%, 0);
+  }
+}
+
+.die {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1.9s cubic-bezier(0.2, 0.7, 0.15, 1);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  padding: 14%;
+  box-sizing: border-box;
+  border-radius: 18%;
+  background: radial-gradient(circle at 30% 25%, #ffffff, #dfe1f5 72%);
+  box-shadow: inset 0 0 0 3px #c9cbe6;
+  backface-visibility: hidden;
+}
+
+.face i {
+  place-self: center;
+  width: 62%;
+  height: 62%;
+  border-radius: 50%;
+  background: #1a0b12;
+}
+
+.one i {
+  width: 78%;
+  height: 78%;
+  background: var(--pb-accent);
+}
+
+.dieShadow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -14%;
+  height: 12%;
+  border-radius: 50%;
+  background: #000;
+  opacity: 0.35;
+  filter: blur(6px);
+}
+
+.sum {
+  margin: 0;
+  min-height: 1.2em;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  opacity: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.sumOn {
+  opacity: 1;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── wheel ── */
+.wheelBox {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(720px, calc(var(--ba-card-h) * 1.35));
+  height: var(--ba-card-h);
+  --ba-wheel: min(480px, calc(var(--ba-card-h) * 0.86));
+}
+
+.tilt {
+  perspective: 1100px;
+}
+
+.wheel {
+  position: relative;
+  width: var(--ba-wheel);
+  height: var(--ba-wheel);
+  border-radius: 50%;
+  /* A tilted disc with a gold rim and a lit edge: the 3D look without leaving transform. */
+  box-shadow:
+    0 0 0 10px var(--pb-surface-2),
+    0 0 0 16px var(--pb-accent-2),
+    0 24px 40px rgb(0 0 0 / 45%),
+    inset 0 0 40px rgb(0 0 0 / 35%);
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.12, 0.8, 0.12, 1);
+}
+
+.tilt > .wheel {
+  rotate: x 22deg;
+}
+
+.prize {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: calc(var(--ba-wheel) * 0.12);
+  line-height: 1;
+  filter: drop-shadow(0 3px 2px rgb(0 0 0 / 40%));
+}
+
+.hub {
+  position: absolute;
+  inset: 42%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--pb-text), var(--pb-accent-2) 70%);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 50%);
+}
+
+.pointer {
+  position: absolute;
+  top: calc((var(--ba-card-h) - var(--ba-wheel)) / 2 - 34px);
+  z-index: 2;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--pb-accent);
+  filter: drop-shadow(0 3px 3px rgb(0 0 0 / 50%));
+  transform-origin: 50% 20%;
+}
+
+.ticking {
+  animation: ba-tick 120ms ease-in-out 24 alternate;
+}
+
+@keyframes ba-tick {
+  from {
+    transform: rotate(-9deg);
+  }
+  to {
+    transform: rotate(9deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallop,
+  .thrown,
+  .ticking,
+  .laneWin,
+  .sumOn {
+    animation: none;
+  }
+  .die,
+  .wheel {
+    transition-duration: 0ms !important;
+  }
+}

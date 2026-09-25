@@ -7,7 +7,14 @@ import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { payout, tierOf } from '../odds';
 import { fixedRequest, lineOf, openRequest } from '../speech';
-import { OPEN_HOLD_MS, OPEN_LINE_AT_MS, OPEN_VOICE_MAX_MS, VOICE_BEAT_MS, betsMs } from '../timing';
+import {
+  EVENT_MS,
+  OPEN_HOLD_MS,
+  OPEN_LINE_AT_MS,
+  OPEN_VOICE_MAX_MS,
+  VOICE_BEAT_MS,
+  betsMs,
+} from '../timing';
 import type { Input, State, Stats, Transition } from '../types';
 
 const VOICE_LATE_MS = 3_000;
@@ -47,7 +54,9 @@ export function enterOpen(state: State, now: number): State {
     notices: {},
     r: { ...state.r, step: 0, voiceAt: null, turnedAt: null },
   });
-  return enterPhase(settled, 'open', now, betsMs(staked(state)));
+  // A live event runs once the bets are down: the payouts wait for its finish.
+  const kind = state.boxes[state.r.idx]?.box.event;
+  return enterPhase(settled, 'open', now, betsMs(staked(state)) + (kind ? EVENT_MS[kind] : 0));
 }
 
 /** When the reading may start: after the fixed line has been said. */

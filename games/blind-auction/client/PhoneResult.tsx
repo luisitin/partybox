@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { Screen, WaitingScreen, buzz, useCountUp, useSound, useT } from '@partybox/game-sdk/ui';
 import type { PushedView } from '@partybox/game-sdk/ui';
 import type { BlindAuctionControllerView, OwnLine } from '../server/views';
-import { KIND_ICON, kindName, ownLineText } from './copy';
+import { iconOf, nameOf, ownLineText } from './copy';
 import { Purse } from './PhoneLot';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
@@ -63,7 +63,7 @@ export function insideWords(
   view: PushedView<BlindAuctionControllerView>,
 ): string {
   const o = view.box && view.outcome !== null ? view.box.options[view.outcome] : undefined;
-  return o ? `${KIND_ICON[o.kind]} ${kindName(L, o.kind)}` : '?';
+  return o ? `${iconOf(o)} ${nameOf(L, o)}` : '?';
 }
 
 export function PhoneResult({

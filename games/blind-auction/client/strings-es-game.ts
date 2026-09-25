@@ -14,6 +14,9 @@ export const ES_GAME: Record<string, string> = {
   'Grand box': 'Gran caja',
   'The last box pays double': 'La última caja paga doble',
   'Spicy boxes': 'Cajas picantes',
+  'Live events': 'Eventos en vivo',
+  'Every other box is a race, a dice roll or a prize wheel':
+    'Una caja de cada dos es una carrera, una tirada de dados o una ruleta',
   'Adds grown-up boxes; the rules stay the same': 'Añade cajas para adultos; las reglas no cambian',
   'Host voice': 'Voz del presentador',
   'Who reads the boxes out loud': 'Quién lee las cajas en voz alta',

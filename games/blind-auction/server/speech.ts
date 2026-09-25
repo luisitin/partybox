@@ -20,6 +20,7 @@ export const FIXED_LINES = {
   twins: 'Twins!',
   receipt: 'Just a receipt.',
   empty: "It's empty!",
+  pick: 'We have a winner!',
 } as const satisfies Record<string, string> & Record<ContentKind, string>;
 export type FixedLine = keyof typeof FIXED_LINES;
 

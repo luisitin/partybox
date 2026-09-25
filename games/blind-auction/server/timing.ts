@@ -24,6 +24,8 @@ export function betsMs(bets: number): number {
 }
 /** …step 1: the box turns (its outcome's fixed line lands as it finishes turning)… */
 export const OPEN_LINE_AT_MS = 850;
+/** A live event plays out on the TV at step 0 of `open`, after the bets land: this long. */
+export const EVENT_MS = { race: 7_000, dice: 2_600, wheel: 5_600 } as const;
 /** …and the payouts hold this long (longer if the reading needs it). */
 export const OPEN_HOLD_MS = 5_500;
 /** A reading may keep the box open this much longer at most. */

@@ -6,7 +6,7 @@ import { Screen, useSequence, useT } from '@partybox/game-sdk/ui';
 import type { PushedView } from '@partybox/game-sdk/ui';
 import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS } from '../server/timing';
 import type { BlindAuctionControllerView } from '../server/views';
-import { KIND_ICON, kindName, payText, toneOf } from './copy';
+import { iconOf, nameOf, payText, toneOf } from './copy';
 import { LotCard } from './LotCard';
 import { OptionBoard } from './Options';
 import { LotTitle, PhoneRules } from './PhoneLot';
@@ -40,8 +40,8 @@ function StageOpen({ view }: { view: View }): JSX.Element | null {
           face={
             inside
               ? {
-                  icon: KIND_ICON[inside.kind],
-                  kicker: kindName(L, inside.kind),
+                  icon: iconOf(inside),
+                  kicker: nameOf(L, inside),
                   big: payText(L, inside.pay),
                   tone: toneOf(inside.kind),
                 }

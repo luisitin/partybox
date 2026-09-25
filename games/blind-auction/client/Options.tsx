@@ -5,7 +5,7 @@ import type { CSSProperties, JSX } from 'react';
 import { Avatar, useT } from '@partybox/game-sdk/ui';
 import type { ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BetView, OptionView } from '../server/views';
-import { COIN, KIND_ICON, kindName, payText, tierWord, toneOf } from './copy';
+import { COIN, iconOf, nameOf, payText, tierWord, toneOf } from './copy';
 import styles from './options.module.css';
 import { STRINGS } from './strings';
 
@@ -54,9 +54,9 @@ export function OptionBoard({
         const body = (
           <>
             <span className={styles.icon} aria-hidden>
-              {KIND_ICON[o.kind]}
+              {iconOf(o)}
             </span>
-            <span className={styles.name}>{kindName(L, o.kind)}</span>
+            <span className={styles.name}>{nameOf(L, o)}</span>
             <span className={styles.odds}>
               {tierWord(L, o.tier)} · {o.chance}%
             </span>

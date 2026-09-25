@@ -9,7 +9,7 @@ import { BidPad } from '@partybox/game-sdk/ui/bid-pad';
 import { PITY_COINS } from '../server/timing';
 import type { Input } from '../server/types';
 import type { BlindAuctionControllerView } from '../server/views';
-import { COIN, KIND_ICON, kindName } from './copy';
+import { COIN, iconOf, nameOf } from './copy';
 import { OptionBoard } from './Options';
 import { LotTitle } from './PhoneLot';
 import styles from './phone.module.css';
@@ -24,7 +24,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
   const box = view.box;
   if (!box) return null;
   const what = option !== null ? box.options[option] : undefined;
-  const label = what ? `${KIND_ICON[what.kind]} ${kindName(L, what.kind)}` : '';
+  const label = what ? `${iconOf(what)} ${nameOf(L, what)}` : '';
   // "Placed" only while the shown bet is the one sent: picking another content re-arms the button.
   // Sitting out is sitting out whatever card is picked.
   const placed = !view.myBet

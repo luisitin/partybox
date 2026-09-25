@@ -60,6 +60,13 @@
       "default": false
     },
     {
+      "key": "live",
+      "label": "Live events",
+      "description": "Every other box is a race, a dice roll or a prize wheel",
+      "type": "boolean",
+      "default": false
+    },
+    {
       "key": "reader",
       "label": "Host voice",
       "description": "Who reads the boxes out loud",

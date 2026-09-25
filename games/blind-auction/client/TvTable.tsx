@@ -9,8 +9,9 @@ import { Avatar, Confetti, Stage, useSequence, useSound, useT } from '@partybox/
 import type { PushedView, SoundCue } from '@partybox/game-sdk/ui';
 import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS } from '../server/timing';
 import type { BlindAuctionTvView } from '../server/views';
-import { COIN, KIND_ICON, kindName, payText, toneOf } from './copy';
+import { COIN, iconOf, kindName, nameOf as optionName, payText, toneOf } from './copy';
 import type { Tone } from './copy';
+import { LiveStage } from './LiveStage';
 import { LotCard } from './LotCard';
 import { OptionBoard } from './Options';
 import { STRINGS } from './strings';
@@ -102,8 +103,10 @@ function OpenPanel({ view }: { view: View }): JSX.Element | null {
     <div className={styles.panel}>
       {landed && kind ? (
         <p className={`${styles.insideLine} ${styles[toneOf(kind)]}`}>
-          <span aria-hidden>{KIND_ICON[kind]}</span>{' '}
-          {L("It's {what}!", { what: kindName(L, kind) })}
+          <span aria-hidden>{inside ? iconOf(inside) : ''}</span>{' '}
+          {inside?.label
+            ? L('{what} wins!', { what: optionName(L, inside) })
+            : L("It's {what}!", { what: kindName(L, kind) })}
         </p>
       ) : (
         <p className={styles.soldHead}>
@@ -166,22 +169,26 @@ export function TvTable({ view }: { view: View }): JSX.Element {
           <div
             className={`${styles.cardCol} ${inside && toneOf(inside.kind) === 'bad' ? styles.shake : ''}`}
           >
-            <LotCard
-              icon={box?.icon ?? '📦'}
-              grand={box?.grand ?? false}
-              flipped={Boolean(inside)}
-              deal={phase === 'box'}
-              face={
-                inside
-                  ? {
-                      icon: KIND_ICON[inside.kind],
-                      kicker: kindName(L, inside.kind),
-                      big: payText(L, inside.pay),
-                      tone: toneOf(inside.kind),
-                    }
-                  : null
-              }
-            />
+            {phase === 'open' && view.run && box ? (
+              <LiveStage run={view.run} options={box.options} bets={view.bets?.length ?? 0} />
+            ) : (
+              <LotCard
+                icon={box?.icon ?? '📦'}
+                grand={box?.grand ?? false}
+                flipped={Boolean(inside)}
+                deal={phase === 'box'}
+                face={
+                  inside
+                    ? {
+                        icon: iconOf(inside),
+                        kicker: optionName(L, inside),
+                        big: payText(L, inside.pay),
+                        tone: toneOf(inside.kind),
+                      }
+                    : null
+                }
+              />
+            )}
           </div>
           {phase === 'box' ? <BoxPanel view={view} /> : null}
           {phase === 'bet' ? <BetPanel view={view} /> : null}
