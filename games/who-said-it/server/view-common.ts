@@ -112,8 +112,6 @@ export function cardOf(state: State): { text: string; number: number; count: num
 /** VIP Skip / Next in words (I-774 B): English on the wire, translated by the game's strings. */
 export function vipSkipLabel(state: State, last: boolean): string {
   switch (state.phase.id) {
-    case 'intro':
-      return "Let's go";
     case 'prompt':
       return 'Start writing';
     case 'write':

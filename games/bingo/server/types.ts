@@ -97,7 +97,7 @@ export interface RoundState {
   decision: Decision | null;
   /** I-105 A: the vote after a bingo — each phone's current choice (the VIP's flagged). */
   votes?: Record<string, { choice: Decision; at: number; vip: boolean }>;
-  /** I-105 A: when the vote closes (6 s after the first choice, never before the read ends). */
+  /** I-105 A: when the vote closes (VOTE_MS after the first choice, never before the read ends). */
   voteEndsAt?: number | null;
   /**
    * check / bingo: the TV's verdict has landed (the phase's first tick, at the end of the reveal —
@@ -131,9 +131,10 @@ export interface RoundState {
   /** playerId → card indices already swapped at the intro (one "deal me another" per card). */
   swapped: Record<string, number[]>;
   /**
-   * intro: who has tapped Ready (loop 344 — the owner: a real card-pick step). Once every
-   * connected person with cards has (bots and the disconnected count as ready), the first
-   * number is INTRO_READY_MS away — never before the deal plus the 3 · 2 · 1 (`introMinMs`).
+   * intro: who has picked their cards ("Play these", loop 344 — a real card-pick step; not a
+   * readiness check, ADR-053). Once every connected person with cards has (bots and the
+   * disconnected count), the first number is PICKED_HOLD_MS away with no count-in — never before
+   * the deal plus that hold (`introMinMs`).
    */
   ready: string[];
 }
@@ -217,7 +218,7 @@ export {
   DEAL_BOUNCE_MS,
   dealDoneMs,
   introMinMs,
-  INTRO_READY_MS,
+  PICKED_HOLD_MS,
   INTRO_BREATH_MS,
   ARM_MS,
   RESUME_MS,
@@ -225,7 +226,9 @@ export {
   BINGO_ABANDONED_MS,
   NO_PICK_MS,
   VOTE_MS,
-  SCOREBOARD_MS,
+  SCOREBOARD_MIN_MS,
+  scoreboardMs,
+  readMs,
   DECK,
   FREE,
   FINAL_MS,

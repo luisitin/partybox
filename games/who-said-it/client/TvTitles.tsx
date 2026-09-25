@@ -1,40 +1,15 @@
-// TV title screens: the intro (the three steps, dealt one by one), the prompt (a card that swings
-// in and holds while the reader says it) and the writing stage (the prompt stays up; the count of
-// answers in is the one focal point, with pips and who we are waiting for).
+// TV title screens: the prompt (a card that swings in and holds while the reader says it) and the
+// writing stage (the prompt stays up; the count of answers in is the one focal point, with pips
+// and who we are waiting for).
 import { useEffect } from 'react';
-import type { CSSProperties, JSX } from 'react';
+import type { JSX } from 'react';
 import { BigText, Stage, useSecondsLeft, useSound, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps, Translator, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { WsTvView } from '../server/views';
-import { STEPS } from './steps';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
 
 type Props = GameTvProps<WsTvView>;
-
-export function TvIntro(_: Props): JSX.Element {
-  const L = useT(STRINGS);
-  return (
-    <Stage center>
-      <div className={styles.title}>
-        <span className={styles.titleIcon} aria-hidden>
-          🗣️
-        </span>
-        <BigText level="display">{L('Who Said It?')}</BigText>
-      </div>
-      <ol className={styles.steps}>
-        {STEPS.map((step, i) => (
-          <li key={step} className={styles.step} style={{ '--i': i } as CSSProperties}>
-            <span className={styles.stepNo} aria-hidden>
-              {i + 1}
-            </span>
-            <span>{L(step)}</span>
-          </li>
-        ))}
-      </ol>
-    </Stage>
-  );
-}
 
 export function questionOf(L: Translator, view: WsTvView): string {
   return L('Question {n} of {total}', { n: view.n, total: view.total });

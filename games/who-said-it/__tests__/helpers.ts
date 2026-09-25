@@ -21,7 +21,7 @@ export interface StartOptions {
   bots?: number;
 }
 
-/** A fresh game in `intro`. The last `bots` seats are bots. */
+/** A fresh game on its first `prompt` (the shell's start stage has run). The last `bots` seats are bots. */
 export function start(options: StartOptions = {}): State {
   const n = options.players ?? 4;
   const bots = options.bots ?? 0;

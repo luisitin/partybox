@@ -11,5 +11,5 @@ export const phone: GamePhoneModule = {
   // Already in this chunk (it is small): no chunk of its own, so no extra file name in the join
   // download's preload list (check-bundle measured +1.1 KB with it split out).
   PhoneStage: lazy(() => Promise.resolve({ default: PhoneStage })),
-  phoneStagePhases: ['intro', 'prompt', 'reveal', 'scores'],
+  phoneStagePhases: ['prompt', 'reveal', 'scores'],
 };

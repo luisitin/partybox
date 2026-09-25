@@ -1,16 +1,13 @@
 // Phase order, exits (deadline / all done / VIP skip), pause, drops, idle rooms (SPEC §4.3, §4.15).
 import { describe, expect, it } from 'vitest';
-import { DONE_GRACE_MS, INTRO_MS, LAND_MS, SCORES_MS } from '../server/types';
+import { DONE_GRACE_MS, LAND_MS, SCORES_MS } from '../server/types';
 import { answer, guess, input, player, start, timer, until, vip, written } from './helpers';
 
 const FOUR = { ana: 'avocado', ben: 'bacon', cy: 'sushi', dee: 'tacos' };
 
 describe('phase order', () => {
-  it('intro → prompt → write → (guess → reveal)× cards → scores → next prompt … → done', () => {
+  it('prompt → write → (guess → reveal)× cards → scores → next prompt … → done', () => {
     let s = start({ settings: { prompts: '2' } });
-    expect(s.phase.id).toBe('intro');
-    expect(s.phase.deadline).toBe(s.phase.startedAt + INTRO_MS);
-    s = timer(s);
     expect(s.phase.id).toBe('prompt');
     s = timer(s);
     expect(s.phase.id).toBe('write');
@@ -97,7 +94,7 @@ describe('exits', () => {
       s = vip(s, 'skip');
       path.push(`${s.phase.id}${s.phase.id === 'reveal' ? `:${s.p.step}` : ''}`);
     }
-    expect(path).toEqual(['intro', 'prompt', 'write', 'guess', 'reveal:land', 'reveal:shown', 'guess', 'reveal:land', 'reveal:shown', 'scores', 'done']); // prettier-ignore
+    expect(path).toEqual(['prompt', 'write', 'guess', 'reveal:land', 'reveal:shown', 'guess', 'reveal:land', 'reveal:shown', 'scores', 'done']); // prettier-ignore
     // A skip in the landing flips the card (scored once, the author shown); the next moves on.
     expect(s.log).toHaveLength(2);
   });

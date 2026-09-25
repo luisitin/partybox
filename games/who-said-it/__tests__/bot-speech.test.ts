@@ -61,7 +61,7 @@ describe('voice', () => {
     expect(speech(start({ players: 4, settings: { reader: 'none' } }))).toEqual([]);
   });
 
-  it('during the intro: the first prompt and the fixed lines, capped', () => {
+  it('on the first prompt: its reading and the fixed lines, capped', () => {
     const asked = speech(voiced());
     expect(asked[0]?.key).toBe(promptReading(voiced(), 0)?.key);
     expect(asked.length).toBeLessThanOrEqual(pendingCap(4));
@@ -79,7 +79,7 @@ describe('voice', () => {
   });
 
   it('the prompt lasts its reading + lead + 1 s, re-timed when the reading arrives', () => {
-    let s = timer(voiced());
+    let s = voiced();
     expect(s.phase.id).toBe('prompt');
     expect(s.phase.deadline).toBe(s.phase.startedAt + PROMPT_MAX_MS);
     const key = promptReading(s, 0)?.key as string;
@@ -89,7 +89,7 @@ describe('voice', () => {
   });
 
   it('a failed voice falls back to reading time and says nothing', () => {
-    let s = timer(voiced());
+    let s = voiced();
     const key = promptReading(s, 0)?.key as string;
     s = reduce(s, { type: 'speech', now: s.phase.startedAt + 200, key, ms: -1 });
     expect(s.phase.deadline).toBeLessThan(s.phase.startedAt + PROMPT_MAX_MS);

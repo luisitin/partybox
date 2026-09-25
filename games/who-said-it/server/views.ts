@@ -75,7 +75,7 @@ function shared(state: State): Shared {
     startedAt: state.phase.startedAt,
     n: state.p.n + 1,
     total: state.cfg.prompts,
-    prompt: phase === 'intro' ? null : (state.prompts[state.p.n]?.prompt ?? null),
+    prompt: state.prompts[state.p.n]?.prompt ?? null,
     card: cardOf(state),
     seated: phase === 'guess' || phase === 'reveal' ? state.p.seated : [],
     reveal: revealOf(state),

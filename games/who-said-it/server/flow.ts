@@ -1,11 +1,10 @@
-// The phase graph: intro → (prompt → write → (guess → reveal)* → scores)* → done. Phase files only
+// The phase graph (the shell's start stage — rules, READY, 3·2·1 — opens the game): (prompt → write → (guess → reveal)* → scores)* → done. Phase files only
 // know their own entry and exit; this file wires the loops so no phase imports another. A VIP skip
 // runs the same `advance` a deadline does.
 import { applyVip, hasPlayer, setConnected } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { buildCards } from './cards';
 import { enterGuess, guessDone, closeGuess, reduceGuess } from './phases/guess';
-import { reduceIntro } from './phases/intro';
 import { enterPrompt, reducePrompt, retimePrompt } from './phases/prompt';
 import { enterReveal, flip, reduceReveal } from './phases/reveal';
 import { enterDone, enterScores, reduceScores } from './phases/scores';
@@ -28,8 +27,6 @@ function afterReveal(state: State, now: number): State {
 /** What a deadline — or a VIP skip — does in each phase. */
 export function advance(state: State, now: number): State {
   switch (state.phase.id) {
-    case 'intro':
-      return enterPrompt(state, now, 0);
     case 'prompt':
       return enterWrite(state, now);
     case 'write':
@@ -76,8 +73,6 @@ export function reduce(state: State, event: GameEvent<Input>): State {
   if (vip) return vip;
   if (state.phase.paused) return state; // inputs and timers wait while paused
   switch (state.phase.id) {
-    case 'intro':
-      return reduceIntro(state, event, advance);
     case 'prompt':
       return reducePrompt(state, event, advance);
     case 'write':

@@ -1,4 +1,4 @@
-// The TV's moments on a phone (phone-only rooms; remote phones once F4 lands): the intro, the
+// The TV's moments on a phone (phone-only rooms and remote phones): the
 // prompt, the reveal as a list — each picked face with the guessers under it, then the author card
 // turning over — and the board. Every spoken line is on screen too (foundation §3.7).
 import type { CSSProperties, JSX } from 'react';
@@ -6,7 +6,7 @@ import { Avatar, Scoreboard, Screen, useT } from '@partybox/game-sdk/ui';
 import type { ControllerView, PushedView, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { WsPhoneView } from '../server/views';
 import { boardRows } from './board';
-import { PhoneIntro, PhonePrompt } from './Controller';
+import { PhonePrompt } from './Controller';
 import { namesLine, verdictOf } from './lines';
 import { STRINGS } from './strings';
 import { useSay } from './useSay';
@@ -89,8 +89,6 @@ export function PhoneStage({ view: pushed }: { view: PushedView<ControllerView> 
   const view = pushed as PushedView<WsPhoneView>;
   useSay(view.say, view.startedAt, view.phaseId, view.deadline);
   switch (view.phaseId) {
-    case 'intro':
-      return <PhoneIntro />;
     case 'prompt':
       return <PhonePrompt view={view} />;
     case 'reveal':

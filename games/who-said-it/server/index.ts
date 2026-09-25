@@ -6,7 +6,7 @@ import manifestJson from '../manifest.json' with { type: 'json' };
 import { decide } from './bot';
 import { promptPool } from './content';
 import { reduce } from './flow';
-import { enterIntro } from './phases/intro';
+import { enterPrompt } from './phases/prompt';
 import { recap } from './recap';
 import { startPrompt } from './round';
 import { results } from './scoring';
@@ -35,7 +35,7 @@ function init(ctx: InitContext): State {
   const zero: Record<string, number> = {};
   for (const id of seats) zero[id] = 0;
   const base = {
-    phase: { id: 'intro', startedAt: ctx.now, deadline: null },
+    phase: { id: 'prompt', startedAt: ctx.now, deadline: null },
     rng,
     players,
     cfg: { ...cfg, prompts: prompts.length },
@@ -48,7 +48,8 @@ function init(ctx: InitContext): State {
     speechMs: {},
     log: [],
   } as unknown as State;
-  return enterIntro(startPrompt(base, 0), ctx.now);
+  // The shell's start stage (rules → READY → 3·2·1) has already run: open on the first question.
+  return enterPrompt(startPrompt(base, 0), ctx.now, 0);
 }
 
 export const game: GameDefinition<State, Input, WsTvView, WsPhoneView> = {

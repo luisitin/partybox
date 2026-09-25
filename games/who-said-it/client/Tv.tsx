@@ -7,14 +7,12 @@ import type { WsTvView } from '../server/views';
 import { TvGuess } from './TvGuess';
 import { TvReveal } from './TvReveal';
 import { TvScores } from './TvScores';
-import { TvIntro, TvPrompt, TvWrite } from './TvTitles';
+import { TvPrompt, TvWrite } from './TvTitles';
 import { useSay } from './useSay';
 
 export function Tv({ view }: GameTvProps<WsTvView>): JSX.Element {
   useSay(view.say, view.startedAt, view.phaseId, view.deadline);
   switch (view.phaseId) {
-    case 'intro':
-      return <TvIntro view={view} />;
     case 'prompt':
       return <TvPrompt view={view} />;
     case 'write':

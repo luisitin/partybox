@@ -3,7 +3,7 @@
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 
-export const PHASES = ['intro', 'prompt', 'write', 'guess', 'reveal', 'scores', 'done'] as const;
+export const PHASES = ['prompt', 'write', 'guess', 'reveal', 'scores', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export const READERS = ['sky', 'george', 'fable', 'jessica', 'original', 'none'] as const;
@@ -106,7 +106,6 @@ export const inputSchema = z.discriminatedUnion('type', [
 ]);
 export type Input = z.infer<typeof inputSchema>;
 
-export const INTRO_MS = 8_000;
 /** The prompt phase: its reading + 1 s, at most 10 s (§4.3). */
 export const PROMPT_MAX_MS = 10_000;
 export const PROMPT_AFTER_MS = 1_000;

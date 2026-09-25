@@ -75,7 +75,6 @@ function wanted(state: State): (SpeechRequest | null)[] {
   const { p } = state;
   const card = p.cards[p.idx];
   const fixed = (Object.keys(FIXED) as FixedLine[]).map((l) => fixedLine(state, l));
-  if (phase === 'intro') return [promptReading(state, 0), ...fixed];
   if (phase === 'prompt' || phase === 'write')
     return [promptReading(state, p.n), fixedLine(state, 'write'), ...fixed];
   if (phase === 'guess' || phase === 'reveal') {

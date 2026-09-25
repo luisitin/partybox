@@ -18,49 +18,6 @@
 }
 
 /* ── intro ─────────────────────────────────────────────────────────────────────────────────── */
-.title {
-  display: flex;
-  align-items: center;
-  gap: var(--pb-space-5);
-  margin-bottom: var(--pb-space-7);
-}
-.titleIcon {
-  font-size: var(--pb-font-display);
-  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
-}
-.steps {
-  display: grid;
-  gap: var(--pb-space-5);
-  width: min(1400px, 100%);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  perspective: 1400px;
-}
-.step {
-  display: flex;
-  align-items: center;
-  gap: var(--pb-space-5);
-  padding: var(--pb-space-5) var(--pb-space-6);
-  border-radius: var(--pb-radius-lg);
-  background: var(--pb-surface);
-  font-size: var(--pb-font-body);
-  text-align: left;
-  animation: ws-deal var(--pb-motion-slow) var(--pb-ease) both;
-  animation-delay: calc(var(--pb-motion-slow) * 0.66 + var(--i) * var(--pb-motion-slow) * 0.58);
-}
-.stepNo {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: var(--pb-accent);
-  color: var(--pb-on-accent);
-  font-size: var(--pb-font-h2);
-  font-weight: 900;
-}
 
 /* ── the prompt card ───────────────────────────────────────────────────────────────────────── */
 .scene {
