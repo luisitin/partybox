@@ -1,0 +1,178 @@
+{
+  "pass": "18",
+  "game": "spy-grid",
+  "players": 16,
+  "scenario": "normal",
+  "focus": "tv",
+  "started": "12:15:57.102",
+  "tvVideoT0": "12:15:52.736",
+  "phoneVideoT0": "12:15:54.131",
+  "changes": [
+    {
+      "t": 1790338557116,
+      "status": "playing",
+      "phase": "teams",
+      "deadline": 1790338617063,
+      "bed": "lounge",
+      "at": "12:15:57.116",
+      "sinceStartS": 0,
+      "videoS": 4.4,
+      "phoneVideoS": 3
+    },
+    {
+      "t": 1790338563074,
+      "status": "playing",
+      "phase": "clue",
+      "deadline": 1790338637947,
+      "bed": "latenight",
+      "at": "12:16:03.074",
+      "sinceStartS": 6,
+      "videoS": 10.3,
+      "phoneVideoS": 8.9
+    },
+    {
+      "t": 1790338564621,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1790338623788,
+      "bed": "pulse",
+      "at": "12:16:04.621",
+      "sinceStartS": 7.5,
+      "videoS": 11.9,
+      "phoneVideoS": 10.5
+    },
+    {
+      "t": 1790338571258,
+      "status": "playing",
+      "phase": "flip",
+      "deadline": 1790338571978,
+      "bed": "pulse",
+      "at": "12:16:11.258",
+      "sinceStartS": 14.2,
+      "videoS": 18.5,
+      "phoneVideoS": 17.1
+    },
+    {
+      "t": 1790338573462,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1790338633410,
+      "bed": "pulse",
+      "at": "12:16:13.462",
+      "sinceStartS": 16.4,
+      "videoS": 20.7,
+      "phoneVideoS": 19.3
+    },
+    {
+      "t": 1790338579139,
+      "status": "playing",
+      "phase": "flip",
+      "deadline": 1790338579894,
+      "bed": "pulse",
+      "at": "12:16:19.139",
+      "sinceStartS": 22,
+      "videoS": 26.4,
+      "phoneVideoS": 25
+    },
+    {
+      "t": 1790338581514,
+      "status": "playing",
+      "phase": "turn-end",
+      "deadline": 1790338584011,
+      "bed": "latenight",
+      "at": "12:16:21.514",
+      "sinceStartS": 24.4,
+      "videoS": 28.8,
+      "phoneVideoS": 27.4
+    },
+    {
+      "t": 1790338584033,
+      "status": "playing",
+      "phase": "clue",
+      "deadline": 1790338659013,
+      "bed": "latenight",
+      "at": "12:16:24.033",
+      "sinceStartS": 26.9,
+      "videoS": 31.3,
+      "phoneVideoS": 29.9
+    },
+    {
+      "t": 1790338586938,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1790338646883,
+      "bed": "pulse",
+      "at": "12:16:26.938",
+      "sinceStartS": 29.8,
+      "videoS": 34.2,
+      "phoneVideoS": 32.8
+    },
+    {
+      "t": 1790338588999,
+      "status": "playing",
+      "phase": "flip",
+      "deadline": 1790338589731,
+      "bed": "pulse",
+      "at": "12:16:28.999",
+      "sinceStartS": 31.9,
+      "videoS": 36.3,
+      "phoneVideoS": 34.9
+    },
+    {
+      "t": 1790338591230,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1790338651145,
+      "bed": "pulse",
+      "at": "12:16:31.230",
+      "sinceStartS": 34.1,
+      "videoS": 38.5,
+      "phoneVideoS": 37.1
+    },
+    {
+      "t": 1790338594717,
+      "status": "playing",
+      "phase": "flip",
+      "deadline": 1790338595414,
+      "bed": "pulse",
+      "at": "12:16:34.717",
+      "sinceStartS": 37.6,
+      "videoS": 42,
+      "phoneVideoS": 40.6
+    },
+    {
+      "t": 1790338596857,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1790338656829,
+      "bed": "pulse",
+      "at": "12:16:36.857",
+      "sinceStartS": 39.8,
+      "videoS": 44.1,
+      "phoneVideoS": 42.7
+    },
+    {
+      "t": 1790338598870,
+      "status": "playing",
+      "phase": "turn-end",
+      "deadline": 1790338601268,
+      "bed": "latenight",
+      "at": "12:16:38.870",
+      "sinceStartS": 41.8,
+      "videoS": 46.1,
+      "phoneVideoS": 44.7
+    },
+    {
+      "t": 1790338601363,
+      "status": "playing",
+      "phase": "clue",
+      "deadline": 1790338676279,
+      "bed": "latenight",
+      "at": "12:16:41.363",
+      "sinceStartS": 44.3,
+      "videoS": 48.6,
+      "phoneVideoS": 47.2
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}

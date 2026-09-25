@@ -103,7 +103,7 @@ export function ClueBar({ view }: { view: SpyTvView }): JSX.Element {
       <div className={styles.clueFit}>
         <div
           className={`${styles.clueMain} ${clueSize(view.clue.word)} ${lands ? styles.clueLands : ''}`}
-          style={{ '--n': view.clue.word.length + 3 } as CSSProperties}
+          style={{ '--n': view.clue.word.length + 4 } as CSSProperties}
         >
           <span className={styles.clueShape}>{SHAPE[team]}</span>
           <span className={styles.clueWord}>{view.clue.word}</span>

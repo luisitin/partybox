@@ -479,8 +479,9 @@
   margin: 0;
   padding: 0;
   display: grid;
-  /* one column up to six players, two beyond (16 players = 8 a side) */
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  /* one name per row in a team card: a two-column grid left 'Maximiliano' narrower than itself
+     (session-c). 8 a side still fits the card's height. */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--pb-space-3);
   align-content: start;
   overflow: hidden;
@@ -602,7 +603,8 @@
 }
 
 .clueFit .clueMain {
-  font-size: min(var(--pb-font-h1), calc(100cqw / (var(--n, 8) * 0.68)));
+  /* the word plus ▲ · 3 in em (--n = letters + 4), less the three fixed gaps ('BATHRO…') */
+  font-size: min(var(--pb-font-h1), calc((100cqw - 3 * var(--pb-space-3)) / (var(--n, 8) * 0.74)));
 }
 
 /* uneven teams: said on the TV too, before the start moves anyone (session-c N3) */
