@@ -260,13 +260,13 @@ export function applyVip(
       return {
         room: { ...room, phoneOnly: action.on },
         effects: [
+          // the VIP's own switch already shows it (review [6537c4] b)
           ...switchToast(
             room,
             action.on
               ? '📱 Phone-only room — the phones show what the TV would'
               : '📺 The TV is the stage again',
-            playerId, // the VIP's own switch already shows it (review [6537c4] b)
-          ),
+          ).filter((e) => !('to' in e) || e.to !== playerId),
           { type: 'push' },
         ],
       };
@@ -287,11 +287,3 @@ export function applyVip(
     }
   }
 }
-<<<<<<< HEAD
-
-/** I-642 C: a room switch changed — everyone is told what it means. */
-function switchToast(text: string, except?: string): Effect {
-  return { type: 'toast', to: 'all', kind: 'info', text, ...(except ? { except } : {}) };
-}
-=======
->>>>>>> main

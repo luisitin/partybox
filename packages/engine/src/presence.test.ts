@@ -62,9 +62,12 @@ describe('what the game sees', () => {
     return applyRoomEvent(chosen, { type: 'vip', now: T0 + 101, playerId: 'p1', action: { action: 'startNow' }, seed: 7 }, spyDeps).room; // prettier-ignore
   };
 
+  // a TV room: new rooms start phone-only (owner 2026-09-24), which would stage every phone
+  const tvRoom = (n: number): RoomState => ({ ...roomWith(n), phoneOnly: false, musicOnPhones: false }); // prettier-ignore
+
   it('gets the room’s presence and each player’s view of the TV at start', () => {
     seen.length = 0;
-    let room = vip(roomWith(3), { action: 'setPresenceMode', mode: 'remote-voice' }).room;
+    let room = vip(tvRoom(3), { action: 'setPresenceMode', mode: 'remote-voice' }).room;
     room = presence(room, 'p3', false);
     start(room);
     expect(seen[0]?.presence).toEqual({ mode: 'remote-voice', phoneOnly: false });
@@ -72,7 +75,7 @@ describe('what the game sees', () => {
   });
 
   it('stamps the stage per phone, live: a mid-game flip moves only that phone', () => {
-    let room = start(presence(roomWith(3), 'p3', false));
+    let room = start(presence(tvRoom(3), 'p3', false));
     const stage = (r: RoomState, id: string) => controllerView(r, id, spyDeps)?.phoneOnly;
     expect([stage(room, 'p1'), stage(room, 'p2'), stage(room, 'p3')]).toEqual([false, false, true]);
     const gameBefore = room.game?.state;

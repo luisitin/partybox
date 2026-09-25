@@ -169,11 +169,7 @@ export function createHost(options: HostOptions): Host {
             text: effect.text,
             ...(effect.playerId ? { playerId: effect.playerId } : {}),
           };
-          if (effect.to === 'all' && effect.except) {
-            transport.toTvs(room.code, 'toast', payload);
-            for (const id of Object.keys(room.players))
-              if (id !== effect.except) transport.toPlayer(id, 'toast', payload);
-          } else if (effect.to === 'all') transport.toAll(room.code, 'toast', payload);
+          if (effect.to === 'all') transport.toAll(room.code, 'toast', payload);
           else if (effect.to === 'tvs')
             transport.toTvs(room.code, 'toast', payload); // I-040
           else transport.toPlayer(effect.to, 'toast', payload);

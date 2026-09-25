@@ -47,15 +47,9 @@ export function useShellCues(
       playing &&
       phase !== null &&
       p.phase !== phase &&
-<<<<<<< HEAD
       // the phones carry the stage's audio: a phone-only room, or this phone stages it (remote);
       // music-on-phones alone leaves cues and voices on the TV (Foundation's ruling [151143])
       (room?.phoneOnly || state.view?.phoneOnly === true) &&
-=======
-      // a room that asked the phones to carry the audio (phone only, or music on every phone)
-      // or this phone is the stage: ADR-047's remote player hears the TV's cues (ruling 14)
-      (room?.phoneOnly || room?.musicOnPhones || state.view?.phoneOnly === true) &&
->>>>>>> main
       tvSoundsOn() &&
       audio
     ) {
