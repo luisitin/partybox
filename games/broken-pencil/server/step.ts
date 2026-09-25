@@ -62,10 +62,12 @@ export function closeStep(state: State, now: number, next: Transition): State {
     for (const i of pagesOfStep(state, state.step)) {
       if (pages.length > i) continue;
       const authorId = authorOfPage(state, b, i);
+      // I-213: why this page is filled in — its author had dropped out, or the clock ran out
+      const filled = state.players[authorId]?.connected === false ? 'away' : 'time';
       pages.push(
         kindOfPage(i) === 'draw'
-          ? { kind: 'draw', authorId, drawing: draftOf(state, authorId) }
-          : { kind: 'guess', authorId, text: null },
+          ? { kind: 'draw', authorId, drawing: draftOf(state, authorId), filled }
+          : { kind: 'guess', authorId, text: null, filled },
       );
     }
     return pages.length === book.pages.length ? book : { ...book, pages };

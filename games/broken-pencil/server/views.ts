@@ -66,6 +66,8 @@ export interface PencilControllerView extends ControllerView, Common {
   draft: Drawing | null;
   /** Who gets this book next (null after the last page). */
   nextName: string | null;
+  /** I-213 A: the page of mine the last step closed on while I was away — what it went on as. */
+  awayPage: 'draft' | 'empty' | 'guess' | null;
   showing: null | {
     book: number;
     ownerName: string;
@@ -225,6 +227,7 @@ export function controllerView(
         ? (state.drafts[playerId] ?? null)
         : null,
     nextName: nextSeat ? nameOf(state, nextSeat) : null,
+    awayPage: awayPageOf(state, playerId),
     showing:
       state.phase.id === 'show' && showing && shownBook
         ? {
@@ -245,4 +248,20 @@ export function controllerView(
     summary: all,
     myBook: all?.find((s) => s.ownerId === playerId) ?? null,
   };
+}
+
+/** I-213 A: my page from the step just closed, if it went on without me while I was away. */
+function awayPageOf(state: State, playerId: string): 'draft' | 'empty' | 'guess' | null {
+  if (!playing(state) || state.step < 1) return null;
+  for (const book of state.books) {
+    for (const page of book.pages) {
+      if (page.authorId !== playerId || page.kind === 'word' || page.filled !== 'away') continue;
+      // only the step the room just moved on from counts (not "the newest page": a bot's guess
+      // lands on top of it the moment the next step opens)
+      if (!pagesOfStep(state, state.step - 1).includes(book.pages.indexOf(page))) continue;
+      if (page.kind === 'guess') return 'guess';
+      return page.drawing && page.drawing.strokes.length > 0 ? 'draft' : 'empty';
+    }
+  }
+  return null;
 }

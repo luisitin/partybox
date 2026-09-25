@@ -67,13 +67,14 @@ describe('drafts', () => {
       kind: 'draw',
       authorId: a,
       drawing: { strokes: more.strokes },
+      filled: 'time', // I-213: the deadline filled it
     });
     expect(s.books[1]?.pages[1]).toEqual({
       kind: 'draw',
       authorId: b,
       drawing: DOT.strokes && { strokes: DOT.strokes },
     });
-    expect(s.books[2]?.pages[1]).toEqual({ kind: 'draw', authorId: c, drawing: null });
+    expect(s.books[2]?.pages[1]).toEqual({ kind: 'draw', authorId: c, drawing: null, filled: 'time' });
     // In a pass a draft only counts once the guess is in; a stray draft before it changes nothing.
     expect(input(s, c, half)).toBe(s);
     s = input(s, c, { type: 'guess', text: 'a line' });
@@ -84,6 +85,7 @@ describe('drafts', () => {
       kind: 'draw',
       authorId: c,
       drawing: { strokes: half.strokes },
+      filled: 'time',
     });
     expect(input(s, 'ghost', half)).toBe(s);
   });

@@ -33,9 +33,12 @@ export interface Drawing {
 export type Page =
   | { kind: 'word'; authorId: string; text: string }
   /** `drawing: null` = the artist never sent one (empty canvas). */
-  | { kind: 'draw'; authorId: string; drawing: Drawing | null }
+  | { kind: 'draw'; authorId: string; drawing: Drawing | null; filled?: Filled }
   /** `text: null` = no guess by the deadline ("???"). */
-  | { kind: 'guess'; authorId: string; text: string | null };
+  | { kind: 'guess'; authorId: string; text: string | null; filled?: Filled };
+
+/** I-213: a page the step closed on without its author — they had dropped out, or time ran out. */
+export type Filled = 'away' | 'time';
 
 export interface Book {
   ownerId: string;

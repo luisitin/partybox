@@ -184,7 +184,15 @@ function CurrentPage({ page }: { page: PageView }): JSX.Element {
           label={L("{name}'s drawing", { name })}
         />
         {/* I-211 B: who drew it, on the sheet's corner */}
-        <p className={`${styles.pageWho} ${styles.sheetTag}`}>{L('{name} drew', { name })}</p>
+        <p className={`${styles.pageWho} ${styles.sheetTag}`}>
+          {L('{name} drew', { name })}
+          {/* I-213 B: a page the round closed on — the room sees why it looks unfinished */}
+          {page.filled === 'away'
+            ? ` ${L('(unfinished — dropped out)')}`
+            : page.filled === 'time'
+              ? ` ${L('(unfinished — time ran out)')}`
+              : ''}
+        </p>
       </div>
     );
   return (
