@@ -1,0 +1,210 @@
+/* Decrees and card backs (SPEC §7.5). Tokens only. Sizes: sm (roster and board chips), md (phone
+   hands, TV slots through --sh-card-w/h), lg (the TV's flying decree). */
+
+.card,
+.back,
+.slot,
+.flip {
+  --w: var(--sh-card-w, calc(6.4 * var(--sh-u, 1rem)));
+  --h: var(--sh-card-h, calc(9 * var(--sh-u, 1rem)));
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: var(--w);
+  height: var(--h);
+  flex: none;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+
+/* --sh-u is 1rem on phones; the TV sets it in px (its root font is scaled). */
+[data-size='sm'] {
+  --w: calc(2.6 * var(--sh-u, 1rem));
+  --h: calc(3.6 * var(--sh-u, 1rem));
+}
+
+[data-size='lg'] {
+  --w: calc(11 * var(--sh-u, 1rem));
+  --h: calc(15.4 * var(--sh-u, 1rem));
+}
+
+/* The decree: paper with a deckled edge, a party ribbon across the top, the seal, the words. */
+.card {
+  padding: 0.5em 0.3em 0.55em;
+  gap: 0.1em;
+  background: var(--sh-paper);
+  color: var(--sh-ink);
+  clip-path: polygon(
+    0 2%,
+    6% 0,
+    14% 1.5%,
+    22% 0,
+    31% 1.2%,
+    40% 0,
+    49% 1.5%,
+    58% 0,
+    67% 1.2%,
+    76% 0,
+    85% 1.4%,
+    93% 0,
+    100% 2%,
+    99% 12%,
+    100% 24%,
+    98.8% 37%,
+    100% 50%,
+    99% 63%,
+    100% 76%,
+    98.8% 88%,
+    100% 98%,
+    93% 100%,
+    85% 98.6%,
+    76% 100%,
+    67% 98.8%,
+    58% 100%,
+    49% 98.5%,
+    40% 100%,
+    31% 98.8%,
+    22% 100%,
+    14% 98.5%,
+    6% 100%,
+    0 98%,
+    1.2% 88%,
+    0 76%,
+    1% 63%,
+    0 50%,
+    1.2% 37%,
+    0 24%,
+    1% 12%
+  );
+  box-shadow:
+    inset 0 0 0 2px var(--sh-paper-2),
+    inset 0 -18px 30px -24px var(--sh-ink-soft);
+  font-size: calc(var(--w) / 6.4);
+  transition:
+    opacity var(--sh-dur-deal) var(--sh-ease),
+    transform var(--sh-dur-deal) var(--sh-ease);
+}
+
+.ribbon {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 34%;
+  background-color: var(--sh-liberal);
+  background-image: var(--sh-pattern-l);
+}
+
+[data-party='F'] > .ribbon {
+  background-color: var(--sh-fascist);
+  background-image: var(--sh-pattern-f);
+}
+
+.seal {
+  position: absolute;
+  top: 17%;
+  left: 27%;
+  width: 46%;
+  aspect-ratio: 1;
+}
+
+.seal > svg {
+  display: block;
+}
+
+.word {
+  font-family: var(--sh-font-display);
+  font-size: 1.45em;
+  line-height: 0.95;
+  letter-spacing: 0.06em;
+  color: var(--sh-ink);
+}
+
+.kind {
+  font-family: var(--sh-font-display);
+  font-size: 0.8em;
+  letter-spacing: 0.3em;
+  color: var(--sh-ink-soft);
+}
+
+/* The small card is a chip: the seal and the colour; the word sits beside it. */
+[data-size='sm'] > .word,
+[data-size='sm'] > .kind {
+  display: none;
+}
+
+[data-size='sm'] > .seal {
+  top: 26%;
+  left: 15%;
+  width: 70%;
+}
+
+.card[data-marked] {
+  opacity: 0.45;
+  transform: rotate(-7deg) translateY(10px);
+}
+
+.back {
+  overflow: hidden;
+  border: 2px solid var(--sh-brass-2);
+  background: var(--sh-wood);
+  box-shadow: 0 6px 14px var(--sh-shadow);
+}
+
+.back > svg {
+  position: absolute;
+  inset: 0;
+}
+
+.backLabel {
+  position: relative;
+  margin-bottom: 0.4em;
+  padding: 0 0.4em;
+  border-radius: 4px;
+  background: var(--sh-night);
+  color: var(--sh-brass);
+  font-family: var(--sh-font-display);
+  font-size: calc(1.1 * var(--sh-u, 1rem));
+  letter-spacing: 0.08em;
+}
+
+/* An empty slot on a track: an engraved recess. */
+.slot {
+  border: 2px dashed var(--sh-brass-2);
+  background: var(--sh-night-2);
+  box-shadow: inset 0 6px 16px var(--sh-shadow);
+}
+
+/* 3D turn: back ⇄ face. Transform only; the delay staggers a wave. */
+.flip {
+  perspective: 900px;
+}
+
+.turn {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform var(--sh-dur-flip) var(--sh-ease) var(--sh-flip-delay, 0ms);
+}
+
+.flip[data-up] > .turn {
+  transform: rotateY(180deg);
+}
+
+.faceBack,
+.faceFront {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  backface-visibility: hidden;
+}
+
+.faceFront {
+  transform: rotateY(180deg);
+}
+
+.faceBack > *,
+.faceFront > * {
+  width: 100%;
+  height: 100%;
+}
