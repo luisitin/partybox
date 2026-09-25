@@ -72,3 +72,7 @@ is), split your stake, double or nothing, insurance. Only twists that fit the ev
   wheel (every other ordinary box becomes an event; the grand box stays a box). Recorded in
   reports/design/loop/21–22. Next: doors, then the phone-played events (hot potato, tug of war,
   shells), then the rest of the kept list; twists after that.
+- 2026-09-25: **Three doors** built (phase `swap`): everyone bets chips on a door (×2); the host
+  opens a goat door, preferring one nobody backed; each bettor stays or switches on the phone (a
+  bettor whose door opened must move; undecided = stays, or the lower closed door if forced);
+  then every door opens. Recorded in reports/design/loop/23.
