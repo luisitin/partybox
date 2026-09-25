@@ -20,9 +20,6 @@ export function TvIntro({ view }: GameTvProps<EchoTvView>): JSX.Element {
       <span className={res.title}>
         <span aria-hidden>🔁</span>
         <span>{L('Echo')}</span>
-        <span className={res.titleEcho} aria-hidden>
-          {L('Echo')}
-        </span>
       </span>
       <span className={res.tagline}>{L('One clue each. Same clue? Both vanish.')}</span>
       <ol className={res.steps}>

@@ -89,7 +89,7 @@ export function PhoneClue({
     ? rejectText(L, firstProblem)
     : complete
       ? L('✓ Good to go')
-      : L('One word, no spaces');
+      : L('Type one word, then Lock it in');
   const footer = editing ? (
     <PrimaryButton disabled={!canSend} onClick={submit}>
       {pending ? L('Sending…') : L('Lock it in')}

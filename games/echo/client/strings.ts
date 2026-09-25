@@ -118,7 +118,7 @@ export const STRINGS: Strings = {
     'Two different words, please.': 'Dos palabras distintas, por favor.',
     'Two clues, please.': 'Dos pistas, por favor.',
     '✓ Good to go': '✓ Lista',
-    'One word, no spaces': 'Una palabra, sin espacios',
+    'Type one word, then Lock it in': 'Escribe una palabra y confirma',
     'Lock it in': 'Confirmar',
     'Sending…': 'Enviando…',
     Change: 'Cambiar',
