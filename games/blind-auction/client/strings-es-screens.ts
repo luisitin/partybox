@@ -74,6 +74,9 @@ export const ES_SCREENS: Record<string, string> = {
   'Look at the TV': 'Mira la TV',
   "That's the last box!": '¡Esa fue la última caja!',
   // live events
+  'Bets are closed. And they’re off!': 'Apuestas cerradas. ¡Arrancan!',
+  'Bets are closed. Roll the dice!': 'Apuestas cerradas. ¡A tirar los dados!',
+  'Bets are closed. Spin the wheel!': 'Apuestas cerradas. ¡A girar la ruleta!',
   'The race': 'La carrera',
   '{what} wins!': '¡Gana {what}!',
   'A winner': 'Un ganador',

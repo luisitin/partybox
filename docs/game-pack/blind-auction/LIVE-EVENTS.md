@@ -65,3 +65,10 @@ is), split your stake, double or nothing, insurance. Only twists that fit the ev
 - C. Small stage: 2–3 players per event hold cases, the rest bet on whether they will beat the
   banker.
   Recommendation: A (no waiting, everyone decides every beat).
+
+## Status
+
+- 2026-09-25: the **Live events** setting is built for the animal race, the 3D dice and the prize
+  wheel (every other ordinary box becomes an event; the grand box stays a box). Recorded in
+  reports/design/loop/21–22. Next: doors, then the phone-played events (hot potato, tug of war,
+  shells), then the rest of the kept list; twists after that.

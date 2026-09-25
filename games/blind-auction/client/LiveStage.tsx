@@ -63,7 +63,9 @@ function Race({ run, options, bets }: Props): JSX.Element {
           className={`${styles.lane} ${done && i === run.outcome ? styles.laneWin : ''}`}
           style={{ '--lane': `var(${LANE_TINT[i] ?? '--pb-accent'})` } as CSSProperties}
         >
-          <span className={styles.laneName}>{nameOf(L, o)}</span>
+          <span className={`${styles.laneName} ${p > 0 && !done ? styles.laneNameBack : ''}`}>
+            {nameOf(L, o)}
+          </span>
           <span className={styles.racer} style={{ '--x': pos(i) } as CSSProperties} aria-hidden>
             <span className={p > 0 && !done ? styles.gallop : undefined}>{iconOf(o)}</span>
           </span>

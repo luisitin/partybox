@@ -50,7 +50,8 @@
 .name {
   font-weight: 900;
   line-height: 1.15;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  hyphens: manual;
 }
 
 .odds {
@@ -144,6 +145,19 @@
 
 .tv .inside {
   font-size: var(--pb-font-caption);
+}
+
+/* Four to six options (live events): smaller words, never broken inside a word. */
+.tv.many .name {
+  font-size: var(--pb-font-body);
+}
+
+.tv.many .pay {
+  font-size: calc(var(--pb-font-h2) * 0.8);
+}
+
+.tv.many .odds {
+  letter-spacing: 0.04em;
 }
 
 /* ── phone ── */

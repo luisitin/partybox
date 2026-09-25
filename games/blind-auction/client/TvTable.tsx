@@ -110,7 +110,15 @@ function OpenPanel({ view }: { view: View }): JSX.Element | null {
         </p>
       ) : (
         <p className={styles.soldHead}>
-          {bets.length ? L('Bets are closed. What’s inside?') : L('Nobody bet. What’s inside?')}
+          {view.run
+            ? view.run.kind === 'race'
+              ? L('Bets are closed. And they’re off!')
+              : view.run.kind === 'dice'
+                ? L('Bets are closed. Roll the dice!')
+                : L('Bets are closed. Spin the wheel!')
+            : bets.length
+              ? L('Bets are closed. What’s inside?')
+              : L('Nobody bet. What’s inside?')}
         </p>
       )}
       <OptionBoard

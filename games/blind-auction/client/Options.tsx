@@ -38,12 +38,17 @@ export function OptionBoard({
   const L = useT(STRINGS);
   const picker = Boolean(onSelect);
   const visible = (bets ?? []).slice(0, shown);
+  // Live events bring four to six options: the TV keeps four in a row (three past that), a phone
+  // two or three per row, and the words get smaller rather than break.
+  const n = options.length;
+  const many = n >= 4;
+  const cols = size === 'tv' ? (n <= 4 ? n : 3) : n <= 3 ? n : n === 4 ? 2 : 3;
   return (
     <div
-      className={`${styles.board} ${styles[size]} ${compact ? styles.compact : ''} ${className ?? ''}`}
+      className={`${styles.board} ${styles[size]} ${compact ? styles.compact : ''} ${many ? styles.many : ''} ${className ?? ''}`}
       role={picker ? 'radiogroup' : 'list'}
       aria-label={L("What's inside?")}
-      style={{ '--ba-n': options.length } as CSSProperties}
+      style={{ '--ba-n': cols } as CSSProperties}
     >
       {options.map((o, i) => {
         const on = selected === i;
