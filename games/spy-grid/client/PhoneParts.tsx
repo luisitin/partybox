@@ -63,8 +63,14 @@ export function ClueLine({
       <span className={`${styles.clueWord} ${styles[`shape-${view.turnTeam}`]}`}>
         {SHAPE[view.turnTeam]}
       </span>
-      <span className={styles.clueWord}>{view.clue.word}</span>
-      <span className={styles.clueNum}>· {view.clue.number}</span>
+      {/* the word and '· 2' travel together: at 200 % the number never wraps alone (session-c) */}
+      <span className={styles.nowrap}>
+        <span className={styles.clueWord}>{view.clue.word}</span>{' '}
+        <span className={styles.clueNum}>
+          ·{' '}
+          {view.clue.number}
+        </span>
+      </span>
       <span className={styles.clueMeta}>
         {L('{n} guesses left', { n: view.guessesLeft })}
         {rule ? ` · ${L('A card flips when most of your team points at it.')}` : ''}

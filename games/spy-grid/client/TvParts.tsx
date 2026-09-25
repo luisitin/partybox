@@ -153,8 +153,10 @@ export function History({ view }: { view: SpyTvView }): JSX.Element {
           <span className={styles.chipWord}>{h.word}</span>
           <span>{h.number}</span>
           <span className={styles.chipFound} role="img" aria-label={L('{n} found', { n: h.found })}>
-            <span className={styles.arrow}>→</span>{' '}
-            {live && i === last ? '…' : h.found > 0 ? `${h.found} ✓` : h.found}
+            <span className={styles.arrow}>→</span> {live && i === last ? '…' : h.found}
+          </span>
+          <span className={styles.chipTick} aria-hidden>
+            {!(live && i === last) && h.found > 0 ? '✓' : ''}
           </span>
         </span>
       ))}
