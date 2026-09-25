@@ -59,6 +59,13 @@
 }
 
 /* ── I-120 A: the curtain — the held snapshot darkens over the base token, then fades. */
+/* Opaque from its first frame: the snapshot's own background is transparent, so while the wash was
+   only part-way dark the incoming screen showed through it — the stage's dimmed rules and the
+   game's first card read as one layered frame (spy-grid 66cc96). A curtain hides what is behind it
+   until it lifts. */
+.ghostCurtain {
+  background: var(--pb-bg);
+}
 .ghostCurtain::after {
   content: '';
   position: absolute;
