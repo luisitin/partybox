@@ -51,21 +51,37 @@ export function StartStage({
   // fold (an SE, 200 % text) the button says so and a tap scrolls to it; where all three fit, the
   // end is seen at once and nothing changes.
   const end = useRef<HTMLDivElement>(null);
-  // (no IntersectionObserver, e.g. a render test: nothing to watch, READY at once)
-  const [seenAll, setSeenAll] = useState(() => typeof IntersectionObserver === 'undefined');
+  const [seenAll, setSeenAll] = useState(false);
   useEffect(() => {
     const el = end.current;
     if (!el || seenAll) return undefined;
-    // all of the end block in view: step 3's last line is then clear of the fade
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.intersectionRatio >= 0.99)) setSeenAll(true);
-      },
-      { threshold: [0.99] },
-    );
-    io.observe(el);
-    return () => io.disconnect();
+    // Measured against the phone's own scroller, not the viewport: at 200 % on a 2.625× screen the
+    // end block ended a fraction of a pixel clipped and never reached the old 99 % visibility, so
+    // READY stayed "↓ Read all" for good (reviewer bb7c73, session-c 6d2abe; Bingo's long steps).
+    let scroller: HTMLElement | null = el.parentElement;
+    while (scroller && !/(auto|scroll)/.test(getComputedStyle(scroller).overflowY))
+      scroller = scroller.parentElement;
+    const check = (): void => {
+      const box = scroller?.getBoundingClientRect();
+      const bottom = box ? box.bottom : window.innerHeight;
+      if (el.getBoundingClientRect().bottom <= bottom + 2) setSeenAll(true);
+    };
+    const first = requestAnimationFrame(check);
+    scroller?.addEventListener('scroll', check, { passive: true });
+    const ro = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(check);
+    if (scroller) ro?.observe(scroller);
+    return () => {
+      cancelAnimationFrame(first);
+      scroller?.removeEventListener('scroll', check);
+      ro?.disconnect();
+    };
   }, [seenAll, about]);
+  // "↓ Read all" scrolls to the end, and that tap counts as having read it once the scroll has had
+  // its time: never a button that does nothing.
+  const readAll = (): void => {
+    end.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    setTimeout(() => setSeenAll(true), 900);
+  };
   const game = gameEntry(stage?.gameId);
   if (!stage || !game) return null;
   const iAmReady = stage.ready.includes(me.id);
@@ -98,11 +114,7 @@ export function StartStage({
               <PrimaryButton
                 done={iAmReady || counting}
                 tone={iAmReady ? 'success' : 'accent'}
-                onClick={() =>
-                  iAmReady || seenAll || counting
-                    ? controller.ready()
-                    : end.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
-                }
+                onClick={() => (iAmReady || seenAll || counting ? controller.ready() : readAll())}
               >
                 {iAmReady
                   ? t.stage.youAreReady

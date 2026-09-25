@@ -61,14 +61,23 @@ describe('I-750 A: only what changed is sent', () => {
     await join(ana, 'Ana');
     const ben = client();
     await join(ben, 'Ben');
-    await quiet(ben); // the joins' own pushes have all arrived
-    let rooms = 0;
-    ben.on('room', () => (rooms += 1));
+    await quiet(ben, 600); // the joins' own pushes have all arrived
+    // Judged by `rev`, not by counting pushes: every sent room carries a new rev, while a push that
+    // arrives late (a loaded box let one land after a 600 ms quiet gap) carries an old one.
+    let rev = -1;
+    let picked = false;
+    ben.on('room', (push: { rev: number; room: { selectedGameId: string | null } }) => {
+      rev = Math.max(rev, push.rev);
+      if (push.room.selectedGameId === 'bingo') picked = true;
+    });
     ana.emit('vip', { action: 'selectGame', gameId: 'bingo' });
-    await quiet(ben);
-    expect(rooms).toBe(1); // the pick changed the room: sent once
+    const until = Date.now() + 5000;
+    while (!picked && Date.now() < until) await new Promise((r) => setTimeout(r, 25));
+    expect(picked).toBe(true); // the pick changed the room: sent
+    await quiet(ben, 600);
+    const before = rev;
     ana.emit('vip', { action: 'updateSettings', settings: {} }); // an empty change: the room is the same
-    await quiet(ben);
-    expect(rooms).toBe(1);
+    await quiet(ben, 600);
+    expect(rev).toBe(before); // nothing newer was sent for the no-op
   });
 });
