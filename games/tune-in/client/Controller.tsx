@@ -9,6 +9,7 @@ import type { TuneControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { modeLine, nameOf, steps, teamName } from './copy';
 import { Countdown } from './Countdown';
+import { EnglishNote } from './EnglishNote';
 import { LockRow } from './LockRow';
 import { PhoneCall } from './PhoneCall';
 import { PhoneDial } from './PhoneDial';
@@ -52,6 +53,7 @@ export function PhoneIntro({
     >
       <h2 className={styles.title}>{L('📻 Tune In')}</h2>
       <p className={styles.kicker}>{modeLine(L, view.turn.mode)}</p>
+      <EnglishNote className={styles.englishNote} />
       {view.myTeam ? (
         <p className={`${styles.teamBadge} ${view.myTeam === 'sun' ? styles.sun : styles.moon}`}>
           {L("You're on {team}", { team: teamName(L, view.myTeam) })}

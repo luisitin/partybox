@@ -13,6 +13,7 @@ import { modeLine, steps } from './copy';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
 import { Countdown } from './Countdown';
+import { EnglishNote } from './EnglishNote';
 import { Rosters } from './Rosters';
 import { useReading } from './useReading';
 
@@ -75,6 +76,7 @@ export function TvIntro({ view }: GameTvProps<TuneTvView>): JSX.Element {
           <BigText level="h2" tone="accent">
             {modeLine(L, mode)}
           </BigText>
+          <EnglishNote className={styles.englishNote} />
         </div>
         {/* Teams: the ready line takes the dial's place beside the title (16 players' rosters need
             the rows below). */}

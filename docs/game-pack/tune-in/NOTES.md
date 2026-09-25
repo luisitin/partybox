@@ -6,30 +6,30 @@ the `foundation` branch (the owner's 20 rulings, not merged); F1–F7 were not o
 
 ## Status
 
-| Stage                   | State                                                                                   |
-| ----------------------- | --------------------------------------------------------------------------------------- |
-| 1 Content               | done: 150 family + 50 spicy spectra, 12 bank clues each, all legal and spread (tests)   |
-| 2 Server logic          | done: 6 phases, 3 modes, bot, speech, recap; 99 unit tests, contract suite, sim 200 × 2 |
-| 3 Client                | done (TV stage, phones, PhoneStage, EN + ES); polishing through the passes              |
-| 4 Record → review → fix | p01–p11 + bursts + edge probe (3 modes, 2–16 players, Spanish, drops, skips, late join) |
-| 5 Review package        | not started                                                                             |
+| Stage                   | State                                                                                    |
+| ----------------------- | ---------------------------------------------------------------------------------------- |
+| 1 Content               | done: 150 family + 50 spicy spectra, 12 bank clues each, all legal and spread (tests)    |
+| 2 Server logic          | done: 6 phases, 3 modes, bot, speech, recap; 118 unit tests, contract suite, sim 200 × 2 |
+| 3 Client                | done (TV stage, phones, PhoneStage, EN + ES); polishing through the passes               |
+| 4 Record → review → fix | p01–p13b + bursts + edge probe (3 modes, 2–16 players, Spanish, drops, skips, late join) |
+| 5 Review package        | done (a6c50cdf, REVIEW.md); in peer review on the hub ([432612])                         |
 
-Foundation watch (2026-09-24 afternoon): `foundation` has F1 (per-game phone / TV / panel
-downloads) and F2 work, not on `main` yet. When F1 lands, Tune In needs its `client/phone.ts` and
-`client/tv.ts` entries; when F2 lands, the manifest gets `icon` 📻, `howToPlay`, `presence`
-(`anywhere`) and `addedOn`, plus `manifest.es.json`.
+2026-09-25: main (Foundation + results-kinds) merged in and ADR-050 adopted (ac3da886); the owner's
+pacing rule [cc45f4] (3141746f, 8f1a8b9f); the reviewer's DESIGN CHANGES [ba045e] (see Decisions).
 
-## Stand-ins for Foundation pieces not on main yet (swap when they land)
+## Stand-ins for Foundation pieces
 
-| Needed                                           | Owner      | Stand-in                                                                                       |
-| ------------------------------------------------ | ---------- | ---------------------------------------------------------------------------------------------- |
-| F5 matcher: `normalize`, `stem`, `sameAnswer`    | Foundation | `games/tune-in/server/text.ts`, with the audit's errata (#15, #16, #25–27, #29)                |
-| F6 `toSpeakable`, overrides, keys                | Foundation | `server/speakable.ts` (rules 1, 5, 7, 8, 10–13; names per §5.5; key `ti…` fits today's regex)  |
-| F6 fixed clips (`render-clips`)                  | Foundation | fixed lines go through the live speech path; the host caches each key, so it renders once ever |
-| F7 `teamsFromSeed`, `majorityPick`               | Foundation | `server/teams.ts` (pure, `[value, RngState]`, never throws)                                    |
-| F4 presence (`InitContext.presence`, `canSeeTv`) | Foundation | `readPresence(ctx)` reads it when present, else `together`; no view branches on `canSeeTv`     |
-| F2 manifest fields (`icon`, `howToPlay`, …)      | Foundation | not in `manifest.json` yet: zod would strip them and the contract deep-equal would fail        |
-| `SecretCard` (hold to see)                       | Imposter   | a local hold-to-see card in `client/`, same behaviour; swap when Imposter ships it             |
+Swapped at the main merge (ac3da886): F5 match (`sameAnswer`, `stem`, `normalize`), F6 speech
+(`toSpeakable` with `playerText` for clues, `speechKey`, `pendingCap`, the pronunciations schema),
+F7 `teamsFromSeed`, the F1 entries (`client/shared.ts`, `phone-entry.ts`, `tv-entry.ts`), the F2
+manifest fields + `manifest.es.json`. Still local:
+
+| Needed                          | Owner      | Stand-in                                                                             |
+| ------------------------------- | ---------- | ------------------------------------------------------------------------------------ |
+| F6 fixed clips (`render-clips`) | Foundation | fixed lines go through the live speech path; the host caches each key, renders once  |
+| F4 presence (`ctx.presence`)    | Foundation | `readPresence(ctx)` reads it when present, else `together` (foundation-f4 in review) |
+| `SecretCard` (hold to see)      | Imposter   | a local hold-to-see card in `client/`, same behaviour; swap when Imposter ships it   |
+| The shell's ready-up stage      | Foundation | the game's own intro ready-up (below); drop it when [46be3c] lands                   |
 
 ## Decisions (made, noted, easy to change)
 
@@ -64,17 +64,33 @@ downloads) and F2 work, not on `main` yet. When F1 lands, Tune In needs its `cli
   whole idle game otherwise ran every round of "No signal!" (396 s in the sim, now 154 s). A round
   with a clue starts the count again.
 - **Awards shared by more than three are skipped** (spec: "ties share"): a six-way Sharpshooter
-  at 16 players is no honour and filled the results; the finale shows a shared award as one card.
+  at 16 players is no honour and filled the results. A tie of up to three sends one award per
+  player; the shell's results-ties ([304c6e]) draws them as one card naming everyone.
 - **The teams intro has no demo dial**: at 16 players its fixed height ran the rosters off the
   card; the rosters sit under the steps and the side that plays first pulses behind its names.
 - **Faces follow the dial's drawn size** (`faceLayout`): spacing, ring distance and each ring's
   clearance from the end labels; the points are a pill on the face's chin.
+- **Rules, I'm ready, 3 · 2 · 1** (the owner's [cc45f4]): bots are ready from the start; the count
+  starts when every connected player has tapped (a dropped phone or a leaver never holds it) or on
+  the VIP's Start now. The INTRO_MS (60 s) net starts only a room where nobody has tapped; once
+  anyone has, it re-arms and waits for the rest, giving up INTRO_GIVE_UP_MS (10 min) after the rules
+  came up (the group standard [e67ec9], reviewer [ba045e] #1). The rules show no clock (timerMode
+  `hidden`). The digits follow the live `phase.deadline`, so a pause during the count keeps them in
+  step ([a9623e]).
+- **Spanish rooms are told the dials are English** on the rules (TV + phone, `EnglishNote`) and in
+  `manifest.es.json` (reviewer [ba045e] #5; fake-out's pattern). No 🇬🇧: Windows browsers (a PC
+  driving the TV) draw it as the letters "GB". The demo dial's "Hot" is "Calor" in Spanish:
+  "Caliente ▶" broke in two in its narrow end column.
+- **The rules' demo dial is 260 px tall** so the ready faces end ~40 px above the host bar
+  (reviewer [ba045e] #4: the bar cut their ✓s).
 - **Relabelled five weak dials** the clue writers flagged: Fleeting ↔ Everlasting, Easy to learn ↔
   Hard to learn, Angelic ↔ Pure evil, Tidy to eat ↔ Messy to eat, The bigger person ↔ Petty, and
   Great date topic ↔ Mood killer. Replaced the near-duplicate "Let it go ↔ Petty revenge"
   (it shared clues with "The bigger person ↔ Petty") with "Tasteful post ↔ Thirst trap".
 
 ## Conflicts for the owner
+
+Conflicts 1 and 2 are settled by ADR-052 (results-kinds, adopted at ac3da886).
 
 1. **The results headline cannot name a team** (teams, p08): Sun won 11–8 and the shell said "Lu,
    Sam & the bot tie!" — `winnerIds` are the winning team's players, and several winners read as a
@@ -103,15 +119,17 @@ so do Nice ↔ Naughty, Prude ↔ Shameless and Wholesome ↔ Twisted in the spi
 
 ## Platform follow-ups (other sessions, agreed on the hub)
 
-- `results-kinds` (Foundation, ADR-052): `GameResults.outcome` + `headline` — fixes the "tie"
-  headline for teams and co-op. When it lands: teams set `{kind:'teams', winner, teams}`, co-op
-  `{kind:'coop', won: rating ≥ Crystal clear}` with the rating as the headline, winnerIds empty
-  for a lost co-op, and the finale drops its own copy of the verdict.
+- `results-kinds` (ADR-052): adopted. Teams send `{kind:'teams', winner, teams}`, co-op
+  `{kind:'coop', won: rating ≥ Crystal clear}` with the rating as the headline.
+- `results-ties` ([304c6e], Foundation): one award card naming every tied winner, three tied names in
+  the headline, the gold outline on a tie's last row (reviewer [ba045e] #3). Tune In needs no change.
+- The shell's ready-up stage ([46be3c], Foundation): then Tune In drops its intro ready-up and keeps
+  a teams-only roster card ([4d6fb9]).
+- The strip's scores frozen at 0 (TvPlaying.tsx:137, reported [ac5036] with a one-line fix).
 - The shell goes faces-only when the strip's chips would take more than two rows (Foundation, after
   its branch lands) — gives the dial back ~136 px at 16 players.
 
 ## Left to do
 
-Phone-only rooms and remote players once F4 (presence) lands; the speech-lab pass once F6 lands;
-swap the stand-ins (F5 match, F6 speakable, F7 turns) and add the F1/F2 entries when the
-Foundation merges; the review package.
+Phone-only rooms and remote players on F4 presence; the speech-lab pass; drop the intro ready-up
+when the shell's stage lands; 4 APPROVEs (2 DESIGN) on the current head, then merge.

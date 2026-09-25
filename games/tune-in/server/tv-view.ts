@@ -74,7 +74,8 @@ export function tvView(state: State, gameId: string): TuneTvView {
     ...envelope(state, gameId, { statusOf: statusOf(state), scores: shown }),
     // Always the bar: the dial's and the call's seconds sit on the stage (TvRound's clock), because
     // a strip countdown that came and went with the phase re-wrapped the chips and moved the dial.
-    timerMode: 'quiet' as const,
+    // The rules have no clock: the room starts when everyone is ready [cc45f4].
+    timerMode: phase === 'intro' ? ('hidden' as const) : ('quiet' as const),
     ...(phase === 'scores' ? { vipSkipLabel: isOver(state) ? 'See results' : 'Next round' } : {}),
     turn: header(state),
     clueAt: state.turn.clueAt,

@@ -347,7 +347,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-5);
+  gap: var(--pb-space-4);
 }
 
 /* The ready-up [cc45f4]: the line, the count, and every face — the ones still to tap breathe (the
@@ -483,8 +483,22 @@
   gap: var(--pb-space-3);
 }
 
+/* Spanish rooms: the dials are English content (EnglishNote). */
+.englishNote {
+  justify-self: start;
+  margin: 0;
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
+
+/* 260 px (was 340): the stage flows from the top, and the ready faces must end a clear band above
+   the host bar in the bottom corner (reviewer [ba045e] #4: its top edge cut their ✓s). */
 .introDial {
-  height: 340px;
+  height: 260px;
   display: flex;
 }
 

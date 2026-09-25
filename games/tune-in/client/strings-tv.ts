@@ -20,7 +20,9 @@ export const STRINGS_TV: Record<string, string> = {
   'Closer scores more for the group. Can the room reach a mind meld?':
     'Más cerca, más puntos para el grupo. ¿Logrará la sala una conexión mental?',
   Cold: 'Frío',
-  Hot: 'Caliente',
+  // Calor, not Caliente: the rules' demo dial gives each end a narrow column ("Caliente ▶" broke
+  // in two on the Spanish TV).
+  Hot: 'Calor',
   '▲ Sun': '▲ Sol',
   '● Moon': '● Luna',
   Sun: 'Sol',
@@ -59,6 +61,8 @@ export const STRINGS_TV: Record<string, string> = {
     'Lee las reglas y toca Estoy listo en tu teléfono',
   '{n} of {total} ready': '{n} de {total} listos',
   'Here we go!': '¡Allá vamos!',
+  'The dials (and the bots’ clues) are in English.':
+    'Los diales (y las pistas de los bots) están en inglés.',
   '★ {name} taps Next round when everyone’s ready':
     '★ {name} toca Siguiente ronda cuando todos estén listos',
   '★ {name} taps See results': '★ {name} toca Ver resultados',

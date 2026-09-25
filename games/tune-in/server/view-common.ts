@@ -108,7 +108,9 @@ export function readyUp(state: State): ReadyUp {
   return {
     ready: here.filter((id) => state.ready.includes(id)),
     here: here.length,
-    startAt: state.startAt,
+    // The live deadline, not the stored startAt: a pause during the 3 · 2 · 1 shifts only the
+    // deadline on resume, and the digits must follow it ([a9623e]).
+    startAt: state.startAt === null ? null : state.phase.deadline,
   };
 }
 

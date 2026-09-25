@@ -121,7 +121,10 @@ export function controllerView(state: State, gameId: string, id: string): TuneCo
   const view: TuneControllerView = {
     ...controllerEnvelope(state, gameId, id, { statusOf: statusOf(state), scores: shown }),
     // The clue is thinking time and the reveal and scores are paced beats: a bar, never a countdown.
-    ...(phase === 'dial' || phase === 'call' ? {} : { timerMode: 'quiet' as const }),
+    // The rules have no clock at all: the room starts when everyone is ready [cc45f4].
+    ...(phase === 'dial' || phase === 'call'
+      ? {}
+      : { timerMode: phase === 'intro' ? ('hidden' as const) : ('quiet' as const) }),
     role: roleOf(state, id),
     myTeam: teamOf(state, id),
     turn: header(state),

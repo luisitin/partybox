@@ -1,4 +1,4 @@
-# Tune In — review package (2026-09-24)
+# Tune In — review package (2026-09-24, updated 2026-09-25)
 
 Branch `game/tune-in` (not merged). Try it: `pnpm dev --port 42350` in
 `C:/dev/partybox-game-tune-in`, pick Tune In. Media is local (gitignored) under
@@ -25,6 +25,21 @@ Branch `game/tune-in` (not merged). Try it: `pnpm dev --port 42350` in
    end after three void rounds), `pnpm verify` green; the 16-player state is ~10 KB and every
    view is under 4 KB.
 
+## Since the package (2026-09-25)
+
+- **main merged in** (Foundation + results-kinds, ADR-050 lazy entries): the SDK's match, speech
+  and teams replace Tune In's stand-ins; results send an outcome (teams: the winning side or a
+  draw; co-op: won at Crystal clear or better, the rating as the headline).
+- **The owner's pacing rule [cc45f4]:** rules on every screen, each phone taps I'm ready (the faces
+  still to tap breathe; bots are ready), then a 3 · 2 · 1 on the TV and every phone. No clock on
+  the rules: the room waits for every connected player; a room where nobody taps starts after
+  60 s, and a phone that never taps stops holding the room at 10 minutes. The scores beat says who
+  moves it on ("★ Tess taps Next round when everyone's ready").
+- **The reviewer's DESIGN CHANGES [ba045e]:** the rules' ready faces clear the host bar; Spanish
+  rooms are told the dials are in English (TV + phone rules, the Spanish manifest); a pause during
+  the 3 · 2 · 1 keeps the digits in step; ties share an award and the shell's results-ties draws
+  one card naming everyone.
+
 ## Screens
 
 | Sheet                       | What                                                                          |
@@ -45,10 +60,7 @@ Clips (TV + two phones each, voice on): `p12/video/*/round.webm` (solo, 6 player
 
 ## Open questions (my recommendation first)
 
-1. **The results headline** reads "Lu, Sam & the bot tie!" when ▲ Sun wins, and "It's a tie!"
-   in co-op. The Foundation's `results-kinds` branch (ADR-052, reviewed) adds an outcome and a
-   headline; Tune In switches as soon as it lands (then co-op below Crystal clear crowns nobody, as
-   the spec wants). **Land results-kinds right after foundation.** (Recommended.)
+1. ~~The results headline~~ settled: results-kinds (ADR-052) landed and Tune In uses it.
 2. **Strip scores never show** (the spec hides them only in `dial` and `reveal`): scores widen the
    chips and wrap the row, which moved the stage; the scores beat already has the board, the race
    or the meter. **Keep?** (Recommended.)
@@ -64,9 +76,10 @@ Clips (TV + two phones each, voice on): `p12/video/*/round.webm` (solo, 6 player
    the clue box and Send in view; shrinking further would drop below the touch targets.
    **Accept?** (Recommended.)
 8. **Spanish:** the chrome is Spanish; the dials and the readings stay English until Spanish
-   content and voices exist (Part 00 §5.3). **OK for now?** (Recommended.)
+   content and voices exist (Part 00 §5.3), and the rules say so. **OK for now?** (Recommended.)
 
 Also noted, not mine: at 16 players the TV strip takes three chip rows (the Foundation will make
 the shell go faces-only past two rows, #plans 3c6fba); the stage countdown ticks one pitch because
 a game's `PlayCueOptions` has no `semitones` (the shell's own countdown rises); phone-only rooms
-and remote players wait for F4 (presence) — the game reads it the moment it lands.
+and remote players wait for F4 (presence) — the game reads it the moment it lands. When the
+shell's own ready-up stage lands ([46be3c]), Tune In drops its intro ready-up for it.

@@ -120,7 +120,7 @@ export type Input = z.infer<typeof inputSchema>;
 /** "Leave the current phase now" — injected into phase reducers by server/flow.ts. */
 export type Transition = (state: State, now: number) => State;
 
-export { COUNTDOWN_MS, INTRO_MS, READY_BREATH_MS } from './timing';
+export { COUNTDOWN_MS, INTRO_GIVE_UP_MS, INTRO_MS, READY_BREATH_MS } from './timing';
 /** Reveal step 0: the shutter swings open, faces land, the needle settles. */
 export const REVEAL_OPEN_MS = 3_600;
 /** Reveal step 1: the points pop (longer when the reader needs it). Reading time is the owner's
