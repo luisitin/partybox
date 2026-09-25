@@ -4,6 +4,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ## [Unreleased]
 
+### Added
+
+- **Echo 🔁** (game pack Part 04): a co-op word game for 3–10 players. One player guesses; everyone else writes a one-word clue, and clues that match vanish before the guesser sees them. A wrong guess burns the next word too. 300 family + 80 spicy words, a reader for the surviving clues, bots welcome, English and Spanish.
+
 ### Fixed
 
 - **Everyone sees the settings while the VIP tunes** (I-648, option B): while the VIP picks a game, every other phone lists that game's settings under its name, read-only, updating as the VIP changes them — so nobody finds out spicy is ON after the first card. The setting that just changed breathes yellow once over 2 s (held still under reduced motion).
