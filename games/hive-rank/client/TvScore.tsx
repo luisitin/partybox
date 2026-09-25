@@ -9,7 +9,7 @@ import { STRINGS } from './strings';
 import { TvButton } from './TvRank';
 import styles from './Tv.module.css';
 
-function Queen({ view }: { view: HiveTvView }): JSX.Element {
+function Queen({ view, compact }: { view: HiveTvView; compact: boolean }): JSX.Element {
   const L = useT(STRINGS);
   const queens = view.score?.queens ?? [];
   const pts = view.score?.rows.find((r) => r.id === queens[0])?.pts ?? 0;
@@ -22,7 +22,7 @@ function Queen({ view }: { view: HiveTvView }): JSX.Element {
   const shown = queens.slice(0, 3);
   const names = shown.map((id) => view.players.find((p) => p.id === id)?.name ?? '?');
   return (
-    <div className={styles.queen}>
+    <div className={`${styles.queen} ${compact ? styles.queenCompact : ''}`}>
       <span className={styles.queenTitle}>
         {queens.length > 1 ? L('Queen Bees') : L('Queen Bee')}
       </span>
@@ -34,7 +34,10 @@ function Queen({ view }: { view: HiveTvView }): JSX.Element {
               <span className={styles.crown} aria-hidden>
                 👑
               </span>
-              <Avatar avatarId={p?.avatarId ?? 'fox'} size={shown.length > 1 ? 104 : 140} />
+              <Avatar
+                avatarId={p?.avatarId ?? 'fox'}
+                size={compact || shown.length > 2 ? 84 : shown.length > 1 ? 104 : 140}
+              />
             </span>
           );
         })}
@@ -67,6 +70,10 @@ export function TvScore({
   const next = view.next === 'results' ? L('See results') : L('Next round');
   return (
     <Stage className={styles.scoreStage}>
+      {/* While the room reads the standings the bee patrols the board: the screen never stills. */}
+      <span className={styles.patrol} aria-hidden>
+        <span className={styles.scoutInner}>🐝</span>
+      </span>
       <header className={styles.scoreHeader}>
         <span className={styles.kicker}>
           {L('Round {n} of {total}', { n: view.round, total: view.rounds })} · {L('Scores')}
@@ -87,7 +94,7 @@ export function TvScore({
         className={styles.scoreBody}
         style={{ '--queen-w': rows.length > 8 ? '400px' : '540px' } as CSSProperties}
       >
-        <Queen view={view} />
+        <Queen view={view} compact={rows.length > 8} />
         <div className={styles.board}>
           <p className={styles.boardTitle}>
             {view.next === 'results'

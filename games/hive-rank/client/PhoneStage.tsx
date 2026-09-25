@@ -25,8 +25,12 @@ export function Ladder({ view }: { view: HiveControllerView }): JSX.Element {
   useLayoutEffect(() => {
     const rung = list.current?.children[next - 1] as HTMLElement | undefined;
     if (!rung || !bee.current) return;
-    const x = rung.offsetLeft + rung.offsetWidth - (perch ? 30 : 64);
-    bee.current.style.transform = `translate3d(${x}px, ${rung.offsetTop + rung.offsetHeight / 2 - 18}px, 0)`;
+    // It hovers on the spot's number circle (never over the thing's words).
+    const place = rung.children[0] as HTMLElement | undefined;
+    const x =
+      rung.offsetLeft + (place ? place.offsetLeft + place.offsetWidth - 30 : 0) - (perch ? 0 : 4);
+    const y = rung.offsetTop + (place ? place.offsetTop - 16 : 0);
+    bee.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
   }, [next, perch]);
   return (
     <div className={styles.ladderBox}>

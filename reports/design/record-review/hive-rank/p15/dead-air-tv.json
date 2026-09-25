@@ -1,0 +1,21 @@
+{
+  "video": "C:\\dev\\partybox-game-hive-rank\\reports\\design\\record-review\\hive-rank\\p15\\video\\tv\\round.webm",
+  "bytes": 14326106,
+  "durationS": 117.3,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [],
+  "deadMsTotal": 0,
+  "hardCuts": [],
+  "samples": 1172,
+  "motion": {
+    "p50": 0.001,
+    "p90": 0.0036,
+    "p99": 0.0559,
+    "max": 0.1147
+  }
+}

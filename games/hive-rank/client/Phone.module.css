@@ -25,6 +25,16 @@
   font-size: calc(var(--pb-font-h2) * 0.84);
 }
 
+/* The rank screen's question never outgrows the five things under it: at 200 % text it caps, so
+   the first rows stay above the fold (play-test: "none of the 5 items above the fold"). */
+.rankScreen .prompt {
+  font-size: min(var(--pb-font-h2), 1.75rem);
+}
+
+.rankScreen .promptLong {
+  font-size: min(calc(var(--pb-font-h2) * 0.84), 1.5rem);
+}
+
 .promptSmall {
   font-size: var(--pb-font-body);
   font-weight: 800;
@@ -422,7 +432,7 @@
 
 .rung {
   display: grid;
-  grid-template-columns: 36px 1fr;
+  grid-template-columns: max(36px, 1.9em) 1fr;
   align-items: center;
   gap: var(--pb-space-2);
   min-height: 52px;
@@ -432,8 +442,8 @@
 .rungPlace {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: max(36px, 1.9em);
+  height: max(36px, 1.9em);
   border-radius: 50%;
   border: 2px dashed var(--pb-text-muted);
   color: var(--pb-text-muted);
