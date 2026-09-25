@@ -73,6 +73,7 @@ function init(ctx: InitContext): State {
     round: emptyRound(1, seats[first] ?? ''),
     history: [],
     announce: null,
+    headline: null,
     winner: null,
     winReason: null,
   };

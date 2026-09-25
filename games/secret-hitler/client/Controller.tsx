@@ -1,36 +1,25 @@
-// Phone view for Secret Hitler (M1: plain screens). A player with something to do gets its panel
-// (PhoneAct); everyone else gets the same waiting card — the phase's words, their dossier (hold to
-// see) and a mini board — so a glance at a phone never shows who is doing what (§11). Tabs, the
-// claim builder and PhoneStage arrive in M2.
+// Phone view for Secret Hitler. A player with something to do gets its panel (PhoneAct); everyone
+// else gets the same waiting card for the phase — its words, and the TV's moment in miniature on
+// the TV's timing (a stamp, the decree turning over, the sealed envelope) — so a glance at a phone
+// never shows who is doing what (§11) and never runs ahead of the TV. Every screen keeps the
+// dossier folder on top and the roster of every seat at the bottom.
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, WaitingScreen, useT } from '@partybox/game-sdk/ui';
+import { PrimaryButton, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { ShControllerView } from '../server/views';
-import { PolicyCard } from './Card';
-import { CREDIT, roleName, winnerLine } from './labels';
+import { MaskEmblem, Stamp } from './art';
+import { FlipCard } from './Card';
+import { CREDIT, endingBanner, roleName, winnerLine } from './labels';
 import { phaseLines } from './lines';
 import { PhoneAct } from './PhoneAct';
-import { PhoneDossier } from './PhoneDossier';
+import { PhoneFrame } from './PhoneFrame';
+import type { Frame } from './PhoneFrame';
+import './sh-global.css';
 import { STRINGS } from './strings';
+import theme from './theme.module.css';
 import styles from './phone.module.css';
-
-function MiniBoard({ view }: { view: ShControllerView }): JSX.Element {
-  const L = useT(STRINGS);
-  return (
-    <div className={styles.mini} aria-label={L('The board')}>
-      <span className={styles.miniRow}>
-        <PolicyCard party="L" size="sm" /> {L('{n} of 5', { n: view.board.L })}
-      </span>
-      <span className={styles.miniRow}>
-        <PolicyCard party="F" size="sm" /> {L('{n} of 6', { n: view.board.F })}
-      </span>
-      <span>
-        {L('Election tracker')} {[0, 1, 2].map((i) => (i < view.tracker ? '●' : '○')).join(' ')}
-      </span>
-    </div>
-  );
-}
 
 function statusHint(L: ReturnType<typeof useT>, view: ShControllerView): string | null {
   if (view.status === 'executed') return L('You were executed. Ghosts can’t talk or vote.');
@@ -39,49 +28,145 @@ function statusHint(L: ReturnType<typeof useT>, view: ShControllerView): string 
   return null;
 }
 
+/** The TV's moment, small, on the same clock as the TV. */
+function Moment({ view }: { view: ShControllerView }): JSX.Element | null {
+  const L = useT(STRINGS);
+  const r = view.round;
+  const [up, setUp] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setUp(true), 450);
+    return () => clearTimeout(t);
+  }, []);
+  switch (view.phaseId) {
+    case 'voteReveal':
+      return (
+        <Stamped
+          text={r.elected ? L('ELECTED') : L('REJECTED')}
+          tone={r.elected ? 'brass' : 'alarm'}
+          delay={1800}
+        />
+      );
+    case 'hitlerCheck':
+      return view.winner ? (
+        <div className={styles.moment} style={{ animationDelay: '2000ms' }}>
+          <MaskEmblem size="8rem" />
+        </div>
+      ) : (
+        <Stamped text={L('NOT HITLER')} tone="liberal" delay={2000} />
+      );
+    case 'enactReveal':
+    case 'chaos': {
+      const card = view.phaseId === 'chaos' ? r.chaosCard : r.enacted;
+      return card ? (
+        <div className={styles.momentCard}>
+          <FlipCard party={card} up={up} />
+        </div>
+      ) : null;
+    }
+    case 'presDraw':
+    case 'chanEnact':
+    case 'vetoAsk':
+      return (
+        <div className={styles.envelope} aria-hidden="true">
+          <span className={styles.flap} />
+          <span className={styles.wax} />
+        </div>
+      );
+    case 'powerReveal':
+      return r.power?.kind === 'execute' ? (
+        <Stamped text={L('EXECUTED')} tone="alarm" delay={1200} />
+      ) : null;
+    default:
+      return null;
+  }
+}
+
+function Stamped({
+  text,
+  tone,
+  delay,
+}: {
+  text: string;
+  tone: 'alarm' | 'brass' | 'liberal';
+  delay: number;
+}): JSX.Element {
+  return (
+    <div className={styles.stampAt} style={{ animationDelay: `${delay}ms` }}>
+      <Stamp text={text} tone={tone} className={styles.stamp} />
+    </div>
+  );
+}
+
 export function Controller({
   view,
   send,
   skip,
 }: GameControllerProps<ShControllerView, Input>): JSX.Element {
   const L = useT(STRINGS);
-  const act = view.status === 'alive' ? view.act : null;
-  if (act) {
-    return (
-      <>
-        {view.lastCall ? (
-          <div className={styles.lastCall}>{L('Last call! Choose now.')}</div>
-        ) : null}
-        <PhoneAct key={`${view.phaseId}:${view.round.n}`} view={view} act={act} send={send} />
-      </>
-    );
+  // The dossier starts open while everyone reads it at the start; after that it opens on a tap.
+  const [dossierOpen, setDossierOpen] = useState(() => view.phaseId === 'seating');
+  // A new phase closes it again (the player's next job is on screen; a secret isn't left out).
+  const [seenPhase, setSeenPhase] = useState(view.phaseId);
+  if (seenPhase !== view.phaseId) {
+    setSeenPhase(view.phaseId);
+    setDossierOpen(view.phaseId === 'seating');
   }
+  const frame: Frame = { view, dossierOpen, setDossierOpen };
+  const act = view.status === 'alive' ? view.act : null;
   const over = view.phaseId === 'gameOver' || view.phaseId === 'done';
   const { title, lines } = phaseLines(L, view);
   const hint = statusHint(L, view);
   const role = view.dossier?.role;
+  const next = skip && (view.phaseId === 'claims' || view.phaseId === 'gameOver');
   return (
-    <WaitingScreen
-      title={over ? winnerLine(L, view.winner) : title}
-      hint={over ? (role ? L('You were {role}.', { role: roleName(L, role) }) : null) : hint}
-      mood={over ? 'done' : 'wait'}
+    <div
+      className={`${theme.sh} ${styles.phone}`}
+      data-phase={view.phaseId}
+      data-paused={view.paused || undefined}
     >
-      <div className={styles.waiting}>
-        {!over
-          ? lines.filter(Boolean).map((line) => (
-              <p key={line} className={styles.hint}>
-                {line}
-              </p>
-            ))
-          : null}
-        {over ? <p className={styles.hint}>{L(CREDIT)}</p> : <PhoneDossier view={view} />}
-        <MiniBoard view={view} />
-        {skip && (view.phaseId === 'claims' || view.phaseId === 'gameOver') ? (
-          <PrimaryButton tone="neutral" onClick={skip}>
-            {L('Next')}
-          </PrimaryButton>
-        ) : null}
-      </div>
-    </WaitingScreen>
+      {view.lastCall && act ? (
+        <div className={styles.lastCall}>{L('Last call! Choose now.')}</div>
+      ) : null}
+      {act ? (
+        <PhoneAct key={`${view.phaseId}:${view.round.n}`} frame={frame} act={act} send={send} />
+      ) : (
+        <PhoneFrame
+          frame={frame}
+          kicker={over ? endingBanner(L, view.winReason, view.winner) : (hint ?? undefined)}
+          title={over ? winnerLine(L, view.winner) : title}
+          actions={
+            next ? (
+              <PrimaryButton tone="neutral" onClick={skip}>
+                {L('Next')}
+              </PrimaryButton>
+            ) : undefined
+          }
+        >
+          <div key={`${view.phaseId}:${view.round.n}`} className={styles.waiting}>
+            {over ? (
+              <>
+                {role ? (
+                  <p className={styles.line}>
+                    {L('You were {role}.', { role: roleName(L, role) })}
+                  </p>
+                ) : null}
+                <p className={styles.hint}>{L(CREDIT)}</p>
+              </>
+            ) : (
+              lines.filter(Boolean).map((line, i) => (
+                <p
+                  key={line}
+                  className={styles.line}
+                  style={{ animationDelay: `${120 + i * 120}ms` }}
+                >
+                  {line}
+                </p>
+              ))
+            )}
+            <Moment view={view} />
+          </div>
+        </PhoneFrame>
+      )}
+    </div>
   );
 }

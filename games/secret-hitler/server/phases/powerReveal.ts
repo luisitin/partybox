@@ -3,7 +3,7 @@
 // second beat of the same phase (ADR-033). An execution of Hitler wins for the Liberals.
 import { isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { go, withRound, without } from '../phase';
+import { go, headlined, withRound, without } from '../phase';
 import { partyOf } from '../rules';
 import { REVEAL_MS } from '../types';
 import type { Input, State, Transition } from '../types';
@@ -16,10 +16,11 @@ export function enterPowerReveal(state: State, now: number): State {
   switch (p.kind) {
     case 'investigate': {
       const s = { ...state, investigated: [...state.investigated, target as string] };
-      return go(s, 'powerReveal', now, REVEAL_MS.investigatePause);
+      return go(headlined(s, 'investigation'), 'powerReveal', now, REVEAL_MS.investigatePause);
     }
     case 'special':
-      return go({ ...state, special: target }, 'powerReveal', now, REVEAL_MS.special);
+      const s = headlined({ ...state, special: target }, 'special');
+      return go(s, 'powerReveal', now, REVEAL_MS.special);
     case 'peek':
       return go(state, 'powerReveal', now, REVEAL_MS.peek);
     case 'execute': {
@@ -31,6 +32,7 @@ export function enterPowerReveal(state: State, now: number): State {
       };
       if (state.role[id] === 'hitler')
         s = { ...s, winner: 'liberals', winReason: 'hitlerExecuted' };
+      s = headlined(s, s.winner ? 'hitlerExecuted' : 'execution');
       return go(s, 'powerReveal', now, REVEAL_MS.execute);
     }
   }

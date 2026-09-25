@@ -3,7 +3,7 @@
 // answer in time: back to the Chancellor, who must enact.
 import { isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { go, patchHistory, timed, withRound } from '../phase';
+import { go, headlined, patchHistory, timed, withRound } from '../phase';
 import { reshuffleIfLow } from '../rules';
 import type { Input, State, Transition } from '../types';
 
@@ -20,7 +20,8 @@ export function answerVeto(state: State, agree: boolean): State {
     tracker: state.tracker + 1,
   };
   // R13: the session is over, so the deck is topped up now.
-  return reshuffleIfLow(patchHistory(withRound(s, { vetoAgreed: true }), { veto: true }));
+  const vetoed = patchHistory(withRound(s, { vetoAgreed: true }), { veto: true });
+  return reshuffleIfLow(headlined(vetoed, 'veto'));
 }
 
 export function reduceVetoAsk(state: State, event: GameEvent<Input>, next: Transition): State {

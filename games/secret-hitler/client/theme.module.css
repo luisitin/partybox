@@ -1,0 +1,160 @@
+/* Parliament Noir (SPEC §7): the game's own tokens (S2), fonts and motion vocabulary. Scoped to
+   the game's root class `.sh` (never :root), set once per platform theme; components use only
+   --sh-* and --pb-* tokens. Fonts are vendored woff2 (latin + latin-ext) with their licences in
+   ./fonts/, so they load with the game's own download, never the lobby. */
+
+/* ── Tokens: Neon Night (the default, dark) ─────────────────────────────────────────────── */
+.sh {
+  --sh-night: #0d0e13;
+  --sh-night-2: #16151c;
+  --sh-wood: #231a14;
+  --sh-wood-2: #33261c;
+  --sh-paper: #efe5cf;
+  --sh-paper-2: #e2d4b4;
+  --sh-ink: #1c1a16;
+  --sh-ink-soft: #5a5143;
+  --sh-brass: #c8a24a;
+  --sh-brass-2: #8e6f2a;
+  --sh-liberal: #2e6bb0;
+  --sh-liberal-ink: #f2f7ff;
+  --sh-fascist: #a3262a;
+  --sh-fascist-ink: #fff1ec;
+  --sh-spot: rgba(255, 238, 200, 0.22);
+  --sh-alarm: #e0432f;
+  --sh-text: #ece4d2;
+  --sh-text-muted: #a89e8a;
+  --sh-shadow: rgba(0, 0, 0, 0.55);
+  --sh-window: #1a2230;
+  --sh-rain: rgba(170, 190, 220, 0.16);
+  --sh-grain: 0.05;
+  --sh-pattern-l: none;
+  --sh-pattern-f: none;
+
+  --sh-font-display: 'SH Bebas', 'Bebas Neue', Impact, 'Arial Narrow', sans-serif;
+  --sh-font-headline: 'SH Playfair', 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --sh-font-type: 'SH Elite', 'Special Elite', 'Courier New', ui-monospace, monospace;
+
+  --sh-dur-stamp: 300ms;
+  --sh-dur-deal: 350ms;
+  --sh-dur-flip: 500ms;
+  --sh-dur-spin: 800ms;
+  --sh-dur-sweep: 1200ms;
+  --sh-dur-pass: 600ms;
+  --sh-dur-shred: 700ms;
+  --sh-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --sh-ease-slam: cubic-bezier(0.3, 1.4, 0.5, 1);
+
+  color: var(--sh-text);
+}
+
+:global([data-theme='daylight']) .sh {
+  --sh-night: #e7e1d3;
+  --sh-night-2: #dcd4c2;
+  --sh-wood: #8a6a4f;
+  --sh-wood-2: #a07e60;
+  --sh-paper: #fbf6ea;
+  --sh-paper-2: #efe6d0;
+  --sh-brass: #7d5a18;
+  --sh-brass-2: #5c4211;
+  --sh-liberal: #1f5a9e;
+  --sh-liberal-ink: #ffffff;
+  --sh-fascist: #8e1d22;
+  --sh-fascist-ink: #ffffff;
+  --sh-spot: rgba(255, 244, 214, 0.55);
+  --sh-alarm: #b52a18;
+  --sh-text: #1f1b15;
+  --sh-text-muted: #5d5445;
+  --sh-shadow: rgba(60, 40, 20, 0.28);
+  --sh-window: #b9c4cf;
+  --sh-rain: rgba(60, 80, 110, 0.18);
+  --sh-grain: 0.04;
+}
+
+:global([data-theme='arcade']) .sh {
+  --sh-night: #07001a;
+  --sh-night-2: #12002b;
+  --sh-wood: #1d0638;
+  --sh-wood-2: #2c0b52;
+  --sh-brass: #ffd23f;
+  --sh-brass-2: #b88f10;
+  --sh-liberal: #16b6f0;
+  --sh-liberal-ink: #00121c;
+  --sh-fascist: #ff2e88;
+  --sh-fascist-ink: #1a0010;
+  --sh-alarm: #ff3d6e;
+  --sh-text: #f0f6ff;
+  --sh-text-muted: #b6a8d8;
+  --sh-window: #1a0f3a;
+  --sh-rain: rgba(120, 220, 255, 0.18);
+}
+
+:global([data-theme='cabin']) .sh {
+  --sh-night: #17100b;
+  --sh-night-2: #21170f;
+  --sh-wood: #3a2618;
+  --sh-wood-2: #4d3322;
+  --sh-brass: #d9a441;
+  --sh-brass-2: #9b7228;
+  --sh-liberal: #3b77b8;
+  --sh-fascist: #b0352f;
+  --sh-text: #fbf3e8;
+  --sh-text-muted: #c6b39a;
+  --sh-window: #2a2420;
+}
+
+/* High Contrast: black, white and yellow only; Liberal = white card with diagonal stripes,
+   Fascist = black card with crosshatching; no grain, no rain. */
+:global([data-theme='contrast']) .sh {
+  --sh-night: #000000;
+  --sh-night-2: #000000;
+  --sh-wood: #000000;
+  --sh-wood-2: #111111;
+  --sh-paper: #ffffff;
+  --sh-paper-2: #ffffff;
+  --sh-ink: #000000;
+  --sh-ink-soft: #000000;
+  --sh-brass: #ffe600;
+  --sh-brass-2: #ffe600;
+  --sh-liberal: #ffffff;
+  --sh-liberal-ink: #000000;
+  --sh-fascist: #000000;
+  --sh-fascist-ink: #ffffff;
+  --sh-spot: rgba(255, 230, 0, 0.18);
+  --sh-alarm: #ffe600;
+  --sh-text: #ffffff;
+  --sh-text-muted: #ffffff;
+  --sh-shadow: transparent;
+  --sh-window: #000000;
+  --sh-rain: transparent;
+  --sh-grain: 0;
+  --sh-pattern-l: repeating-linear-gradient(135deg, transparent 0 9px, #000 9px 11px);
+  --sh-pattern-f:
+    repeating-linear-gradient(45deg, transparent 0 7px, #fff 7px 8px),
+    repeating-linear-gradient(135deg, transparent 0 7px, #fff 7px 8px);
+}
+
+/* Paused (D10): every game animation holds where it is. */
+.sh[data-paused] *,
+.sh[data-paused] *::before,
+.sh[data-paused] *::after {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sh *,
+  .sh *::before,
+  .sh *::after {
+    animation-duration: 150ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 150ms !important;
+  }
+}
+:global(:root[data-motion='off']) .sh *,
+:global(:root[data-motion='off']) .sh *::before,
+:global(:root[data-motion='off']) .sh *::after {
+  animation-duration: 150ms !important;
+  animation-iteration-count: 1 !important;
+  animation-delay: 0ms !important;
+  transition-duration: 150ms !important;
+}

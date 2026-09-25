@@ -88,6 +88,8 @@ export interface PublicView {
   lastCall: boolean;
   /** D6: a legislative session is running; the President and Chancellor may not speak. */
   silence: boolean;
+  /** The newspaper's latest headline (§19), public. */
+  headline: string | null;
   history: HistoryView[];
   winner: Winner | null;
   winReason: WinReason | null;
@@ -183,6 +185,7 @@ export function publicView(state: State): PublicView {
     announce: state.announce ? { who: state.announce.who } : null,
     lastCall: r.lastCall,
     silence: SECRET_CARD_PHASES.has(phase),
+    headline: state.headline,
     history: state.history.slice(-7).map(({ president, chancellor, ...row }) => ({
       ...row,
       pres: state.seats.indexOf(president),
@@ -203,9 +206,13 @@ function statusOf(state: State): (id: string) => PlayerStatus {
   };
 }
 
-function timing(state: State): Pick<TvView, 'timerMode' | 'vipSkipLabel' | 'vipSkipHidden'> {
+/** The TV draws its own clock in the banner, so its shell timer is the quiet bar only. */
+function timing(
+  state: State,
+  tv = false,
+): Pick<TvView, 'timerMode' | 'vipSkipLabel' | 'vipSkipHidden'> {
   const phase = state.phase.id;
-  const quiet = phase === 'presDraw' || phase === 'chanEnact';
+  const quiet = tv || phase === 'presDraw' || phase === 'chanEnact';
   const out: Pick<TvView, 'timerMode' | 'vipSkipLabel' | 'vipSkipHidden'> = {
     timerMode: HIDDEN_TIMER.has(phase) ? 'hidden' : quiet ? 'quiet' : 'normal',
   };
@@ -219,7 +226,7 @@ function timing(state: State): Pick<TvView, 'timerMode' | 'vipSkipLabel' | 'vipS
 export function tvView(state: State): ShTvView {
   return {
     ...envelope(state, GAME_ID, { statusOf: statusOf(state) }),
-    ...timing(state),
+    ...timing(state, true),
     ...publicView(state),
   };
 }

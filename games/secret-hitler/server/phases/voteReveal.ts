@@ -2,7 +2,7 @@
 // counts as Nein. Elected: the pair becomes the term-limited pair. Rejected: the tracker moves up.
 import { isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { go, patchHistory, withRound } from '../phase';
+import { go, headlined, patchHistory, withRound } from '../phase';
 import { isElected } from '../rules';
 import { REVEAL_MS } from '../types';
 import type { Input, State, Transition } from '../types';
@@ -20,6 +20,7 @@ export function enterVoteReveal(state: State, now: number): State {
   s = elected
     ? { ...s, lastElected: { president: s.round.president, chancellor: s.round.nominee } }
     : { ...s, tracker: s.tracker + 1 };
+  s = headlined(s, elected ? 'elected' : s.tracker === 2 ? 'tracker2' : 'rejected');
   return go(s, 'voteReveal', now, REVEAL_MS.voteReveal);
 }
 

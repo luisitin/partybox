@@ -2,7 +2,7 @@
 // Chancellor wins for the Fascists at once; anyone else is marked ✓ Not Hitler for the game.
 import { isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { go } from '../phase';
+import { go, headlined } from '../phase';
 import { REVEAL_MS } from '../types';
 import type { Input, State, Transition } from '../types';
 
@@ -12,7 +12,12 @@ export function enterHitlerCheck(state: State, now: number): State {
     state.role[chancellor] === 'hitler'
       ? { ...state, winner: 'fascists', winReason: 'hitlerElected' }
       : { ...state, notHitler: [...new Set([...state.notHitler, chancellor])] };
-  return go(s, 'hitlerCheck', now, REVEAL_MS.hitlerCheck);
+  return go(
+    headlined(s, s.winner ? 'hitlerElected' : 'notHitler'),
+    'hitlerCheck',
+    now,
+    REVEAL_MS.hitlerCheck,
+  );
 }
 
 export function reduceHitlerCheck(state: State, event: GameEvent<Input>, next: Transition): State {

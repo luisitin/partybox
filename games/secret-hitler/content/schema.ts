@@ -1,6 +1,6 @@
 // Content pack schemas. `packs` maps content/<name>.json → its zod schema; the contract suite
-// validates every pack with it. M1 ships only the About text; narrator lines, headlines and bot
-// chat lines arrive in M2/M4 (SPEC §19).
+// validates every pack with it: the About text and the newspaper headlines; narrator lines and
+// bot chat lines arrive later (SPEC §19).
 import { z } from '@partybox/game-sdk';
 
 export const aboutPackSchema = z.object({
@@ -11,4 +11,36 @@ export const aboutPackSchema = z.object({
 });
 export type AboutPack = z.infer<typeof aboutPackSchema>;
 
-export const packs = { about: aboutPackSchema } as const;
+/** SPEC §19: 6–8 newspaper headlines per event, at most 40 characters (the TV banner). */
+export const HEADLINE_EVENTS = [
+  'elected',
+  'rejected',
+  'tracker2',
+  'liberal',
+  'fascist',
+  'chaos',
+  'zone',
+  'notHitler',
+  'veto',
+  'execution',
+  'special',
+  'investigation',
+  'liberalPolicies',
+  'hitlerExecuted',
+  'hitlerFled',
+  'fascistPolicies',
+  'hitlerElected',
+  'tooFew',
+] as const;
+export type HeadlineEvent = (typeof HEADLINE_EVENTS)[number];
+
+const headlineList = z.array(z.string().min(1).max(40)).min(6).max(8);
+export const headlinesPackSchema = z.object(
+  Object.fromEntries(HEADLINE_EVENTS.map((e) => [e, headlineList])) as Record<
+    HeadlineEvent,
+    typeof headlineList
+  >,
+);
+export type HeadlinesPack = z.infer<typeof headlinesPackSchema>;
+
+export const packs = { about: aboutPackSchema, headlines: headlinesPackSchema } as const;

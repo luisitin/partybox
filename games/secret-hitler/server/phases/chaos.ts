@@ -3,7 +3,7 @@
 // chaos policy can win the game.
 import { isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { enactOnBoard, go, patchHistory, withRound } from '../phase';
+import { enactOnBoard, go, headlined, patchHistory, withRound } from '../phase';
 import { policyWinner, reshuffleIfLow } from '../rules';
 import { REVEAL_MS } from '../types';
 import type { Input, State, Transition } from '../types';
@@ -25,6 +25,7 @@ export function enterChaos(state: State, now: number, after: 'fail' | 'veto'): S
       winner: won,
       winReason: won === 'liberals' ? 'liberalPolicies' : 'fascistPolicies',
     };
+  s = headlined(s, won ? (won === 'liberals' ? 'liberalPolicies' : 'fascistPolicies') : 'chaos');
   return go(reshuffleIfLow(s), 'chaos', now, REVEAL_MS.chaos);
 }
 

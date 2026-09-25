@@ -1,6 +1,8 @@
 // Helpers every phase file shares (phase files never import each other, so this is where the
 // common pieces live): entering a phase, a fresh round, the public history, and small setters.
-import { enterPhase } from '@partybox/game-sdk';
+import { enterPhase, pick } from '@partybox/game-sdk';
+import type { HeadlineEvent } from '../content/schema';
+import { HEADLINES } from './content';
 import { stepMs } from './rules';
 import type { HistoryRow, Party, Round, State, TimedStep } from './types';
 
@@ -83,6 +85,12 @@ export function patchHistory(state: State, patch: Partial<HistoryRow>): State {
 export function enactOnBoard(state: State, card: Party): State {
   const board = { ...state.board, [card]: state.board[card] + 1 };
   return { ...state, board, tracker: 0, vetoUnlocked: state.vetoUnlocked || board.F >= 5 };
+}
+
+/** The newspaper prints a new headline for a public event (one of 6–8, with the rng). */
+export function headlined(state: State, event: HeadlineEvent): State {
+  const [headline, rng] = pick(state.rng, HEADLINES[event]);
+  return { ...state, headline, rng };
 }
 
 export function without<T>(list: readonly T[], item: T): T[] {

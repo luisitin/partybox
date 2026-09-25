@@ -6,7 +6,7 @@
   },
   "rng": {
     "seed": 1,
-    "step": 47
+    "step": 73
   },
   "players": {
     "p1": {
@@ -70,7 +70,7 @@
   "exiled": [],
   "droppedAt": {},
   "ready": ["p1", "p6", "p4", "p5", "p2", "p7", "p3"],
-  "deck": ["F", "F", "F", "F", "L", "F", "F", "F"],
+  "deck": ["F", "F", "L", "F", "F", "F", "F", "F"],
   "discards": [],
   "board": {
     "L": 5,
@@ -110,8 +110,8 @@
       "p2": true
     },
     "elected": true,
-    "draw": ["F", "L", "F"],
-    "passed": ["L", "F"],
+    "draw": ["F", "F", "L"],
+    "passed": ["F", "L"],
     "vetoRequested": false,
     "vetoAgreed": null,
     "enacted": "L",
@@ -233,6 +233,7 @@
     }
   ],
   "announce": null,
+  "headline": "THE LIGHTS STAY ON",
   "winner": "liberals",
   "winReason": "liberalPolicies"
 }

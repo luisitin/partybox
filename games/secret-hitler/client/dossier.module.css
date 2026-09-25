@@ -1,0 +1,135 @@
+/* The dossier folder (SPEC §9.2): manila cover, typed sheet. Tokens only. */
+
+.folder {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px 14px 10px 10px;
+  background: var(--sh-paper-2);
+  color: var(--sh-ink);
+  box-shadow:
+    inset 0 0 0 2px var(--sh-brass-2),
+    0 8px 18px var(--sh-shadow);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.cover {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.9rem;
+  padding: 0.35rem 0.8rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.tab {
+  font-family: var(--sh-font-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+}
+
+.stampMark {
+  justify-self: start;
+  padding: 0 0.4rem;
+  border: 2px solid var(--sh-fascist);
+  border-radius: 3px;
+  font-family: var(--sh-font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: var(--sh-fascist);
+  transform: rotate(-4deg);
+}
+
+.who {
+  font-family: var(--sh-font-type);
+  font-size: var(--pb-font-caption);
+  color: var(--sh-ink-soft);
+}
+
+.hint {
+  justify-self: end;
+  white-space: nowrap;
+  font-size: var(--pb-font-caption);
+  color: var(--sh-ink-soft);
+}
+
+.folder[data-open] .hint {
+  color: var(--sh-ink);
+  font-weight: 700;
+}
+
+/* The sheet slides out of the folder. */
+.sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0 0.5rem 0.55rem;
+  padding: 0.75rem 0.8rem;
+  border-radius: 4px;
+  background: var(--sh-paper);
+  box-shadow: 0 4px 10px var(--sh-shadow);
+  font-family: var(--sh-font-type);
+  font-size: var(--pb-font-body);
+  animation: global(sh-rise) 260ms var(--sh-ease) both;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 4.6rem 1fr;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.row dt {
+  font-family: var(--sh-font-display);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--sh-ink-soft);
+}
+
+.row dd {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.list {
+  flex-direction: column;
+  align-items: flex-start !important;
+}
+
+.roleMark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: var(--sh-liberal);
+}
+
+.roleMark[data-role='fascist'] {
+  color: var(--sh-fascist);
+}
+
+.goal {
+  display: block;
+  font-size: var(--pb-font-caption);
+  color: var(--sh-ink-soft);
+}
+
+.mate {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--sh-fascist);
+}

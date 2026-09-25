@@ -1,32 +1,34 @@
-// The phone's "do something now" panels (§9.4, plain for M1): Got it, the nominee picker, the
-// Ja / Nein placards, the discard and enact card rows (hold to see), the veto answer, the power
-// target picker (execution confirms twice) and the peek. There is no undo after a confirm.
+// The phone's "do something now" panels (SPEC §9.4): Got it, the nominee picker, the JA! / NEIN!
+// placards, the discard and enact card rows, the veto answer, the power target picker (execution
+// confirms twice) and the peek. There is no undo after a confirm (§11).
 import { useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, Screen, useT } from '@partybox/game-sdk/ui';
+import { PrimaryButton, buzz, useT } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
-import type { ActView, ShControllerView } from '../server/views';
+import type { ActView } from '../server/views';
+import { PowerIcon, VetoIcon } from './icons';
 import { CardRow } from './CardRow';
 import { nameIn, partyName, powerName, reasonName } from './labels';
-import { PhoneDossier } from './PhoneDossier';
+import { PhoneFrame } from './PhoneFrame';
+import type { Frame } from './PhoneFrame';
 import { FacePicker } from './standin/FacePicker';
-import { getSecretCardMode } from './standin/mode';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
 interface Props {
-  view: ShControllerView;
+  frame: Frame;
   act: ActView;
   send: (input: Input) => void;
 }
 
 function Picker({
-  view,
+  frame,
   act,
   onPick,
   picked,
 }: Props & { onPick: (id: string) => void; picked: string | null }): JSX.Element {
   const L = useT(STRINGS);
+  const { view } = frame;
   const face = (seat: number, reason?: string) => {
     const p = view.players.find((x) => x.id === view.seats[seat]?.id);
     return {
@@ -53,8 +55,9 @@ function Picker({
   );
 }
 
-export function PhoneAct({ view, act, send }: Props): JSX.Element {
+export function PhoneAct({ frame, act, send }: Props): JSX.Element {
   const L = useT(STRINGS);
+  const { view } = frame;
   const [picked, setPicked] = useState<string | null>(null);
   const [mark, setMark] = useState<number | null>(null);
   const [sure, setSure] = useState(false);
@@ -64,23 +67,26 @@ export function PhoneAct({ view, act, send }: Props): JSX.Element {
   switch (act.kind) {
     case 'ready':
       return (
-        <Screen
-          title={L('Your dossier')}
-          footer={
+        <PhoneFrame
+          frame={frame}
+          kicker={L('A new parliament')}
+          title={L('Read your dossier')}
+          actions={
             <PrimaryButton done={act.done} onClick={() => send({ type: 'ready' })}>
               {act.done ? L('Ready') : L('Got it')}
             </PrimaryButton>
           }
         >
-          <PhoneDossier view={view} />
-          <p className={styles.hint}>{L('Keep it secret. Hold to look, let go to hide.')}</p>
-        </Screen>
+          <p className={styles.hint}>{L('Keep it secret. Tap the folder to open or close it.')}</p>
+        </PhoneFrame>
       );
     case 'nominate':
       return (
-        <Screen
+        <PhoneFrame
+          frame={frame}
+          kicker={L('You are the President')}
           title={L('Choose your Chancellor')}
-          footer={
+          actions={
             <PrimaryButton
               disabled={!picked}
               onClick={() => picked && send({ type: 'nominate', target: picked })}
@@ -89,35 +95,37 @@ export function PhoneAct({ view, act, send }: Props): JSX.Element {
             </PrimaryButton>
           }
         >
-          <Picker view={view} act={act} send={send} onPick={setPicked} picked={picked} />
-        </Screen>
+          <Picker frame={frame} act={act} send={send} onPick={setPicked} picked={picked} />
+        </PhoneFrame>
       );
     case 'vote':
       return (
-        <Screen title={L('President {p} · Chancellor {c}', { p: pres, c: chan })}>
+        <PhoneFrame
+          frame={frame}
+          kicker={L('Vote now')}
+          title={L('President {p} · Chancellor {c}', { p: pres, c: chan })}
+        >
           <div className={styles.placards}>
-            <button
-              type="button"
-              className={styles.placard}
-              data-on={act.myVote === true || undefined}
-              aria-label={L('Vote Ja')}
-              onClick={() => send({ type: 'vote', ja: true })}
-            >
-              {L('✓ JA!')}
-            </button>
-            <button
-              type="button"
-              className={styles.placard}
-              data-no
-              data-on={act.myVote === false || undefined}
-              aria-label={L('Vote Nein')}
-              onClick={() => send({ type: 'vote', ja: false })}
-            >
-              {L('✗ NEIN!')}
-            </button>
+            {[true, false].map((ja) => (
+              <button
+                key={String(ja)}
+                type="button"
+                className={styles.placard}
+                data-ja={ja || undefined}
+                data-on={act.myVote === ja || undefined}
+                aria-label={ja ? L('Vote Ja') : L('Vote Nein')}
+                onClick={() => {
+                  buzz(20);
+                  send({ type: 'vote', ja });
+                }}
+              >
+                <span className={styles.placardMark}>{ja ? '✓' : '✗'}</span>
+                <span className={styles.placardWord}>{ja ? 'JA!' : 'NEIN!'}</span>
+              </button>
+            ))}
           </div>
           <p className={styles.hint}>{L('You can change your vote until the timer ends.')}</p>
-        </Screen>
+        </PhoneFrame>
       );
     case 'discard':
     case 'enact': {
@@ -129,15 +137,14 @@ export function PhoneAct({ view, act, send }: Props): JSX.Element {
           ? L('Discard this {party} policy', { party: partyName(L, card) })
           : L('Enact this {party} policy', { party: partyName(L, card) });
       return (
-        <Screen
-          title={
-            discard
-              ? L('Discard one policy. The other two go to Chancellor {name}.', { name: chan })
-              : L('Enact one policy.')
-          }
-          footer={
-            <div className={styles.footer}>
+        <PhoneFrame
+          frame={frame}
+          kicker={L('Session · say nothing')}
+          title={discard ? L('Discard one policy') : L('Enact one policy.')}
+          actions={
+            <>
               <PrimaryButton
+                tone={card === 'F' ? 'danger' : 'accent'}
                 disabled={mark === null}
                 onClick={() =>
                   mark !== null &&
@@ -152,27 +159,29 @@ export function PhoneAct({ view, act, send }: Props): JSX.Element {
               </PrimaryButton>
               {act.canVeto ? (
                 <PrimaryButton tone="neutral" onClick={() => send({ type: 'vetoRequest' })}>
-                  {L('Request veto')}
+                  <VetoIcon size="1.2em" /> {L('Request veto')}
                 </PrimaryButton>
               ) : null}
-            </div>
+            </>
           }
         >
           <CardRow cards={act.cards} marked={mark} onMark={setMark} />
-          <p className={styles.hint}>
-            {getSecretCardMode() === 'tap'
-              ? L('Tap the row to see them, then tap one to choose it.')
-              : L('Hold the row to see them, slide onto one and let go to choose it.')}
-          </p>
-        </Screen>
+          {discard ? (
+            <p className={styles.hint}>
+              {L('The other two go to Chancellor {name}.', { name: chan })}
+            </p>
+          ) : null}
+        </PhoneFrame>
       );
     }
     case 'vetoAnswer':
       return (
-        <Screen
+        <PhoneFrame
+          frame={frame}
+          kicker={L('Veto requested')}
           title={L('Chancellor {name} requests a veto.', { name: chan })}
-          footer={
-            <div className={styles.footer}>
+          actions={
+            <>
               <PrimaryButton onClick={() => send({ type: 'vetoAnswer', agree: true })}>
                 {L('Agree')}
               </PrimaryButton>
@@ -182,26 +191,28 @@ export function PhoneAct({ view, act, send }: Props): JSX.Element {
               >
                 {L('Refuse')}
               </PrimaryButton>
-            </div>
+            </>
           }
         >
           <p className={styles.hint}>
             {L('Both policies will be thrown away, and the tracker moves up one.')}
           </p>
           <CardRow cards={act.cards} marked={null} />
-        </Screen>
+        </PhoneFrame>
       );
     case 'peek':
       return (
-        <Screen
+        <PhoneFrame
+          frame={frame}
+          kicker={powerName(L, 'peek')}
           title={L('The next three policies')}
-          footer={
+          actions={
             <PrimaryButton onClick={() => send({ type: 'peekDone' })}>{L('Done')}</PrimaryButton>
           }
         >
           <CardRow cards={act.cards} marked={null} />
           <p className={styles.hint}>{L('They go back in the same order.')}</p>
-        </Screen>
+        </PhoneFrame>
       );
     case 'target': {
       const power = act.power ?? 'investigate';
@@ -211,9 +222,15 @@ export function PhoneAct({ view, act, send }: Props): JSX.Element {
           ? L('This can’t be undone. Execute {name}?', { name: pickedName })
           : L('{power}: {name}', { power: powerName(L, power), name: pickedName });
       return (
-        <Screen
+        <PhoneFrame
+          frame={frame}
+          kicker={
+            <span className={styles.powerKicker}>
+              <PowerIcon kind={power} size="1.4em" /> {L('Your power')}
+            </span>
+          }
           title={powerName(L, power)}
-          footer={
+          actions={
             <PrimaryButton
               tone={execute ? 'danger' : 'accent'}
               disabled={!picked || act.done}
@@ -228,7 +245,7 @@ export function PhoneAct({ view, act, send }: Props): JSX.Element {
           }
         >
           <Picker
-            view={view}
+            frame={frame}
             act={act}
             send={send}
             onPick={(id) => {
@@ -237,7 +254,7 @@ export function PhoneAct({ view, act, send }: Props): JSX.Element {
             }}
             picked={picked}
           />
-        </Screen>
+        </PhoneFrame>
       );
     }
   }

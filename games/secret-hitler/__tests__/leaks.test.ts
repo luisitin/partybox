@@ -120,7 +120,12 @@ describe('leaks', () => {
       expect(dossier).toBeNull();
       expect(act).toBeNull();
       expect(status).toBe('spectator');
-      expect({ ...cv, lastCall: false }).toEqual({ ...tvView(s), lastCall: false });
+      // the TV draws its own clock, so its shell timer is quiet; the rest is the same
+      expect({ ...cv, lastCall: false, timerMode: '' }).toEqual({
+        ...tvView(s),
+        lastCall: false,
+        timerMode: '',
+      });
     }
   });
 

@@ -1,163 +1,298 @@
-/* Secret Hitler phone, plain for M1. Tokens only; fits 320×568 at 18 px body text. */
+/* Secret Hitler on the phone: Parliament Noir at hand size. Tokens only; fits 320×568 at 18 px
+   body text; touch targets ≥ 44 px. */
+
+.phone {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(140% 60% at 50% 0%, var(--sh-night-2), var(--sh-night) 70%), var(--sh-night);
+  --sh-u: 1rem;
+}
+
+.screen {
+  flex: 1;
+  background: transparent;
+  color: var(--sh-text);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.dock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.kicker {
+  margin: 0;
+  font-family: var(--sh-font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  color: var(--sh-brass);
+  text-align: center;
+  animation: global(sh-rise) 300ms var(--sh-ease) both;
+}
+
+.powerKicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--sh-font-headline);
+  font-weight: 900;
+  font-size: clamp(1.2rem, 5.6vw, 1.55rem);
+  line-height: 1.12;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--sh-text);
+  animation: global(sh-rise) 350ms var(--sh-ease) 60ms both;
+}
 
 .hint {
-  margin: var(--pb-space-2) 0;
+  margin: 0;
   font-size: var(--pb-font-caption);
-  color: var(--pb-text-muted);
+  color: var(--sh-text-muted);
   text-align: center;
 }
 
 .waiting {
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-3);
-  width: 100%;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.line {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  color: var(--sh-text);
+  text-align: center;
+  animation: global(sh-rise) 350ms var(--sh-ease) both;
 }
 
 .lastCall {
-  padding: var(--pb-space-2);
-  background: var(--pb-danger);
-  color: var(--pb-bg);
-  font-weight: 800;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  padding: 0.5rem;
+  background: var(--sh-alarm);
+  color: var(--sh-night);
+  font-family: var(--sh-font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
   text-align: center;
+  animation: global(sh-pulse) 800ms ease-in-out infinite;
 }
 
-.footer {
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-2);
-  width: 100%;
-}
-
-.dossier {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--pb-space-1) var(--pb-space-3);
-  margin: 0;
-  text-align: left;
-  font-size: var(--pb-font-caption);
-}
-
-.dossier dt {
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--pb-text-muted);
-}
-
-.dossier dd {
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--pb-space-1);
-}
-
-.goal {
-  width: 100%;
-  color: var(--pb-text-muted);
-}
-
-.intel {
-  display: block;
-  width: 100%;
-}
-
+/* JA! / NEIN! placards (§9.4): paper and ink, each at least 140×200. */
 .placards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--pb-space-3);
-  width: 100%;
+  gap: 0.75rem;
+  perspective: 700px;
 }
 
 .placard {
-  min-height: 12.5rem;
-  border: 3px solid var(--pb-border);
-  border-radius: var(--pb-radius-lg);
-  background: var(--pb-text);
-  color: var(--pb-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-height: min(12.5rem, 34vh);
+  border: 3px solid var(--sh-ink);
+  border-radius: 10px;
+  background: var(--sh-ink);
+  color: var(--sh-paper);
   font: inherit;
-  font-size: var(--pb-font-h2);
-  font-weight: 900;
   cursor: pointer;
+  box-shadow: 0 10px 22px var(--sh-shadow);
+  transition:
+    transform 220ms var(--sh-ease),
+    opacity 220ms var(--sh-ease);
+  touch-action: manipulation;
+  animation: global(sh-deal) var(--sh-dur-deal) var(--sh-ease) both;
 }
 
-.placard[data-no] {
-  background: var(--pb-bg);
-  color: var(--pb-text);
-  border-color: var(--pb-text);
+.placard[data-ja] {
+  background: var(--sh-paper);
+  color: var(--sh-ink);
+  animation-delay: 60ms;
+}
+
+.placard:not([data-ja]) {
+  border-color: var(--sh-paper);
+  animation-delay: 140ms;
 }
 
 .placard[data-on] {
-  outline: 4px solid var(--pb-accent);
+  transform: translateY(-10px) rotate(-2deg);
+  outline: 4px solid var(--sh-brass);
   outline-offset: 3px;
-  transform: translateY(-6px);
 }
 
+.placards:has([data-on]) .placard:not([data-on]) {
+  opacity: 0.55;
+}
+
+.placardMark {
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.placardWord {
+  font-family: var(--sh-font-display);
+  font-size: 2.6rem;
+  letter-spacing: 0.06em;
+}
+
+/* Card rows: decrees dealt one after another, turned over together. */
 .cardRowWrap {
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-2);
-  width: 100%;
+  gap: 0.4rem;
 }
 
 .cardRow {
-  position: relative;
   display: flex;
   justify-content: center;
-  gap: var(--pb-space-2);
-  padding: var(--pb-space-3) var(--pb-space-2);
-  border-radius: var(--pb-radius-lg);
-  background: var(--pb-surface-2);
+  gap: 0.5rem;
+  padding: 0.7rem 0.4rem;
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--sh-wood-2), var(--sh-wood));
+  box-shadow: inset 0 0 0 2px var(--sh-brass-2);
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   touch-action: none;
+  cursor: pointer;
+  --sh-card-w: min(24vw, 6.2rem);
+  --sh-card-h: calc(var(--sh-card-w) * 1.4);
 }
 
 .cardRow[data-open] {
-  background: var(--pb-surface);
-  outline: 2px solid var(--pb-accent-2);
+  box-shadow: inset 0 0 0 3px var(--sh-brass);
 }
 
-.cardHint {
-  position: absolute;
-  bottom: var(--pb-space-1);
+.dealt {
+  display: inline-flex;
+  transition: transform 220ms var(--sh-ease);
+  animation: global(sh-deal) var(--sh-dur-deal) var(--sh-ease) var(--deal, 0ms) both;
+}
+
+.dealt[data-marked] {
+  transform: translateY(8px) rotate(-6deg);
+}
+
+.rowHint {
+  margin: 0;
+  padding: 0.35rem;
+  border: 0;
+  background: none;
+  font: inherit;
   font-size: var(--pb-font-caption);
-  color: var(--pb-text-muted);
+  color: var(--sh-text-muted);
+  text-align: center;
+}
+
+button.rowHint {
+  min-height: 44px;
+  color: var(--sh-brass);
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .cardKeys {
   display: flex;
-  gap: var(--pb-space-2);
+  gap: 0.5rem;
 }
 
 .cardKey {
   flex: 1;
-  min-height: var(--pb-touch);
-  border: 2px solid var(--pb-border);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-  color: var(--pb-text);
+  min-height: 44px;
+  border: 2px solid var(--sh-brass-2);
+  border-radius: 8px;
+  background: var(--sh-night-2);
+  color: var(--sh-text);
   font: inherit;
   font-size: var(--pb-font-caption);
 }
 
 .cardKey[data-on] {
-  border-color: var(--pb-accent);
+  border-color: var(--sh-brass);
+  background: var(--sh-wood);
   font-weight: 800;
 }
 
-.mini {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: var(--pb-space-3);
-  font-size: var(--pb-font-caption);
+/* Waiting moments: the TV's, small and on its clock. */
+.stampAt {
+  width: min(88%, 20rem);
+  opacity: 0;
+  animation: global(sh-stamp) var(--sh-dur-stamp) var(--sh-ease) forwards;
 }
 
-.miniRow {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--pb-space-1);
+.stamp {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.moment {
+  opacity: 0;
+  animation: global(sh-stamp) 700ms var(--sh-ease) forwards;
+}
+
+.momentCard {
+  display: flex;
+  --sh-card-w: 8rem;
+  --sh-card-h: 11.2rem;
+  animation: global(sh-deal) 400ms var(--sh-ease) both;
+}
+
+.envelope {
+  position: relative;
+  width: 9rem;
+  height: 5.8rem;
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  background: var(--sh-paper-2);
+  box-shadow:
+    inset 0 0 0 2px var(--sh-brass-2),
+    0 10px 20px var(--sh-shadow);
+  animation: global(sh-deal) var(--sh-dur-deal) var(--sh-ease) both;
+}
+
+.flap {
+  position: absolute;
+  inset: 0 0 40%;
+  background: var(--sh-paper);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.wax {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 1.6rem;
+  height: 1.6rem;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--sh-fascist);
+  box-shadow: 0 0 0 3px var(--sh-alarm);
 }

@@ -1,223 +1,174 @@
-/* Secret Hitler TV, plain for M1 (§8.1 zones, simplified). Tokens only (docs/DESIGN_SYSTEM.md). */
+/* The TV frame (SPEC §8.1) on the fixed 1920×1080 canvas: the game covers the stage area
+   edge to edge (its own overscan padding) so the chamber fills the screen. */
 
 .tv {
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  --sh-u: 16px;
+}
+
+.layout {
+  position: relative;
+  z-index: 1;
   flex: 1;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: var(--pb-space-3);
-  width: 100%;
-  min-width: 0;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 10px;
+  padding: 14px var(--pb-overscan-x, 96px) var(--pb-overscan-y, 54px);
   min-height: 0;
 }
 
-/* TV cards: two tracks + the band must fit between the header and the seat row at 1080p. */
-.tv {
-  --sh-card-w: 4.2em;
-  --sh-card-h: 5em;
+/* The newspaper ticker: an EXTRA tag and the latest headline. */
+.ticker {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  height: 52px;
+  padding: 0 18px 0 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--sh-paper);
+  color: var(--sh-ink);
+  box-shadow: 0 8px 20px var(--sh-shadow);
 }
 
-.head {
+.extra {
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  padding: 0 18px;
+  background: var(--sh-fascist);
+  color: var(--sh-fascist-ink);
+  font-family: var(--sh-font-display);
+  font-size: 34px;
+  letter-spacing: 0.12em;
+}
+
+.tickerText {
+  font-family: var(--sh-font-headline);
+  font-weight: 900;
+  font-size: 34px;
+  white-space: nowrap;
+  animation: global(sh-rise) 500ms var(--sh-ease) both;
+}
+
+/* The phase banner: what is happening now, and the game's clock. */
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 84px;
+  padding: 6px 24px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--sh-night-2), var(--sh-night));
+  box-shadow:
+    inset 0 0 0 2px var(--sh-brass-2),
+    0 10px 24px var(--sh-shadow);
+}
+
+.banner[data-silence] {
+  box-shadow:
+    inset 0 0 0 3px var(--sh-alarm),
+    0 10px 24px var(--sh-shadow);
+}
+
+.bannerText {
+  flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--pb-space-2);
+  gap: 2px;
   text-align: center;
-  padding: var(--pb-space-3) var(--pb-space-5);
-  border-radius: var(--pb-radius-lg);
-  background: var(--pb-surface);
 }
 
-.head[data-silence] {
-  border: 3px dashed var(--pb-accent-2);
+.title {
+  margin: 0;
+  font-family: var(--sh-font-display);
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--sh-text);
+  text-wrap: balance;
+  animation: global(sh-rise) 450ms var(--sh-ease) both;
+}
+
+.title[data-over] {
+  font-size: 78px;
+  color: var(--sh-brass);
 }
 
 .line {
-  font-size: var(--pb-font-body);
-  color: var(--pb-text);
+  margin: 0;
+  font-size: 30px;
+  color: var(--sh-text-muted);
+  animation: global(sh-rise) 450ms var(--sh-ease) both;
 }
 
 .lastCall {
-  font-size: var(--pb-font-body);
-  font-weight: 800;
-  color: var(--pb-danger);
+  margin: 0;
+  font-family: var(--sh-font-display);
+  font-size: 36px;
+  letter-spacing: 0.08em;
+  color: var(--sh-alarm);
+  animation: global(sh-pulse) 800ms ease-in-out infinite;
 }
 
 .credit {
-  font-size: var(--pb-font-caption);
-  color: var(--pb-text-muted);
+  margin: 0;
+  font-size: 24px;
+  color: var(--sh-text-muted);
 }
 
-.boards {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--pb-space-4);
+.clock {
+  display: grid;
+  place-items: center;
+  min-width: 104px;
+  height: 72px;
+  border-radius: 12px;
+  background: var(--sh-night);
+  box-shadow: inset 0 0 0 3px var(--sh-brass-2);
+  font-family: var(--sh-font-display);
+  font-size: 58px;
+  font-variant-numeric: tabular-nums;
+  color: var(--sh-brass);
+}
+
+.clock[data-urgent] {
+  color: var(--sh-alarm);
+  box-shadow: inset 0 0 0 3px var(--sh-alarm);
+  animation: global(sh-pulse) 1s ease-in-out infinite;
+}
+
+.clock[data-quiet] {
+  visibility: hidden;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 460px;
+  gap: 22px;
   min-height: 0;
 }
 
-.tracks {
-  display: flex;
-  justify-content: center;
-  gap: var(--pb-space-7);
-}
-
-.track {
+.side {
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-2);
+  gap: 10px;
+  min-height: 0;
 }
 
-.trackTitle {
-  font-size: var(--pb-font-caption);
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--pb-text-muted);
+.side > :first-child {
+  flex: 1;
 }
 
-.slots {
-  display: flex;
-  gap: var(--pb-space-2);
-}
-
-.slot {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--pb-space-1);
-  /* em of the caption size, never rem: the TV scales its root font. */
-  font-size: var(--pb-font-caption);
-  width: 4.6em;
-}
-
-/* The HITLER ZONE line: a rule before Fascist slot 4 with its label above the track. */
-.slot[data-zone]::before {
-  content: '';
-  position: absolute;
-  left: calc(-0.5 * var(--pb-space-2) - 2px);
-  top: 0;
-  height: var(--sh-card-h);
-  border-left: 4px solid var(--pb-accent-2);
-}
-
-.slotLabel {
-  min-height: 2.4em;
-  font-size: var(--pb-font-caption);
-  line-height: 1.2;
-  text-align: center;
-  color: var(--pb-text-muted);
-}
-
-.zone {
-  position: absolute;
-  left: 0;
-  top: -1.5em;
-  font-size: var(--pb-font-caption);
-  font-weight: 800;
-  white-space: nowrap;
-  color: var(--pb-text-muted);
-}
-
-.zone[data-on] {
-  color: var(--pb-danger);
-}
-
-.band {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--pb-space-3) var(--pb-space-6);
-  font-size: var(--pb-font-caption);
-  color: var(--pb-text);
-}
-
-.rivets {
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: var(--pb-danger);
-}
-
-.seats {
-  display: flex;
-  justify-content: center;
-  gap: var(--pb-space-3);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.seat {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--pb-space-1);
-  width: 160px;
-  font-size: var(--pb-font-caption);
-}
-
-.seat[data-gone] {
-  opacity: 0.55;
-}
-
-.seatName {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-weight: 700;
-}
-
-.plate {
-  padding: 0 var(--pb-space-2);
-  border-radius: var(--pb-radius);
-  background: var(--pb-accent-2);
-  color: var(--pb-on-accent-2-fill);
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.plate[data-plate='nominee'] {
-  background: var(--pb-surface-2);
-  color: var(--pb-text);
-}
-
-.next {
-  font-weight: 800;
-  color: var(--pb-accent);
-}
-
-.tag,
-.voted {
-  color: var(--pb-text-muted);
-  text-align: center;
-  font-size: calc(var(--pb-font-caption) * 0.85);
-}
-
-.role {
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--pb-accent-2);
-}
-
-.placard {
-  padding: var(--pb-space-1) var(--pb-space-2);
-  border-radius: var(--pb-radius);
-  font-weight: 800;
-  background: var(--pb-text);
-  color: var(--pb-bg);
-}
-
-.placard[data-vote='nein'] {
-  background: var(--pb-bg);
-  color: var(--pb-text);
-  border: 2px solid var(--pb-text);
-}
-
-.arrow {
-  position: absolute;
-  right: calc(-1 * var(--pb-space-3));
-  top: 32px;
-  color: var(--pb-text-muted);
+.special {
+  display: grid;
+  place-items: center;
+  min-height: 0;
 }

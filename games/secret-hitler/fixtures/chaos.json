@@ -6,7 +6,7 @@
   },
   "rng": {
     "seed": 1,
-    "step": 32
+    "step": 36
   },
   "players": {
     "p1": {
@@ -91,7 +91,7 @@
   "round": {
     "n": 3,
     "president": "p6",
-    "nominee": "p1",
+    "nominee": "p3",
     "votes": {},
     "elected": false,
     "draw": null,
@@ -119,7 +119,7 @@
     {
       "n": 2,
       "president": "p5",
-      "chancellor": "p7",
+      "chancellor": "p1",
       "ja": 0,
       "nein": 7,
       "elected": false,
@@ -130,7 +130,7 @@
     {
       "n": 3,
       "president": "p6",
-      "chancellor": "p1",
+      "chancellor": "p3",
       "ja": 0,
       "nein": 7,
       "elected": false,
@@ -140,6 +140,7 @@
     }
   ],
   "announce": null,
+  "headline": "CHAOS IN THE CAPITAL",
   "winner": null,
   "winReason": null
 }

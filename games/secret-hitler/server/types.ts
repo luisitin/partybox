@@ -123,6 +123,8 @@ export interface State extends GameStateBase {
    * with `fresh: true` by the timeout; the next phase shows it, the one after clears it.
    */
   announce: { who: string | null; fresh: boolean } | null;
+  /** The newspaper's latest headline (SPEC §19), picked with the rng at each public event. */
+  headline: string | null;
   winner: Winner | null;
   winReason: WinReason | null;
 }

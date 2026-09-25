@@ -6,7 +6,7 @@
   },
   "rng": {
     "seed": 1,
-    "step": 40
+    "step": 56
   },
   "players": {
     "p1": {
@@ -70,7 +70,7 @@
   "exiled": [],
   "droppedAt": {},
   "ready": ["p1", "p6", "p4", "p5", "p2", "p7", "p3"],
-  "deck": ["L", "F", "F", "L", "F", "F", "F", "L", "F"],
+  "deck": ["F", "F", "L", "L", "F", "F", "F", "F", "L"],
   "discards": ["F", "F"],
   "board": {
     "L": 3,
@@ -201,6 +201,7 @@
     }
   ],
   "announce": null,
+  "headline": "RELIEF IN THE CHAMBER",
   "winner": null,
   "winReason": null
 }
