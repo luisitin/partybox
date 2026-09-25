@@ -2,7 +2,7 @@
 // compact scoreboard with "me" marked; the VIP gets play again / new game / lobby, everyone else
 // waits for the VIP by name. The board shows the instant the TV's does (the phone never spoils,
 // and never hides a board the TV is already showing); the cue + buzz come from the shell.
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PrimaryButton, Scoreboard, Screen, useLang } from '@partybox/game-sdk/ui';
@@ -31,31 +31,13 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   // Your own row is what you look for first: bring it above the sticky footer (review-loop #15).
   const list = useRef<HTMLDivElement>(null);
   const lang = useLang();
-  useEffect(() => {
-    // I-456 B: to the middle of the list, not its nearest edge (which was half under the footer)
-    const toMe = (): void =>
-      list.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'center' });
-    toMe();
-    // Again once the sticky title has settled (the place line and the award chips arrive after the
-    // first paint and shrink the body): a 5th place otherwise sat under the "more below" fade. Not
-    // if the player has touched the list meanwhile.
-    let moved = false;
-    let scroller: HTMLElement | null = list.current?.parentElement ?? null;
-    while (scroller && !/(auto|scroll)/.test(getComputedStyle(scroller).overflowY))
-      scroller = scroller.parentElement;
-    const touched = (): void => {
-      moved = true;
-    };
-    const events = ['pointerdown', 'wheel', 'touchstart', 'keydown'] as const;
-    for (const e of events) scroller?.addEventListener(e, touched, { passive: true });
-    const again = setTimeout(() => {
-      if (!moved) toMe();
-    }, 700);
-    return () => {
-      clearTimeout(again);
-      for (const e of events) scroller?.removeEventListener(e, touched);
-    };
-  }, []);
+  // The board opens at the top, on the winners the headline names (the reviewer: a 5th place
+  // opened on their own row and two of three tied winners sat above the fold); your place is the
+  // line under the headline, and a tap on it brings your row to the middle (I-456 B).
+  const toMe = (): void =>
+    list.current
+      ?.querySelector('[aria-current="true"]')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   const rows = scoreboardRows(room);
   const mine = myRow(room, me.id);
   const scoreless = useGame(room.results?.gameId, 'phone').module?.scoreless === true;
@@ -90,11 +72,11 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
           <span className={styles.winner} data-screen="results">
             {winnerLineFor(room, me.id, scoreless)}
           </span>
-          {/* I-456 B: your place stays in view while the board scrolls to your row */}
+          {/* I-456 B: your place stays in view over the board; a tap shows your row */}
           {mine && !over && !scoreless ? (
-            <span className={`pb-muted pb-caption ${styles.place}`}>
+            <button type="button" className={`pb-muted pb-caption ${styles.place}`} onClick={toMe}>
               {t.results.yourPlace(mine.rank, mine.score)}
-            </span>
+            </button>
           ) : null}
           {/* I-456 C: the awards as chips, under your place — never scrolled away; I-155 A/B:
               yours first, and reading as yours */}
