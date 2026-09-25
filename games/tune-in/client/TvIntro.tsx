@@ -2,13 +2,14 @@
 // tuning back and forth so the card is never still, and in teams both rosters under their banners.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { Avatar, BigText, Stage, useReducedMotion, useT } from '@partybox/game-sdk/ui';
+import { BigText, Stage, useReducedMotion, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import { Dial } from '@partybox/game-sdk/ui/dial';
 import type { TuneTvView } from '../server/index';
-import { modeLine, nameOf, steps, teamName } from './copy';
+import { modeLine, steps } from './copy';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
+import { Rosters } from './Rosters';
 import { useReading } from './useReading';
 
 const SWEEP = [22, 78, 35, 64, 50];
@@ -22,24 +23,6 @@ function useSweep(): number {
     return () => clearInterval(t);
   }, [reduced]);
   return SWEEP[i] ?? 50;
-}
-
-function Roster({ view, team }: { view: TuneTvView; team: 'sun' | 'moon' }): JSX.Element {
-  const L = useT(STRINGS);
-  const ids = view.teams?.[team] ?? [];
-  return (
-    <div className={`${styles.roster} ${team === 'sun' ? styles.rosterSun : styles.rosterMoon}`}>
-      <span className={styles.rosterName}>{teamName(L, team)}</span>
-      <ul className={styles.rosterList}>
-        {ids.map((id, i) => (
-          <li key={id} className={styles.rosterRow} style={{ animationDelay: `${i * 80}ms` }}>
-            <Avatar avatarId={view.players.find((p) => p.id === id)?.avatarId ?? 'fox'} size={40} />
-            {nameOf(view.players, id)}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
 }
 
 export function TvIntro({ view }: GameTvProps<TuneTvView>): JSX.Element {
@@ -76,11 +59,8 @@ export function TvIntro({ view }: GameTvProps<TuneTvView>): JSX.Element {
           </li>
         ))}
       </ol>
-      {mode === 'teams' ? (
-        <div className={styles.rosters}>
-          <Roster view={view} team="sun" />
-          <Roster view={view} team="moon" />
-        </div>
+      {mode === 'teams' && view.teams ? (
+        <Rosters teams={view.teams} players={view.players} />
       ) : null}
     </Stage>
   );

@@ -50,8 +50,11 @@
   bottom: 0;
   display: grid;
   place-items: center;
-  font-size: var(--pb-font-body);
+  overflow: hidden;
+  /* A narrow zone (5 of 100 on a small phone is ~15 px) still fits its digit. */
+  font-size: var(--pb-font-caption);
   font-weight: 900;
+  letter-spacing: -0.02em;
   color: var(--pb-on-accent);
   box-shadow: inset 1px 0 0 var(--pb-surface-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
@@ -67,6 +70,39 @@
   background: var(--pb-accent-2-fill);
 }
 
+.scan {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 30%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--pb-text) 16%, transparent),
+    transparent
+  );
+  animation: strip-scan calc(var(--pb-motion-pulse) * 2.4) ease-in-out infinite alternate;
+}
+
+@keyframes strip-scan {
+  from {
+    transform: translateX(-60%);
+  }
+  to {
+    transform: translateX(293%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan {
+    display: none;
+  }
+}
+:global(:root[data-motion='off']) .scan {
+  display: none;
+}
+
 .needle {
   position: absolute;
   top: -2px;
@@ -77,18 +113,20 @@
   background: var(--pb-text);
 }
 
+/* Side by side while they fit; a row each with big text (never broken inside a word). */
 .ends {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: var(--pb-space-3);
+  gap: var(--pb-space-1) var(--pb-space-3);
   font-size: var(--pb-font-caption);
   font-weight: 800;
   color: var(--pb-text-muted);
 }
 
 .ends span {
-  max-width: 48%;
-  overflow-wrap: anywhere;
+  flex: 1 1 0;
+  min-width: min-content;
 }
 
 .endRight {

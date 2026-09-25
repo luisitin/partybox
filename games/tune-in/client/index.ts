@@ -23,7 +23,11 @@ export const clientModule: GameClientModule = {
   beds: { intro: 'lounge', clue: 'latenight', dial: 'marimba', call: 'pulse', scores: 'warm' },
   // The dial stays put from clue to reveal: the stage cuts, and only what changes animates.
   quickInto: ['clue', 'dial', 'call', 'reveal'],
-  stripScores: (view: PushedView<TvView>) => view.phaseId !== 'dial' && view.phaseId !== 'reveal',
+  // Spec §5.4 hides the strip's scores during dial and reveal. Tune In never shows them: scores
+  // widen the chips and wrap the row, which jumped the stage at every change (p05, and the
+  // reveal → scores crossfade in the 2026-09-24 burst), and the scores screen already has them
+  // (the board, the banner or the meter).
+  stripScores: () => false,
   stripActive: (view: PushedView<TvView>) => {
     const v = view as TuneView;
     if (v.phaseId === 'clue' || v.phaseId === 'dial')

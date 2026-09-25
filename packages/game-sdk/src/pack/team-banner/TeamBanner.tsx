@@ -17,7 +17,7 @@ export interface TeamBannerProps {
   tag?: ReactNode;
   /** The game's words: the two names and the middle line. */
   words: { sun: string; moon: string; middle: ReactNode };
-  size?: 'tv' | 'phone';
+  size?: 'tv' | 'stage' | 'phone';
   className?: string;
 }
 

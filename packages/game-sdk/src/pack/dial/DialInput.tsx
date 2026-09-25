@@ -10,6 +10,9 @@ import { buzz } from '../../ui/haptics';
 import styles from './DialInput.module.css';
 import { posFromX } from './geometry';
 
+/** Keeps an end's arrow on its word when a label wraps (200 % text). */
+const NBSP = '\u00a0';
+
 export interface DialInputMark {
   id: string;
   pos: number;
@@ -95,8 +98,8 @@ export function DialInput(props: DialInputProps): JSX.Element {
   return (
     <div className={`${styles.dial} ${disabled ? styles.disabled : ''}`}>
       <div className={styles.ends} aria-hidden>
-        <span className={styles.endLeft}>◀ {left}</span>
-        <span className={styles.endRight}>{right} ▶</span>
+        <span className={styles.endLeft}>{`◀${NBSP}${left}`}</span>
+        <span className={styles.endRight}>{`${right}${NBSP}▶`}</span>
       </div>
       <div className={styles.lane}>
         <div className={styles.marks} aria-hidden>

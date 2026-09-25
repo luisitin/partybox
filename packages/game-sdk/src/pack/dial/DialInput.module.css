@@ -14,10 +14,13 @@
   opacity: 0.55;
 }
 
+/* The two ends share a row while they fit; with big text they take a row each (left above,
+   right below, pushed to its side) — a label never breaks inside a word. */
 .ends {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: var(--pb-space-3);
+  gap: var(--pb-space-1) var(--pb-space-3);
   font-size: var(--pb-font-body);
   font-weight: 800;
   line-height: 1.2;
@@ -25,8 +28,8 @@
 
 .endLeft,
 .endRight {
-  max-width: 48%;
-  overflow-wrap: anywhere;
+  flex: 1 1 0;
+  min-width: min-content;
 }
 
 .endRight {
@@ -198,6 +201,40 @@
   text-align: center;
   font-size: var(--pb-font-caption);
   color: var(--pb-text-muted);
+}
+
+/* A sideways phone (the shell's query): − and + either side of the rail, and the untouched hint
+   goes (the dashed thumb says it), so the whole dial is one row under its ends. */
+@media (orientation: landscape) and (max-height: 420px) {
+  .dial {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: end;
+    column-gap: var(--pb-space-3);
+  }
+  .ends {
+    grid-column: 1 / -1;
+  }
+  .lane {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .steps {
+    display: contents;
+  }
+  .step {
+    grid-row: 2;
+    margin-bottom: calc((64px - var(--pb-touch)) / 2);
+  }
+  .step:first-of-type {
+    grid-column: 1;
+  }
+  .step:last-of-type {
+    grid-column: 3;
+  }
+  .hint {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

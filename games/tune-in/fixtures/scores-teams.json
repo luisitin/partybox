@@ -1,0 +1,859 @@
+{
+  "phase": {
+    "id": "scores",
+    "startedAt": 1700000080105,
+    "deadline": 1700000086105
+  },
+  "rng": {
+    "seed": 1,
+    "step": 167
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "mode": "teams",
+    "rounds": 6,
+    "targetScore": 10,
+    "maxTurns": 12,
+    "clueSeconds": 45,
+    "dialSeconds": 25,
+    "callSeconds": 15,
+    "targetSize": "normal",
+    "huddle": true,
+    "spicy": false,
+    "reader": "sky"
+  },
+  "presence": {
+    "mode": "together",
+    "phoneOnly": false
+  },
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6"],
+  "left": [],
+  "mode": "teams",
+  "teams": {
+    "sun": ["p1", "p3", "p5"],
+    "moon": ["p6", "p4", "p2"]
+  },
+  "psychicBag": {
+    "all": ["p2", "p5", "p6", "p1", "p3", "p4"],
+    "sun": ["p3"],
+    "moon": ["p6", "p4"]
+  },
+  "spectra": [
+    {
+      "id": "tn-pointy-039",
+      "left": "Round",
+      "right": "Pointy",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a beach ball",
+          "pos": 2
+        },
+        {
+          "text": "a snowman",
+          "pos": 6
+        },
+        {
+          "text": "an egg",
+          "pos": 12
+        },
+        {
+          "text": "an owl",
+          "pos": 22
+        },
+        {
+          "text": "a lemon",
+          "pos": 30
+        },
+        {
+          "text": "a rugby ball",
+          "pos": 45
+        },
+        {
+          "text": "an ice cream cone",
+          "pos": 55
+        },
+        {
+          "text": "a crown",
+          "pos": 66
+        },
+        {
+          "text": "a unicorn",
+          "pos": 76
+        },
+        {
+          "text": "a cactus",
+          "pos": 86
+        },
+        {
+          "text": "a porcupine",
+          "pos": 92
+        },
+        {
+          "text": "a needle",
+          "pos": 98
+        }
+      ]
+    },
+    {
+      "id": "tn-classy-044",
+      "left": "Tacky",
+      "right": "Classy",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "fuzzy dice",
+          "pos": 3
+        },
+        {
+          "text": "lawn flamingos",
+          "pos": 8
+        },
+        {
+          "text": "a gold tooth",
+          "pos": 15
+        },
+        {
+          "text": "a waterbed",
+          "pos": 22
+        },
+        {
+          "text": "a Las Vegas wedding",
+          "pos": 32
+        },
+        {
+          "text": "a hot tub",
+          "pos": 42
+        },
+        {
+          "text": "a tiara",
+          "pos": 55
+        },
+        {
+          "text": "a cloth napkin",
+          "pos": 66
+        },
+        {
+          "text": "cursive handwriting",
+          "pos": 74
+        },
+        {
+          "text": "a harp",
+          "pos": 82
+        },
+        {
+          "text": "a chandelier",
+          "pos": 88
+        },
+        {
+          "text": "a tuxedo",
+          "pos": 94
+        }
+      ]
+    },
+    {
+      "id": "tn-pocket-081",
+      "left": "Fits in a pocket",
+      "right": "Needs a truck",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a house key",
+          "pos": 2
+        },
+        {
+          "text": "a guitar pick",
+          "pos": 5
+        },
+        {
+          "text": "a hamster",
+          "pos": 16
+        },
+        {
+          "text": "a banana",
+          "pos": 24
+        },
+        {
+          "text": "a folded umbrella",
+          "pos": 33
+        },
+        {
+          "text": "a laptop",
+          "pos": 42
+        },
+        {
+          "text": "a toaster",
+          "pos": 52
+        },
+        {
+          "text": "a mini fridge",
+          "pos": 64
+        },
+        {
+          "text": "a Christmas tree",
+          "pos": 72
+        },
+        {
+          "text": "a couch",
+          "pos": 86
+        },
+        {
+          "text": "a grand piano",
+          "pos": 94
+        },
+        {
+          "text": "a hot tub",
+          "pos": 98
+        }
+      ]
+    },
+    {
+      "id": "tn-invention-071",
+      "left": "Dumb invention",
+      "right": "Genius invention",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "a singing fish plaque",
+          "pos": 3
+        },
+        {
+          "text": "a banana slicer",
+          "pos": 8
+        },
+        {
+          "text": "an umbrella hat",
+          "pos": 14
+        },
+        {
+          "text": "a selfie stick",
+          "pos": 26
+        },
+        {
+          "text": "the leaf blower",
+          "pos": 36
+        },
+        {
+          "text": "the pogo stick",
+          "pos": 42
+        },
+        {
+          "text": "a treadmill",
+          "pos": 55
+        },
+        {
+          "text": "a heated toilet seat",
+          "pos": 64
+        },
+        {
+          "text": "the snooze button",
+          "pos": 74
+        },
+        {
+          "text": "bubble wrap",
+          "pos": 82
+        },
+        {
+          "text": "sliced bread",
+          "pos": 90
+        },
+        {
+          "text": "the wheel",
+          "pos": 98
+        }
+      ]
+    },
+    {
+      "id": "tn-brag-023",
+      "left": "Embarrassing",
+      "right": "Brag-worthy",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "tripping on stage",
+          "pos": 2
+        },
+        {
+          "text": "calling your teacher Mom",
+          "pos": 6
+        },
+        {
+          "text": "toilet paper on your shoe",
+          "pos": 10
+        },
+        {
+          "text": "waving back at a stranger",
+          "pos": 16
+        },
+        {
+          "text": "a participation trophy",
+          "pos": 26
+        },
+        {
+          "text": "a minivan",
+          "pos": 36
+        },
+        {
+          "text": "singing karaoke",
+          "pos": 44
+        },
+        {
+          "text": "a homegrown tomato",
+          "pos": 58
+        },
+        {
+          "text": "nailing a parallel park",
+          "pos": 68
+        },
+        {
+          "text": "catching a big fish",
+          "pos": 74
+        },
+        {
+          "text": "winning the spelling bee",
+          "pos": 84
+        },
+        {
+          "text": "running a marathon",
+          "pos": 94
+        }
+      ]
+    },
+    {
+      "id": "tn-dirt-064",
+      "left": "Clean",
+      "right": "Dirty",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "an operating room",
+          "pos": 2
+        },
+        {
+          "text": "fresh laundry",
+          "pos": 7
+        },
+        {
+          "text": "a snowflake",
+          "pos": 13
+        },
+        {
+          "text": "a hotel pillow",
+          "pos": 28
+        },
+        {
+          "text": "the dinner table",
+          "pos": 34
+        },
+        {
+          "text": "a dog's mouth",
+          "pos": 48
+        },
+        {
+          "text": "a doorknob",
+          "pos": 56
+        },
+        {
+          "text": "money",
+          "pos": 66
+        },
+        {
+          "text": "a kitchen sponge",
+          "pos": 74
+        },
+        {
+          "text": "a teenager's bedroom",
+          "pos": 84
+        },
+        {
+          "text": "a gas station bathroom",
+          "pos": 92
+        },
+        {
+          "text": "a pigsty",
+          "pos": 97
+        }
+      ]
+    },
+    {
+      "id": "tn-pirate-105",
+      "left": "Accountant name",
+      "right": "Pirate name",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "Howard Spreadsheet",
+          "pos": 2
+        },
+        {
+          "text": "Doris from Payroll",
+          "pos": 5
+        },
+        {
+          "text": "Dennis Deductible",
+          "pos": 10
+        },
+        {
+          "text": "Brenda",
+          "pos": 22
+        },
+        {
+          "text": "Gerald",
+          "pos": 28
+        },
+        {
+          "text": "Captain Receipt",
+          "pos": 45
+        },
+        {
+          "text": "Bartholomew",
+          "pos": 55
+        },
+        {
+          "text": "Silas Crow",
+          "pos": 66
+        },
+        {
+          "text": "Salty Sam",
+          "pos": 76
+        },
+        {
+          "text": "Mad Molly Mayhem",
+          "pos": 88
+        },
+        {
+          "text": "Barnacle Bill",
+          "pos": 93
+        },
+        {
+          "text": "Captain Scurvy",
+          "pos": 97
+        }
+      ]
+    },
+    {
+      "id": "tn-draw-101",
+      "left": "Easy to draw",
+      "right": "Hard to draw",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "a smiley face",
+          "pos": 2
+        },
+        {
+          "text": "a stick figure",
+          "pos": 4
+        },
+        {
+          "text": "a cloud",
+          "pos": 8
+        },
+        {
+          "text": "a snowman",
+          "pos": 15
+        },
+        {
+          "text": "a pizza slice",
+          "pos": 22
+        },
+        {
+          "text": "a tree",
+          "pos": 30
+        },
+        {
+          "text": "a dog",
+          "pos": 45
+        },
+        {
+          "text": "a car",
+          "pos": 55
+        },
+        {
+          "text": "a bicycle",
+          "pos": 66
+        },
+        {
+          "text": "a horse",
+          "pos": 74
+        },
+        {
+          "text": "human hands",
+          "pos": 86
+        },
+        {
+          "text": "the Mona Lisa",
+          "pos": 96
+        }
+      ]
+    },
+    {
+      "id": "tn-fight-126",
+      "left": "Useless in a fight",
+      "right": "Great in a fight",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a newborn baby",
+          "pos": 2
+        },
+        {
+          "text": "a goldfish",
+          "pos": 5
+        },
+        {
+          "text": "a sloth",
+          "pos": 12
+        },
+        {
+          "text": "a librarian",
+          "pos": 22
+        },
+        {
+          "text": "a toddler",
+          "pos": 30
+        },
+        {
+          "text": "a mall cop",
+          "pos": 36
+        },
+        {
+          "text": "a grandma with a purse",
+          "pos": 46
+        },
+        {
+          "text": "an angry goose",
+          "pos": 55
+        },
+        {
+          "text": "a pirate",
+          "pos": 68
+        },
+        {
+          "text": "a sumo wrestler",
+          "pos": 78
+        },
+        {
+          "text": "a honey badger",
+          "pos": 90
+        },
+        {
+          "text": "a grizzly bear",
+          "pos": 97
+        }
+      ]
+    },
+    {
+      "id": "tn-price-004",
+      "left": "Cheap",
+      "right": "Expensive",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "a paperclip",
+          "pos": 1
+        },
+        {
+          "text": "a stick of gum",
+          "pos": 5
+        },
+        {
+          "text": "a toothbrush",
+          "pos": 14
+        },
+        {
+          "text": "a large pizza",
+          "pos": 24
+        },
+        {
+          "text": "a pair of jeans",
+          "pos": 32
+        },
+        {
+          "text": "a video game console",
+          "pos": 46
+        },
+        {
+          "text": "a new laptop",
+          "pos": 54
+        },
+        {
+          "text": "braces",
+          "pos": 64
+        },
+        {
+          "text": "a wedding",
+          "pos": 74
+        },
+        {
+          "text": "a new car",
+          "pos": 80
+        },
+        {
+          "text": "a house",
+          "pos": 90
+        },
+        {
+          "text": "a private island",
+          "pos": 99
+        }
+      ]
+    },
+    {
+      "id": "tn-rarity-052",
+      "left": "Rare",
+      "right": "Common",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "a unicorn",
+          "pos": 1
+        },
+        {
+          "text": "a solar eclipse",
+          "pos": 10
+        },
+        {
+          "text": "a double rainbow",
+          "pos": 18
+        },
+        {
+          "text": "a shooting star",
+          "pos": 25
+        },
+        {
+          "text": "red hair",
+          "pos": 34
+        },
+        {
+          "text": "twins",
+          "pos": 46
+        },
+        {
+          "text": "a snow day",
+          "pos": 54
+        },
+        {
+          "text": "a flat tire",
+          "pos": 62
+        },
+        {
+          "text": "finding a penny",
+          "pos": 72
+        },
+        {
+          "text": "a rainy day",
+          "pos": 82
+        },
+        {
+          "text": "a pigeon",
+          "pos": 94
+        },
+        {
+          "text": "a sneeze",
+          "pos": 98
+        }
+      ]
+    },
+    {
+      "id": "tn-age-046",
+      "left": "Young",
+      "right": "Old",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "a newborn",
+          "pos": 1
+        },
+        {
+          "text": "a toddler",
+          "pos": 5
+        },
+        {
+          "text": "a skateboarder",
+          "pos": 17
+        },
+        {
+          "text": "a rookie cop",
+          "pos": 26
+        },
+        {
+          "text": "a newlywed",
+          "pos": 32
+        },
+        {
+          "text": "a soccer mom",
+          "pos": 42
+        },
+        {
+          "text": "a school principal",
+          "pos": 55
+        },
+        {
+          "text": "a golfer",
+          "pos": 64
+        },
+        {
+          "text": "a crossword fan",
+          "pos": 73
+        },
+        {
+          "text": "a retiree",
+          "pos": 84
+        },
+        {
+          "text": "Santa Claus",
+          "pos": 92
+        },
+        {
+          "text": "a redwood tree",
+          "pos": 98
+        }
+      ]
+    }
+  ],
+  "turn": {
+    "n": 3,
+    "psychic": "p5",
+    "team": "sun",
+    "catchUp": false,
+    "spectrum": 2,
+    "target": 33,
+    "clue": "a banana",
+    "clueAt": 1700000062642,
+    "clueDeadline": 1700000106925,
+    "rejected": null,
+    "dials": {
+      "p1": 6,
+      "p3": 22
+    },
+    "locked": ["p1", "p3"],
+    "needle": 14,
+    "calls": {
+      "p4": "right",
+      "p2": "right",
+      "p6": "right"
+    },
+    "points": {
+      "p1": 0,
+      "p3": 2
+    },
+    "teamPoints": {
+      "sun": 0,
+      "moon": 1
+    },
+    "void": false,
+    "step": 1
+  },
+  "nextTeam": "sun",
+  "scores": {
+    "p1": 4,
+    "p2": 5,
+    "p3": 4,
+    "p4": 5,
+    "p5": 4,
+    "p6": 5
+  },
+  "turnStartScores": {
+    "p1": 4,
+    "p2": 4,
+    "p3": 4,
+    "p4": 4,
+    "p5": 4,
+    "p6": 4
+  },
+  "team": {
+    "sun": 4,
+    "moon": 5
+  },
+  "coopTotal": 0,
+  "played": 3,
+  "stats": {
+    "p3": {
+      "bulls": 1,
+      "dials": 2,
+      "dist": 13,
+      "zeros": 0,
+      "psyTurns": 0,
+      "psyPts": 0
+    },
+    "p5": {
+      "bulls": 1,
+      "dials": 1,
+      "dist": 3,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 0
+    },
+    "p1": {
+      "bulls": 0,
+      "dials": 1,
+      "dist": 27,
+      "zeros": 1,
+      "psyTurns": 1,
+      "psyPts": 4
+    },
+    "p6": {
+      "bulls": 0,
+      "dials": 1,
+      "dist": 7,
+      "zeros": 0,
+      "psyTurns": 0,
+      "psyPts": 0
+    },
+    "p4": {
+      "bulls": 1,
+      "dials": 1,
+      "dist": 2,
+      "zeros": 0,
+      "psyTurns": 0,
+      "psyPts": 0
+    },
+    "p2": {
+      "bulls": 0,
+      "dials": 0,
+      "dist": 0,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 4
+    }
+  },
+  "speechMs": {}
+}

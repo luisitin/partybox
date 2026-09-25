@@ -8,6 +8,7 @@ import { DialStrip } from '@partybox/game-sdk/ui/dial';
 import type { TuneControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { modeLine, nameOf, steps, teamName } from './copy';
+import { LockRow } from './LockRow';
 import { PhoneCall } from './PhoneCall';
 import { PhoneDial } from './PhoneDial';
 import { PsychicClue, PsychicDial } from './PhonePsychic';
@@ -44,7 +45,7 @@ function WaitClue({ view }: { view: TuneControllerView }): JSX.Element {
   return (
     <WaitingScreen
       title={L('{name} is thinking of a clue…', { name: nameOf(view.players, view.turn.psychic) })}
-      hint={L('Where would it land? Get ready to slide.')}
+      hint={<span className={styles.roomy}>{L('Where would it land? Get ready to slide.')}</span>}
     >
       <DialStrip
         left={view.turn.left}
@@ -67,7 +68,11 @@ function WaitOthers({ view }: { view: TuneControllerView }): JSX.Element {
     view.phaseId === 'dial' && view.myTeam && view.myTeam !== view.turn.team
       ? L('Next, your team calls LEFT or RIGHT of their needle.')
       : L('Clue: “{clue}”', { clue: view.turn.clue ?? '' });
-  return <WaitingScreen title={title} hint={hint} />;
+  return (
+    <WaitingScreen title={title} hint={hint}>
+      <LockRow players={view.players} phase={view.phaseId} />
+    </WaitingScreen>
+  );
 }
 
 export function Controller({ view, send, skip }: Props): JSX.Element {

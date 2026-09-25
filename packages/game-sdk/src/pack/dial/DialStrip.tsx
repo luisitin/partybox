@@ -6,6 +6,9 @@ import { Avatar } from '../../ui/Avatar';
 import styles from './DialStrip.module.css';
 import { stackRings, wedges } from './geometry';
 
+/** Keeps an end's arrow on its word when a label wraps (200 % text). */
+const NBSP = '\u00a0';
+
 export interface DialStripMark {
   id: string;
   pos: number;
@@ -75,11 +78,15 @@ export function DialStrip(props: DialStripProps): JSX.Element {
             ))
           : null}
         {needle !== null ? <span className={styles.needle} style={{ left: `${needle}%` }} /> : null}
+        {/* Nothing on the bar yet: it scans, a radio looking for the station (never a dead box). */}
+        {target === null && needle === null && marks.length === 0 ? (
+          <span className={styles.scan} aria-hidden />
+        ) : null}
       </div>
       {showEnds ? (
         <div className={styles.ends}>
-          <span>◀ {left}</span>
-          <span className={styles.endRight}>{right} ▶</span>
+          <span>{`◀${NBSP}${left}`}</span>
+          <span className={styles.endRight}>{`${right}${NBSP}▶`}</span>
         </div>
       ) : null}
     </div>

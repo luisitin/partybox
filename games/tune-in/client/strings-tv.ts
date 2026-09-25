@@ -53,6 +53,9 @@ export const STRINGS_TV: Record<string, string> = {
   'Final scores': 'Puntuación final',
   'Final score': 'Resultado final',
   'After round {n}': 'Tras la ronda {n}',
+  'After turn {n}': 'Tras el turno {n}',
+  'Winners!': '¡Ganadores!',
   '{team} hit the bullseye and goes again!': '¡{team} dio en el blanco y vuelve a jugar!',
+  'Next up: {team}': 'Ahora juega {team}',
   '+{n} for the group this round': '+{n} para el grupo en esta ronda',
 };

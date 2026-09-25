@@ -10,6 +10,7 @@ import type { TuneControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { avatarOf, clueMessage, roundLine } from './copy';
 import { HoldToSee } from './HoldToSee';
+import { LockRow } from './LockRow';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 
@@ -77,37 +78,41 @@ export function PsychicClue({ view, send }: Props): JSX.Element {
     >
       <p className={styles.kicker}>{roundLine(L, view.turn)}</p>
       <h2 className={styles.role}>{L("You're the psychic 📻")}</h2>
-      <Target view={view} live={false} />
-      <form
-        className={styles.clueForm}
-        onSubmit={(e) => {
-          e.preventDefault();
-          submit();
-        }}
-      >
-        <input
-          ref={input}
-          className={`${styles.clueInput} ${message ? styles.clueBad : ''}`}
-          value={text}
-          maxLength={CLUE_MAX_CHARS + 10}
-          placeholder={L('Your clue…')}
-          aria-label={L('Your clue')}
-          aria-invalid={message !== null}
-          autoComplete="off"
-          autoCorrect="on"
-          spellCheck
-          enterKeyHint="send"
-          disabled={sent !== null}
-          onChange={(e) => setText(e.target.value)}
-        />
-        <span className={styles.counter} aria-hidden>
-          {[...text.trim()].length} / {CLUE_MAX_CHARS}
-        </span>
-      </form>
-      <p className={message ? styles.legalBad : styles.legal} role="status" aria-live="polite">
-        {message ?? (verdict.ok ? L('✓ Good to go') : ' ')}
-      </p>
-      <p className={styles.tip}>
+      <div className={styles.pair}>
+        <Target view={view} live={false} />
+        <div className={styles.pairSide}>
+          <form
+            className={styles.clueForm}
+            onSubmit={(e) => {
+              e.preventDefault();
+              submit();
+            }}
+          >
+            <input
+              ref={input}
+              className={`${styles.clueInput} ${message ? styles.clueBad : ''}`}
+              value={text}
+              maxLength={CLUE_MAX_CHARS + 10}
+              placeholder={L('Your clue…')}
+              aria-label={L('Your clue')}
+              aria-invalid={message !== null}
+              autoComplete="off"
+              autoCorrect="on"
+              spellCheck
+              enterKeyHint="send"
+              disabled={sent !== null}
+              onChange={(e) => setText(e.target.value)}
+            />
+            <span className={styles.counter} aria-hidden>
+              {[...text.trim()].length} / {CLUE_MAX_CHARS}
+            </span>
+          </form>
+          <p className={message ? styles.legalBad : styles.legal} role="status" aria-live="polite">
+            {message ?? (verdict.ok ? L('✓ Good to go') : ' ')}
+          </p>
+        </div>
+      </div>
+      <p className={`${styles.tip} ${styles.roomy}`}>
         {L("Name something that sits right on the target. No numbers, no 'left' or 'right'.")}
       </p>
     </Screen>
@@ -122,8 +127,23 @@ export function PsychicDial({ view }: { view: TuneControllerView }): JSX.Element
       <p className={styles.yourClue}>
         {L('Your clue:')} <strong>“{view.turn.clue}”</strong>
       </p>
-      <Target view={view} live />
+      <div className={styles.pair}>
+        {view.huddleMarks ? (
+          // The huddle isn't secret from its psychic: the team's markers ride in the open, and the
+          // target stays under the card (holding it shows both together).
+          <DialStrip
+            left={view.turn.left}
+            right={view.turn.right}
+            target={null}
+            bands={view.turn.bands}
+            marks={view.huddleMarks.map((m) => ({ ...m, avatarId: avatarOf(view.players, m.id) }))}
+            needle={view.needle}
+          />
+        ) : null}
+        <Target view={view} live />
+      </div>
       <p className={styles.hush}>{L('Psychics stay silent! 🤫')}</p>
+      <LockRow players={view.players} phase={view.phaseId} className={styles.roomy} />
     </Screen>
   );
 }

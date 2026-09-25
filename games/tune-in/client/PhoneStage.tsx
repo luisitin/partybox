@@ -25,7 +25,8 @@ function Board({ view }: { view: TuneControllerView }): JSX.Element {
   if (view.turn.mode === 'coop' && view.coop)
     return (
       <p className={styles.total}>
-        {L('Group {total} / {max}', { total: view.coop.total, max: view.coop.max })} ·{' '}
+        {L('Group {total} / {max}', { total: view.coop.total, max: view.coop.max })}
+        {'\u00a0· '}
         {ratingText(L, view.coop.rating)}
       </p>
     );

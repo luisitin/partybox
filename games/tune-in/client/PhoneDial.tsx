@@ -8,6 +8,7 @@ import { DialInput, createThrottle } from '@partybox/game-sdk/ui/dial';
 import type { TuneControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { avatarOf, nameOf, roundLine } from './copy';
+import { LockRow } from './LockRow';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 
@@ -89,11 +90,12 @@ export function PhoneDial({
           hint: L('Slide to where the clue lands'),
         }}
       />
-      <p className={styles.tip}>
+      <p className={`${styles.tip} ${styles.optional}`}>
         {huddle
           ? L('Your team sees your dial move. Talk it out, then lock in.')
           : L('Nobody sees your dial until the reveal.')}
       </p>
+      <LockRow players={view.players} phase={view.phaseId} className={styles.roomy} />
     </Screen>
   );
 }

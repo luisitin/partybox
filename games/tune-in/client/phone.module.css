@@ -170,8 +170,10 @@
 }
 
 /* ── the call ── */
+/* LEFT on the left, RIGHT on the right: the side you mean is the side you tap. */
 .calls {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--pb-space-3);
 }
 
@@ -213,7 +215,60 @@
   overflow-wrap: anywhere;
 }
 
+/* ── lock-in row ── */
+.lockRow {
+  display: grid;
+  gap: var(--pb-space-2);
+}
+
+.lockCount {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.lockFaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+}
+
+.lockFace {
+  position: relative;
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+.lockTick {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  border: 2px solid var(--pb-bg);
+  font-size: 11px;
+  font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
 /* ── results ── */
+/* The result sits in the middle of the screen, not stuck to the top of a tall phone. */
+.middle {
+  margin-block: auto;
+  display: grid;
+  gap: var(--pb-space-4);
+}
+
+.picture {
+  width: 100%;
+  margin-top: var(--pb-space-2);
+}
 .result {
   display: grid;
   justify-items: center;
@@ -329,4 +384,79 @@
 }
 :global(:root[data-motion='off']) .holdInner {
   transition: none;
+}
+
+/* A short screen (an iPhone SE, a sideways phone, big text) keeps what the player needs to act;
+   the reassurance lines go. */
+@media (max-height: 640px) {
+  .optional {
+    display: none;
+  }
+}
+
+/* Stacked everywhere but a sideways phone, where the two sit side by side. */
+.pair,
+.pairSide {
+  display: contents;
+}
+
+/* A sideways phone (the shell's own query): side by side instead of stacked, and the lines that
+   only reassure go, so everything a player acts on fits without a scroll. */
+@media (orientation: landscape) and (max-height: 420px) {
+  .pair {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: var(--pb-space-4);
+    align-items: center;
+  }
+  .pairSide {
+    display: grid;
+    gap: var(--pb-space-2);
+  }
+  .roomy {
+    display: none;
+  }
+  /* The result card takes three fifths; the totals (a line, or the teams' banner) the rest. */
+  .middle {
+    display: flex;
+    align-items: center;
+  }
+  .middle > .result {
+    flex: 3 1 0;
+    min-width: 0;
+  }
+  .middle > :not(.result) {
+    flex: 2 1 0;
+    min-width: 0;
+  }
+  /* Teams' scores: a card without a picture beside the banner — half and half. */
+  .middle.even > .result,
+  .middle.even > :not(.result) {
+    flex: 1 1 0;
+  }
+  /* The scores beat keeps your result and the totals; the round's picture was just on screen. */
+  .atScores .picture {
+    display: none;
+  }
+  .result {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--pb-space-4);
+    padding: var(--pb-space-3) var(--pb-space-4);
+  }
+  .big {
+    grid-row: 1 / span 2;
+  }
+  .resultLine,
+  .picture {
+    grid-column: 2;
+  }
+  /* No picture under it: the line centres beside the number. */
+  .resultLine:last-child {
+    grid-row: 1 / span 2;
+  }
+  .picture {
+    margin-top: 0;
+  }
 }

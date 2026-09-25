@@ -84,7 +84,7 @@
   gap: var(--pb-space-2);
   font-weight: 900;
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .moon .name {
@@ -154,21 +154,67 @@
   text-align: center;
 }
 
-.tv .name {
+/* `stage`: the big board (scores, finale). */
+.stage .name {
   font-size: var(--pb-font-h2);
 }
-.tv .score {
+.stage .score {
   font-size: var(--pb-font-h1);
 }
-.tv .middle {
+.stage .middle {
   font-size: var(--pb-font-body);
 }
-.tv .tag {
+.stage .tag {
   font-size: var(--pb-font-caption);
 }
 
+/* `tv`: one slim row per team over a round — shape and name, the race bar, the score — so the
+   stage keeps its height for the game. */
+.tv .side {
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto;
+  column-gap: var(--pb-space-4);
+  padding: var(--pb-space-2) var(--pb-space-5);
+}
+.tv .name {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: var(--pb-font-body);
+}
+.tv .track {
+  grid-column: 2;
+  grid-row: 1;
+}
+.tv .score {
+  grid-column: 3;
+  grid-row: 1;
+  font-size: var(--pb-font-h2);
+  line-height: 1;
+}
+.tv .moon .score {
+  grid-column: 1;
+}
+.tv .moon .name {
+  grid-column: 3;
+}
+.tv .middle {
+  font-size: var(--pb-font-caption);
+}
+.tv .tag {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--pb-font-caption);
+}
+
+/* `phone`: the two sides share the row and the middle line goes under them — three columns at
+   320 px squeezed the names to one letter per line. */
 .phone {
+  grid-template-columns: 1fr 1fr;
   gap: var(--pb-space-2);
+}
+.phone .middle {
+  grid-column: 1 / -1;
+  grid-row: 2;
 }
 .phone .side {
   padding: var(--pb-space-2) var(--pb-space-3);

@@ -3,9 +3,17 @@
 // the psychic's thinking dots, then the clue (landing with its reading), then the call or the
 // verdict. The reveal plays its own cues on its own frames: `reveal` as the shutter unlatches,
 // `jackpot` / `bust` as the points pop.
-import { useEffect, useState } from 'react';
-import type { JSX } from 'react';
-import { Avatar, BigText, Stage, useSecondsLeft, useSound, useT } from '@partybox/game-sdk/ui';
+import { useCallback, useEffect, useState } from 'react';
+import type { CSSProperties, JSX } from 'react';
+import {
+  Avatar,
+  BigText,
+  Stage,
+  Timer,
+  useSecondsLeft,
+  useSound,
+  useT,
+} from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import { Dial } from '@partybox/game-sdk/ui/dial';
 import type { DialMarker } from '@partybox/game-sdk/ui/dial';
@@ -13,7 +21,7 @@ import type { TuneTvView } from '../server/index';
 import { avatarOf, nameOf, roundLine, teamName, verdictText } from './copy';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
-import { CoopMeter, TvHeader } from './TvHeader';
+import { TvHeader } from './TvHeader';
 import { useReading } from './useReading';
 
 type Props = GameTvProps<TuneTvView>;
@@ -112,6 +120,32 @@ function Bubble({ view, landed }: { view: TuneTvView; landed: boolean }): JSX.El
   );
 }
 
+/** The dial's and the call's seconds, at the end of the bubble row. They live on the stage, not
+ *  in the shell's strip: a strip countdown that came and went with the phase re-wrapped the chips
+ *  and jumped the dial at every cut (burst of 2026-09-24). */
+function Clock({ view }: { view: TuneTvView }): JSX.Element | null {
+  const play = useSound();
+  const onTick = useCallback(() => play('countdown', { quiet: true }), [play]);
+  if (view.phaseId !== 'dial' && view.phaseId !== 'call') return null;
+  return (
+    <div className={styles.clock}>
+      <Timer deadline={view.deadline} paused={view.paused} onTick={onTick} size="lg" />
+    </div>
+  );
+}
+
+/** The empty upper corner beside the arc, on the side away from `pos` (the needle or the target):
+ *  what floats there never covers the dial, its ends or the faces. */
+function corner(pos: number | null): CSSProperties {
+  // max-content first: a box pinned at left 85% would otherwise only get the 15 % to its right.
+  return {
+    left: (pos ?? 50) < 50 ? '84%' : '16%',
+    top: '24%',
+    width: 'max-content',
+    maxWidth: '30%',
+  };
+}
+
 /** What floats over the dial without moving it: the call's question, the verdict, "No signal!". */
 function Overlay({ view }: { view: TuneTvView }): JSX.Element | null {
   const L = useT(STRINGS);
@@ -119,7 +153,7 @@ function Overlay({ view }: { view: TuneTvView }): JSX.Element | null {
   const other = turn.team === 'sun' ? 'moon' : 'sun';
   if (view.phaseId === 'call')
     return (
-      <p className={`${styles.overlay} ${styles.callout}`}>
+      <p className={`${styles.overlay} ${styles.callout}`} style={corner(view.needle)}>
         {L('{team}: is the target LEFT or RIGHT of the needle?', { team: teamName(L, other) })}
       </p>
     );
@@ -135,10 +169,8 @@ function Overlay({ view }: { view: TuneTvView }): JSX.Element | null {
     );
   if (reveal.step !== 1) return null;
   const calls = reveal.revealCalls;
-  // The verdict floats over the half of the dial the target is not in, so the wedges stay clear.
-  const side = reveal.bullseyeAt < 50 ? '67%' : '33%';
   return (
-    <div className={`${styles.overlay} ${styles.verdictRow}`} style={{ left: side, top: '66%' }}>
+    <div className={`${styles.overlay} ${styles.verdictRow}`} style={corner(reveal.bullseyeAt)}>
       <span className={styles.verdict}>{verdictText(L, reveal.verdict)}</span>
       {calls && calls.side ? (
         <span className={styles.callResult}>
@@ -181,14 +213,10 @@ export function TvRound({ view }: Props): JSX.Element {
     showPoints && reveal.needlePts !== null && turn.mode !== 'solo' ? `+${reveal.needlePts}` : null;
   return (
     <Stage className={styles.round}>
-      {turn.mode === 'teams' ? <TvHeader view={view} /> : null}
+      {turn.mode === 'solo' ? null : <TvHeader view={view} />}
       <div className={styles.bubbleRow}>
         <Bubble view={view} landed={landed} />
-        {view.coop ? (
-          <span className={styles.meterCorner}>
-            <CoopMeter total={view.coop.total} max={view.coop.max} />
-          </span>
-        ) : null}
+        <Clock view={view} />
       </div>
       <div className={styles.dialRow}>
         <Overlay view={view} />
@@ -202,7 +230,9 @@ export function TvRound({ view }: Props): JSX.Element {
           markers={markers}
           landing={revealing}
           needle={needle}
-          needleSettles={revealing}
+          // Only a needle the room hasn't seen yet swings in (co-op without a huddle); a teams
+          // needle was up for the call and a huddle's was live, so it stays where it is.
+          needleSettles={revealing && turn.mode === 'coop' && !turn.huddle}
           needleBadge={badge}
           showPoints={showPoints}
           entrance={phase === 'clue'}

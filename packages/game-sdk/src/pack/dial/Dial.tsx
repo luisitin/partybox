@@ -7,6 +7,9 @@ import { Avatar } from '../../ui/Avatar';
 import styles from './Dial.module.css';
 import { BOX, fanOut, pointAt, posToDeg, slicePath, wedges } from './geometry';
 
+/** Keeps an end's arrow on its word when a label wraps (200 % text). */
+const NBSP = '\u00a0';
+
 export interface DialMarker {
   id: string;
   pos: number;
@@ -54,7 +57,8 @@ const ZONE_CLASS: Record<2 | 3 | 4, string> = {
 const faceRadius = (ring: number): number => BOX.rim + 34 + ring * 46;
 
 function faceStyle(pos: number, ring: number, i: number, landGapMs: number): CSSProperties {
-  const radius = ring < 0 ? BOX.rim - 12 : faceRadius(ring);
+  // ring −1: the needle's own badge, riding partway along it (clear of the faces on the rim).
+  const radius = ring < 0 ? BOX.face * 0.58 : faceRadius(ring);
   return {
     '--arm': `${(radius / BOX.w) * 100}%`,
     '--deg': `${-posToDeg(pos)}deg`,
@@ -86,7 +90,7 @@ export function Dial(props: DialProps): JSX.Element {
       role="img"
       aria-label={label ?? `${left} — ${right}`}
     >
-      <span className={`${styles.end} ${styles.endLeft}`}>◀ {left}</span>
+      <span className={`${styles.end} ${styles.endLeft}`}>{`◀${NBSP}${left}`}</span>
       <div className={styles.box}>
         {/* The still parts are one SVG, painted once; everything that moves is its own layer. */}
         <svg className={styles.svg} viewBox={`0 0 ${BOX.w} ${BOX.h}`} aria-hidden>
@@ -180,7 +184,7 @@ export function Dial(props: DialProps): JSX.Element {
           </span>
         ))}
       </div>
-      <span className={`${styles.end} ${styles.endRight}`}>{right} ▶</span>
+      <span className={`${styles.end} ${styles.endRight}`}>{`${right}${NBSP}▶`}</span>
     </div>
   );
 }
@@ -203,6 +207,8 @@ function Shutter({ swing }: { swing: boolean }): JSX.Element {
           ))}
         </svg>
       </span>
+      {/* A closed lid is never still: a faint glint sweeps it, a radio searching for a station. */}
+      {swing ? null : <span className={styles.glint} />}
     </span>
   );
 }

@@ -88,6 +88,22 @@ describe('the phone never spoils', () => {
     });
   });
 
+  it('the teams banner and the co-op meter hold their totals until the points beat', () => {
+    let t = toDial(start(4, { mode: 'teams' }), 50);
+    t = dialAll(t, [50]);
+    t = timer(t); // the call runs out → reveal, step 0
+    expect(t.phase.id).toBe('reveal');
+    const active = t.turn.team as 'sun' | 'moon';
+    expect(t.team[active]).toBe(4);
+    expect(game.tvView(t).team[active]).toBe(0);
+    expect(game.tvView(timer(t)).team[active]).toBe(4);
+    let c = dialAll(toDial(start(3, { mode: 'coop' }), 50), [50, 50]);
+    expect(c.coopTotal).toBe(4);
+    expect(game.tvView(c).coop?.total).toBe(0);
+    c = timer(c);
+    expect(game.tvView(c).coop?.total).toBe(4);
+  });
+
   it('the TV strip keeps the old scores through the reveal', () => {
     const s = dialAll(toDial(start(4, { mode: 'solo' }), 50), [50, 50, 50]);
     expect(game.tvView(s).players.every((p) => (p.score ?? 0) === 0)).toBe(true);

@@ -34,11 +34,21 @@
 .bubbleRow {
   position: relative;
   z-index: 1;
-  height: 164px;
+  height: 150px;
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* The dial's and the call's seconds at the bubble row's end: out of the flow, so the bubble stays
+   centred and nothing moves when it comes or goes. */
+.clock {
+  position: absolute;
+  inset-inline-end: 0;
+  top: 50%;
+  translate: 0 -50%;
+  animation: pb-fade-in var(--pb-motion-base) var(--pb-ease) both;
 }
 
 /* The speech bubble over the arc, its tail pointing down at the dial. */
@@ -82,11 +92,29 @@
   text-overflow: ellipsis;
 }
 
-.meterCorner {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+/* Co-op's slim header row: the group meter across the stage, as slim as the teams' banner. */
+.coopRow {
+  display: flex;
+  padding: var(--pb-space-2) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+}
+
+.meterSlim {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-5);
+}
+
+.meterSlim .meterLabel {
+  flex: 0 0 auto;
+  font-size: var(--pb-font-body);
+  color: var(--pb-text);
+}
+
+.meterSlim .meterTrack {
+  flex: 1;
 }
 
 .who {
@@ -275,6 +303,21 @@
   transition: transform var(--pb-motion-slow) var(--pb-ease);
 }
 
+/* The scores beat: the group's fill grows from its old total once the stage has landed. */
+.meterGain .meterFill {
+  animation: tune-meter-gain var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: var(--pb-motion-slow);
+}
+
+@keyframes tune-meter-gain {
+  from {
+    transform: scaleX(var(--from));
+  }
+  to {
+    transform: scaleX(var(--fill));
+  }
+}
+
 .meterBand {
   position: absolute;
   top: 50%;
@@ -361,6 +404,12 @@
   --team: var(--pb-team-moon);
 }
 
+/* The finale's winners: the card lit in its team's colour. */
+.rosterWon {
+  outline: 4px solid var(--team);
+  outline-offset: 4px;
+}
+
 .rosterName {
   font-size: var(--pb-font-h2);
   font-weight: 900;
@@ -393,7 +442,7 @@
   gap: var(--pb-space-5);
 }
 
-.scores > :last-child {
+.board {
   width: min(1200px, 100%);
 }
 
@@ -401,17 +450,114 @@
   width: min(1400px, 100%);
 }
 
-.deltas {
-  display: flex;
-  gap: var(--pb-space-8);
+/* The teams' race (RaceTrack): name · cells to the target · flag · total · +N. The old cells stand;
+   this turn's pop in one by one after the stage has landed, and each lane's total and +N land
+   after its last new cell. */
+.race {
+  width: min(1600px, 100%);
+  display: grid;
+  gap: var(--pb-space-5);
+}
+
+.lane {
+  --team: var(--pb-team-sun);
+  --land: calc(var(--pb-motion-slow) + var(--end) * var(--pb-motion-fast));
+  display: grid;
+  grid-template-columns: 5em minmax(0, 1fr) auto 2em 2.4em;
+  align-items: center;
+  column-gap: var(--pb-space-4);
+  padding: var(--pb-space-4) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border-left: 10px solid var(--team);
   font-size: var(--pb-font-h2);
-  font-weight: 800;
-  color: var(--pb-text-muted);
+  font-weight: 900;
+}
+
+.laneMoon {
+  --team: var(--pb-team-moon);
+}
+
+.laneActive {
+  outline: 4px solid var(--team);
+  outline-offset: 4px;
+}
+
+.laneName {
+  color: var(--team);
+  white-space: nowrap;
+  text-align: start;
+}
+
+.cells {
+  display: grid;
+  grid-template-columns: repeat(var(--cells), minmax(0, 1fr));
+  gap: var(--pb-space-2);
+}
+
+.cell {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+}
+
+.cellFull {
+  background: var(--team);
+}
+
+/* A new point is an empty cell first (never a hole in the lane), then its colour pops in. */
+.cellNew::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--team);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-slow) + var(--k) * var(--pb-motion-fast));
+}
+
+.flag {
+  font-size: 1.3em;
+  line-height: 1;
+}
+
+.laneScore {
+  display: grid;
+  justify-items: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.laneScore > span {
+  grid-area: 1 / 1;
+}
+
+.scoreWas {
+  animation: global(pb-fade-out) var(--pb-motion-fast) linear both;
+  animation-delay: var(--land);
+}
+
+.scoreNow {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: var(--land);
+}
+
+.laneGain {
+  color: var(--pb-accent-3);
+  font-size: 0.8em;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: var(--land);
 }
 
 .catchUp {
   animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
   animation-delay: var(--pb-motion-slow);
+}
+
+/* Co-op's "+3 for the group" lands as the meter finishes growing. */
+.gainLine {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-slow) * 2);
 }
 
 .bigMeter {
@@ -439,6 +585,50 @@
 
 .rating {
   animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.finaleRosters {
+  width: min(1400px, 100%);
+}
+
+/* The awards under a kept finale board (the shell shows none for it): one card each, in a row. */
+.awards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-4);
+  width: min(1600px, 100%);
+}
+
+.award {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-1);
+  min-width: 14em;
+  padding: var(--pb-space-3) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  text-align: center;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.awardTitle {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+}
+
+.awardWho {
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+}
+
+.awardWhy {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
 }
 
 @media (prefers-reduced-motion: reduce) {

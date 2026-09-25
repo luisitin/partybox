@@ -3,11 +3,11 @@
 import type { JSX } from 'react';
 import { BigText, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ScoreboardRow } from '@partybox/game-sdk/ui';
-import { TeamBanner } from '@partybox/game-sdk/ui/team-banner';
 import type { TuneTvView } from '../server/index';
 import { ratingText, teamName } from './copy';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
+import { RaceTrack } from './RaceTrack';
 import { CoopMeter } from './TvHeader';
 import { useReading } from './useReading';
 
@@ -35,30 +35,33 @@ export function TvScores({ view }: GameTvProps<TuneTvView>): JSX.Element {
   const L = useT(STRINGS);
   useReading(view.reading);
   const { turn, reveal } = view;
-  const title = view.last ? L('Final scores') : L('After round {n}', { n: turn.n });
+  // Teams count turns (catch-ups included), like the round line over the dial.
+  const title = view.last
+    ? L('Final scores')
+    : turn.mode === 'teams'
+      ? L('After turn {n}', { n: turn.n })
+      : L('After round {n}', { n: turn.n });
   if (turn.mode === 'teams') {
-    const pts = reveal?.teamPoints ?? { sun: 0, moon: 0 };
+    const other = turn.team === 'sun' ? 'moon' : 'sun';
     return (
       <Stage center className={styles.scores}>
         <BigText level="h1">{title}</BigText>
-        <TeamBanner
-          className={styles.bigBanner}
-          sun={view.team.sun}
-          moon={view.team.moon}
+        <RaceTrack
+          totals={view.team}
+          gained={reveal?.teamPoints ?? { sun: 0, moon: 0 }}
           winAt={view.winAt}
+          names={{ sun: teamName(L, 'sun'), moon: teamName(L, 'moon') }}
           active={view.catchUpNext ? turn.team : null}
-          tag={view.catchUpNext ? L('CATCH-UP!') : undefined}
-          words={{ sun: L('Sun'), moon: L('Moon'), middle: L('First to {n}', { n: view.winAt }) }}
         />
-        <p className={styles.deltas}>
-          <span>{`${teamName(L, 'sun')} +${pts.sun}`}</span>
-          <span>{`${teamName(L, 'moon')} +${pts.moon}`}</span>
-        </p>
         {view.catchUpNext ? (
           <BigText level="h2" tone="accent" className={styles.catchUp}>
             {L('{team} hit the bullseye and goes again!', { team: teamName(L, turn.team) })}
           </BigText>
-        ) : null}
+        ) : view.last ? null : (
+          <BigText level="h2" tone="muted" className={styles.catchUp}>
+            {L('Next up: {team}', { team: teamName(L, other) })}
+          </BigText>
+        )}
       </Stage>
     );
   }
@@ -68,9 +71,9 @@ export function TvScores({ view }: GameTvProps<TuneTvView>): JSX.Element {
       <Stage center className={styles.scores}>
         <BigText level="h1">{title}</BigText>
         <div className={styles.bigMeter}>
-          <CoopMeter total={view.coop.total} max={view.coop.max} />
+          <CoopMeter total={view.coop.total} max={view.coop.max} from={view.coop.total - gained} />
         </div>
-        <BigText level="h2" tone={gained > 0 ? 'accent' : 'muted'}>
+        <BigText level="h2" tone={gained > 0 ? 'accent' : 'muted'} className={styles.gainLine}>
           {L('+{n} for the group this round', { n: gained })}
         </BigText>
         <BigText level="h2" tone="muted">
@@ -83,7 +86,9 @@ export function TvScores({ view }: GameTvProps<TuneTvView>): JSX.Element {
   return (
     <Stage className={styles.scores}>
       <BigText level="h1">{title}</BigText>
-      <Scoreboard rows={rows} stagger="climb" climbFrom={before} />
+      <div className={styles.board}>
+        <Scoreboard rows={rows} stagger="climb" climbFrom={before} />
+      </div>
     </Stage>
   );
 }

@@ -59,12 +59,17 @@ function deltas(state: State): Record<string, number> {
 export function tvView(state: State, gameId: string): TuneTvView {
   const phase = state.phase.id;
   const revealed = isRevealed(state);
-  // The strip never counts points the stage hasn't shown yet.
+  // The strip never counts points the stage hasn't shown yet; nor do the banner and the meter
+  // while the shutter is still opening (the totals move on the points beat).
   const shown = phase === 'reveal' ? state.turnStartScores : state.scores;
+  const opening = phase === 'reveal' && state.turn.step === 0 && !state.turn.void;
+  const gained = opening ? state.turn.teamPoints : { sun: 0, moon: 0 };
+  const groupGained = opening && state.mode === 'coop' ? (revealFacts(state).needlePts ?? 0) : 0;
   const view: TuneTvView = {
     ...envelope(state, gameId, { statusOf: statusOf(state), scores: shown }),
-    // The clue is thinking time and the reveal and scores are paced beats: a bar, never a countdown.
-    ...(phase === 'dial' || phase === 'call' ? {} : { timerMode: 'quiet' as const }),
+    // Always the bar: the dial's and the call's seconds sit on the stage (TvRound's clock), because
+    // a strip countdown that came and went with the phase re-wrapped the chips and moved the dial.
+    timerMode: 'quiet' as const,
     ...(phase === 'scores' ? { vipSkipLabel: isOver(state) ? 'See results' : 'Next round' } : {}),
     turn: header(state),
     clueAt: state.turn.clueAt,
@@ -74,9 +79,12 @@ export function tvView(state: State, gameId: string): TuneTvView {
         ? state.turn.needle
         : null,
     teams: state.teams,
-    team: state.team,
+    team: { sun: state.team.sun - gained.sun, moon: state.team.moon - gained.moon },
     winAt: state.cfg.targetScore,
-    coop: state.mode === 'coop' ? coopMeter(state) : null,
+    coop:
+      state.mode === 'coop'
+        ? coopMeter({ ...state, coopTotal: state.coopTotal - groupGained })
+        : null,
     deltas: deltas(state),
     catchUpNext: phase === 'scores' && !isOver(state) && earnsCatchUp(state),
     last: isOver(state),
