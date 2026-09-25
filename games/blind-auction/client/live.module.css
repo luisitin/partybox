@@ -680,3 +680,7 @@
     transition-duration: 0ms;
   }
 }
+
+.tugScreen .potatoTitle {
+  color: var(--team);
+}

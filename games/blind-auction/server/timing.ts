@@ -40,7 +40,8 @@ export const EVENT_MS = {
 /** Tug of war: the pull lasts this long at most; a counted tap moves the rope TUG_STEP × your
  *  share of your team's stake; taps closer than TUG_TAP_MS are one tap. */
 export const TUG_MS = 12_000;
-export const TUG_STEP = 0.035;
+// Tuned on a 6-player recording: at 0.035 the rope barely left the middle in 12 s.
+export const TUG_STEP = 0.06;
 export const TUG_TAP_MS = 80;
 /** Hot potato: it pops between these (ms, secret), checked every POTATO_TICK_MS; a holder must
  *  hold it this long before a pass counts; the burnt holder loses POTATO_BURN coins. */

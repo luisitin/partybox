@@ -219,7 +219,7 @@ describe('live events: tug of war', () => {
     s = bet(s, 'p4', 1, 0);
     expect(s.phase.id).toBe('tug');
     const a = pull(s, 'p1', 100);
-    expect(a.r.rope).toBeCloseTo(-0.035 * 0.75);
+    expect(a.r.rope).toBeCloseTo(-0.06 * 0.75);
     expect(pull(a, 'p1', 150).r.rope).toBe(a.r.rope); // inside 80 ms: one tap
     expect(pull(s, 'p4', 100).r.rope).toBe(0);
   });
