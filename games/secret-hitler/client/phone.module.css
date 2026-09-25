@@ -221,7 +221,8 @@
   -webkit-touch-callout: none;
   touch-action: none;
   cursor: pointer;
-  --sh-card-w: min(24vw, 6.2rem);
+  /* Capped by the screen's height too, so at 200 % text the hand still sits above the button. */
+  --sh-card-w: min(24vw, 6.2rem, 12vh);
   --sh-card-h: calc(var(--sh-card-w) * 1.4);
 }
 
@@ -240,6 +241,8 @@
 }
 
 .rowHint[data-lead] {
+  padding-block: 0.1rem;
+  font-size: min(var(--pb-font-caption), 2.6vh);
   font-weight: 800;
   color: var(--sh-brass);
 }

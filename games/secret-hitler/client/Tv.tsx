@@ -49,6 +49,16 @@ function Clock({ view }: { view: ShTvView }): JSX.Element | null {
   );
 }
 
+/**
+ * The banner holds a title and two lines at one fixed height (the board never moves), so a third
+ * line (a time-out note beside a count) folds into the second (review cfa424 #1).
+ */
+function bannerLines(lines: readonly string[]): string[] {
+  const shown = lines.filter(Boolean);
+  if (shown.length <= 2) return shown;
+  return [shown[0] as string, shown.slice(1).join(' · ')];
+}
+
 export function Tv({ view }: GameTvProps<ShTvView>): JSX.Element {
   const L = useT(STRINGS);
   const root = useRef<HTMLDivElement>(null);
@@ -81,7 +91,7 @@ export function Tv({ view }: GameTvProps<ShTvView>): JSX.Element {
             <h1 className={styles.title} data-over={over || undefined}>
               {title}
             </h1>
-            {lines.filter(Boolean).map((line, i) => (
+            {bannerLines(lines).map((line, i) => (
               <p
                 key={line}
                 className={styles.line}

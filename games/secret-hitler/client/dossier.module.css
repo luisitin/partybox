@@ -87,10 +87,15 @@
   }
 }
 
-/* A choice on screen: one short line, so the choice keeps the height. */
+/* A choice on screen: one short line, so the choice keeps the height; its type follows the screen's
+   height too, so at 200 % text it stays one line (review cfa424 #2). */
 .folder[data-compact] .cover {
-  min-height: 2.2rem;
+  min-height: 0;
   padding-block: 0.15rem;
+}
+
+.folder[data-compact] .hint {
+  font-size: min(var(--pb-font-caption), 2.4vh);
 }
 
 .folder[data-compact] .stampMark {
@@ -98,7 +103,7 @@
 }
 
 .folder[data-compact] .tab {
-  font-size: 1rem;
+  font-size: min(1rem, 2.8vh);
 }
 
 .folder[data-open] .hint {
