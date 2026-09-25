@@ -44,7 +44,9 @@ returns `ctx.presence` (the SDK's `GamePresence`), else all in one room. Still l
 - **A psychic who drops** during `clue` keeps it open 10 s at most (a phone reload is common), and
   gets the full time back on return; leaving for good voids the round at once.
 - **Reveal in two beats** (ADR-033 re-arm): shutter + faces first, points second. Phones show their
-  own result only at the second beat. A VIP skip steps through the beats.
+  own result only at the second beat. A VIP skip steps through the beats. Neither beat holds a
+  still picture (p17): the bullseye's outline breathes once the faces are down, and faces that
+  scored hop while the points are up.
 - **Fixed lines** are voiced in `intro` ("Tune in!"), `dial` ("Lock it in." with a few seconds left,
   played by the stage), `call` ("Left or right?"), the verdict beat, catch-up and co-op's rating.
 - **The TV's timer is always the quiet bar;** the dial's and the call's seconds sit on the stage

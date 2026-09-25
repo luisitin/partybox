@@ -201,6 +201,42 @@
   display: none;
 }
 
+/* The reveal's hold: the bullseye's outline breathes once the faces are down (p17: the stage
+   otherwise held still for 3–4 s on each beat, only the timer bar moving). Opacity only, its own
+   layer; the 4 inside stays readable because only the edge lights. */
+.halo {
+  will-change: opacity;
+  animation: tune-halo calc(var(--pb-motion-pulse) * 2.2) ease-in-out infinite backwards;
+  animation-delay: calc(var(--pb-motion-fast) + var(--pb-motion-slow) * 2);
+  pointer-events: none;
+}
+
+.halo path {
+  fill: none;
+  stroke: var(--pb-text);
+  stroke-width: 6;
+  stroke-linejoin: round;
+}
+
+@keyframes tune-halo {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .halo {
+    display: none;
+  }
+}
+:global(:root[data-motion='off']) .halo {
+  display: none;
+}
+
 .shutterFace {
   fill: var(--pb-surface);
   stroke: var(--pb-surface-2);
@@ -336,6 +372,44 @@
   height: 40px;
   animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
   animation-delay: calc(var(--pb-motion-fast) + var(--pb-motion-slow) + var(--i) * var(--gap));
+}
+
+/* The face and its pill, one box, so a face that scored can hop with its points. */
+.bob {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* While the points are up, each face that scored hops, the crowd in a ripple (the reveal's hold
+   was a still picture for 3–4 s, p17). Transform only. */
+.hop {
+  animation: tune-hop calc(var(--pb-motion-pulse) * 1.6) ease-in-out infinite;
+  animation-delay: calc(var(--pb-motion-base) + var(--i) * 110ms);
+}
+
+@keyframes tune-hop {
+  0%,
+  34%,
+  100% {
+    transform: translateY(0);
+  }
+  14% {
+    transform: translateY(-9px);
+  }
+  24% {
+    transform: translateY(1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hop {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off']) .hop {
+  animation: none;
 }
 
 /* A face's points: a small pill on its own chin, inside the face's footprint, sized from the

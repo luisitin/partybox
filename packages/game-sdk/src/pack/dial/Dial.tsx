@@ -165,6 +165,21 @@ export function Dial(props: DialProps): JSX.Element {
             );
           })}
         </svg>
+        {/* The reveal's hold is never still: once the faces are down, the bullseye's outline
+            breathes (its own layer, opacity only) until the stage moves on. */}
+        {swing && target !== null ? (
+          <svg
+            className={`${styles.svg} ${styles.halo}`}
+            viewBox={`0 0 ${BOX.w} ${BOX.h}`}
+            aria-hidden
+          >
+            {wedges(target, bands)
+              .filter((w) => w.pts === 4)
+              .map((w) => (
+                <path key={w.from} d={slicePath(w.from, w.to, BOX.face)} />
+              ))}
+          </svg>
+        ) : null}
         {!open || swing ? <Shutter swing={swing} /> : null}
         {leaders.length > 0 ? (
           <svg
@@ -207,12 +222,17 @@ export function Dial(props: DialProps): JSX.Element {
           >
             <span className={`${styles.upright} ${landing ? '' : styles.glide}`}>
               <span className={landing ? styles.land : styles.face40}>
-                <Avatar avatarId={m.avatarId} size={40} />
-                {showPoints && m.pts !== null && m.pts !== undefined ? (
-                  <span className={`${styles.badge} ${m.pts === 0 ? styles.badgeZero : ''}`}>
-                    {m.pts > 0 ? `+${m.pts}` : '0'}
-                  </span>
-                ) : null}
+                {/* A face that scored hops while the points are up, the crowd in a ripple. */}
+                <span
+                  className={`${styles.bob} ${showPoints && (m.pts ?? 0) > 0 ? styles.hop : ''}`}
+                >
+                  <Avatar avatarId={m.avatarId} size={40} />
+                  {showPoints && m.pts !== null && m.pts !== undefined ? (
+                    <span className={`${styles.badge} ${m.pts === 0 ? styles.badgeZero : ''}`}>
+                      {m.pts > 0 ? `+${m.pts}` : '0'}
+                    </span>
+                  ) : null}
+                </span>
               </span>
             </span>
           </span>

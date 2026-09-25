@@ -212,3 +212,17 @@ double-tap Lock in; callers tap a side; Priya's phone (iPhone SE, 320 × 568) ge
   motion).
 - p14c: TV 246 s, 0 dead spans, 0 hard cuts; phones 0 dead spans in the game. The only still
   left starts after the results arrive (the shell's results screen on the phones).
+
+## p17 — the reveal's hold (helper-1's Recipe A on c8d6e3a9, 2026-09-25)
+
+- Found by helper-1's solo run: the TV held still for 8.6 s in round 3 (101.8–110.5 s). Traced
+  frame by frame, this is the reveal, not the capture: once the faces are down, only the thin
+  timer bar moves until the verdict pops (about 2 s), and again from the verdict to the scores
+  (about 4.5 s). Every round has the same hold. Round 3 was the only one with no other blip to
+  break the span, so it was the only one the checker flagged.
+- Fixed in the SDK Dial (branch tune-in/reveal-alive): the bullseye's outline breathes from the
+  moment the faces are down (its own layer, opacity only; the 4 stays readable), and a face that
+  scored hops while the points are up, the crowd in a ripple (transform only). Both are off under
+  reduced motion.
+- p17 solo (6 players): TV 245 s, **0 dead spans, 0 hard cuts** (it had 2 spans, 8.6 s, before
+  the fix). The phones' only stills start after the results arrive (the shell's results screen).
