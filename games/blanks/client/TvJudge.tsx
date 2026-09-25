@@ -8,6 +8,7 @@ import { Avatar, Stage, useSound, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
 import { fillText } from '../server/fill';
+import { anchorOf } from './anchor';
 import { FilledCard, LETTERS } from './Cards';
 import { STRINGS } from './strings';
 import styles from './blanks.module.css';
@@ -329,22 +330,4 @@ export function TvJudge({ view }: Props): JSX.Element {
       <JudgeGrid key={`${view.round}:${view.cards.length}`} view={view} />
     </Stage>
   );
-}
-
-/** I-179 B: the two words either side of a sentence's blank, around the blank — or the bare blank
- *  for a question card (no blank: the answer stands alone). */
-function anchorOf(text: string): string {
-  const m = /_{2,}/.exec(text);
-  if (!m) return '____';
-  const before = text.slice(0, m.index).trim().split(/\s+/).filter(Boolean).slice(-2).join(' ');
-  const after = text
-    .slice(m.index + m[0].length)
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .join(' ');
-  const head = before ? `…${before} ` : '';
-  const tail = after ? ` ${after}…` : '';
-  return `${head}____${tail}`;
 }
