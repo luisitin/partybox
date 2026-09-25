@@ -24,12 +24,7 @@ export function RolesPhone({ view, send }: { view: View; send: (i: Input) => voi
       className={styles.screen}
       footer={
         <PrimaryButton done={view.ready} onClick={() => send({ type: 'ready' })}>
-          {view.ready
-            ? L('{ready} of {total} have seen their role', {
-                ready: view.readyCount,
-                total: view.livingCount,
-              })
-            : L('Got it')}
+          {L('Got it')}
         </PrimaryButton>
       }
     >
@@ -38,7 +33,15 @@ export function RolesPhone({ view, send }: { view: View; send: (i: Input) => voi
         <HoldCard secret="role">
           <RoleFace view={view} />
         </HoldCard>
-        <p className={styles.sub}>{L('Keep it secret. Hold the card close.')}</p>
+        {view.ready ? (
+          <p className={styles.status} aria-live="polite">
+            ✓{' '}
+            {L('{ready} of {total} have seen their role', {
+              ready: view.readyCount,
+              total: view.livingCount,
+            })}
+          </p>
+        ) : null}
         <CastLine view={view} />
       </div>
     </Screen>

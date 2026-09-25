@@ -60,6 +60,7 @@ export function VotePhone({ view, send }: { view: View; send: (i: Input) => void
         <p className={styles.head}>
           🗳️ {vote.runoff ? L('Runoff: vote again') : L('Who goes? Vote.')}
         </p>
+        <p className={styles.status}>{L('Your vote stays secret until the verdict.')}</p>
         <FaceGrid
           faces={facesFor(view, vote.candidates)}
           selected={selected}
@@ -67,7 +68,6 @@ export function VotePhone({ view, send }: { view: View; send: (i: Input) => void
           extra={{ id: 'none', label: L('No one'), glyph: '🙅' }}
           onPick={(id) => setPick({ key, id })}
         />
-        <p className={styles.status}>{L('Your vote stays secret until the verdict.')}</p>
       </div>
     </Screen>
   );
