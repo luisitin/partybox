@@ -2,6 +2,26 @@
 // strings.ts so each file stays readable; strings.ts spreads this table into STRINGS.es.
 export const STRINGS_UI_ES: Record<string, string> = {
   // phone — shared
+  // the ready-up (rules.ts, RolesScene, RolesPhone)
+  'Check your card for your secret role. Wolves know each other.':
+    'Mira tu tarjeta para ver tu rol secreto. Los lobos se conocen entre sí.',
+  'At night everyone taps a face in secret: wolves hunt, the seer looks, the doctor saves.':
+    'De noche todos tocan una cara en secreto: los lobos cazan, la vidente mira, el médico salva.',
+  'By day, talk it out and vote someone out. Find the wolves before they outnumber you.':
+    'De día, habladlo y expulsad a alguien. Encontrad a los lobos antes de que os superen.',
+  'Check your card for your secret role. The mafia know each other.':
+    'Mira tu tarjeta para ver tu rol secreto. Los mafiosos se conocen entre sí.',
+  'At night everyone taps a face in secret: the mafia strike, the detective looks, the doctor saves.':
+    'De noche todos tocan una cara en secreto: la mafia ataca, el detective mira, el médico salva.',
+  'By day, talk it out and vote someone out. Find the mafia before they outnumber you.':
+    'De día, habladlo y expulsad a alguien. Encontrad a la mafia antes de que os supere.',
+  'How to play': 'Cómo se juega',
+  "I'm ready": '¡Listo!',
+  '{ready} of {total} ready': '{ready} de {total} listos',
+  'Tap I’m ready on your phone when you’ve read this.':
+    'Toca ¡Listo! en tu teléfono cuando lo hayas leído.',
+  'Night 1 is falling…': 'Cae la primera noche…',
+  'Everyone’s ready!': '¡Todos listos!',
   'Tap to see your role': 'Toca para ver tu rol',
   'Tap: your role': 'Toca: tu rol',
   'Tap to see your night job': 'Toca para ver tu tarea de la noche',

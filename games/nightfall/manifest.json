@@ -3,7 +3,7 @@
   "name": "Nightfall",
   "icon": "🐺",
   "tagline": "By night the wolves hunt. By day, the village votes.",
-  "description": "Secret roles on every phone: a few wolves hide among the villagers, with a seer and a doctor on the village's side. At night everyone picks someone in secret. By day the village argues and votes someone out. The village wins when the wolves are gone; the wolves win when they equal the rest.",
+  "description": "Secret roles on every phone: wolves hide among the villagers, with a seer and a doctor on the village's side. At night everyone picks someone in secret; by day the village votes someone out. The village wins when the wolves are gone; the wolves win when they equal the rest.",
   "howToPlay": [
     "Check your card for your secret role. Wolves know each other.",
     "At night everyone taps a face in secret: wolves hunt, the seer looks, the doctor saves.",
@@ -13,13 +13,10 @@
   "minPlayers": 6,
   "maxPlayers": 16,
   "estimatedMinutes": 20,
-  "tags": [
-    "hidden-roles",
-    "bluff"
-  ],
+  "tags": ["hidden-roles", "bluff"],
   "presence": {
     "needs": "voice-if-remote",
-    "note": "The day is spoken: remote players need a call (or turn on the Town board)."
+    "note": "The day is spoken: remote players need a call."
   },
   "addedOn": "2026-09-25",
   "settings": [

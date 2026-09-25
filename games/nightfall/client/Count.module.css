@@ -1,0 +1,88 @@
+/* The 3 · 2 · 1 (Count.tsx). Transform/opacity only; a 52 px radius is a 326.7 px circumference. */
+.count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-3);
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.wrap {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  display: grid;
+  place-items: center;
+}
+
+.tv .wrap {
+  width: 320px;
+  height: 320px;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.track,
+.fill {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.track {
+  stroke: var(--pb-surface-2);
+}
+
+.fill {
+  stroke: var(--pb-accent-2-fill);
+  stroke-dasharray: 326.7;
+  animation: nightfall-ring 3s linear both;
+}
+
+@keyframes nightfall-ring {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 326.7;
+  }
+}
+
+.digit {
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  animation: global(pb-tick) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.tv .digit {
+  font-size: 180px;
+  line-height: 1;
+}
+
+.line {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .count,
+  .digit,
+  .fill {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .count,
+:global(:root[data-motion='off']) .digit,
+:global(:root[data-motion='off']) .fill {
+  animation: none;
+}

@@ -11,7 +11,7 @@ import { enterDone, enterEnd, reduceEnd } from './phases/end';
 import { enterHunter, reduceHunter } from './phases/hunter';
 import { enterLastWords, reduceLastWords } from './phases/lastWords';
 import { enterNight, reduceNight } from './phases/night';
-import { enterRoles, reduceRoles } from './phases/roles';
+import { checkReady, enterRoles, reduceRoles, startCount } from './phases/roles';
 import { enterVerdict, reduceVerdict } from './phases/verdict';
 import { closeVote, enterRunoff, enterVote, reduceVote } from './phases/vote';
 import { recap } from './recap';
@@ -117,7 +117,8 @@ function afterVerdict(state: State, now: number): State {
 export function advance(state: State, now: number): State {
   switch (state.phase.id) {
     case 'roles':
-      return enterNight(state, now);
+      // The skip (or the idle fallback) during the ready-up starts the 3 · 2 · 1; it always plays.
+      return state.step === 0 ? startCount(state, now) : enterNight(state, now);
     case 'night':
       return enterDawn(state, now);
     case 'dawn':
@@ -166,6 +167,7 @@ function onPlayer(state: State, event: Extract<GameEvent<Input>, { type: 'player
   if (event.gone && isAlive(s, id) && !s.leaving.includes(id))
     s = { ...s, leaving: [...s.leaving, id] };
   if (s === state || s.phase.paused || event.connected) return s;
+  if (s.phase.id === 'roles') return checkReady(s, event.now);
   const done = doneIds(s);
   return done && allLivingDone(s, done) ? advance(s, event.now) : s;
 }

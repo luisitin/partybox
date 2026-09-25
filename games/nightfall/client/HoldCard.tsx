@@ -52,7 +52,11 @@ export function HoldCard({
       label={tap ? w.tap : w.hold}
       backLabel={strip ? (tap ? w.tapStrip : w.strip) : tap ? w.tap : w.hold}
       backHint={
-        strip ? undefined : tap ? L('It hides again by itself.') : L('Keep it close: neighbours peek.')
+        strip
+          ? undefined
+          : tap
+            ? L('It hides again by itself.')
+            : L('Keep it close: neighbours peek.')
       }
     >
       {children}

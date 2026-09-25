@@ -15,6 +15,8 @@ export interface NightfallTvView extends TvView {
   day: number;
   maxDays: number;
   step: number;
+  /** The end of the 3 · 2 · 1 before night 1 (roles step 1), else null. */
+  countEnd: number | null;
   /** "Who's a wolf?" in this flavour. */
   question: string;
   cast: CastEntry[];
@@ -46,9 +48,20 @@ export function statusOf(state: State): (id: string) => PlayerStatus {
 }
 
 /** The envelope, with the day's real end as its deadline and the night's clock kept quiet. */
+export function countEndOf(state: State): number | null {
+  return state.phase.id === 'roles' && state.step === 1 ? state.phase.deadline : null;
+}
+
 export function nightfallEnvelope(state: State): ReturnType<typeof envelope> {
   const env = envelope(state, GAME_ID, { statusOf: statusOf(state) });
-  const deadline = state.phase.id === 'day' ? state.dayEndsAt : state.phase.deadline;
+  // The ready-up shows no clock (its fallback is for empty rooms only), and its 3 · 2 · 1 is the
+  // scene's own (`countEnd`), not the shell's timer.
+  const deadline =
+    state.phase.id === 'day'
+      ? state.dayEndsAt
+      : state.phase.id === 'roles'
+        ? null
+        : state.phase.deadline;
   const paced = ['dawn', 'verdict', 'end', 'done'].includes(state.phase.id);
   const lastWordsShown = state.phase.id === 'last-words' && state.step === 1;
   const hunterShot = state.phase.id === 'hunter' && state.step === 1;
@@ -75,6 +88,7 @@ export function tvView(state: State): NightfallTvView {
   const living = livingOf(state);
   return {
     ...nightfallEnvelope(state),
+    countEnd: countEndOf(state),
     flavour: state.cfg.flavour,
     day: state.day,
     maxDays: state.cfg.maxDays,

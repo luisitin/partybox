@@ -143,6 +143,15 @@
   animation: drift 64s linear infinite alternate;
 }
 
+/* Dusk (the ready-up) fills the middle with the rules: the moon keeps to the far corner. */
+[data-mood='dusk'] .moonPath {
+  top: 1%;
+  left: 88%;
+  transform: scale(0.7);
+  transform-origin: top left;
+  animation: none;
+}
+
 @keyframes drift {
   from {
     transform: translate(0, 0);

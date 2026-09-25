@@ -9,7 +9,7 @@ import { postsToday } from './text';
 import { POSTS_PER_DAY } from './types';
 import { castOf, graveyardOf, over, sideText, stageOf } from './views-common';
 import type { CastEntry, GraveEntry, StageView } from './views-common';
-import { boardToday, nightfallEnvelope, tvView, GAME_ID } from './views-tv';
+import { boardToday, countEndOf, nightfallEnvelope, tvView, GAME_ID } from './views-tv';
 import type { NightfallTvView } from './views-tv';
 import type { Ballot, FlavourId, Role, Side, State } from './types';
 
@@ -26,6 +26,8 @@ export interface NightfallControllerView extends ControllerView {
   flavour: FlavourId;
   day: number;
   step: number;
+  /** The end of the 3 · 2 · 1 before night 1 (roles step 1), else null. */
+  countEnd: number | null;
   question: string;
   cast: CastEntry[];
   living: string[];
@@ -117,6 +119,7 @@ function spectatorView(state: State, playerId: string): NightfallControllerView 
     ...tv,
     ...controllerEnvelope(state, GAME_ID, playerId),
     ...nightfallEnvelope(state),
+    countEnd: countEndOf(state),
     me: { id: playerId, role: 'spectator' },
     alive: false,
     ghost: false,
@@ -163,6 +166,7 @@ export function phoneView(state: State, playerId: string): NightfallControllerVi
   return {
     ...controllerEnvelope(state, GAME_ID, playerId),
     ...nightfallEnvelope(state),
+    countEnd: countEndOf(state),
     me: { id: playerId, role: 'player' },
     flavour: state.cfg.flavour,
     day: state.day,

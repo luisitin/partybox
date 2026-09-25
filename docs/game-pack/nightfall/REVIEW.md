@@ -1,4 +1,4 @@
-# Nightfall — review package (2026-09-24, branch `game/nightfall` @ 583abb46)
+# Nightfall — review package (2026-09-25, branch `game/nightfall`)
 
 ## In five lines
 
@@ -13,6 +13,21 @@
 4. Record-review: 0 dead spans and 0 hard cuts on the TV over whole games (p04, p12, p13b); phones
    only go still on the shell's results screen. Frame cost in isolation matches Lightning Round.
 5. 78 unit tests, contract green, sim 200 random + 200 idle + 200 mixed green, `pnpm verify` green.
+
+## Since the first review (2026-09-25)
+
+- main merged in: ADR-050 layout (shared / phone-entry / tv-entry), manifest icon, howToPlay,
+  presence (voice-if-remote), addedOn, and manifest.es.json. The role/job/report cards are the
+  SDK's SecretCard (tap mode says "Tap", not "Hold").
+- Pacing (#decisions cc45f4): `roles` is now the ready-up. The TV shows the three rules on a panel,
+  the cast, the village with ✓ as people tap, and "n of m ready". Phones show rules → secret card →
+  **I'm ready**. There is no visible clock. Bots are ready from the start, dropped phones don't block,
+  and the VIP skip is "Start now". Then "Everyone's ready!" plus a 3 · 2 · 1 (ring and ticks) on
+  TV and phones, then night 1. A hidden 3-minute net exists only for the idle-room contract.
+  When the shell's ready-up stage lands (#plans 31490d), this shrinks back to hold-your-card.
+- Recordings: `p14-ready/` (EN) and `p15-ready-es/` (ES). Measured 3.63 s from the last Ready to night.
+- Note: `/preview/nightfall/roles` shows a shell timer because the preview route rebases fixture
+  deadlines. A live game shows none.
 
 ## Try it
 
