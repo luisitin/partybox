@@ -39,6 +39,16 @@ export function TvScores({ view }: Props): JSX.Element {
           : final
             ? L('Final round played')
             : L('After round {round} of {rounds}', { round: view.round, rounds: view.rounds })}
+        {/* Pacing rule (2026-09-25): the board waits for the VIP's Next — say whose phone on the
+            kicker line, so the board keeps its room above the host bar (reviews d0daab, 6eb6dd). */}
+        {final || finalNext ? null : (
+          <>
+            {' · '}
+            {vipName
+              ? L("Next on {name}'s phone", { name: vipName })
+              : L("Next on the VIP's phone")}
+          </>
+        )}
       </p>
       <BigText level="h1">{final ? L('Final scores') : L('Scores so far')}</BigText>
       {/* The hook goes above the board: at 5-6 players the bottom slot is the first thing clipped. */}
@@ -46,13 +56,7 @@ export function TvScores({ view }: Props): JSX.Element {
         <BigText level="h2" tone="accent">
           {L('Next: the final round — double points!')}
         </BigText>
-      ) : final ? null : (
-        // Pacing rule (2026-09-25): the board waits for the VIP's Next — say whose phone, under the
-        // heading, where it is clear of the host bar (review d0daab).
-        <BigText level="h2" tone="muted">
-          {vipName ? L("Next on {name}'s phone", { name: vipName }) : L("Next on the VIP's phone")}
-        </BigText>
-      )}
+      ) : null}
       <div className={styles.board}>
         <Scoreboard rows={view.standings} noTrophy stagger="climb" climbFrom={climbFrom} />
       </div>
