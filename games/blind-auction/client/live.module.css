@@ -1391,3 +1391,11 @@
   background: var(--pb-accent-2);
   color: var(--pb-on-accent-2-fill);
 }
+
+/* Short phones: the twist line stays two lines at most (review [2a24d2] #2). */
+@media (max-height: 640px) {
+  .twistPhone {
+    font-size: 0.8125rem;
+    line-height: 1.25;
+  }
+}

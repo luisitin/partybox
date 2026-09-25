@@ -581,3 +581,10 @@
   gap: var(--pb-space-2);
   align-self: stretch;
 }
+
+/* Short phones: the hint is a caption (after .betHint so it wins; review [2a24d2] #2). */
+@media (max-height: 640px) {
+  .betHint {
+    font-size: var(--pb-font-caption);
+  }
+}

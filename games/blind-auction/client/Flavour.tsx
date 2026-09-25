@@ -19,7 +19,7 @@ export function Flavour({
   return (
     <p className={className}>
       {boxWords(L, box).flavour}
-      {english ? <span lang="es">{` · 🇬🇧 ${L('in English')}`}</span> : null}
+      {english ? <span lang="es">{` · ${L('in English')}`}</span> : null}
     </p>
   );
 }

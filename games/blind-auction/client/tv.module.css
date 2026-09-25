@@ -51,7 +51,8 @@
 
 .row {
   display: flex;
-  align-items: center;
+  /* Safe: a board taller than the row spills down, never up over the kicker (review [2a24d2] #1). */
+  align-items: safe center;
   justify-content: center;
   gap: var(--pb-space-8);
   min-height: 0;

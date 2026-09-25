@@ -25,7 +25,7 @@ export function TwistNote({
         : twist === 'peek'
           ? L('👁 Peek: pay to rule out one wrong answer, on your phone only.')
           : twist === 'split'
-            ? L('✂️ Split: tap two answers to put half your stake on each.')
+            ? L('✂️ Split: tap two answers, half your stake on each.')
             : twist === 'double'
               ? L('🪙 Double or nothing: a right call flips a coin, twice the win or nothing.')
               : L(

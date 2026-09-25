@@ -130,7 +130,8 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
         <div className={styles.betHead}>
           <LotTitle box={box} coins={view.coins} />
           <TwistNote twist={box.twist} size="phone" />
-          {option === null && box.event !== 'shells' && box.event !== 'keno' ? (
+          {/* A twist's own line is the instruction on that box (review [2a24d2] #2: one line, not two). */}
+          {option === null && !box.twist && box.event !== 'shells' && box.event !== 'keno' ? (
             // Above the cards, never in the fade (review). A first-timer didn't know to tap a card or where the stake goes.
             <p className={styles.betHint}>{L('Tap a card, then set your coins')}</p>
           ) : null}

@@ -160,7 +160,20 @@
   letter-spacing: 0.04em;
 }
 
+/* A short TV stage (a wrapped player strip): a six-option board gets tighter cards so it fits
+   under the kicker and above the host bar (review [2a24d2] #1). */
+@container (max-height: 760px) {
+  .tv.many .option {
+    padding-block: var(--pb-space-2);
+    gap: 0;
+  }
+  .tv.many .icon {
+    font-size: min(48px, 5cqh);
+  }
+}
+
 /* ── phone ── */
+
 .phone {
   gap: 6px;
 }
@@ -376,4 +389,19 @@ button.option:focus-visible {
 /* Cards already dealt on the box intro: no second entrance in betting and after. */
 .still .option {
   animation: none;
+}
+
+/* A short phone: a slimmer pay column leaves a long Spanish name ("Premio gordo") one line, so a
+   three-option box stays above the fold (review [2a24d2] #3). */
+@media (max-height: 640px) {
+  .phone .pay {
+    font-size: calc(var(--pb-font-body) * 0.85);
+  }
+  .phone .option {
+    column-gap: var(--pb-space-2);
+    padding-block: 2px;
+  }
+  .phone .name {
+    font-size: calc(var(--pb-font-body) * 0.92);
+  }
 }

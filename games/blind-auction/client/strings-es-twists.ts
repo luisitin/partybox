@@ -14,8 +14,8 @@ export const ES_TWISTS: Record<string, string> = {
   '👁 Peek: pay to rule out one wrong answer, on your phone only.':
     '👁 Espiar: paga para descartar una respuesta equivocada, solo en tu celular.',
   '👁 Ruled out: {what}': '👁 Descartada: {what}',
-  '✂️ Split: tap two answers to put half your stake on each.':
-    '✂️ Dividir: toca dos respuestas para poner la mitad de tu apuesta en cada una.',
+  '✂️ Split: tap two answers, half your stake on each.':
+    '✂️ Dividir: toca dos respuestas, mitad de tu apuesta a cada una.',
   '👁 Peek: rule one out ({coin} {n})': '👁 Espiar: descarta una ({coin} {n})',
   '🪙 Double or nothing: a right call flips a coin, twice the win or nothing.':
     '🪙 Doble o nada: si aciertas se lanza una moneda, el doble del premio o nada.',
