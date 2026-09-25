@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { createRng } from '@partybox/game-sdk';
 import { spymasterClue } from '../server/bot';
 import { clueClash, clueProblem } from '../server/clue-rules';
+import { speakable } from '../server/speech';
 import { FAMILY_THEMES } from '../server/content';
 import { game } from '../server/index';
 import { allPoint, clue, finishFlip, rigged, send, skip, start, tick } from './kit';
@@ -128,6 +129,13 @@ describe('clue clash message', () => {
     expect(clueProblem('BATHROOM', board)).toBe('board');
     expect(clueClash('BATHROOM', board)).toBe('bat');
     expect(clueClash('OCEAN', board)).toBeNull();
+  });
+});
+
+describe('speech', () => {
+  it('keeps accented letters for the reader (a Spanish clue reaches it whole)', () => {
+    expect(speakable('CANCIÓN')).toBe('canción');
+    expect(speakable('“T-REX”')).toBe('t-rex');
   });
 });
 

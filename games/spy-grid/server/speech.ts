@@ -60,7 +60,8 @@ export function speakable(word: string): string {
     .replace(/[“”"]/g, '')
     .toLowerCase();
   const fix = PRONUNCIATIONS[clean];
-  return (fix?.say ?? clean).replace(/[^a-z' -]/g, '');
+  // Any letter survives (CANCIÓN, ÑANDÚ), so a Spanish clue reaches the reader whole (session-c).
+  return (fix?.say ?? clean).replace(/[^\p{L}' -]/gu, '');
 }
 
 export function voiceOf(state: State): string | null {
