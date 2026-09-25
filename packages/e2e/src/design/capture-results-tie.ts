@@ -98,14 +98,15 @@ async function run(
           ranking,
           winnerIds: scenario === 'teams' ? ['p-ben', 'p-cleo'] : tie ? ['p-ana', 'p-ben', 'p-cleo'] : ['p-dev'], // prettier-ignore
           awards: scenario === 'teams' ? awards.slice(0, 2) : awards,
-          // ADR-052: a team game, Moon wins (its members first, the headline in its colour)
+          // ADR-052: a team game, Moon wins (its members first, the headline in its colour);
+          // Maximiliano is in no team (they left), so the board ends on a "No team" group
           ...(scenario === 'teams'
             ? {
                 outcome: {
                   kind: 'teams',
                   winner: 'moon',
                   teams: [
-                    { id: 'sun', name: 'Sun', mark: '▲', color: 'var(--pb-accent-2)', members: ['p-ana', 'p-dev', me] }, // prettier-ignore
+                    { id: 'sun', name: 'Sun', mark: '▲', color: 'var(--pb-accent-2)', members: ['p-ana', me] }, // prettier-ignore
                     { id: 'moon', name: 'Moon', mark: '●', color: 'var(--pb-info)', members: ['p-ben', 'p-cleo'] }, // prettier-ignore
                   ],
                 },
@@ -117,6 +118,12 @@ async function run(
     await settle(4500); // the board lands, the headline and awards follow
     if (device === 'iphone-se') await tv.screenshot({ path: join(OUT, `${lang}-tv-${scenario}.png`) }); // prettier-ignore
     await page.screenshot({ path: join(OUT, `${lang}-${device}-${scenario}.png`) });
+    if (scenario === 'teams') {
+      // this phone's team lost: a tap on its line brings its own group into view
+      await page.getByRole('button', { name: /Your team|Tu equipo/ }).click();
+      await settle(900);
+      await page.screenshot({ path: join(OUT, `${lang}-${device}-${scenario}-mine.png`) });
+    }
     // and scrolled to the end (at 200 % the chips move under the board)
     await page.evaluate(`[...document.querySelectorAll('*')].filter((e) => /(auto|scroll)/.test(getComputedStyle(e).overflowY) && e.scrollHeight > e.clientHeight).forEach((e) => { e.scrollTop = e.scrollHeight; })`); // prettier-ignore
     await settle(600);

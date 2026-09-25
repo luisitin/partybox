@@ -47,7 +47,8 @@ export function outcomeLine(room: RoomSnapshot): string | null {
   if (o.kind === 'coop') return o.won ? t.results.coopWon : t.results.coopLost;
   const team = o.teams.find((x) => x.id === o.winner);
   if (!team) return t.results.teamDraw;
-  return t.results.teamWins(`${team.mark ? `${team.mark} ` : ''}${say(team.name)}`);
+  // The mark closes the line, never mid-sentence ("¡Gana ● Luna!" read as a typo, tune-in af72d6).
+  return `${t.results.teamWins(say(team.name))}${team.mark ? ` ${team.mark}` : ''}`;
 }
 
 export function winnerLine(room: RoomSnapshot, scoreless = false): string {
@@ -168,7 +169,7 @@ export function teamGroups(room: RoomSnapshot): TeamGroup[] | null {
   const o = r?.results.outcome;
   if (!r || !o || o.kind !== 'teams') return null;
   const rows = scoreboardRows(room);
-  const groups = o.teams.map((team) => ({
+  const groups: TeamGroup[] = o.teams.map((team) => ({
     id: team.id,
     name: serverText(team.name, getLang(), r.gameId),
     ...(team.mark ? { mark: team.mark } : {}),
@@ -176,7 +177,13 @@ export function teamGroups(room: RoomSnapshot): TeamGroup[] | null {
     won: team.id === o.winner,
     rows: rows.filter((row) => team.members.includes(row.playerId)),
   }));
-  return groups.sort((a, b) => Number(b.won) - Number(a.won));
+  groups.sort((a, b) => Number(b.won) - Number(a.won));
+  // Someone in no team (the contract allows it: a player who left) still has a place on the board.
+  const teamless = rows.filter(
+    (row) => !o.teams.some((team) => team.members.includes(row.playerId)),
+  );
+  if (teamless.length > 0) groups.push({ id: '', name: t.results.teamless, color: 'var(--pb-text-muted)', won: false, rows: teamless }); // prettier-ignore
+  return groups;
 }
 
 /** The winning team's colour, for the headline (undefined when there is none). */

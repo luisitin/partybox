@@ -24,7 +24,7 @@ export function TeamBoards({
     <div className={`${styles.teams} ${compact ? styles.compact : ''}`}>
       {groups.map((g) => (
         <section
-          key={g.id}
+          key={g.id || 'teamless'}
           className={`${styles.team} ${g.won ? styles.won : ''}`}
           style={{ '--team': g.color ?? 'var(--pb-accent-2)' } as CSSProperties}
           aria-label={`${g.mark ? `${g.mark} ` : ''}${g.name}${g.won ? `, ${wonLabel}` : ''}`}

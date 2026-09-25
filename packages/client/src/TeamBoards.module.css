@@ -14,6 +14,9 @@
   padding: var(--pb-space-3);
   border-radius: var(--pb-radius-lg);
   border: 2px solid transparent;
+  /* A tap on "Your team lost this one" scrolls the group to the top: its header lands below the
+     phone list's top fade (Screen's fold-clear + fold-top, scrolled), not dimmed under it. */
+  scroll-margin-top: calc(var(--pb-space-4) + var(--pb-font-caption) * 2);
 }
 
 .team.won {

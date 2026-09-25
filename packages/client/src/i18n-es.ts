@@ -138,6 +138,7 @@ export const es: Texts = {
     teamWins: (team) => `¡Gana ${team}!`,
     teamDraw: '¡Empate!',
     teamWonTag: 'Ganadores',
+    teamless: 'Sin equipo',
     yourTeamWon: '¡Ganó tu equipo!',
     yourTeamLost: 'Tu equipo perdió esta vez',
     over: 'Fin del juego',

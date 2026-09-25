@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { RoomSnapshot } from '@partybox/shared';
 import { ordinal } from '../i18n';
 import {
+  outcomeLine,
   groupAwards,
   joinNames,
   myRow,
@@ -182,7 +183,7 @@ describe('ADR-052: co-op and team games', () => {
       { id: 'sun', name: 'Sun', mark: '▲', members: ['Sam'] },
       { id: 'moon', name: 'Moon', mark: '●', members: ['Priya'] },
     ];
-    expect(winnerLine(withOutcome({ outcome: { kind: 'teams', winner: 'sun', teams } }))).toBe('▲ Sun wins!'); // prettier-ignore
+    expect(winnerLine(withOutcome({ outcome: { kind: 'teams', winner: 'sun', teams } }))).toBe('Sun wins! ▲'); // prettier-ignore
     expect(winnerLine(withOutcome({ outcome: { kind: 'teams', winner: null, teams } }))).toBe('A draw!'); // prettier-ignore
   });
   it("the game's own headline wins", () => {
@@ -287,5 +288,21 @@ describe('ADR-052: a team game grouped by team', () => {
     expect(yourTeamLine(teamsRoom('moon'), 'Sam')).toBe('Your team lost this one');
     expect(yourTeamLine(teamsRoom(null), 'Sam')).toBeNull();
     expect(teamGroups(room({ Sam: 1 }, ['Sam'], []))).toBeNull();
+  });
+  it('closes the headline with the winning mark, never mid-sentence', () => {
+    expect(outcomeLine(teamsRoom('moon'))).toBe('Moon wins! ●');
+  });
+  it('keeps a player in no team on the board, in a last group of their own', () => {
+    const r = teamsRoom('moon');
+    const o = r.results?.results.outcome;
+    if (o?.kind !== 'teams') throw new Error('teams outcome expected');
+    const left = { ...o, teams: o.teams.map((tm) => ({ ...tm, members: tm.members.filter((id) => id !== 'Priya') })) }; // prettier-ignore
+    const room2 = { ...r, results: { ...r.results, results: { ...r.results?.results, outcome: left } } } as RoomSnapshot; // prettier-ignore
+    const groups = teamGroups(room2) ?? [];
+    expect(groups.map((g) => [g.id, g.name, g.won, g.rows.map((row) => row.playerId)])).toEqual([
+      ['moon', 'Moon', true, ['Kenji', 'Ana']],
+      ['sun', 'Sun', false, ['Sam']],
+      ['', 'No team', false, ['Priya']],
+    ]);
   });
 });

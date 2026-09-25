@@ -42,6 +42,13 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
     list.current
       ?.querySelector('[aria-current="true"]')
       ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // ADR-052: in a team game the line is your team's result, and a tap brings your team's group
+  // (its header and your row) into view: a losing side opens under the winners (tune-in af72d6).
+  const toMyTeam = (): void =>
+    list.current
+      ?.querySelector('[aria-current="true"]')
+      ?.closest('section')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const teams = teamGroups(room);
   const teamColor = winnerColor(room);
   const teamLine = yourTeamLine(room, me.id);
@@ -102,7 +109,15 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
             {winnerLineFor(room, me.id, scoreless)}
           </span>
           {/* ADR-052: in a team game your team's result is your line (a place means little) */}
-          {teamLine ? <span className={`pb-caption ${styles.teamLine}`}>{teamLine}</span> : null}
+          {teamLine ? (
+            <button
+              type="button"
+              className={`pb-caption ${styles.place} ${styles.teamLine}`}
+              onClick={toMyTeam}
+            >
+              {teamLine}
+            </button>
+          ) : null}
           {/* I-456 B: your place stays in view over the board; a tap shows your row */}
           {mine && !over && !scoreless && !teamLine ? (
             <button type="button" className={`pb-muted pb-caption ${styles.place}`} onClick={toMe}>
