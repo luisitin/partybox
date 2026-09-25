@@ -110,6 +110,9 @@ export const STRINGS: Strings = {
     'Tap one to use it:': 'Toca una para usarla:',
     'Waiting for the others… then the guessing.': 'Esperando a los demás… luego a adivinar.',
     'Waiting for the others… then watch the TV.': 'Esperando a los demás… luego mira la TV.',
+    "This one's yours — sit tight": 'Esta es tuya: quédate quieto',
+    'Keep a straight face while the others guess.':
+      'Pon cara de póquer mientras los demás adivinan.',
     'Tap who you think wrote it': 'Toca a quien crees que lo escribió',
     'Picked {name} · tap another face to change': 'Elegiste a {name} · toca otra cara para cambiar',
     'Pick {name}': 'Elegir a {name}',

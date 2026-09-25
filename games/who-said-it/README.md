@@ -54,8 +54,8 @@ right guesses, to the guesser: "Ana knows Ben best (3 of 3)").
 - A player who doesn't answer: no card, still guesses and is still a candidate.
 - An author who leaves before their card: it still plays and names them; someone who left for good
   is not a candidate from the next question on. Guessing someone who left is allowed.
-- The author's phone is identical to everyone else's during their card (same grid, header, haptic;
-  their ✓ shows); "all done" counts every connected seated player, the author too.
+- The author sits out their own card (the owner, 2026-09-24): their phone says "This one's yours —
+  sit tight", their tap is ignored, their chip shows ✓ and they count as done.
 - A drop that leaves everyone else done closes the phase. One connected player plays alone.
 - Everyone idle: no cards; the game runs out on deadlines. Pause mid-reveal resumes the same beat.
 

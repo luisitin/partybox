@@ -35,19 +35,21 @@ describe('bots', () => {
     expect(game.bot.sampleInput(s, 'ana', createRng(1))).toEqual({ type: 'idea' });
   });
 
-  it('guess uniformly among their candidates, author bots included', () => {
+  it('guess uniformly among their candidates; an author bot sits out', () => {
     let s = until(botsAnswer(until(start({ players: 6, bots: 6 }), 'write')), 'guess');
     const author = authorsNow(s)[0] as string;
+    const guesser = s.seats.find((id) => id !== author) as string;
+    expect(decide(phone(s, author), createRng(1))).toBeNull(); // the author bot sits out
     const picks = new Map<string, number>();
     for (let seed = 0; seed < 600; seed += 1) {
-      const inp = decide(phone(s, author), createRng(seed));
+      const inp = decide(phone(s, guesser), createRng(seed));
       if (inp?.type === 'guess') picks.set(inp.target, (picks.get(inp.target) ?? 0) + 1);
     }
-    expect(picks.has(author)).toBe(false);
+    expect(picks.has(guesser)).toBe(false);
     expect(picks.size).toBe(5);
     for (const n of picks.values()) expect(n).toBeGreaterThan(70);
     s = timer(s);
-    expect(game.bot.sampleInput(s, author, createRng(1))).toBeNull();
+    expect(game.bot.sampleInput(s, guesser, createRng(1))).toBeNull();
   });
 });
 

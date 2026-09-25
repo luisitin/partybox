@@ -25,7 +25,9 @@ export function readingEndsAt(state: State): number {
 }
 
 export function guessDone(state: State): boolean {
-  return allConnectedDone(state, [...guessedIds(state), ...notSeated(state)]);
+  // The owner's rule (2026-09-24): the author sits out their own card, so they count as done.
+  const authors = currentCard(state)?.authors ?? [];
+  return allConnectedDone(state, [...guessedIds(state), ...notSeated(state), ...authors]);
 }
 
 /** All tapped: close after the grace, or once the reading is over, whichever is later. */
@@ -39,6 +41,7 @@ export function closeGuess(state: State, now: number): State {
 
 function apply(state: State, playerId: string, input: Input): State {
   if (input.type !== 'guess' || !isSeated(state, playerId)) return state;
+  if (currentCard(state)?.authors.includes(playerId)) return state; // the author sits out
   const { target } = input;
   if (target === playerId || !isSeated(state, target)) return state;
   if (state.p.guesses[playerId] === target) return state;

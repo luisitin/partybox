@@ -1,45 +1,32 @@
-// Hidden information (SPEC §4.5, §4.16): the author's phone is identical to everyone else's during
-// their own card; no author id in any view before the flip; upcoming cards never shown; a phone's
+// Hidden information (SPEC §4.5, §4.16, as amended by the owner 2026-09-24: the author sits out
+// their own card); no author id in any view before the flip; upcoming cards never shown; a phone's
 // own result only after the TV's flip; budgets at 16 players.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
-import type { State } from '../server/types';
 import { authorsNow, guess, phone, start, timer, tv, until, written } from './helpers';
 
 const FIVE = { ana: 'avocado', ben: 'bacon', cy: 'sushi', dee: 'tacos', eli: 'pancakes' };
 
-/** A phone view with the viewer's own identity swapped out, so two players' views compare. */
-function neutral(s: State, id: string): unknown {
-  const v = JSON.parse(JSON.stringify(phone(s, id))) as Record<string, unknown>;
-  const others = (v['candidates'] as string[]).length;
-  delete v['me'];
-  delete v['candidates'];
-  return { ...v, candidates: others };
-}
-
-describe('author camouflage', () => {
-  it("during their own card the author's phone equals a guesser's, before and after tapping", () => {
+describe('the author sits out their own card (the owner, 2026-09-24)', () => {
+  it("the author's phone says it is theirs, with no faces; everyone else gets the grid", () => {
     let s = until(written(start({ players: 5 }), FIVE), 'guess');
     const author = authorsNow(s)[0] as string;
     const other = s.seats.find((id) => id !== author) as string;
-    expect(neutral(s, author)).toEqual(neutral(s, other));
-    s = guess(guess(s, author, other), other, author);
-    const a = phone(s, author);
-    const o = phone(s, other);
-    expect(a.myGuess).toBe(other);
-    expect(o.myGuess).toBe(author);
-    expect({ ...(neutral(s, author) as object), myGuess: 0 }).toEqual({ ...(neutral(s, other) as object), myGuess: 0 }); // prettier-ignore
-    // Their tap shows ✓ like anyone's.
+    expect(phone(s, author)).toMatchObject({ mine: true, candidates: [] });
+    expect(phone(s, other).mine).toBe(false);
+    expect(phone(s, other).candidates).toHaveLength(4);
+    // The author's tap is ignored; they already count as done (✓ on the strip).
+    s = guess(s, author, other);
+    expect(s.p.guesses[author]).toBeUndefined();
     expect(tv(s).players.find((p) => p.id === author)?.status).toBe('submitted');
   });
 
-  it('the author is never a candidate on their own phone, and never a "yours" field exists', () => {
-    const s = until(written(start({ players: 5 }), FIVE), 'guess');
+  it('the guess closes once every other connected player has tapped', () => {
+    let s = until(written(start({ players: 4 }), { ana: 'avocado', ben: 'bacon', cy: 'sushi', dee: 'tacos' }), 'guess'); // prettier-ignore
     const author = authorsNow(s)[0] as string;
-    const view = phone(s, author);
-    expect(view.candidates).not.toContain(author);
-    expect(view.myAnswer).toBeNull();
-    expect(JSON.stringify(view)).not.toMatch(/mine|yours|author/i);
+    for (const id of s.seats.filter((x) => x !== author))
+      s = guess(s, id, s.seats.find((x) => x !== id) as string);
+    expect(s.phase.deadline).toBeLessThan(s.phase.startedAt + 12_000);
   });
 });
 

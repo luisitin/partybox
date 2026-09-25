@@ -54,6 +54,8 @@ export interface WsPhoneView extends ControllerView, Shared {
   canIdea: boolean;
   /** guess: everyone seated except me, in seat order; my current tap. */
   candidates: string[];
+  /** guess: this card is mine — I sit it out (the owner, 2026-09-24). */
+  mine: boolean;
   myGuess: string | null;
   /** reveal, from the flip: my own line — right, wrong, mine, or no tap. */
   result: {
@@ -125,6 +127,7 @@ export function controllerView(state: State, gameId: string, me: string): WsPhon
   const bot = state.players[me]?.bot === true;
   const writing = phase === 'write' && seated;
   const row = standings(state).find((r) => r.playerId === me);
+  const mineNow = phase === 'guess' && (state.p.cards[state.p.idx]?.authors.includes(me) ?? false);
   return {
     ...controllerEnvelope(state, gameId, me, { statusOf: statusOf(state), scores: state.scores }),
     ...base(state),
@@ -132,7 +135,9 @@ export function controllerView(state: State, gameId: string, me: string): WsPhon
     myAnswer: writing ? (state.p.answers[me] ?? null) : null,
     ideas: writing && (bot || state.p.ideaUsed.includes(me)) ? (state.p.ideas[me] ?? []) : [],
     canIdea: writing && state.cfg.ideas && !state.p.ideaUsed.includes(me),
-    candidates: phase === 'guess' && seated ? state.p.seated.filter((id) => id !== me) : [],
+    candidates:
+      phase === 'guess' && seated && !mineNow ? state.p.seated.filter((id) => id !== me) : [],
+    mine: mineNow,
     myGuess: phase === 'guess' ? (state.p.guesses[me] ?? null) : null,
     result: resultOf(state, me),
     standing: { score: row?.score ?? 0, rank: row?.rank ?? 0, delta: row?.delta ?? 0 },

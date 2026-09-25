@@ -25,6 +25,24 @@ export function PhoneGuess({ view, send }: GameControllerProps<WsPhoneView, Inpu
     .map((id) => byId.get(id))
     .filter((p): p is NonNullable<typeof p> => p !== undefined)
     .map((p) => ({ id: p.id, name: p.name, avatarId: p.avatarId, connected: p.connected }));
+  // The owner's rule (2026-09-24): the author sits out their own card.
+  if (view.mine)
+    return (
+      <Screen className="pb-enter">
+        <p className={styles.kicker}>
+          {card ? L('Answer {n} of {total}', { n: card.number, total: card.count }) : ''}
+        </p>
+        <div key={number} className={styles.quote}>
+          <p className={styles.quoteText}>{card?.text ?? ''}</p>
+        </div>
+        <div className={styles.locked} role="status">
+          <span className={styles.lockedLabel}>🤫 {L("This one's yours — sit tight")}</span>
+          <span className={styles.lockedHint}>
+            {L('Keep a straight face while the others guess.')}
+          </span>
+        </div>
+      </Screen>
+    );
   return (
     <Screen
       className={styles.guessScreen}

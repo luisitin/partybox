@@ -67,6 +67,7 @@ export function statusOf(state: State): (id: string) => PlayerStatus {
     if (phase === 'write' || phase === 'guess') {
       if (!state.p.seated.includes(id)) return 'waiting';
       const done = phase === 'write' ? answered : guessed;
+      if (phase === 'guess' && currentCard(state)?.authors.includes(id)) return 'submitted';
       return done.has(id) ? 'submitted' : 'active';
     }
     return 'active';

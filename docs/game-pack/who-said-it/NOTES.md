@@ -46,6 +46,10 @@ Branch `game/who-said-it`, worktree `C:/dev/partybox-game-who-said-it`, harness 
 7. `prompts` clamping: the manifest's description says a big room is capped at 40 answers; the
    settings screen has no per-setting live note today.
 
+8. **The author sits out their own card** (the owner's ruling, 2026-09-24, over SPEC §4.5's
+   camouflage): their phone says "This one's yours — sit tight" and their tap is ignored. Accepted
+   cost: their ✓ is on the TV strip from the start, so a sharp room can read it as a tell.
+
 ## Open questions for the owner
 
 - None blocking. The deviations above are reversible if the owner prefers the spec's letter.
