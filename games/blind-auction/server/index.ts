@@ -173,13 +173,19 @@ function onPlayer(state: State, event: Extract<GameEvent<Input>, { type: 'player
   let next = potatoDropped(setConnected(state, event));
   if (event.gone && hasPlayer(state, event.playerId) && !state.left.includes(event.playerId))
     next = { ...next, left: [...next.left, event.playerId] };
+  return recheck(next, event.now);
+}
+
+/** Everyone waited on is in: move on. Run after a drop and after a resume (reviewer [12ea6b]: a
+ *  drop or the last Ready during a pause must not leave the phase sitting until its timer). */
+function recheck(next: State, now: number): State {
   if (next.phase.paused) return next;
   if (next.phase.id === 'rules' && next.rulesStep === 0 && allReady(next))
-    return countDown(next, event.now);
+    return countDown(next, now);
   if (next.phase.id === 'bet' && allConnectedDone(next, Object.keys(next.r.bets)))
-    return advance(next, event.now);
-  if (next.phase.id === 'swap' && swapsIn(next)) return advance(next, event.now);
-  if (next.phase.id === 'cups' && cupsIn(next)) return advance(next, event.now);
+    return advance(next, now);
+  if (next.phase.id === 'swap' && swapsIn(next)) return advance(next, now);
+  if (next.phase.id === 'cups' && cupsIn(next)) return advance(next, now);
   return next;
 }
 
@@ -192,7 +198,8 @@ function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') return onPlayer(state, event);
   if (event.type === 'speech') return onSpeech(state, event.key, event.ms, event.now);
   const vip = applyVip(state, event, { skip: advance, end: enterDone });
-  if (vip) return vip;
+  // A resume re-checks: whoever dropped (or readied) during the pause may have completed the phase.
+  if (vip) return state.phase.paused && !vip.phase.paused ? recheck(vip, event.now) : vip;
   if (state.phase.paused) return state;
   switch (state.phase.id) {
     case 'rules':

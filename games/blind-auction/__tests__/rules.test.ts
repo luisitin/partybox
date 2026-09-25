@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { COUNTDOWN_MS, RULES_SAFETY_MS } from '../server/timing';
-import { ready, send, skip, start, timer } from './helpers';
+import { bet, ready, send, skip, start, timer, walkTo } from './helpers';
 
 describe('rules and ready-up', () => {
   it('opens on the rules; bots are ready from the start', () => {
@@ -72,5 +72,17 @@ describe('rules and ready-up', () => {
   it('nobody touched anything: the safety net starts the countdown', () => {
     const s = timer(start(3));
     expect([s.phase.id, s.rulesStep]).toEqual(['rules', 1]);
+  });
+});
+
+describe('pause and resume (reviewer [12ea6b])', () => {
+  it('the last player drops during a pause: the resume moves on', () => {
+    let s = walkTo(start(3), 'bet');
+    s = bet(bet(s, 'p1', 0, 10), 'p2', 0, 10);
+    s = send(s, { type: 'vip', now: s.phase.startedAt + 200, action: 'pause' });
+    s = send(s, { type: 'player', now: s.phase.startedAt + 300, playerId: 'p3', connected: false });
+    expect(s.phase.id).toBe('bet');
+    s = send(s, { type: 'vip', now: s.phase.startedAt + 400, action: 'resume' });
+    expect(s.phase.id).toBe('open');
   });
 });
