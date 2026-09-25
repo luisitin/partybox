@@ -10,6 +10,7 @@ import {
   SoundProvider,
   WaitingScreen,
   getLang,
+  LeadMark,
 } from '@partybox/game-sdk/ui';
 import styles from './ControllerShell.module.css';
 import { clientGames } from '../games.generated';
@@ -96,6 +97,8 @@ function Bench({
   // The phase id as a word in the device's language (the id itself in English, or when unknown).
   const phaseId = view?.phaseId ?? '';
   const phase = (t.phases as Readonly<Record<string, string>>)[phaseId] ?? phaseId;
+  // I-268 B: the roster's rule — no leader when nobody has scored or everyone is tied
+  const leads = top > 0 && rows.some((p) => p.score !== top);
   return (
     <div className={styles.bench} aria-label={t.playing.scoresSoFar}>
       <p className={styles.benchWhere}>
@@ -105,7 +108,7 @@ function Bench({
         {rows.map((p) => (
           <li
             key={p.id}
-            className={`${styles.benchRow} ${top > 0 && p.score === top ? styles.benchLead : ''}`}
+            className={`${styles.benchRow} ${leads && p.score === top ? styles.benchLead : ''}`}
           >
             <Avatar avatarId={p.avatarId} size={24} />
             <span className={styles.benchName}>{p.name}</span>
@@ -113,7 +116,7 @@ function Bench({
               key={p.score}
               className={`${styles.benchScore} ${changed.has(p.id) ? styles.benchBump : ''}`}
             >
-              {top > 0 && p.score === top ? '🏆 ' : ''}
+              {leads && p.score === top ? <LeadMark className={styles.benchMark} /> : null}
               {p.score}
             </span>
           </li>

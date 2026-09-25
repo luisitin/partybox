@@ -86,24 +86,42 @@
   border: 0;
   padding: 0;
   margin: 0;
+  /* a fieldset is min-content wide by default: the strip would stretch it instead of scrolling */
+  min-inline-size: 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-2);
 }
 
 .grid {
-  display: grid;
-  /* 4 columns on a portrait phone, 8+ in landscape or on a tablet — cells never balloon */
-  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  /* I-793 F: one sideways-swiping strip that bleeds to the screen's edges (the last face peeks
+     out under a fade: there is more to swipe). Every face stays one swipe away. */
+  display: flex;
   gap: var(--pb-space-2);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  margin: 0 calc(-1 * var(--pb-space-4));
+  padding: 4px 44px 4px var(--pb-space-4); /* the end clears the fade */
+  scroll-padding: 0 var(--pb-space-4);
+  mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+}
+.grid::-webkit-scrollbar {
+  display: none;
 }
 
 .avatarButton {
+  flex: 0 0 auto;
   display: grid;
   place-items: center;
-  min-height: 64px;
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  scroll-snap-align: start;
+  border-radius: 50%;
+  background: transparent;
   border: 3px solid transparent;
   transition: transform var(--pb-motion-fast) var(--pb-ease);
 }
@@ -114,7 +132,6 @@
 
 .selected {
   border-color: var(--pb-accent-2);
-  background: var(--pb-surface-2);
 }
 
 /* ── I-031 A: the pick pops, the rest step back (transform + opacity). */
@@ -128,35 +145,59 @@
 }
 .picking .avatarButton:not(.selected),
 .photoUp .avatarButton {
-  opacity: 0.55;
+  opacity: 0.8;
   transition:
     opacity var(--pb-motion-base) var(--pb-ease),
     transform var(--pb-motion-fast) var(--pb-ease);
 }
 
-/* ── I-031 B: the portrait row — the chosen face at 96 px and the name as typed; the owner's
-   note adds "Use a photo" beside it (the phone's own camera / gallery sheet). */
-.portraitRow {
+/* ── I-031 B + I-793 F: the portrait (64 px) and the name field share one row; the photo lives
+   on the portrait itself (📷 in its corner, ✕ with a photo up). */
+.nameRow {
   display: flex;
-  align-items: center;
-  gap: var(--pb-space-4);
-  min-height: 104px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--pb-space-2) var(--pb-space-3);
+}
+.nameField {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.nameField .input {
+  width: 100%;
+  min-width: 0;
+}
+.portraitRow {
+  display: contents;
+}
+.portraitButton {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+}
+.portraitBadge {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--pb-bg);
+  background: var(--pb-surface-2);
+  font-size: 13px;
+  line-height: 1;
+  color: var(--pb-text);
 }
 .portrait {
   display: inline-flex;
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-}
-.portraitSide {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--pb-space-2);
-  min-width: 0;
-}
-.portraitName {
-  font-size: var(--pb-font-h1);
-  font-weight: 900;
-  overflow-wrap: anywhere;
 }
 .photoInput {
   position: absolute;
@@ -165,18 +206,9 @@
   opacity: 0;
   pointer-events: none;
 }
-.photoButton {
-  min-height: var(--pb-touch);
-  padding: 0 var(--pb-space-3);
-  border-radius: var(--pb-radius);
-  border: 2px solid var(--pb-border);
-  background: var(--pb-surface);
-  color: var(--pb-text);
-  font: inherit;
-  font-size: var(--pb-font-caption);
-  font-weight: 700;
-}
 .photoHint {
+  order: 3;
+  flex-basis: 100%;
   font-size: var(--pb-font-caption);
   color: var(--pb-danger);
 }
@@ -200,11 +232,13 @@
   animation: none;
 }
 
-/* I-041: "Joining room KGVU" — the code came with the QR, no field to fill. */
+/* I-041 + I-793 F: "Room KGVU · 5 people are in" under the title — the code came with the QR. */
 .joiningRoom {
-  margin: 0 0 var(--pb-space-3);
+  display: block;
+  margin-top: 2px;
+  font-size: var(--pb-font-caption);
+  font-weight: 600;
   color: var(--pb-text-muted);
-  text-align: center;
 }
 .joiningRoom strong {
   font-family: var(--pb-font-mono);
@@ -251,11 +285,6 @@
   border-radius: 50%;
   box-shadow: 0 0 0 3px var(--pb-accent-2);
 }
-.photoCaption {
-  font-size: var(--pb-font-caption);
-  font-weight: 700;
-  color: var(--pb-accent-2);
-}
 :global(:root[data-motion='off']) .flipIn,
 :global(:root[data-motion='off']) .flipBack {
   animation: none;
@@ -293,43 +322,6 @@
   animation: none;
 }
 
-/* ── I-060 B: the three dots breathe like a typing indicator (opacity only, 1.2 s loop). */
-.portraitDots {
-  display: inline-flex;
-  gap: 0.18em;
-  vertical-align: middle;
-}
-.portraitDots span {
-  width: 0.28em;
-  height: 0.28em;
-  border-radius: 50%;
-  background: var(--pb-text-muted);
-  animation: pb-dot-breathe 1.2s ease-in-out infinite;
-}
-.portraitDots span:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.portraitDots span:nth-child(3) {
-  animation-delay: 0.4s;
-}
-@keyframes pb-dot-breathe {
-  0%,
-  60%,
-  100% {
-    opacity: 0.35;
-  }
-  30% {
-    opacity: 1;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .portraitDots span {
-    animation: none;
-  }
-}
-:global(:root[data-motion='off']) .portraitDots > span {
-  animation: none;
-}
 /* ── I-067 A: a short sideways box — the join button needs no portrait-height target. */
 @media (orientation: landscape) and (max-height: 420px) {
   .form :global(button[type='submit']) {
@@ -357,9 +349,15 @@
     gap: var(--pb-space-3);
     grid-column: 1;
   }
-  .avatars {
+  .pickers {
     grid-column: 2;
     min-height: 0;
+  }
+  /* the strip bleeds only to the right edge: on the left it would slide under the name column */
+  .grid {
+    margin-left: 0;
+    padding-left: 0;
+    scroll-padding-left: 0;
   }
   /* status lines (kicked, joining room…) span both columns */
   .form :global(section) > div:nth-of-type(1) > p {
@@ -367,25 +365,20 @@
   }
 }
 
-/* ── I-076 B / the owner (2026-09-22): the language pills sit in the screen's top-right corner,
-   beside the title, where a phone looks for them first. */
+/* ── I-793 F: the title over its room line (the language moved to the header). */
 .head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--pb-space-3);
+  display: block;
 }
 .headTitle {
-  min-width: 0;
+  display: block;
   text-wrap: balance;
 }
+
+/* I-076 B: the language pills (the 🎨 sheet's row). */
 .langs {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
   gap: 4px;
-  flex: 0 0 auto;
-  max-width: 45%;
 }
 .lang {
   padding: 2px 10px;
@@ -402,6 +395,51 @@
   color: var(--pb-text);
 }
 
+/* I-793 F: the header's "🌐 EN ▾" — a pill with the phone's own list laid invisibly over it. */
+.langPick {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font-size: min(var(--pb-font-caption), 16px);
+  font-weight: 800;
+  white-space: nowrap;
+}
+.langCaret {
+  font-size: 0.8em;
+  color: var(--pb-text-muted);
+}
+.langSelect {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  font-size: 16px; /* iOS zooms into a focused control under 16 px */
+  cursor: pointer;
+}
+.langPick:focus-within {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+
+/* I-793 F: the faces strip and the colour dots, one label each. */
+.pickers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+  min-width: 0;
+}
+.tintRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+}
+
 /* ── I-079 C: the seasonal face's tag. */
 .avatarButton {
   position: relative;
@@ -409,7 +447,7 @@
 .seasonTag {
   position: absolute;
   left: 50%;
-  bottom: 2px;
+  bottom: -4px;
   translate: -50% 0;
   padding: 0 5px;
   border-radius: 999px;
@@ -485,8 +523,8 @@
    bottom edge belongs to I-079's "this month" tag). */
 .takenBadge {
   position: absolute;
-  right: 4px;
-  top: 4px;
+  right: -4px;
+  top: -4px;
   padding: 0 5px;
   border-radius: 999px;
   background: var(--pb-surface-2);
@@ -505,7 +543,6 @@
   grid-template-columns: repeat(8, minmax(0, 36px));
   justify-content: space-between;
   gap: var(--pb-space-1);
-  margin-top: var(--pb-space-2);
 }
 .tint {
   width: 100%;

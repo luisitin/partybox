@@ -4,7 +4,9 @@ import { clientModule as bingo } from '../../../games/bingo/client/index';
 import { clientModule as blanks } from '../../../games/blanks/client/index';
 import { clientModule as brokenPencil } from '../../../games/broken-pencil/client/index';
 import { clientModule as herdMind } from '../../../games/herd-mind/client/index';
+import { clientModule as hiveRank } from '../../../games/hive-rank/client/index';
 import { clientModule as lightningRound } from '../../../games/lightning-round/client/index';
+import { clientModule as spyGrid } from '../../../games/spy-grid/client/index';
 import { clientModule as wisecrack } from '../../../games/wisecrack/client/index';
 
 export const clientGames: Readonly<Record<string, GameClientModule>> = {
@@ -12,6 +14,8 @@ export const clientGames: Readonly<Record<string, GameClientModule>> = {
   'blanks': blanks,
   'broken-pencil': brokenPencil,
   'herd-mind': herdMind,
+  'hive-rank': hiveRank,
   'lightning-round': lightningRound,
+  'spy-grid': spyGrid,
   'wisecrack': wisecrack,
 };

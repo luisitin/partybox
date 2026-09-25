@@ -78,6 +78,47 @@
     animation: pb-fold linear both;
     animation-timeline: scroll(self);
   }
+  /* fill1: a title drawn down to its bottom edge (the results' award chips) sat flush on the body's
+     clip line, so a row scrolled half out read as hidden under the chips — at 200 % text most of a
+     name. Scrolled away from the top, the body keeps the clear strip it has at rest (its own top
+     padding) and then fades in over twice the caption size, so nothing touches the title at any
+     text size. Paint only: every box stays where it was, and at the top there is no mask at all. */
+  .body.fadeTop {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent var(--pb-fold-clear),
+      #000 calc(var(--pb-fold-clear) + var(--pb-fold-top)),
+      #000 calc(100% - var(--pb-fold)),
+      transparent
+    );
+    animation:
+      pb-fold linear both,
+      pb-fold-top linear both;
+    animation-timeline: scroll(self), scroll(self);
+  }
+}
+
+@property --pb-fold-top {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+@property --pb-fold-clear {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes pb-fold-top {
+  0% {
+    --pb-fold-clear: 0px;
+    --pb-fold-top: 0px;
+  }
+  8%,
+  100% {
+    --pb-fold-clear: var(--pb-space-4);
+    --pb-fold-top: calc(var(--pb-font-caption) * 2);
+  }
 }
 
 @keyframes pb-fold {
@@ -90,39 +131,79 @@
   }
 }
 
-/* ── I-066 B: the "more below" chevron — a small pill at the body's foot while it can scroll. */
-.more {
+/* ── I-788 A (design review A, refines I-066 B / I-187): "more below" is a slim row of its own at the
+   top of the footer — a grab bar and the words — never a pill floating over the body's last line or
+   the button's own words. The row is laid out whenever the body overflows (the body gives up its
+   height), and only fades out at the end, so nothing shifts under a finger. With no footer the same
+   row sits in the bottom safe area. The whole row is the button: 28 px drawn, 40 px to the thumb. */
+.cue {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 28px;
+  margin: 0 0 2px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--pb-text-muted);
+  font: inherit;
+  font-size: calc(var(--pb-font-caption) * 0.86);
+  font-weight: 700;
+  line-height: 1.1;
+  cursor: pointer;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+.cue::before {
+  content: '';
+  width: 28px;
+  height: 3px;
+  border-radius: 3px;
+  background: currentColor;
+  opacity: 0.6;
+  flex: none;
+}
+/* The thumb target reaches up to the footer's top edge (40 px), never down over the button. */
+.cue::after {
+  content: '';
   position: absolute;
-  left: 50%;
-  bottom: var(--pb-space-2); /* I-187: from the footer's top edge, not a guessed 60 px */
-  translate: -50% 0;
-  z-index: 2;
-  /* The owner (2026-09-22): a real thumb target, not a 32x22 sliver. */
-  width: 56px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  border: 1px solid var(--pb-border);
-  background: var(--pb-surface-2);
-  color: var(--pb-text);
-  font-size: 22px;
-  line-height: 1;
-  pointer-events: auto;
-  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+  inset: calc(-1 * var(--pb-space-3)) 0 0;
+}
+.cue[data-on='false'] {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--pb-motion-base) var(--pb-ease),
+    visibility 0s linear var(--pb-motion-base);
 }
 @media (prefers-reduced-motion: reduce) {
-  .more {
-    animation: none;
+  .cue,
+  .cue[data-on='false'] {
+    transition: none;
   }
 }
-:global(:root[data-motion='off']) .more {
-  animation: none;
+:global(:root[data-motion='off']) .cue,
+:global(:root[data-motion='off']) .cue[data-on='false'] {
+  transition: none;
 }
 
-/* ── I-187: the pill's zero-height anchor between the body and the footer. */
-.moreAnchor {
-  position: relative;
-  height: 0;
-  z-index: 2;
+/* No footer: the row alone, in the bottom safe area. */
+.cueOnly {
+  flex-shrink: 0;
+  padding: var(--pb-space-3) var(--pb-space-4) calc(4px + env(safe-area-inset-bottom));
+}
+
+@media (orientation: landscape) and (max-height: 420px) {
+  .cue {
+    min-height: 22px;
+    margin: 0;
+  }
+  .cue::after {
+    inset: -4px 0 0;
+  }
+  .cueOnly {
+    padding: 4px var(--pb-space-4) calc(2px + env(safe-area-inset-bottom));
+  }
 }

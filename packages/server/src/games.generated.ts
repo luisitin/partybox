@@ -4,7 +4,9 @@ import { game as bingo } from '../../../games/bingo/server/index';
 import { game as blanks } from '../../../games/blanks/server/index';
 import { game as brokenPencil } from '../../../games/broken-pencil/server/index';
 import { game as herdMind } from '../../../games/herd-mind/server/index';
+import { game as hiveRank } from '../../../games/hive-rank/server/index';
 import { game as lightningRound } from '../../../games/lightning-round/server/index';
+import { game as spyGrid } from '../../../games/spy-grid/server/index';
 import { game as wisecrack } from '../../../games/wisecrack/server/index';
 
 export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
@@ -12,6 +14,8 @@ export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'blanks': blanks,
   'broken-pencil': brokenPencil,
   'herd-mind': herdMind,
+  'hive-rank': hiveRank,
   'lightning-round': lightningRound,
+  'spy-grid': spyGrid,
   'wisecrack': wisecrack,
 };

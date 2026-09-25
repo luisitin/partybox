@@ -36,15 +36,23 @@ export function CustomStake({ score, placed, disabled, onPlace }: CustomStakePro
   const open = placed === null && !disabled;
   return (
     <div
-      className={`${styles.custom} ${placed !== null ? styles.customOn : ''} ${disabled ? styles.customOff : ''}`}
+      className={`${styles.custom} ${placed !== null ? styles.customOn : ''} ${disabled ? styles.customOff : ''} ${open ? styles.customOpen : ''}`}
       role="group"
       aria-label={L('custom wager')}
     >
-      <span className={styles.wagerRow}>
-        <Chips percent={percent} />
-        <span className={styles.amount}>{amount ?? '–'}</span>
-        <span className={styles.pct}>{placed !== null ? L('✓ your stake') : L('Custom')}</span>
-      </span>
+      {open ? (
+        // I-550 (the owner's note): open, the row is one line — what it works out to over "Custom"
+        <span className={styles.customLead}>
+          {amount !== null ? <span className={styles.amount}>{amount}</span> : null}
+          <span className={styles.pct}>{L('Custom')}</span>
+        </span>
+      ) : (
+        <span className={styles.wagerRow}>
+          <Chips percent={percent} />
+          <span className={styles.amount}>{amount ?? '–'}</span>
+          <span className={styles.pct}>{placed !== null ? L('✓ your stake') : L('Custom')}</span>
+        </span>
+      )}
       {open ? (
         <form
           className={styles.customForm}
