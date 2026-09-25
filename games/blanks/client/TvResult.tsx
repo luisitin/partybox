@@ -195,7 +195,8 @@ export function TvResult({ view }: Props): JSX.Element {
           {L('Round {round} of {rounds} · result', { round: view.round, rounds: view.rounds })}
         </p>
         {/* I-152 B: after a VIP handover "the VIP" is whoever it has just become — name them. */}
-        {!view.timed ? (
+        {/* Timed or not, the result waits for the VIP's Next (pacing rule, 2026-09-25). */}
+        {view.phaseId === 'result' ? (
           <span className={styles.progressPill}>
             {vipName
               ? L("Next on {name}'s phone", { name: vipName })

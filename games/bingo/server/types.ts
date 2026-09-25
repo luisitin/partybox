@@ -97,7 +97,7 @@ export interface RoundState {
   decision: Decision | null;
   /** I-105 A: the vote after a bingo — each phone's current choice (the VIP's flagged). */
   votes?: Record<string, { choice: Decision; at: number; vip: boolean }>;
-  /** I-105 A: when the vote closes (6 s after the first choice, never before the read ends). */
+  /** I-105 A: when the vote closes (VOTE_MS after the first choice, never before the read ends). */
   voteEndsAt?: number | null;
   /**
    * check / bingo: the TV's verdict has landed (the phase's first tick, at the end of the reveal —
@@ -225,7 +225,9 @@ export {
   BINGO_ABANDONED_MS,
   NO_PICK_MS,
   VOTE_MS,
-  SCOREBOARD_MS,
+  SCOREBOARD_MIN_MS,
+  scoreboardMs,
+  readMs,
   DECK,
   FREE,
   FINAL_MS,

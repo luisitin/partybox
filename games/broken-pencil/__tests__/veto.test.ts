@@ -4,6 +4,8 @@ import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { encodePoints } from '../server/encoding';
 import { owedNow } from '../server/books';
+import { enterShow, summaryMs, turnPage } from '../server/phases/show';
+import { BOT_SHOW_MS, SUMMARY_MS } from '../server/types';
 import type { Input, State } from '../server/types';
 
 const T0 = 1_000_000;
@@ -94,5 +96,28 @@ describe("the VIP's close-enough veto (the owner, 2026-09-21)", () => {
     let d = v;
     while (d.phase.id !== 'done') d = timer(d);
     expect(game.results(d)?.awards.some((a) => a.playerId === d.books[1]?.ownerId)).toBe(true);
+  });
+});
+
+// Owner's pacing rule (Agent Hub #decisions cc45f4, 2026-09-25): enough time to read.
+describe('pacing: pages and the summary stay up long enough to read', () => {
+  it("a bot book's last page holds the verdict beat plus the time to read its line", () => {
+    const s = playThrough(start(3));
+    const owner = s.books[0]?.ownerId ?? '';
+    const bots: State = {
+      ...s,
+      players: { ...s.players, [owner]: { ...s.players[owner]!, bot: true } },
+    };
+    let last = enterShow(bots, T0 + 9000);
+    while (last.showing?.verdict === null) last = turnPage(last, T0 + 10_000, (st) => st);
+    expect((last.phase.deadline ?? 0) - last.phase.startedAt).toBeGreaterThan(
+      BOT_SHOW_MS.guess + 3_000,
+    );
+  });
+  it('the summary falls back after at least 40 s, longer with more books', () => {
+    const s = playThrough(start(3));
+    expect(summaryMs(s)).toBeGreaterThanOrEqual(SUMMARY_MS);
+    const many = { ...s, books: Array.from({ length: 5 }, () => s.books).flat() };
+    expect(summaryMs(many)).toBeGreaterThan(summaryMs(s));
   });
 });

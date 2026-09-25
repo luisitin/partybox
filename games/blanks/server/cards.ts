@@ -4,15 +4,7 @@
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { blackCard, blackTier } from './content';
-import {
-  BIG_REVEAL_MAX_MS,
-  BIG_REVEAL_MIN_MS,
-  BIG_REVEAL_PER_CHAR_MS,
-  BIG_ROOM,
-  REVEAL_MAX_MS,
-  REVEAL_MIN_MS,
-  REVEAL_PER_CHAR_MS,
-} from './types';
+import { REVEAL_POP_MS, readMs, wordCount } from './types';
 import type { State } from './types';
 
 /**
@@ -103,11 +95,8 @@ export { fill, fillText, glue } from './fill'; // I-752 B
 export type { Segment } from './fill';
 import { fillText } from './fill';
 
-/** How long a reveal card stays up: long enough to read it out loud; a room with more than
- *  BIG_ROOM cards to get through reads each one a little faster. */
-export function revealMs(text: string, whites: readonly string[], cards = 1): number {
-  const length = fillText(text, whites).length;
-  if (cards > BIG_ROOM)
-    return Math.min(BIG_REVEAL_MAX_MS, BIG_REVEAL_MIN_MS + length * BIG_REVEAL_PER_CHAR_MS);
-  return Math.min(REVEAL_MAX_MS, REVEAL_MIN_MS + length * REVEAL_PER_CHAR_MS);
+/** How long a reveal card stays up with no voice: the whites' drop-in, then the time a slow reader
+ *  needs for the whole sentence (deck text: no UI margin). `cards` is kept for callers. */
+export function revealMs(text: string, whites: readonly string[], _cards = 1): number {
+  return REVEAL_POP_MS + readMs(wordCount(fillText(text, whites)), 1);
 }

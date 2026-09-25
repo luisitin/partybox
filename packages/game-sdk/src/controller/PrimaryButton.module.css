@@ -76,7 +76,10 @@
 }
 
 /* The ✓ pops once each time a done button mounts (R-063); 0 ms under reduced motion. */
+/* The gap is a margin: a trailing space inside an inline-block collapses, so every done button
+   read "✓Submitted" / "✓You're ready". */
 .check {
   display: inline-block;
+  margin-right: 0.35em;
   animation: global(pb-pop) var(--pb-motion-fast) var(--pb-ease) both;
 }

@@ -5,7 +5,7 @@
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { AUTO_END_MS, VERDICT_READ_MS, WRONG_READ_MS, claimRevealMs } from '../server/reveal';
-import { NO_PICK_MS, RESUME_MS } from '../server/types';
+import { NO_PICK_MS, RESUME_MS, VOTE_MS } from '../server/types';
 import { pointsFor } from '../server/scoring';
 import {
   PLAYERS,
@@ -108,7 +108,7 @@ describe('keeping the round going', () => {
       pattern: 'same',
       by: 'b',
     });
-    expect(early.phase.deadline).toBe(Math.max(endsAt, s.phase.startedAt + 400 + 6000));
+    expect(early.phase.deadline).toBe(Math.max(endsAt, s.phase.startedAt + 400 + VOTE_MS));
     expect(game.tvView(early).pendingDecision).toBeNull(); // no one has picked FOR the room
     expect(game.tvView(early).votes).toEqual([{ name: 'Ben', choice: 'same' }]);
     expect(game.controllerView(early, 'b').myVote).toBe('same');
@@ -214,9 +214,9 @@ describe('the points land with the verdict (loop 257)', () => {
     const scored = timer(early);
     expect(scored.phase.id).toBe('bingo');
     expect(scored.wins['a']).toBe(3);
-    // I-105: the vote closes at its own 6 s mark, never before the read after the verdict.
+    // I-105: the vote closes at its own VOTE_MS mark, never before the read after the verdict.
     expect(scored.phase.deadline).toBe(
-      Math.max(verdictAt + VERDICT_READ_MS, s.phase.startedAt + 400 + 6000),
+      Math.max(verdictAt + VERDICT_READ_MS, s.phase.startedAt + 400 + VOTE_MS),
     );
     expect(timer(scored).phase.id).toBe('play');
   });
@@ -341,8 +341,8 @@ describe('a VIP pause through a bingo (loop 294 — the review)', () => {
       judged.round.judgedAt ?? 0,
     );
     expect(choice.phase.id).toBe('bingo');
-    // I-105: a vote cast at the verdict runs its full 6 s (longer than the 3 s read).
-    expect(choice.phase.deadline).toBe((judged.round.judgedAt ?? 0) + 6000);
+    // I-105: a vote cast at the verdict runs its full VOTE_MS (longer than the 3 s read).
+    expect(choice.phase.deadline).toBe((judged.round.judgedAt ?? 0) + VOTE_MS);
     expect(timer(choice).phase.id).toBe('play');
   });
 

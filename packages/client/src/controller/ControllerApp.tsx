@@ -11,7 +11,8 @@ import { PHONE_MUTE_KEY, createSoundEngine } from '../sound';
 import type { SoundEngine } from '../sound';
 import { ControllerShell } from './ControllerShell';
 import { BigScreenHint } from '../surface/SurfaceHint';
-import { CrossfadeSwap } from '../CrossfadeSwap';
+import { CrossfadeSwap, screenKey } from '../CrossfadeSwap';
+import { StartStage } from './StartStage';
 import { buzz } from '@partybox/game-sdk/ui';
 const SUBMIT_BUZZ = 20; // I-070 B: the same pattern a submit uses
 import { Join } from './Join';
@@ -213,7 +214,12 @@ export function ControllerApp(): JSX.Element {
         );
         break;
       case 'selecting':
-        screen = <Selecting controller={controller} room={state.room} me={me} />;
+        // ADR-053: between Start and the game, the start stage (rules, READY, 3·2·1)
+        screen = state.room.starting ? (
+          <StartStage controller={controller} room={state.room} me={me} audio={audio} />
+        ) : (
+          <Selecting controller={controller} room={state.room} me={me} />
+        );
         break;
       case 'playing':
         screen = (
@@ -245,7 +251,7 @@ export function ControllerApp(): JSX.Element {
           musicWhat={musicWhat}
         >
           <CrossfadeSwap
-            swapKey={!state.joined || !state.room || !me ? 'join' : state.room.status}
+            swapKey={!state.joined || !state.room || !me ? 'join' : screenKey(state.room)}
             delayMs={
               state.room?.status === 'playing' ? 200 : 0
             } /* I-039 A: a beat between phase screens */
