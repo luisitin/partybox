@@ -2,7 +2,6 @@
 // Content (box names and flavour lines) stays in the deck's language.
 export const ES_SCREENS: Record<string, string> = {
   // the rules
-  'Blind Auction': 'Subasta a Ciegas',
   'A mystery box shows what might be inside, and the odds.':
     'Una caja misteriosa muestra lo que podría tener dentro, y sus probabilidades.',
   'Bet your coins in secret on what you think is inside. Long shots pay big.':
@@ -74,6 +73,8 @@ export const ES_SCREENS: Record<string, string> = {
   'Look at the TV': 'Mira la TV',
   "That's the last box!": '¡Esa fue la última caja!',
   // live events
+  // The game's name is a brand: it stays English on Spanish screens (#decisions, Part 00 a).
+  'Blind Auction': 'Blind Auction',
   'No passes yet': 'Aún sin pases',
   '1 pass': '1 pase',
   'Everyone: {tier} · {n}% · pays {x}': 'Todos: {tier} · {n}% · paga {x}',

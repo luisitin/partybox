@@ -9,7 +9,7 @@ import { Avatar, Confetti, Stage, useSequence, useSound, useT } from '@partybox/
 import type { PushedView, SoundCue } from '@partybox/game-sdk/ui';
 import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS } from '../server/timing';
 import type { BlindAuctionTvView } from '../server/views';
-import { COIN, iconOf, kindName, nameOf as optionName, payText, toneOf } from './copy';
+import { COIN, boxWords, iconOf, kindName, nameOf as optionName, payText, toneOf } from './copy';
 import type { Tone } from './copy';
 import { Doors, LiveStage } from './LiveStage';
 import { PotatoRing, passWords } from './Potato';
@@ -40,14 +40,15 @@ function Kicker({ view }: { view: View }): JSX.Element {
 }
 
 function BoxPanel({ view }: { view: View }): JSX.Element | null {
+  const L = useT(STRINGS);
   const play = useSound();
   useEffect(() => play('card'), [play]);
   useReading(view.voice);
   if (!view.box) return null;
   return (
     <div className={styles.panel}>
-      <h1 className={styles.plate}>{view.box.name}</h1>
-      <p className={styles.flavour}>{view.box.flavour}</p>
+      <h1 className={styles.plate}>{boxWords(L, view.box).name}</h1>
+      <p className={styles.flavour}>{boxWords(L, view.box).flavour}</p>
       <OptionBoard options={view.box.options} />
     </div>
   );

@@ -8,11 +8,22 @@
 }
 
 .topRow {
+  /* Never squeezed by the screen's column: a two-line name keeps its height. */
+  flex-shrink: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: var(--pb-space-2);
   min-height: var(--pb-touch);
+}
+
+.topRow > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.topRow > :last-child {
+  flex: none;
 }
 
 .purse {
@@ -82,9 +93,12 @@
 }
 
 .lotTitle {
+  /* The kicker over the name: a long name (or 200 % text) wraps under itself, never over the
+     line below or under the coin pill. */
   display: flex;
-  align-items: baseline;
-  gap: var(--pb-space-2);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
   min-width: 0;
   margin: var(--pb-space-1) 0 0;
 }
@@ -114,6 +128,7 @@
 
 /* The lot, centred in the phone's height: the dealt card over its name and hint. */
 .lotStage {
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;

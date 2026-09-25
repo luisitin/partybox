@@ -163,6 +163,9 @@
 /* ── phone ── */
 .phone {
   gap: var(--pb-space-2);
+  /* As many columns as fit at this text size (200 % text: two, then one), never words that
+     collide. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.5em), 1fr));
 }
 
 .phone .option {
@@ -303,4 +306,22 @@ button.option:focus-visible {
 
 .phone.uniformBoard .icon {
   display: none;
+}
+
+/* The rules' sample board on the TV: compact, but TV-sized. */
+.tv.compact .icon {
+  font-size: 40px;
+}
+
+.tv.compact .name,
+.tv.compact .pay {
+  font-size: var(--pb-font-body);
+}
+
+.tv.compact .odds {
+  letter-spacing: 0.02em;
+}
+
+.tv.compact .option {
+  padding: var(--pb-space-2) var(--pb-space-3);
 }

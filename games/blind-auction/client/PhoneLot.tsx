@@ -5,7 +5,7 @@ import type { JSX } from 'react';
 import { PrimaryButton, Screen, usePhoneOnly, useSecondsLeft, useT } from '@partybox/game-sdk/ui';
 import type { PushedView } from '@partybox/game-sdk/ui';
 import type { BlindAuctionControllerView, BoxView } from '../server/views';
-import { COIN } from './copy';
+import { COIN, boxWords } from './copy';
 import { LotCard } from './LotCard';
 import { OptionBoard } from './Options';
 import styles from './phone.module.css';
@@ -34,7 +34,7 @@ export function LotTitle({ box }: { box: BoxView }): JSX.Element {
         {box.grand ? `★ ${L('Grand box ×2')}` : L('Box {n}/{total}', { n: box.n, total: box.of })}
       </span>
       <span className={styles.lotTitleName}>
-        <span aria-hidden>{box.icon}</span> {box.name}
+        <span aria-hidden>{box.icon}</span> {boxWords(L, box).name}
       </span>
     </p>
   );
@@ -125,7 +125,7 @@ export function PhoneBox({ view }: { view: View }): JSX.Element {
             deal
             size="phone"
           />
-          <p className={styles.flavour}>{box.flavour}</p>
+          <p className={styles.flavour}>{boxWords(L, box).flavour}</p>
           <OptionBoard options={box.options} size="phone" />
         </div>
       ) : null}

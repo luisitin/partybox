@@ -43,6 +43,15 @@ export function kindName(L: Translator, kind: ContentKind): string {
   }
 }
 
+/** A box's name and flavour line: a live event's are the game's own words (translated); a lot's
+ *  are content and stay in the deck's language. */
+export function boxWords(
+  L: Translator,
+  box: { name: string; flavour: string; event?: string },
+): { name: string; flavour: string } {
+  return box.event ? { name: L(box.name), flavour: L(box.flavour) } : box;
+}
+
 /** An option's icon: a live event's own (🐢, 🎲 call, 🍕) or the content's. */
 export function iconOf(o: Pick<OptionView, 'kind' | 'label'>): string {
   return o.label?.icon ?? KIND_ICON[o.kind];

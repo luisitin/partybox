@@ -1,5 +1,5 @@
 // `rules` on the TV (the owner, 2026-09-24: "start the game explaining the rules and waiting for
-// everybody to ready up"): the three steps land one by one beside an example box, then the room's
+// everybody to ready up"): the three steps land one by one (the first with an example box's odds), then the room's
 // faces tick ✓ as each phone taps Ready; once everyone is in, a big 3 · 2 · 1.
 import { useEffect, useRef } from 'react';
 import type { JSX } from 'react';
@@ -7,9 +7,8 @@ import { Avatar, Stage, useBeats, useSecondsLeft, useSound, useT } from '@partyb
 import type { PushedView } from '@partybox/game-sdk/ui';
 import type { BlindAuctionTvView } from '../server/views';
 import { COIN } from './copy';
-import { LotCard } from './LotCard';
 import { OptionBoard } from './Options';
-import { SAMPLE_BOX, SAMPLE_OPTIONS } from './sample';
+import { SAMPLE_OPTIONS } from './sample';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
 
@@ -45,22 +44,19 @@ export function TvRules({ view }: { view: PushedView<BlindAuctionTvView> }): JSX
           <span aria-hidden>🔨</span> {L('Blind Auction')}
         </h1>
         <div className={styles.rulesRow}>
-          <div className={styles.rulesCard} aria-hidden>
-            <LotCard icon={SAMPLE_BOX.icon} grand={false} face={null} flipped={false} deal />
-          </div>
           <ol className={styles.steps}>
             {steps.map((text, i) => (
               <li key={i} className={`${styles.stepItem} ${beat >= i + 1 ? styles.stepIn : ''}`}>
                 <span className={styles.stepNum}>{i + 1}</span>
                 <span className={styles.stepBody}>
                   <span>{text}</span>
-                  {i === 0 ? (
-                    <OptionBoard options={SAMPLE_OPTIONS} className={styles.sampleBoard} />
-                  ) : null}
                 </span>
               </li>
             ))}
           </ol>
+          <div className={`${styles.rulesSample} ${beat >= 1 ? styles.stepIn : ''}`} aria-hidden>
+            <OptionBoard options={SAMPLE_OPTIONS} compact />
+          </div>
         </div>
         <div className={`${styles.readyRow} ${beat >= 4 ? styles.stepIn : ''}`}>
           <p className={styles.startCoins}>
