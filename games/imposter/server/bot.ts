@@ -21,10 +21,13 @@ function fresh(options: readonly string[], view: ImposterControllerView): string
   return options.filter((o) => !used.some((u) => sameAnswer(u, o, PACK_LANG)));
 }
 
+/** Each word's bank, normalized once at load (bots ask this on every decision). */
+const BANK = new Map(ALL_CATS.flatMap((c) => c.words).map((w) => [w.id, w.clues.map(compact)]));
+
 /** How many of a word's bank clues are on the board. */
 function overlap(word: WordItem, texts: readonly string[]): number {
   const set = new Set(texts.map(compact));
-  return word.clues.filter((c) => set.has(compact(c))).length;
+  return (BANK.get(word.id) ?? word.clues.map(compact)).filter((c) => set.has(c)).length;
 }
 
 /** The imposter's best guess at the word: the category word whose bank the board fits best. */
