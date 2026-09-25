@@ -195,7 +195,7 @@ export const STRINGS: Strings = {
     'End turn opens after the first card': 'Terminar turno se abre tras la primera carta',
     'Teams even out at the start: bots move first.':
       'Los equipos se igualan al empezar: primero se mueven los bots.',
-    'The board words are in English.': '🇬🇧 Las palabras del tablero están en inglés.',
+    'The board words are in English.': 'Las palabras del tablero están en inglés.',
     'The crew found {n}.': 'El equipo encontró {n}.',
     'The crew touched the assassin 💀': 'El equipo tocó al asesino 💀',
     'You all play one team. Want to give the clues? Switch on “I’ll be spymaster”.':
