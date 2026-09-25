@@ -42,6 +42,7 @@ describe('serverText', () => {
       'Puedes añadir como máximo 4 bots.',
     );
     expect(serverText('Sam was kicked', 'es')).toBe('Expulsaron a Sam');
+    expect(serverText('Removed Sam', 'es')).toBe('Quitaste a Sam'); // I-373
     expect(serverText("Only the bot's owner or the VIP can remove it.", 'es')).toBe(
       'Solo quien lo añadió o el VIP pueden quitar ese bot.',
     );

@@ -248,15 +248,10 @@ export function removePlayer(
     next = handover.room;
     effects.push(...handover.effects);
   }
-  effects.push(
-    { type: 'push' },
-    {
-      type: 'toast',
-      to: 'all',
-      kind: 'info',
-      text: reason === 'kicked' ? `${player.name} was kicked` : `${player.name} left`,
-    },
-  );
+  effects.push({ type: 'push' });
+  // I-373 A: the room hears "left" for a removal too — a kick is the VIP's housekeeping, not a
+  // public expulsion (the VIP's own phone is told "Removed …" by the kick itself)
+  effects.push({ type: 'toast', to: 'all', kind: 'info', text: `${player.name} left` });
   return { room: next, effects };
 }
 

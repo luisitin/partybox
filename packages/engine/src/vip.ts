@@ -158,6 +158,7 @@ export function applyVip(
         return reject(room, playerId, 'cannot_start', 'You cannot kick yourself.');
       if (!room.players[action.playerId])
         return reject(room, playerId, 'not_in_room', 'That player already left.');
+      const gone = room.players[action.playerId]?.name ?? '';
       const removed = removePlayer(room, action.playerId, now, deps, 'kicked');
       return {
         room: removed.room,
@@ -168,6 +169,10 @@ export function applyVip(
             reason: 'The VIP removed you from the room.',
           },
           ...removed.effects,
+          // I-373 A: only the one who did it is told it was a removal
+          ...(host
+            ? []
+            : [{ type: 'toast' as const, to: playerId, kind: 'info' as const, text: `Removed ${gone}` }]),
         ],
       };
     }
