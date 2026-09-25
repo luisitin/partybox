@@ -69,9 +69,9 @@
     {
       "key": "reader",
       "label": "Host voice",
-      "description": "Who reads the boxes out loud",
+      "description": "Short calls: place your bets, bets closed, the winners",
       "type": "select",
-      "default": "george",
+      "default": "none",
       "options": [
         {
           "value": "george",

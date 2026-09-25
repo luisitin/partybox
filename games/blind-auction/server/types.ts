@@ -3,7 +3,7 @@
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 
-export const PHASES = ['rules', 'box', 'bet', 'swap', 'open', 'done'] as const;
+export const PHASES = ['rules', 'box', 'bet', 'swap', 'potato', 'open', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export const READERS = ['george', 'fable', 'jessica', 'sky', 'original', 'none'] as const;
@@ -28,7 +28,7 @@ export interface Cfg {
 }
 
 /** The live events (the owner's picks, docs/game-pack/blind-auction/LIVE-EVENTS.md). */
-export const LIVE_KINDS = ['race', 'dice', 'wheel', 'doors'] as const;
+export const LIVE_KINDS = ['race', 'dice', 'wheel', 'doors', 'potato'] as const;
 export type LiveKind = (typeof LIVE_KINDS)[number];
 
 /** What a box can hold. Each kind has its icon and words on the client (EN + ES). */
@@ -96,6 +96,11 @@ export interface RoundState {
    *  final door; absent = undecided, which stays). */
   opened?: number;
   swaps?: Record<string, number>;
+  /** Hot potato (`potato`): who holds it, since when, how many passes; `popAt` is SECRET. */
+  holder?: string;
+  heldAt?: number;
+  passes?: number;
+  popAt?: number;
 }
 
 export interface Stats {
@@ -108,7 +113,7 @@ export interface Stats {
 
 /** A refused input, shown on that phone; `at` keys the toast so a repeat shows again. */
 export interface Notice {
-  code: 'over' | 'option';
+  code: 'over' | 'option' | 'self';
   have: number;
   at: number;
 }
@@ -138,9 +143,12 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('ready') }),
   // Doors: the door you end on after the host opens one (your own = stay).
   z.object({ type: z.literal('swap'), door: z.number().int().min(0).max(2) }),
+  // Hot potato: the holder passes it on.
+  z.object({ type: z.literal('pass') }),
   z.object({
     type: z.literal('bet'),
-    option: z.number().int().min(0).max(3),
+    // Up to 16 for hot potato (one option per player).
+    option: z.number().int().min(0).max(15),
     amount: z.number().int().min(0).max(100000),
   }),
 ]);

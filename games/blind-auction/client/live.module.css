@@ -368,3 +368,180 @@
     animation: none;
   }
 }
+
+/* ── hot potato ── */
+.ring {
+  position: relative;
+  width: min(720px, calc(var(--ba-card-h) * 1.35));
+  height: var(--ba-card-h);
+  --ba-seat: min(84px, calc(var(--ba-card-h) * 0.15));
+}
+
+.seat {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transform: translate(-50%, -50%);
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.seatFace {
+  display: block;
+  width: var(--ba-seat);
+  height: var(--ba-seat);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--pb-surface-2);
+}
+
+.seatHot .seatFace {
+  box-shadow: 0 0 0 5px var(--pb-accent);
+}
+
+.seatHot {
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.seatBurnt .seatFace {
+  box-shadow: 0 0 0 6px var(--pb-danger);
+}
+
+.seatName {
+  max-width: calc(var(--ba-seat) * 1.8);
+  overflow: hidden;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.potato {
+  position: absolute;
+  z-index: 2;
+  font-size: calc(var(--ba-seat) * 0.9);
+  line-height: 1;
+  /* Sits on the holder's face, a little up and right. */
+  translate: -10% -95%;
+  animation: ba-land 220ms var(--pb-ease) both;
+  transition:
+    left 200ms var(--pb-ease),
+    top 200ms var(--pb-ease);
+}
+
+@keyframes ba-land {
+  from {
+    transform: scale(0.6) rotate(-20deg);
+  }
+  to {
+    transform: scale(1) rotate(0);
+  }
+}
+
+.heat0 {
+  animation:
+    ba-land 220ms var(--pb-ease) both,
+    ba-jitter 420ms ease-in-out 220ms infinite alternate;
+}
+
+.heat1 {
+  animation:
+    ba-land 220ms var(--pb-ease) both,
+    ba-jitter 260ms ease-in-out 220ms infinite alternate;
+}
+
+.heat2,
+.heat3 {
+  filter: drop-shadow(0 0 10px var(--pb-danger));
+  animation:
+    ba-land 220ms var(--pb-ease) both,
+    ba-jitter 140ms ease-in-out 220ms infinite alternate;
+}
+
+@keyframes ba-jitter {
+  from {
+    transform: rotate(-8deg);
+  }
+  to {
+    transform: rotate(8deg);
+  }
+}
+
+.boom {
+  font-size: calc(var(--ba-seat) * 1.6);
+  translate: -50% -60%;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The holder's phone: one big potato. */
+.potatoScreen {
+  justify-content: center;
+}
+
+.potatoTitle {
+  margin: 0;
+  text-align: center;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent);
+}
+
+.potatoButton {
+  display: grid;
+  place-items: center;
+  width: min(70vw, 18rem);
+  aspect-ratio: 1;
+  margin: var(--pb-space-4) auto;
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--pb-danger) 40%, transparent),
+    transparent 70%
+  );
+  font-size: min(40vw, 9rem);
+  line-height: 1;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  animation: ba-jitter 160ms ease-in-out infinite alternate;
+}
+
+.potatoSent {
+  opacity: 0.4;
+  animation: none;
+}
+
+.potatoHint {
+  margin: 0;
+  text-align: center;
+  color: var(--pb-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .potato,
+  .heat0,
+  .heat1,
+  .heat2,
+  .heat3,
+  .potatoButton {
+    animation: none;
+  }
+}
+
+/* A phone with no TV (PhoneStage, the potato watchers): the same stages, phone-sized. */
+.phoneStage {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+  --ba-card-h: min(300px, 58vw);
+}
+
+.phoneStage > * {
+  max-width: 100%;
+}
+
+.screen {
+  gap: var(--pb-space-3);
+}

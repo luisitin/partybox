@@ -34,8 +34,12 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       : view.myBet.option === option
         ? view.myBet.amount
         : null;
+  // Hot potato: you cannot back yourself (you could just keep it).
+  const self = box.event === 'potato' && option !== null && option === view.mySeat;
   const notice =
-    view.notice?.code === 'over' ? (
+    self || view.notice?.code === 'self' ? (
+      L('You can’t bet on yourself: pick someone else')
+    ) : view.notice?.code === 'over' ? (
       <span key={view.notice.at}>
         {L('You only have {coin} {n}', { coin: COIN, n: view.notice.have })}
       </span>
@@ -57,7 +61,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
         setAmount(0);
         send({ type: 'bet', option: option ?? 0, amount: 0 });
       }}
-      blocked={option === null}
+      blocked={option === null || self}
       texts={{
         place: (n) => L('Bet {coin} {n} on {what}', { coin: COIN, n, what: label }),
         change: (n) => L('Change to {coin} {n} on {what}', { coin: COIN, n, what: label }),

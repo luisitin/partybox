@@ -35,7 +35,10 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
   const { option, amount } = event.input;
   const have = state.coins[id] ?? 0;
   const box = state.boxes[state.r.idx]?.box;
-  const code = amount > have ? 'over' : !box || option >= box.options.length ? 'option' : null;
+  // Hot potato: you cannot bet on yourself holding it (you could just keep it).
+  const self = box?.event === 'potato' && amount > 0 && state.seats[option] === id;
+  const code =
+    amount > have ? 'over' : !box || option >= box.options.length ? 'option' : self ? 'self' : null;
   if (code) return { ...state, notices: { ...state.notices, [id]: { code, have, at: event.now } } };
   const { [id]: _cleared, ...notices } = state.notices;
   const after: State = {

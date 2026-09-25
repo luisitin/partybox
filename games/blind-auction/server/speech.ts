@@ -61,16 +61,16 @@ export function boxText(state: State, idx: number): string | null {
   return `${opener} The ${round.box.name}. ${round.box.flavour} What's inside?`;
 }
 
-export function boxRequest(state: State, idx: number): SpeechRequest | null {
-  const voice = voiceOf(state);
-  const text = boxText(state, idx);
-  return voice && text ? request(voice, text) : null;
+/** The owner (2026-09-25): the host just read the screen and was too much — the box is no longer
+ *  read aloud (the screen already says it); the voice keeps its short calls only. */
+export function boxRequest(_state: State, _idx: number): SpeechRequest | null {
+  return null;
 }
 
 /** The content the open box shows: its fixed line. */
-export function lineOf(state: State): FixedLine | null {
-  const round = state.boxes[state.r.idx];
-  return round ? (round.box.options[round.outcome]?.kind ?? null) : null;
+export function lineOf(_state: State): FixedLine | null {
+  // No per-content call ("A raccoon!") any more: the winners' line says what matters.
+  return null;
 }
 
 /** How many called it right (with a stake): only once the box is open (step 1). */

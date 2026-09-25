@@ -74,6 +74,17 @@ export const ES_SCREENS: Record<string, string> = {
   'Look at the TV': 'Mira la TV',
   "That's the last box!": '¡Esa fue la última caja!',
   // live events
+  'You can’t bet on yourself: pick someone else': 'No puedes apostar por ti: elige a otra persona',
+  'Hot Potato': 'Papa caliente',
+  'Tap to pass it on. Who is holding it when it pops?':
+    'Tócala para pasarla. ¿Quién la tiene cuando explota?',
+  'Tap to pass!': '¡Toca para pasarla!',
+  'You have the potato!': '¡Tienes la papa!',
+  '{name} has the potato': '{name} tiene la papa',
+  '{n} passes': '{n} pases',
+  'Pass it on before it pops!': '¡Pásala antes de que explote!',
+  'POP! {name} got burnt': '¡PUM! {name} se quemó',
+  'Bets are closed. Pass the potato!': 'Apuestas cerradas. ¡Pasen la papa!',
   'Stay or switch?': '¿Te quedas o cambias?',
   'A goat behind door {n}! Keep your door, or switch to the other one.':
     '¡Una cabra tras la puerta {n}! Quédate con tu puerta o cambia a la otra.',

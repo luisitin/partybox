@@ -77,6 +77,11 @@ const DOORS: readonly Label[] = [
 export const DOOR_PAY = 2;
 
 const EVENT_BOX: Record<LiveKind, { name: string; icon: string; flavour: string }> = {
+  potato: {
+    name: 'Hot Potato',
+    icon: '🥔',
+    flavour: 'Tap to pass it on. Who is holding it when it pops?',
+  },
   race: { name: 'Animal Race', icon: '🏁', flavour: 'Four racers, one finish line. Who wins?' },
   dice: { name: 'Dice Roll', icon: '🎲', flavour: 'Two dice. Under seven, lucky seven, or over?' },
   wheel: { name: 'Prize Wheel', icon: '🎡', flavour: 'Round and round it goes. Where it stops…' },
@@ -140,9 +145,25 @@ function doors(rng: RngState, n: number): [Round, RngState] {
   return [{ box: eventBox('doors', n, options), outcome }, s1];
 }
 
+/** Hot potato: its options are the players, filled in at `init` (potatoOptions) — here, none. */
+function potato(rng: RngState, n: number): [Round, RngState] {
+  return [{ box: eventBox('potato', n, []), outcome: 0 }, rng];
+}
+
+/** One option per player (seat order): equal chances in whole %, adding to 100. */
+export function potatoOptions(names: readonly string[]): BoxOption[] {
+  const n = Math.max(1, names.length);
+  const base = Math.floor(100 / n);
+  return names.map((name, i) => ({
+    ...option({ icon: '🔥', name }, base + (i < 100 - base * n ? 1 : 0)),
+    pay: payOf(base),
+  }));
+}
+
 export function drawEvent(kind: LiveKind, rng: RngState, n: number): [Round, RngState] {
   if (kind === 'race') return race(rng, n);
   if (kind === 'dice') return dice(rng, n);
   if (kind === 'doors') return doors(rng, n);
+  if (kind === 'potato') return potato(rng, n);
   return wheel(rng, n);
 }

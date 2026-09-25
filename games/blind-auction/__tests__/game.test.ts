@@ -3,7 +3,7 @@ import { createRng } from '@partybox/game-sdk';
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { boxRequest } from '../server/speech';
-import { BOX_LEAD_MS, BOX_SILENT_MS, BOX_TAIL_MS, OPEN_HOLD_MS } from '../server/timing';
+import { BOX_SILENT_MS, OPEN_HOLD_MS } from '../server/timing';
 import type { State } from '../server/types';
 import { bet, playThrough, send, setOutcome, skip, start, timer, walkTo } from './helpers';
 
@@ -61,20 +61,15 @@ describe('flow', () => {
 });
 
 describe('voice pacing', () => {
-  it('a ready box reading sets the box: lead + reading + 1 s', () => {
-    let s = start(3);
-    const key = boxRequest(s, 0)?.key ?? '';
-    s = send(s, { type: 'speech', now: s.phase.startedAt + 100, key, ms: 3000 });
-    s = skip(s);
-    expect(s.phase.deadline).toBe(s.phase.startedAt + BOX_LEAD_MS + 3000 + BOX_TAIL_MS);
-    expect(game.tvView(s).voice).toEqual({
-      url: `/api/speech/${key}.wav`,
-      at: s.phase.startedAt + BOX_LEAD_MS,
-    });
+  it('the box is not read aloud (owner, 2026-09-25): it lasts the silent time', () => {
+    const s = skip(start(3, { reader: 'george' }));
+    expect(boxRequest(s, 0)).toBeNull();
+    expect(s.phase.deadline).toBe(s.phase.startedAt + BOX_SILENT_MS);
+    expect(game.tvView(s).voice).toBeNull();
   });
 
   it('the winners line plays after the box opens, and the box waits for it', () => {
-    let s = setOutcome(walkTo(start(2), 'bet'), 0);
+    let s = setOutcome(walkTo(start(2, { reader: 'george' }), 'bet'), 0);
     s = bet(bet(s, 'p1', 0, 10), 'p2', 0, 10);
     s = timer(s);
     expect(s.r.step).toBe(1);
@@ -86,8 +81,9 @@ describe('voice pacing', () => {
     expect(s.phase.deadline).toBeLessThanOrEqual((s.r.turnedAt ?? 0) + OPEN_HOLD_MS + 5000);
   });
 
-  it('no voice at all when the reader is none', () => {
+  it('no voice at all when the reader is none — the default', () => {
     expect(game.speech?.(start(3, { reader: 'none' }))).toEqual([]);
+    expect(game.speech?.(start(3))).toEqual([]);
   });
 });
 

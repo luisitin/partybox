@@ -74,6 +74,8 @@ interface Common {
   run: RunView | null;
   /** Doors, from `swap` on: the goat door the host opened. */
   opened: number | null;
+  /** Hot potato: who holds it (`potato`; at `open`, who got burnt) and how many passes so far. */
+  potato: { holder: string; passes: number; ring: string[] } | null;
   results: ResultView[] | null;
   voice: VoiceView | null;
   clips: Partial<Record<FixedLine, string>>;
@@ -98,11 +100,13 @@ export interface BlindAuctionControllerView extends ControllerView, Common {
   myBet: Bet | null;
   /** Broke at the start of this bet: topped up to the pity stake. */
   topped: boolean;
-  notice: { code: 'over' | 'option'; have: number; at: number } | null;
+  notice: { code: 'over' | 'option' | 'self'; have: number; at: number } | null;
   line: OwnLine | null;
   /** Doors `swap`: the door you bet on (null = no stake, nothing to choose) and where you are now. */
   myDoor: number | null;
   mySwap: number | null;
+  /** Hot potato: your own option index (you cannot back yourself), null when not a player. */
+  mySeat: number | null;
 }
 
 function boxView(state: State): BoxView | null {
@@ -215,6 +219,7 @@ function statusOf(state: State): (id: string) => PlayerStatus {
   return (id) => {
     if (state.phase.id === 'rules') return state.ready.includes(id) ? 'submitted' : 'active';
     if (state.phase.id === 'bet') return Object.hasOwn(state.r.bets, id) ? 'submitted' : 'active';
+    if (state.phase.id === 'potato') return state.r.holder === id ? 'active' : 'waiting';
     if (state.phase.id === 'swap')
       return !swappers(state).includes(id) || Object.hasOwn(state.r.swaps ?? {}, id)
         ? 'submitted'
@@ -233,6 +238,8 @@ function skipLabel(state: State): string | undefined {
       return 'Close betting';
     case 'swap':
       return 'Open the doors';
+    case 'potato':
+      return 'Pop it now';
     case 'open':
       return state.r.idx + 1 < state.boxes.length ? 'Next box' : 'See results';
     default:
@@ -257,6 +264,10 @@ function common(state: State): Common {
     run: runView(state),
     opened:
       state.phase.id === 'swap' || state.phase.id === 'open' ? (state.r.opened ?? null) : null,
+    potato:
+      (state.phase.id === 'potato' || state.phase.id === 'open') && state.r.holder
+        ? { holder: state.r.holder, passes: state.r.passes ?? 0, ring: state.seats }
+        : null,
     results: resultsView(state),
     voice: voice(state),
     clips: clips(state),
@@ -314,5 +325,6 @@ export function controllerView(state: State, playerId: string): BlindAuctionCont
         ? (state.r.bets[playerId]?.option ?? null)
         : null,
     mySwap: playing && state.phase.id === 'swap' ? (state.r.swaps?.[playerId] ?? null) : null,
+    mySeat: playing && state.seats.includes(playerId) ? state.seats.indexOf(playerId) : null,
   };
 }

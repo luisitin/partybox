@@ -9,6 +9,9 @@ import type { BlindAuctionControllerView } from './views';
 export function decide(view: BlindAuctionControllerView, factor: number, rng: Rng): Input | null {
   if (view.me.role !== 'player') return null;
   if (view.phaseId === 'rules') return view.ready ? null : { type: 'ready' };
+  // Hot potato: pass it on the moment it lands (the server makes you hold it a beat first).
+  if (view.phaseId === 'potato')
+    return view.potato?.holder === view.me.id ? { type: 'pass' } : null;
   if (view.phaseId === 'swap') {
     // Doors: like people, most bots trust their first door; the bolder ones switch.
     if (view.myDoor === null || view.mySwap !== null || view.opened === null) return null;
@@ -22,7 +25,12 @@ export function decide(view: BlindAuctionControllerView, factor: number, rng: Rn
   const options = view.box.options;
   if (options.length === 0) return null;
   // Weight each content by its chance, bent by the personality toward the long shots.
-  const weights = options.map((o) => Math.pow(o.chance / 100, 1.6 - 1.4 * factor));
+  const weights = options.map((o, i) =>
+    // Never itself on hot potato (refused anyway).
+    view.box?.event === 'potato' && i === view.mySeat
+      ? 0
+      : Math.pow(o.chance / 100, 1.6 - 1.4 * factor),
+  );
   let roll = rng.float() * weights.reduce((a, b) => a + b, 0);
   let option = options.length - 1;
   for (let i = 0; i < weights.length; i++) {

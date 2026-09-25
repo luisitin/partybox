@@ -17,6 +17,8 @@ import { decide } from './bot';
 import { drawBoxes } from './content';
 import { enterBet, reduceBet } from './phases/bet';
 import { closeSwap, enterSwap, isDoors, reduceSwap, swappers, swapsIn } from './phases/swap';
+import { enterPotato, isPotato, pop, potatoDropped, reducePotato } from './phases/potato';
+import { drawEvent, potatoOptions } from './events';
 import { boxSpeech, enterBox, reduceBox } from './phases/box';
 import { enterOpen, openSpeech, reduceOpen } from './phases/open';
 import { allReady, countDown, enterRules, reduceRules } from './phases/rules';
@@ -46,7 +48,8 @@ function presenceOf(ctx: InitContext): Presence {
 }
 
 function cfgOf(settings: Settings): Cfg {
-  const reader = String(settings['reader'] ?? 'george');
+  // Off unless the host picks a voice (the owner found it too much).
+  const reader = String(settings['reader'] ?? 'none');
   return {
     rounds: num(settings, 'rounds', 8, 5, 12),
     startCoins: Math.round(num(settings, 'startCoins', 100, 50, 300) / 50) * 50,
@@ -63,8 +66,19 @@ function init(ctx: InitContext): State {
   for (const p of ctx.players) players[p.id] = p;
   const seats = ctx.players.map((p) => p.id);
   const cfg = cfgOf(ctx.settings);
-  const [boxes, afterDraw] = drawBoxes(cfg, seedRng(ctx.seed));
+  const [drawn, afterDraw] = drawBoxes(cfg, seedRng(ctx.seed));
   let rng = afterDraw;
+  // Hot potato bets on the players themselves: one option each. Under three players (you cannot
+  // back yourself) it is a race instead.
+  const names = ctx.players.map((p) => p.name);
+  const boxes = drawn.map((round, i) => {
+    if (round.box.event !== 'potato') return round;
+    if (names.length >= 3)
+      return { ...round, box: { ...round.box, options: potatoOptions(names) } };
+    const [race, next] = drawEvent('race', rng, i);
+    rng = next;
+    return race;
+  });
   const factors: Record<string, number> = {};
   for (const p of ctx.players) {
     if (p.bot !== true) continue;
@@ -109,9 +123,12 @@ export function advance(state: State, now: number): State {
       return enterBet(state, now);
     case 'bet':
       // Doors: the host opens a goat door and the bettors stay or switch first.
+      if (isPotato(state)) return enterPotato(state, now);
       return isDoors(state) && swappers(state).length > 0
         ? enterSwap(state, now)
         : enterOpen(state, now);
+    case 'potato':
+      return enterOpen(pop(state), now);
     case 'swap':
       return enterOpen(closeSwap(state), now);
     case 'open':
@@ -125,7 +142,7 @@ export function advance(state: State, now: number): State {
 
 /** Connections (and leaving for good, ADR-046); a drop can complete the ready-up or the betting. */
 function onPlayer(state: State, event: Extract<GameEvent<Input>, { type: 'player' }>): State {
-  let next = setConnected(state, event);
+  let next = potatoDropped(setConnected(state, event));
   if (event.gone && hasPlayer(state, event.playerId) && !state.left.includes(event.playerId))
     next = { ...next, left: [...next.left, event.playerId] };
   if (next.phase.paused) return next;
@@ -157,6 +174,8 @@ function reduce(state: State, event: GameEvent<Input>): State {
       return reduceBet(state, event, advance);
     case 'swap':
       return reduceSwap(state, event, advance);
+    case 'potato':
+      return reducePotato(state, event, advance);
     case 'open':
       return reduceOpen(state, event, advance);
     default:

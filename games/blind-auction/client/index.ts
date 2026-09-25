@@ -17,7 +17,14 @@ export const clientModule: GameClientModule = {
   // The game plays its own cues on the frame they belong to (TvTable, TvRules): the dealt box, the
   // `phase` chime under "Place your bets!", the reveal's cue as the box finishes turning, the 3·2·1.
   // Mapped phases re-chime whenever their deadline moves, so every phase maps to `silence`.
-  sounds: { rules: 'silence', box: 'silence', bet: 'silence', swap: 'silence', open: 'silence' },
+  sounds: {
+    rules: 'silence',
+    box: 'silence',
+    bet: 'silence',
+    swap: 'silence',
+    potato: 'silence',
+    open: 'silence',
+  },
   // The owner (2026-09-24): the music never stops — one low, continuous caper playlist under the
   // whole auction (no per-phase beds: a bed swapping every ten seconds read as choppy). Whole tracks
   // back to back, quiet under the auctioneer and the cues.
@@ -28,7 +35,7 @@ export const clientModule: GameClientModule = {
     mode: 'chain',
   },
   // Every round phase keeps the same table: cut between them, the box never re-rises.
-  quickInto: ['box', 'bet', 'swap', 'open'],
+  quickInto: ['box', 'bet', 'swap', 'potato', 'open'],
   // Whoever called the open box right.
   stripActive: (view) => {
     const v = view as { phaseId: string; results?: { id: string; delta: number }[] | null };

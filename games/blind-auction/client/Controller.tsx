@@ -10,6 +10,7 @@ import { PhoneBet } from './PhoneBet';
 import { PhoneBox, PhoneRules } from './PhoneLot';
 import { PhoneResult } from './PhoneResult';
 import { PhoneSwap } from './PhoneSwap';
+import { PhonePotato } from './Potato';
 import { STRINGS } from './strings';
 
 type Props = GameControllerProps<BlindAuctionControllerView, Input>;
@@ -32,6 +33,12 @@ export function Controller(props: Props): JSX.Element {
       ) : (
         // Keyed by box: a fresh picker and pad for every box.
         <PhoneBet key={view.box?.n ?? 0} {...props} />
+      );
+    case 'potato':
+      return spectator ? (
+        <WaitingScreen title={L('Look at the TV')} mood="watch" />
+      ) : (
+        <PhonePotato {...props} />
       );
     case 'swap':
       return <PhoneSwap key={view.box?.n ?? 0} {...props} />;

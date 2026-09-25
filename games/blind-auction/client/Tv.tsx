@@ -16,6 +16,7 @@ export function Tv({ view }: GameTvProps<BlindAuctionTvView>): JSX.Element {
     case 'box':
     case 'bet':
     case 'swap':
+    case 'potato':
     case 'open':
       return <TvTable view={view} />;
     default:

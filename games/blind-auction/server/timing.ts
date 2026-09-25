@@ -25,7 +25,25 @@ export function betsMs(bets: number): number {
 /** …step 1: the box turns (its outcome's fixed line lands as it finishes turning)… */
 export const OPEN_LINE_AT_MS = 850;
 /** A live event plays out on the TV at step 0 of `open`, after the bets land: this long. */
-export const EVENT_MS = { race: 7_000, dice: 2_600, wheel: 5_600, doors: 2_400 } as const;
+export const EVENT_MS = {
+  race: 7_000,
+  dice: 2_600,
+  wheel: 5_600,
+  doors: 2_400,
+  // The potato has already popped live (`potato`): the reveal only shows who got burnt.
+  potato: 600,
+} as const;
+/** Hot potato: it pops between these (ms, secret), checked every POTATO_TICK_MS; a holder must
+ *  hold it this long before a pass counts; the burnt holder loses POTATO_BURN coins. */
+export const POTATO_MIN_MS = 3_000;
+export const POTATO_MAX_MS = 30_000;
+export const POTATO_TICK_MS = 500;
+export const POTATO_HOLD_MS = 400;
+/** Bots hold it about as long as a person takes to look and tap. */
+export const POTATO_BOT_HOLD_MS = 1_100;
+export const POTATO_BURN = 10;
+/** The owner: people had no time to react — every pass stops the pop clock this long. */
+export const POTATO_GRACE_MS = 250;
 /** Doors: after the host opens a goat door, everyone gets this long to stay or switch. */
 export const SWAP_MS = 12_000;
 /** …and the payouts hold this long (longer if the reading needs it). */

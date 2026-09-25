@@ -12,6 +12,7 @@ import type { BlindAuctionTvView } from '../server/views';
 import { COIN, iconOf, kindName, nameOf as optionName, payText, toneOf } from './copy';
 import type { Tone } from './copy';
 import { Doors, LiveStage } from './LiveStage';
+import { PotatoRing } from './Potato';
 import { LotCard } from './LotCard';
 import { OptionBoard } from './Options';
 import { STRINGS } from './strings';
@@ -97,6 +98,21 @@ function SwapPanel({ view }: { view: View }): JSX.Element | null {
   );
 }
 
+function PotatoPanel({ view }: { view: View }): JSX.Element | null {
+  const L = useT(STRINGS);
+  const name = view.players.find((p) => p.id === view.potato?.holder)?.name ?? '?';
+  if (!view.box) return null;
+  return (
+    <div className={styles.panel}>
+      <h1 className={styles.call}>{L('Pass it on before it pops!')}</h1>
+      <p className={styles.plate}>{L('{name} has the potato', { name })}</p>
+      <p className={styles.count} aria-live="polite">
+        {L('{n} passes', { n: view.potato?.passes ?? 0 })}
+      </p>
+    </div>
+  );
+}
+
 function OpenPanel({ view }: { view: View }): JSX.Element | null {
   const L = useT(STRINGS);
   const play = useSound();
@@ -137,7 +153,11 @@ function OpenPanel({ view }: { view: View }): JSX.Element | null {
                 ? L('Bets are closed. Roll the dice!')
                 : view.run.kind === 'doors'
                   ? L('Doors are final. Where is the car?')
-                  : L('Bets are closed. Spin the wheel!')
+                  : view.run.kind === 'potato'
+                    ? L('POP! {name} got burnt', {
+                        name: view.players.find((p) => p.id === view.potato?.holder)?.name ?? '?',
+                      })
+                    : L('Bets are closed. Spin the wheel!')
             : bets.length
               ? L('Bets are closed. What’s inside?')
               : L('Nobody bet. What’s inside?')}
@@ -199,7 +219,9 @@ export function TvTable({ view }: { view: View }): JSX.Element {
           <div
             className={`${styles.cardCol} ${inside && toneOf(inside.kind) === 'bad' ? styles.shake : ''}`}
           >
-            {box?.event === 'doors' && phase !== 'open' ? (
+            {box?.event === 'potato' && (phase === 'potato' || phase === 'open') ? (
+              <PotatoRing view={view} popped={phase === 'open'} />
+            ) : box?.event === 'doors' && phase !== 'open' ? (
               <Doors opened={phase === 'swap' ? view.opened : null} car={null} />
             ) : phase === 'open' && view.run && box ? (
               <LiveStage run={view.run} options={box.options} bets={view.bets?.length ?? 0} />
@@ -225,6 +247,7 @@ export function TvTable({ view }: { view: View }): JSX.Element {
           {phase === 'box' ? <BoxPanel view={view} /> : null}
           {phase === 'bet' ? <BetPanel view={view} /> : null}
           {phase === 'swap' ? <SwapPanel view={view} /> : null}
+          {phase === 'potato' ? <PotatoPanel view={view} /> : null}
           {phase === 'open' ? <OpenPanel view={view} /> : null}
         </div>
       </Stage>

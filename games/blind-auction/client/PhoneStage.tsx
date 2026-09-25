@@ -7,7 +7,10 @@ import type { PushedView } from '@partybox/game-sdk/ui';
 import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS } from '../server/timing';
 import type { BlindAuctionControllerView } from '../server/views';
 import { iconOf, nameOf, payText, toneOf } from './copy';
+import liveStyles from './live.module.css';
+import { Doors, LiveStage } from './LiveStage';
 import { LotCard } from './LotCard';
+import { PotatoRing } from './Potato';
 import { OptionBoard } from './Options';
 import { LotTitle, PhoneRules } from './PhoneLot';
 import { OwnLineCard, insideWords } from './PhoneResult';
@@ -31,24 +34,36 @@ function StageOpen({ view }: { view: View }): JSX.Element | null {
   return (
     <Screen className={styles.screen}>
       <LotTitle box={view.box} />
-      <div className={styles.stageTop}>
-        <LotCard
-          icon={view.box.icon}
-          grand={view.box.grand}
-          flipped={Boolean(inside)}
-          size="phone"
-          face={
-            inside
-              ? {
-                  icon: iconOf(inside),
-                  kicker: nameOf(L, inside),
-                  big: payText(L, inside.pay),
-                  tone: toneOf(inside.kind),
-                }
-              : null
-          }
-        />
-      </div>
+      {view.run ? (
+        <div className={liveStyles.phoneStage}>
+          {view.run.kind === 'potato' ? (
+            <PotatoRing view={view} popped />
+          ) : view.run.kind === 'doors' ? (
+            <Doors opened={view.run.detail[0] ?? null} car={view.run.outcome} delay={0} />
+          ) : (
+            <LiveStage run={view.run} options={view.box.options} bets={bets.length} />
+          )}
+        </div>
+      ) : (
+        <div className={styles.stageTop}>
+          <LotCard
+            icon={view.box.icon}
+            grand={view.box.grand}
+            flipped={Boolean(inside)}
+            size="phone"
+            face={
+              inside
+                ? {
+                    icon: iconOf(inside),
+                    kicker: nameOf(L, inside),
+                    big: payText(L, inside.pay),
+                    tone: toneOf(inside.kind),
+                  }
+                : null
+            }
+          />
+        </div>
+      )}
       <OptionBoard
         options={view.box.options}
         size="phone"
