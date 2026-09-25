@@ -182,6 +182,7 @@ export function Controller({
             {!sheet ? <StylePill onOpen={openMenu} /> : null}
           </div>
           <IntroCount
+            deadline={view.deadline}
             cards={n}
             ready={view.ready}
             waitingOn={view.waitingOn}

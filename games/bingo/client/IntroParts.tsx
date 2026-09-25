@@ -2,7 +2,7 @@
 // buttons under the dealt cards. Split from Overlays.tsx (2026-09-23) to keep both under 300 lines.
 import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, buzz, useHold, useT } from '@partybox/game-sdk/ui';
+import { PrimaryButton, buzz, useHold, useSecondsLeft, useT } from '@partybox/game-sdk/ui';
 import type { PlayCue } from '@partybox/game-sdk/ui';
 import { dealDoneMs } from '../server/constants';
 import type { Input } from '../server/types';
@@ -15,12 +15,18 @@ import styles from './Controller.module.css';
  * (ADR-053, reviewer 59a5f4): the shell's stage did READY and the 3 · 2 · 1; once everyone has
  * picked, the first number simply comes.
  */
+/** How close to the pick's deadline the "cards stand" line shows: long enough to read it. */
+const STAND_NOTE_S = 5;
+
 export function IntroCount({
+  deadline,
   cards,
   ready,
   waitingOn,
   lastOne,
 }: {
+  /** The pick's deadline: near it, a calm line says the dealt cards will stand (Foundation note). */
+  deadline: number | null;
   /** Cards dealt: the caption says "dealing" only while the deal is on (loop 302). */
   cards: number;
   /** This phone has picked (tapped Play these); who has not yet (the card-pick step, loop 344). */
@@ -30,6 +36,7 @@ export function IntroCount({
   lastOne: boolean;
 }): JSX.Element {
   const L = useT(STRINGS);
+  const left = useSecondsLeft(deadline, false, 250);
   // Once the last card is down the caption stops saying "dealing" (loop 302; a second a card, 345).
   const dealt = useHold('deal', dealDoneMs(cards));
   useEffect(() => {
@@ -49,11 +56,16 @@ export function IntroCount({
               : waitingOn.length === 1
                 ? L('picked — waiting for {name}', { name: waitingOn[0] ?? '' })
                 : L('everyone has picked')
-          : lastOne
-            ? L('everyone is waiting for you')
-            : cards > 1
-              ? L('swap a card, or play these')
-              : L('swap it, or play it')
+          : left !== null && left <= STAND_NOTE_S
+            ? // content, not a timeout: an unpicked hand simply plays as dealt
+              cards > 1
+              ? L('the dealt cards stand in {n} s', { n: left })
+              : L('the dealt card stands in {n} s', { n: left })
+            : lastOne
+              ? L('everyone is waiting for you')
+              : cards > 1
+                ? L('swap a card, or play these')
+                : L('swap it, or play it')
         : L('dealing the cards…')}
     </p>
   );

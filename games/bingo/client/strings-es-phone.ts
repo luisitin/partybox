@@ -95,6 +95,8 @@ export const ES_PHONE: Readonly<Record<string, string>> = {
   '✓ Picked': '✓ Elegido',
   'Play these': 'Jugar estos',
   'Play it': 'Juégalo',
+  'the dealt cards stand in {n} s': 'los cartones repartidos quedan en {n} s',
+  'the dealt card stands in {n} s': 'el cartón repartido queda en {n} s',
   Kept: 'Guardado',
 
   // PhoneStage.tsx
