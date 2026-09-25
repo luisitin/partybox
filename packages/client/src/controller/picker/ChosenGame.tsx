@@ -17,6 +17,7 @@ import { SettingField } from '../../SettingField';
 import { fixLabel, runFix, startFix } from '../../startFix';
 import selecting from '../Selecting.module.css';
 import { tunedLine, tunedSettings } from '../tunedLine';
+import { PresenceNotice } from './PresenceNotice';
 import styles from './picker.module.css';
 
 export interface ChosenGameProps {
@@ -102,6 +103,7 @@ export function ChosenGame({ controller, room, me }: ChosenGameProps): JSX.Eleme
           ) : null}
         </p>
       </div>
+      <PresenceNotice game={game} room={room} controller={controller} />
       {/* I-642 B: the room's switches, one row — changed in the ★ menu */}
       <button
         type="button"

@@ -1,0 +1,68 @@
+/* The "can't see the TV" question: a card in the lobby's flow, answers a thumb can hit (44 px). */
+.prompt {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-accent-2);
+  background: var(--pb-surface);
+  font-weight: 700;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
+}
+
+/* Two answers of equal weight, stacked so each has room for its line on a 320 px SE. */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+}
+
+.actions button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-height: var(--pb-touch);
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border: 2px solid var(--pb-accent);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+
+.actions small {
+  font-size: var(--pb-font-caption);
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--pb-space-2);
+}
+
+.head > span {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.close {
+  flex-shrink: 0;
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  margin: calc(-1 * var(--pb-space-2)) calc(-1 * var(--pb-space-2)) 0 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}

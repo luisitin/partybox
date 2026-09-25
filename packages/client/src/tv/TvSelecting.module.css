@@ -276,6 +276,17 @@
   color: var(--pb-text);
 }
 
+/* ADR-047: someone can't see the TV while the room says together — the TV asks too (the host's
+   screen, ADR-031), one line: the question and its two answers. */
+.switchAsk {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-weight: 700;
+  color: var(--pb-accent-2);
+}
+
 /* Part 00 §1.6: back to the grid from the chosen game. */
 .allGames {
   align-self: flex-start;
@@ -319,14 +330,19 @@
   display: flex;
   gap: var(--pb-space-3);
   counter-increment: step;
-  opacity: 0.55;
   transition:
     opacity var(--pb-motion-base) var(--pb-ease),
     transform var(--pb-motion-base) var(--pb-ease);
 }
 .steps li.stepLit {
-  opacity: 1;
   transform: translateX(6px);
+}
+
+/* Every step reads at full strength ([cc45f4]: nothing a slow reader needs is dimmed); the one
+   the room is on wears the accent badge and steps forward, the others a quiet badge. */
+.steps li:not(.stepLit)::before {
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
 }
 .steps li::before {
   content: counter(step);
