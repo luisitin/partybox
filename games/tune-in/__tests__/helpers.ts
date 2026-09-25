@@ -61,8 +61,11 @@ export function withTarget(state: State, target: number): State {
 }
 
 /** From the intro into the first clue. */
+/** Past the intro's ready-up and its 3 · 2 · 1 (two deadlines) to turn 1's clue. */
 export function toClue(state: State): State {
-  return timer(state);
+  let s = state;
+  for (let i = 0; i < 3 && s.phase.id === 'intro'; i += 1) s = timer(s);
+  return s;
 }
 
 /** A legal clue from this turn's psychic (a bank clue of the spectrum on the dial). */

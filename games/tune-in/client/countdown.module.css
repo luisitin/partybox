@@ -1,0 +1,31 @@
+/* The 3 · 2 · 1 (Countdown.tsx): one big digit popping in on its own second, "Here we go!" for the
+   breath before it. Transform and opacity only. */
+.count {
+  display: grid;
+  place-items: center;
+}
+
+.digit,
+.go {
+  font-weight: 1000;
+  line-height: 1;
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.tv .digit {
+  font-size: calc(var(--pb-font-display) * 2.4);
+}
+
+.tv .go {
+  font-size: var(--pb-font-display);
+}
+
+.phone .digit {
+  font-size: calc(var(--pb-font-display) * 2.2);
+}
+
+.phone .go {
+  font-size: var(--pb-font-h1);
+}

@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "clue",
-    "startedAt": 1700000008000,
-    "deadline": 1700000053000
+    "startedAt": 1700000011054,
+    "deadline": 1700000056054
   },
   "rng": {
     "seed": 7,
@@ -419,7 +419,7 @@
     "target": 25,
     "clue": null,
     "clueAt": null,
-    "clueDeadline": 1700000053000,
+    "clueDeadline": 1700000056054,
     "rejected": null,
     "dials": {},
     "locked": [],
@@ -457,6 +457,8 @@
   "coopTotal": 0,
   "played": 0,
   "voidStreak": 0,
+  "ready": ["p1", "p2", "p4", "p3", "p5", "p6"],
+  "startAt": 1700000011054,
   "stats": {},
   "speechMs": {}
 }

@@ -66,6 +66,8 @@ function init(ctx: InitContext): State {
     coopTotal: 0,
     played: 0,
     voidStreak: 0,
+    ready: [],
+    startAt: null,
     stats: {},
     speechMs: {},
   };

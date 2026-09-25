@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { IDLE_VOIDS } from '../server/types';
 import type { State } from '../server/types';
-import { start, timer, toDial } from './helpers';
+import { start, timer, toClue, toDial } from './helpers';
 
 /** Let every deadline pass until the game is done (nobody sends anything). */
 function runIdle(s: State): State {
@@ -22,7 +22,7 @@ describe('an idle room', () => {
 
   it('starts the count again after a round with a clue', () => {
     let s = start(5, { mode: 'solo' });
-    s = timer(s); // intro → clue (round 1): void
+    s = toClue(s); // past the ready-up and its 3 · 2 · 1 to round 1's clue: void
     s = timer(s); // clue runs out → void reveal
     s = timer(s); // → round 2
     expect(s.voidStreak).toBe(1);

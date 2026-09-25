@@ -2,7 +2,7 @@
   "phase": {
     "id": "intro",
     "startedAt": 1700000000000,
-    "deadline": 1700000008000
+    "deadline": 1700000011054
   },
   "rng": {
     "seed": 7,
@@ -457,6 +457,8 @@
   "coopTotal": 0,
   "played": 0,
   "voidStreak": 0,
+  "ready": ["p1", "p2", "p4", "p3", "p5", "p6"],
+  "startAt": 1700000011054,
   "stats": {},
   "speechMs": {}
 }

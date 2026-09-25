@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "scores",
-    "startedAt": 1700000030004,
-    "deadline": 1700000036004
+    "startedAt": 1700000035475,
+    "deadline": 1700000055475
   },
   "rng": {
     "seed": 7,
@@ -417,27 +417,27 @@
     "catchUp": false,
     "spectrum": 0,
     "target": 25,
-    "clue": "a video call",
-    "clueAt": 1700000009831,
-    "clueDeadline": 1700000053000,
+    "clue": "a cardigan",
+    "clueAt": 1700000012939,
+    "clueDeadline": 1700000056054,
     "rejected": null,
     "dials": {
-      "p1": 30,
-      "p3": 18,
-      "p2": 29,
-      "p4": 23,
-      "p6": 30
+      "p2": 21,
+      "p3": 19,
+      "p1": 11,
+      "p6": 20,
+      "p4": 11
     },
-    "locked": ["p2", "p6", "p4", "p3", "p1"],
+    "locked": ["p1", "p3", "p2", "p4", "p6"],
     "needle": null,
     "calls": {},
     "points": {
-      "p1": 4,
+      "p1": 2,
       "p2": 4,
       "p3": 3,
-      "p4": 4,
+      "p4": 2,
       "p6": 4,
-      "p5": 4
+      "p5": 3
     },
     "teamPoints": {
       "sun": 0,
@@ -448,11 +448,11 @@
   },
   "nextTeam": "sun",
   "scores": {
-    "p1": 4,
+    "p1": 2,
     "p2": 4,
     "p3": 3,
-    "p4": 4,
-    "p5": 4,
+    "p4": 2,
+    "p5": 3,
     "p6": 4
   },
   "turnStartScores": {
@@ -470,11 +470,13 @@
   "coopTotal": 0,
   "played": 1,
   "voidStreak": 0,
+  "ready": ["p1", "p2", "p4", "p3", "p5", "p6"],
+  "startAt": 1700000011054,
   "stats": {
     "p1": {
-      "bulls": 1,
+      "bulls": 0,
       "dials": 1,
-      "dist": 5,
+      "dist": 14,
       "zeros": 0,
       "psyTurns": 0,
       "psyPts": 0
@@ -490,15 +492,15 @@
     "p3": {
       "bulls": 0,
       "dials": 1,
-      "dist": 7,
+      "dist": 6,
       "zeros": 0,
       "psyTurns": 0,
       "psyPts": 0
     },
     "p4": {
-      "bulls": 1,
+      "bulls": 0,
       "dials": 1,
-      "dist": 2,
+      "dist": 14,
       "zeros": 0,
       "psyTurns": 0,
       "psyPts": 0
@@ -517,7 +519,7 @@
       "dist": 0,
       "zeros": 0,
       "psyTurns": 1,
-      "psyPts": 4
+      "psyPts": 3
     }
   },
   "speechMs": {}

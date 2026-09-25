@@ -1,13 +1,13 @@
-// In a phone-only room (S-005, P00 §3.6) the phones show the TV's moments — intro, reveal,
-// scores: a horizontal dial with the zones, the markers and the needle, the verdict and a compact
-// score list. Every spoken line is also written here, and the reader plays on the phone.
+// In a phone-only room (S-005, P00 §3.6) the phones show the TV's moments — the reveal and the
+// scores (the intro stays the phone's own screen: it carries I'm ready): a horizontal dial with
+// the zones, the markers and the needle, the verdict and a compact score list. Every spoken line
+// is also written here, and the reader plays on the phone.
 import type { JSX } from 'react';
 import { Avatar, Screen, useT } from '@partybox/game-sdk/ui';
 import type { ControllerView, PushedView } from '@partybox/game-sdk/ui';
 import { DialStrip } from '@partybox/game-sdk/ui/dial';
 import type { TuneControllerView } from '../server/index';
 import { avatarOf, ratingText, roundLine, teamName, verdictText } from './copy';
-import { PhoneIntro } from './Controller';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 import { useReading } from './useReading';
@@ -48,7 +48,6 @@ export function PhoneStage({ view: raw }: { view: PushedView<ControllerView> }):
   const L = useT(STRINGS);
   const view = raw as unknown as TuneControllerView;
   useReading(view.reading);
-  if (view.phaseId === 'intro') return <PhoneIntro view={view} />;
   const reveal = view.reveal;
   const points = reveal !== undefined && (reveal.step === 1 || view.phaseId !== 'reveal');
   const marks = (reveal?.revealDials ?? []).map((d) => ({

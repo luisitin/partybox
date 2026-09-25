@@ -2,12 +2,13 @@
 // the server re-checks everything. Each input screen is keyed by the turn, so a new turn starts
 // clean (no draft, no thumb) and rises in as a new card.
 import type { JSX } from 'react';
-import { Screen, WaitingScreen, useT } from '@partybox/game-sdk/ui';
+import { PrimaryButton, Screen, WaitingScreen, buzz, useSound, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import { DialStrip } from '@partybox/game-sdk/ui/dial';
 import type { TuneControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { modeLine, nameOf, steps, teamName } from './copy';
+import { Countdown } from './Countdown';
 import { LockRow } from './LockRow';
 import { PhoneCall } from './PhoneCall';
 import { PhoneDial } from './PhoneDial';
@@ -18,10 +19,37 @@ import { STRINGS } from './strings';
 
 type Props = GameControllerProps<TuneControllerView, Input>;
 
-export function PhoneIntro({ view }: { view: TuneControllerView }): JSX.Element {
+export function PhoneIntro({
+  view,
+  send,
+}: {
+  view: TuneControllerView;
+  send: (input: Input) => void;
+}): JSX.Element {
   const L = useT(STRINGS);
+  const play = useSound();
+  const counting = view.startAt !== null;
+  const ready = (): void => {
+    if (view.ready || counting) return;
+    play('submit');
+    buzz(12);
+    send({ type: 'ready' });
+  };
   return (
-    <Screen className={styles.screen}>
+    <Screen
+      className={styles.screen}
+      footer={
+        counting ? undefined : (
+          <PrimaryButton
+            className={view.ready ? undefined : styles.breathe}
+            done={view.ready}
+            onClick={ready}
+          >
+            {view.ready ? L('Ready!') : L('I’m ready')}
+          </PrimaryButton>
+        )
+      }
+    >
       <h2 className={styles.title}>{L('📻 Tune In')}</h2>
       <p className={styles.kicker}>{modeLine(L, view.turn.mode)}</p>
       {view.myTeam ? (
@@ -36,6 +64,19 @@ export function PhoneIntro({ view }: { view: TuneControllerView }): JSX.Element 
           </li>
         ))}
       </ol>
+      <p className={styles.readyNote} role="status">
+        {view.ready
+          ? L('Waiting for the others · {n} of {total} ready', {
+              n: view.readyCount,
+              total: view.readyHere,
+            })
+          : L('Read the rules, then tap I’m ready')}
+      </p>
+      {counting && view.startAt !== null ? (
+        <div className={styles.countOverlay}>
+          <Countdown startAt={view.startAt} paused={view.paused} size="phone" />
+        </div>
+      ) : null}
     </Screen>
   );
 }
@@ -90,7 +131,7 @@ export function Controller({ view, send, skip }: Props): JSX.Element {
     return <WaitingScreen mood="watch" title={L("You're in as soon as this one ends")} />;
   switch (view.phaseId) {
     case 'intro':
-      return <PhoneIntro view={view} />;
+      return <PhoneIntro view={view} send={send} />;
     case 'clue':
       return view.role === 'psychic' ? (
         <PsychicClue key={key} view={view} send={send} />

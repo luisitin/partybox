@@ -1,6 +1,7 @@
 // What both views share: chip statuses, the public turn header, the reveal's facts and the
 // huddle's live markers. Secrets go out under keys no other field shares (`bullseyeAt`,
 // `huddleMarks`, `revealDials`, `revealCalls`) so the contract suite can check them by name.
+import { connectedIds } from '@partybox/game-sdk';
 import type { PlayerStatus } from '@partybox/game-sdk';
 import { BANDS, bandPoints, coopRating, teamCall, targetSide } from './scoring';
 import { verdictLine } from './speech';
@@ -82,12 +83,32 @@ export function statusOf(state: State): (id: string) => PlayerStatus {
   const guessers = phase === 'dial' ? guessersOf(state) : [];
   const callers = phase === 'call' ? callersOf(state) : [];
   return (id) => {
+    // The ready-up: the strip ticks each player who has tapped I'm ready.
+    if (phase === 'intro') return state.ready.includes(id) ? 'submitted' : 'active';
     if (phase === 'clue') return id === turn.psychic ? 'active' : 'waiting';
     if (phase === 'dial' && guessers.includes(id))
       return turn.locked.includes(id) ? 'submitted' : 'active';
     if (phase === 'call' && callers.includes(id))
       return Object.hasOwn(turn.calls, id) ? 'submitted' : 'active';
     return 'waiting';
+  };
+}
+
+/** The intro's ready-up [cc45f4]: who is counted (connected, not gone) and who of them tapped. */
+export interface ReadyUp {
+  ready: string[];
+  here: number;
+  /** The 3 · 2 · 1 ends here (turn 1); null while the room gets ready. */
+  startAt: number | null;
+}
+
+export function readyUp(state: State): ReadyUp {
+  if (state.phase.id !== 'intro') return { ready: [], here: 0, startAt: null };
+  const here = connectedIds(state).filter((id) => !state.left.includes(id));
+  return {
+    ready: here.filter((id) => state.ready.includes(id)),
+    here: here.length,
+    startAt: state.startAt,
   };
 }
 

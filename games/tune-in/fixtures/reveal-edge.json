@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "reveal",
-    "startedAt": 1700000195619,
-    "deadline": 1700000202219
+    "startedAt": 1700000285665,
+    "deadline": 1700000295765
   },
   "rng": {
     "seed": 1,
@@ -542,19 +542,19 @@
     "spectrum": 5,
     "target": 5,
     "clue": "checking the mailbox",
-    "clueAt": 1700000173046,
-    "clueDeadline": 1700000217440,
+    "clueAt": 1700000269276,
+    "clueDeadline": 1700000312078,
     "rejected": null,
     "dials": {
-      "p5": 1,
-      "p7": 5,
-      "p3": 3,
-      "p6": 8,
-      "p8": 0,
       "p1": 0,
-      "p2": 8
+      "p8": 8,
+      "p5": 0,
+      "p7": 10,
+      "p6": 8,
+      "p3": 0,
+      "p2": 3
     },
-    "locked": ["p2", "p6", "p3", "p5", "p7", "p1", "p8"],
+    "locked": ["p2", "p6", "p8", "p1", "p5", "p7", "p3"],
     "needle": null,
     "calls": {},
     "points": {
@@ -576,24 +576,24 @@
   },
   "nextTeam": "moon",
   "scores": {
-    "p1": 21,
-    "p2": 24,
-    "p3": 22,
-    "p4": 24,
-    "p5": 21,
-    "p6": 22,
-    "p7": 20,
-    "p8": 21
+    "p1": 20,
+    "p2": 19,
+    "p3": 20,
+    "p4": 20,
+    "p5": 20,
+    "p6": 24,
+    "p7": 23,
+    "p8": 22
   },
   "turnStartScores": {
-    "p1": 17,
-    "p2": 20,
-    "p3": 18,
-    "p4": 18,
-    "p5": 17,
-    "p6": 18,
-    "p7": 16,
-    "p8": 17
+    "p1": 16,
+    "p2": 15,
+    "p3": 16,
+    "p4": 14,
+    "p5": 16,
+    "p6": 20,
+    "p7": 19,
+    "p8": 18
   },
   "team": {
     "sun": 0,
@@ -602,70 +602,72 @@
   "coopTotal": 0,
   "played": 6,
   "voidStreak": 0,
+  "ready": ["p3", "p8", "p1", "p5", "p4", "p6", "p7", "p2"],
+  "startAt": 1700000011930,
   "stats": {
     "p1": {
-      "bulls": 3,
-      "dials": 5,
-      "dist": 29,
-      "zeros": 0,
-      "psyTurns": 1,
-      "psyPts": 4
-    },
-    "p2": {
-      "bulls": 6,
-      "dials": 6,
-      "dist": 16,
-      "zeros": 0,
-      "psyTurns": 0,
-      "psyPts": 0
-    },
-    "p3": {
-      "bulls": 3,
-      "dials": 5,
-      "dist": 20,
-      "zeros": 0,
-      "psyTurns": 1,
-      "psyPts": 4
-    },
-    "p4": {
-      "bulls": 3,
-      "dials": 5,
-      "dist": 26,
-      "zeros": 0,
-      "psyTurns": 1,
-      "psyPts": 6
-    },
-    "p6": {
-      "bulls": 4,
-      "dials": 5,
-      "dist": 22,
-      "zeros": 0,
-      "psyTurns": 1,
-      "psyPts": 3
-    },
-    "p7": {
-      "bulls": 3,
-      "dials": 5,
-      "dist": 29,
-      "zeros": 0,
-      "psyTurns": 1,
-      "psyPts": 3
-    },
-    "p8": {
-      "bulls": 3,
-      "dials": 6,
-      "dist": 38,
-      "zeros": 0,
-      "psyTurns": 0,
-      "psyPts": 0
-    },
-    "p5": {
       "bulls": 2,
       "dials": 5,
       "dist": 32,
       "zeros": 0,
       "psyTurns": 1,
       "psyPts": 4
+    },
+    "p2": {
+      "bulls": 3,
+      "dials": 6,
+      "dist": 40,
+      "zeros": 0,
+      "psyTurns": 0,
+      "psyPts": 0
+    },
+    "p3": {
+      "bulls": 2,
+      "dials": 5,
+      "dist": 29,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 3
+    },
+    "p4": {
+      "bulls": 1,
+      "dials": 5,
+      "dist": 44,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 6
+    },
+    "p6": {
+      "bulls": 5,
+      "dials": 5,
+      "dist": 13,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 4
+    },
+    "p7": {
+      "bulls": 5,
+      "dials": 5,
+      "dist": 16,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 3
+    },
+    "p8": {
+      "bulls": 5,
+      "dials": 6,
+      "dist": 32,
+      "zeros": 0,
+      "psyTurns": 0,
+      "psyPts": 0
+    },
+    "p5": {
+      "bulls": 3,
+      "dials": 5,
+      "dist": 29,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 3
     }
   },
   "speechMs": {}

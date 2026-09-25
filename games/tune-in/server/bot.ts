@@ -59,6 +59,8 @@ function callerTap(view: TuneControllerView, rng: Rng): Input | null {
 
 export function decide(view: TuneControllerView, rng: Rng): Input | null {
   if (view.me.role !== 'player') return null;
+  if (view.phaseId === 'intro')
+    return view.ready || view.startAt !== null ? null : { type: 'ready' };
   if (view.phaseId === 'clue' && view.role === 'psychic') return psychicClue(view, rng);
   if (view.phaseId === 'dial' && view.role === 'guesser') return guesserMove(view, rng);
   if (view.phaseId === 'call' && view.role === 'caller') return callerTap(view, rng);

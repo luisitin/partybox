@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "dial",
-    "startedAt": 1700000009831,
-    "deadline": 1700000034831
+    "startedAt": 1700000012939,
+    "deadline": 1700000037939
   },
   "rng": {
     "seed": 7,
@@ -417,18 +417,18 @@
     "catchUp": false,
     "spectrum": 0,
     "target": 25,
-    "clue": "a video call",
-    "clueAt": 1700000009831,
-    "clueDeadline": 1700000053000,
+    "clue": "a cardigan",
+    "clueAt": 1700000012939,
+    "clueDeadline": 1700000056054,
     "rejected": null,
     "dials": {
-      "p1": 30,
-      "p3": 18,
-      "p2": 29,
-      "p4": 23,
-      "p6": 30
+      "p2": 21,
+      "p3": 19,
+      "p1": 11,
+      "p6": 20,
+      "p4": 11
     },
-    "locked": ["p2", "p6", "p4", "p3"],
+    "locked": ["p1", "p3", "p2", "p4"],
     "needle": null,
     "calls": {},
     "points": {},
@@ -463,6 +463,8 @@
   "coopTotal": 0,
   "played": 0,
   "voidStreak": 0,
+  "ready": ["p1", "p2", "p4", "p3", "p5", "p6"],
+  "startAt": 1700000011054,
   "stats": {},
   "speechMs": {}
 }

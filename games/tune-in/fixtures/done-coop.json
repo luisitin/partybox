@@ -1,7 +1,7 @@
 {
   "phase": {
     "id": "done",
-    "startedAt": 1700000108418,
+    "startedAt": 1700000181006,
     "deadline": null
   },
   "rng": {
@@ -294,8 +294,8 @@
     "spectrum": 3,
     "target": 3,
     "clue": "a kitten on your lap",
-    "clueAt": 1700000087829,
-    "clueDeadline": 1700000131752,
+    "clueAt": 1700000142917,
+    "clueDeadline": 1700000186840,
     "rejected": null,
     "dials": {
       "p4": 17,
@@ -337,11 +337,13 @@
   "coopTotal": 9,
   "played": 4,
   "voidStreak": 0,
+  "ready": ["p4", "p2", "p3", "p1"],
+  "startAt": 1700000010739,
   "stats": {
     "p1": {
       "bulls": 0,
       "dials": 3,
-      "dist": 44,
+      "dist": 52,
       "zeros": 2,
       "psyTurns": 1,
       "psyPts": 3
@@ -349,15 +351,15 @@
     "p2": {
       "bulls": 1,
       "dials": 3,
-      "dist": 33,
-      "zeros": 1,
+      "dist": 53,
+      "zeros": 2,
       "psyTurns": 1,
       "psyPts": 4
     },
     "p4": {
-      "bulls": 0,
+      "bulls": 1,
       "dials": 3,
-      "dist": 61,
+      "dist": 30,
       "zeros": 1,
       "psyTurns": 1,
       "psyPts": 2
@@ -365,7 +367,7 @@
     "p3": {
       "bulls": 1,
       "dials": 3,
-      "dist": 26,
+      "dist": 28,
       "zeros": 0,
       "psyTurns": 1,
       "psyPts": 0

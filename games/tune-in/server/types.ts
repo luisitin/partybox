@@ -99,6 +99,10 @@ export interface State extends GameStateBase {
   played: number;
   /** Void rounds in a row; IDLE_VOIDS of them end the game (spec §5.17 "Everyone idle"). */
   voidStreak: number;
+  /** The intro's ready-up [cc45f4]: who has tapped I'm ready (bots from the start). */
+  ready: string[];
+  /** The 3 · 2 · 1: when turn 1 starts (the intro's deadline), or null while the room gets ready. */
+  startAt: number | null;
   stats: Record<string, PlayerStats>;
   /** READER-VOICES (ADR-045): reading key → its length in ms, or −1 when it failed. */
   speechMs: Record<string, number>;
@@ -109,20 +113,25 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('dial'), pos: z.number().int().min(0).max(100) }),
   z.object({ type: z.literal('lock') }),
   z.object({ type: z.literal('call'), side: z.enum(['left', 'right']) }),
+  z.object({ type: z.literal('ready') }),
 ]);
 export type Input = z.infer<typeof inputSchema>;
 
 /** "Leave the current phase now" — injected into phase reducers by server/flow.ts. */
 export type Transition = (state: State, now: number) => State;
 
-export const INTRO_MS = 8_000;
+export { COUNTDOWN_MS, INTRO_MS, READY_BREATH_MS } from './timing';
 /** Reveal step 0: the shutter swings open, faces land, the needle settles. */
 export const REVEAL_OPEN_MS = 3_600;
-/** Reveal step 1: the points pop (longer when the reader needs it). */
-export const REVEAL_POINTS_MS = 3_000;
-/** A void round's "No signal!" card. */
-export const VOID_MS = 3_500;
-export const SCORES_MS = 6_000;
+/** Reveal step 1: the points pop (longer when the reader needs it). Reading time is the owner's
+ *  pacing rule [cc45f4] — 1.5 s + 1 s per 3 words, ×1.3 for Spanish: the verdict, the call and
+ *  each phone's own line come to ~10 words. */
+export const REVEAL_POINTS_MS = 6_500;
+/** A void round's card: "No signal! No clue came through. Nobody scores." (~8 words). */
+export const VOID_MS = 6_000;
+/** The scores wait for the VIP's Next round; this is only the fallback, long enough for a slow
+ *  reader of a sixteen-row board in Spanish. */
+export const SCORES_MS = 20_000;
 /** A psychic who drops mid-clue keeps the clue open this long at most (they may come back). */
 export const DROP_GRACE_MS = 10_000;
 /** Spec §5.17 "Everyone idle … the game ends quickly": this many void rounds in a row end it

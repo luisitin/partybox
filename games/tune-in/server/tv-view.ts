@@ -13,6 +13,7 @@ import {
   huddleMarks,
   isRevealed,
   liveHuddle,
+  readyUp,
   revealFacts,
   statusOf,
 } from './view-common';
@@ -44,6 +45,10 @@ export interface TuneTvView extends TvView {
   reading: Reading | null;
   /** Dial phase: "Lock it in." for the stage to say with a few seconds left. */
   lockIn: Reading | null;
+  /** The intro's ready-up [cc45f4]: who has tapped I'm ready, and when the 3 · 2 · 1 ends. */
+  ready: string[];
+  readyHere: number;
+  startAt: number | null;
 }
 
 function deltas(state: State): Record<string, number> {
@@ -90,6 +95,9 @@ export function tvView(state: State, gameId: string): TuneTvView {
     last: isOver(state),
     reading: stageReading(state),
     lockIn: phase === 'dial' ? playable(state, fixedReading(state, 'lockIn')) : null,
+    ready: readyUp(state).ready,
+    readyHere: readyUp(state).here,
+    startAt: readyUp(state).startAt,
   };
   if (liveHuddle(state)) view.huddleMarks = huddleMarks(state);
   if (revealed && state.turn.n > 0) view.reveal = revealFacts(state);

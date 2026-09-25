@@ -6,7 +6,7 @@
   },
   "rng": {
     "seed": 3,
-    "step": 152
+    "step": 156
   },
   "players": {
     "p1": {
@@ -20,18 +20,42 @@
       "name": "Player 2",
       "avatarId": "owl",
       "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
     }
   },
   "cfg": {
-    "mode": "coop",
-    "rounds": 8,
+    "mode": "solo",
+    "rounds": 6,
     "targetScore": 10,
     "maxTurns": 12,
     "clueSeconds": 45,
     "dialSeconds": 25,
     "callSeconds": 15,
     "targetSize": "normal",
-    "huddle": true,
+    "huddle": false,
     "spicy": false,
     "reader": "sky"
   },
@@ -39,12 +63,12 @@
     "mode": "together",
     "phoneOnly": false
   },
-  "seats": ["p1", "p2"],
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6"],
   "left": [],
-  "mode": "coop",
+  "mode": "solo",
   "teams": null,
   "psychicBag": {
-    "all": ["p1"],
+    "all": ["p4", "p6", "p5", "p2", "p1"],
     "sun": [],
     "moon": []
   },
@@ -384,127 +408,15 @@
           "pos": 99
         }
       ]
-    },
-    {
-      "id": "tn-duration-091",
-      "left": "Brief",
-      "right": "Endless",
-      "kind": "measurable",
-      "clues": [
-        {
-          "text": "a sneeze",
-          "pos": 1
-        },
-        {
-          "text": "a firework",
-          "pos": 6
-        },
-        {
-          "text": "a commercial",
-          "pos": 12
-        },
-        {
-          "text": "a haircut",
-          "pos": 22
-        },
-        {
-          "text": "a movie",
-          "pos": 34
-        },
-        {
-          "text": "a school day",
-          "pos": 44
-        },
-        {
-          "text": "a baseball game",
-          "pos": 54
-        },
-        {
-          "text": "a road trip",
-          "pos": 64
-        },
-        {
-          "text": "a group project",
-          "pos": 74
-        },
-        {
-          "text": "on hold with the bank",
-          "pos": 84
-        },
-        {
-          "text": "a soap opera",
-          "pos": 92
-        },
-        {
-          "text": "a toddler asking why",
-          "pos": 97
-        }
-      ]
-    },
-    {
-      "id": "tn-vacation-128",
-      "left": "Bad vacation",
-      "right": "Dream vacation",
-      "kind": "opinion",
-      "clues": [
-        {
-          "text": "a cruise with food poisoning",
-          "pos": 3
-        },
-        {
-          "text": "a timeshare pitch",
-          "pos": 8
-        },
-        {
-          "text": "camping in the rain",
-          "pos": 14
-        },
-        {
-          "text": "visiting the in-laws",
-          "pos": 24
-        },
-        {
-          "text": "a road trip with toddlers",
-          "pos": 30
-        },
-        {
-          "text": "a staycation",
-          "pos": 38
-        },
-        {
-          "text": "Antarctica",
-          "pos": 50
-        },
-        {
-          "text": "Las Vegas",
-          "pos": 58
-        },
-        {
-          "text": "a cabin in the woods",
-          "pos": 66
-        },
-        {
-          "text": "a ski trip",
-          "pos": 72
-        },
-        {
-          "text": "Paris",
-          "pos": 85
-        },
-        {
-          "text": "the Maldives",
-          "pos": 96
-        }
-      ]
     }
   ],
   "turn": {
     "n": 1,
-    "psychic": "p2",
+    "psychic": "p3",
     "team": null,
     "catchUp": false,
     "spectrum": 0,
-    "target": 35,
+    "target": 3,
     "clue": null,
     "clueAt": null,
     "clueDeadline": null,
@@ -524,11 +436,19 @@
   "nextTeam": "moon",
   "scores": {
     "p1": 0,
-    "p2": 0
+    "p2": 0,
+    "p3": 0,
+    "p4": 0,
+    "p5": 0,
+    "p6": 0
   },
   "turnStartScores": {
     "p1": 0,
-    "p2": 0
+    "p2": 0,
+    "p3": 0,
+    "p4": 0,
+    "p5": 0,
+    "p6": 0
   },
   "team": {
     "sun": 0,
@@ -537,7 +457,7 @@
   "coopTotal": 0,
   "played": 0,
   "voidStreak": 0,
-  "ready": [],
+  "ready": ["p1", "p3", "p4"],
   "startAt": null,
   "stats": {},
   "speechMs": {}

@@ -1,12 +1,12 @@
 {
   "phase": {
     "id": "scores",
-    "startedAt": 1700000084080,
-    "deadline": 1700000090080
+    "startedAt": 1700000156187,
+    "deadline": 1700000176187
   },
   "rng": {
-    "seed": 6,
-    "step": 167
+    "seed": 2,
+    "step": 169
   },
   "players": {
     "p1": {
@@ -67,628 +67,516 @@
   "left": [],
   "mode": "teams",
   "teams": {
-    "sun": ["p4", "p5", "p3"],
-    "moon": ["p1", "p6", "p2"]
+    "sun": ["p1", "p2", "p4"],
+    "moon": ["p3", "p5", "p6"]
   },
   "psychicBag": {
-    "all": ["p3", "p2", "p6", "p1", "p4", "p5"],
-    "sun": ["p3"],
-    "moon": ["p6", "p1"]
+    "all": ["p4", "p1", "p3", "p5", "p6", "p2"],
+    "sun": ["p2"],
+    "moon": ["p5"]
   },
   "spectra": [
     {
-      "id": "tn-crowd-148",
-      "left": "Deserted",
-      "right": "Packed",
+      "id": "tn-disaster-120",
+      "left": "Mild inconvenience",
+      "right": "Total disaster",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a hangnail",
+          "pos": 3
+        },
+        {
+          "text": "burnt toast",
+          "pos": 7
+        },
+        {
+          "text": "a wet sock",
+          "pos": 14
+        },
+        {
+          "text": "forgetting a name",
+          "pos": 22
+        },
+        {
+          "text": "a dead phone",
+          "pos": 32
+        },
+        {
+          "text": "a flat tire",
+          "pos": 42
+        },
+        {
+          "text": "no toilet paper",
+          "pos": 55
+        },
+        {
+          "text": "ripped pants",
+          "pos": 62
+        },
+        {
+          "text": "a burst pipe",
+          "pos": 74
+        },
+        {
+          "text": "a dropped wedding cake",
+          "pos": 82
+        },
+        {
+          "text": "a kitchen fire",
+          "pos": 88
+        },
+        {
+          "text": "a zombie apocalypse",
+          "pos": 98
+        }
+      ]
+    },
+    {
+      "id": "tn-energy-119",
+      "left": "Monday energy",
+      "right": "Friday energy",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "an alarm clock",
+          "pos": 2
+        },
+        {
+          "text": "an empty coffee pot",
+          "pos": 6
+        },
+        {
+          "text": "a staff meeting",
+          "pos": 12
+        },
+        {
+          "text": "Sunday night",
+          "pos": 24
+        },
+        {
+          "text": "a rainy commute",
+          "pos": 33
+        },
+        {
+          "text": "a fire drill",
+          "pos": 44
+        },
+        {
+          "text": "Wednesday",
+          "pos": 52
+        },
+        {
+          "text": "a lunch break",
+          "pos": 63
+        },
+        {
+          "text": "a road trip",
+          "pos": 74
+        },
+        {
+          "text": "payday",
+          "pos": 82
+        },
+        {
+          "text": "karaoke night",
+          "pos": 88
+        },
+        {
+          "text": "the last school bell",
+          "pos": 95
+        }
+      ]
+    },
+    {
+      "id": "tn-depth-058",
+      "left": "Shallow",
+      "right": "Deep",
       "kind": "measurable",
       "clues": [
         {
-          "text": "a ghost town",
+          "text": "a puddle",
           "pos": 1
         },
         {
-          "text": "the moon",
+          "text": "a birdbath",
           "pos": 4
         },
         {
-          "text": "a beach in winter",
-          "pos": 10
+          "text": "a kiddie pool",
+          "pos": 9
         },
         {
-          "text": "a church on a Tuesday",
-          "pos": 18
+          "text": "a swimming pool",
+          "pos": 26
         },
         {
-          "text": "a laundromat",
-          "pos": 28
+          "text": "a grave",
+          "pos": 36
         },
         {
-          "text": "a small-town diner",
-          "pos": 38
+          "text": "a well",
+          "pos": 48
         },
         {
-          "text": "a doctor's waiting room",
-          "pos": 50
+          "text": "a lake",
+          "pos": 56
         },
         {
-          "text": "the grocery store on Sunday",
-          "pos": 58
+          "text": "Loch Ness",
+          "pos": 66
         },
         {
-          "text": "a kid's birthday party",
-          "pos": 64
+          "text": "the Grand Canyon",
+          "pos": 74
         },
         {
-          "text": "the gym in January",
-          "pos": 72
+          "text": "a shipwreck",
+          "pos": 84
         },
         {
-          "text": "an airport at Thanksgiving",
-          "pos": 86
+          "text": "the Mariana Trench",
+          "pos": 96
         },
         {
-          "text": "a clown car",
+          "text": "the Earth's core",
+          "pos": 100
+        }
+      ]
+    },
+    {
+      "id": "tn-outdoor-109",
+      "left": "Indoors",
+      "right": "Outdoors",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "a bathtub",
+          "pos": 2
+        },
+        {
+          "text": "a fireplace",
+          "pos": 6
+        },
+        {
+          "text": "bowling",
+          "pos": 12
+        },
+        {
+          "text": "a potted plant",
+          "pos": 22
+        },
+        {
+          "text": "a garage",
+          "pos": 32
+        },
+        {
+          "text": "a greenhouse",
+          "pos": 40
+        },
+        {
+          "text": "a swimming pool",
+          "pos": 52
+        },
+        {
+          "text": "tennis",
+          "pos": 66
+        },
+        {
+          "text": "a porch",
+          "pos": 74
+        },
+        {
+          "text": "a barbecue",
+          "pos": 84
+        },
+        {
+          "text": "a lawnmower",
+          "pos": 92
+        },
+        {
+          "text": "camping",
           "pos": 97
         }
       ]
     },
     {
-      "id": "tn-cursed-138",
-      "left": "Cursed object",
-      "right": "Lucky charm",
+      "id": "tn-tasty-051",
+      "left": "Sounds gross",
+      "right": "Sounds tasty",
       "kind": "playful",
       "clues": [
         {
-          "text": "a monkey's paw",
-          "pos": 2
+          "text": "jellied eels",
+          "pos": 4
         },
         {
-          "text": "a haunted doll",
-          "pos": 5
-        },
-        {
-          "text": "a creepy clown painting",
+          "text": "head cheese",
           "pos": 10
         },
         {
-          "text": "an antique mirror",
-          "pos": 22
+          "text": "toad in the hole",
+          "pos": 26
         },
         {
-          "text": "your ex's hoodie",
-          "pos": 30
+          "text": "fish sauce",
+          "pos": 34
         },
         {
-          "text": "a garden gnome",
-          "pos": 44
+          "text": "sweetbreads",
+          "pos": 46
         },
         {
-          "text": "a snow globe",
-          "pos": 54
+          "text": "bubble and squeak",
+          "pos": 52
         },
         {
-          "text": "a rubber duck",
-          "pos": 60
+          "text": "sloppy joe",
+          "pos": 57
         },
         {
-          "text": "unwashed game-day socks",
-          "pos": 70
+          "text": "pigs in a blanket",
+          "pos": 68
         },
         {
-          "text": "a dreamcatcher",
-          "pos": 78
+          "text": "fairy bread",
+          "pos": 76
         },
         {
-          "text": "a pot of gold",
-          "pos": 86
+          "text": "funnel cake",
+          "pos": 84
         },
         {
-          "text": "a horseshoe",
-          "pos": 94
+          "text": "garlic bread",
+          "pos": 91
+        },
+        {
+          "text": "chocolate lava cake",
+          "pos": 97
         }
       ]
     },
     {
-      "id": "tn-law-116",
-      "left": "Should be banned",
-      "right": "Should be required",
+      "id": "tn-time-062",
+      "left": "Waste of time",
+      "right": "Time well spent",
       "kind": "opinion",
       "clues": [
         {
-          "text": "speakerphone in public",
+          "text": "arguing online",
           "pos": 3
         },
         {
-          "text": "chewing with mouth open",
+          "text": "waiting on hold",
+          "pos": 9
+        },
+        {
+          "text": "ironing socks",
+          "pos": 15
+        },
+        {
+          "text": "folding fitted sheets",
+          "pos": 25
+        },
+        {
+          "text": "watching reruns",
+          "pos": 36
+        },
+        {
+          "text": "making the bed",
+          "pos": 45
+        },
+        {
+          "text": "a jigsaw puzzle",
+          "pos": 56
+        },
+        {
+          "text": "a family reunion",
+          "pos": 64
+        },
+        {
+          "text": "a road trip",
+          "pos": 76
+        },
+        {
+          "text": "reading a book",
+          "pos": 84
+        },
+        {
+          "text": "planting a tree",
+          "pos": 90
+        },
+        {
+          "text": "calling your mom",
+          "pos": 96
+        }
+      ]
+    },
+    {
+      "id": "tn-lovable-059",
+      "left": "Hard to love",
+      "right": "Easy to love",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "a cockroach",
+          "pos": 1
+        },
+        {
+          "text": "a telemarketer",
           "pos": 6
         },
         {
-          "text": "a car alarm",
+          "text": "a mime",
+          "pos": 16
+        },
+        {
+          "text": "a goose",
+          "pos": 24
+        },
+        {
+          "text": "a teenager",
+          "pos": 36
+        },
+        {
+          "text": "a moody cat",
+          "pos": 48
+        },
+        {
+          "text": "the in-laws",
+          "pos": 54
+        },
+        {
+          "text": "a goat",
+          "pos": 62
+        },
+        {
+          "text": "a hedgehog",
+          "pos": 72
+        },
+        {
+          "text": "a sloth",
+          "pos": 82
+        },
+        {
+          "text": "grandma",
+          "pos": 92
+        },
+        {
+          "text": "a baby panda",
+          "pos": 97
+        }
+      ]
+    },
+    {
+      "id": "tn-wear-141",
+      "left": "Would never wear",
+      "right": "Would wear",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a trash bag",
+          "pos": 2
+        },
+        {
+          "text": "a banana suit",
+          "pos": 8
+        },
+        {
+          "text": "a mullet wig",
           "pos": 12
         },
         {
-          "text": "daylight saving time",
+          "text": "a bathrobe in public",
+          "pos": 18
+        },
+        {
+          "text": "a superhero cape",
           "pos": 24
         },
         {
           "text": "socks with sandals",
-          "pos": 34
+          "pos": 32
         },
         {
-          "text": "pineapple on pizza",
-          "pos": 45
+          "text": "a fanny pack",
+          "pos": 42
         },
         {
-          "text": "small talk",
-          "pos": 52
+          "text": "a cowboy hat",
+          "pos": 50
         },
         {
-          "text": "dessert",
-          "pos": 66
+          "text": "an ugly Christmas sweater",
+          "pos": 64
         },
         {
-          "text": "tipping",
+          "text": "a leather jacket",
           "pos": 74
         },
         {
-          "text": "recess for adults",
-          "pos": 84
-        },
-        {
-          "text": "sunscreen",
-          "pos": 90
-        },
-        {
-          "text": "a seatbelt",
-          "pos": 97
-        }
-      ]
-    },
-    {
-      "id": "tn-served-096",
-      "left": "Best served cold",
-      "right": "Best served hot",
-      "kind": "playful",
-      "clues": [
-        {
-          "text": "revenge",
-          "pos": 1
-        },
-        {
-          "text": "ice cream",
-          "pos": 3
-        },
-        {
-          "text": "a pillow",
-          "pos": 10
-        },
-        {
-          "text": "potato salad",
-          "pos": 14
-        },
-        {
-          "text": "sushi",
-          "pos": 22
-        },
-        {
-          "text": "milk",
-          "pos": 30
-        },
-        {
-          "text": "leftover pizza",
-          "pos": 42
-        },
-        {
-          "text": "fried chicken",
-          "pos": 52
-        },
-        {
-          "text": "apple pie",
-          "pos": 62
-        },
-        {
-          "text": "tea",
-          "pos": 68
-        },
-        {
-          "text": "a bubble bath",
-          "pos": 84
-        },
-        {
-          "text": "tomato soup",
-          "pos": 94
-        }
-      ]
-    },
-    {
-      "id": "tn-owl-015",
-      "left": "Morning person",
-      "right": "Night owl",
-      "kind": "playful",
-      "clues": [
-        {
-          "text": "a rooster",
-          "pos": 1
-        },
-        {
-          "text": "a farmer",
-          "pos": 5
-        },
-        {
-          "text": "a yoga instructor",
-          "pos": 18
-        },
-        {
-          "text": "a kindergarten teacher",
-          "pos": 24
-        },
-        {
-          "text": "a golfer",
-          "pos": 30
-        },
-        {
-          "text": "a new parent",
-          "pos": 48
-        },
-        {
-          "text": "a nurse",
-          "pos": 52
-        },
-        {
-          "text": "a poet",
-          "pos": 66
-        },
-        {
-          "text": "a detective",
-          "pos": 72
-        },
-        {
-          "text": "a teenager",
-          "pos": 82
-        },
-        {
-          "text": "a bartender",
+          "text": "sweatpants",
           "pos": 88
         },
         {
-          "text": "a vampire",
-          "pos": 98
+          "text": "a cozy hoodie",
+          "pos": 96
         }
       ]
     },
     {
-      "id": "tn-learn-145",
-      "left": "Easy to learn",
-      "right": "Hard to learn",
+      "id": "tn-age-046",
+      "left": "Young",
+      "right": "Old",
       "kind": "measurable",
       "clues": [
         {
-          "text": "tic-tac-toe",
-          "pos": 2
-        },
-        {
-          "text": "rock paper scissors",
-          "pos": 4
-        },
-        {
-          "text": "tying your shoes",
-          "pos": 10
-        },
-        {
-          "text": "whistling",
-          "pos": 16
-        },
-        {
-          "text": "riding a bike",
-          "pos": 24
-        },
-        {
-          "text": "driving a car",
-          "pos": 34
-        },
-        {
-          "text": "knitting",
-          "pos": 44
-        },
-        {
-          "text": "juggling",
-          "pos": 54
-        },
-        {
-          "text": "skateboarding",
-          "pos": 64
-        },
-        {
-          "text": "golf",
-          "pos": 78
-        },
-        {
-          "text": "the violin",
-          "pos": 90
-        },
-        {
-          "text": "brain surgery",
-          "pos": 98
-        }
-      ]
-    },
-    {
-      "id": "tn-idea-011",
-      "left": "Terrible idea",
-      "right": "Brilliant idea",
-      "kind": "opinion",
-      "clues": [
-        {
-          "text": "hugging a bear",
+          "text": "a newborn",
           "pos": 1
         },
         {
-          "text": "a fork in the microwave",
-          "pos": 4
+          "text": "a toddler",
+          "pos": 5
         },
         {
-          "text": "cutting your own bangs",
-          "pos": 16
+          "text": "a skateboarder",
+          "pos": 17
         },
         {
-          "text": "a group project",
+          "text": "a rookie cop",
           "pos": 26
         },
         {
-          "text": "camping in winter",
-          "pos": 34
-        },
-        {
-          "text": "the snooze button",
-          "pos": 42
-        },
-        {
-          "text": "a surprise party",
-          "pos": 54
-        },
-        {
-          "text": "pizza for breakfast",
-          "pos": 62
-        },
-        {
-          "text": "a pillow fort",
-          "pos": 72
-        },
-        {
-          "text": "air conditioning",
-          "pos": 86
-        },
-        {
-          "text": "sliced bread",
-          "pos": 92
-        },
-        {
-          "text": "the wheel",
-          "pos": 98
-        }
-      ]
-    },
-    {
-      "id": "tn-pirate-105",
-      "left": "Accountant name",
-      "right": "Pirate name",
-      "kind": "playful",
-      "clues": [
-        {
-          "text": "Howard Spreadsheet",
-          "pos": 2
-        },
-        {
-          "text": "Doris from Payroll",
-          "pos": 5
-        },
-        {
-          "text": "Dennis Deductible",
-          "pos": 10
-        },
-        {
-          "text": "Brenda",
-          "pos": 22
-        },
-        {
-          "text": "Gerald",
-          "pos": 28
-        },
-        {
-          "text": "Captain Receipt",
-          "pos": 45
-        },
-        {
-          "text": "Bartholomew",
-          "pos": 55
-        },
-        {
-          "text": "Silas Crow",
-          "pos": 66
-        },
-        {
-          "text": "Salty Sam",
-          "pos": 76
-        },
-        {
-          "text": "Mad Molly Mayhem",
-          "pos": 88
-        },
-        {
-          "text": "Barnacle Bill",
-          "pos": 93
-        },
-        {
-          "text": "Captain Scurvy",
-          "pos": 97
-        }
-      ]
-    },
-    {
-      "id": "tn-speed-013",
-      "left": "Slow",
-      "right": "Fast",
-      "kind": "measurable",
-      "clues": [
-        {
-          "text": "a glacier",
-          "pos": 1
-        },
-        {
-          "text": "a snail",
-          "pos": 4
-        },
-        {
-          "text": "a kid cleaning their room",
-          "pos": 10
-        },
-        {
-          "text": "the line at the DMV",
-          "pos": 14
-        },
-        {
-          "text": "rush hour traffic",
-          "pos": 22
-        },
-        {
-          "text": "a jogger",
+          "text": "a newlywed",
           "pos": 32
         },
         {
-          "text": "a bicycle",
+          "text": "a soccer mom",
           "pos": 42
         },
         {
-          "text": "a horse",
+          "text": "a school principal",
           "pos": 55
         },
         {
-          "text": "a startled cat",
-          "pos": 68
-        },
-        {
-          "text": "a cheetah",
-          "pos": 78
-        },
-        {
-          "text": "a race car",
-          "pos": 86
-        },
-        {
-          "text": "lightning",
-          "pos": 98
-        }
-      ]
-    },
-    {
-      "id": "tn-thrill-104",
-      "left": "Snoozefest",
-      "right": "Edge of your seat",
-      "kind": "opinion",
-      "clues": [
-        {
-          "text": "watching paint dry",
-          "pos": 2
-        },
-        {
-          "text": "a vacation slideshow",
-          "pos": 8
-        },
-        {
-          "text": "golf on TV",
-          "pos": 16
-        },
-        {
-          "text": "bingo night",
-          "pos": 25
-        },
-        {
-          "text": "a museum tour",
-          "pos": 32
-        },
-        {
-          "text": "a baseball game",
-          "pos": 42
-        },
-        {
-          "text": "a magic show",
-          "pos": 55
-        },
-        {
-          "text": "a spelling bee final",
-          "pos": 66
-        },
-        {
-          "text": "a horror movie",
-          "pos": 76
-        },
-        {
-          "text": "a haunted house",
-          "pos": 84
-        },
-        {
-          "text": "a penalty shootout",
-          "pos": 90
-        },
-        {
-          "text": "defusing a bomb",
-          "pos": 97
-        }
-      ]
-    },
-    {
-      "id": "tn-strength-115",
-      "left": "Weak",
-      "right": "Strong",
-      "kind": "measurable",
-      "clues": [
-        {
-          "text": "a wet noodle",
-          "pos": 2
-        },
-        {
-          "text": "a tissue",
-          "pos": 6
-        },
-        {
-          "text": "a paper straw",
-          "pos": 12
-        },
-        {
-          "text": "a hamster",
-          "pos": 20
-        },
-        {
-          "text": "a rubber band",
-          "pos": 32
-        },
-        {
-          "text": "a wooden chair",
-          "pos": 45
-        },
-        {
-          "text": "a toddler's grip",
-          "pos": 52
-        },
-        {
-          "text": "an ant",
+          "text": "a golfer",
           "pos": 64
         },
         {
-          "text": "garlic breath",
-          "pos": 76
+          "text": "a crossword fan",
+          "pos": 73
         },
         {
-          "text": "espresso",
+          "text": "a retiree",
           "pos": 84
         },
         {
-          "text": "a gorilla",
+          "text": "Santa Claus",
           "pos": 92
         },
         {
-          "text": "a bulldozer",
-          "pos": 97
+          "text": "a redwood tree",
+          "pos": 98
         }
       ]
     },
@@ -747,113 +635,227 @@
           "pos": 94
         }
       ]
+    },
+    {
+      "id": "tn-fill-067",
+      "left": "Empty",
+      "right": "Full",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "outer space",
+          "pos": 2
+        },
+        {
+          "text": "a ghost town",
+          "pos": 6
+        },
+        {
+          "text": "a school in summer",
+          "pos": 12
+        },
+        {
+          "text": "the office on a Friday",
+          "pos": 26
+        },
+        {
+          "text": "the gym in February",
+          "pos": 34
+        },
+        {
+          "text": "the cookie jar",
+          "pos": 44
+        },
+        {
+          "text": "a piggy bank",
+          "pos": 52
+        },
+        {
+          "text": "a laundry basket",
+          "pos": 66
+        },
+        {
+          "text": "a suitcase",
+          "pos": 74
+        },
+        {
+          "text": "an inbox",
+          "pos": 84
+        },
+        {
+          "text": "a subway at rush hour",
+          "pos": 94
+        },
+        {
+          "text": "a clown car",
+          "pos": 99
+        }
+      ]
+    },
+    {
+      "id": "tn-fancy-112",
+      "left": "Plain",
+      "right": "Fancy",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "white bread",
+          "pos": 2
+        },
+        {
+          "text": "a paper bag",
+          "pos": 6
+        },
+        {
+          "text": "gray sweatpants",
+          "pos": 12
+        },
+        {
+          "text": "a baked potato",
+          "pos": 22
+        },
+        {
+          "text": "a rotisserie chicken",
+          "pos": 34
+        },
+        {
+          "text": "a birthday party",
+          "pos": 46
+        },
+        {
+          "text": "an ice cream sundae",
+          "pos": 55
+        },
+        {
+          "text": "a garden party",
+          "pos": 64
+        },
+        {
+          "text": "a bow tie",
+          "pos": 70
+        },
+        {
+          "text": "a wedding cake",
+          "pos": 84
+        },
+        {
+          "text": "a chandelier",
+          "pos": 91
+        },
+        {
+          "text": "caviar",
+          "pos": 97
+        }
+      ]
     }
   ],
   "turn": {
-    "n": 3,
-    "psychic": "p5",
-    "team": "sun",
+    "n": 4,
+    "psychic": "p3",
+    "team": "moon",
     "catchUp": false,
-    "spectrum": 2,
-    "target": 5,
-    "clue": "chewing with mouth open",
-    "clueAt": 1700000060409,
-    "clueDeadline": 1700000102956,
+    "spectrum": 3,
+    "target": 12,
+    "clue": "a fireplace",
+    "clueAt": 1700000139028,
+    "clueDeadline": 1700000181860,
     "rejected": null,
     "dials": {
-      "p4": 5,
-      "p3": 2
+      "p6": 2,
+      "p5": 14
     },
-    "locked": ["p4", "p3"],
-    "needle": 4,
+    "locked": ["p6", "p5"],
+    "needle": 8,
     "calls": {
-      "p6": "right",
-      "p2": "right",
-      "p1": "right"
+      "p4": "left",
+      "p2": "left",
+      "p1": "left"
     },
     "points": {
-      "p4": 4,
-      "p3": 4
+      "p5": 4,
+      "p6": 3
     },
     "teamPoints": {
-      "sun": 4,
-      "moon": 0
+      "sun": 0,
+      "moon": 4
     },
     "void": false,
     "step": 1
   },
-  "nextTeam": "sun",
+  "nextTeam": "moon",
   "scores": {
-    "p1": 5,
-    "p2": 5,
-    "p3": 4,
-    "p4": 4,
-    "p5": 4,
-    "p6": 5
+    "p1": 9,
+    "p2": 9,
+    "p3": 7,
+    "p4": 9,
+    "p5": 7,
+    "p6": 7
   },
   "turnStartScores": {
-    "p1": 5,
-    "p2": 5,
-    "p3": 0,
-    "p4": 0,
-    "p5": 0,
-    "p6": 5
+    "p1": 9,
+    "p2": 9,
+    "p3": 3,
+    "p4": 9,
+    "p5": 3,
+    "p6": 3
   },
   "team": {
-    "sun": 4,
-    "moon": 5
+    "sun": 9,
+    "moon": 7
   },
   "coopTotal": 0,
-  "played": 3,
+  "played": 4,
   "voidStreak": 0,
+  "ready": ["p2", "p6", "p1", "p5", "p4", "p3"],
+  "startAt": 1700000010465,
   "stats": {
-    "p5": {
+    "p1": {
       "bulls": 0,
       "dials": 1,
-      "dist": 17,
-      "zeros": 1,
+      "dist": 11,
+      "zeros": 0,
       "psyTurns": 1,
       "psyPts": 4
     },
-    "p3": {
+    "p2": {
       "bulls": 1,
       "dials": 2,
-      "dist": 18,
-      "zeros": 0,
+      "dist": 27,
+      "zeros": 1,
       "psyTurns": 0,
       "psyPts": 0
     },
     "p4": {
       "bulls": 1,
       "dials": 1,
-      "dist": 0,
+      "dist": 5,
       "zeros": 0,
       "psyTurns": 1,
-      "psyPts": 0
+      "psyPts": 4
     },
-    "p1": {
-      "bulls": 1,
+    "p3": {
+      "bulls": 0,
       "dials": 1,
-      "dist": 1,
+      "dist": 11,
       "zeros": 0,
-      "psyTurns": 0,
-      "psyPts": 0
+      "psyTurns": 1,
+      "psyPts": 4
     },
-    "p6": {
-      "bulls": 1,
-      "dials": 1,
+    "p5": {
+      "bulls": 2,
+      "dials": 2,
       "dist": 3,
       "zeros": 0,
       "psyTurns": 0,
       "psyPts": 0
     },
-    "p2": {
+    "p6": {
       "bulls": 0,
-      "dials": 0,
-      "dist": 0,
+      "dials": 1,
+      "dist": 10,
       "zeros": 0,
       "psyTurns": 1,
-      "psyPts": 4
+      "psyPts": 3
     }
   },
   "speechMs": {}

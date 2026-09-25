@@ -15,6 +15,7 @@ import {
   liveHuddle,
   revealFacts,
   statusOf,
+  readyUp,
 } from './view-common';
 import type { CoopMeter, Mark, RevealFacts, TurnHeader } from './view-common';
 import type { Reading } from './tv-view';
@@ -50,6 +51,11 @@ export interface TuneControllerView extends ControllerView {
   coop: CoopMeter | null;
   last: boolean;
   reading: Reading | null;
+  /** The intro's ready-up [cc45f4]: have I tapped I'm ready, and how many of the room have. */
+  ready: boolean;
+  readyCount: number;
+  readyHere: number;
+  startAt: number | null;
 }
 
 function roleOf(state: State, id: string): Role {
@@ -91,6 +97,19 @@ function myResult(state: State, id: string): MyResult | null {
   return { pts, away: Math.abs(dial.pos - turn.target), psychic: null };
 }
 
+function readyFor(
+  state: State,
+  id: string,
+): Pick<TuneControllerView, 'ready' | 'readyCount' | 'readyHere' | 'startAt'> {
+  const up = readyUp(state);
+  return {
+    ready: up.ready.includes(id),
+    readyCount: up.ready.length,
+    readyHere: up.here,
+    startAt: up.startAt,
+  };
+}
+
 export function controllerView(state: State, gameId: string, id: string): TuneControllerView {
   const { turn } = state;
   const phase = state.phase.id;
@@ -112,6 +131,7 @@ export function controllerView(state: State, gameId: string, id: string): TuneCo
     myCall: turn.calls[id] ?? null,
     rejected: isPsychic && phase === 'clue' ? turn.rejected : null,
     mine: myResult(state, id),
+    ...readyFor(state, id),
     team: state.team,
     winAt: state.cfg.targetScore,
     coop: state.mode === 'coop' ? coopMeter(state) : null,

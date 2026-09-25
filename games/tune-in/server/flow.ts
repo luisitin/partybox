@@ -6,7 +6,7 @@ import type { GameEvent } from '@partybox/game-sdk';
 import { callDone, enterCall, reduceCall } from './phases/call';
 import { enterClue, psychicLink, reduceClue } from './phases/clue';
 import { dialDone, enterDial, reduceDial } from './phases/dial';
-import { reduceIntro } from './phases/intro';
+import { checkReady, reduceIntro, startCountdown } from './phases/intro';
 import { enterReveal, reduceReveal, stepReveal } from './phases/reveal';
 import { enterDone, enterScores, reduceScores } from './phases/scores';
 import { needleOf } from './scoring';
@@ -29,8 +29,9 @@ function nextTurnOrDone(state: State, now: number): State {
   return startTurn(planTurn({ ...state, nextTeam }, catchUp), now);
 }
 
+/** The ready-up's deadline or the VIP's Start now: the 3 · 2 · 1 if it hasn't begun, else turn 1. */
 export function afterIntro(state: State, now: number): State {
-  return startTurn(state, now);
+  return state.startAt === null ? startCountdown(state, now) : startTurn(state, now);
 }
 
 export function afterClue(state: State, now: number): State {
@@ -96,6 +97,9 @@ function onLink(state: State, event: Extract<GameEvent<Input>, { type: 'player' 
   if (after.phase.paused) return after;
   const now = event.now;
   const phase = after.phase.id;
+  // A drop or a leave can leave only ready players: the 3 · 2 · 1 starts (a dropped phone never
+  // holds up the room).
+  if (phase === 'intro') return checkReady(after, now);
   if (phase === 'clue' && event.playerId === after.turn.psychic)
     return event.gone ? afterClue(after, now) : psychicLink(after, event.connected, now);
   if (event.connected) return after;

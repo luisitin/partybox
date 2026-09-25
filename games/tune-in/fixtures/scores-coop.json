@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "scores",
-    "startedAt": 1700000051780,
-    "deadline": 1700000057780
+    "startedAt": 1700000075368,
+    "deadline": 1700000095368
   },
   "rng": {
     "seed": 1,
@@ -293,22 +293,22 @@
     "catchUp": false,
     "spectrum": 1,
     "target": 61,
-    "clue": "a snow globe",
-    "clueAt": 1700000033790,
-    "clueDeadline": 1700000078384,
+    "clue": "a rubber duck",
+    "clueAt": 1700000053296,
+    "clueDeadline": 1700000096226,
     "rejected": null,
     "dials": {
-      "p3": 69,
-      "p4": 72,
-      "p1": 55
+      "p1": 78,
+      "p3": 51,
+      "p4": 61
     },
-    "locked": ["p4", "p3", "p1"],
-    "needle": 65,
+    "locked": ["p1", "p4", "p3"],
+    "needle": 63,
     "calls": {},
     "points": {
-      "p1": 3,
+      "p1": 0,
       "p3": 3,
-      "p4": 2
+      "p4": 4
     },
     "teamPoints": {
       "sun": 0,
@@ -337,11 +337,13 @@
   "coopTotal": 4,
   "played": 2,
   "voidStreak": 0,
+  "ready": ["p4", "p2", "p3", "p1"],
+  "startAt": 1700000010739,
   "stats": {
     "p1": {
       "bulls": 0,
       "dials": 2,
-      "dist": 24,
+      "dist": 32,
       "zeros": 1,
       "psyTurns": 0,
       "psyPts": 0
@@ -349,15 +351,15 @@
     "p2": {
       "bulls": 0,
       "dials": 1,
-      "dist": 14,
-      "zeros": 0,
+      "dist": 34,
+      "zeros": 1,
       "psyTurns": 1,
       "psyPts": 4
     },
     "p4": {
-      "bulls": 0,
+      "bulls": 1,
       "dials": 2,
-      "dist": 47,
+      "dist": 16,
       "zeros": 1,
       "psyTurns": 0,
       "psyPts": 0
@@ -365,7 +367,7 @@
     "p3": {
       "bulls": 0,
       "dials": 1,
-      "dist": 8,
+      "dist": 10,
       "zeros": 0,
       "psyTurns": 1,
       "psyPts": 0

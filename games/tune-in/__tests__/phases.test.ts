@@ -43,7 +43,7 @@ describe('the round', () => {
   });
 
   it('with no clue by the deadline the round is void: "No signal!", nobody scores, next round', () => {
-    let s = timer(start(4, { mode: 'solo' }));
+    let s = toClue(start(4, { mode: 'solo' }));
     s = timer(s);
     expect(s.phase.id).toBe('reveal');
     expect(s.turn.void).toBe(true);
@@ -75,7 +75,11 @@ describe('the round', () => {
 
 describe('the VIP', () => {
   it('skips every phase, and a dial skip locks the dials where they are', () => {
+    // Start now: the 3 · 2 · 1 at once, and a second skip goes straight to turn 1.
     let s = vip(start(4, { mode: 'solo' }), 'skip');
+    expect(s.phase.id).toBe('intro');
+    expect(s.startAt).not.toBeNull();
+    s = vip(s, 'skip');
     expect(s.phase.id).toBe('clue');
     s = vip(s, 'skip');
     expect(s.turn.void).toBe(true);
@@ -173,7 +177,7 @@ describe('drops, leaves and returns', () => {
 
 describe('teams', () => {
   it('Sun and Moon alternate; the other team calls; a team with nobody left is void', () => {
-    let s = timer(start(4, { mode: 'teams' }));
+    let s = toClue(start(4, { mode: 'teams' }));
     const first = s.turn.team;
     s = dialAll(toDial(s, 50), [10]);
     expect(s.phase.id).toBe('call');
