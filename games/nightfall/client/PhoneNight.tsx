@@ -26,7 +26,12 @@ export function RolesPhone({ view, send }: { view: View; send: (i: Input) => voi
     return (
       <Screen className={styles.screen}>
         <div className={`${styles.stack} ${styles.middle}`}>
-          <Count until={view.countEnd} line={L('Night 1 is falling…')} size="phone" />
+          <Count
+            until={view.countEnd}
+            line={L('Night 1 is falling…')}
+            size="phone"
+            paused={view.paused}
+          />
         </div>
       </Screen>
     );

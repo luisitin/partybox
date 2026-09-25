@@ -32,10 +32,17 @@ export function RolesScene({ view }: { view: NightfallTvView }): JSX.Element {
     return (
       <div className={`${styles.column} ${styles.centered}`}>
         <p className={styles.kicker}>{L('Everyone’s ready!')}</p>
-        <Count until={view.countEnd} line={L('Night 1 is falling…')} size="tv" />
+        <Count
+          until={view.countEnd}
+          line={L('Night 1 is falling…')}
+          size="tv"
+          paused={view.paused}
+        />
       </div>
     );
-  const ready = view.players.filter((p) => p.status === 'submitted').length;
+  // Dropped phones don't block the start, so they don't count here either.
+  const here = view.players.filter((p) => p.connected && view.living.includes(p.id));
+  const ready = here.filter((p) => p.status === 'submitted').length;
   return (
     <div className={styles.column}>
       <p className={styles.kicker}>🌙 Nightfall · {L('How to play')}</p>
@@ -59,7 +66,7 @@ export function RolesScene({ view }: { view: NightfallTvView }): JSX.Element {
         narrow
       />
       <p className={styles.caption} aria-live="polite">
-        ✋ {L('{ready} of {total} ready', { ready, total: view.living.length })} ·{' '}
+        ✋ {L('{ready} of {total} ready', { ready, total: here.length })} ·{' '}
         {L('Tap I’m ready on your phone when you’ve read this.')}
       </p>
     </div>

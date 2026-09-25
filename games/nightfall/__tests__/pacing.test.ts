@@ -41,6 +41,23 @@ describe('ready-up and 3 · 2 · 1', () => {
     expect(s.step).toBe(1);
   });
 
+  it('the ready count leaves out dropped phones', () => {
+    let s = start({ n: 6 });
+    s = input(s, 'ana', { type: 'ready' });
+    s = reduce(s, { type: 'player', now: T0 + 5000, playerId: 'ana', connected: false });
+    expect(phone(s, 'ben')).toMatchObject({ readyCount: 0, livingCount: 5 });
+  });
+
+  it('a pause during the 3 · 2 · 1 moves its end by the pause', () => {
+    let s = start({ n: 6 });
+    for (const id of IDS) s = input(s, id, { type: 'ready' }, T0 + 1000);
+    const end = s.phase.deadline as number;
+    s = vip(s, 'pause', T0 + 2000);
+    s = vip(s, 'resume', T0 + 7000);
+    expect(phone(s, 'ana').countEnd).toBe(end + 5000);
+    expect(JSON.parse(tv(s)).countEnd).toBe(end + 5000);
+  });
+
   it("the VIP's skip starts the count; a second skip ends it", () => {
     let s = start({ n: 6 });
     s = vip(s, 'skip');

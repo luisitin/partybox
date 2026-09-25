@@ -74,6 +74,16 @@ export interface NightfallControllerView extends ControllerView {
 
 const STAGE_PHASES = new Set(['dawn', 'verdict', 'hunter', 'last-words', 'end', 'done']);
 
+/** "n of m ready". At the ready-up, dropped phones don't block the start, so they aren't counted. */
+function readyCounts(state: State, living: string[]): { readyCount: number; livingCount: number } {
+  const here =
+    state.phase.id === 'roles' ? living.filter((id) => state.players[id]?.connected) : living;
+  return {
+    readyCount: state.ready.filter((id) => here.includes(id)).length,
+    livingCount: here.length,
+  };
+}
+
 function jobOf(state: State, role: Role): string {
   const f = flavourOf(state.cfg.flavour);
   if (role === 'wolf') return f.words.victim;
@@ -193,8 +203,7 @@ export function phoneView(state: State, playerId: string): NightfallControllerVi
     seerLog: role === 'seer' ? state.seerLog : [],
     tally: stage.tally,
     ready: state.ready.includes(playerId),
-    readyCount: state.ready.filter((id) => isAlive(state, id)).length,
-    livingCount: living.length,
+    ...readyCounts(state, living),
     board: state.cfg.townBoard ? boardToday(state, 20) : [],
     postsLeft:
       state.cfg.townBoard && reallyAlive ? POSTS_PER_DAY - postsToday(state, playerId) : null,
