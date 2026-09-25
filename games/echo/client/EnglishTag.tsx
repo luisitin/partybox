@@ -7,5 +7,5 @@ import { STRINGS } from './strings';
 export function EnglishTag(): JSX.Element | null {
   const L = useT(STRINGS);
   if (useLang() === 'en') return null;
-  return <span> · 🇬🇧 {L('in English')}</span>;
+  return <span> · {L('in English')}</span>;
 }
