@@ -1,13 +1,23 @@
 {
   "id": "secret-hitler",
   "name": "Secret Hitler",
+  "icon": "🏛️",
   "tagline": "Pass laws. Spot the liars. Stop Hitler.",
   "description": "Secret roles and a stacked deck. Elect a President and a Chancellor, pass laws in secret, and find Hitler before it's too late. Based on Secret Hitler by Max Temkin, Mike Boxleiter & Tommy Maranges · CC BY-NC-SA 4.0 · free, non-commercial play.",
+  "howToPlay": [
+    "Secret roles: Liberals, Fascists and Hitler. The Fascists know each other.",
+    "Elect a President and Chancellor. They secretly pass one policy from a stacked deck.",
+    "Liberals: 5 Liberal laws or kill Hitler. Fascists: 6 Fascist laws or elect Hitler."
+  ],
   "version": "0.1.0",
   "minPlayers": 5,
   "maxPlayers": 10,
   "estimatedMinutes": 40,
   "tags": ["hidden-roles", "bluff", "strategy"],
+  "presence": {
+    "needs": "voice-if-remote"
+  },
+  "addedOn": "2026-09-24",
   "settings": [
     {
       "key": "pace",
@@ -16,9 +26,18 @@
       "type": "select",
       "default": "normal",
       "options": [
-        { "value": "relaxed", "label": "Relaxed" },
-        { "value": "normal", "label": "Normal" },
-        { "value": "fast", "label": "Fast" }
+        {
+          "value": "relaxed",
+          "label": "Relaxed"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "fast",
+          "label": "Fast"
+        }
       ]
     }
   ],

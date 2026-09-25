@@ -37,8 +37,35 @@ module.exports = {
       name: 'game-server-never-imports-sdk-ui',
       comment: 'ADR-023: the pure sdk entry point must stay loadable by Node (no React/CSS).',
       severity: 'error',
-      from: { path: '^(games/[^/]+/server/|packages/game-sdk/src/(index|timer|scoring|views).ts)' },
-      to: { path: '^packages/game-sdk/src/(ui|tv|controller)/' },
+      from: {
+        path: '^(games/[^/]+/server/|packages/game-sdk/src/((index|timer|scoring|views|compare|answer-pack|match|speech|turns)[.]ts|match/|speech/))',
+      },
+      // The shared pack pieces (src/pack/<name>/ behind src/ui-<name>.ts) are UI too.
+      to: { path: '^packages/game-sdk/src/((ui|tv|controller|pack)/|ui-[^/]+[.]ts$)' },
+    },
+    {
+      name: 'match-imports-only-match',
+      comment:
+        'ADR-048: phones run isLegalClue as the player types, so @partybox/game-sdk/match pulls no zod (shared), UI or Node.',
+      severity: 'error',
+      from: { path: '^packages/game-sdk/src/match([.]ts$|/)', pathNot: '[.]test[.]ts$' },
+      to: { path: '^packages/(?!game-sdk/src/match/)' },
+    },
+    {
+      name: 'match-no-node-core',
+      severity: 'error',
+      from: { path: '^packages/game-sdk/src/match([.]ts$|/)', pathNot: '[.]test[.]ts$' },
+      to: { dependencyTypes: ['core'] },
+    },
+    {
+      // Its purity (no node:*, clocks, randomness) is ESLint's: see eslint.config.js.
+      name: 'sdk-speech-is-server-only',
+      comment: 'It carries zod and the override lists: a phone or TV download never includes it.',
+      severity: 'error',
+      from: {
+        path: '^(packages/client/|games/[^/]+/client/|packages/game-sdk/src/(ui|tv|controller|pack)/)',
+      },
+      to: { path: '^packages/game-sdk/src/(speech\\.ts|speech/)' },
     },
     {
       name: 'game-server-no-node-core',
@@ -73,10 +100,11 @@ module.exports = {
     },
     {
       name: 'server-imports-only-game-server-code',
-      comment: 'The generated registry is the only bridge and it points at games/<id>/server.',
+      comment:
+        'The generated registry is the only bridge: games/<id>/server, plus each manifest.es.json (ADR-049).',
       severity: 'error',
       from: { path: '^packages/server/' },
-      to: { path: '^games/', pathNot: '^games/[^/]+/server/' },
+      to: { path: '^games/', pathNot: '^games/[^/]+/(server/|manifest\.es\.json$)' },
     },
     {
       name: 'client-imports-only-sdk-shared',

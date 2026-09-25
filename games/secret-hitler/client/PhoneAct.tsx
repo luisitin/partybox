@@ -11,7 +11,7 @@ import { CardRow } from './CardRow';
 import { nameIn, partyName, powerName, reasonName } from './labels';
 import { PhoneFrame } from './PhoneFrame';
 import type { Frame } from './PhoneFrame';
-import { FacePicker } from './standin/FacePicker';
+import { FacePicker } from '@partybox/game-sdk/ui/face-picker';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 

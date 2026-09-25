@@ -218,4 +218,18 @@ describe('R19–R22 · veto, tracker reset, honesty, the end', () => {
     s = timeout(s);
     expect(game.results(s)?.winnerIds).toEqual(['p1', 'p2', 'p3']);
   });
+
+  it('ADR-052 the results name the winning side, its members and why', () => {
+    const s = timeout(timeout(send(toPower(5, 3), 'p1', { type: 'target', target: 'p5' })));
+    const r = game.results(s);
+    expect(r?.outcome).toEqual({
+      kind: 'teams',
+      winner: 'liberals',
+      teams: [
+        { id: 'liberals', name: 'Liberals', mark: '▲', members: ['p1', 'p2', 'p3'] },
+        { id: 'fascists', name: 'Fascists', mark: '●', members: ['p4', 'p5'] },
+      ],
+    });
+    expect(r?.headline).toBe('Hitler is dead: the Liberals win!');
+  });
 });

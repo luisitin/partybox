@@ -38,8 +38,8 @@ effect runs before the parent's ref is attached, so seat positions are measured 
 
 ## The owner's rulings on the M1 plan (2026-09-24)
 
-1. **Stand-ins** for SecretCard and FacePicker live in `games/secret-hitler/client/standin/`, with
-   the real ones' prop names; swap when Imposter's land on main.
+1. **Stand-ins** for SecretCard and FacePicker, with the real ones' prop names; swapped for the
+   SDK's once Imposter's landed on main (see "Foundation landed" below).
 2. **D4 Last call = the VIP's Skip** in a choosing phase (`nominate`, `vote`, `presDraw`,
    `chanEnact`, `vetoAsk`, `power`): the deadline becomes min(deadline, now + 10 s) and
    `vipSkipLabel` reads "Last call"; a second Skip does nothing (`vipSkipHidden`). No new input,
@@ -94,27 +94,25 @@ Proposed in #plans `1fe99b` at 19:35; no objections by 20:07; Imposter agreed (`
   or tap mode (see above); numbered "Card n" keys for keyboards and screen readers never name the
   card.
 
-## Stand-ins in use
+## Foundation landed (merged from main 2026-09-24)
 
-| Needed                               | Owner         | Stand-in                                                       |
-| ------------------------------------ | ------------- | -------------------------------------------------------------- |
-| `SecretCard`                         | Imposter      | `client/standin/SecretCard.tsx` (hold to see, no 3D)           |
-| `FacePicker`                         | Imposter      | `client/standin/FacePicker.tsx` (2/3 columns, reason captions) |
-| `toSpeakable`, clips                 | Foundation F6 | none needed in M1 (no narrator yet)                            |
-| presence (P7), PhoneStage per player | Foundation F4 | none in M1                                                     |
-
-## When Foundation lands on main
-
-Foundation asked for review to merge F0–F3 + F5–F7 on 2026-09-24 (hub #merges `3ed9d4`). After it
-lands, `git merge main` here needs: the ADR-050 layout (`client/shared.ts`, `phone-entry.ts`,
-`tv-entry.ts`), `manifest.es.json`, the manifest fields (🏛️, the three `howToPlay` lines from
-`content/about.json`, `presence: { needs: 'voice-if-remote' }`, `addedOn`, tags as now), a
-description ≤ 300 (it is 244), and `rotation` / `majorityPick` from `@partybox/game-sdk` where
-they fit (seat rotation stays game code: R16's return rule is game-specific).
-
-When `results-kinds` (ADR-052, stacked on foundation) lands: set `results().outcome` to
-`{ kind: 'teams', winner: 'liberals' | 'fascists' | null, teams }` and `headline` to the ending
-("Hitler is dead"), so the results screen stops calling the winning side a tie.
+- **ADR-050 layout:** `client/shared.ts` (sounds, beds, words), `phone-entry.ts` (Controller),
+  `tv-entry.ts` (Tv, `stripHidden` every phase, `quickInto` the reveals). Phone download 19.9 KB
+  gzip, TV 20.2 KB.
+- **Manifest:** 🏛️, the three `howToPlay` lines (same as `content/about.json`),
+  `presence: { needs: 'voice-if-remote' }` (the table talk is the game), `addedOn` 2026-09-24.
+  Its Spanish moved from `client/strings.ts` to `manifest.es.json`.
+- **FacePicker** is the SDK's (`@partybox/game-sdk/ui/face-picker`). **SecretCard** isn't used as
+  a component: the dossier is the game's own folder. `client/cardMode.ts` reads the same device
+  preference key but defaults to **tap** (the owner's play-test), where the SDK's getter answers
+  'hold' when nothing is stored.
+- **ADR-052:** `results().outcome` is `{ kind: 'teams', winner, teams }` (▲ Liberals, ● Fascists,
+  dead members included) and `headline` says why ("Hitler is dead: the Liberals win!"); a game
+  the VIP ended is a draw (`winner: null`, "The game was ended").
+- **Not adopted:** `majorityPick` is a plurality with a random tie-break; a Ja vote needs a strict
+  majority (R7), so `isElected` stays. Seat rotation stays game code (R16's return rule). No
+  `localeCompare` anywhere in the server (only numeric sorts).
+- Narrator (`toSpeakable`, clips) and presence PhoneStage: not needed until M3/M4.
 
 ## Screenshots
 

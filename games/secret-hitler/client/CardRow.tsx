@@ -9,7 +9,7 @@ import type { CSSProperties, JSX } from 'react';
 import { buzz, useT } from '@partybox/game-sdk/ui';
 import type { ActView } from '../server/views';
 import { FlipCard } from './Card';
-import { getSecretCardMode } from './standin/mode';
+import { getSecretCardMode } from './cardMode';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 

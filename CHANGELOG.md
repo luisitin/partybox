@@ -251,6 +251,46 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Co-op and team games end properly** (ADR-052): a game can say it was a co-op mission (complete or
+  failed) or a team game (▲ Sun wins, or a draw), with its own headline. The results screens stop
+  calling those a tie: a win gets the cheer and the confetti, a loss or a draw the quiet chord.
+
+- **A new game picker** (game pack F3, ADR-051): "Pick a game" opens a list with nothing chosen —
+  a count of who is here, filter chips that only appear when they narrow the list, and one compact
+  row per game (icon, NEW, tagline, players · minutes, why it doesn't fit tonight). Games that fit
+  come first, then the room's votes, then NEW, then A–Z. ⓘ (or a long press) opens About — how to
+  play in three steps — and the TV shows that game big while the VIP reads, with a "Sam is reading
+  about…" line on the guests' phones. A guest's 👍 Suggest is their vote and tells the room once in
+  a while. The TV grid pages through the games and turns a spotlight through them when nobody is
+  reading. Two columns on a phone turned sideways; one-line names on a 320 px phone.
+
+- **Phones download only what they play** (game pack F1–F2, ADR-049/050): joining a room now
+  downloads 177 KB instead of 1.1 MB. The list of games is a small catalog the host sends once (with
+  its Spanish), About and a game's settings words come from the host when opened, and a game's
+  phone code downloads only when it is chosen (Wisecrack: 13 KB); phones never download TV code or
+  the content packs. Hashed files are cached for good and sent compressed. `pnpm verify` fails if
+  the join download grows or a game's phone download passes its budget.
+
+- **One answer matcher for typed answers** (game pack F5, ADR-048): `@partybox/game-sdk/match` —
+  the same rules on the host and the phone for "is this the answer?", in English and Spanish:
+  spacing, case, accents, apostrophes, "a/the/una", plurals and number words never matter; close
+  typos count only when the pack allows; a listed wrong answer always loses. Clue checks ("one
+  word", "not the secret") return a reason the game words in both languages. Answer packs carry
+  their language and are checked by `checkAnswerPack`.
+
+- **Teams, votes and turns for the new games** (game pack F7): `teamsFromSeed` makes ▲ Sun and
+  ● Moon teams of even size with the bots spread, `majorityPick` picks a vote's winner with a
+  seeded tie-break (none when nobody voted), and `rotation` says whose turn it is, skipping players
+  who left.
+
+- **Readings for the game pack** (F6, ADR-045 addendum): `@partybox/game-sdk/speech`, server-only —
+  `toSpeakable` turns a line into what the reader should hear (Part 00 §5.3: numbers, money, times
+  and years as words; abbreviations; acronyms spelled, as phonemes so a mid-line "A" is not "uh";
+  shouting and stretched words in player text; no emoji), with a global pronunciation list the
+  game's own list beats (case-sensitive unless `anyCase`); `speakableName`; `speechKey` (a content
+  hash, so `/api/speech/<key>.wav` is now cached for good) and `pendingCap`. Phoneme parts always
+  carry their words, so Zira says them instead of going silent; hyphenated game ids get readings.
+
 - **Blanks reads every card aloud** (READER-VOICES, ADR-045): a Reader setting (default Old British
   Man; Young British Man, American Woman, Soft-Spoken Woman, Original, or No reader for the players
   to read). Each finished card is synthesised on the host the moment it is played — with a beat

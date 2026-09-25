@@ -1,24 +1,24 @@
 // Secret Hitler's words in Spanish, keyed by the English sentence (ADR-044). Screens write
-// `L('…')` from `useT(STRINGS)`; the picker reads the manifest's lines from here too, and
+// `L('…')` from `useT(STRINGS)`; the manifest's lines live in manifest.es.json (ADR-049), and
 // scripts/i18n-coverage.test.ts fails until each has its Spanish. Ja and Nein stay as they are in
 // both languages (SPEC §19). `{name}` marks a placeholder.
 import type { Strings } from '@partybox/game-sdk/ui';
 
 export const STRINGS: Strings = {
   es: {
-    // manifest.json — the game picker
-    'Pass laws. Spot the liars. Stop Hitler.':
-      'Aprueba leyes. Descubre a los mentirosos. Detén a Hitler.',
-    "Secret roles and a stacked deck. Elect a President and a Chancellor, pass laws in secret, and find Hitler before it's too late. Based on Secret Hitler by Max Temkin, Mike Boxleiter & Tommy Maranges · CC BY-NC-SA 4.0 · free, non-commercial play.":
-      'Roles secretos y un mazo trucado. Elijan un Presidente y un Canciller, aprueben leyes en secreto y encuentren a Hitler antes de que sea tarde. Basado en Secret Hitler de Max Temkin, Mike Boxleiter y Tommy Maranges · CC BY-NC-SA 4.0 · juego gratuito y no comercial.',
-    Pace: 'Ritmo',
-    'How long each choice may take': 'Cuánto puede tardar cada decisión',
-    Relaxed: 'Tranquilo',
-    Normal: 'Normal',
-    Fast: 'Rápido',
     'Last call': 'Última llamada',
     'Based on Secret Hitler by Max Temkin, Mike Boxleiter & Tommy Maranges · CC BY-NC-SA 4.0':
       'Basado en Secret Hitler de Max Temkin, Mike Boxleiter y Tommy Maranges · CC BY-NC-SA 4.0',
+    // server/scoring.ts — the results line (ADR-052)
+    Liberals: 'Liberales',
+    Fascists: 'Fascistas',
+    'Five Liberal laws: the Liberals win!': 'Cinco leyes liberales: ¡ganan los Liberales!',
+    'Hitler is dead: the Liberals win!': 'Hitler ha muerto: ¡ganan los Liberales!',
+    'Hitler fled: the Liberals win!': 'Hitler huyó: ¡ganan los Liberales!',
+    'Six Fascist laws: the Fascists win!': 'Seis leyes fascistas: ¡ganan los Fascistas!',
+    'Hitler is Chancellor: the Fascists win!': 'Hitler es Canciller: ¡ganan los Fascistas!',
+    'Too few left: the Liberals win!': 'Quedan muy pocos: ¡ganan los Liberales!',
+    'Too few left: the Fascists win!': 'Quedan muy pocos: ¡ganan los Fascistas!',
     // roles, parties, powers
     Liberal: 'Liberal',
     Fascist: 'Fascista',

@@ -11,7 +11,7 @@ import type { ShControllerView } from '../server/views';
 import { MaskEmblem, PartyEmblem } from './art';
 import { PolicyCard } from './Card';
 import { nameIn, partyName, roleGoal, roleName } from './labels';
-import { getSecretCardMode } from './standin/mode';
+import { getSecretCardMode } from './cardMode';
 import { STRINGS } from './strings';
 import styles from './dossier.module.css';
 

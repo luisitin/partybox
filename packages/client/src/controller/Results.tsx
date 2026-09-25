@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PrimaryButton, Scoreboard, Screen, useLang } from '@partybox/game-sdk/ui';
-import { clientGames } from '../games.generated';
+import { useGame } from '../game-loader';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
 import type { Controller } from '../net/controller';
@@ -30,7 +30,7 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   }, []);
   const rows = scoreboardRows(room);
   const mine = myRow(room, me.id);
-  const scoreless = room.results ? clientGames[room.results.gameId]?.scoreless === true : false;
+  const scoreless = useGame(room.results?.gameId, 'phone').module?.scoreless === true;
   const over = nobodyScored(room) && !scoreless;
   const vipName = room.players.find((p) => p.id === room.vip)?.name;
   const awardsForMe = [...(room.results?.results.awards ?? [])].sort(
@@ -90,12 +90,7 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
               <button
                 type="button"
                 className={styles.secondary}
-                onClick={() =>
-                  controller.vip({
-                    action: 'selectGame',
-                    gameId: room.selectedGameId ?? room.games[0]?.id ?? '',
-                  })
-                }
+                onClick={() => controller.vip({ action: 'selectGame', gameId: null })}
               >
                 {t.results.newGame}
               </button>

@@ -78,6 +78,10 @@ export interface RoomState {
   formerVip?: string;
   /** I-650: votes for the next game (player id → game id); cleared when a game starts. */
   votes?: Record<string, string>;
+  /** Part 00 §1.4: the game whose About sheet the VIP (`by`) has open — the TV shows it big. */
+  highlight?: { gameId: string; by: string };
+  /** Ruling 2: when each player's last "👍 … suggests …" toast went out (the 10 s throttle). */
+  suggestedAt?: Record<string, number>;
 }
 
 /** I-652 B: one finished game, as the lobby remembers it. */

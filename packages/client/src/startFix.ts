@@ -1,6 +1,6 @@
 // I-667 A: the one-tap fix for "can't start" — the exact bots to remove, or how many to add.
 // Bots only: people are never removed. Newest bots go first (the ones just added to pad a room).
-import type { GameSummary, RoomSnapshot } from '@partybox/shared';
+import type { CatalogEntry, RoomSnapshot } from '@partybox/shared';
 
 export type StartFix =
   { kind: 'remove'; botIds: string[]; all: boolean } | { kind: 'add'; count: number };
@@ -26,7 +26,7 @@ export function fixLabel(fix: StartFix, w: FixWords): string {
  */
 export function startFix(
   room: RoomSnapshot,
-  game: GameSummary,
+  game: Pick<CatalogEntry, 'minPlayers' | 'maxPlayers' | 'supportsBots'>,
   addRoom = Infinity,
 ): StartFix | null {
   const bots = room.players.filter((p) => p.bot);
