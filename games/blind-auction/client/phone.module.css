@@ -565,6 +565,7 @@
 .doorMini {
   display: grid;
   place-items: center;
+  overflow: hidden;
   width: 64px;
   height: 92px;
   border-radius: 10px 10px 3px 3px;
@@ -576,6 +577,8 @@
 }
 
 .doorMiniOpen {
+  /* px, not rem: the goat stays inside its frame at 200 % text. */
+  font-size: 36px;
   background: var(--pb-bg);
   box-shadow: inset 0 0 0 3px var(--pb-surface-2);
 }

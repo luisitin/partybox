@@ -16,7 +16,7 @@ export const ES_GAME: Record<string, string> = {
   'The biggest single win': 'La ganancia más grande',
   '🎯 Long Shot': '🎯 Tiro Lejano',
   'Called a rare one right': 'Acertó una rara',
-  '🔮 Fortune Teller': '🔮 Adivino',
+  '🔮 Psychic': '🔮 Adivino',
   'The most right calls': 'Más aciertos',
   '💀 Unlucky': '💀 Sin Suerte',
   'The most coins lost on wrong calls': 'Más monedas perdidas en fallos',

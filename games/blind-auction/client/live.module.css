@@ -316,6 +316,7 @@
 
 .behind {
   position: absolute;
+  overflow: hidden;
   top: 0;
   width: var(--ba-door-w);
   height: var(--ba-door-h);
@@ -347,6 +348,8 @@
 
 .doorOpen {
   transform: rotateY(-72deg);
+  /* The swung door shows only its edge: its number goes (the label under the frame names it). */
+  color: transparent;
 }
 
 .doorWin .behind {

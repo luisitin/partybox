@@ -97,14 +97,14 @@ export const ES_SCREENS: Record<string, string> = {
   'A goat behind door {n}! Keep your door, or switch to the other one.':
     '¡Una cabra tras la puerta {n}! Quédate con tu puerta o cambia a la otra.',
   '{n} of {total} have chosen': '{n} de {total} ya eligieron',
-  'Doors are final. Where is the car?': 'Puertas decididas. ¿Dónde está el coche?',
+  'Doors are final. Where is the car?': 'Puertas decididas. ¿Dónde está el auto?',
   'Door {n}': 'Puerta {n}',
   'Door 1': 'Puerta 1',
   'Door 2': 'Puerta 2',
   'Door 3': 'Puerta 3',
   'Three Doors': 'Tres puertas',
   'A car behind one, goats behind two. Stay or switch?':
-    'Un coche tras una, cabras tras dos. ¿Te quedas o cambias?',
+    'Un auto tras una, cabras tras dos. ¿Te quedas o cambias?',
   'No stake on these doors: watch the others choose.':
     'No apostaste en estas puertas: mira cómo eligen los demás.',
   'A goat behind your door {n}! Pick one of the other two.':

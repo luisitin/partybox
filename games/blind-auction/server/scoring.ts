@@ -33,7 +33,7 @@ const AWARDS: AwardRule[] = [
   },
   {
     id: 'fortune-teller',
-    title: '🔮 Fortune Teller',
+    title: '🔮 Psychic',
     description: 'The most right calls',
     measure: (s) => s.calls,
   },

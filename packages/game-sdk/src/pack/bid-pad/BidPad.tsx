@@ -41,6 +41,9 @@ export interface BidPadProps {
   texts?: BidPadTexts;
   /** The confirm stays off (with `notice` saying why) — e.g. nothing picked yet to bet on. */
   blocked?: boolean;
+  /** Show "You have 🪙 N" above the dial (default). Off when the caller shows the coins itself,
+   *  e.g. pinned in a header that never scrolls under a fade. */
+  showHave?: boolean;
   className?: string;
 }
 
@@ -99,6 +102,7 @@ export function BidPad({
   coin = '🪙',
   texts = {},
   blocked = false,
+  showHave = true,
   className,
 }: BidPadProps): JSX.Element {
   const L = useT(BID_PAD_STRINGS);
@@ -183,7 +187,9 @@ export function BidPad({
       {header}
       <div className={styles.layout}>
         <div className={styles.pad} onContextMenu={(e) => e.preventDefault()}>
-          <p className={styles.have}>{L('You have {coin} {n}', { coin, n: max })}</p>
+          {showHave ? (
+            <p className={styles.have}>{L('You have {coin} {n}', { coin, n: max })}</p>
+          ) : null}
           <div className={styles.dial}>
             {stepper(-1, down)}
             <output

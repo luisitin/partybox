@@ -11,7 +11,7 @@ import type { Input } from '../server/types';
 import type { BlindAuctionControllerView } from '../server/views';
 import { COIN, iconOf, nameOf } from './copy';
 import { OptionBoard } from './Options';
-import { LotTitle } from './PhoneLot';
+import { LotTitle, Purse } from './PhoneLot';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 
@@ -81,9 +81,14 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
         pass: L('Sit this one out'),
         passed: L('✓ Sitting this one out'),
       }}
+      // The coins sit pinned in the header, never under the scroll fade (review [39e0f5eb] #1).
+      showHave={false}
       header={
         <div className={styles.betHead}>
-          <LotTitle box={box} />
+          <div className={styles.topRow}>
+            <LotTitle box={box} />
+            <Purse coins={view.coins} />
+          </div>
           <OptionBoard
             options={box.options}
             size="phone"

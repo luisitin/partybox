@@ -1,6 +1,6 @@
 // Phase "rules" (the owner, 2026-09-24: "start the game explaining the rules and waiting for
 // everybody to ready up"): the TV and every phone walk through the three steps; each person taps
-// Ready (bots are ready from the start). Once everyone connected is ready — or after 40 s, or on the
+// Ready (bots are ready from the start). Once everyone connected is ready — or after the hidden safety net, or on the
 // VIP's skip — a 3·2·1 (step 1, ADR-033) and the first box.
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
