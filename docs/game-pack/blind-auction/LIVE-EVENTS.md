@@ -76,3 +76,8 @@ is), split your stake, double or nothing, insurance. Only twists that fit the ev
   opens a goat door, preferring one nobody backed; each bettor stays or switches on the phone (a
   bettor whose door opened must move; undecided = stays, or the lower closed door if forced);
   then every door opens. Recorded in reports/design/loop/23.
+- 2026-09-25: **Hot potato** (phase `potato`) and **tug of war** (phase `tug`) built. Potato: the
+  holder taps to pass round the circle; pops at a secret 3–30 s (the clock never leaves the
+  server); +250 ms per pass; holder burnt −10. Tug: teams dealt at `init` (teamsFromSeed), shown
+  from `box`; you bet on your own side; each tap pulls 0.06 × your share of your team's stake; the
+  rope over the line or 12 s ends it; a dead heat refunds. Recorded in reports/design/loop/24–26.
