@@ -6,7 +6,7 @@ import type { GameDefinition, InitContext, Settings as RawSettings } from '@part
 import manifestJson from '../manifest.json' with { type: 'json' };
 import { sampleInput } from './bot';
 import { factPool } from './content';
-import { enterIntro, reduce } from './flow';
+import { enterQuestion, reduce } from './flow';
 import { newQuestion } from './phases/question';
 import { recap } from './recap';
 import { results, ZERO_STATS } from './scoring';
@@ -76,7 +76,7 @@ function init(ctx: InitContext): State {
   }
   const questions = drawn.slice(0, need);
   const state: State = {
-    phase: { id: 'intro', startedAt: ctx.now, deadline: null },
+    phase: { id: 'question', startedAt: ctx.now, deadline: null },
     rng,
     players,
     cfg,
@@ -88,10 +88,9 @@ function init(ctx: InitContext): State {
     stats,
     offered: {},
     speechMs: {},
-    ready: [],
-    counting: false,
   };
-  return enterIntro(state, ctx.now);
+  // The rules, READY and the 3 · 2 · 1 are the shell's start stage (ADR-053): play starts here.
+  return enterQuestion(state, ctx.now);
 }
 
 export const game: GameDefinition<State, Input, FakeOutTvView, FakeOutControllerView> = {
