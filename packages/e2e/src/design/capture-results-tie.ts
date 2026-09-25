@@ -39,7 +39,7 @@ async function open(browser: Browser, url: string, device: DeviceId, lang: strin
   return page;
 }
 
-type Scenario = 'tie' | 'many';
+type Scenario = 'tie' | 'many' | 'teams';
 
 async function run(
   browser: Browser,
@@ -96,8 +96,21 @@ async function run(
         results: {
           scores,
           ranking,
-          winnerIds: tie ? ['p-ana', 'p-ben', 'p-cleo'] : ['p-dev'],
-          awards,
+          winnerIds: scenario === 'teams' ? ['p-ben', 'p-cleo'] : tie ? ['p-ana', 'p-ben', 'p-cleo'] : ['p-dev'], // prettier-ignore
+          awards: scenario === 'teams' ? awards.slice(0, 2) : awards,
+          // ADR-052: a team game, Moon wins (its members first, the headline in its colour)
+          ...(scenario === 'teams'
+            ? {
+                outcome: {
+                  kind: 'teams',
+                  winner: 'moon',
+                  teams: [
+                    { id: 'sun', name: 'Sun', mark: '▲', color: 'var(--pb-accent-2)', members: ['p-ana', 'p-dev', me] }, // prettier-ignore
+                    { id: 'moon', name: 'Moon', mark: '●', color: 'var(--pb-info)', members: ['p-ben', 'p-cleo'] }, // prettier-ignore
+                  ],
+                },
+              }
+            : {}),
         },
       },
     });
@@ -120,7 +133,7 @@ async function main(): Promise<void> {
   const browser = await chromium.launch();
   try {
     for (const lang of ['en', 'es'])
-      for (const scenario of ['tie', 'many'] as const)
+      for (const scenario of ['tie', 'many', 'teams'] as const)
         for (const device of ['iphone-se', 'font200'] as const)
           await run(browser, server.url, api, lang, device, scenario);
   } finally {

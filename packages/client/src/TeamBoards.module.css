@@ -1,0 +1,61 @@
+/* ADR-052: team groups on the results boards. The team colour heads its group (never alone: the
+   mark and the name say which team), the winners' group is outlined in it. */
+.teams {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+  width: 100%;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius-lg);
+  border: 2px solid transparent;
+}
+
+.team.won {
+  border-color: var(--team);
+  background: color-mix(in srgb, var(--team) 10%, transparent);
+}
+
+.head {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--team);
+}
+
+.mark {
+  flex-shrink: 0;
+}
+
+.name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.tag {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text);
+}
+
+.compact {
+  gap: var(--pb-space-3);
+}
+
+.compact .team {
+  padding: var(--pb-space-2);
+}
+
+.compact .head {
+  font-size: var(--pb-font-body);
+}

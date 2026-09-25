@@ -151,3 +151,43 @@ export function winnerLineFor(room: RoomSnapshot, meId: string, scoreless = fals
   if (ids.length >= results.players.length) return t.results.tie;
   return t.results.youTie;
 }
+
+/** ADR-052: one team's part of a team game's board. */
+export interface TeamGroup {
+  id: string;
+  name: string;
+  mark?: string;
+  color?: string;
+  won: boolean;
+  rows: ScoreboardRow[];
+}
+
+/** A team game's board grouped by team, the winning team first (null for any other game). */
+export function teamGroups(room: RoomSnapshot): TeamGroup[] | null {
+  const r = room.results;
+  const o = r?.results.outcome;
+  if (!r || !o || o.kind !== 'teams') return null;
+  const rows = scoreboardRows(room);
+  const groups = o.teams.map((team) => ({
+    id: team.id,
+    name: serverText(team.name, getLang(), r.gameId),
+    ...(team.mark ? { mark: team.mark } : {}),
+    ...(team.color ? { color: team.color } : {}),
+    won: team.id === o.winner,
+    rows: rows.filter((row) => team.members.includes(row.playerId)),
+  }));
+  return groups.sort((a, b) => Number(b.won) - Number(a.won));
+}
+
+/** The winning team's colour, for the headline (undefined when there is none). */
+export function winnerColor(room: RoomSnapshot): string | undefined {
+  return teamGroups(room)?.find((g) => g.won)?.color;
+}
+
+/** Your team's line on your phone: won or lost (null outside a decided team game). */
+export function yourTeamLine(room: RoomSnapshot, meId: string): string | null {
+  const groups = teamGroups(room);
+  const mine = groups?.find((g) => g.rows.some((row) => row.playerId === meId));
+  if (!groups || !mine || !groups.some((g) => g.won)) return null;
+  return mine.won ? t.results.yourTeamWon : t.results.yourTeamLost;
+}

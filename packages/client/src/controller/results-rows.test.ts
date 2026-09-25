@@ -2,7 +2,16 @@
 import { describe, expect, it } from 'vitest';
 import type { RoomSnapshot } from '@partybox/shared';
 import { ordinal } from '../i18n';
-import { groupAwards, joinNames, myRow, winnerLine, winnerLineFor } from './results-rows';
+import {
+  groupAwards,
+  joinNames,
+  myRow,
+  teamGroups,
+  winnerColor,
+  winnerLine,
+  winnerLineFor,
+  yourTeamLine,
+} from './results-rows';
 
 type Rank = { playerId: string; score: number; rank: number };
 
@@ -233,5 +242,50 @@ describe('a tie among bots', () => {
       ],
     );
     expect(winnerLine(onlyBots)).toBe('The bots tie — nobody home?');
+  });
+});
+
+describe('ADR-052: a team game grouped by team', () => {
+  const teamsRoom = (winner: string | null): RoomSnapshot => {
+    const base = room(
+      { Sam: 3, Priya: 1, Kenji: 2, Ana: 0 },
+      [],
+      [
+        { playerId: 'Sam', score: 3, rank: 1 },
+        { playerId: 'Kenji', score: 2, rank: 2 },
+        { playerId: 'Priya', score: 1, rank: 3 },
+        { playerId: 'Ana', score: 0, rank: 4 },
+      ],
+    );
+    const r = base.results as NonNullable<RoomSnapshot['results']>;
+    const outcome = {
+      kind: 'teams',
+      winner,
+      teams: [
+        {
+          id: 'sun',
+          name: 'Sun',
+          mark: '▲',
+          color: 'var(--pb-accent-2)',
+          members: ['Sam', 'Priya'],
+        },
+        { id: 'moon', name: 'Moon', mark: '●', color: 'var(--pb-info)', members: ['Kenji', 'Ana'] },
+      ],
+    };
+    return { ...base, results: { ...r, results: { ...r.results, outcome } } } as RoomSnapshot;
+  };
+  it('puts the winning team first, each with its members', () => {
+    const groups = teamGroups(teamsRoom('moon')) ?? [];
+    expect(groups.map((g) => [g.id, g.won, g.rows.map((row) => row.playerId)])).toEqual([
+      ['moon', true, ['Kenji', 'Ana']],
+      ['sun', false, ['Sam', 'Priya']],
+    ]);
+    expect(winnerColor(teamsRoom('moon'))).toBe('var(--pb-info)');
+  });
+  it('tells each phone its team won or lost; a draw says neither', () => {
+    expect(yourTeamLine(teamsRoom('moon'), 'Ana')).toBe('Your team won!');
+    expect(yourTeamLine(teamsRoom('moon'), 'Sam')).toBe('Your team lost this one');
+    expect(yourTeamLine(teamsRoom(null), 'Sam')).toBeNull();
+    expect(teamGroups(room({ Sam: 1 }, ['Sam'], []))).toBeNull();
   });
 });

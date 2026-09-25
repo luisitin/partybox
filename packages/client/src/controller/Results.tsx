@@ -16,8 +16,12 @@ import {
   myRow,
   nobodyScored,
   scoreboardRows,
+  teamGroups,
+  winnerColor,
   winnerLineFor,
+  yourTeamLine,
 } from './results-rows';
+import { TeamBoards } from '../TeamBoards';
 import styles from './Results.module.css';
 import { VoteRow } from './VoteRow';
 
@@ -38,6 +42,9 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
     list.current
       ?.querySelector('[aria-current="true"]')
       ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const teams = teamGroups(room);
+  const teamColor = winnerColor(room);
+  const teamLine = yourTeamLine(room, me.id);
   const rows = scoreboardRows(room);
   const mine = myRow(room, me.id);
   const scoreless = useGame(room.results?.gameId, 'phone').module?.scoreless === true;
@@ -87,11 +94,17 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       // hero inside the body scrolled off the top (review-loop #76).
       title={
         <>
-          <span className={styles.winner} data-screen="results">
+          <span
+            className={styles.winner}
+            data-screen="results"
+            style={teamColor ? { color: teamColor } : undefined}
+          >
             {winnerLineFor(room, me.id, scoreless)}
           </span>
+          {/* ADR-052: in a team game your team's result is your line (a place means little) */}
+          {teamLine ? <span className={`pb-caption ${styles.teamLine}`}>{teamLine}</span> : null}
           {/* I-456 B: your place stays in view over the board; a tap shows your row */}
-          {mine && !over && !scoreless ? (
+          {mine && !over && !scoreless && !teamLine ? (
             <button type="button" className={`pb-muted pb-caption ${styles.place}`} onClick={toMe}>
               {t.results.yourPlace(mine.rank, mine.score)}
             </button>
@@ -148,7 +161,16 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
         </p>
       ) : (
         <div ref={list}>
-          <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over} />
+          {teams ? (
+            <TeamBoards
+              groups={teams}
+              compact
+              highlightId={me.id}
+              wonLabel={t.results.teamWonTag}
+            />
+          ) : (
+            <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over} />
+          )}
         </div>
       )}
       {chips ? (

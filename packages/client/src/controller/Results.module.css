@@ -9,6 +9,14 @@
   text-wrap: balance;
 }
 
+/* ADR-052: your team's result under the winner line — a statement, not a tap target */
+.teamLine {
+  display: block;
+  margin-top: var(--pb-space-1);
+  text-align: center;
+  font-weight: 700;
+}
+
 /* My place, right under the winner line. */
 .place {
   display: block;

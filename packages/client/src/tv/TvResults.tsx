@@ -12,8 +12,11 @@ import {
   joinNames,
   nobodyScored,
   scoreboardRows,
+  teamGroups,
+  winnerColor,
   winnerLine,
 } from '../controller/results-rows';
+import { TeamBoards } from '../TeamBoards';
 import { useGame } from '../game-loader';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
@@ -34,6 +37,8 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
   const said = (text: string): string => serverText(text, L.lang, room.results?.gameId);
   const rows = scoreboardRows(room);
   // one card per award, everyone who won it named on it (a tie gave each tied player a copy)
+  const teams = teamGroups(room);
+  const teamColor = winnerColor(room);
   const grouped = groupAwards(room.results?.results.awards ?? []);
   // The award column never runs under the host bar, whatever a game sends: six cards (two columns
   // of three) and a line for the rest (imposter's six-way tie sent seven).
@@ -97,10 +102,13 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
         {/* three or more tied names take the h1 size: at display size a Spanish tie wrapped to
             two lines and pushed the last award under the host bar */}
         <BigText
-          level={many || keepBoard || tied.length >= 3 || line.length > 24 ? 'h1' : 'display'}
+          level={
+            many || keepBoard || tied.length >= 3 || line.length > 24 || teams ? 'h1' : 'display'
+          }
           tone="accent"
         >
-          {line}
+          {/* the winning team's colour on its headline (the mark alone was headline yellow) */}
+          <span style={teamColor ? { color: teamColor } : undefined}>{line}</span>
         </BigText>
         {nobodyScored(room) && !scoreless ? (
           <p className="pb-muted">{t.results.nobodyScored}</p>
@@ -125,12 +133,18 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
         <div
           className={`${styles.columns} ${awards.length === 0 ? styles.single : ''} ${large ? styles.wide : ''} ${crowned ? styles.photoFinish : ''}`}
         >
-          <Scoreboard
-            rows={rows}
-            noTrophy={nobodyScored(room)}
-            noRanks={nobodyScored(room)}
-            size={large ? 'lg' : 'md'}
-          />
+          {/* ADR-052: a team game's board is grouped by team, the winners first */}
+          {teams ? (
+            // body-size rows: two team headers on top of the board ran it under the host bar
+            <TeamBoards groups={teams} size="sm" wonLabel={t.results.teamWonTag} />
+          ) : (
+            <Scoreboard
+              rows={rows}
+              noTrophy={nobodyScored(room)}
+              noRanks={nobodyScored(room)}
+              size={large ? 'lg' : 'md'}
+            />
+          )}
           {awards.length > 0 ? (
             <ul className={styles.awards} aria-label={L('awards')}>
               {awards.map((a) => (

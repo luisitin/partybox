@@ -154,6 +154,11 @@ export const en = {
     coopLost: 'Mission failed',
     teamWins: (team: string): string => `${team} wins!`,
     teamDraw: 'A draw!',
+    /** ADR-052: your team's result on your phone. */
+    /** ADR-052: the winning team's tag on the results boards. */
+    teamWonTag: 'Winners',
+    yourTeamWon: 'Your team won!',
+    yourTeamLost: 'Your team lost this one',
     over: 'Game over',
     show: "That's the show!",
     scorelessHint: 'No points in this game — the books on the TV are the result.',
