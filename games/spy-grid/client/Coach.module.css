@@ -63,3 +63,17 @@
   font-weight: 700;
   color: var(--pb-text-muted);
 }
+
+/* the guesser's line: the board gets the room, most of all at 200 % text (the role header and the
+   padding took a whole card's height) */
+.compact {
+  padding: var(--pb-space-1) var(--pb-space-3);
+}
+
+.compact .role {
+  display: none;
+}
+
+.compact .next {
+  font-size: var(--pb-font-caption);
+}

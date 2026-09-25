@@ -81,7 +81,8 @@ function lines(view: V, L: Translator): { role: string; next: string; mine: bool
   return { role: `${SHAPE[t]} ${team}`, next: L('Watch the TV.'), mine: false };
 }
 
-export function Coach({ view }: { view: V }): JSX.Element {
+/** `compact`: one short line, no role header (a guesser's screen needs the room for the board). */
+export function Coach({ view, compact = false }: { view: V; compact?: boolean }): JSX.Element {
   const L = useT(STRINGS);
   const { role, next, mine } = lines(view, L);
   // Only a translated game says this: the words on the board stay English (session-c #10).
@@ -90,7 +91,7 @@ export function Coach({ view }: { view: V }): JSX.Element {
     view.phaseId === 'teams' && english !== 'The board words are in English.' ? english : null;
   return (
     <div
-      className={`${styles.coach} ${mine ? styles.mine : ''}`}
+      className={`${styles.coach} ${mine ? styles.mine : ''} ${compact ? styles.compact : ''}`}
       key={`${role}|${next}`}
       role="status"
     >

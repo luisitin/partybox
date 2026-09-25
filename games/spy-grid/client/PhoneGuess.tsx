@@ -121,7 +121,6 @@ export function PhoneGuess({
   } else {
     footer = (
       <div className={styles.bar} key="idle">
-        <div className={styles.barLine}>{L('Tap a card to point at it')}</div>
         {/* Always there, so the bar keeps its height; before the first flip it says when it opens
             (session-c N2: an empty band under the list on SE). */}
         <button
@@ -141,7 +140,7 @@ export function PhoneGuess({
       side={
         <>
           <Scores view={view} />
-          <Coach view={view} />
+          <Coach view={view} compact />
           <ClueLine view={view} />
         </>
       }
