@@ -78,6 +78,16 @@ const DOORS: readonly Label[] = [
 export const DOOR_PAY = 2;
 
 const EVENT_BOX: Record<LiveKind, { name: string; icon: string; flavour: string }> = {
+  ghost: {
+    name: 'Ghost Hunt',
+    icon: '👻',
+    flavour: 'A ghost hides in one of four rooms. Right room pays ×3.5.',
+  },
+  wires: {
+    name: 'Defuse the Bomb',
+    icon: '💣',
+    flavour: 'Four wires, one stops the bomb. Pick it: ×3.5.',
+  },
   penalty: {
     name: 'Penalty Kick',
     icon: '⚽',
@@ -217,6 +227,33 @@ function penalty(rng: RngState, n: number): [Round, RngState] {
   return [{ box: eventBox('penalty', n, options), outcome, detail: [aim, keeper] }, s3];
 }
 
+/** Ghost hunt and defuse the bomb (the owner: rules and payouts clear before; no adding to a bet
+ *  at the last wire — so the bets close first and the TV plays it out): four rooms / wires, one
+ *  right. `detail` = the order the others are checked (the right one last). */
+const ROOMS: readonly Label[] = [
+  { icon: '🛏️', name: 'Bedroom' },
+  { icon: '🍳', name: 'Kitchen' },
+  { icon: '🛁', name: 'Bathroom' },
+  { icon: '📦', name: 'Attic' },
+];
+const WIRES: readonly Label[] = [
+  { icon: '🔴', name: 'Red wire' },
+  { icon: '🔵', name: 'Blue wire' },
+  { icon: '🟡', name: 'Yellow wire' },
+  { icon: '🟢', name: 'Green wire' },
+];
+
+function fourWay(kind: 'ghost' | 'wires', rng: RngState, n: number): [Round, RngState] {
+  const labels = kind === 'ghost' ? ROOMS : WIRES;
+  const options = labels.map((l) => option(l, 25));
+  const [outcome, s1] = int(rng, 4);
+  const [order, s2] = shuffle(
+    s1,
+    [0, 1, 2, 3].filter((i) => i !== outcome),
+  );
+  return [{ box: eventBox(kind, n, options), outcome, detail: order }, s2];
+}
+
 /** Keno: one "option" (you play your numbers, not a card); the draw is `detail`. */
 function keno(rng: RngState, n: number): [Round, RngState] {
   const [pool, next] = shuffle(
@@ -278,5 +315,6 @@ export function drawEvent(kind: LiveKind, rng: RngState, n: number): [Round, Rng
   if (kind === 'coins') return coins(rng, n);
   if (kind === 'keno') return keno(rng, n);
   if (kind === 'penalty') return penalty(rng, n);
+  if (kind === 'ghost' || kind === 'wires') return fourWay(kind, rng, n);
   return wheel(rng, n);
 }

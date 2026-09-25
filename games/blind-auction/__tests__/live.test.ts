@@ -47,6 +47,10 @@ describe('live events: the draw', () => {
           const sum = a + b;
           expect(outcome).toBe(sum < 7 ? 0 : sum === 7 ? 1 : 2);
         }
+        if (kind === 'ghost' || kind === 'wires') {
+          // The other three are checked first, each once; the right one is never among them.
+          expect([...detail].sort()).toEqual([0, 1, 2, 3].filter((i) => i !== outcome));
+        }
         if (kind === 'penalty') {
           const [aim = -1, keeper = -1] = detail;
           expect(aim).toBeGreaterThanOrEqual(0);

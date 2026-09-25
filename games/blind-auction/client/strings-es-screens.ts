@@ -73,6 +73,26 @@ export const ES_SCREENS: Record<string, string> = {
   "That's the last box!": '¡Esa fue la última caja!',
   'Tap a card, then choose your coins': 'Toca una carta y luego elige tus monedas',
   // live events
+  'Ghost Hunt': 'Cazafantasmas',
+  'A ghost hides in one of four rooms. Right room pays ×3.5.':
+    'Un fantasma se esconde en uno de cuatro cuartos. El cuarto correcto paga ×3.5.',
+  'Defuse the Bomb': 'Desactiva la bomba',
+  'Four wires, one stops the bomb. Pick it: ×3.5.':
+    'Cuatro cables, uno detiene la bomba. Adivínalo: ×3.5.',
+  Bedroom: 'Recámara',
+  Kitchen: 'Cocina',
+  Bathroom: 'Baño',
+  Attic: 'Ático',
+  'Red wire': 'Cable rojo',
+  'Blue wire': 'Cable azul',
+  'Yellow wire': 'Cable amarillo',
+  'Green wire': 'Cable verde',
+  empty: 'vacío',
+  cut: 'cortado',
+  'BOO!': '¡BU!',
+  'defused!': '¡desactivada!',
+  'Bets are closed. Flashlights on!': 'Apuestas cerradas. ¡Linternas encendidas!',
+  'Bets are closed. Snip… snip…': 'Apuestas cerradas. Clic… clic…',
   'Penalty Kick': 'Penal',
   'One shot, one keeper. Goal, save, or off the post?':
     'Un tiro, un portero. ¿Gol, atajada o al palo?',

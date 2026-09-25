@@ -44,7 +44,12 @@ export const EVENT_MS = {
   keno: 5_600,
   // The run-up, the kick, the dive, the net (or not).
   penalty: 3_800,
+  // A room / a wire every REVEAL_STEP_MS until the ghost / the bomb's fate, then a beat.
+  ghost: 5_400,
+  wires: 5_400,
 } as const;
+/** Ghost hunt and defuse the bomb: one room or wire checked per step. */
+export const REVEAL_STEP_MS = 1_100;
 /** Coin-flip streak: one flip on the TV. */
 export const COIN_FLIP_MS = 900;
 /** Keno (the owner: like KENO, Bingo-style balls, a tray, the payouts clear up front): pick

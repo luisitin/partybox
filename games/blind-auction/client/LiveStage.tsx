@@ -11,7 +11,7 @@ import { KenoStage } from './Keno';
 import styles from './live.module.css';
 import { useProgress } from './liveShared';
 import type { Props } from './liveShared';
-import { Coins, Penalty } from './MoreEvents';
+import { Coins, Penalty, Reveal4 } from './MoreEvents';
 import { STRINGS } from './strings';
 
 const LANE_TINT = ['--pb-player-1', '--pb-player-2', '--pb-player-3', '--pb-player-4'];
@@ -239,6 +239,7 @@ export function LiveStage(props: Props): JSX.Element {
   if (props.run.kind === 'dice') return <Dice {...props} />;
   if (props.run.kind === 'coins') return <Coins {...props} />;
   if (props.run.kind === 'penalty') return <Penalty {...props} />;
+  if (props.run.kind === 'ghost' || props.run.kind === 'wires') return <Reveal4 {...props} />;
   if (props.run.kind === 'keno') return <KenoStage drawn={props.run.detail} bets={props.bets} />;
   if (props.run.kind === 'doors')
     return (

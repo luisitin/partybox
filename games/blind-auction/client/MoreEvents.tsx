@@ -2,7 +2,8 @@
 import { useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { useReducedMotion, useT } from '@partybox/game-sdk/ui';
-import { COIN_FLIP_MS, EVENT_MS, betsMs } from '../server/timing';
+import { COIN_FLIP_MS, EVENT_MS, REVEAL_STEP_MS, betsMs } from '../server/timing';
+import { iconOf, nameOf } from './copy';
 import styles from './live.module.css';
 import { useProgress } from './liveShared';
 import type { Props } from './liveShared';
@@ -84,6 +85,63 @@ export function Penalty({ run, bets }: Props): JSX.Element {
       <p className={`${styles.sum} ${done ? styles.sumOn : ''}`} aria-live="polite">
         {done ? result : ' '}
       </p>
+    </div>
+  );
+}
+
+/** Ghost hunt / defuse the bomb: the four rooms or wires; the wrong ones go dark (or get cut) one
+ *  by one, a step apart, and the last one is the ghost / the wire that saves the day. */
+export function Reveal4({ run, options, bets }: Props): JSX.Element {
+  const L = useT(STRINGS);
+  const reduced = useReducedMotion();
+  const order = run.detail;
+  const [step, setStep] = useState(reduced ? order.length + 1 : 0);
+  useEffect(() => {
+    if (reduced) return;
+    const start = betsMs(bets);
+    const hs = [...order, run.outcome].map((_, i) =>
+      setTimeout(() => setStep(i + 1), start + (i + 1) * REVEAL_STEP_MS),
+    );
+    return () => hs.forEach(clearTimeout);
+  }, [order, run.outcome, bets, reduced]);
+  const ghost = run.kind === 'ghost';
+  const cleared = order.slice(0, step);
+  const done = step > order.length;
+  return (
+    <div className={`${styles.four} ${ghost ? styles.house : styles.bomb}`}>
+      {!ghost ? (
+        <span className={`${styles.bombFace} ${done ? styles.bombSafe : ''}`} aria-hidden>
+          {done ? '✅' : '💣'}
+        </span>
+      ) : null}
+      <div className={styles.fourGrid}>
+        {options.map((o, i) => {
+          const out = cleared.includes(i);
+          const it = done && i === run.outcome;
+          return (
+            <span
+              key={i}
+              className={`${styles.fourCell} ${out ? styles.fourOut : ''} ${it ? styles.fourIt : ''}`}
+            >
+              <span className={styles.fourIcon} aria-hidden>
+                {it && ghost ? '👻' : iconOf(o)}
+              </span>
+              <span className={styles.fourName}>{nameOf(L, o)}</span>
+              <span className={styles.fourMark}>
+                {out
+                  ? ghost
+                    ? L('empty')
+                    : L('cut')
+                  : it
+                    ? ghost
+                      ? L('BOO!')
+                      : L('defused!')
+                    : ' '}
+              </span>
+            </span>
+          );
+        })}
+      </div>
     </div>
   );
 }

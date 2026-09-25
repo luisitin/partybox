@@ -125,23 +125,27 @@ function OpenPanel({ view }: { view: View }): JSX.Element | null {
                   ? L('Doors are final. Where is the car?')
                   : view.run.kind === 'coins'
                     ? L('Bets are closed. Flip it!')
-                    : view.run.kind === 'penalty'
-                      ? L('Bets are closed. Here comes the kick!')
-                      : view.run.kind === 'keno'
-                        ? L('Bets are closed. Here come the balls!')
-                        : view.run.kind === 'shells'
-                          ? L('Cups up! Where is the ball?')
-                          : view.run.kind === 'tug' && view.tug?.draw
-                            ? L('Dead heat! Every stake goes back.')
-                            : view.run.kind === 'tug'
-                              ? L('Time! Which side held on?')
-                              : view.run.kind === 'potato'
-                                ? L('POP! {name} got burnt', {
-                                    name:
-                                      view.players.find((p) => p.id === view.potato?.holder)
-                                        ?.name ?? '?',
-                                  })
-                                : L('Bets are closed. Spin the wheel!')
+                    : view.run.kind === 'ghost'
+                      ? L('Bets are closed. Flashlights on!')
+                      : view.run.kind === 'wires'
+                        ? L('Bets are closed. Snip… snip…')
+                        : view.run.kind === 'penalty'
+                          ? L('Bets are closed. Here comes the kick!')
+                          : view.run.kind === 'keno'
+                            ? L('Bets are closed. Here come the balls!')
+                            : view.run.kind === 'shells'
+                              ? L('Cups up! Where is the ball?')
+                              : view.run.kind === 'tug' && view.tug?.draw
+                                ? L('Dead heat! Every stake goes back.')
+                                : view.run.kind === 'tug'
+                                  ? L('Time! Which side held on?')
+                                  : view.run.kind === 'potato'
+                                    ? L('POP! {name} got burnt', {
+                                        name:
+                                          view.players.find((p) => p.id === view.potato?.holder)
+                                            ?.name ?? '?',
+                                      })
+                                    : L('Bets are closed. Spin the wheel!')
             : bets.length
               ? L('Bets are closed. What’s inside?')
               : L('Nobody bet. What’s inside?')}

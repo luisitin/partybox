@@ -1128,3 +1128,93 @@
     transition-duration: 0ms;
   }
 }
+
+/* ── ghost hunt / defuse the bomb ── */
+.four {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  width: min(720px, calc(var(--ba-card-h) * 1.35));
+  height: var(--ba-card-h);
+  border-radius: var(--pb-radius-lg);
+}
+
+.house {
+  background: radial-gradient(ellipse at 50% 30%, #2b2350, #0c0a1c 75%);
+}
+
+.bomb {
+  background: radial-gradient(ellipse at 50% 30%, #3b1c1c, #140909 75%);
+}
+
+.bombFace {
+  font-size: calc(var(--ba-card-h) * 0.18);
+  line-height: 1;
+  animation: ba-jitter 240ms ease-in-out infinite alternate;
+}
+
+.bombSafe {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.fourGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--pb-space-3);
+  width: 86%;
+}
+
+.fourCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--pb-space-2);
+  border-radius: var(--pb-radius);
+  background: rgb(255 255 255 / 8%);
+  box-shadow: inset 0 0 0 2px rgb(255 255 255 / 12%);
+  transition:
+    opacity var(--pb-motion-base) var(--pb-ease),
+    filter var(--pb-motion-base) var(--pb-ease);
+}
+
+.fourIcon {
+  font-size: calc(var(--ba-card-h) * 0.14);
+  line-height: 1;
+}
+
+.fourName {
+  font-weight: 900;
+  font-size: calc(var(--ba-card-h) * 0.07);
+}
+
+.fourMark {
+  min-height: 1.2em;
+  font-size: calc(var(--ba-card-h) * 0.06);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.fourOut {
+  opacity: 0.35;
+  filter: grayscale(1);
+}
+
+.fourIt {
+  box-shadow: inset 0 0 0 4px var(--pb-accent-2);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.fourIt .fourMark {
+  color: var(--pb-accent-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bombFace,
+  .bombSafe,
+  .fourIt {
+    animation: none;
+  }
+}
