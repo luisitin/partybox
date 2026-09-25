@@ -10,6 +10,14 @@ import type { t, Texts } from './i18n';
 // German, French and Portuguese cover the lines below and fall back to English elsewhere.
 export type JoinLang = 'en' | 'es' | 'de' | 'fr' | 'pt';
 export const JOIN_LANGS: readonly JoinLang[] = ['en', 'es', 'de', 'fr', 'pt'];
+/** I-793 F: each language in its own words, for the header's "🌐 EN ▾" list. */
+export const JOIN_LANG_NAMES: Record<JoinLang, string> = {
+  en: 'English',
+  es: 'Español',
+  de: 'Deutsch',
+  fr: 'Français',
+  pt: 'Português',
+};
 type JoinAll = Texts['join'];
 type JoinStrings = Pick<
   JoinAll,
@@ -23,6 +31,10 @@ type JoinStrings = Pick<
   | 'submit'
   | 'needName'
   | 'joining'
+  | 'roomLabel'
+  | 'peopleIn'
+  | 'faceSwipe'
+  | 'colourLabel'
 >;
 const JOIN_L10N: Record<Exclude<JoinLang, 'en'>, JoinStrings> = {
   es: {
@@ -36,6 +48,11 @@ const JOIN_L10N: Record<Exclude<JoinLang, 'en'>, JoinStrings> = {
     submit: 'Entrar',
     needName: 'Escribe un nombre para entrar',
     joining: 'Entrando…',
+    roomLabel: 'Sala',
+    peopleIn: (n) =>
+      n === 0 ? 'aún no hay nadie' : n === 1 ? '1 persona dentro' : `${n} personas dentro`,
+    faceSwipe: 'Cara · desliza para ver más',
+    colourLabel: 'Color',
   },
   de: {
     title: 'Mach mit',
@@ -48,6 +65,11 @@ const JOIN_L10N: Record<Exclude<JoinLang, 'en'>, JoinStrings> = {
     submit: 'Beitreten',
     needName: 'Gib einen Namen ein',
     joining: 'Tritt bei…',
+    roomLabel: 'Raum',
+    peopleIn: (n) =>
+      n === 0 ? 'noch niemand da' : n === 1 ? '1 Person ist da' : `${n} Personen sind da`,
+    faceSwipe: 'Gesicht · wischen für mehr',
+    colourLabel: 'Farbe',
   },
   fr: {
     title: 'Rejoins la fête',
@@ -60,6 +82,15 @@ const JOIN_L10N: Record<Exclude<JoinLang, 'en'>, JoinStrings> = {
     submit: 'Rejoindre',
     needName: 'Entre un prénom pour rejoindre',
     joining: 'Connexion…',
+    roomLabel: 'Salle',
+    peopleIn: (n) =>
+      n === 0
+        ? 'personne pour l’instant'
+        : n === 1
+          ? '1 personne est là'
+          : `${n} personnes sont là`,
+    faceSwipe: 'Visage · glisse pour en voir plus',
+    colourLabel: 'Couleur',
   },
   pt: {
     title: 'Entra na festa',
@@ -72,6 +103,11 @@ const JOIN_L10N: Record<Exclude<JoinLang, 'en'>, JoinStrings> = {
     submit: 'Entrar',
     needName: 'Escreve um nome para entrar',
     joining: 'A entrar…',
+    roomLabel: 'Sala',
+    peopleIn: (n) =>
+      n === 0 ? 'ainda ninguém' : n === 1 ? '1 pessoa lá dentro' : `${n} pessoas lá dentro`,
+    faceSwipe: 'Cara · desliza para ver mais',
+    colourLabel: 'Cor',
   },
 };
 /**

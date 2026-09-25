@@ -1,7 +1,9 @@
 // Lobby on the phone: who is here (bots included, with ✕ on the ones you may remove), a
 // "＋ Add a bot" chip at the end of the grid (ADR-028), and for the VIP the button that opens
-// game selection.
-import { useEffect, useState } from 'react';
+// game selection. I-792 E (design review): people first — a title row "Lobby · 6 of 16" with
+// Share and ⋯ (Leave, 🎨 setup and the guest's nudge live there), the roster straight after as a
+// two-column grid, and every tip reduced to one rotating line under it.
+import { useState } from 'react';
 import type { JSX } from 'react';
 import { MAX_BOTS_PER_OWNER } from '@partybox/shared';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
@@ -11,6 +13,9 @@ import { lobbyStrings } from '../i18n-join';
 import type { Controller } from '../net/controller';
 import type { SoundEngine } from '../sound';
 import styles from './Lobby.module.css';
+import { LobbyLine } from './LobbyLine';
+import type { LobbyLineItem } from './LobbyLine';
+import { LobbyMore } from './LobbyMore';
 import { ShareButton } from './ShareSheet';
 import { VoteRow, tallyLine, voteLeader } from './VoteRow';
 import { VIP_TIPS, setTipsSeen, tipsSeen } from './vipTips';
@@ -26,29 +31,24 @@ export interface LobbyProps {
 }
 
 export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX.Element {
-  // I-070 A: one nudge per 20 s from this phone (the server throttles too).
-  const [nudgedAt, setNudgedAt] = useState<number | null>(null);
   const vipName = room.players.find((p) => p.isVip)?.name ?? null;
-  // I-082 A: the tips strip — first hosted room only; rotates every 5 s; ✕ ends it for good.
+  // I-082 A: the VIP's tips — first hosted room only; ✕ ends them for good. I-792 E: they rotate
+  // in the one line with the room's other hints.
   const [tipsOn, setTipsOn] = useState(() => !tipsSeen());
-  const [tipIndex, setTipIndex] = useState(0);
-  // Leaving is one tap to arm, one to go (the ★ menu's confirm shape) — it drops the session and
-  // lands back on the join screen, where the room list and "open a new room" live.
-  const [leaving, setLeaving] = useState(false);
-  useEffect(() => {
-    if (!leaving) return undefined;
-    const h = setTimeout(() => setLeaving(false), 3000);
-    return () => clearTimeout(h);
-  }, [leaving]);
   // I-082 B: tips retire as the VIP learns them.
   const hasBot = room.players.some((p) => p.bot);
   const tips = VIP_TIPS.filter((tip) => !(tip.id === 'bots' && hasBot));
-  useEffect(() => {
-    if (!tipsOn || !me.isVip || tips.length === 0) return undefined;
-    const h = setInterval(() => setTipIndex((i) => i + 1), 5000);
-    return () => clearInterval(h);
-  }, [tipsOn, me.isVip, tips.length]);
-  const tip = tips.length > 0 ? tips[tipIndex % tips.length] : undefined;
+  const tally = me.isVip ? tallyLine(room) : null;
+  const lines: LobbyLineItem[] = me.isVip
+    ? [
+        ...(tally ? [{ id: 'tally', text: `🙋 ${tally}` }] : []),
+        { id: 'in', text: t.lobbyTop.everyoneIn },
+        ...(tipsOn ? tips.map((tip) => ({ id: tip.id, text: t.tips[tip.id], tip: true })) : []),
+      ]
+    : [
+        { id: 'wait', text: lobbyStrings().waitingForVip },
+        { id: 'bots', text: t.lobby.addBotHint },
+      ];
   // I-074 A: a removed bot puffs out before the remove is sent (450 ms, one poof at a time).
   const [poofing, setPoofing] = useState<string | null>(null);
   const poof = (botId: string): void => {
@@ -77,20 +77,17 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       title={
         <span className={styles.head}>
           <span className={styles.headTitle}>{t.lobby.title}</span>
-          <span className={styles.headPills}>
-            {/* The owner (2026-09-22): Share is a pill in the corner, and there is a way out. */}
-            <button
-              type="button"
-              className={styles.leavePill}
-              onClick={() => {
-                if (leaving) controller.leave();
-                else setLeaving(true);
-              }}
-            >
-              {leaving ? t.lobby.leaveConfirm : t.lobby.leave}
-            </button>
-            <ShareButton code={room.code} />
+          <span className={styles.headCount}>
+            {t.lobbyTop.count(room.players.length, room.capacity)}
+            {room.locked ? ` · 🔒` : ''}
           </span>
+          {/* The owner (2026-09-22): Share is a pill in the corner, and there is a way out (⋯). */}
+          <ShareButton code={room.code} />
+          <LobbyMore
+            controller={controller}
+            nudgeName={!me.isVip ? vipName : null}
+            onSetup={onSetup}
+          />
         </span>
       }
       footer={
@@ -104,53 +101,7 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
         ) : undefined
       }
     >
-      <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : lobbyStrings().waitingForVip}</p>
-      {/* I-650 A: guests vote for the next game; the VIP sees the tally */}
-      {!me.isVip ? <VoteRow controller={controller} room={room} me={me} /> : null}
-      {me.isVip && tallyLine(room) ? (
-        <p className={styles.tally}>
-          <span aria-hidden>🙋</span> {tallyLine(room)}
-        </p>
-      ) : null}
-      {me.isVip && tipsOn && tip ? (
-        <p key={tip.id} className={styles.tip} role="status">
-          <span aria-hidden>💡</span> {t.tips[tip.id]}
-          <button
-            type="button"
-            className={styles.tipClose}
-            aria-label={t.lobby.dismissTips}
-            onClick={() => {
-              setTipsSeen(true);
-              setTipsOn(false);
-            }}
-          >
-            ✕
-          </button>
-        </p>
-      ) : null}
-      {/* I-070 A: something to tap while you wait — a rate-limited nudge to the VIP. */}
-      {!me.isVip && vipName ? (
-        <button
-          type="button"
-          className={`${styles.setup} ${styles.nudge}`}
-          disabled={nudgedAt !== null}
-          onClick={() => {
-            controller.nudge();
-            setNudgedAt(Date.now());
-            setTimeout(() => setNudgedAt(null), 20_000);
-          }}
-        >
-          {nudgedAt !== null ? t.lobby.nudged : t.lobby.nudge(vipName)}
-        </button>
-      ) : null}
-      {/* S-003 B: set up your phone while you wait — opens the 🎨 sheet. */}
-      <button type="button" className={styles.setup} onClick={onSetup}>
-        {t.lobby.setup}
-      </button>
-      <p className={`pb-caption ${styles.count}`}>
-        {t.lobby.players(room.players.length, room.capacity)}
-        {room.locked ? ` · ${t.lobby.locked}` : ''}
-      </p>
+      {room.locked ? <p className={`pb-caption ${styles.count}`}>{t.lobby.locked}</p> : null}
       <ul key={room.players.length} className={styles.list} aria-label={t.lobby.playersList}>
         {room.players.map((p, i) => {
           // The owner or the VIP may remove a bot (ADR-028): one tap, no confirm — re-adding is one tap too.
@@ -158,7 +109,7 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
           return (
             <li
               key={p.id}
-              className={`${styles.item} ${poofing === p.id ? styles.poof : ''} ${styles.settle}`}
+              className={`${styles.item} ${poofing === p.id ? styles.poof : ''} ${styles.settle} ${p.id === me.id ? styles.mine : ''}`}
               style={{ ['--pb-i' as string]: i }}
             >
               {poofing === p.id ? (
@@ -177,8 +128,10 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
                 isBot={p.bot !== undefined}
                 status={p.spectator ? 'spectator' : 'active'}
                 isMe={p.id === me.id}
+                compact
                 onRemove={removable ? () => poof(p.id) : undefined}
                 removeLabel={`${t.lobby.removeBot} ${p.name}`}
+                size="sm"
               />
             </li>
           );
@@ -194,11 +147,23 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
             <span className={styles.addBotPlus} aria-hidden>
               ＋
             </span>
-            🤖 {addLabel}
+            {addLabel}
           </button>
         </li>
       </ul>
-      <p className="pb-caption pb-muted">{t.lobby.addBotHint}</p>
+      <LobbyLine
+        lines={lines}
+        onDismissTips={
+          me.isVip && tipsOn
+            ? () => {
+                setTipsSeen(true);
+                setTipsOn(false);
+              }
+            : undefined
+        }
+      />
+      {/* I-650 A: guests vote for the next game; the VIP sees the tally (in the line above) */}
+      {!me.isVip ? <VoteRow controller={controller} room={room} me={me} /> : null}
     </Screen>
   );
 }

@@ -1,0 +1,126 @@
+/* I-791 D: the offline card over the dimmed game, and the one-beat "You're back" card. */
+
+/* Offline: the whole phone goes quiet under a veil; the card sits in the middle. The veil takes
+   every tap, so nothing under it can look accepted. */
+.veil {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: var(--pb-space-6) var(--pb-space-5);
+  background: rgb(8 9 22 / 0.72);
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.card {
+  width: min(100%, 22rem);
+  max-height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-5);
+  border-radius: 18px;
+  background: var(--pb-surface);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.5);
+  text-align: center;
+}
+
+.spin {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 4px solid var(--pb-surface-2);
+  border-top-color: var(--pb-accent-2);
+  animation: global(pb-spin) 1s linear infinite;
+}
+
+.title {
+  font-size: var(--pb-font-h2);
+  line-height: 1.15;
+}
+
+.body {
+  margin: 0;
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 600;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.time {
+  color: var(--pb-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.pill {
+  margin-top: var(--pb-space-1);
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.sent {
+  color: var(--pb-text);
+}
+
+/* Back online: the body is covered for one beat (header and timer stay), then the live screen
+   shows — no fade of the old one under it. */
+.back {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-5);
+  background: var(--pb-bg);
+  text-align: center;
+  overflow-y: auto;
+}
+
+.check {
+  font-size: 44px;
+  line-height: 1;
+}
+
+.backTitle {
+  font-size: var(--pb-font-h2);
+  line-height: 1.15;
+}
+
+.line {
+  display: block;
+  text-wrap: pretty;
+}
+
+.standing {
+  width: min(80%, 20rem);
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: var(--pb-surface);
+  outline: 2px solid var(--pb-accent);
+  outline-offset: -2px;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .veil {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off']) .veil,
+:global(:root[data-motion='off']) .spin {
+  animation: none;
+}

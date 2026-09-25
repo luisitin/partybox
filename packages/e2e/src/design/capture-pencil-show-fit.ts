@@ -68,7 +68,7 @@ async function main(): Promise<void> {
         .first()
         .boundingBox();
       const kicker = await tv
-        .getByText(/turns the pages/i)
+        .getByText(/^page \d+ of \d+$/i)
         .first()
         .boundingBox();
       const host = await tv
@@ -91,9 +91,14 @@ async function main(): Promise<void> {
         `sheet bottom ${sheet ? (sheet.y + sheet.height).toFixed(0) : '?'}, host bar top ${host?.y.toFixed(0)}`,
       );
       check(
-        `${players} players: the caption sits under the kicker`,
-        caption !== null && kicker !== null && caption.y >= kicker.y + kicker.height - 1,
-        `caption top ${caption?.y.toFixed(0)}, kicker bottom ${kicker ? (kicker.y + kicker.height).toFixed(0) : '?'}`,
+        `${players} players: the "X drew" tag sits on the sheet, the page count in the left column (I-211 B)`,
+        caption !== null &&
+          kicker !== null &&
+          sheet !== null &&
+          caption.x >= sheet.x &&
+          caption.y >= sheet.y &&
+          kicker.x + kicker.width <= sheet.x,
+        `tag ${caption?.x.toFixed(0)},${caption?.y.toFixed(0)} in sheet ${sheet?.x.toFixed(0)},${sheet?.y.toFixed(0)}; page count right edge ${kicker ? (kicker.x + kicker.width).toFixed(0) : '?'}`,
       );
       widths[players] = sheet?.width ?? 0;
     }

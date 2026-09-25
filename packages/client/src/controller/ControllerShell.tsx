@@ -3,26 +3,27 @@
 // the header is the current screen. The shell also turns state transitions into the phone's own
 // cues and haptics (docs/DESIGN_SYSTEM.md): the TV stays the audible focal point, so the phone
 // only sounds for what happened in the player's hand (submit, error) and buzzes for the rest.
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { PlayerPublic } from '@partybox/shared';
-import { Avatar, buzz, getLang, useSecondsLeft } from '@partybox/game-sdk/ui';
+import { Avatar, getLang, useSecondsLeft } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
 import type { SoundEngine } from '../sound';
 import { ThemePicker } from '../ThemePicker';
 import styles from './ControllerShell.module.css';
-import { PhoneSettings, tvSoundsOn } from './PhoneSettings';
+import { PhoneSettings } from './PhoneSettings';
 import { ShareButton } from './ShareSheet';
-import { clientGames } from '../games.generated';
-import type { SoundCue } from '../sound';
-import { linkLabel, useLinkBanner } from './flapFree';
+import { linkLabel } from './flapFree';
+import { useGraceLeft } from './grace';
+import { BackCard, OfflineCard, snapshotOf, useLinkCard } from './OfflineCard';
 import { serverText } from '../server-text';
 import { usePhoneUrgency } from './urgency';
 import { VipMenu, vipMenuState } from './VipMenu';
 import { ReclaimVip } from './ReclaimVip';
-import { BUZZ } from './haptics';
+import { JoinLangPick } from './JoinLangs';
 import { ShellCountdown } from './ShellCountdown';
+import { useShellCues } from './useShellCues';
 
 export interface ControllerShellProps {
   controller: Controller;
@@ -91,14 +92,12 @@ export function ControllerShell({
   const myStatus = state.view?.players.find((p) => p.id === state.playerId)?.status ?? null;
   // Offline, the local countdown still runs (and parks at 0): show it muted, never urgent.
   const online = state.connection === 'connected';
-  // The link's own banner: one steady message across a flapping connection (the owner,
-  // 2026-09-22), ending in "Back online" instead of vanishing.
-  const { showBanner, text: reconnectingText } = useLinkBanner(
-    !online && state.joined && !state.otherTab, // I-755 A: stepping aside is not a lost link
-    state.joined,
-  );
-  // With a countdown row on screen, "Reconnecting…" takes its cue slot (review-loop #33): the
-  // overlay banner hid the first content line for the whole outage. No row → the banner.
+  // I-791 D: a lost link is a state you can see — the game dims under one card (seat held, answer
+  // sent or not), and the return is one "You're back" beat naming where the game is now. Steady
+  // across a flapping connection (the owner, 2026-09-22); I-755 A: stepping aside is not a lost link.
+  const trouble = !online && state.joined && !state.otherTab;
+  const { card, before } = useLinkCard(trouble, snapshotOf(state.view, myStatus));
+  const graceLeft = useGraceLeft(trouble); // I-089 C: the server's 120 s grace
   const countdownRow = view !== null && seconds !== null && view.timerMode !== 'hidden';
   const { candidate, shellRef, mainRef } = usePhoneUrgency({
     view,
@@ -108,80 +107,15 @@ export function ControllerShell({
     online,
   });
 
-  const prev = useRef<{
-    status: string | null;
-    phase: string | null;
-    roomStatus: string;
-    error: ControllerState['error'];
-  }>({ status: null, phase: null, roomStatus: '', error: null });
-  // I-009 C: the link comes back — it lands in the hand: one short buzz and the `join` note.
-  const wasOnline = useRef(online);
-  useEffect(() => {
-    if (online && !wasOnline.current) {
-      audio?.play('join');
-      buzz(BUZZ.back);
-    }
-    wasOnline.current = online;
-  }, [online, audio]);
-  useEffect(() => {
-    const p = prev.current;
-    const roomStatus = room?.status ?? '';
-    const phase = state.view?.phaseId ?? null;
-    const error = state.error;
-    const playing = roomStatus === 'playing';
-    // Locked in: the phone's own confirmation (a game that just cued its verdict wins the beat).
-    if (playing && myStatus === 'submitted' && p.status !== 'submitted' && p.status !== null) {
-      if (audio && performance.now() - audio.lastPlayedAt() > 50) audio.play('submit');
-      buzz(BUZZ.submit);
-    }
-    // S-005 C: the TV's phase cue on this phone (a phone-only room, the phone opted in).
-    if (
-      playing &&
-      phase !== null &&
-      p.phase !== phase &&
-      // a room that asked the phones to carry the audio (phone only, or music on every phone)
-      (room?.phoneOnly || room?.musicOnPhones) &&
-      tvSoundsOn() &&
-      audio
-    ) {
-      const mapped = room.selectedGameId
-        ? clientGames[room.selectedGameId]?.sounds?.[phase]
-        : undefined;
-      if (mapped && mapped !== 'silence') audio.play(mapped as SoundCue);
-    }
-    // A rejected join or input, once per error object: the strip goes red (Join renders the
-    // same error inline).
-    if (error && error !== p.error) {
-      audio?.play('error');
-      // I-040 C: a taken name buzzes twice — the one join error that is about someone else.
-      buzz(error.code === 'name_taken' ? [40, 60, 40] : BUZZ.error);
-    }
-    // The phone needs the player (a new prompt): a buzz only — the TV plays `phase`.
-    if (
-      playing &&
-      phase !== null &&
-      p.phase !== null &&
-      phase !== p.phase &&
-      myStatus === 'active' &&
-      state.view?.timerMode !== 'quiet'
-    )
-      buzz(BUZZ.prompt);
-    // Results: a longer pattern for a winner, one nudge for everyone else — the TV plays `win`.
-    if (roomStatus === 'results' && p.roomStatus !== 'results' && p.roomStatus !== '') {
-      const won =
-        state.playerId !== null && room?.results?.results.winnerIds.includes(state.playerId);
-      buzz(won ? BUZZ.winner : BUZZ.results);
-    }
-    prev.current = {
-      status: playing ? myStatus : null,
-      phase: playing ? phase : null,
-      roomStatus,
-      error,
-    };
-  }, [room, state.view, state.error, state.playerId, myStatus, audio]);
+  useShellCues(state, myStatus, online, audio);
 
   return (
-    <div ref={shellRef} className={styles.shell} data-surface="controller">
+    <div
+      ref={shellRef}
+      className={styles.shell}
+      data-surface="controller"
+      data-resync={card === 'off' ? undefined : card}
+    >
       <header className={styles.header}>
         <div className={styles.left}>
           <span className={styles.brand} aria-label={t.appName}>
@@ -201,6 +135,8 @@ export function ControllerShell({
           ) : null}
         </div>
         <div className={styles.right}>
+          {/* I-793 F: the join page's language is one "🌐 EN ▾" up here, not a row of pills */}
+          {!me ? <JoinLangPick /> : null}
           {/* I-666 B: once you're in, no 🎨 — your face opens the same sheet (the join page, with
               no face yet, keeps it) */}
           {!me ? (
@@ -259,7 +195,7 @@ export function ControllerShell({
           view={view}
           seconds={seconds}
           online={online}
-          banner={showBanner ? reconnectingText : null}
+          banner={null}
           hurry={candidate}
         />
       ) : null}
@@ -278,22 +214,24 @@ export function ControllerShell({
       ) : null}
       <main
         ref={mainRef}
-        className={`${styles.main} ${paused ? styles.pausedMain : ''}`}
-        inert={paused}
+        className={`${styles.main} ${paused ? styles.pausedMain : ''} ${card === 'offline' ? styles.offlineMain : ''}`}
+        inert={paused || card !== 'off'}
       >
         {/* Overlays the top of the body and slides in (review-loop #20): a banner in the flow shoved
             the drawing sheet under a finger mid-stroke. */}
-        {showBanner && !countdownRow ? (
-          <div className={styles.banner} role="status">
-            {reconnectingText}
-          </div>
-        ) : paused ? (
+        {paused && card === 'off' ? (
           <div className={styles.banner} role="status">
             {me?.isVip ? t.paused.vip : t.paused.other(vipName)}
           </div>
         ) : null}
         {children}
+        {card === 'back' ? (
+          <BackCard before={before} view={view} seconds={seconds} playerId={state.playerId} />
+        ) : null}
       </main>
+      {card === 'offline' ? (
+        <OfflineCard secondsLeft={graceLeft} before={before} playing={view !== null} />
+      ) : null}
       <div className={styles.toasts} aria-live="polite">
         {/* I-347 C: the host whose VIP passed on while they were away can take it back */}
         <ReclaimVip room={room} playerId={state.playerId} controller={controller} />
