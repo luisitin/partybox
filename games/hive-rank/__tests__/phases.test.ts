@@ -5,14 +5,13 @@ import { game } from '../server/index';
 import { order, phone, start, throughHive, timer, toRank, tv, vip } from './helpers';
 
 describe('intro', () => {
-  it('lasts 8 s, or until the VIP’s "Let’s go"', () => {
+  it('is a 2.5 s title beat after the shell stage (ADR-053), or a VIP skip', () => {
     const s = start();
     expect(s.phase.id).toBe('intro');
-    expect(s.phase.deadline).toBe(s.phase.startedAt + 8000);
+    expect(s.phase.deadline).toBe(s.phase.startedAt + 2500);
     expect(timer(s).phase.id).toBe('rank');
     expect(vip(s, 'skip').phase.id).toBe('rank');
-    expect(tv(s).vipSkipHidden).toBe(true);
-    expect(phone(s, 'a').next).toBe('start');
+    expect(tv(s).vipSkipHidden).toBeUndefined();
   });
 });
 
@@ -170,7 +169,7 @@ describe('score and the end', () => {
     let s = toRank(start({ rounds: 6 }));
     for (let i = 0; i < 20 && s.phase.id !== 'done'; i++) s = timer(s);
     expect(s.phase.id).toBe('done');
-    expect(s.phase.startedAt - 1_000_000).toBeLessThan(6 * 36_000 + 9_000);
+    expect(s.phase.startedAt - 1_000_000).toBeLessThan(6 * 36_000 + 3_000);
     expect(game.results(s)?.ranking.map((r) => r.rank)).toEqual([1, 1, 1]);
   });
 

@@ -70,7 +70,10 @@ export function TvScore({
         ) : null}
         {view.next && skip ? <TvButton label={next} skip={skip} delayMs={2000} /> : null}
       </header>
-      <div className={styles.scoreBody}>
+      <div
+        className={styles.scoreBody}
+        style={{ '--queen-w': rows.length > 8 ? '400px' : '540px' } as CSSProperties}
+      >
         <Queen view={view} />
         <div className={styles.board}>
           <Scoreboard

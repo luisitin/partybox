@@ -4,14 +4,9 @@ import { useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { BigText, Stage, useT } from '@partybox/game-sdk/ui';
 import type { HiveTvView } from '../server/views';
+import { EnglishNote } from './EnglishNote';
 import { STRINGS } from './strings';
 import styles from './Tv.module.css';
-
-const STEPS = [
-  'You get five things and a question, like “best to worst road-trip snack”. Put them in order.',
-  'Everyone’s orders are combined into the hive’s order.',
-  'Score 2 for each thing in the hive’s exact spot, and 1 if you’re one spot off.',
-] as const;
 
 /** The game's own button (the host runs the room from the TV, ADR-031), after a beat. */
 export function TvButton({
@@ -46,7 +41,9 @@ export function TvButton({
   );
 }
 
-export function TvIntro({ skip }: { skip?: (() => void) | undefined }): JSX.Element {
+/** A short title beat after the shell's start stage (ADR-053 showed the rules, READY and
+ *  3 · 2 · 1): the name, the one hint that matters, and the first round on its way. */
+export function TvIntro(): JSX.Element {
   const L = useT(STRINGS);
   return (
     <Stage center className={styles.introStage}>
@@ -58,19 +55,9 @@ export function TvIntro({ skip }: { skip?: (() => void) | undefined }): JSX.Elem
           Hive Rank
         </BigText>
       </div>
-      <BigText level="h2">{L('Rank five things the way the hive would.')}</BigText>
-      <ol className={styles.steps}>
-        {STEPS.map((step, i) => (
-          <li key={step} className={styles.step} style={{ '--i': i } as CSSProperties}>
-            <span className={styles.stepNum}>{i + 1}</span>
-            <span>{L(step)}</span>
-          </li>
-        ))}
-      </ol>
       <p className={styles.introNote}>
         {L('You’re not ranking what you like — you’re predicting the room.')}
       </p>
-      {skip ? <TvButton label={L('Let’s go')} skip={skip} delayMs={600} /> : null}
     </Stage>
   );
 }
@@ -95,8 +82,9 @@ export function QuestionHeader({
         {kicker ? ` · ${kicker}` : ''}
       </span>
       <h1 className={size === 'h1' ? styles.prompt : styles.promptSmall}>{q.prompt}</h1>
+      <EnglishNote />
       <span className={styles.ends}>
-        {L('1 = {top} · 5 = {bottom}', { top: q.top, bottom: q.bottom })}
+        {L('1 = {top} · 5 = {bottom}', { top: L(q.top), bottom: L(q.bottom) })}
       </span>
     </header>
   );

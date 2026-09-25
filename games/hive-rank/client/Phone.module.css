@@ -32,6 +32,19 @@
   text-wrap: balance;
 }
 
+.englishNote {
+  display: inline-block;
+  text-transform: none;
+  letter-spacing: 0;
+  width: fit-content;
+  padding: 0 var(--pb-space-2);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
+
 .note {
   font-size: var(--pb-font-caption);
   font-weight: 700;
@@ -81,6 +94,11 @@
 .resetButton:disabled {
   opacity: 0.35;
   cursor: default;
+}
+
+.scaleLong {
+  font-size: calc(var(--pb-font-caption) * 0.88);
+  white-space: nowrap;
 }
 
 .lockedBar {
@@ -177,6 +195,12 @@
 .watchLine {
   font-size: var(--pb-font-h2);
   font-weight: 900;
+}
+
+.watchLineSmall {
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  text-align: center;
 }
 
 .pips {

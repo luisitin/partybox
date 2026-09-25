@@ -18,7 +18,7 @@ export function Tv({ view, skip }: GameTvProps<HiveTvView>): JSX.Element {
   useReading(view.speech, true, readingDelay(view.phaseId, view.step));
   const body =
     view.phaseId === 'intro' ? (
-      <TvIntro skip={view.next ? skip : undefined} />
+      <TvIntro />
     ) : view.phaseId === 'rank' ? (
       <TvRank view={view} />
     ) : view.phaseId === 'hive' ? (

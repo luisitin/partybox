@@ -29,7 +29,6 @@ export function NextButton({
         : L('Next round');
   return (
     <PrimaryButton
-      tone="neutral"
       done={sent}
       onClick={() => {
         if (sent) return;
@@ -97,6 +96,23 @@ export function PhoneScore({
               </span>
             </li>
           ))}
+        </ol>
+      ) : null}
+      {!result && view.spots.length ? (
+        <ol className={styles.marks} aria-label={L('The hive’s order')}>
+          {[...view.spots]
+            .sort((a, b) => a.place - b.place)
+            .map((spot, i) => (
+              <li key={spot.id} className={styles.markRow} style={{ '--i': i } as CSSProperties}>
+                <span className={styles.markMine}>{spot.place}</span>
+                <span className={styles.markLabel}>{spot.label}</span>
+                <span className={styles.markHive}>
+                  <span className={styles.markWhere}>
+                    {L('avg {avg}', { avg: spot.avg.toFixed(1) })}
+                  </span>
+                </span>
+              </li>
+            ))}
         </ol>
       ) : null}
       {board ? <Scoreboard rows={board.rows} compact /> : null}

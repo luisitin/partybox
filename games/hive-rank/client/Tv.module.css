@@ -184,6 +184,7 @@
 /* ── rank ────────────────────────────────────────────────────────────────────────────────── */
 .rankStage {
   justify-content: space-evenly;
+  gap: var(--pb-space-4);
 }
 
 .cards {
@@ -205,8 +206,8 @@
   flex: 1;
   display: grid;
   place-items: center;
-  min-height: 240px;
-  padding: var(--pb-space-5);
+  min-height: 180px;
+  padding: var(--pb-space-4);
   border-radius: var(--pb-radius-lg);
   background: var(--pb-surface);
   border: 3px solid var(--pb-border);
@@ -558,6 +559,7 @@
 }
 
 .scoreHeader {
+  margin-bottom: var(--pb-space-3);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -581,7 +583,7 @@
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: 540px minmax(0, 1fr);
+  grid-template-columns: var(--queen-w, 540px) minmax(0, 1fr);
   gap: var(--pb-space-6);
   align-items: start;
 }

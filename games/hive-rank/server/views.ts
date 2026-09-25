@@ -182,7 +182,7 @@ function common(state: State): Common {
     spots: spots(state),
     score: scoreView(state),
     ...reading(state),
-    next: phase === 'intro' ? 'start' : phase === 'score' ? (last ? 'results' : 'round') : null,
+    next: phase === 'score' ? (last ? 'results' : 'round') : null,
   };
 }
 
@@ -200,7 +200,7 @@ function extras(state: State): Partial<TvView> {
   const item = question(state);
   return {
     timerMode: phase === 'rank' ? 'normal' : phase === 'hive' ? 'hidden' : 'quiet',
-    ...(phase === 'intro' || phase === 'score' ? { vipSkipHidden: true } : {}),
+    ...(phase === 'score' ? { vipSkipHidden: true } : {}),
     ...(PHASE_LABEL[phase] && !(phase === 'hive' && state.q.short)
       ? { vipSkipLabel: PHASE_LABEL[phase] }
       : {}),

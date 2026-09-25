@@ -8,6 +8,7 @@ import { PrimaryButton, Screen, useSound, useT } from '@partybox/game-sdk/ui';
 import { OrderPicker } from '@partybox/game-sdk/ui/order-picker';
 import type { HiveControllerView } from '../server/views';
 import type { Input } from '../server/types';
+import { EnglishNote } from './EnglishNote';
 import { STRINGS } from './strings';
 import styles from './Phone.module.css';
 
@@ -49,6 +50,7 @@ export function PhoneRank({
   }, [sending, echoed]);
   if (!q) return <Screen>{null}</Screen>;
   const locked = view.locked && !editing;
+  const scale = L('Tap from {top} to {bottom}', { top: L(q.top), bottom: L(q.bottom) });
   const waiting = sending !== null && !echoed;
   const full = picks.length === q.items.length;
   const lock = (): void => {
@@ -119,9 +121,9 @@ export function PhoneRank({
         hint={
           <span className={styles.hintStack}>
             <span className={styles.kicker}>
-              {L('Round {n} of {total}', { n: view.round, total: view.rounds })}
+              {L('Round {n} of {total}', { n: view.round, total: view.rounds })} <EnglishNote />
             </span>
-            <span>{L('Tap from {top} to {bottom}', { top: q.top, bottom: q.bottom })}</span>
+            <span className={scale.length > 28 ? styles.scaleLong : ''}>{scale}</span>
           </span>
         }
       />

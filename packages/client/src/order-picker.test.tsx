@@ -18,7 +18,7 @@ describe('toggleOrder', () => {
 });
 
 describe('OrderPicker', () => {
-  it('shows each placed row’s number and the next number in the empty ones', () => {
+  it('shows each placed row’s number; empty rows carry the next number only for screen readers', () => {
     const html = renderToStaticMarkup(
       <OrderPicker items={ITEMS} value={['grapes', 'chips']} onChange={noop} />,
     );

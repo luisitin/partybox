@@ -61,7 +61,6 @@ export function OrderPicker(props: OrderPickerProps): JSX.Element {
   const joined = value.join('\n');
   if (seen.now !== joined) setSeen({ now: joined, before: seen.now ? seen.now.split('\n') : [] });
   const before = seen.now === joined ? seen.before : [];
-  const full = value.length === items.length;
   const tap = (id: string, at: number): void => {
     if (disabled) return;
     const prev = last.current;
@@ -120,7 +119,8 @@ export function OrderPicker(props: OrderPickerProps): JSX.Element {
                       {at + 1}
                     </span>
                   ) : (
-                    <span className={styles.next}>{full ? '' : value.length + 1}</span>
+                    // An empty ring: a digit on every unplaced row read as "all tied at 1" (review).
+                    <span className={styles.next} />
                   )}
                 </span>
                 <span className={`${styles.label} ${text.length > LONG ? styles.long : ''}`}>

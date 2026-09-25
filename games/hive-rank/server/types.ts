@@ -76,8 +76,9 @@ export const inputSchema = z.discriminatedUnion('type', [
 ]);
 export type Input = z.infer<typeof inputSchema>;
 
-/** `intro`: the title and the three steps. */
-export const INTRO_MS = 8_000;
+/** `intro`: a short title beat after the shell's start stage (ADR-053 carries the rules, READY and
+ *  3 · 2 · 1); it also gives round 1's reading time to be made. */
+export const INTRO_MS = 2_500;
 /** `hive` step 0: "The hive has decided…" (at least this long; its clip is ~1.5 s). */
 export const DECIDED_MS = 1_800;
 /** The TV starts "The hive has decided." this far in, after its `reveal` sting (client timing.ts). */
