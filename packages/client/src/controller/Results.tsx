@@ -113,7 +113,9 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
               yours first, and reading as yours */}
           {awardsForMe.length ? (
             <span className={styles.chipsBox}>
-              <span className={`${styles.awardChips} ${styles.chipsTitle}`}>{chips}</span>
+              <span className={`${styles.awardChips} ${styles.chipsTitle}`} aria-hidden>
+                {chips}
+              </span>
             </span>
           ) : null}
         </>
@@ -175,7 +177,9 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       )}
       {chips ? (
         <div className={styles.chipsBox}>
-          <div className={`${styles.awardChips} ${styles.chipsBody}`}>{chips}</div>
+          <div className={`${styles.awardChips} ${styles.chipsBody}`} aria-hidden>
+            {chips}
+          </div>
         </div>
       ) : null}
       {/* (I-456 C: the awards are chips under your place; the long list only for a screen reader)

@@ -8,7 +8,7 @@
 // while rows were still arriving read as two competing motions — review-loop #32); the leader's
 // trophy pops last. Everything runs on the motion tokens, so reduced motion renders the final
 // board at once.
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { Avatar } from '../ui/Avatar';
 import { useT } from '../ui/lang';
@@ -244,7 +244,16 @@ export function Scoreboard({
             dim={row.connected === false}
             size={compact ? 32 : 'var(--pb-chip-size)'}
           />
-          <span className={styles.name}>{row.name}</span>
+          <span className={styles.name}>
+            {/* one span per word: on a phone a long name wraps at its spaces and a word too wide for
+                the row ends in its own ellipsis, never "Maximilia / no…" (session-c ec3ea7) */}
+            {row.name.split(' ').map((word, i) => (
+              <Fragment key={i}>
+                {i > 0 ? ' ' : null}
+                <span className={styles.word}>{word}</span>
+              </Fragment>
+            ))}
+          </span>
           {row.delta ? (
             <span className={styles.delta}>+{row.delta}</span>
           ) : markIds.includes(row.playerId) ? (
