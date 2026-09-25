@@ -75,7 +75,7 @@ export const STRINGS: Strings = {
 
     // TV.
     'Who Said It?': '¿Quién lo dijo?',
-    'Question {n} of {total}': 'Pregunta {n} de {total}',
+    'Question {n} of {total}': 'Pregunta {n} de {total} · en inglés',
     'Answer on your phone': 'Responde en tu teléfono',
     'Last chance!': '¡Última oportunidad!',
     '{n} / {total} answers in': '{n} / {total} respuestas',
