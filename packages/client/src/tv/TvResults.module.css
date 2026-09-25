@@ -125,3 +125,10 @@
 :global(:root[data-motion='off']) .tiedFace {
   animation: none;
 }
+
+/* "+ 2 more awards": the cards stop at six so the column clears the host bar */
+.moreAwards {
+  justify-content: center;
+  color: var(--pb-text-muted);
+  font-weight: 700;
+}

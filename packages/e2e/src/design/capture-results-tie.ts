@@ -39,54 +39,71 @@ async function open(browser: Browser, url: string, device: DeviceId, lang: strin
   return page;
 }
 
-async function run(browser: Browser, url: string, api: DevApi, lang: string): Promise<void> {
+type Scenario = 'tie' | 'many';
+
+async function run(
+  browser: Browser,
+  url: string,
+  api: DevApi,
+  lang: string,
+  device: DeviceId,
+  scenario: Scenario,
+): Promise<void> {
   await api.reset();
   const tv = await open(browser, `${url}/tv`, 'tv', lang);
   await tv.waitForSelector('[data-surface="tv"]');
   await passAudioGate(tv);
-  const page = await open(browser, await phoneUrl(url), 'iphone-se', lang);
+  const page = await open(browser, await phoneUrl(url), device, lang);
   await page.waitForSelector('[data-surface="controller"]');
-  const sam: Phone = { device: 'iphone-se', context: page.context(), page, name: 'Sam', playerId: null }; // prettier-ignore
+  await applyDeviceCss(page, device);
+  const sam: Phone = { device, context: page.context(), page, name: 'Sam', playerId: null };
   await joinViaForm(sam, api, { avatarIndex: 2 });
   try {
     const players = [
       ['p-ana', 'Ana', 'fox'],
       ['p-ben', 'Ben', 'owl'],
       ['p-cleo', 'Cleo', 'frog'],
-      ['p-dev', 'Dev', 'panda'],
+      ['p-dev', 'Maximiliano Guadalupe', 'panda'],
     ].map(([id, name, avatarId]) => ({ id, name, avatarId }));
     // Sam (this phone) shares an award too, so the phone shows "… with Ana"
     const state = (await api.state()) as { room?: { vipId?: string | null } | null };
     const me = state.room?.vipId ?? 'p-sam';
     players.push({ id: me, name: 'Sam', avatarId: 'cat' });
     const award = (id: string, title: string, description: string, playerId: string) => ({ id, title, description, playerId }); // prettier-ignore
+    const tie = scenario === 'tie';
+    // 'many': one long-named winner and eight awards — the TV caps the cards at six (+ 2 more)
+    const scores = tie
+      ? { 'p-ana': 1050, 'p-ben': 1050, 'p-cleo': 1050, 'p-dev': 300, [me]: 200 }
+      : { 'p-dev': 1200, 'p-ana': 1050, 'p-ben': 800, 'p-cleo': 300, [me]: 200 };
+    const order = Object.entries(scores).sort((x, y) => y[1] - x[1]);
+    const ranking = order.map(([playerId, score]) => ({ playerId, score, rank: 1 + order.filter(([, v]) => v > score).length })); // prettier-ignore
+    const awards = tie
+      ? [
+          award('crowd', 'Crowd favourite', 'Most votes received: 6', 'p-cleo'),
+          award('sweep', 'Sweep master', 'Unanimous wins: 2', 'p-ana'),
+          award('sweep', 'Sweep master', 'Unanimous wins: 2', 'p-ben'),
+          award('speed', 'Speed writer', 'Answers in before half time: 4', 'p-ana'),
+          award('speed', 'Speed writer', 'Answers in before half time: 3', me),
+        ]
+      : ['crowd', 'sweep', 'speed', 'last', 'bold', 'quiet', 'close', 'lucky'].map(
+          (id, i) =>
+          award(id, `${id[0]?.toUpperCase()}${id.slice(1)} award`, `A line for award ${i + 1}`, players[i % players.length]?.id ?? me), // prettier-ignore
+        );
     await api.post('/api/dev/results', {
       results: {
         gameId: 'wisecrack',
         players,
         results: {
-          scores: { 'p-ana': 1050, 'p-ben': 1050, 'p-cleo': 1050, 'p-dev': 300, [me]: 200 },
-          ranking: [
-            { playerId: 'p-ana', score: 1050, rank: 1 },
-            { playerId: 'p-ben', score: 1050, rank: 1 },
-            { playerId: 'p-cleo', score: 1050, rank: 1 },
-            { playerId: 'p-dev', score: 300, rank: 4 },
-            { playerId: me, score: 200, rank: 5 },
-          ],
-          winnerIds: ['p-ana', 'p-ben', 'p-cleo'],
-          awards: [
-            award('crowd', 'Crowd favourite', 'Most votes received: 6', 'p-cleo'),
-            award('sweep', 'Sweep master', 'Unanimous wins: 2', 'p-ana'),
-            award('sweep', 'Sweep master', 'Unanimous wins: 2', 'p-ben'),
-            award('speed', 'Speed writer', 'Answers in before half time: 4', 'p-ana'),
-            award('speed', 'Speed writer', 'Answers in before half time: 3', me),
-          ],
+          scores,
+          ranking,
+          winnerIds: tie ? ['p-ana', 'p-ben', 'p-cleo'] : ['p-dev'],
+          awards,
         },
       },
     });
     await settle(4500); // the board lands, the headline and awards follow
-    await tv.screenshot({ path: join(OUT, `${lang}-tv-results.png`) });
-    await page.screenshot({ path: join(OUT, `${lang}-iphone-se-results.png`) });
+    if (device === 'iphone-se') await tv.screenshot({ path: join(OUT, `${lang}-tv-${scenario}.png`) }); // prettier-ignore
+    await page.screenshot({ path: join(OUT, `${lang}-${device}-${scenario}.png`) });
   } finally {
     for (const p of [page, tv]) await p.context().close();
   }
@@ -98,7 +115,10 @@ async function main(): Promise<void> {
   const api = new DevApi(server.url);
   const browser = await chromium.launch();
   try {
-    for (const lang of ['en', 'es']) await run(browser, server.url, api, lang);
+    for (const lang of ['en', 'es'])
+      for (const scenario of ['tie', 'many'] as const)
+        for (const device of ['iphone-se', 'font200'] as const)
+          await run(browser, server.url, api, lang, device, scenario);
   } finally {
     await browser.close();
     await server.stop();

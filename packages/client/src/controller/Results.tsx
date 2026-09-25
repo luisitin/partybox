@@ -81,25 +81,27 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
           {/* I-456 C: the awards as chips, under your place — never scrolled away; I-155 A/B:
               yours first, and reading as yours */}
           {awardsForMe.length ? (
-            <span className={styles.awardChips}>
-              {awardsForMe.map((a) =>
-                mineIn(a) ? (
-                  <span
-                    key={`${a.id}|${a.title}`}
-                    className={`${styles.awardChip} ${styles.awardMine}`}
-                  >
-                    <strong>
-                      {t.results.yourAward(serverText(a.title, lang, room.results?.gameId))}
-                    </strong>
-                    {sharedWith(a)}
-                  </span>
-                ) : (
-                  <span key={`${a.id}|${a.title}`} className={styles.awardChip}>
-                    <strong>{serverText(a.title, lang, room.results?.gameId)}</strong>{' '}
-                    {winnersOf(a)}
-                  </span>
-                ),
-              )}
+            <span className={styles.chipsBox}>
+              <span className={styles.awardChips}>
+                {awardsForMe.map((a) =>
+                  mineIn(a) ? (
+                    <span
+                      key={`${a.id}|${a.title}`}
+                      className={`${styles.awardChip} ${styles.awardMine}`}
+                    >
+                      <strong>
+                        {t.results.yourAward(serverText(a.title, lang, room.results?.gameId))}
+                      </strong>
+                      {sharedWith(a)}
+                    </span>
+                  ) : (
+                    <span key={`${a.id}|${a.title}`} className={styles.awardChip}>
+                      <strong>{serverText(a.title, lang, room.results?.gameId)}</strong>{' '}
+                      {winnersOf(a)}
+                    </span>
+                  ),
+                )}
+              </span>
             </span>
           ) : null}
         </>

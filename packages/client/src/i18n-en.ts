@@ -137,6 +137,8 @@ export const en = {
     pair: (a: string, b: string) => `${a} & ${b}`,
     /** Three tied winners, all named ("Abuela, Kenji & Lucía tie!"). */
     /** A shared award on your own phone: who you share it with. */
+    /** TV results: awards past the six cards that fit above the host bar. */
+    moreAwards: (n: number) => `+ ${n} more ${n === 1 ? 'award' : 'awards'}`,
     sharedWith: (names: string) => `with ${names}`,
     tieNamed: (names: string) => `${names} tie!`,
     tieAmong: (names: string, others: number) =>

@@ -311,3 +311,9 @@
   bottom: 0.15em;
   border-bottom: 3px solid var(--pb-accent);
 }
+/* On a phone the board fills the scroller, which clips anything left of it: the bracket sits in
+   the rows' own left padding (at 200 % text it was a pink tick at the edge — session-c). */
+.compact .tied::before {
+  left: 3px;
+  width: 0.3em;
+}

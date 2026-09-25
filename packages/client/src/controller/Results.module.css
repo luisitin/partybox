@@ -95,6 +95,30 @@
   mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
   padding-right: 20px;
 }
+/* The chips' box, queried in caption ems: when the row is under ~16 of them wide (200 % text on a
+   phone), a chip can't show whole in one line, so the row wraps instead of cutting a chip mid-word
+   with the next off screen (session-c); at 100 % it stays one row that scrolls. */
+.chipsBox {
+  display: block;
+  container-type: inline-size;
+  font-size: var(--pb-font-caption);
+}
+@container (max-width: 16em) {
+  .awardChips {
+    flex-wrap: wrap;
+    justify-content: center;
+    mask-image: none;
+    padding-right: 0;
+  }
+  /* and a chip wider than the row wraps its own words instead of running past both edges
+     (scoped under the row: the base .awardChip rule comes later in this file) */
+  .awardChips .awardChip {
+    flex-shrink: 1;
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+}
 .awardChips > * {
   scroll-snap-align: start;
 }
