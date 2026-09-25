@@ -1,10 +1,9 @@
-// Echo's results (§7.7): co-op, so every player carries the team's words won and everyone shares
-// rank 1. The spec crowns nobody below Great, but the contract suite requires a winner, so the
-// Tune In co-op fallback applies: everyone is crowned and the finale board carries the verdict
-// (NOTES.md, open question for the owner). Four individual awards; ties share them.
+// Echo's results (§7.7, ADR-052): co-op, so every player carries the team's words won. Great or
+// better is a win (everyone is crowned); below it nobody is. The headline carries the rating.
+// Four individual awards; ties share them.
 import { buildResults } from '@partybox/game-sdk';
 import type { GameAward, GameResults } from '@partybox/game-sdk';
-import { piles } from './deck';
+import { RATINGS, crowns, piles, ratingOf } from './deck';
 import type { State, Turn } from './types';
 
 export interface Tally {
@@ -89,5 +88,14 @@ export function results(state: State): GameResults | null {
   const won = piles(state).won.length;
   const scores: Record<string, number> = {};
   for (const id of Object.keys(state.players)) scores[id] = won;
-  return buildResults(state, scores, awardsFor(state));
+  const built = buildResults(state, scores, awardsFor(state));
+  const rating = ratingOf(won, state.deck.length);
+  const r = RATINGS.find((x) => x.id === rating);
+  const winning = crowns(rating);
+  return {
+    ...built,
+    winnerIds: winning ? built.winnerIds : [],
+    outcome: { kind: 'coop', won: winning },
+    headline: `${r?.icon ?? ''} ${r?.label ?? ''} ${won} of ${state.deck.length} words`.trim(),
+  };
 }

@@ -60,6 +60,13 @@ export const STRINGS: Strings = {
     'Most right guesses': 'Más aciertos',
     '🙈 Bold Guess': '🙈 Pura osadía',
     'Most wrong guesses': 'Más fallos',
+    // results headline (server text, ADR-052)
+    '🏆 Flawless! {won} of {total} words': '🏆 ¡Perfecto! {won} de {total} palabras',
+    '🌟 Brilliant {won} of {total} words': '🌟 Brillante: {won} de {total} palabras',
+    '🎉 Great {won} of {total} words': '🎉 Genial: {won} de {total} palabras',
+    '👍 Solid {won} of {total} words': '👍 Bien: {won} de {total} palabras',
+    '🔥 Warming up {won} of {total} words': '🔥 Calentando: {won} de {total} palabras',
+    '🔁 Try again! {won} of {total} words': '🔁 ¡Otra vez! {won} de {total} palabras',
     // intro (TV + phone)
     Echo: 'Echo',
     'One player guesses; everyone else sees the secret word and writes a one-word clue.':

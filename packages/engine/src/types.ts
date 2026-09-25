@@ -5,6 +5,7 @@ import type {
   BotStrategy,
   ErrorCode,
   GameStateBase,
+  PresenceMode,
   RoomResults,
   RoomStatus,
   Settings,
@@ -26,6 +27,8 @@ export interface RoomPlayer {
   spectator: boolean;
   /** Bots are room players driven by the host from `game.bot.sampleInput` (ADR-028). Never VIP. */
   bot?: { ownerId: string | null; strategy: BotStrategy };
+  /** ADR-047: this person can't see the TV (stored only when false; bots always can). */
+  canSeeTv?: false;
 }
 
 export interface RunningGame {
@@ -67,6 +70,8 @@ export interface RoomState {
   listed: boolean;
   /** S-005: "phone only" — the TV's moments go to the phones. */
   phoneOnly: boolean;
+  /** ADR-047: where everyone is (absent = together; optional so saved rooms still load). */
+  presenceMode?: PresenceMode;
   /** I-746 B: when the last person's phone dropped mid-game (the game is paused until one is back). */
   asleepSince?: number;
   /** I-746: the game was already paused (by the VIP) when everyone dropped — waking leaves it paused. */
@@ -78,6 +83,24 @@ export interface RoomState {
   formerVip?: string;
   /** I-650: votes for the next game (player id → game id); cleared when a game starts. */
   votes?: Record<string, string>;
+  /** Part 00 §1.4: the game whose About sheet the VIP (`by`) has open — the TV shows it big. */
+  highlight?: { gameId: string; by: string };
+  /** ADR-053: the start stage between Start and the game (rules, READY, 3·2·1). */
+  starting?: StartStage;
+  /** Ruling 2: when each player's last "👍 … suggests …" toast went out (the 10 s throttle). */
+  suggestedAt?: Record<string, number>;
+}
+
+/** ADR-053: what Start fixed (game, settings, seed) and who has tapped READY. */
+export interface StartStage {
+  gameId: string;
+  settings: Settings;
+  seed: number;
+  ready: string[];
+  /** When the 3·2·1 began (server clock), or null while the room is still reading. */
+  countdownAt: number | null;
+  /** The VIP said Wait during the count: no count until their Start now. */
+  held?: boolean;
 }
 
 /** I-652 B: one finished game, as the lobby remembers it. */
@@ -104,6 +127,8 @@ export type RoomEvent =
       existingToken?: string;
       /** I-741 C: "That's me — take my seat": claim the seat of this name even if it reads connected. */
       takeOver?: boolean;
+      /** ADR-047: the phone's own "I can see the TV", else the host's guess from its address. */
+      canSeeTv?: boolean;
     }
   | {
       /** A player (or the dev API, ownerId null) adds a bot; the host mints id + token. */
@@ -121,6 +146,10 @@ export type RoomEvent =
   | { type: 'nudge'; now: number; playerId: string }
   /** I-650: a person votes for the next game (null takes the vote back). */
   | { type: 'vote'; now: number; playerId: string; gameId: string | null }
+  /** ADR-047: a phone flips its "I can see the TV". */
+  | { type: 'presence'; now: number; playerId: string; canSeeTv: boolean }
+  /** ADR-053: a person has read the rules. */
+  | { type: 'ready'; now: number; playerId: string }
   | {
       type: 'vip';
       now: number;

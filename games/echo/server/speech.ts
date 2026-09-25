@@ -2,11 +2,11 @@
 // "The word was …" when `result` begins. The fixed lines are asked for as readings too (cached by
 // key on the host forever) until F6's render-clips pipeline exists — see NOTES.md. A key reaches
 // a view only when its line plays; the word is never asked for before `result`.
-import { hashString } from '@partybox/game-sdk';
 import type { SpeechRequest } from '@partybox/game-sdk';
+import { parsePronunciations, speechKey, toSpeakable } from '@partybox/game-sdk/speech';
+import pronunciationsJson from '../content/pronunciations.json' with { type: 'json' };
 import { piles, ratingOf } from './deck';
 import { echoedRefs, survivorTexts } from './echoes';
-import { speakable } from './speakable';
 import type { State } from './types';
 
 export const LINES = {
@@ -46,12 +46,15 @@ export interface Say {
   ms: number | null;
 }
 
-/** Host key (`/^[a-z0-9]{6,40}$/` on main): two 32-bit hashes of voice + text, in decimal — so a
- *  key never spells a word (the leak checks match secrets as substrings). */
+const OVERRIDES = parsePronunciations(pronunciationsJson);
+
+function partsOf(voice: string, text: string) {
+  return toSpeakable(text, { voice, lang: 'en', overrides: OVERRIDES, playerText: true });
+}
+
+/** The host key (SDK `speechKey`: game id + hash of engine version, voice and parts). */
 export function keyOf(voice: string, text: string): string {
-  const a = hashString(`${voice}|${text}`);
-  const b = hashString(`${text}|${voice}|echo`);
-  return `ec${a}${b}`;
+  return speechKey('echo', voice, partsOf(voice, text));
 }
 
 function voiceOf(state: State): string | null {
@@ -59,7 +62,7 @@ function voiceOf(state: State): string | null {
 }
 
 function req(voice: string, text: string): SpeechRequest {
-  return { key: keyOf(voice, text), voice, parts: [{ text: speakable(text) }] };
+  return { key: keyOf(voice, text), voice, parts: partsOf(voice, text) };
 }
 
 export function survivorsLine(state: State): string {

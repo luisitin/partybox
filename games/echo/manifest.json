@@ -1,8 +1,14 @@
 {
   "id": "echo",
   "name": "Echo",
+  "icon": "🔁",
   "tagline": "One clue each. Same clue? Both vanish.",
-  "description": "A co-op word game. One player guesses; everyone else sees the secret word and writes a one-word clue without peeking at each other's. Clues that match cancel out before the guesser sees them, so be clever, not obvious. A wrong guess burns the next word too. The whole group wins or loses together.",
+  "howToPlay": [
+    "One player guesses; everyone else sees the secret word and writes a one-word clue.",
+    "Clues that match each other vanish before the guesser sees them.",
+    "Guess the word from what's left. The whole group wins or loses together."
+  ],
+  "description": "A co-op word game. One player guesses; everyone else sees the word and writes a one-word clue. Matching clues cancel out before the guesser sees them, so be clever, not obvious. A wrong guess burns the next word too.",
   "version": "0.1.0",
   "minPlayers": 3,
   "maxPlayers": 10,
@@ -59,16 +65,46 @@
       "type": "multiselect",
       "default": "",
       "options": [
-        { "value": "animals", "label": "Animals" },
-        { "value": "food", "label": "Food" },
-        { "value": "objects", "label": "Objects" },
-        { "value": "places", "label": "Places" },
-        { "value": "jobs", "label": "Jobs" },
-        { "value": "nature", "label": "Nature" },
-        { "value": "activities", "label": "Activities" },
-        { "value": "fantasy", "label": "Fantasy" },
-        { "value": "sports", "label": "Sports" },
-        { "value": "house", "label": "Around the house" }
+        {
+          "value": "animals",
+          "label": "Animals"
+        },
+        {
+          "value": "food",
+          "label": "Food"
+        },
+        {
+          "value": "objects",
+          "label": "Objects"
+        },
+        {
+          "value": "places",
+          "label": "Places"
+        },
+        {
+          "value": "jobs",
+          "label": "Jobs"
+        },
+        {
+          "value": "nature",
+          "label": "Nature"
+        },
+        {
+          "value": "activities",
+          "label": "Activities"
+        },
+        {
+          "value": "fantasy",
+          "label": "Fantasy"
+        },
+        {
+          "value": "sports",
+          "label": "Sports"
+        },
+        {
+          "value": "house",
+          "label": "Around the house"
+        }
       ]
     },
     {
@@ -85,14 +121,36 @@
       "type": "select",
       "default": "george",
       "options": [
-        { "value": "none", "label": "No reader" },
-        { "value": "george", "label": "Old British Man" },
-        { "value": "fable", "label": "Young British Man" },
-        { "value": "jessica", "label": "American Woman" },
-        { "value": "sky", "label": "Soft-Spoken Woman" },
-        { "value": "original", "label": "Original" }
+        {
+          "value": "none",
+          "label": "No reader"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        }
       ]
     }
   ],
-  "supportsBots": true
+  "supportsBots": true,
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-24"
 }

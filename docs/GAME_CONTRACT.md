@@ -17,7 +17,7 @@ export interface GameDefinition<
   manifest: GameManifest; // must deep-equal games/<id>/manifest.json (contract test)
   phases: readonly string[]; // every phase id, in typical order; each needs fixtures/<id>.json
   inputSchema: z.ZodType<I>; // validated at the socket BEFORE reduce sees the input
-  init(ctx: InitContext): S; // { players, settings, seed, now }
+  init(ctx: InitContext): S; // { players, settings, seed, now, presence? } — presence (ADR-047): { mode: 'together' | 'remote-voice' | 'remote-text', phoneOnly }, fixed for the game; absent = together with a TV
   reduce(state: S, event: GameEvent<I>): S; // PURE + TOTAL — never throws
   tvView(state: S): TV; // JSON; identical for every TV
   controllerView(state: S, playerId: string): CV; // JSON; per player
@@ -32,7 +32,7 @@ export interface GameDefinition<
 interface GameStateBase {
   phase: { id: string; startedAt: number; deadline: number | null; paused?: { at: number } };
   rng: RngState; // { seed, step } — pure PRNG state lives IN the state
-  players: Record<string, PlayerInfo>; // { id, name, avatarId, connected, bot? } — who is playing; bot: true for a bot (ADR-028) so a game can act for it where a person taps (Bingo's ready-up); avatarId is a face id or `photo:<id>` for a photo avatar (ADR-037) — pass it to `Avatar` as is
+  players: Record<string, PlayerInfo>; // { id, name, avatarId, connected, bot?, canSeeTv? } — who is playing; bot: true for a bot (ADR-028) so a game can act for it where a person taps (Bingo's ready-up); avatarId is a face id or `photo:<id>` for a photo avatar (ADR-037) — pass it to `Avatar` as is; canSeeTv (ADR-047) is whether the player could see the TV at start (bots always) — switch features with it and with ctx.presence, never branch view content on it (a remote phone needs every input phase on its own screen)
 }
 ```
 
@@ -44,10 +44,11 @@ interface GameStateBase {
 
 ```ts
 type GameEvent<I> =
-  | { type: 'input'; now: number; playerId: string; input: I } // schema-valid input
+  | { type: 'input'; now: number; playerId: string; input: I; vip?: boolean } // schema-valid input; `vip` = sent by the VIP (ADR-042)
   | { type: 'timer'; now: number; phaseId: string; startedAt: number } // once per deadline (ADR-033)
   | { type: 'player'; now: number; playerId: string; connected: boolean; gone?: 'left' | 'kicked' } // (re)connect / leave; `gone` = for good (ADR-046)
-  | { type: 'vip'; now: number; action: 'skip' | 'pause' | 'resume' | 'end' };
+  | { type: 'vip'; now: number; action: 'skip' | 'pause' | 'resume' | 'end' }
+  | { type: 'speech'; now: number; key: string; ms: number }; // a reading you asked for is ready: its length, or -1 (ADR-045)
 ```
 
 `reduce` must handle every event in every phase. A timer fires once per phase instance — unless
@@ -110,6 +111,14 @@ stale timers, VIP actions in any order.
 On `vip.pause` the shared helper stores `phase.paused = { at: now }`; on `resume` it shifts `deadline` by
 the paused duration and clears `paused`. While paused, ignore inputs and timers (the helper does this for you).
 
+### The start is the shell's (ADR-053)
+
+`init` runs after the shell's start stage: the room has read the manifest's three `howToPlay` steps,
+everyone connected has tapped READY, and the 3·2·1 has played on the TV and every phone. A game does
+not show its own rules, READY or countdown, and needs no idle timeout for them. Its first phase may
+still hold game content that has to follow the start (a card pick, a secret role to read, teams) —
+never a second READY for the rules.
+
 ### Views
 
 Both views share the envelope; the shells render it (timer, player chips, VIP overlay) and hand the whole
@@ -144,9 +153,16 @@ code get typed fields.
 interface GameResults {
   scores: Record<string, number>; // every player from init
   ranking: { playerId: string; score: number; rank: number }[]; // rank 1 = winner; ties share a rank
-  winnerIds: string[];
+  winnerIds: string[]; // empty only for a co-op game the players lost
   awards: { id: string; title: string; description: string; playerId: string }[];
+  // ADR-052, optional: how a co-op or team game ended, and the results line (English, translated
+  // through the game's strings like awards)
+  outcome?:
+    | { kind: 'coop'; won: boolean }
+    | { kind: 'teams'; winner: string | null; teams: { id; name; mark?; members: string[] }[] };
+  headline?: string;
 }
+// a team game still ranks every member of the winning team 1 (winnerIds = that team)
 ```
 
 ### Recap (optional, ADR-035)
@@ -158,6 +174,41 @@ instance began, oldest first — read the reveal states there for anything the g
 (Lightning's picks, Wisecrack's votes). Files are plain names written beside the markdown (Broken
 Pencil writes each drawing as an SVG). Pure like every other method; without it the host keeps only the
 state.
+
+### Speech (optional, ADR-045)
+
+`speech?(state)` lists the readings the state wants: `SpeechRequest { key, voice, parts }`, where a part
+is `{ text }` or `{ ipa, text }` — `text` is required on phoneme parts too, because Zira (`original`)
+reads it where Kokoro reads the phonemes. The host makes each key once, serves it at
+`/api/speech/<key>.wav` (cached for good: the key is a content hash) and answers with the `speech`
+event; `-1` means no voice — carry on with reading time. Ask for a line as soon as its text is known,
+never before a secret it contains is revealed, and at most `pendingCap(players)` at a time. Build
+readings with the server-only `@partybox/game-sdk/speech` (never from `client/`):
+
+```ts
+import { parsePronunciations, speechKey, toSpeakable } from '@partybox/game-sdk/speech';
+import list from '../content/pronunciations.json' with { type: 'json' };
+const OVERRIDES = parsePronunciations(list); // validated once, at module level
+
+const parts = toSpeakable(prompt.text, {
+  voice,
+  lang: 'en',
+  overrides: OVERRIDES,
+  itemId: prompt.id,
+});
+// player-written text: { ..., playerText: true } (shouting, stretched words, 140 characters)
+const req = { key: speechKey('fake-out', voice, parts), voice, parts };
+```
+
+- `toSpeakable(text, { voice, lang, overrides?, itemId?, playerText? })` applies Part 00 §5.3's rules:
+  numbers, money, times and years as words, symbols and abbreviations, acronyms spelled (as phonemes,
+  so a mid-line "A" is not "uh"), pacing, no emoji. Spanish gets rules 1, 9, 10 and 11 only.
+- Overrides: the SDK's `speech/overrides.en.json`, beaten by your `content/pronunciations.json`
+  (`docs/game-pack/schemas/pronunciations.schema.json`: `words`, `items`, `patterns`; each entry
+  `say` / `ipa` (alias `phonemes`) / `spell`), whole words, **case-sensitive** unless `anyCase: true`.
+  Test your list: it parses, and `unknownPhonemes(ipa)` is empty for every entry.
+- `speakableName(name)`: the name to read, or `null` to skip it. `speechKey(gameId, voice, parts)`:
+  `<gameId>-<16 hex>`, a hash of `SPEECH_ENGINE_VERSION`, the voice and the parts.
 
 ### Bots (`manifest.supportsBots`)
 
@@ -176,23 +227,83 @@ never needs information a phone would not have. Bots are never VIP and count tow
 value are offered and kept, ADR-034). The VIP edits them in the lobby; the engine validates against the
 spec and passes `settings` to `init` (`multiselectPicks(value)` from `@partybox/shared` splits one).
 
-## Client side — `games/<id>/client/index.ts`
+### Typed answers — `@partybox/game-sdk/match` (ADR-048)
+
+Whatever a player types that the game compares — a guess, a clue, a lie, a free-text answer — goes
+through the shared matcher, never `===` on raw text. It is pure and gives the same answer on every
+machine, so `reduce` may call it and a phone may run the same check as the player types. Every
+function takes the content's `lang` (`'en' | 'es'`), read from the pack's required `lang` field.
+
+| Function                                                   | Returns                                                                                                                                                                          |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `normalize(text, lang)`                                    | `{ norm, compact }`: lowercase, no accents, quotes or punctuation, one leading article dropped, number words to 99 as digits ("The Twenty-One Pilots" → `21 pilots`, `21pilots`) |
+| `stem(word, lang)`                                         | a key where singular and plural meet (movies, movie → `movi`; luces, luz → `luz`)                                                                                                |
+| `matchAnswer(input, item, lang)`                           | `'exact' \| 'stem' \| 'fuzzy' \| 'none'` against `{ answer, accept?, reject?, family? }`; a reject blocks every level, digits never fuzz                                         |
+| `sameAnswer(a, b, lang)`                                   | one player's text against another's: the same compact form, the same stems, or 6+ letters one edit apart                                                                         |
+| `groupAnswers(texts, lang)`                                | `number[][]`: indices grouped by chains of `sameAnswer`, in submission order                                                                                                     |
+| `isLegalClue(clue, secret, { lang, maxChars?, oneWord? })` | `{ ok: true }` or `{ ok: false, reason }`: `empty`, `too-long`, `not-one-word`, `is-secret`, `contains-secret` (the game words the message, in both languages)                   |
+
+Each game picks the level it accepts (a guess usually scores at `fuzzy` or better); `isLegalClue`
+calls a clue the secret at `stem` or better. Pass `secret: null` for a player who does not know the
+secret (Imposter's imposter): the error itself would tell them their clue is close. Sort ids with
+`compareCodeUnits` (`@partybox/game-sdk`): `localeCompare`, `toLocale*` and `Intl` are banned under
+`games/*/server`.
+
+**Answer packs.** A content file with typed answers carries `lang` and items `{ id, answer, accept,
+reject, family }`, all lowercase (`docs/game-pack/schemas/answer-item.schema.json`); spacing, case,
+accent and apostrophe variants are automatic and never listed. Build the content schema with
+`answerItemSchema` and test the pack with `checkAnswerPack({ lang, items }, { isCommon? })` (both from
+`@partybox/game-sdk`, not `./match`, so zod stays off phones): it fails on two entries equal after
+normalization and on an accept that does not come back `exact`, and warns on common words with fewer
+than 3 accepts.
+
+**"That counts" (game pack §4.8).** When a guess is judged below the game's bar, the reveal shows what
+was typed and the VIP's phone (`view.vip === me.id`) shows ✓ That counts until Next. The button sends a
+game input the reducer honours only when `event.vip === true` (ADR-042); it re-scores through the same
+`judged()` helper that feeds the score, awards, views and recap, and the TV tags the answer "Counted by
+the VIP". Store what was counted, never who counted it. Only a phone sends game inputs, so a room run
+from the TV host bar has no override. The contract fuzz sends every input stamped `vip: true` too.
+
+## Client side — `games/<id>/client/{shared,phone-entry,tv-entry}.ts` (ADR-050)
+
+Each surface is its own download: a phone fetches the game's phone entry once the game is chosen
+(and never a TV entry), the TV fetches the TV entry. The generated registry imports them lazily;
+nothing in `packages/client` may import a game statically (lint).
 
 ```ts
-export const clientModule: GameClientModule = {
+// shared.ts — what both surfaces carry
+export const shared: GameShared = {
   id: 'my-game',
   strings: STRINGS, // from ./strings.ts: the game's Spanish, keyed by the English sentence (ADR-044)
-  Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
-  Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   sounds: { reveal: 'reveal' }, // optional: map your moments to design-system cue names
-  quickInto: ['play'], // optional: phases the TV cuts into (their own entrance is the choreography)
-  stripActive: (view) => [], // optional: player ids the TV strip rings as "on" — whoever the room should look at (I-017)
-  ownLocks: ['answer'], // optional: TV phases where the game sounds its own lock-ins; the shell's `lock` tick stays quiet there (I-020)
-  PhoneSettings: lazy(() => import('./PhonePanel')), // optional: the game's per-phone settings panel for the lobby's 🎨 sheet, under the game's name (S-003)
+  music,
+  beds,
+  scoreless, // optional: the sound plan (a phone plays it in a phone-only room)
+};
+// phone-entry.ts
+export const phone: GamePhoneModule = {
+  ...shared,
+  Controller,
   PhoneStage: lazy(() => import('./PhoneStage')), // optional: in a "phone only" room the phones show what the TV would for `phoneStagePhases`, in place of the Controller (S-005)
   phoneStagePhases: ['bingo'],
 };
+// tv-entry.ts
+export const tv: GameTvModule = {
+  ...shared,
+  Tv,
+  quickInto: ['play'], // optional: phases the TV cuts into (their own entrance is the choreography)
+  stripActive: (view) => [], // optional: player ids the TV strip rings as "on" — whoever the room should look at (I-017)
+  ownLocks: ['answer'], // optional: TV phases where the game sounds its own lock-ins; the shell's `lock` tick stays quiet there (I-020)
+  finale,
+  Finale, // optional: keep the game's last board on the results stage
+};
+// settings-entry.ts (optional; `"phoneSettings": true` in the manifest): the game's per-phone
+// panel for the lobby's 🎨 sheet — a closed row until a player opens it (S-003)
+export const settings: GameSettingsModule = { PhoneSettings: PhonePanel };
 ```
+
+Never import a TV file from the phone side (a constant both need goes in its own file, like Blanks'
+`timing.ts`): the phone would download the TV screen with it.
 
 Components receive `{ view, send(input), me, skip? }` and are dumb (`skip` is set on the VIP's phone only and
 fires the engine's VIP skip, so a game's own "Next" button is the VIP's without the game knowing who that is — ADR-036): no sockets, no global state, no game logic —
@@ -205,8 +316,10 @@ Every sentence a player or the room reads goes through the device's language (AD
 useT(STRINGS)` at the top of a component, then `L('Waiting for {name}…', { name })` — the key is the
 literal English, placeholders instead of template strings, one key per plural form. A sentence your
 server writes renders through `L.sent(text)` (the table's exact entry, or a `{placeholder}` entry that
-matches it). `STRINGS.es` also carries the manifest's tagline, description and setting labels for the
-game picker. `scripts/i18n-coverage.test.ts` fails until each has its Spanish. Content stays as written.
+matches it). The manifest's own sentences (tagline, description, how-to-play, setting labels) go in
+`manifest.es.json` next to it: the host serves them to the picker, About and the settings form, so the
+picker never loads game code (ADR-049). `scripts/i18n-coverage.test.ts` fails until each has its
+Spanish. Content stays as written.
 
 ## Worked example — the template game (`games/_template`)
 

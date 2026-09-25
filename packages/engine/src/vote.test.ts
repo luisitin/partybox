@@ -43,7 +43,7 @@ describe('I-650: voting for the next game', () => {
     room = applyRoomEvent(room, { type: 'leave', now: T0 + 60, playerId: 'p3' }, deps).room;
     expect(snapshot(room, deps).votes).toEqual({ p2: 'fake' });
     const selected = vip(room, { action: 'selectGame', gameId: 'fake' }, T0 + 70).room;
-    const started = vip(selected, { action: 'start' }, T0 + 71, 'p1', 42).room;
+    const started = vip(selected, { action: 'startNow' }, T0 + 71, 'p1', 42).room;
     expect(started.status).toBe('playing');
     expect(snapshot(started, deps).votes).toEqual({});
   });

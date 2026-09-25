@@ -105,13 +105,15 @@ describe('rating and results', () => {
     expect(ratingOf(won, size)).toBe(id);
   });
 
-  it('everyone scores the team total and shares rank 1 (the finale carries the verdict)', () => {
+  it('everyone scores the team total; below Great nobody is crowned (co-op lost)', () => {
     let s = atClue(5, { words: 6 });
     for (let i = 0; i < 6; i++) s = play(s, i === 0 ? 'telescope' : '');
     expect(s.phase.id).toBe('done');
     const res = game.results(s);
     expect(res?.scores).toEqual({ p1: 1, p2: 1, p3: 1, p4: 1, p5: 1 });
-    expect(res?.winnerIds).toHaveLength(5);
+    expect(res?.winnerIds).toEqual([]);
+    expect(res?.outcome).toEqual({ kind: 'coop', won: false });
+    expect(res?.headline).toBe('🔁 Try again! 1 of 6 words');
     expect(game.tvView(s).final?.rating).toBe('again');
     expect(res?.awards.map((a) => a.id)).toContain('sharp-guesser-p1');
   });
@@ -122,6 +124,7 @@ describe('rating and results', () => {
     const res = game.results(s);
     expect(res?.scores['p1']).toBe(6);
     expect(res?.winnerIds).toHaveLength(5);
+    expect(res?.outcome).toEqual({ kind: 'coop', won: true });
     expect(game.tvView(s).final?.rating).toBe('flawless');
   });
 });

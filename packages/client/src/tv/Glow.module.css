@@ -1,0 +1,92 @@
+/* The TV's ambient glows (I-029 B), shared by the lobby and the game picker so neither stage ever
+   sits frozen. */
+/* Two large soft radial glows in the brand pink and gold drift slowly behind the
+   stage — 14 s and 17 s translate loops at 18 % opacity, no blur (radial gradients are cheap to
+   paint); the keyframes only exist without reduced motion, so a reduced-motion TV shows them
+   still. Ambient, so the loops run past the 600 ms ceiling on purpose, like the lobby's dots. */
+.glow {
+  position: fixed; /* behind the whole TV: the lobby's stage is not a positioned box */
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.glow > span {
+  position: absolute;
+  width: 900px;
+  height: 900px;
+  border-radius: 50%;
+  opacity: 0.18;
+}
+.glowA {
+  left: -300px;
+  top: -200px;
+  background: radial-gradient(circle, var(--pb-accent) 0%, transparent 62%);
+  animation: pb-glow-a 14s ease-in-out infinite alternate;
+}
+.glowB {
+  right: -320px;
+  bottom: -260px;
+  background: radial-gradient(circle, var(--pb-accent-2) 0%, transparent 62%);
+  animation: pb-glow-b 17s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pb-glow-a {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(180px, 120px);
+    }
+  }
+  @keyframes pb-glow-b {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(-160px, -140px);
+    }
+  }
+}
+
+/* ── I-065 A: sound off stills the room — the glows pause, grey and dim until the first tap
+   (or while muted). Filter on two fixed spans only. */
+:global(:root[data-sound='off']) .glow > span {
+  animation-play-state: paused;
+  filter: grayscale(1);
+  opacity: 0.1;
+}
+
+/* ── I-065 B: the wake — one swell as sound comes on, on top of the drift. */
+:global(:root[data-sound='on']) .glowA {
+  animation:
+    pb-glow-a 14s ease-in-out infinite alternate,
+    pb-glow-wake var(--pb-motion-slow) var(--pb-ease) both;
+}
+:global(:root[data-sound='on']) .glowB {
+  animation:
+    pb-glow-b 17s ease-in-out infinite alternate,
+    pb-glow-wake var(--pb-motion-slow) var(--pb-ease) both;
+}
+@keyframes pb-glow-wake {
+  0% {
+    opacity: 0.1;
+  }
+  45% {
+    opacity: 0.34;
+  }
+  100% {
+    opacity: 0.18;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(:root[data-sound='on']) .glowA,
+  :global(:root[data-sound='on']) .glowB {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off'][data-sound='on']) .glowA,
+:global(:root[data-motion='off'][data-sound='on']) .glowB {
+  animation: none;
+}

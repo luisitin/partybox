@@ -4,9 +4,12 @@
 import { LIMITS } from '@partybox/shared';
 import type { GameEvent, GameStateBase } from '@partybox/shared';
 import { addBot, removeBot } from './bots';
+import { suggestToast } from './picker';
+import { setCanSeeTv, withJoinPresence } from './presence';
 import { disconnect, expirePlayers, join, removePlayer } from './players';
 import { ASLEEP_END_MS, abortGame, applyGameEvent, fireDueTimer } from './runner';
 import type { ApplyResult, Effect, EngineDeps, RoomEvent, RoomState } from './types';
+import { fireStage, markReady, settleStage } from './start-stage';
 import { applyVip } from './vip';
 
 export interface CreateRoomOptions {
@@ -110,6 +113,9 @@ function handleTick(room: RoomState, now: number, deps: EngineDeps): ApplyResult
       ],
     };
   }
+  // ADR-053: the start stage's count ended
+  const started = fireStage(room, now, deps);
+  if (started) return started;
   let result = expirePlayers(room, now, deps);
   const effects = [...result.effects];
   for (let i = 0; i < MAX_TIMERS_PER_TICK; i++) {
@@ -144,7 +150,11 @@ function isStateBase(value: unknown): value is GameStateBase {
 function dispatch(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyResult {
   switch (event.type) {
     case 'join':
-      return join(room, event, deps);
+      return withJoinPresence(join(room, event, deps), event.canSeeTv);
+    case 'presence':
+      return setCanSeeTv(room, event.playerId, event.canSeeTv);
+    case 'ready':
+      return markReady(room, event.playerId);
     case 'bot-add':
       return addBot(room, event);
     case 'bot-remove':
@@ -187,7 +197,12 @@ function dispatch(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyRes
       const votes = { ...room.votes };
       if (event.gameId === null) delete votes[who.id];
       else votes[who.id] = event.gameId;
-      return { room: { ...room, votes }, effects: [{ type: 'push' }] };
+      // Ruling 2: a vote is the picker's 👍 Suggest — the room hears it, at most every 10 s each.
+      const heard =
+        event.gameId === null
+          ? { room: { ...room, votes }, effects: [] }
+          : suggestToast({ ...room, votes }, who.id, event.gameId, event.now, deps);
+      return { room: heard.room, effects: [...heard.effects, { type: 'push' }] };
     }
     case 'dev:loadState': {
       const game = deps.games[event.gameId];
@@ -238,7 +253,10 @@ function normalise(before: RoomState, result: ApplyResult): ApplyResult {
 }
 
 export function applyRoomEvent(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyResult {
-  return normalise(room, awakeOutsideGames(dispatch(room, event, deps)));
+  // ADR-053: after any event the start stage may close (the picker moved on) or begin its count
+  // (the last READY, or the last unready phone dropped)
+  const settled = settleStage(dispatch(room, event, deps), event.now);
+  return normalise(room, awakeOutsideGames(settled));
 }
 
 /** I-746: "asleep" belongs to a running game — however the game ended (VIP end, the TV's Home,

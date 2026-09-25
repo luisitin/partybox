@@ -1,24 +1,27 @@
-// During a game: spectators wait; players get the game's lazy Controller component with
-// `{ view, me, send }`. Unknown game ids (registry drift) show a plain message instead of crashing.
+// During a game: spectators wait; players get the game's Controller (its phone entry, loaded on
+// demand — ADR-050) with `{ view, me, send }`. Unknown game ids (registry drift) show a plain message instead of crashing.
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import type { ControllerView, PlayerPublic, PushedView, RoomSnapshot } from '@partybox/shared';
 import {
   Avatar,
   PhoneOnlyProvider,
+  PrimaryButton,
   SoundProvider,
   WaitingScreen,
   getLang,
   LeadMark,
 } from '@partybox/game-sdk/ui';
 import styles from './ControllerShell.module.css';
-import { clientGames } from '../games.generated';
+import { useGame } from '../game-loader';
+import { gameLoaders } from '../games.generated';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
 import type { Controller } from '../net/controller';
 import type { PlayCueOptions } from '@partybox/game-sdk/ui';
 import type { SoundCue, SoundEngine } from '../sound';
 import { GameErrorBoundary } from './GameErrorBoundary';
+import { gameName as gameName_ } from '../catalog';
 
 export interface PlayingProps {
   controller: Controller;
@@ -90,8 +93,7 @@ function Bench({
   }, [seen, play]);
   if (rows.length === 0) return null;
   const top = rows[0]?.score ?? 0;
-  const gameName =
-    room.games.find((g) => g.id === room.selectedGameId)?.name ?? room.selectedGameId ?? '';
+  const gameName = gameName_(room.selectedGameId);
   // The phase id as a word in the device's language (the id itself in English, or when unknown).
   const phaseId = view?.phaseId ?? '';
   const phase = (t.phases as Readonly<Record<string, string>>)[phaseId] ?? phaseId;
@@ -136,6 +138,8 @@ export function Playing({
     (cue: SoundCue, opts?: PlayCueOptions) => audio?.play(cue, opts),
     [audio],
   );
+  // ADR-050: the game's phone entry (usually already here: it downloads once the game is chosen).
+  const game = useGame(room.selectedGameId, 'phone');
   if (me.spectator || view?.me.role === 'spectator') {
     // A spectator's screen is the game screen for them: release the game-start hold (loop #22).
     return (
@@ -155,8 +159,7 @@ export function Playing({
   }
   // The socket is up; we are waiting for the first view push or the lazy chunk — say so.
   if (!view) return <DelayedWaiting title={t.connection.loadingGame} />;
-  const module = room.selectedGameId ? clientGames[room.selectedGameId] : undefined;
-  if (!module)
+  if (!room.selectedGameId || !gameLoaders[room.selectedGameId])
     return (
       <WaitingScreen
         title={t.playing.unknownGame(room.selectedGameId ?? '')}
@@ -164,9 +167,21 @@ export function Playing({
         mood="wait"
       />
     );
+  // Part 00 §2.3: three tries failed — the player taps to try again (the room carries on).
+  if (game.failed)
+    return (
+      <WaitingScreen title={t.connection.loadFailed} mood="oops">
+        <PrimaryButton onClick={game.retry}>{t.connection.tapRetry}</PrimaryButton>
+      </WaitingScreen>
+    );
+  const module = game.module;
+  if (!module) return <DelayedWaiting title={t.connection.loadingGame} />;
   // S-005 A: a "phone only" room hands the phones the TV's moment for the phases the game names.
+  // ADR-047: the engine stamps the stage per phone — the room is phone-only, or this player can't
+  // see the TV — so a remote phone in a TV room gets the stage too.
+  const stage = view.phoneOnly ?? room.phoneOnly;
   const PhoneStage =
-    room.phoneOnly && module.PhoneStage && module.phoneStagePhases?.includes(view.phaseId)
+    stage && module.PhoneStage && module.phoneStagePhases?.includes(view.phaseId)
       ? module.PhoneStage
       : null;
   const GameController = module.Controller as unknown as (props: {
@@ -178,7 +193,7 @@ export function Playing({
   return (
     <GameErrorBoundary key={view.gameId}>
       <Suspense fallback={<DelayedWaiting title={t.connection.loadingGame} />}>
-        <PhoneOnlyProvider value={room.phoneOnly}>
+        <PhoneOnlyProvider value={stage}>
           <SoundProvider
             play={play}
             clip={audio ? (src, opts) => audio.clip(src, opts) : undefined}

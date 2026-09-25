@@ -1,11 +1,18 @@
 // English for every shell string: the source every translation mirrors (i18n-es.ts), and the
 // fallback for any language without a table. Read through `t` (i18n.ts), which picks the device's.
-// The phone's newer sections live in i18n-en-phone.ts (this file's line cap) and are spread in.
+// The phone's newer sections live in i18n-en-phone.ts and the picker's in i18n-en-picker.ts (this
+// file's line cap); both are spread in.
 import { enPhone } from './i18n-en-phone';
+import { enPicker } from './i18n-en-picker';
+import { enPresence } from './i18n-en-presence';
+import { enStage } from './i18n-en-stage';
 import { ordinal } from './ordinal';
 
 export const en = {
   ...enPhone,
+  ...enPicker,
+  ...enPresence,
+  ...enStage,
   appName: 'PartyBox',
   appShort: 'PB',
   join: {
@@ -136,6 +143,11 @@ export const en = {
     /** I-153 C: a tie with no person in it (a lone bot winner still gets its name). */
     botTie: 'The bots tie — nobody home?',
     tie: "It's a tie!",
+    // ADR-052: co-op and team games.
+    coopWon: 'Mission complete!',
+    coopLost: 'Mission failed',
+    teamWins: (team: string): string => `${team} wins!`,
+    teamDraw: 'A draw!',
     over: 'Game over',
     show: "That's the show!",
     scorelessHint: 'No points in this game — the books on the TV are the result.',
@@ -206,6 +218,9 @@ export const en = {
     /** The header dot's label, by the link's state (flapFree.ts `linkLabel`). */
     dot: { connecting: 'connecting', connected: 'connected', reconnecting: 'reconnecting' },
     loadingGame: 'Getting the game ready…',
+    /** Part 00 §2.3: the game's download failed three times over (1, 3, 6 s apart). */
+    loadFailed: "Couldn't load the game.",
+    tapRetry: 'Tap to retry',
     lostServer: 'Lost the PartyBox server — reconnecting…',
     /** The owner (2026-09-22): the banner ends here instead of vanishing, so a flapping link
      *  cannot strobe "Reconnecting…" over and over. */

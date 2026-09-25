@@ -2,13 +2,18 @@
 // phone or TV tab left open holds an index.html whose lazy game chunks no longer exist. The first
 // game start then fails to import its chunk ("This game hit a snag") until someone refreshes.
 // Two guards, both ending in a plain reload (the phone's stored session resumes by token):
-//   1. a dynamic import fails (Vite's `vite:preloadError`) → reload once;
+//   1. a chunk fails to load (Vite's `vite:preloadError`, or the game loader giving up) and the
+//      server now has a different `startedAt` than the one this page was loaded against → reload
+//      once; a chunk that failed on a flaky connection is retried instead (game-loader.ts);
 //   2. the socket reconnects to a server with a different `startedAt` (it restarted, likely
 //      rebuilt) → reload.
 // A sessionStorage stamp keeps a broken deploy from reload-looping.
 
 const STAMP_KEY = 'partybox:reloaded-at';
 const MIN_GAP_MS = 15_000;
+
+/** The server this page was loaded against (its boot time), once the first check has run. */
+let bootedAt: number | null = null;
 
 /** Reloads unless the page already reloaded for this reason within the last few seconds. */
 export function reloadOnce(reason: string): void {
@@ -23,11 +28,33 @@ export function reloadOnce(reason: string): void {
   location.reload();
 }
 
+async function serverStartedAt(): Promise<number | null> {
+  try {
+    const res = await fetch('/api/info');
+    const info = res.ok ? ((await res.json()) as { startedAt?: number }) : null;
+    return typeof info?.startedAt === 'number' ? info.startedAt : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Reloads (once) when the server has restarted since this page loaded; true when it did. */
+export async function reloadIfRestarted(reason: string): Promise<boolean> {
+  const now = await serverStartedAt();
+  if (now === null) return false;
+  if (bootedAt === null) {
+    bootedAt = now;
+    return false;
+  }
+  if (now === bootedAt) return false;
+  reloadOnce(reason);
+  return true;
+}
+
 /** Install the stale-chunk guard once per page. */
 export function guardStaleChunks(): void {
-  window.addEventListener('vite:preloadError', (event) => {
-    event.preventDefault();
-    reloadOnce('a game chunk from a previous build is gone');
+  window.addEventListener('vite:preloadError', () => {
+    void reloadIfRestarted('a chunk from a previous build is gone');
   });
 }
 
@@ -36,18 +63,9 @@ export function guardStaleChunks(): void {
  * records the server this page was loaded against, later ones reload if it is a different one.
  */
 export function createRestartWatch(): { onConnect: () => void } {
-  let bootedAt: number | null = null;
   return {
     onConnect: () => {
-      void fetch('/api/info')
-        .then((res) => (res.ok ? (res.json() as Promise<{ startedAt?: number }>) : null))
-        .then((info) => {
-          const now = info?.startedAt;
-          if (typeof now !== 'number') return;
-          if (bootedAt === null) bootedAt = now;
-          else if (now !== bootedAt) reloadOnce('the server restarted (new build?)');
-        })
-        .catch(() => undefined);
+      void reloadIfRestarted('the server restarted (new build?)');
     },
   };
 }

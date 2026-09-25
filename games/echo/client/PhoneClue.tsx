@@ -10,7 +10,7 @@ import { isLegalClue, sameAnswer } from '../server/match/index';
 import type { ClueReject, Input } from '../server/types';
 import { CLUE_MAX_CHARS } from '../server/types';
 import type { EchoControllerView } from '../server/views';
-import { SecretCard } from './SecretCard';
+import { SecretCard } from '@partybox/game-sdk/ui/secret-card';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
@@ -105,7 +105,13 @@ export function PhoneClue({
         <p className={styles.kicker}>
           {L('Word {n} of {total}', { n: view.tv.wordNo, total: view.tv.deckSize })}
         </p>
-        <SecretCard key={secret.id} word={secret.answer} />
+        <SecretCard
+          key={secret.id}
+          backLabel={L('Hold to see the word')}
+          label={L('Hold to see the word')}
+        >
+          <span className={styles.secretWord}>{secret.answer}</span>
+        </SecretCard>
         <p className={styles.prompt}>
           {n === 2
             ? L('Two different words to help {name}', { name: guesser })

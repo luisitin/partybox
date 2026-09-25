@@ -3,10 +3,14 @@
 
 // Types client code needs (also available from the pure entry point).
 export type {
-  GameClientModule,
   GameControllerProps,
   GameFinaleProps,
+  GameLoaders,
   GameMusic,
+  GamePhoneModule,
+  GameSettingsModule,
+  GameShared,
+  GameTvModule,
   GameTvProps,
 } from './client-module';
 export type {
@@ -77,7 +81,7 @@ export { PrimaryButton } from './controller/PrimaryButton';
 export type { PrimaryButtonProps } from './controller/PrimaryButton';
 export { WaitingScreen } from './controller/WaitingScreen';
 export type { WaitingScreenProps } from './controller/WaitingScreen';
-export { PhoneOnlyProvider, usePhoneOnly } from './controller/phoneOnly';
+export { PhoneOnlyProvider, useCanSeeTv, usePhoneOnly } from './controller/phoneOnly';
 export {
   LANGS,
   fill,

@@ -1,5 +1,5 @@
-// The TV's two countdown rings: the intro's "first number in 3 · 2 · 1" (loop 262) and the
-// 3 · 2 · 1 after the last card-style menu closes (loop 242). One tick per second on both.
+// The card pick's slot on the TV (the deal, who is still picking — no count-in since ADR-053) and
+// the 3 · 2 · 1 after the last card-style menu closes (loop 242), one tick per second.
 import { useEffect } from 'react';
 import type { JSX } from 'react';
 import {
@@ -22,35 +22,27 @@ import {
   DEAL_STEP_MS,
   RESUME_MS,
   dealDoneMs,
-} from '../server/types';
+} from '../server/constants';
 import styles from './Tv.module.css';
 
 /**
- * The intro's last three seconds (loop 262): "First number in 3 · 2 · 1", a small ring and one
- * tick per second — the cards are dealt on the phones in the first second or so, then the room
- * knows exactly when the first ball drops. Before that the slot says the cards are being dealt.
+ * The card pick's slot: the deal, then who is still picking, then "everyone has picked" — no
+ * count-in: the shell's stage did READY and the 3 · 2 · 1 (ADR-053, reviewer 59a5f4).
  */
 export function IntroCountdown({
-  deadline,
   cards,
   waitingOn,
   players,
 }: {
-  deadline: number | null;
   /** Cards per player: the TV plucks once per card on the phones' deal beats (loop 278). */
   cards: number;
-  /** Who is still picking their cards (loop 344): the slot names them until the 3 · 2 · 1. */
+  /** Who is still picking their cards (loop 344): the slot names them. */
   waitingOn: string[];
-  /** Everyone with cards: a row of faces, each lighting up as its player taps Ready (loop 349). */
+  /** Everyone with cards: a row of faces, each lighting up as its player has picked (loop 349). */
   players: ViewPlayer[];
 }): JSX.Element {
-  const left = useSecondsLeft(deadline, false, 50);
-  const counting = left !== null && left <= 3 && left > 0;
   const sound = useSoundApi();
   const L = useT(STRINGS);
-  useEffect(() => {
-    if (counting) sound.play('tick');
-  }, [counting, left, sound]);
   // Once the last card back has landed the caption stops saying "dealing" (loop 302).
   const dealt = useHold('deal', dealDoneMs(cards));
   // The deal, heard from the sofa: the same beats the phones use (Controller.tsx — a second a
@@ -63,80 +55,55 @@ export function IntroCountdown({
   }, [cards, sound]);
   return (
     <div className={styles.introSlot}>
-      {counting ? (
-        <>
-          <span className={styles.introLead}>{L('first number in')}</span>
-          {/* The ring pops in whole; only a CHANGE of digit pops the digit (loop 299: the
-              first frame showed an empty ring while the digit's own pop was still invisible). */}
-          <span className={`${styles.introRing} pb-tick`}>
-            <svg className={styles.ring} viewBox="0 0 120 120" aria-hidden>
-              <circle className={styles.ringTrack} cx="60" cy="60" r="52" />
-              <circle
-                className={styles.ringFill}
-                cx="60"
-                cy="60"
-                r="52"
-                style={{ animationDuration: '3000ms' }}
-              />
-            </svg>
-            <BigText key={left} level="h1" tone="accent" className="pb-tick">
-              {left}
-            </BigText>
+      {/* The deal itself (loop 279): one card back per card, dealt out of a deck on the
+          plucks' beats, each turning face-up as it lands in the fan. */}
+      <span className={styles.dealWrap}>
+        {dealt ? (
+          // The faces take the fan's place once the deal is down (loop 349): dim while
+          // picking, lit with a ✓ as each pick lands — who the room waits for, at a glance.
+          <span className={`${styles.dealFan} ${styles.readyRow}`} aria-hidden>
+            {players
+              .filter((p) => p.status !== 'spectator')
+              .map((p) => (
+                <span
+                  key={p.id}
+                  className={`${styles.readyFace} ${p.status === 'submitted' ? `${styles.readyDone} pb-pop` : waitingOn.length === 1 ? styles.readyLast : ''}`}
+                >
+                  <Avatar avatarId={p.avatarId} size="var(--pb-face, 72px)" />
+                  <b className={styles.readyTick}>✓</b>
+                </span>
+              ))}
           </span>
-        </>
-      ) : (
-        <>
-          {/* The deal itself (loop 279): one card back per card, dealt out of a deck on the
-              plucks' beats, each turning face-up as it lands in the fan. */}
-          <span className={styles.dealWrap}>
-            {dealt ? (
-              // The faces take the fan's place once the deal is down (loop 349): dim while
-              // picking, lit with a ✓ as each Ready lands — who the room waits for, at a glance.
-              <span className={`${styles.dealFan} ${styles.readyRow}`} aria-hidden>
-                {players
-                  .filter((p) => p.status !== 'spectator')
-                  .map((p) => (
-                    <span
-                      key={p.id}
-                      className={`${styles.readyFace} ${p.status === 'submitted' ? `${styles.readyDone} pb-pop` : waitingOn.length === 1 ? styles.readyLast : ''}`}
-                    >
-                      <Avatar avatarId={p.avatarId} size="var(--pb-face, 72px)" />
-                      <b className={styles.readyTick}>✓</b>
-                    </span>
-                  ))}
+        ) : (
+          <span className={styles.dealFan} aria-hidden>
+            {Array.from({ length: cards }, (_, i) => (
+              <span
+                key={i}
+                className={styles.dealSlot}
+                style={{ transform: `rotate(${(i - (cards - 1) / 2) * 9}deg)` }}
+              >
+                <span
+                  className={styles.dealCard}
+                  style={{ animationDelay: `${DEAL_START_MS + i * DEAL_STEP_MS}ms` }}
+                />
               </span>
-            ) : (
-              <span className={styles.dealFan} aria-hidden>
-                {Array.from({ length: cards }, (_, i) => (
-                  <span
-                    key={i}
-                    className={styles.dealSlot}
-                    style={{ transform: `rotate(${(i - (cards - 1) / 2) * 9}deg)` }}
-                  >
-                    <span
-                      className={styles.dealCard}
-                      style={{ animationDelay: `${DEAL_START_MS + i * DEAL_STEP_MS}ms` }}
-                    />
-                  </span>
-                ))}
-              </span>
-            )}
-            <span className={styles.introLead}>
-              {!dealt
-                ? L('dealing the cards…')
-                : waitingOn.length === 0
-                  ? L('everyone is ready')
-                  : waitingOn.length > 3
-                    ? L('pick your cards on your phone — {n} still picking', {
-                        n: waitingOn.length,
-                      })
-                    : L('pick your cards on your phone — waiting for {names}', {
-                        names: waitingOn.join(', '),
-                      })}
-            </span>
+            ))}
           </span>
-        </>
-      )}
+        )}
+        <span className={styles.introLead}>
+          {!dealt
+            ? L('dealing the cards…')
+            : waitingOn.length === 0
+              ? L('everyone has picked')
+              : waitingOn.length > 3
+                ? L('pick your cards on your phone — {n} still picking', {
+                    n: waitingOn.length,
+                  })
+                : L('pick your cards on your phone — waiting for {names}', {
+                    names: waitingOn.join(', '),
+                  })}
+        </span>
+      </span>
     </div>
   );
 }
@@ -230,7 +197,6 @@ export function IntroStage({
         ))}
       </p>
       <IntroCountdown
-        deadline={view.deadline}
         cards={view.cardsPerPlayer}
         waitingOn={view.waitingOn}
         players={view.players}

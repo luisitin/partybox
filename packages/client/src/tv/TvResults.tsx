@@ -8,7 +8,7 @@ import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
 import { Avatar, BigText, Confetti, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
 import { nobodyScored, scoreboardRows, winnerLine } from '../controller/results-rows';
-import { clientGames } from '../games.generated';
+import { useGame } from '../game-loader';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
 import { STRINGS } from './strings';
@@ -29,7 +29,7 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
   const many = rows.length >= 7;
   const nameOf = (id: string): string =>
     room.results?.players.find((p) => p.id === id)?.name ?? '?';
-  const module = room.results ? clientGames[room.results.gameId] : undefined;
+  const module = useGame(room.results?.gameId, 'tv').module;
   const Finale = module?.Finale;
   const keepBoard = Boolean(Finale && lastView && module?.finale?.(lastView));
   const scoreless = module?.scoreless === true;
@@ -39,13 +39,24 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
   // I-025: one clear winner gets a face and a crown on the headline (a tie, a scoreless game or
   // a game nobody scored in stays the plain line).
   const winnerIds = room.results?.results.winnerIds ?? [];
+  // ADR-052: a co-op or team game — its line, the winning team's faces, no lone crown.
+  const outcome = room.results?.results.outcome;
+  // A team's win counts only when the winner is one of its teams (else the line says a draw).
+  const celebrate = !outcome
+    ? null
+    : outcome.kind === 'coop'
+      ? outcome.won
+      : outcome.teams.some((team) => team.id === outcome.winner);
   const winner =
-    winnerIds.length === 1 && !nobodyScored(room) && !scoreless
+    !outcome && winnerIds.length === 1 && !nobodyScored(room) && !scoreless
       ? (room.results?.players.find((p) => p.id === winnerIds[0]) ?? null)
       : null;
   // I-037 A: a real tie shares the crown — the tied faces together beside the line.
   const tied =
-    winnerIds.length > 1 && !nobodyScored(room) && !scoreless
+    // a team's win crowns its faces even on a 0–0 board; the old tie still needs a score
+    (outcome
+      ? outcome.kind === 'teams' && celebrate
+      : winnerIds.length > 1 && !nobodyScored(room)) && !scoreless
       ? (room.results?.players.filter((p) => winnerIds.includes(p.id)) ?? []).slice(0, 4)
       : [];
   const crowned = winner !== null || tied.length > 0;
@@ -78,7 +89,9 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
       {/* I-025 B: confetti for a person — a gentle sixteen pieces when a bot takes it. */}
       {winner ? <Confetti pieces={winner.bot ? 16 : 48} /> : null}
       {/* I-037 A: a tie gets one shared, smaller sprinkle. */}
-      {tied.length > 0 ? <Confetti pieces={12} /> : null}
+      {tied.length > 0 && !outcome ? <Confetti pieces={12} /> : null}
+      {/* ADR-052: a mission complete or a team's win is a full celebration; a loss or a draw, none. */}
+      {celebrate ? <Confetti pieces={48} /> : null}
       {keepBoard && Finale && lastView ? (
         <GameErrorBoundary surface="tv">
           {/* I-025 C: a photo finish — the board dims for a beat as the winner is named. */}

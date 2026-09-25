@@ -1,8 +1,14 @@
 {
   "id": "lightning-round",
   "name": "Lightning Round",
+  "icon": "⚡",
   "tagline": "Fast fingers, sharp minds. Bet big on the last one.",
   "description": "Speed trivia. Every question has four choices: answer fast for more points, keep a streak for a bonus, then wager part of your score on one final question. Highest score wins.",
+  "howToPlay": [
+    "A question and four choices go up. Tap your answer on your phone.",
+    "Answer fast for more points; a streak of right answers earns a bonus.",
+    "Wager part of your score on one final question. Highest score wins."
+  ],
   "version": "1.1.0",
   "minPlayers": 1,
   "maxPlayers": 16,
@@ -10,10 +16,12 @@
   "estimate": {
     "fixedSeconds": 25,
     "perRoundSeconds": 19,
-    "perPlayerPerRoundSeconds": 0,
+    "perPlayerPerRoundSeconds": 1,
     "roundsSetting": "questions"
   },
-  "tags": ["trivia", "choice", "speed"],
+  "tags": ["trivia"],
+  "presence": { "needs": "anywhere" },
+  "addedOn": "2026-01-01",
   "settings": [
     {
       "key": "questions",

@@ -11,14 +11,15 @@ import { PHONE_MUTE_KEY, createSoundEngine } from '../sound';
 import type { SoundEngine } from '../sound';
 import { ControllerShell } from './ControllerShell';
 import { BigScreenHint } from '../surface/SurfaceHint';
-import { CrossfadeSwap } from '../CrossfadeSwap';
+import { CrossfadeSwap, screenKey } from '../CrossfadeSwap';
+import { StartStage } from './StartStage';
 import { buzz } from '@partybox/game-sdk/ui';
 const SUBMIT_BUZZ = 20; // I-070 B: the same pattern a submit uses
 import { Join } from './Join';
 import { OtherTab } from './OtherTab';
 import { useSyncExternalStore } from 'react';
 import type { PushedView, TvView } from '@partybox/shared';
-import { clientGames } from '../games.generated';
+import { useGame } from '../game-loader';
 import { bedFor, createBedEngine } from '../beds';
 import type { MusicEngine } from '../music';
 import { createMusicEngine, planFor } from '../music';
@@ -32,6 +33,7 @@ import { Lobby } from './Lobby';
 import { Playing } from './Playing';
 import { Results } from './Results';
 import { Selecting } from './Selecting';
+import { gameEntry } from '../catalog';
 
 let singleton: Controller | null = null;
 function controllerInstance(): Controller {
@@ -115,10 +117,13 @@ export function ControllerApp(): JSX.Element {
   // below already followed. Without it a game with music but no beds (Broken Pencil) was silent
   // on every phone in a phone-only room (the 2026-09-22 audio sweep: 2 sounds in a whole game).
   // The phone's own switch wins once touched (the owner, 2026-09-23: Off did not turn it off).
-  const musicWanted = phoneMusicWanted(musicChoice, room);
-  const gameMusic = room?.selectedGameId ? clientGames[room.selectedGameId]?.music : undefined;
+  const remote = room?.players.find((p) => p.id === state.playerId)?.canSeeTv === false;
+  const musicWanted = phoneMusicWanted(musicChoice, room, remote);
+  // ADR-050: the chosen game's phone entry — this is also what starts its download (§2.3).
+  const game = useGame(room?.selectedGameId, 'phone').module;
+  const gameMusic = game?.music;
   const plan = musicWanted ? planFor(room, view, gameMusic) : null;
-  const gameName = room?.games.find((g) => g.id === room.selectedGameId)?.name;
+  const gameName = gameEntry(room?.selectedGameId)?.name;
   const musicWhat = !musicWanted
     ? null
     : plan
@@ -141,7 +146,7 @@ export function ControllerApp(): JSX.Element {
   }, [music, planId, musicVolume, paused, results]);
   const bedTurns = useRef<Record<string, number>>({});
   const bedPhase = useRef<string | null>(null);
-  const gameBeds = room?.selectedGameId ? clientGames[room.selectedGameId]?.beds : undefined;
+  const gameBeds = game?.beds;
   const bedsWanted = musicWanted;
   useEffect(() => {
     // the TV's rotation rule (TvApp): a phase that names several beds turns through them
@@ -193,7 +198,12 @@ export function ControllerApp(): JSX.Element {
         );
         break;
       case 'selecting':
-        screen = <Selecting controller={controller} room={state.room} me={me} />;
+        // ADR-053: between Start and the game, the start stage (rules, READY, 3·2·1)
+        screen = state.room.starting ? (
+          <StartStage controller={controller} room={state.room} me={me} audio={audio} />
+        ) : (
+          <Selecting controller={controller} room={state.room} me={me} />
+        );
         break;
       case 'playing':
         screen = (
@@ -225,7 +235,7 @@ export function ControllerApp(): JSX.Element {
           musicWhat={musicWhat}
         >
           <CrossfadeSwap
-            swapKey={!state.joined || !state.room || !me ? 'join' : state.room.status}
+            swapKey={!state.joined || !state.room || !me ? 'join' : screenKey(state.room)}
             delayMs={
               state.room?.status === 'playing' ? 200 : 0
             } /* I-039 A: a beat between phase screens */

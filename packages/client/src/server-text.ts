@@ -64,6 +64,11 @@ const EXACT_ES: Readonly<Record<string, string>> = {
   '📱 Phone-only room — the phones show what the TV would':
     '📱 Sala solo con teléfonos: los teléfonos muestran lo que mostraría la TV',
   '📺 The TV is the stage again': '📺 La TV vuelve a ser el escenario',
+  // ADR-047: the VIP's "Where is everyone?" (engine presence.ts).
+  '📍 Everyone is in one room': '📍 Todos están en la misma sala',
+  '🎧 Some of you are remote, on a call': '🎧 Algunos están lejos, en una llamada',
+  '💬 Some of you are remote, with no call': '💬 Algunos están lejos, sin llamada',
+  'Bad presence payload.': 'No se pudo procesar ese cambio.',
 };
 
 const PATTERNS_ES: readonly [RegExp, (m: RegExpMatchArray) => string][] = [
@@ -99,6 +104,7 @@ const PATTERNS_ES: readonly [RegExp, (m: RegExpMatchArray) => string][] = [
   [/^(.+) left$/, (m) => `${m[1]} se fue`],
   [/^👋 (.+) says: hurry up, (.+)!$/, (m) => `👋 ${m[1]} dice: ¡date prisa, ${m[2]}!`],
   [/^👋 (.+) says: hurry up!$/, (m) => `👋 ${m[1]} dice: ¡date prisa!`],
+  [/^👍 (.+) suggests (.+)$/, (m) => `👍 ${m[1]} propone ${m[2]}`], // ruling 2: Suggest (picker)
   [
     /^Someone's trying to join as (.+) — that name's taken$/,
     (m) => `Alguien intenta entrar como ${m[1]}: ese nombre ya está en uso`,

@@ -188,7 +188,11 @@ describe('sockets', () => {
     const codes: string[] = [];
     a.on('error', (e: ErrorPayload) => codes.push(e.code));
     for (let i = 0; i < 40; i++) a.emit('input', { seq: i, input: {} });
-    await new Promise((r) => setTimeout(r, 300));
+    // every input is answered (not_playing or rate_limited): wait for the flood's answers, not a
+    // fixed 300 ms — a loaded box answered only 17 of 40 by then and the test failed on timing
+    const until = Date.now() + 5000;
+    while (codes.length < 40 && !codes.includes('rate_limited') && Date.now() < until)
+      await new Promise((r) => setTimeout(r, 25));
     expect(codes).toContain('rate_limited');
   });
 
@@ -222,13 +226,13 @@ describe('sockets', () => {
     expect(app.host.house().vipId).toBeNull();
     tv.emit('tv:vip', { action: 'selectGame', gameId: 'bingo' });
     tv.emit('tv:vip', { action: 'updateSettings', settings: { rounds: 1, callSeconds: 3 } });
-    tv.emit('tv:vip', { action: 'start' });
+    tv.emit('tv:vip', { action: 'startNow' });
     await new Promise((r) => setTimeout(r, 120));
     expect(app.host.house().status).toBe('playing');
     expect(app.host.house().settings['rounds']).toBe(1);
     // Refusals come back to the TV as errors (a TV cannot start twice).
     const refused = once<ErrorPayload>(tv, 'error');
-    tv.emit('tv:vip', { action: 'start' });
+    tv.emit('tv:vip', { action: 'startNow' });
     expect((await refused).code).toBe('cannot_start');
     tv.emit('tv:vip', { action: 'end' });
     tv.emit('tv:vip', { action: 'toLobby' });

@@ -3,7 +3,7 @@
 // (docs/DESIGN_SYSTEM.md). Moved out of ControllerShell (the 300-line cap).
 import { useEffect, useRef } from 'react';
 import { buzz } from '@partybox/game-sdk/ui';
-import { clientGames } from '../games.generated';
+import { peekGame } from '../game-loader';
 import type { ControllerState } from '../net/controller';
 import type { SoundCue, SoundEngine } from '../sound';
 import { BUZZ } from './haptics';
@@ -48,12 +48,13 @@ export function useShellCues(
       phase !== null &&
       p.phase !== phase &&
       // a room that asked the phones to carry the audio (phone only, or music on every phone)
-      (room?.phoneOnly || room?.musicOnPhones) &&
+      // or this phone is the stage: ADR-047's remote player hears the TV's cues (ruling 14)
+      (room?.phoneOnly || room?.musicOnPhones || state.view?.phoneOnly === true) &&
       tvSoundsOn() &&
       audio
     ) {
-      const mapped = room.selectedGameId
-        ? clientGames[room.selectedGameId]?.sounds?.[phase]
+      const mapped = room?.selectedGameId
+        ? peekGame(room.selectedGameId, 'phone')?.sounds?.[phase]
         : undefined;
       if (mapped && mapped !== 'silence') audio.play(mapped as SoundCue);
     }

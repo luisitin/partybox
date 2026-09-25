@@ -2,7 +2,7 @@
 // never nulled: `correctIndex`, `pickIndex` and `wagerAmount` only exist once the stage may show
 // them (__tests__/contract.config.ts asserts those key names never leak early).
 import { BASE_POINTS, SPEED_MAX_POINTS } from './types';
-import { controllerEnvelope, envelope, rank } from '@partybox/game-sdk';
+import { compareCodeUnits, controllerEnvelope, envelope, rank } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { categoryLabel, drawLabel, questionById } from './content';
 import { labelOf } from '../content/schema';
@@ -188,7 +188,7 @@ function revealRows(state: State, correctIndex: number, final: boolean): RevealR
       Number(b.correct) - Number(a.correct) ||
       (a.correct && b.correct ? (a.elapsedMs ?? 0) - (b.elapsedMs ?? 0) : 0) ||
       b.score - a.score ||
-      a.playerId.localeCompare(b.playerId),
+      compareCodeUnits(a.playerId, b.playerId),
   );
 }
 

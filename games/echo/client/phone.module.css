@@ -18,6 +18,14 @@
   text-align: center;
 }
 
+.secretWord {
+  font-size: var(--pb-font-h1);
+  font-weight: 1000;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  color: var(--pb-accent-2);
+}
+
 .prompt {
   text-wrap: balance;
   margin: 0;

@@ -17,12 +17,13 @@ import {
   botPayloadSchema,
   nameKey,
   normalizeName,
-  votePayloadSchema,
 } from '@partybox/shared';
-import type { ErrorPayload } from '@partybox/shared';
+import type { Catalog, ErrorPayload } from '@partybox/shared';
 import type { Host, Transport } from './host';
 import type { FunnelBook } from './funnel';
+import { canSeeTvByAddress } from './presence-address';
 import { createRateLimiter, jsonBytes } from './rate-limit';
+import { registerPersonMessages } from './socket-person';
 import { createJoinFloodGuard, createLatestWinsEmitter, sameOriginOnly } from './socket-helpers';
 
 interface SocketData {
@@ -35,7 +36,7 @@ export interface SocketLayer {
   io: IoServer;
   transport: Transport;
   /** Wires the host once it exists (host and sockets need each other). */
-  attach(host: Host, deps: EngineDeps, funnel?: FunnelBook): void;
+  attach(host: Host, deps: EngineDeps, funnel?: FunnelBook, catalog?: Catalog): void;
 }
 
 export function createSocketLayer(server: HttpServer): SocketLayer {
@@ -71,8 +72,11 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
     },
   };
 
-  function attach(host: Host, deps: EngineDeps, funnel?: FunnelBook): void {
+  function attach(host: Host, deps: EngineDeps, funnel?: FunnelBook, catalog?: Catalog): void {
     io.on('connection', (socket) => {
+      // Part 00 §1.2: the game list once per connection (a reconnect gets it again), never in
+      // the room pushes.
+      if (catalog) socket.emit('catalog', catalog);
       const data: SocketData = { role: null, playerId: null, code: null };
       socket.data = data;
       const limiter = createRateLimiter();
@@ -146,6 +150,10 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
           ...(parsed.data.photo ? { photo: parsed.data.photo } : {}),
           existingToken: parsed.data.token,
           ...(parsed.data.takeOver ? { takeOver: true } : {}),
+          // ADR-047: the phone's own choice, else the host's guess from where it connects from
+          canSeeTv:
+            parsed.data.canSeeTv ??
+            canSeeTvByAddress(socket.handshake.address, socket.handshake.headers),
         });
         const welcome = result?.effects.find((e) => e.type === 'welcome');
         if (welcome) funnel?.joined(code);
@@ -221,25 +229,7 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
         });
       });
 
-      // I-070 A: a nudge costs 10 tokens (two per 20 s at most) and the engine ignores the VIP's.
-      socket.on('nudge', () => {
-        if (!data.playerId || !data.code) return sendError('not_in_room', 'Join a room first.');
-        if (!limiter.take(10)) return sendError('rate_limited', 'Slow down.');
-        host.dispatch(data.code, { type: 'nudge', playerId: data.playerId });
-      });
-
-      // I-650: a vote for the next game — 2 tokens, so a thumb can change its mind a few times.
-      socket.on('vote', (raw: unknown) => {
-        if (!data.playerId || !data.code) return sendError('not_in_room', 'Join a room first.');
-        const parsed = votePayloadSchema.safeParse(raw);
-        if (!parsed.success) return sendError('invalid_payload', 'Bad vote payload.');
-        if (!limiter.take(2)) return sendError('rate_limited', 'Slow down.');
-        host.dispatch(data.code, {
-          type: 'vote',
-          playerId: data.playerId,
-          gameId: parsed.data.gameId,
-        });
-      });
+      registerPersonMessages(socket, data, limiter, host, sendError);
 
       socket.on('leave', () => {
         if (!data.playerId || !data.code) return;

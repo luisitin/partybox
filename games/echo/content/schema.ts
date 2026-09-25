@@ -2,6 +2,7 @@
 // (docs/game-pack/schemas/answer-item.schema.json) plus a category and a bank of ten clues, ordered
 // from most to least obvious, that bots write and bot guessers read.
 import { z } from '@partybox/game-sdk';
+import { pronunciationsSchema } from '@partybox/game-sdk/speech';
 
 export const CATEGORIES = [
   'animals',
@@ -40,11 +41,6 @@ export const wordPackSchema = z.object({
   words: z.array(wordItemSchema).min(10),
 });
 export type WordPack = z.infer<typeof wordPackSchema>;
-
-// Speech overrides for the reader (foundation §5.4; the shared schema lands with F6).
-export const pronunciationsSchema = z.object({
-  words: z.record(z.string(), z.object({ say: z.string().min(1), ipa: z.string().optional() })),
-});
 
 export const packs = {
   family: wordPackSchema,

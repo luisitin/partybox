@@ -1,6 +1,6 @@
 // I-648: a setting's value in words, for the guests' glance.
 import { describe, expect, it } from 'vitest';
-import type { GameSummary } from '@partybox/shared';
+import type { SelectedGame } from '@partybox/shared';
 import { settingValue } from './tunedLine';
 
 const game = {
@@ -19,11 +19,11 @@ const game = {
       ],
     },
   ],
-} as unknown as GameSummary;
+} as unknown as SelectedGame;
 const [rounds, timed, decks] = game.settings as [
-  GameSummary['settings'][number],
-  GameSummary['settings'][number],
-  GameSummary['settings'][number],
+  SelectedGame['settings'][number],
+  SelectedGame['settings'][number],
+  SelectedGame['settings'][number],
 ];
 
 describe('I-648: settingValue', () => {

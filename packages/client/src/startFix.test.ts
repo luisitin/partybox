@@ -1,20 +1,20 @@
 // I-667 A: the start fix.
 import { describe, expect, it } from 'vitest';
-import type { GameSummary, PlayerPublic, RoomSnapshot } from '@partybox/shared';
+import type { CatalogEntry, PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { en } from './i18n-en';
 import { es } from './i18n-es';
 import { fixLabel, startFix } from './startFix';
 
-const game = (min: number, max: number, supportsBots = true): GameSummary => ({
+const game = (min: number, max: number, supportsBots = true): CatalogEntry => ({
   id: 'g',
   name: 'G',
+  icon: '🎲',
   tagline: '',
-  description: '',
   minPlayers: min,
   maxPlayers: max,
   estimatedMinutes: 10,
   tags: [],
-  settings: [],
+  presence: 'anywhere',
   supportsBots,
 });
 const player = (id: string, bot = false): PlayerPublic =>

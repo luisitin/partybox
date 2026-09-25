@@ -1,6 +1,7 @@
 // The game contract (docs/GAME_CONTRACT.md). Games implement `GameDefinition`; the engine drives it.
 // Changing anything here changes every game — write an ADR first (docs/DECISIONS.md).
 import { z } from 'zod';
+import type { GamePresence } from './constants';
 import type { Rng, RngState } from './rng';
 
 // ─── Manifest + settings ────────────────────────────────────────────────────────────────────────
@@ -61,28 +62,52 @@ export const settingSpecSchema = z.discriminatedUnion('type', [
   }),
 ]);
 
-/** A multiselect value → its picks (deduped, in option order when `spec` is given). */
-export function multiselectPicks(
-  value: unknown,
-  spec?: { options: { value: string }[] },
-): string[] {
-  const raw = typeof value === 'string' ? value.split(',') : [];
-  const picks = [...new Set(raw.map((v) => v.trim()).filter((v) => v.length > 0))];
-  if (!spec) return picks;
-  const known = spec.options.map((o) => o.value);
-  return known.filter((v) => picks.includes(v));
-}
 export type SettingSpec = z.infer<typeof settingSpecSchema>;
 
 export const DEFAULT_MAX_INPUT_BYTES = 16 * 1024;
 export const HARD_MAX_INPUT_BYTES = 256 * 1024;
 
+/**
+ * The picker's filter chips (game pack Part 00 §1.2, the owner's ruling 4): 1–3 per game. `quick`
+ * is not on the list — the catalog derives it from `estimatedMinutes ≤ QUICK_MINUTES`.
+ */
+export const GAME_TAGS = [
+  'words',
+  'drawing',
+  'trivia',
+  'bluff',
+  'hidden-roles',
+  'teams',
+  'co-op',
+  'comedy',
+  'strategy',
+  'classic',
+] as const;
+export type GameTag = (typeof GAME_TAGS)[number];
+export const QUICK_MINUTES = 8;
+/** Where the players must be (Part 00 §3.5): the picker's badge and the notice on choosing. */
+export const PRESENCE_NEEDS = ['anywhere', 'voice-if-remote', 'same-room'] as const;
+export type PresenceNeeds = (typeof PRESENCE_NEEDS)[number];
+/** One user-perceived character: `icon` is a single emoji (flags and ZWJ sequences included). */
+function oneGrapheme(s: string): boolean {
+  return [...new Intl.Segmenter('en', { granularity: 'grapheme' }).segment(s)].length === 1;
+}
+
 export const gameManifestSchema = z
   .object({
     id: z.string().regex(GAME_ID_PATTERN),
     name: z.string().min(1).max(40),
-    tagline: z.string().min(1).max(80),
-    description: z.string().min(1).max(500),
+    /** One emoji: the picker's icon tile and the TV card. */
+    icon: z.string().min(1).max(16).refine(oneGrapheme, { message: 'icon must be one emoji' }),
+    tagline: z.string().min(1).max(60),
+    /** Served only through `about` (never in the catalog). */
+    description: z.string().min(1).max(300),
+    /** The About sheet's 1-2-3 (and the TV mirror's), each step one short sentence. */
+    howToPlay: z.tuple([
+      z.string().min(1).max(90),
+      z.string().min(1).max(90),
+      z.string().min(1).max(90),
+    ]),
     version: z.string().regex(SEMVER),
     minPlayers: z.number().int().min(1).max(16),
     maxPlayers: z.number().int().min(1).max(16),
@@ -101,7 +126,16 @@ export const gameManifestSchema = z
         roundsSetting: z.string().min(1).max(40),
       })
       .optional(),
-    tags: z.array(z.string().min(1).max(20)).max(10),
+    tags: z.array(z.enum(GAME_TAGS)).min(1).max(3),
+    presence: z.object({
+      needs: z.enum(PRESENCE_NEEDS),
+      /** One sentence for the lobby notice when this game is chosen in a room that conflicts. */
+      note: z.string().min(1).max(140).optional(),
+    }),
+    /** ISO date the game joined PartyBox: the catalog's NEW badge for 30 days. */
+    addedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    /** The game ships a `PhoneSettings` panel for the lobby's 🎨 sheet (loaded on expand). */
+    phoneSettings: z.boolean().optional(),
     settings: z.array(settingSpecSchema).max(12),
     /** ADR-002: raise for stroke-list inputs (drawing games). */
     maxInputBytes: z.number().int().min(1024).max(HARD_MAX_INPUT_BYTES).optional(),
@@ -129,6 +163,11 @@ export interface PlayerInfo {
   connected: boolean;
   /** A bot (ADR-028): a game may act for it where a person would tap (Bingo's ready-up). */
   bot?: boolean;
+  /**
+   * ADR-047: whether this player could see the TV when the game started (bots always can). Absent
+   * from hosts before presence. Switch features with it; never branch view content on it.
+   */
+  canSeeTv?: boolean;
 }
 
 export interface PhaseInfo {
@@ -150,6 +189,8 @@ export interface InitContext {
   settings: Settings;
   seed: number;
   now: number;
+  /** ADR-047: where everyone is, fixed at start. Optional: absent means all in one room with a TV. */
+  presence?: GamePresence;
 }
 
 // ─── Events ─────────────────────────────────────────────────────────────────────────────────────
@@ -175,12 +216,18 @@ export type GameEvent<I> =
   | { type: 'speech'; now: number; key: string; ms: number };
 
 /** A piece of a reading: text for the voice to say, or phonemes (espeak notation) said as given —
- *  with the written word beside them for a voice that cannot take phonemes (Zira). */
-export type SpeechPart = { text: string } | { ipa: string; text?: string };
+ *  with the words beside them, required: a voice that cannot take phonemes (Zira) says `text`
+ *  instead, so an ipa part is never silent (game-pack audit #17). */
+export type SpeechPart = { text: string } | { ipa: string; text: string };
+
+/** What a speech key may be: lowercase letters, digits and hyphens — room for `<gameId>-<hash>`
+ *  (`speechKey` in `@partybox/game-sdk/speech`) and never a path (game-pack audit #18). */
+export const SPEECH_KEY_PATTERN = /^[a-z0-9][a-z0-9-]{5,63}$/;
 
 /** A reading a game wants made (ADR-045): the host synthesises it once per `key`, serves it at
  *  /api/speech/<key>.wav and answers with a `speech` event. */
 export interface SpeechRequest {
+  /** SPEECH_KEY_PATTERN; a content hash, so the WAV behind a key never changes. */
   key: string;
   /** A voice id the host's speech service knows ('george', 'fable', 'jessica', 'sky', 'original'). */
   voice: string;
@@ -244,7 +291,10 @@ export type TvView = ViewEnvelope;
 
 export interface ControllerView extends ViewEnvelope {
   me: { id: string; role: 'player' | 'spectator' };
-  /** S-005: the room is in "phone only" mode (the engine stamps it). */
+  /**
+   * This phone is the stage (the engine stamps it): the room is "phone only" (S-005), or this
+   * player can't see the TV (ADR-047). Per phone, live: a mid-game flip moves only this phone.
+   */
   phoneOnly?: boolean;
 }
 
@@ -268,9 +318,25 @@ export interface GameResults {
   perRoundVotes?: Record<string, number[]>;
   scores: Record<string, number>;
   ranking: { playerId: string; score: number; rank: number }[];
+  /** Who won. Empty only for a co-op game the players lost (`outcome`). */
   winnerIds: string[];
   awards: GameAward[];
+  /** ADR-052: a game that isn't "these players won" says how it ended (co-op, or a team). */
+  outcome?: GameOutcome;
+  /** ADR-052: the results screen's line, in English (translated through the game's strings, like
+   *  awards): "📡 Crystal clear!", "Mission failed". Absent: the shell words it from the outcome. */
+  headline?: string;
 }
+
+/** ADR-052: co-op (everyone wins or nobody does) or teams (`winner` null = a draw). */
+export type GameOutcome =
+  | { kind: 'coop'; won: boolean }
+  | {
+      kind: 'teams';
+      winner: string | null;
+      /** `mark` (▲ / ●) goes with the name, so a team never rests on colour alone. */
+      teams: { id: string; name: string; mark?: string; members: string[] }[];
+    };
 
 /** One extra file a recap writes next to `recap.md` (a drawing as SVG, a CSV). */
 export interface RecapFile {

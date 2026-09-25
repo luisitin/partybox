@@ -14,10 +14,12 @@ import type { Controller } from '../net/controller';
 import type { SoundEngine } from '../sound';
 import styles from './Lobby.module.css';
 import { LobbyLine } from './LobbyLine';
+import { PresencePrompt } from './PresencePrompt';
 import type { LobbyLineItem } from './LobbyLine';
 import { LobbyMore } from './LobbyMore';
 import { ShareButton } from './ShareSheet';
 import { VoteRow, tallyLine, voteLeader } from './VoteRow';
+import { useCatalog } from '../catalog';
 import { VIP_TIPS, setTipsSeen, tipsSeen } from './vipTips';
 
 export interface LobbyProps {
@@ -60,13 +62,11 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       setPoofing(null);
     }, 450);
   };
-  const first = room.games[0];
-  // I-650 B: the picker opens on the room's favourite (the VIP can still pick any game)
-  const leader = voteLeader(room);
-  const pick = (): void => {
-    const gameId = leader?.id ?? first?.id;
-    if (gameId) controller.vip({ action: 'selectGame', gameId });
-  };
+  const { games } = useCatalog();
+  const first = games[0];
+  const leader = voteLeader(room, games);
+  // Part 00 §1.3: the list opens with nothing chosen (the room's favourites sort first there).
+  const pick = (): void => controller.vip({ action: 'selectGame', gameId: null });
   const myBots = room.players.filter((p) => p.bot?.ownerId === me.id);
   const full = room.players.length >= room.capacity;
   const maxed = myBots.length >= MAX_BOTS_PER_OWNER;
@@ -102,6 +102,10 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       }
     >
       {room.locked ? <p className={`pb-caption ${styles.count}`}>{t.lobby.locked}</p> : null}
+      {/* ADR-047: someone can't see the TV while the room says together — asked in the flow (a
+          floating card covered the add-bot row), above the roster so both answers are on an SE's
+          first screen (under it, the second answer fell below the fold). */}
+      <PresencePrompt room={room} me={me} controller={controller} />
       <ul key={room.players.length} className={styles.list} aria-label={t.lobby.playersList}>
         {room.players.map((p, i) => {
           // The owner or the VIP may remove a bot (ADR-028): one tap, no confirm — re-adding is one tap too.

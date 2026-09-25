@@ -34,6 +34,9 @@ const startBody = z.object({
   seed: z.number().int().optional(),
   /** Tests and design captures should not pile up recaps: off unless the caller says so. */
   record: z.boolean().optional(),
+  /** ADR-053: through the start stage (rules, READY, 3·2·1) like the VIP's Start; otherwise the
+   *  game starts at once, so every session's tools keep working. */
+  stage: z.boolean().optional(),
 });
 const eventBody = z.object({ event: z.unknown() });
 const loadStateBody = z.object({
@@ -50,7 +53,7 @@ const previewQuery = z.object({
   view: z.enum(['tv', 'controller']).default('tv'),
   player: z.string().optional(),
 });
-const SAFE_NAME = /^[a-z0-9-]+$/;
+const SAFE_NAME = /^[a-zA-Z0-9-]+$/; // camelCase phase ids are fixture names (Imposter: clueReveal)
 
 export function registerDevApi(app: FastifyInstance, options: DevApiOptions): void {
   const { host, bots, clock, deps } = options;
@@ -132,7 +135,7 @@ export function registerDevApi(app: FastifyInstance, options: DevApiOptions): vo
     const result = host.dispatch(code, {
       type: 'vip',
       playerId: vip,
-      action: { action: 'start' },
+      action: { action: body.data.stage ? 'start' : 'startNow' },
       seed: body.data.seed,
     });
     const error = result?.effects.find((e) => e.type === 'error');

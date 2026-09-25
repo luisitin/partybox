@@ -12,6 +12,7 @@ import {
   playingRoom,
   roomWith,
   T0,
+  throughStage,
   toasts,
   vip,
 } from './test-utils.helper';
@@ -108,7 +109,10 @@ describe('join', () => {
     expect(playing.game?.state.players['p3']).toBeUndefined();
     const ended = vip(late.room, { action: 'end' }, T0 + 300).room;
     expect(ended.status).toBe('results');
-    const again = vip(ended, { action: 'playAgain' }, T0 + 400).room;
+    // ADR-053: Play again opens the start stage; the late joiner reads the rules too
+    const staged = vip(ended, { action: 'playAgain' }, T0 + 400).room;
+    expect(staged.starting?.gameId).toBe('fake');
+    const again = throughStage(staged);
     expect(again.status).toBe('playing');
     expect(again.players['p3']?.spectator).toBe(false);
     expect(again.game?.state.players['p3']).toBeDefined();

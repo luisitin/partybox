@@ -2,9 +2,15 @@
 // Spanish"). The same shape as i18n.ts's English table — the compiler holds them to it; neutral "tú".
 import type { Texts } from './i18n-en';
 import { esPhone } from './i18n-es-phone';
+import { esPicker } from './i18n-es-picker';
+import { esPresence } from './i18n-es-presence';
+import { esStage } from './i18n-es-stage';
 
 export const es: Texts = {
   ...esPhone,
+  ...esPicker,
+  ...esPresence,
+  ...esStage,
   appName: 'PartyBox',
   appShort: 'PB',
   join: {
@@ -124,6 +130,10 @@ export const es: Texts = {
     tieWithBots: (names, bots) => `¡Empate entre ${names} y ${bots === 1 ? 'el bot' : 'los bots'}!`,
     botTie: 'Empatan los bots: ¿no hay nadie en casa?',
     tie: '¡Empate!',
+    coopWon: '¡Misión cumplida!',
+    coopLost: 'Misión fallida',
+    teamWins: (team) => `¡Gana ${team}!`,
+    teamDraw: '¡Empate!',
     over: 'Fin del juego',
     show: '¡Y eso fue todo!',
     scorelessHint: 'Este juego no da puntos: los libros en la TV son el resultado.',
@@ -189,6 +199,8 @@ export const es: Texts = {
     connected: 'Conectado',
     dot: { connecting: 'conectando', connected: 'conectado', reconnecting: 'reconectando' },
     loadingGame: 'Preparando el juego…',
+    loadFailed: 'No se pudo cargar el juego.',
+    tapRetry: 'Toca para reintentar',
     lostServer: 'Se perdió la conexión con el servidor: reconectando…',
     backOnline: '✓ Conectado de nuevo',
     seconds: (n) => `${n} s`,

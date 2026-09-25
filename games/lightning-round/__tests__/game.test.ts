@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { QUESTIONS, questionById, questionsIn } from '../server/content';
 import { drawQuestions } from '../server/draw';
 import { game } from '../server/index';
+import { revealMs } from '../server/phases/reveal';
 import { seedRng } from '@partybox/game-sdk';
 import {
   PLAYERS,
@@ -81,7 +82,7 @@ describe('draw', () => {
 describe('phase flow', () => {
   it('starts in intro with a 4 s deadline and results null', () => {
     const s = start();
-    expect(s.phase).toEqual({ id: 'intro', startedAt: T0, deadline: T0 + 4_000 });
+    expect(s.phase).toEqual({ id: 'intro', startedAt: T0, deadline: T0 + 2_000 }); // ADR-053: a title beat
     expect(s.index).toBe(-1);
     expect(game.results(s)).toBeNull();
     expect(s.scores).toEqual({ a: 0, b: 0, c: 0 });
@@ -120,8 +121,9 @@ describe('phase flow', () => {
     expect(s.phase.id).toBe('question');
     s = pick(s, 'c', true);
     expect(s.phase.id).toBe('reveal');
-    // I-589 (the owner's note): a regular reveal holds 8 s (the standings get the extra time)
-    expect(s.phase.deadline).toBe(s.phase.startedAt + 8_000);
+    // I-589 + the pacing rule: a regular reveal holds long enough to read every row, >= 8 s
+    expect(s.phase.deadline).toBe(s.phase.startedAt + revealMs(s));
+    expect(revealMs(s)).toBeGreaterThanOrEqual(8_000);
   });
 
   it('the wager phase lasts 15 s and ends early once everyone wagered', () => {

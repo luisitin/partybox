@@ -7,6 +7,7 @@ import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard, FlipCard, InlineFilled, LETTERS } from './Cards';
+import { EnglishNote } from './EnglishNote';
 import { NextButton } from './NextButton';
 import { STRINGS } from './strings';
 import styles from './blanks.module.css';
@@ -105,7 +106,12 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
       <VoteList
         kicker={kicker}
         header={<FilledCard text={black.text} pick={black.pick} size="phone" />}
-        prompt={L('Which one will the judge take?')}
+        prompt={
+          <>
+            {L('Which one will the judge take?')}
+            <EnglishNote />
+          </>
+        }
         promptKey={`guess:${view.round}`}
         size={view.cards.length <= 3 ? 'large' : 'compact'}
         options={view.cards.map((c) => ({
@@ -137,7 +143,12 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
         header={
           answersOnly ? <FilledCard text={black.text} pick={black.pick} size="phone" /> : null
         }
-        prompt={view.judgeMode === 'czar' ? L('Pick the winner') : L('Vote for the best')}
+        prompt={
+          <>
+            {view.judgeMode === 'czar' ? L('Pick the winner') : L('Vote for the best')}
+            <EnglishNote />
+          </>
+        }
         promptKey={`${view.round}`}
         // Two or three cards: tall lettered cards fill the thumb zone (as Wisecrack's A / B).
         size={large ? 'large' : 'compact'}

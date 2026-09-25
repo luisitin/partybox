@@ -6,6 +6,24 @@ import reactHooks from 'eslint-plugin-react-hooks';
 
 const sharedBans = ['@partybox/sim', '@partybox/e2e'];
 
+// ADR-048 (FOUNDATION-AUDIT #30): locale APIs answer differently on different machines (ICU data,
+// the host's locale: Turkish lowercases "I" to "ı"), so a tie-break or a match could differ
+// between two hosts and a replay would drift. Banned wherever game state is computed.
+const localeMessage =
+  'Locale APIs differ between machines (ADR-048): sort with compareCodeUnits, lowercase with toLowerCase.';
+const localeProperties = [
+  'localeCompare',
+  'toLocaleLowerCase',
+  'toLocaleUpperCase',
+  'toLocaleString',
+].map((property) => ({ property, message: localeMessage }));
+const localeGlobals = [{ name: 'Intl', message: localeMessage }];
+/** The SDK's pure code: what game servers call inside `reduce`, and the matcher. */
+const sdkPureFiles = [
+  'packages/game-sdk/src/{index,timer,scoring,views,compare,answer-pack,match,speech,turns}.ts',
+  'packages/game-sdk/src/{match,speech}/**/*.ts',
+];
+
 /** Config files and generated files may use default exports and long lines. */
 const relaxedFiles = ['**/*.config.{js,ts}', '**/*.generated.ts', '**/.dependency-cruiser.cjs'];
 
@@ -87,7 +105,8 @@ export default tseslint.config(
     },
   },
   {
-    // Client never touches engine or server internals; games arrive via games.generated.ts.
+    // Client never touches engine or server internals; games arrive via games.generated.ts —
+    // as dynamic imports only (ADR-050), so no static import of a game may exist in the client.
     files: ['packages/client/src/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-imports': [
@@ -97,6 +116,11 @@ export default tseslint.config(
           patterns: [
             { group: ['**/packages/server/**', '**/packages/engine/**'] },
             { group: ['node:*', 'fs', 'path', 'os'], message: 'client runs in the browser.' },
+            {
+              group: ['**/games/**'],
+              message:
+                'games load lazily through games.generated.ts (ADR-050): use game-loader.ts.',
+            },
           ],
         },
       ],
@@ -139,11 +163,13 @@ export default tseslint.config(
         ...['fetch', 'process', 'performance', 'crypto', 'localStorage', 'window', 'document'].map(
           (name) => ({ name, message: 'Game server code is pure (docs/GAME_CONTRACT.md).' }),
         ),
+        ...localeGlobals,
       ],
       'no-restricted-properties': [
         'error',
         { object: 'Date', property: 'now', message: 'Use event.now.' },
         { object: 'Math', property: 'random', message: 'Use state.rng via game-sdk rng helpers.' },
+        ...localeProperties,
       ],
       'no-restricted-syntax': [
         'error',
@@ -171,8 +197,80 @@ export default tseslint.config(
             },
             { group: ['../client/**', '**/client/**'], message: 'Server code never imports UI.' },
             {
-              group: ['@partybox/game-sdk/ui'],
+              group: ['@partybox/game-sdk/ui', '@partybox/game-sdk/ui/*'],
               message: 'Server code never imports UI (ADR-023): use @partybox/game-sdk.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    // ADR-048: the SDK code game servers call is as locale-free as the games themselves.
+    files: sdkPureFiles,
+    ignores: ['**/*.test.ts'],
+    rules: {
+      'no-restricted-globals': ['error', ...localeGlobals],
+      'no-restricted-properties': ['error', ...localeProperties],
+    },
+  },
+  {
+    // ADR-048: phones run isLegalClue as the player types, so `@partybox/game-sdk/match` stays
+    // free of zod (via @partybox/shared), React and Node. Mirrored in .dependency-cruiser.cjs.
+    files: ['packages/game-sdk/src/match.ts', 'packages/game-sdk/src/match/**/*.ts'],
+    ignores: ['**/*.test.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            ...sharedBans,
+            ...['@partybox/shared', 'zod', 'react', 'react-dom'].map((name) => ({
+              name,
+              message: 'The matcher stays free of zod and React: phones download it (ADR-048).',
+            })),
+          ],
+          patterns: [
+            { group: ['node:*', 'fs', 'path', 'os'], message: 'The matcher is pure.' },
+            { group: ['../*'], message: 'The matcher imports only its own files.' },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    // `@partybox/game-sdk/speech` runs inside game server code, so it is held to the same purity:
+    // no clocks, randomness, timers, I/O or module state (ADR-045 addendum). Its tests may read files.
+    files: ['packages/game-sdk/src/speech.ts', 'packages/game-sdk/src/speech/**/*.ts'],
+    ignores: ['**/*.test.ts'],
+    rules: {
+      'no-restricted-globals': [
+        'error',
+        ...['setTimeout', 'setInterval', 'setImmediate', 'queueMicrotask', 'fetch', 'process'].map(
+          (name) => ({ name, message: 'The speech helpers are pure.' }),
+        ),
+      ],
+      'no-restricted-properties': [
+        'error',
+        { object: 'Date', property: 'now', message: 'The speech helpers are pure.' },
+        { object: 'Math', property: 'random', message: 'The speech helpers are pure.' },
+      ],
+      'no-restricted-syntax': [
+        'error',
+        { selector: 'ExportDefaultDeclaration', message: 'Use named exports.' },
+        {
+          selector: "Program > VariableDeclaration[kind!='const']",
+          message: 'No module-level mutable state in the speech helpers.',
+        },
+      ],
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [...sharedBans, 'react', 'react-dom'],
+          patterns: [
+            {
+              group: ['node:*', 'fs', 'path', 'os', 'crypto', 'child_process'],
+              message: 'No I/O.',
             },
           ],
         },

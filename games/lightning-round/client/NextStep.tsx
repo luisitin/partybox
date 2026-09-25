@@ -13,7 +13,7 @@ import type { Translator } from '@partybox/game-sdk/ui';
 import type { RevealNext } from '../server/views';
 import { STRINGS } from './strings';
 import { RACE_MS } from './timing';
-import styles from './Tv.module.css';
+import styles from './NextStep.module.css';
 
 function nextLabel(next: RevealNext, L: Translator): string {
   return next === 'wager' ? L('On to the wager') : L('Next question');
@@ -29,9 +29,18 @@ export function useStandingsUp(key: number | null): boolean {
   return key !== null && upFor === key;
 }
 
-/** The TV stage's Next: the host clicks it on the screen the party is run from (ADR-031). The
- *  caller shows it once the standings are up (useStandingsUp). */
-export function TvNext({ next, skip }: { next: RevealNext; skip: () => void }): JSX.Element {
+/** The TV stage's Next: a hint that says whose phone moves the room on (review 6c24ba (4): the
+ *  accent chip read as a button nobody on the sofa could press); still clickable for a host who
+ *  runs the party from the TV (ADR-031). Shown once the standings are up (useStandingsUp). */
+export function TvNext({
+  skip,
+  vipName,
+}: {
+  next: RevealNext;
+  skip: () => void;
+  /** Review 6c24ba (4): the TV says whose phone moves the room on (Wisecrack's scores kicker). */
+  vipName: string | undefined;
+}): JSX.Element {
   const L = useT(STRINGS);
   const [sent, setSent] = useState(false);
   return (
@@ -44,7 +53,11 @@ export function TvNext({ next, skip }: { next: RevealNext; skip: () => void }): 
         skip();
       }}
     >
-      {sent ? L('Moving on…') : `${nextLabel(next, L)} ▶`}
+      {sent
+        ? L('Moving on…')
+        : vipName
+          ? L("Next on {name}'s phone", { name: vipName })
+          : L("Next on the VIP's phone")}
     </button>
   );
 }

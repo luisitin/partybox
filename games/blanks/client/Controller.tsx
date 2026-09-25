@@ -23,7 +23,7 @@ import { ControllerPick } from './ControllerPick';
 import { ControllerJudge, ControllerReveal } from './ControllerJudge';
 import { NextButton } from './NextButton';
 import { useReading } from './useReading';
-import { RESULT_BEATS_MS } from './TvResult';
+import { RESULT_BEATS_MS } from './timing';
 import { rankLine } from './rankLine';
 import { list, votesLabel, winnerLine } from './resultLines';
 import { STRINGS } from './strings';
@@ -138,12 +138,13 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
           ? L('Final scores')
           : L('Round {round} of {rounds}', { round: view.round, rounds: view.rounds })
       }
-      // Untimed rounds: the result stays up until the VIP moves on.
+      // The result stays up until the VIP moves on — timed rounds too, with a long fallback
+      // (owner's pacing rule 2026-09-25: results wait for a tap, not a timer).
       footer={
         final ? undefined : (
           <NextButton
             skip={skip}
-            timed={view.timed}
+            timed={false}
             label={view.round < view.rounds ? L('Next round') : L('Final scores')}
           />
         )

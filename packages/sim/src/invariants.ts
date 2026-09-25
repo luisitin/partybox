@@ -96,7 +96,9 @@ export function checkResults(
   for (const row of results.ranking)
     if (row.score !== results.scores[row.playerId])
       out.push(`ranking score for ${row.playerId} disagrees with scores`);
-  if (results.winnerIds.length === 0) out.push('no winner');
+  // ADR-052: only a co-op game the players lost may crown nobody.
+  const lostCoop = results.outcome?.kind === 'coop' && !results.outcome.won;
+  if (results.winnerIds.length === 0 && !lostCoop) out.push('no winner');
   for (const id of results.winnerIds)
     if (results.ranking.find((r) => r.playerId === id)?.rank !== 1)
       out.push(`winner ${id} is not rank 1`);
