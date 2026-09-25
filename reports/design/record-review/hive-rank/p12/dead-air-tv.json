@@ -1,0 +1,43 @@
+{
+  "video": "C:\\dev\\partybox-game-hive-rank\\reports\\design\\record-review\\hive-rank\\p12\\video\\tv\\round.webm",
+  "bytes": 13998648,
+  "durationS": 118.4,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 0.6,
+      "toS": 5.3,
+      "ms": 4700,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 7,
+      "toS": 9.7,
+      "ms": 2700,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 10.9,
+      "toS": 12.5,
+      "ms": 1600,
+      "during": "(start)",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 9000,
+  "hardCuts": [],
+  "samples": 1183,
+  "motion": {
+    "p50": 0.0004,
+    "p90": 0.004,
+    "p99": 0.0579,
+    "max": 0.107
+  }
+}

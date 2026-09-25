@@ -1,0 +1,139 @@
+.side {
+  --sg-team: var(--pb-team-sun, var(--pb-accent));
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    'title left'
+    'faces faces';
+  align-items: center;
+  gap: var(--pb-space-1) var(--pb-space-3);
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 2px solid var(--pb-border);
+  overflow: hidden;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+.moon {
+  --sg-team: var(--pb-team-moon, var(--pb-info));
+}
+
+/* the team's band: a bar along the top edge, lit brighter when the team is on */
+.side::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 6px;
+  background: var(--sg-team);
+  opacity: 0.35;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+.half::before {
+  opacity: 0.7;
+}
+
+.on::before {
+  opacity: 1;
+  /* the team on the clock breathes, so a quiet guess step still moves */
+  animation: global(pb-breathe) 2.4s ease-in-out infinite;
+}
+
+.on {
+  background: color-mix(in srgb, var(--sg-team) 16%, var(--pb-surface));
+}
+
+.off {
+  opacity: 0.72;
+}
+
+.title {
+  grid-area: title;
+  display: flex;
+  align-items: baseline;
+  gap: var(--pb-space-2);
+  font-weight: 900;
+}
+
+.shape {
+  color: var(--sg-team);
+}
+
+.left {
+  grid-area: left;
+  justify-self: end;
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.wins {
+  color: var(--pb-accent-2);
+  letter-spacing: 0.1em;
+}
+
+.faces {
+  grid-area: faces;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-1);
+}
+
+.face {
+  position: relative;
+  width: var(--sg-face-size, 40px);
+  height: var(--sg-face-size, 40px);
+}
+
+.dimFace {
+  opacity: 0.4;
+}
+
+.spy {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  font-size: calc(var(--sg-face-size, 40px) * 0.5);
+  line-height: 1;
+}
+
+.tv {
+  --sg-face-size: 44px;
+  font-size: var(--pb-font-h2);
+}
+
+.tv .left {
+  font-size: var(--pb-font-body);
+}
+
+.phone {
+  --sg-face-size: 24px;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  font-size: var(--pb-font-body);
+}
+
+.phone .left {
+  font-size: var(--pb-font-caption);
+}
+
+.end .title {
+  justify-self: end;
+}
+
+.end {
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'left title'
+    'faces faces';
+}
+
+.end .left {
+  justify-self: start;
+}
+
+.end .faces {
+  justify-content: flex-end;
+}

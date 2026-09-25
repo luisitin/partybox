@@ -1,0 +1,314 @@
+{
+  "phase": {
+    "id": "flip",
+    "startedAt": 1002230,
+    "deadline": 1004430
+  },
+  "rng": {
+    "seed": 1,
+    "step": 905
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "P1",
+      "avatarId": "0",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "P2",
+      "avatarId": "1",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "P3",
+      "avatarId": "2",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "P4",
+      "avatarId": "3",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "P5",
+      "avatarId": "4",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "P6",
+      "avatarId": "5",
+      "connected": true
+    }
+  },
+  "settings": {
+    "mode": "teams",
+    "teamPick": "random",
+    "rounds": 1,
+    "clueSeconds": 75,
+    "guessSeconds": 60,
+    "maxTurns": 24,
+    "coopTurns": 8,
+    "assassins": 1,
+    "reactions": true,
+    "spicy": false,
+    "reader": "fable"
+  },
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6"],
+  "left": [],
+  "mode": "teams",
+  "teams": {
+    "sun": ["p1", "p2", "p3"],
+    "moon": ["p4", "p5", "p6"]
+  },
+  "spymaster": {
+    "sun": "p1",
+    "moon": "p4"
+  },
+  "volunteers": [],
+  "round": 1,
+  "roundWins": {
+    "sun": 0,
+    "moon": 0
+  },
+  "board": [
+    {
+      "word": "SINK",
+      "itemId": "sink"
+    },
+    {
+      "word": "PARACHUTE",
+      "itemId": "parachute"
+    },
+    {
+      "word": "PIPE",
+      "itemId": "pipe"
+    },
+    {
+      "word": "ROCKET",
+      "itemId": "rocket"
+    },
+    {
+      "word": "SOLDIER",
+      "itemId": "soldier"
+    },
+    {
+      "word": "SKYSCRAPER",
+      "itemId": "skyscraper"
+    },
+    {
+      "word": "MOUSE",
+      "itemId": "mouse"
+    },
+    {
+      "word": "BOOT",
+      "itemId": "boot"
+    },
+    {
+      "word": "STAR",
+      "itemId": "star"
+    },
+    {
+      "word": "ALIEN",
+      "itemId": "alien"
+    },
+    {
+      "word": "PENGUIN",
+      "itemId": "penguin"
+    },
+    {
+      "word": "GOAL",
+      "itemId": "goal"
+    },
+    {
+      "word": "TROLL",
+      "itemId": "troll"
+    },
+    {
+      "word": "SCALE",
+      "itemId": "scale"
+    },
+    {
+      "word": "WATER",
+      "itemId": "water"
+    },
+    {
+      "word": "ACORN",
+      "itemId": "acorn"
+    },
+    {
+      "word": "ELF",
+      "itemId": "elf"
+    },
+    {
+      "word": "SUBMARINE",
+      "itemId": "submarine"
+    },
+    {
+      "word": "TAXI",
+      "itemId": "taxi"
+    },
+    {
+      "word": "BALL",
+      "itemId": "ball"
+    },
+    {
+      "word": "SUNFLOWER",
+      "itemId": "sunflower"
+    },
+    {
+      "word": "GARAGE",
+      "itemId": "garage"
+    },
+    {
+      "word": "GLASSES",
+      "itemId": "glasses"
+    },
+    {
+      "word": "VILLAIN",
+      "itemId": "villain"
+    },
+    {
+      "word": "ANT",
+      "itemId": "ant"
+    }
+  ],
+  "key": [
+    "sun",
+    "sun",
+    "sun",
+    "sun",
+    "sun",
+    "sun",
+    "sun",
+    "sun",
+    "sun",
+    "moon",
+    "moon",
+    "moon",
+    "moon",
+    "moon",
+    "moon",
+    "moon",
+    "moon",
+    "bystander",
+    "bystander",
+    "bystander",
+    "bystander",
+    "bystander",
+    "bystander",
+    "bystander",
+    "assassin"
+  ],
+  "flipped": [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
+  "starter": "moon",
+  "turn": {
+    "team": "sun",
+    "n": 1,
+    "spymaster": "p1",
+    "clue": {
+      "word": "OCEAN",
+      "number": 3
+    },
+    "clueError": null,
+    "left": 2,
+    "made": 2,
+    "pointers": {
+      "p2": 18,
+      "p3": 18
+    },
+    "firsts": {
+      "18": "p2"
+    },
+    "reactions": {
+      "p3": {
+        "card": 5,
+        "emoji": "🤔",
+        "until": 1007230
+      }
+    },
+    "flip": {
+      "card": 18,
+      "kind": "bystander",
+      "first": "p2"
+    },
+    "ended": null,
+    "newSpymaster": null
+  },
+  "idleTurns": 0,
+  "winner": null,
+  "reason": null,
+  "coop": null,
+  "history": [
+    {
+      "round": 1,
+      "team": "sun",
+      "spymaster": "p1",
+      "word": "OCEAN",
+      "number": 3,
+      "flips": [
+        {
+          "card": 0,
+          "kind": "sun",
+          "first": "p2"
+        },
+        {
+          "card": 18,
+          "kind": "bystander",
+          "first": "p2"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "p1": {
+      "clues": 1,
+      "agentsFromClues": 1,
+      "bestClue": 1,
+      "sharp": 0,
+      "trap": 0
+    },
+    "p2": {
+      "clues": 0,
+      "agentsFromClues": 0,
+      "bestClue": 0,
+      "sharp": 1,
+      "trap": 0
+    },
+    "p3": {
+      "clues": 0,
+      "agentsFromClues": 0,
+      "bestClue": 0,
+      "sharp": 0,
+      "trap": 0
+    },
+    "p4": {
+      "clues": 0,
+      "agentsFromClues": 0,
+      "bestClue": 0,
+      "sharp": 0,
+      "trap": 0
+    },
+    "p5": {
+      "clues": 0,
+      "agentsFromClues": 0,
+      "bestClue": 0,
+      "sharp": 0,
+      "trap": 0
+    },
+    "p6": {
+      "clues": 0,
+      "agentsFromClues": 0,
+      "bestClue": 0,
+      "sharp": 0,
+      "trap": 0
+    }
+  },
+  "speechMs": {},
+  "usedThemes": ["yellow", "plumbing", "movie", "small", "soccer"]
+}
