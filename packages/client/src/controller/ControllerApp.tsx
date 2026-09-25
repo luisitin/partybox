@@ -32,7 +32,7 @@ import {
 import { Lobby } from './Lobby';
 import { Playing } from './Playing';
 import { Results } from './Results';
-import { nobodyScored } from './results-rows';
+import { resultsCue } from './results-rows';
 import { Selecting } from './Selecting';
 import { gameEntry } from '../catalog';
 
@@ -146,8 +146,7 @@ export function ControllerApp(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [music, planId, musicVolume, paused, results]);
   // A phone-only room has no TV to cheer the winner (owner's play-test, 2026-09-25): each phone
-  // plays the TV's results cue itself, by TvApp's rules — a soft note when nobody scored, the tie
-  // chord for several winners, else the cheer. Once per results screen.
+  // plays the TV's results cue itself — the same resultsCue rule as TvApp. Once per results screen.
   const phoneOnlyRoom = room?.phoneOnly === true;
   const cheered = useRef(false);
   useEffect(() => {
@@ -157,8 +156,8 @@ export function ControllerApp(): JSX.Element {
     }
     if (!phoneOnlyRoom || cheered.current || !room) return;
     cheered.current = true;
-    if (nobodyScored(room)) audio.play('leave', { quiet: true });
-    else audio.play((room.results?.results.winnerIds.length ?? 0) > 1 ? 'tie' : 'cheer');
+    const cue = resultsCue(room);
+    audio.play(cue, cue === 'leave' ? { quiet: true } : undefined);
   }, [results, phoneOnlyRoom, room, audio]);
   const bedTurns = useRef<Record<string, number>>({});
   const bedPhase = useRef<string | null>(null);

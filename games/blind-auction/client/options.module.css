@@ -145,6 +145,8 @@
 
 .tv .inside {
   font-size: var(--pb-font-caption);
+  /* Sits on the card's top edge, clear of the icon (review [34ea15] nit). */
+  top: -1.3em;
 }
 
 /* Four to six options (live events): smaller words, never broken inside a word. */

@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { Screen, WaitingScreen, buzz, useCountUp, useSound, useT } from '@partybox/game-sdk/ui';
 import type { PushedView } from '@partybox/game-sdk/ui';
 import type { BlindAuctionControllerView, OwnLine } from '../server/views';
-import { iconOf, nameOf, ownLineText } from './copy';
+import { iconOf, nameOf, ownLineText, inSentence } from './copy';
 import { LotTitle, Purse } from './PhoneLot';
 import { PhoneEvent } from './PhoneEvent';
 import styles from './phone.module.css';
@@ -67,7 +67,7 @@ export function insideWords(
   if (view.box?.event === 'keno' && view.run)
     return L('drawn {list}', { list: view.run.detail.join(' · ') });
   const o = view.box && view.outcome !== null ? view.box.options[view.outcome] : undefined;
-  return o ? `${iconOf(o)} ${nameOf(L, o)}` : '?';
+  return o ? `${iconOf(o)} ${inSentence(nameOf(L, o))}` : '?';
 }
 
 export function PhoneResult({

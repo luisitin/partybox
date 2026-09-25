@@ -122,7 +122,7 @@ export function BlackjackTable({ view }: { view: BjView }): JSX.Element | null {
                     <Avatar avatarId={p.avatarId} size="100%" />
                   </span>
                 ) : null}
-                {p?.name ?? '?'}
+                <span className={styles.handName}>{p?.name ?? '?'}</span>
               </span>
               <span className={styles.cardsRow}>
                 {cards.map((n, i) => (

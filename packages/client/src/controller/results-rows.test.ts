@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import type { RoomSnapshot } from '@partybox/shared';
 import { ordinal } from '../i18n';
-import { myRow, winnerLine, winnerLineFor } from './results-rows';
+import { myRow, resultsCue, winnerLine, winnerLineFor } from './results-rows';
 
 type Rank = { playerId: string; score: number; rank: number };
 
@@ -172,6 +172,20 @@ describe('ADR-052: co-op and team games', () => {
     ];
     expect(winnerLine(withOutcome({ outcome: { kind: 'teams', winner: 'sun', teams } }))).toBe('▲ Sun wins!'); // prettier-ignore
     expect(winnerLine(withOutcome({ outcome: { kind: 'teams', winner: null, teams } }))).toBe('A draw!'); // prettier-ignore
+  });
+  it('one results cue for the TV and a phone-only room (foundation [8fce81])', () => {
+    const teams = [
+      { id: 'sun', name: 'Sun', mark: '▲', members: ['Sam'] },
+      { id: 'moon', name: 'Moon', mark: '●', members: ['Priya'] },
+    ];
+    expect(resultsCue(withOutcome({ outcome: { kind: 'coop', won: true } }))).toBe('cheer');
+    // A lost co-op has no winners: never the cheer.
+    expect(resultsCue(withOutcome({ winnerIds: [], outcome: { kind: 'coop', won: false } }))).toBe('tie'); // prettier-ignore
+    expect(resultsCue(withOutcome({ outcome: { kind: 'teams', winner: 'sun', teams } }))).toBe('cheer'); // prettier-ignore
+    expect(resultsCue(withOutcome({ outcome: { kind: 'teams', winner: null, teams } }))).toBe('tie'); // prettier-ignore
+    expect(resultsCue(room({ Sam: 5, Priya: 5 }, ['Sam', 'Priya'], []))).toBe('tie');
+    expect(resultsCue(room({ Sam: 5, Priya: 2 }, ['Sam'], []))).toBe('cheer');
+    expect(resultsCue(room({ Sam: 0, Priya: 0 }, [], []))).toBe('leave');
   });
   it("the game's own headline wins", () => {
     const r = withOutcome({ outcome: { kind: 'coop', won: true }, headline: '📡 Crystal clear!' });

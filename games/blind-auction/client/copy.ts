@@ -20,6 +20,11 @@ export const KIND_ICON: Record<ContentKind, string> = {
   pick: '🏁',
 };
 
+/** A content name inside a sentence: its article in lower case ("It's a trap!", not "A trap"). */
+export function inSentence(name: string): string {
+  return name.replace(/^(A|An|Un|Una|Unos|Unas|El|La|Los|Las) /u, (m) => m.toLowerCase());
+}
+
 export function kindName(L: Translator, kind: ContentKind): string {
   switch (kind) {
     case 'treasure':

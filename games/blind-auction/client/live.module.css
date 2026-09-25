@@ -1291,6 +1291,24 @@
   height: calc(var(--ba-pcard) * 0.45);
 }
 
+/* A seat at the table: the face and the whole name on their own row, the cards and total under it
+   (review [34ea15] #3: names were cut to 'San', 'Luc' beside the cards). */
+.handsGrid .hand21 {
+  flex-wrap: wrap;
+  row-gap: 2px;
+}
+
+.handsGrid .handWho {
+  flex-basis: 100%;
+  max-width: 100%;
+}
+
+.handName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .cardsRow {
   display: inline-flex;
   gap: 4px;

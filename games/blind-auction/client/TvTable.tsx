@@ -17,7 +17,16 @@ import {
 import type { PushedView, SoundCue } from '@partybox/game-sdk/ui';
 import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS, betsMs } from '../server/timing';
 import type { BlindAuctionTvView } from '../server/views';
-import { COIN, boxWords, iconOf, kindName, nameOf as optionName, payText, toneOf } from './copy';
+import {
+  COIN,
+  boxWords,
+  iconOf,
+  kindName,
+  nameOf as optionName,
+  payText,
+  toneOf,
+  inSentence,
+} from './copy';
 import type { Tone } from './copy';
 import { Doors, LiveStage } from './LiveStage';
 import { PotatoRing } from './Potato';
@@ -132,7 +141,7 @@ function OpenPanel({ view }: { view: View }): JSX.Element | null {
           <span aria-hidden>{inside ? iconOf(inside) : ''}</span>{' '}
           {inside?.label
             ? L('{what} wins!', { what: optionName(L, inside) })
-            : L("It's {what}!", { what: kindName(L, kind) })}
+            : L("It's {what}!", { what: inSentence(kindName(L, kind)) })}
         </p>
       ) : (
         <p className={styles.soldHead}>

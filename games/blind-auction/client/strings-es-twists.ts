@@ -4,7 +4,7 @@ export const ES_TWISTS: Record<string, string> = {
   'Sat out, the peek cost −{n}': 'Pasaste; espiar costó −{n}',
   Twist: 'Giro',
   '⏰ Early bird: bet now for up to ×1.25 more — it slides to ×1.00 at the buzzer.':
-    '⏰ Madrugador: apuesta ya y gana hasta ×1.25 más; baja a ×1.00 al sonar el timbre.',
+    '⏰ Madrugador: apuesta ya y gana hasta ×1,25 más; baja a ×1,00 al sonar el timbre.',
   "🛟 Insurance: pay 10 % more to get half your stake back if you're wrong.":
     '🛟 Seguro: paga un 10 % más y recupera la mitad de tu apuesta si fallas.',
   '🧮 The crowd sets the odds: right calls split the whole pot — back the unpopular pick!':
