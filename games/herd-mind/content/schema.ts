@@ -49,7 +49,7 @@ export const questionSchema = z
 export type QuestionItem = z.infer<typeof questionSchema>;
 
 export const packSchema = z.object({
-  lang: z.literal('en'),
+  lang: z.enum(['en', 'es']),
   items: z.array(questionSchema).min(1),
 });
 export type Pack = z.infer<typeof packSchema>;
