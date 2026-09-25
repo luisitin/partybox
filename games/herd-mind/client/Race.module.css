@@ -129,8 +129,10 @@
 .slide {
   position: absolute;
   inset: 0 auto 0 0;
-  /* the face is as big as the lane allows, up to --face */
-  width: calc(100% - min(var(--face), 90cqh));
+  /* the face is as big as the lane allows, up to --face; the score beside it lands before the
+     finish line too, so the dots never run through a leader's digits (blind-auction 39d514) */
+  width: calc(100% - min(var(--face), 90cqh) - var(--pb-space-2) - 1.4em);
+  font-size: var(--pb-font-body);
   display: flex;
   align-items: center;
   gap: var(--pb-space-2);
