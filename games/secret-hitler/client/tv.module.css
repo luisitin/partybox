@@ -62,7 +62,7 @@
   align-items: center;
   gap: 24px;
   /* One height in every phase (a title and two lines), so the boards below never move. */
-  height: 136px;
+  height: 142px;
   overflow: hidden;
   padding: 6px 24px;
   border-radius: 12px;
@@ -108,7 +108,7 @@
 .line {
   margin: 0;
   font-size: 28px;
-  line-height: 1.25;
+  line-height: 1.18;
   color: var(--sh-text-muted);
   animation: global(sh-rise) 450ms var(--sh-ease) both;
 }
