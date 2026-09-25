@@ -169,7 +169,8 @@
 }
 
 .phone .option {
-  padding: var(--pb-space-2) var(--pb-space-1);
+  /* Inner room on both sides: a long word never touches the border (review: 'Treasure' on SE). */
+  padding: var(--pb-space-2) var(--pb-space-2);
   border-radius: var(--pb-radius);
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -179,7 +180,7 @@
 }
 
 .phone .icon {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 }
 
 .phone .name {
@@ -324,4 +325,8 @@ button.option:focus-visible {
 
 .tv.compact .option {
   padding: var(--pb-space-2) var(--pb-space-3);
+}
+
+.nowrap {
+  white-space: nowrap;
 }

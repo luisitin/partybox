@@ -26,8 +26,9 @@ describe('flow', () => {
       labels.push(game.tvView(s).vipSkipLabel ?? '');
       s = skip(s);
     }
-    expect(labels.slice(0, 4)).toEqual([
-      "Let's go",
+    // The countdown (rules step 1) has no skip label.
+    expect(labels.filter(Boolean).slice(0, 4)).toEqual([
+      'Start now',
       'Skip to betting',
       'Close betting',
       'Next box',
@@ -36,7 +37,7 @@ describe('flow', () => {
   });
 
   it('a box without a voice holds 6 s; betting lasts `betSeconds`', () => {
-    let s = skip(start(3, { reader: 'none', betSeconds: 15 }));
+    let s = walkTo(start(3, { reader: 'none', betSeconds: 15 }), 'box');
     expect(s.phase.deadline).toBe(s.phase.startedAt + BOX_SILENT_MS);
     s = timer(s);
     expect(s.phase.deadline).toBe(s.phase.startedAt + 15_000);
@@ -62,7 +63,7 @@ describe('flow', () => {
 
 describe('voice pacing', () => {
   it('the box is not read aloud (owner, 2026-09-25): it lasts the silent time', () => {
-    const s = skip(start(3, { reader: 'george' }));
+    const s = walkTo(start(3, { reader: 'george' }), 'box');
     expect(boxRequest(s, 0)).toBeNull();
     expect(s.phase.deadline).toBe(s.phase.startedAt + BOX_SILENT_MS);
     expect(game.tvView(s).voice).toBeNull();

@@ -231,7 +231,7 @@ function statusOf(state: State): (id: string) => PlayerStatus {
 function skipLabel(state: State): string | undefined {
   switch (state.phase.id) {
     case 'rules':
-      return state.rulesStep === 0 ? "Let's go" : undefined;
+      return state.rulesStep === 0 ? 'Start now' : undefined;
     case 'box':
       return 'Skip to betting';
     case 'bet':
@@ -249,7 +249,8 @@ function skipLabel(state: State): string | undefined {
 
 function timerMode(state: State): 'normal' | 'quiet' | 'hidden' {
   if (state.phase.id === 'bet' || state.phase.id === 'swap') return 'normal';
-  return state.phase.id === 'rules' && state.rulesStep === 0 ? 'quiet' : 'hidden';
+  // The rules' safety net is never shown: nobody should feel hurried while reading.
+  return 'hidden';
 }
 
 function common(state: State): Common {

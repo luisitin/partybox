@@ -90,11 +90,11 @@ export function ownLineText(
     case 'won':
       return {
         big: L('You called it! +{n}', { n: line.back - line.amount }),
-        small: L('It was {what}. Your {coin} {bet} paid {coin} {back}.', {
+        // Coin and number glued (NBSP): never an orphaned number on its own line.
+        small: L('It was {what}. Your {bet} paid {back}.', {
           what: inside,
-          coin: COIN,
-          bet: line.amount,
-          back: line.back,
+          bet: `${COIN} ${line.amount}`,
+          back: `${COIN} ${line.back}`,
         }),
       };
     case 'lost':

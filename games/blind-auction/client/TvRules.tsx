@@ -29,7 +29,8 @@ function Countdown({ view }: { view: PushedView<BlindAuctionTvView> }): JSX.Elem
 
 export function TvRules({ view }: { view: PushedView<BlindAuctionTvView> }): JSX.Element {
   const L = useT(STRINGS);
-  const beat = useBeats([0, 700, 1900, 3100, 4300]);
+  // All three steps at once (a slow reader can read ahead), a short stagger for the entrance.
+  const beat = useBeats([0, 150, 300, 450, 700]);
   const steps = [
     L('A mystery box shows what might be inside, and the odds.'),
     L('Bet your coins in secret on what you think is inside. Long shots pay big.'),
@@ -41,7 +42,7 @@ export function TvRules({ view }: { view: PushedView<BlindAuctionTvView> }): JSX
     <div className={styles.frame}>
       <Stage center className={styles.rules}>
         <h1 className={styles.title}>
-          <span aria-hidden>🔨</span> {L('Blind Auction')}
+          <span aria-hidden>📦</span> {L('Blind Auction')}
         </h1>
         <div className={styles.rulesRow}>
           <ol className={styles.steps}>

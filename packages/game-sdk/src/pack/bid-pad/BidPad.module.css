@@ -30,7 +30,8 @@
   margin: 0;
   text-align: center;
   font-size: var(--pb-font-caption);
-  color: var(--pb-text-muted);
+  /* Information, not a disabled control (review: the grey read as disabled). */
+  color: var(--pb-text);
   font-variant-numeric: tabular-nums;
 }
 

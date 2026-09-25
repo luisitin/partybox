@@ -4,11 +4,14 @@
 // VIP's skip — a 3·2·1 (step 1, ADR-033) and the first box.
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { COUNTDOWN_MS, RULES_MS } from '../timing';
+import { COUNTDOWN_MS, RULES_SAFETY_MS } from '../timing';
 import type { Input, State, Transition } from '../types';
 
 export function enterRules(state: State, now: number): State {
-  return enterPhase({ ...state, rulesStep: 0 }, 'rules', now, RULES_MS);
+  // The owner's rule [cc45f4]: the game does not start until every connected player is ready; the
+  // VIP's "Start now" is the escape. A hidden safety net (never shown as a clock) only keeps a
+  // phone left on the table from holding the room forever (the contract: idle players end).
+  return enterPhase({ ...state, rulesStep: 0 }, 'rules', now, RULES_SAFETY_MS);
 }
 
 /** Everyone still connected (and in the game) has tapped Ready. */

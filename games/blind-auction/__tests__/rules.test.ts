@@ -1,14 +1,17 @@
 // The rules and the ready-up (the owner, 2026-09-24): everyone reads, taps Ready, then 3·2·1.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
-import { COUNTDOWN_MS, RULES_MS } from '../server/timing';
+import { COUNTDOWN_MS, RULES_SAFETY_MS } from '../server/timing';
 import { ready, send, skip, start, timer } from './helpers';
 
 describe('rules and ready-up', () => {
   it('opens on the rules; bots are ready from the start', () => {
     const s = start(4, {}, 1, 2);
     expect(s.phase.id).toBe('rules');
-    expect(s.phase.deadline).toBe(s.phase.startedAt + RULES_MS);
+    // No visible clock: the game waits for everyone (the owner's rule [cc45f4]); only a 3-minute
+    // safety net keeps an idle phone from holding the room.
+    expect(s.phase.deadline).toBe(s.phase.startedAt + RULES_SAFETY_MS);
+    expect(game.tvView(s).timerMode).toBe('hidden');
     expect(s.ready.sort()).toEqual(['p3', 'p4']);
     expect(game.tvView(s).readyIds.sort()).toEqual(['p3', 'p4']);
   });
@@ -25,10 +28,11 @@ describe('rules and ready-up', () => {
     expect(s.phase.id).toBe('box');
   });
 
-  it('never waits forever: the deadline starts the countdown with whoever is ready', () => {
+  it("waits for everyone; the VIP's Start now is the escape", () => {
     let s = start(3);
     s = ready(s, 'p1');
-    s = timer(s);
+    expect(game.tvView(s).vipSkipLabel).toBe('Start now');
+    s = skip(s);
     expect([s.phase.id, s.rulesStep]).toEqual(['rules', 1]);
     expect(timer(s).phase.id).toBe('box');
   });
@@ -42,7 +46,9 @@ describe('rules and ready-up', () => {
     expect(s.rulesStep).toBe(1);
   });
 
-  it('the VIP skip goes straight to the first box', () => {
-    expect(skip(start(3)).phase.id).toBe('box');
+  it('the VIP skip counts 3·2·1, then the first box', () => {
+    const s = skip(start(3));
+    expect([s.phase.id, s.rulesStep]).toEqual(['rules', 1]);
+    expect(timer(s).phase.id).toBe('box');
   });
 });

@@ -63,8 +63,7 @@ export const ES_SCREENS: Record<string, string> = {
   // own lines
   '👀 Watch the TV': '👀 Mira la TV',
   'You called it! +{n}': '¡Acertaste! +{n}',
-  'It was {what}. Your {coin} {bet} paid {coin} {back}.':
-    'Era {what}. Tus {coin} {bet} pagaron {coin} {back}.',
+  'It was {what}. Your {bet} paid {back}.': 'Era {what}. Tus {bet} pagaron {back}.',
   'Not this time: −{n}': 'Esta vez no: −{n}',
   'It was {what}.': 'Era {what}.',
   'You sat this one out': 'Pasaste esta ronda',
@@ -72,6 +71,7 @@ export const ES_SCREENS: Record<string, string> = {
   'One moment…': 'Un momento…',
   'Look at the TV': 'Mira la TV',
   "That's the last box!": '¡Esa fue la última caja!',
+  'Tap a card, then choose your coins': 'Toca una carta y luego elige tus monedas',
   // live events
   // The game's name is a brand: it stays English on Spanish screens (#decisions, Part 00 a).
   'Blind Auction': 'Blind Auction',

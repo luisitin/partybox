@@ -91,6 +91,10 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
             onSelect={setOption}
             locked={box.event === 'potato' ? view.mySeat : null}
           />
+          {option === null ? (
+            // Review: a first-timer didn't know to tap a card or where the stake goes.
+            <p className={styles.betHint}>{L('Tap a card, then choose your coins')}</p>
+          ) : null}
         </div>
       }
       notice={notice}

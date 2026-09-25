@@ -118,7 +118,8 @@ function enterDone(state: State, now: number): State {
 export function advance(state: State, now: number): State {
   switch (state.phase.id) {
     case 'rules':
-      return enterBox(state, now, 0);
+      // "Start now" still counts 3·2·1 first; the countdown's end deals the first box.
+      return state.rulesStep === 0 ? countDown(state, now) : enterBox(state, now, 0);
     case 'box':
       return enterBet(state, now);
     case 'bet':

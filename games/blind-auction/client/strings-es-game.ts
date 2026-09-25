@@ -2,7 +2,7 @@
 // manifest.es.json): the VIP's Skip labels (`vipSkipLabel`) and the awards. Keyed by the English sentence (ADR-044).
 export const ES_GAME: Record<string, string> = {
   // vipSkipLabel — the host bar and the ★ menu
-  "Let's go": '¡Vamos!',
+  'Start now': 'Empezar ya',
   'Skip to betting': 'Ir a las apuestas',
   'Close betting': 'Cerrar las apuestas',
   'Next box': 'Siguiente caja',

@@ -75,7 +75,7 @@ export function PhoneRules({ view, onReady }: { view: View; onReady?: () => void
   return (
     <Screen className={styles.screen} footer={footer}>
       <h2 className={styles.howTitle}>
-        <span aria-hidden>🔨</span> {L('Blind Auction')}
+        <span aria-hidden>📦</span> {L('Blind Auction')}
       </h2>
       {view.step === 1 ? (
         <div className={styles.countdownBox}>

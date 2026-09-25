@@ -1,8 +1,8 @@
 // Every duration Blind Auction paces itself by. Pure constants, shared by the reducer and the TV so
 // the stage's choreography lands on the server's beats. No content imports.
 
-/** `rules`: everyone reads the three steps and taps Ready; this long at most. */
-export const RULES_MS = 40_000;
+/** `rules`: nobody is hurried (no clock shown); after this long an idle phone stops holding the room. */
+export const RULES_SAFETY_MS = 180_000;
 /** `rules` step 1: the 3·2·1 once everyone is ready. */
 export const COUNTDOWN_MS = 3_000;
 
