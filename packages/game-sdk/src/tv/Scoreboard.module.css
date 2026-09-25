@@ -149,13 +149,15 @@
 }
 
 .me {
-  box-shadow: inset 4px 0 0 var(--pb-accent);
+  /* --pb-me: a team's card sets its own colour, so "you" never reads as the other team (Sun is the
+     accent pink: tune-in 243619) */
+  box-shadow: inset 4px 0 0 var(--pb-me, var(--pb-accent));
 }
 
 /* Phone (compact) only: my row pops in and, when not the winner's outlined row, gets its own
    accent outline so "that one is me" reads at a glance. */
 .compact .me:not(.top) {
-  outline: 2px solid var(--pb-accent);
+  outline: 2px solid var(--pb-me, var(--pb-accent));
 }
 
 .compact .me {

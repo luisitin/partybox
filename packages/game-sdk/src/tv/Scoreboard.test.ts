@@ -1,6 +1,13 @@
 // The board's landing beat (what counts up, and what a game deals beside the board, wait for).
 import { describe, expect, it } from 'vitest';
-import { boardLandedMs, climbOffset, rankBand, tieEdges, tierOf } from './Scoreboard';
+import {
+  boardLandedMs,
+  climbOffset,
+  rankBand,
+  tieEdges,
+  tieSpansColumns,
+  tierOf,
+} from './Scoreboard';
 
 describe('boardLandedMs', () => {
   it('lands one row per 150 ms in a single column, plus the last rise', () => {
@@ -67,5 +74,11 @@ describe('tie brackets and rank bands (I-146)', () => {
     expect(rankBand(ranks, 4, 4)).toBe('4');
     expect(rankBand(ranks, 1, 4)).toBeNull();
     expect(rankBand([1, 2, 3, 4, 5, 6, 7], 4, 4)).toBe('5–7');
+  });
+
+  it('shows no band labels when a column carries a tie on into other ranks (hive-rank 489534)', () => {
+    expect(tieSpansColumns([1, 1, 1, 1, 1, 1, 1, 8], 4)).toBe(true); // "1" | "1–8" would mislead
+    expect(tieSpansColumns([1, 2, 2, 4, 4, 4, 4, 4], 4)).toBe(false); // "1–4" | "4" reads right
+    expect(tieSpansColumns([1, 2, 3, 4, 5, 6, 7], 4)).toBe(false);
   });
 });

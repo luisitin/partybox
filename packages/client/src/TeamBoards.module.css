@@ -17,6 +17,8 @@
   /* A tap on "Your team lost this one" scrolls the group to the top: its header lands below the
      phone list's top fade (Screen's fold-clear + fold-top, scrolled), not dimmed under it. */
   scroll-margin-top: calc(var(--pb-space-4) + var(--pb-font-caption) * 2);
+  /* your own row in your team's colour, not the accent (tune-in 243619: Sun is the accent) */
+  --pb-me: var(--team);
 }
 
 .team.won {
