@@ -1,12 +1,16 @@
 // Settings (spec §5.14) resolved against the room at init: the mode `auto` picks, the rounds
 // `auto` gives, and the presence switch that turns the huddle off. Pure; init must never throw, so
 // every read clamps to the manifest's spec.
-import type { InitContext, SettingSpec, Settings as RawSettings } from '@partybox/game-sdk';
+import type {
+  GamePresence,
+  InitContext,
+  SettingSpec,
+  Settings as RawSettings,
+} from '@partybox/game-sdk';
 import type { Mode, PresenceMode, Reader, Settings, TargetSize } from './types';
 
 const READERS: readonly Reader[] = ['george', 'fable', 'jessica', 'sky', 'original'];
 const SIZES: readonly TargetSize[] = ['narrow', 'normal', 'wide'];
-const PRESENCE: readonly PresenceMode[] = ['together', 'remote-voice', 'remote-text'];
 
 function numberSetting(specs: readonly SettingSpec[], raw: RawSettings, key: string): number {
   const spec = specs.find((s) => s.key === key);
@@ -33,12 +37,10 @@ export function resolveRounds(chosen: unknown, players: number): number {
   return players >= 3 && players <= 8 ? players : 8;
 }
 
-/** ADR-047 (F4, not on main yet): presence arrives on the init context when it exists. */
-export function readPresence(ctx: InitContext): { mode: PresenceMode; phoneOnly: boolean } {
-  const raw = (ctx as InitContext & { presence?: { mode?: unknown; phoneOnly?: unknown } })
-    .presence;
-  const mode = PRESENCE.find((m) => m === raw?.mode) ?? 'together';
-  return { mode, phoneOnly: raw?.phoneOnly === true };
+/** ADR-047: where everyone is, fixed at start (a host from before presence sends none: all in one
+ *  room with a TV). */
+export function readPresence(ctx: InitContext): GamePresence {
+  return ctx.presence ?? { mode: 'together', phoneOnly: false };
 }
 
 export function readSettings(

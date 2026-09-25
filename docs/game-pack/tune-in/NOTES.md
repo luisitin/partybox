@@ -22,14 +22,14 @@ pacing rule [cc45f4] (3141746f, 8f1a8b9f); the reviewer's DESIGN CHANGES [ba045e
 Swapped at the main merge (ac3da886): F5 match (`sameAnswer`, `stem`, `normalize`), F6 speech
 (`toSpeakable` with `playerText` for clues, `speechKey`, `pendingCap`, the pronunciations schema),
 F7 `teamsFromSeed`, the F1 entries (`client/shared.ts`, `phone-entry.ts`, `tv-entry.ts`), the F2
-manifest fields + `manifest.es.json`. Still local:
+manifest fields + `manifest.es.json`. F4 presence at the next merge (02e5dfd3): `readPresence`
+returns `ctx.presence` (the SDK's `GamePresence`), else all in one room. Still local:
 
-| Needed                          | Owner      | Stand-in                                                                             |
-| ------------------------------- | ---------- | ------------------------------------------------------------------------------------ |
-| F6 fixed clips (`render-clips`) | Foundation | fixed lines go through the live speech path; the host caches each key, renders once  |
-| F4 presence (`ctx.presence`)    | Foundation | `readPresence(ctx)` reads it when present, else `together` (foundation-f4 in review) |
-| `SecretCard` (hold to see)      | Imposter   | a local hold-to-see card in `client/`, same behaviour; swap when Imposter ships it   |
-| The shell's ready-up stage      | Foundation | the game's own intro ready-up (below); drop it when [46be3c] lands                   |
+| Needed                          | Owner      | Stand-in                                                                            |
+| ------------------------------- | ---------- | ----------------------------------------------------------------------------------- |
+| F6 fixed clips (`render-clips`) | Foundation | fixed lines go through the live speech path; the host caches each key, renders once |
+| `SecretCard` (hold to see)      | Imposter   | a local hold-to-see card in `client/`, same behaviour; swap when Imposter ships it  |
+| The shell's ready-up stage      | Foundation | the game's own intro ready-up (below); drop it when ready-up [303ec0] lands         |
 
 ## Decisions (made, noted, easy to change)
 

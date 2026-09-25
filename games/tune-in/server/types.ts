@@ -1,6 +1,6 @@
 // State and input types for Tune In (spec §5.9–5.10). Everything is JSON (docs/GAME_CONTRACT.md).
 import { z } from '@partybox/game-sdk';
-import type { GameStateBase } from '@partybox/game-sdk';
+import type { GamePresence, GameStateBase } from '@partybox/game-sdk';
 import type { SpectrumItem } from '../content/schema';
 
 export const PHASES = ['intro', 'clue', 'dial', 'call', 'reveal', 'scores', 'done'] as const;
@@ -11,7 +11,7 @@ export type TeamId = 'sun' | 'moon';
 export type Side = 'left' | 'right';
 export type TargetSize = 'narrow' | 'normal' | 'wide';
 export type Reader = 'george' | 'fable' | 'jessica' | 'sky' | 'original';
-export type PresenceMode = 'together' | 'remote-voice' | 'remote-text';
+export type { PresenceMode } from '@partybox/game-sdk';
 
 export interface Settings {
   mode: Mode;
@@ -77,7 +77,7 @@ export interface PlayerStats {
 
 export interface State extends GameStateBase {
   cfg: Settings;
-  presence: { mode: PresenceMode; phoneOnly: boolean };
+  presence: GamePresence;
   /** Seat order at the start (bots included); everyone here is in the results. */
   seats: string[];
   /** Players who left for good: never drawn as psychic again. */
