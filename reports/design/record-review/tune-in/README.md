@@ -177,3 +177,16 @@ double-tap Lock in; callers tap a side; Priya's phone (iPhone SE, 320 × 568) ge
   shrinks, and a short screen drops the lock row's faces for its count. SE and 200 % re-shot with
   nothing overlapping; at 200 % the psychic screens scroll a little, the card, the clue box and
   Send in view (open question in REVIEW.md).
+
+## Final checks on the merged build (main f8f24cf3 merged in at 9ea2f9d6)
+
+- Clean timing (no video, no stills, 8 players): teams 13 184 frames, 6 over 34 ms (0.05 %);
+  co-op 20 351 frames, 5 (0.02 %); none over 100 ms — the worst are the game's first frame (the
+  dev server compiling Tune In) and the scores board mounting. `timing-teams.json`,
+  `timing-coop.json`.
+- p12 — solo, real touch (6 players, seed 52): TV dead-air 160.6 s, **0 dead spans, 0 hard cuts**;
+  the hold card flips to the target and back at the same height on the iPhone and the SE.
+- Found in the matrix: the phone strip's zone digits ran together ("23 4 32") on an SE and at
+  200 % text. Fixed: each zone sizes its own digit to its width, with a 2 px seam between zones.
+- Sims on the final code: 700 games (12 players ×200, 3 ×100, 2–16 varied ×200, 16 random ×100,
+  16 idle ×100), 0 failed.
