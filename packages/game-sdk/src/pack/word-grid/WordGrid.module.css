@@ -433,3 +433,9 @@
   color: inherit;
   opacity: 0.75;
 }
+
+/* on the TV the faces sit inside the card's rounded corner */
+.tv .faces {
+  top: 8px;
+  right: 10px;
+}
