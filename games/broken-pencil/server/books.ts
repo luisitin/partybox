@@ -93,7 +93,10 @@ export function isIntact(book: Book): boolean {
   const last = book.pages[book.pages.length - 1];
   if (!first || first.kind !== 'word' || !last || last.kind !== 'guess' || last.text === null)
     return false;
-  return normalizeText(last.text) === normalizeText(first.text);
+  // I-496: a word or guess with no letters or digits left ("🍕", "Привет", "???") normalises to
+  // "" — two empties are not a match
+  const word = normalizeText(first.text);
+  return word !== '' && normalizeText(last.text) === word;
 }
 
 export function wordOf(book: Book): string {

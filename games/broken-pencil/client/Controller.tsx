@@ -67,7 +67,7 @@ function Pick({ view, send }: GameControllerProps<PencilControllerView, Input>):
       }
     >
       <p className={styles.hint}>
-        {reachLine(L, view)} {L('Pick something drawable.')}
+        {reachLine(L, view)} {L('Pick something drawable.')} {L('No letters or numbers when you draw.')}
       </p>
       <Offers
         offers={offers}
@@ -186,6 +186,7 @@ function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>):
       </h2>
       <DrawPad
         initial={initial}
+        hint={L('No letters, no numbers — the pencil does the talking.')}
         onChange={(s) => {
           strokes.current = s;
           setCount(s.length);

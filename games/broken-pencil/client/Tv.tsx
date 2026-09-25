@@ -223,6 +223,8 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
                   })}
           </li>
           <li>{L('Then everyone presents their own book on the TV, page by page.')}</li>
+          {/* I-496 A: the one rule, while every head is up */}
+          <li>{L('No letters, no numbers: the pencil has to do the talking.')}</li>
         </ol>
         {/* I-507 B: the book as it will be — the word, then drawing, guess, drawing… */}
         <p className={styles.chain} aria-label={L('{n} pages', { n: view.pageCount })}>
