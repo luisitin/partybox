@@ -177,6 +177,9 @@ export function fireDueTimer(room: RoomState, now: number, deps: EngineDeps): Ap
 }
 
 /** When the host should next send a `tick`, or null when nothing is pending. */
+/** ADR-053: the start stage's 3·2·1, a second each (start-stage.ts; here for nextWakeAt). */
+export const STAGE_COUNT_MS = 3000;
+
 export function nextWakeAt(room: RoomState): number | null {
   const candidates: number[] = [];
   const running = room.game;
@@ -198,6 +201,9 @@ export function nextWakeAt(room: RoomState): number | null {
     if (p.isVip && canHandOver && room.status === 'playing')
       candidates.push(p.disconnectedAt + LIMITS.vipHandoverMs);
   }
+  // ADR-053: the start stage's 3·2·1 ends
+  const staged = room.starting?.countdownAt;
+  if (staged !== null && staged !== undefined) candidates.push(staged + STAGE_COUNT_MS);
   // I-746 C: an empty room ends 5 minutes after the last phone dropped
   if (room.asleepSince !== undefined && room.status === 'playing')
     candidates.push(room.asleepSince + ASLEEP_END_MS);

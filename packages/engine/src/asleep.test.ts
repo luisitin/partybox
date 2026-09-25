@@ -16,7 +16,7 @@ function playing(): RoomState {
   ).room;
   room = applyRoomEvent(
     room,
-    { type: 'vip', now: T0 + 60, playerId: 'p1', action: { action: 'start' }, seed: 1 },
+    { type: 'vip', now: T0 + 60, playerId: 'p1', action: { action: 'startNow' }, seed: 1 },
     deps,
   ).room;
   return room;
