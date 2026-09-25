@@ -4,7 +4,7 @@
 import { enterPhase, isTimerFor, pick } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { isIntact } from '../books';
-import { LINES } from '../content';
+import { linesFor } from '../content';
 import {
   BOT_SHOW_MS,
   SHOW_MS,
@@ -29,7 +29,10 @@ export function showPage(state: State, b: number, page: number, now: number): St
     const intact = isIntact(book);
     verdict = intact ? 'intact' : 'broken';
     if (intact) intactBooks++;
-    [line, rng] = pick(rng, intact ? LINES.intact : LINES.broken);
+    [line, rng] = pick(
+      rng,
+      intact ? linesFor(state.contentLang).intact : linesFor(state.contentLang).broken,
+    );
   }
   // A bot owns no thumb: its pages turn on the shorter presenter-pace timers instead.
   const botsBook = book !== undefined && state.players[book.ownerId]?.bot === true;

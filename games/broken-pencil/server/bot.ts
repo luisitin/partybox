@@ -5,7 +5,7 @@
 import { hasPlayer } from '@partybox/game-sdk';
 import type { Rng } from '@partybox/game-sdk';
 import { bookInHands, owedNow } from './books';
-import { LINES } from './content';
+import { linesFor } from './content';
 import { COLORS, WIDTHS, encodePoints } from './encoding';
 import { jitter, shapeFor } from './shapes';
 import { hasPicked } from './phases/pick';
@@ -13,6 +13,13 @@ import { presenterOf } from './phases/show';
 import type { Input, State, Stroke } from './types';
 
 const CUSTOM_WORDS = ['a confused robot', 'my left shoe', 'a very tired cat', 'soup', 'the moon'];
+const CUSTOM_WORDS_ES = [
+  'un robot confundido',
+  'mi zapato izquierdo',
+  'un gato muy cansado',
+  'sopa',
+  'la luna',
+];
 
 export function sampleInput(state: State, playerId: string, rng: Rng): Input | null {
   if (!hasPlayer(state, playerId)) return null;
@@ -20,14 +27,18 @@ export function sampleInput(state: State, playerId: string, rng: Rng): Input | n
     case 'pick':
       if (hasPicked(state, playerId)) return null;
       if (state.settings.customWords && rng.chance(0.2))
-        return { type: 'pickCustom', text: rng.pick(CUSTOM_WORDS) };
+        return {
+          type: 'pickCustom',
+          text: rng.pick(state.contentLang === 'es' ? CUSTOM_WORDS_ES : CUSTOM_WORDS),
+        };
       return { type: 'pick', option: rng.int(0, 2) };
     case 'draw':
     case 'pass':
     case 'guess': {
       // Whatever the step asks for next: a guess, then (in a pass) a drawing of it.
       const owed = owedNow(state, playerId);
-      if (owed === 'guess') return { type: 'guess', text: rng.pick(LINES.botGuesses) };
+      if (owed === 'guess')
+        return { type: 'guess', text: rng.pick(linesFor(state.contentLang).botGuesses) };
       if (owed !== 'draw') return null;
       // The page before the one being drawn holds the phrase: the word, or the last guess.
       const book = state.books[bookInHands(state, playerId)];

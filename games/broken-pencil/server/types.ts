@@ -67,6 +67,9 @@ export interface State extends GameStateBase {
   books: Book[];
   /** playerId → the three offered words. */
   offers: Record<string, string[]>;
+  /** ADR-054: the language of the deck, the verdict lines and the bot's guesses, fixed at init.
+   *  Absent (older states, fixtures) = English. */
+  contentLang?: 'en' | 'es';
   showing: Showing | null;
   intactBooks: number;
   /** Books the VIP called "close enough" (the owner, 2026-09-21): intact by veto. Absent in
@@ -112,7 +115,7 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('draw'), strokes: strokesSchema }),
   /** The sheet so far, while still drawing: what the deadline keeps if "Done" never comes. */
   z.object({ type: z.literal('draft'), strokes: strokesSchema }),
-  z.object({ type: z.literal('guess'), text: z.string().trim().min(1).max(40) }),
+  z.object({ type: z.literal('guess'), text: z.string().trim().min(1).max(60) }),
   /** The VIP's "close enough": a broken book counts as intact (show's last page, or the summary). */
   z.object({ type: z.literal('veto'), book: z.number().int().min(0).max(15) }),
 ]);

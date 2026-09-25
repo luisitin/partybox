@@ -53,6 +53,8 @@ export function readSettings(raw: RawSettings): Settings {
 
 function init(ctx: InitContext): State {
   const settings = readSettings(ctx.settings);
+  // ADR-054: the deck's language, fixed for the game (absent = English).
+  const contentLang = ctx.contentLang === 'es' ? 'es' : 'en';
   const players: State['players'] = {};
   for (const p of ctx.players) players[p.id] = p;
   const N = ctx.players.length;
@@ -62,7 +64,7 @@ function init(ctx: InitContext): State {
   let rng = seedRng(ctx.seed);
   const [seats, afterSeats] = shuffle(rng, Object.keys(players).sort());
   rng = afterSeats;
-  const [offers, afterOffers] = dealOffers(rng, seats, settings.spicy);
+  const [offers, afterOffers] = dealOffers(rng, seats, settings.spicy, contentLang);
   rng = afterOffers;
   const books: Book[] = seats.map((ownerId) => ({ ownerId, pages: [] }));
   const base: State = {
@@ -76,6 +78,7 @@ function init(ctx: InitContext): State {
     step: 0,
     books,
     offers,
+    ...(contentLang === 'es' ? { contentLang } : {}),
     showing: null,
     intactBooks: 0,
   };

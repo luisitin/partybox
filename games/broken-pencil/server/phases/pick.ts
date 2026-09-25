@@ -5,6 +5,7 @@ import { allConnectedDone, enterPhase, hasPlayer, isTimerFor } from '@partybox/g
 import type { GameEvent } from '@partybox/game-sdk';
 import { PICK_MS } from '../types';
 import type { Book, Input, State, Transition } from '../types';
+import { mysteryWord } from '../content';
 
 export function enterPick(state: State, now: number): State {
   return enterPhase(state, 'pick', now, PICK_MS);
@@ -28,7 +29,7 @@ export function closePick(state: State, now: number, next: Transition): State {
   let s = state;
   for (const id of s.seats) {
     if (hasPicked(s, id)) continue;
-    s = withWord(s, id, s.offers[id]?.[1] ?? 'a mystery');
+    s = withWord(s, id, s.offers[id]?.[1] ?? mysteryWord(s.contentLang));
   }
   return next({ ...s, step: 1 }, now);
 }

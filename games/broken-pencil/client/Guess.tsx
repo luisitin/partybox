@@ -91,7 +91,7 @@ export function Guess({
         }
         prompt={last ? L('Last guess: what is this?') : L('What is this? (you draw it next)')}
         placeholder={L('Your best guess…')}
-        maxLength={40}
+        maxLength={60}
         submitted={false}
         submitLabel={last ? L('Send guess') : L('Guess, then draw it')}
         promptKey={`${view.step}:${view.deadline ?? ''}`}
