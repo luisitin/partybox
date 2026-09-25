@@ -6,10 +6,11 @@ import type { JSX } from 'react';
 import { PrimaryButton, Screen, useT } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { ActView, ShControllerView } from '../server/views';
-import { CardBack, PolicyCard } from './Card';
+import { CardRow } from './CardRow';
 import { nameIn, partyName, powerName, reasonName } from './labels';
 import { PhoneDossier } from './PhoneDossier';
 import { FacePicker } from './standin/FacePicker';
+import { getSecretCardMode } from './standin/mode';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
@@ -49,72 +50,6 @@ function Picker({
       columns={options.length > 6 ? 3 : 2}
       label={act.kind === 'nominate' ? L('Choose your Chancellor') : L('Choose a player')}
     />
-  );
-}
-
-/**
- * Hold the row to see the cards; slide onto one and let go to mark it (one finger). Face-down
- * otherwise, with numbered keys for keyboards and screen readers that name the card only as
- * "Card 2", so a glance never shows the hand.
- */
-function CardRow({
-  cards,
-  marked,
-  onMark,
-}: {
-  cards: ActView['cards'];
-  marked: number | null;
-  onMark?: (i: number) => void;
-}): JSX.Element {
-  const L = useT(STRINGS);
-  const [open, setOpen] = useState(false);
-  const release = (x: number, y: number): void => {
-    setOpen(false);
-    const hit = document.elementFromPoint(x, y)?.closest('[data-card]');
-    const i = Number(hit?.getAttribute('data-card'));
-    if (onMark && Number.isInteger(i) && hit) onMark(i);
-  };
-  return (
-    <div className={styles.cardRowWrap}>
-      <div
-        className={styles.cardRow}
-        data-open={open || undefined}
-        aria-label={L('The policies in your hand')}
-        onPointerDown={(e) => {
-          e.currentTarget.setPointerCapture(e.pointerId);
-          setOpen(true);
-        }}
-        onPointerUp={(e) => release(e.clientX, e.clientY)}
-        onPointerCancel={() => setOpen(false)}
-        onContextMenu={(e) => e.preventDefault()}
-      >
-        {cards.map((c, i) => (
-          <span key={i} data-card={i}>
-            {open ? (
-              <PolicyCard party={c} marked={marked === i} />
-            ) : (
-              <CardBack label={marked === i ? '✓' : String(i + 1)} />
-            )}
-          </span>
-        ))}
-        {open ? null : <span className={styles.cardHint}>{L('Hold to see the policies')}</span>}
-      </div>
-      {onMark ? (
-        <div className={styles.cardKeys}>
-          {cards.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              className={styles.cardKey}
-              data-on={marked === i || undefined}
-              onClick={() => onMark(i)}
-            >
-              {L('Card {n}', { n: i + 1 })}
-            </button>
-          ))}
-        </div>
-      ) : null}
-    </div>
   );
 }
 
@@ -225,7 +160,9 @@ export function PhoneAct({ view, act, send }: Props): JSX.Element {
         >
           <CardRow cards={act.cards} marked={mark} onMark={setMark} />
           <p className={styles.hint}>
-            {L('Hold the row to see them, slide onto one and let go to choose it.')}
+            {getSecretCardMode() === 'tap'
+              ? L('Tap the row to see them, then tap one to choose it.')
+              : L('Hold the row to see them, slide onto one and let go to choose it.')}
           </p>
         </Screen>
       );

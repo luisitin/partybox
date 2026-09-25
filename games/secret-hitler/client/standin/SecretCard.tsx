@@ -1,8 +1,11 @@
 // STAND-IN for the SDK's SecretCard (Part 00 §6 P6; Imposter owns it, on game/imposter, not on
-// main yet). Same props subset, so the swap is an import change: press and hold to see the face,
-// let go to hide it. Plain on purpose (M1); the 3D flip comes with the real one.
-import { useState } from 'react';
+// main yet). Same props subset, so the swap is an import change. Hold mode: press and hold to see
+// the face, let go to hide it. Tap mode (the phone's preference): tap to show, tap again or wait
+// 5 s to hide. It also turns back on pointercancel, blur and the page hiding. Plain on purpose
+// (M1); the 3D turn comes with the real one.
+import { useEffect, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
+import { AUTO_HIDE_MS, getSecretCardMode } from './mode';
 import styles from './standin.module.css';
 
 export interface SecretCardProps {
@@ -21,8 +24,21 @@ export function SecretCard({
   className,
 }: SecretCardProps): JSX.Element {
   const [open, setOpen] = useState(false);
+  const [tap] = useState(() => getSecretCardMode() === 'tap');
   const show = (): void => setOpen(true);
   const hide = (): void => setOpen(false);
+  useEffect(() => {
+    const onHide = (): void => {
+      if (document.visibilityState === 'hidden') setOpen(false);
+    };
+    document.addEventListener('visibilitychange', onHide);
+    return () => document.removeEventListener('visibilitychange', onHide);
+  }, []);
+  useEffect(() => {
+    if (!open || !tap) return;
+    const t = setTimeout(() => setOpen(false), AUTO_HIDE_MS);
+    return () => clearTimeout(t);
+  }, [open, tap]);
   return (
     <button
       type="button"
@@ -30,14 +46,22 @@ export function SecretCard({
       aria-pressed={open}
       className={`${styles.secret} ${className ?? ''}`}
       onPointerDown={(e) => {
+        if (e.button !== 0) return;
+        if (tap) return setOpen(!open);
         e.currentTarget.setPointerCapture(e.pointerId);
         show();
       }}
-      onPointerUp={hide}
+      onPointerUp={() => (tap ? undefined : hide())}
       onPointerCancel={hide}
       onContextMenu={(e) => e.preventDefault()}
-      onKeyDown={(e) => (e.key === ' ' || e.key === 'Enter' ? show() : undefined)}
-      onKeyUp={hide}
+      onKeyDown={(e) => {
+        if (e.key !== ' ' && e.key !== 'Enter') return;
+        e.preventDefault();
+        if (e.repeat) return;
+        if (tap) setOpen(!open);
+        else show();
+      }}
+      onKeyUp={() => (tap ? undefined : hide())}
       onBlur={hide}
     >
       {open ? (

@@ -5,6 +5,7 @@ import { useT } from '@partybox/game-sdk/ui';
 import type { ShControllerView } from '../server/views';
 import { PolicyCard } from './Card';
 import { nameIn, partyName, roleGoal, roleName } from './labels';
+import { getSecretCardMode } from './standin/mode';
 import { SecretCard } from './standin/SecretCard';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
@@ -15,7 +16,12 @@ export function PhoneDossier({ view }: { view: ShControllerView }): JSX.Element 
   if (!d) return null;
   const name = (id: string): string => nameIn(view.players, id);
   return (
-    <SecretCard backLabel={L('Hold to see your dossier')} label={L('Your secret dossier')}>
+    <SecretCard
+      backLabel={
+        getSecretCardMode() === 'tap' ? L('Tap to see your dossier') : L('Hold to see your dossier')
+      }
+      label={L('Your secret dossier')}
+    >
       <dl className={styles.dossier}>
         <dt>{L('Party')}</dt>
         <dd>

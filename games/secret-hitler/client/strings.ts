@@ -149,6 +149,10 @@ export const STRINGS: Strings = {
     'The policies in your hand': 'Las leyes en tu mano',
     'Hold to see the policies': 'Mantén pulsado para ver las leyes',
     'Card {n}': 'Carta {n}',
+    'Tap to see the policies': 'Toca para ver las leyes',
+    'Tap the row to see them, then tap one to choose it.':
+      'Toca la fila para verlas y luego toca una para elegirla.',
+    'Tap to see your dossier': 'Toca para ver tu expediente',
     'Tap a policy': 'Toca una ley',
     'Discard this {party} policy': 'Descartar esta ley: {party}',
     'Enact this {party} policy': 'Aprobar esta ley: {party}',
