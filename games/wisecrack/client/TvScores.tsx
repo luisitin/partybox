@@ -20,6 +20,7 @@ export function TvScores({ view }: Props): JSX.Element {
   // all zeros instead of landing unexplained (review-loop #35).
   const tied = view.standings.filter((r) => r.rank === 1).length > 1;
   const silentRound = view.promptsPlayed === 0;
+  const vipName = view.players.find((p) => p.id === view.vip)?.name;
   // I-027: where every row stood before this round — by pre-delta score, ties in roster order
   // (after round 1 everyone was level: the roster IS the old board).
   const roster = new Map(view.players.map((p, i) => [p.id, i]));
@@ -57,8 +58,10 @@ export function TvScores({ view }: Props): JSX.Element {
           </span>
         </BigText>
       ) : finalNext ? null : (
+        // Pacing rule (2026-09-25): the board waits for the VIP's Next — say whose phone (not under
+        // the final-round hook: at 5–6 players the bottom slot is the first thing clipped).
         <BigText level="h2" tone="muted">
-          {L('Next round coming up…')}
+          {vipName ? L("Next on {name}'s phone", { name: vipName }) : L("Next on the VIP's phone")}
         </BigText>
       )}
     </Stage>

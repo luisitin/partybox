@@ -122,5 +122,10 @@ export const STRINGS: Strings = {
     "It's a tie": 'Hay empate',
     'And the winner is': 'Y el ganador es',
     'Next round coming up…': 'Ya viene otra ronda…',
+    // Pacing rule (2026-09-25): the board between rounds waits for the VIP's Next.
+    'Next round': 'Próxima ronda',
+    'Moving on…': 'Avanzando…',
+    "Next on the VIP's phone": 'El VIP toca Siguiente',
+    "Next on {name}'s phone": '{name} toca Siguiente',
   },
 };
