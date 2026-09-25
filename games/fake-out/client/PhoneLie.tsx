@@ -11,6 +11,7 @@ import type { FakeOutControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FactCard } from './FactCard';
 import { STRINGS } from './strings';
+import { EnglishNote } from './EnglishNote';
 import { kicker } from './labels';
 import styles from './phone.module.css';
 
@@ -93,6 +94,7 @@ export function PhoneLie({ view, send }: Props): JSX.Element {
         {kicker(L, view)}
       </p>
       <FactCard fact={view.fact} size="phone" className={styles.fact} />
+      <EnglishNote />
       {locked ? (
         <div className={styles.locked} role="status" key="locked">
           <span className={styles.lockedLabel}>{L('Locked in')}</span>

@@ -152,7 +152,8 @@
   min-height: 1.4em;
   font-size: var(--pb-font-caption);
   font-weight: 700;
-  color: var(--pb-text-muted);
+  /* full-contrast text: muted grey read as disabled (reviewer [a62642] #3) */
+  color: var(--pb-text);
 }
 
 .legality[data-bad] {
@@ -271,10 +272,14 @@
 }
 
 .mine {
+  align-self: center;
   margin: 0;
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
   font-size: var(--pb-font-caption);
-  font-weight: 700;
-  color: var(--pb-text-muted);
+  font-weight: 800;
+  text-align: center;
 }
 
 .options {
@@ -644,6 +649,12 @@
     min-height: calc(var(--pb-font-h2) * 1.7);
     padding-bottom: var(--pb-space-4);
     font-size: var(--pb-font-body);
+  }
+
+  /* The default hint would sit under the 'more below' fade and read as disabled: short phones
+     show only refusals (the placeholder already says "sounds real"). */
+  .legality:not([data-bad]) {
+    display: none;
   }
 
   .introMask {

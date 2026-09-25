@@ -217,8 +217,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: var(--pb-space-6);
+  justify-content: flex-start;
+  gap: var(--pb-space-4);
+  /* call + tray + count read as one block under the card, clear of it and of the host bar
+     (reviewer [a62642] #2): content that is too tall must never centre up over the card */
+  margin-top: var(--pb-space-5);
+}
+
+.lieBody .callout {
+  font-size: var(--pb-font-h2);
 }
 
 /* Face-down slips pile up as lies come in; each drops in from above and settles skewed. */
@@ -226,7 +233,7 @@
   position: relative;
   flex: none;
   width: 420px;
-  height: 250px;
+  height: 210px;
 }
 
 /* The tray the lies land in: visible before the first one, so the space reads as a place. */
@@ -239,7 +246,9 @@
   height: 190px;
   margin: -95px 0 0 -150px;
   border-radius: var(--pb-radius-lg);
-  border: 3px dashed var(--pb-border);
+  /* visible before the first lie: the tray reads as a place, not an empty band */
+  border: 4px dashed color-mix(in srgb, var(--pb-text-muted) 60%, transparent);
+  background: color-mix(in srgb, var(--pb-surface) 60%, transparent);
 }
 
 .slip {
@@ -852,4 +861,10 @@
 
 .readyOn .readyMark {
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* Who picked it reads at the answer's scale, not as a footnote (blind-auction [ca5b28] #5). */
+.pickedBy .caption,
+.pickedBy .faceName {
+  font-size: var(--pb-font-h3);
 }

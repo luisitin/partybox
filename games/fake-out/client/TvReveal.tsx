@@ -33,7 +33,7 @@ function Faces({
         const p = players.find((x) => x.id === id);
         return (
           <span key={id} className={styles.face} style={{ ['--i' as string]: i }}>
-            <Avatar avatarId={p?.avatarId ?? 'ghost'} size="var(--pb-space-8)" />
+            <Avatar avatarId={p?.avatarId ?? 'ghost'} size="calc(var(--pb-space-8) * 1.35)" />
             <span className={styles.faceName}>{p?.name ?? '?'}</span>
           </span>
         );
