@@ -42,6 +42,8 @@ export const EVENT_MS = {
   coins: 5_800,
   // Keno: five balls drop, KENO_BALL_MS apart, then a beat.
   keno: 5_600,
+  // The run-up, the kick, the dive, the net (or not).
+  penalty: 3_800,
 } as const;
 /** Coin-flip streak: one flip on the TV. */
 export const COIN_FLIP_MS = 900;

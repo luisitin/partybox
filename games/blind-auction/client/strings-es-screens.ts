@@ -73,6 +73,16 @@ export const ES_SCREENS: Record<string, string> = {
   "That's the last box!": '¡Esa fue la última caja!',
   'Tap a card, then choose your coins': 'Toca una carta y luego elige tus monedas',
   // live events
+  'Penalty Kick': 'Penal',
+  'One shot, one keeper. Goal, save, or off the post?':
+    'Un tiro, un portero. ¿Gol, atajada o al palo?',
+  Goal: 'Gol',
+  Saved: 'Atajada',
+  'Off the post': 'Al palo',
+  'GOAL!': '¡GOL!',
+  'SAVED!': '¡ATAJADA!',
+  'Off the post!': '¡Al palo!',
+  'Bets are closed. Here comes the kick!': 'Apuestas cerradas. ¡Ahí va el tiro!',
   'Pick a card': 'Elige una carta',
   'Pick a player': 'Elige a alguien',
   'drawn {list}': 'salieron {list}',

@@ -78,6 +78,11 @@ const DOORS: readonly Label[] = [
 export const DOOR_PAY = 2;
 
 const EVENT_BOX: Record<LiveKind, { name: string; icon: string; flavour: string }> = {
+  penalty: {
+    name: 'Penalty Kick',
+    icon: '⚽',
+    flavour: 'One shot, one keeper. Goal, save, or off the post?',
+  },
   keno: {
     name: 'Lucky Numbers',
     icon: '🎱',
@@ -191,6 +196,27 @@ function coins(rng: RngState, n: number): [Round, RngState] {
   return [{ box: eventBox('coins', n, options), outcome, detail: flips }, state];
 }
 
+/** Penalty shootout: one kick. Goal (70 %), saved (22 %), off the post or wide (8 %). `detail` =
+ *  [where the shot goes (0 left, 1 middle, 2 right), where the keeper dives]. A goal: the keeper
+ *  went the other way; saved: the same way; wide: the shot sails past the post. */
+const KICKS: readonly (Label & { chance: number })[] = [
+  { icon: '⚽', name: 'Goal', chance: 70 },
+  { icon: '🧤', name: 'Saved', chance: 22 },
+  { icon: '🥅', name: 'Off the post', chance: 8 },
+];
+
+function penalty(rng: RngState, n: number): [Round, RngState] {
+  const options = KICKS.map((k) => option({ icon: k.icon, name: k.name }, k.chance));
+  const [outcome, s1] = drawOutcome(rng, options);
+  const [shot, s2] = int(s1, 3);
+  const [other, s3] = int(s2, 2);
+  const away = [0, 1, 2].filter((d) => d !== shot)[other] ?? 0;
+  const keeper = outcome === 1 ? shot : away;
+  // Wide: the shot aims for a corner and misses it.
+  const aim = outcome === 2 ? (shot === 1 ? 2 : shot) : shot;
+  return [{ box: eventBox('penalty', n, options), outcome, detail: [aim, keeper] }, s3];
+}
+
 /** Keno: one "option" (you play your numbers, not a card); the draw is `detail`. */
 function keno(rng: RngState, n: number): [Round, RngState] {
   const [pool, next] = shuffle(
@@ -251,5 +277,6 @@ export function drawEvent(kind: LiveKind, rng: RngState, n: number): [Round, Rng
   if (kind === 'shells') return shells(rng, n);
   if (kind === 'coins') return coins(rng, n);
   if (kind === 'keno') return keno(rng, n);
+  if (kind === 'penalty') return penalty(rng, n);
   return wheel(rng, n);
 }

@@ -5,38 +5,14 @@
 import { useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { useReducedMotion, useT } from '@partybox/game-sdk/ui';
-import { COIN_FLIP_MS, EVENT_MS, betsMs } from '../server/timing';
-import type { OptionView, RunView } from '../server/views';
+import { EVENT_MS, betsMs } from '../server/timing';
 import { iconOf, nameOf } from './copy';
 import { KenoStage } from './Keno';
 import styles from './live.module.css';
+import { useProgress } from './liveShared';
+import type { Props } from './liveShared';
+import { Coins, Penalty } from './MoreEvents';
 import { STRINGS } from './strings';
-
-interface Props {
-  run: RunView;
-  options: OptionView[];
-  /** Bets on the table: the event starts once they have landed. */
-  bets: number;
-}
-
-/** 0 before the start, then 0…1 over `ms`, driven by animation frames. */
-function useProgress(delay: number, ms: number): number {
-  const reduced = useReducedMotion();
-  const [p, setP] = useState(reduced ? 1 : 0);
-  useEffect(() => {
-    if (reduced) return;
-    const t0 = performance.now() + delay;
-    let raf = 0;
-    const tick = (now: number): void => {
-      const next = Math.max(0, Math.min(1, (now - t0) / ms));
-      setP(next);
-      if (next < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [delay, ms, reduced]);
-  return p;
-}
 
 const LANE_TINT = ['--pb-player-1', '--pb-player-2', '--pb-player-3', '--pb-player-4'];
 
@@ -258,55 +234,11 @@ export function Doors({
   );
 }
 
-/** Coin-flip streak: the coin spins once per flip; heads stack up in a row until tails lands. */
-function Coins({ run, bets }: Props): JSX.Element {
-  const L = useT(STRINGS);
-  const reduced = useReducedMotion();
-  const flips = run.detail;
-  const [shown, setShown] = useState(reduced ? flips.length : 0);
-  useEffect(() => {
-    if (reduced) return;
-    const start = betsMs(bets);
-    const hs = flips.map((_, i) =>
-      setTimeout(() => setShown(i + 1), start + (i + 1) * COIN_FLIP_MS),
-    );
-    return () => hs.forEach(clearTimeout);
-  }, [flips, bets, reduced]);
-  const last = shown > 0 ? flips[shown - 1] : null;
-  const done = shown >= flips.length;
-  return (
-    <div className={styles.coins}>
-      <span
-        key={shown}
-        className={`${styles.coin} ${shown < flips.length ? styles.coinSpin : ''} ${last === 0 ? styles.coinTails : ''}`}
-        aria-hidden
-      >
-        {last === null ? '?' : last === 0 ? 'T' : 'H'}
-      </span>
-      <p className={`${styles.sum} ${shown > 0 ? styles.sumOn : ''}`} aria-live="polite">
-        {shown === 0
-          ? ' '
-          : done
-            ? last === 0
-              ? L('Tails! A streak of {n}', { n: flips.filter((f) => f === 1).length })
-              : L('{n} heads in a row!', { n: flips.length })
-            : L('Heads! {n} so far…', { n: shown })}
-      </p>
-      <span className={styles.flipRow} aria-hidden>
-        {flips.slice(0, shown).map((f, i) => (
-          <span key={i} className={styles.flip}>
-            {f ? 'H' : 'T'}
-          </span>
-        ))}
-      </span>
-    </div>
-  );
-}
-
 export function LiveStage(props: Props): JSX.Element {
   if (props.run.kind === 'race') return <Race {...props} />;
   if (props.run.kind === 'dice') return <Dice {...props} />;
   if (props.run.kind === 'coins') return <Coins {...props} />;
+  if (props.run.kind === 'penalty') return <Penalty {...props} />;
   if (props.run.kind === 'keno') return <KenoStage drawn={props.run.detail} bets={props.bets} />;
   if (props.run.kind === 'doors')
     return (

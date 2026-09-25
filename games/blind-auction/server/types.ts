@@ -49,6 +49,7 @@ export const LIVE_KINDS = [
   'shells',
   'coins',
   'keno',
+  'penalty',
 ] as const;
 export type LiveKind = (typeof LIVE_KINDS)[number];
 

@@ -47,6 +47,14 @@ describe('live events: the draw', () => {
           const sum = a + b;
           expect(outcome).toBe(sum < 7 ? 0 : sum === 7 ? 1 : 2);
         }
+        if (kind === 'penalty') {
+          const [aim = -1, keeper = -1] = detail;
+          expect(aim).toBeGreaterThanOrEqual(0);
+          expect(keeper).toBeLessThanOrEqual(2);
+          // Saved: the keeper guessed right; a goal: the keeper went the other way.
+          if (outcome === 1) expect(keeper).toBe(aim);
+          if (outcome === 0) expect(keeper).not.toBe(aim);
+        }
         if (kind === 'keno') {
           expect(new Set(detail).size).toBe(5);
           expect(detail.every((n) => n >= 1 && n <= 20)).toBe(true);
