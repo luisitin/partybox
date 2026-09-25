@@ -110,7 +110,8 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
           {/* the winning team's colour on its headline (the mark alone was headline yellow) */}
           <span style={teamColor ? { color: teamColor } : undefined}>{line}</span>
         </BigText>
-        {nobodyScored(room) && !scoreless ? (
+        {/* a plain game only: under a team draw or a co-op result it read as nonsense (secret-hitler 53d0d5) */}
+        {nobodyScored(room) && !scoreless && !outcome ? (
           <p className="pb-muted">{t.results.nobodyScored}</p>
         ) : null}
       </div>
@@ -140,8 +141,9 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
           ) : (
             <Scoreboard
               rows={rows}
-              noTrophy={nobodyScored(room)}
-              noRanks={nobodyScored(room)}
+              // a co-op board has no places: the group won or lost together (ADR-052)
+              noTrophy={nobodyScored(room) || outcome?.kind === 'coop'}
+              noRanks={nobodyScored(room) || outcome?.kind === 'coop'}
               size={large ? 'lg' : 'md'}
             />
           )}

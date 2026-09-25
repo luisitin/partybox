@@ -57,7 +57,12 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   const mine = myRow(room, me.id);
   const scoreless = useGame(room.results?.gameId, 'phone').module?.scoreless === true;
   const headline = winnerLineFor(room, me.id, scoreless);
-  const over = nobodyScored(room) && !scoreless;
+  // ADR-052: a co-op or team game ends for the group, not by places (secret-hitler 53d0d5: a lost
+  // co-op said "You finished 1st" on every phone). Its own line says how it went; no place line,
+  // no ranks. "The game ended before anyone could" is for a plain game where nobody scored.
+  const outcome = room.results?.results.outcome;
+  const coop = outcome?.kind === 'coop';
+  const over = nobodyScored(room) && !scoreless && !outcome;
   const vipName = room.players.find((p) => p.id === room.vip)?.name;
   // One chip per award, everyone who won it on it (a tie gave each tied player a copy); yours first.
   const mineIn = (a: { playerIds: string[] }): boolean => a.playerIds.includes(me.id);
@@ -126,7 +131,7 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
             </button>
           ) : null}
           {/* I-456 B: your place stays in view over the board; a tap shows your row */}
-          {mine && !over && !scoreless && !teamLine ? (
+          {mine && !over && !scoreless && !outcome ? (
             <button type="button" className={`pb-muted pb-caption ${styles.place}`} onClick={toMe}>
               {t.results.yourPlace(mine.rank, mine.score)}
             </button>
@@ -193,7 +198,13 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
               wonLabel={t.results.teamWonTag}
             />
           ) : (
-            <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over} />
+            <Scoreboard
+              rows={rows}
+              compact
+              highlightId={me.id}
+              noTrophy={over || coop}
+              noRanks={over || coop}
+            />
           )}
         </div>
       )}

@@ -39,7 +39,7 @@ async function open(browser: Browser, url: string, device: DeviceId, lang: strin
   return page;
 }
 
-type Scenario = 'tie' | 'many' | 'teams' | 'long';
+type Scenario = 'tie' | 'many' | 'teams' | 'long' | 'coop';
 
 async function run(
   browser: Browser,
@@ -72,9 +72,13 @@ async function run(
     const award = (id: string, title: string, description: string, playerId: string) => ({ id, title, description, playerId }); // prettier-ignore
     const tie = scenario === 'tie';
     // 'many': one long-named winner and eight awards — the TV caps the cards at six (+ 2 more)
-    const scores = tie
-      ? { 'p-ana': 1050, 'p-ben': 1050, 'p-cleo': 1050, 'p-dev': 300, [me]: 200 }
-      : { 'p-dev': 1200, 'p-ana': 1050, 'p-ben': 800, 'p-cleo': 300, [me]: 200 };
+    const coop = scenario === 'coop';
+    // 'coop': a lost co-op game (Tune In's): everyone on the same group score, no winner
+    const scores = coop
+      ? { 'p-ana': 3, 'p-ben': 3, 'p-cleo': 3, 'p-dev': 3, [me]: 3 }
+      : tie
+        ? { 'p-ana': 1050, 'p-ben': 1050, 'p-cleo': 1050, 'p-dev': 300, [me]: 200 }
+        : { 'p-dev': 1200, 'p-ana': 1050, 'p-ben': 800, 'p-cleo': 300, [me]: 200 };
     const order = Object.entries(scores).sort((x, y) => y[1] - x[1]);
     const ranking = order.map(([playerId, score]) => ({ playerId, score, rank: 1 + order.filter(([, v]) => v > score).length })); // prettier-ignore
     const awards = tie
@@ -96,7 +100,7 @@ async function run(
         results: {
           scores,
           ranking,
-          winnerIds: scenario === 'teams' ? ['p-ben', 'p-cleo'] : tie ? ['p-ana', 'p-ben', 'p-cleo'] : ['p-dev'], // prettier-ignore
+          winnerIds: coop ? [] : scenario === 'teams' ? ['p-ben', 'p-cleo'] : tie ? ['p-ana', 'p-ben', 'p-cleo'] : ['p-dev'], // prettier-ignore
           awards: scenario === 'teams' ? awards.slice(0, 2) : awards,
           // ADR-052: a team game, Moon wins (its members first, the headline in its colour);
           // Maximiliano is in no team (they left), so the board ends on a "No team" group
@@ -111,7 +115,9 @@ async function run(
                   ],
                 },
               }
-            : {}),
+            : coop
+              ? { outcome: { kind: 'coop', won: false }, headline: '📺 Static.' }
+              : {}),
         },
       },
     });
@@ -140,7 +146,7 @@ async function main(): Promise<void> {
   const browser = await chromium.launch();
   try {
     for (const lang of ['en', 'es'])
-      for (const scenario of ['tie', 'many', 'teams', 'long'] as const)
+      for (const scenario of ['tie', 'many', 'teams', 'long', 'coop'] as const)
         for (const device of ['iphone-se', 'font200'] as const)
           await run(browser, server.url, api, lang, device, scenario);
   } finally {
