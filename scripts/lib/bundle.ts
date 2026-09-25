@@ -208,3 +208,19 @@ export function gzipTotal(bundle: Bundle, files: readonly string[]): number {
   }
   return total;
 }
+
+/** Each registered game adds its chunks' file names to the entry's `__vite__mapDeps` preload list
+ *  and a loader to the registry: ~1.05–1.1 KB gz measured (who-said-it, blind-auction, 2026-09-24).
+ *  The join ratchet allows this much per game beyond the recorded count, so a new game doesn't trip
+ *  it on its own and every game branch needn't re-record the same number (merge conflicts). */
+export const PER_GAME_GZIP = 1280;
+
+/** The join download a build with `games` registered games is expected to weigh, from the budget
+ *  recorded with `recordedGames` (a budget from before the count was recorded counts as today's). */
+export function expectedJoinGzip(
+  recorded: number,
+  recordedGames: number | undefined,
+  games: number,
+): number {
+  return recorded + (games - (recordedGames ?? games)) * PER_GAME_GZIP;
+}

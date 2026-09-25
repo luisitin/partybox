@@ -6,7 +6,9 @@ import {
   closure,
   contentModules,
   entryGameModules,
+  expectedJoinGzip,
   gzipTotal,
+  PER_GAME_GZIP,
   relativeIds,
   surfaceChunks,
   tvModulesIn,
@@ -226,5 +228,16 @@ describe('check-bundle', () => {
       'games/blanks/content/wild.json',
       'games/blanks/server/content.ts',
     ]);
+  });
+});
+
+describe('the join ratchet per registered game', () => {
+  it('allows each game registered since the budget, and takes back a removed one', () => {
+    expect(expectedJoinGzip(160_000, 8, 8)).toBe(160_000);
+    expect(expectedJoinGzip(160_000, 8, 10)).toBe(160_000 + 2 * PER_GAME_GZIP);
+    expect(expectedJoinGzip(160_000, 8, 7)).toBe(160_000 - PER_GAME_GZIP);
+  });
+  it('reads a budget recorded before the count as recorded with today’s games', () => {
+    expect(expectedJoinGzip(160_000, undefined, 12)).toBe(160_000);
   });
 });
