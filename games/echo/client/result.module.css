@@ -19,6 +19,8 @@
 }
 
 .word {
+  display: inline-block;
+  animation: echo-hold 2.6s ease-in-out 1s infinite;
   font-size: var(--pb-font-display);
   font-weight: 1000;
   line-height: 1;
@@ -86,6 +88,27 @@
   font-weight: 800;
   color: var(--pb-danger);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The word breathes while the room takes it in (transform only; still under reduced motion). */
+@keyframes echo-hold {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .word {
+  animation: none;
 }
 
 /* The word's card flies from the stage to its pile in the deck counter (top right). */

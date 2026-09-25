@@ -77,6 +77,10 @@
   outline-offset: 2px;
 }
 
+.input[data-idle='1'] {
+  animation: global(pb-breathe) 1.6s ease-in-out infinite;
+}
+
 .input[data-bad='1'] {
   border-color: var(--pb-danger);
 }
@@ -239,7 +243,30 @@
   font-size: var(--pb-font-display);
   line-height: 1;
   text-align: center;
-  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+  animation:
+    global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both,
+    echo-float 2.8s ease-in-out var(--pb-motion-slow) infinite;
+}
+
+/* A waiting phone is never frozen: the big icon floats gently (transform only). */
+@keyframes echo-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bigIcon {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .bigIcon {
+  animation: none;
 }
 
 .line {

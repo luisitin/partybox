@@ -4,7 +4,7 @@
 // becomes Change. A sent clue is held locally until the view confirms it — no double send.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, Screen, useServerNow, useT } from '@partybox/game-sdk/ui';
+import { PrimaryButton, Screen, useHold, useServerNow, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
 import { isLegalClue, sameAnswer } from '../server/match/index';
 import type { ClueReject, Input } from '../server/types';
@@ -55,6 +55,8 @@ export function PhoneClue({
   const [editing, setEditing] = useState(!locked);
   const [pending, setPending] = useState<string | null>(null);
   const now = useServerNow(500);
+  // An empty box breathes after 3 s: a nudge, and the waiting screen is never frozen.
+  const stalled = useHold(secret.id, 3000);
   // The server took it: leave edit mode (adjusted in render, React's pattern for derived state).
   // A refused one (or no answer in 2 s) frees the button again.
   if (pending && JSON.stringify(view.myClues) === pending) {
@@ -117,6 +119,7 @@ export function PhoneClue({
                 value={d}
                 maxLength={CLUE_MAX_CHARS}
                 data-bad={problems[i] ? '1' : '0'}
+                data-idle={stalled && d.length === 0 ? '1' : '0'}
                 aria-label={n === 2 ? L('Clue {n}', { n: i + 1 }) : L('Your clue')}
                 placeholder={n === 2 ? L('Clue {n}', { n: i + 1 }) : L('Your clue')}
                 autoComplete="off"

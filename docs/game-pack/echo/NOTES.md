@@ -72,6 +72,11 @@ Foundation work lives on branch `foundation` and does not merge until the owner 
   player now.
 - 200 % text: the intro's first step was clipped above the scroll area (centred overflow) →
   `align-content: safe center`.
+- Idle rooms froze the TV (19–27 s) and phones (3–7 s): opacity-only idling was too faint →
+  transform idling (guesser ring pulse, bobbing dots, the result word breathing, a floating icon on
+  waiting phones, an empty box breathing after 3 s); an empty word's result is 4.5 s.
+- 10 players: the second row of cards ran under the host bar → smaller two-row cards, room for
+  author tags, the stage body clears the host bar.
 - Touch pass (iPhone SE): no selection, zoom, page scroll or double send anywhere; the clue
   screen overflowed 10 px (drag jiggle) → a lower word card on short phones.
 

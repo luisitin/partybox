@@ -63,7 +63,12 @@ export function TvGuess({ view }: GameTvProps<EchoTvView>): JSX.Element {
       </div>
       <div className={stage.body}>
         <div className={stage.hero}>
-          {guesser ? <Avatar avatarId={guesser.avatarId} size={96} /> : null}
+          {guesser ? (
+            <span className={stage.heroFace} data-size="s">
+              <span className={stage.heroRing} aria-hidden />
+              <Avatar avatarId={guesser.avatarId} size={96} />
+            </span>
+          ) : null}
           <span className={stage.heroLine}>
             {L("{name}, what's the word?", { name: guesser?.name ?? '?' })}
           </span>

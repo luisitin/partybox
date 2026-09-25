@@ -2,7 +2,7 @@
 // and a secondary Pass; everyone else "Ana is guessing…". A guess is sent once (held locally).
 import { useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import { PrimaryButton, Screen, useT } from '@partybox/game-sdk/ui';
+import { PrimaryButton, Screen, useHold, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { EchoControllerView } from '../server/views';
@@ -45,6 +45,7 @@ export function PhoneGuess({
   const L = useT(STRINGS);
   const [text, setText] = useState('');
   const [sent, setSent] = useState(false);
+  const stalled = useHold(view.tv.phaseAt, 3000);
   const guesser = view.players.find((p) => p.id === view.tv.guesser)?.name ?? '?';
   if (view.role !== 'guesser') {
     return (
@@ -91,6 +92,7 @@ export function PhoneGuess({
         <Clues view={view} />
         <input
           className={styles.input}
+          data-idle={stalled && text.length === 0 && !sent ? '1' : '0'}
           value={text}
           maxLength={GUESS_MAX}
           disabled={sent}
