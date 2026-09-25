@@ -1,0 +1,167 @@
+{
+  "pass": "18",
+  "game": "echo",
+  "players": 5,
+  "scenario": "normal",
+  "focus": "tv",
+  "started": "15:17:44.460",
+  "tvVideoT0": "15:17:36.388",
+  "phoneVideoT0": "15:17:39.968",
+  "changes": [
+    {
+      "t": 1790349464498,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1790349465863,
+      "bed": null,
+      "at": "15:17:44.498",
+      "sinceStartS": 0,
+      "videoS": 8.1,
+      "phoneVideoS": 4.5
+    },
+    {
+      "t": 1790349466481,
+      "status": "playing",
+      "phase": "clue",
+      "deadline": 1790349500875,
+      "bed": "lofi",
+      "at": "15:17:46.481",
+      "sinceStartS": 2,
+      "videoS": 10.1,
+      "phoneVideoS": 6.5
+    },
+    {
+      "t": 1790349470683,
+      "status": "playing",
+      "phase": "check",
+      "deadline": 1790349482521,
+      "bed": "lofi",
+      "at": "15:17:50.683",
+      "sinceStartS": 6.2,
+      "videoS": 14.3,
+      "phoneVideoS": 10.7
+    },
+    {
+      "t": 1790349474822,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1790349499701,
+      "bed": "pulse",
+      "at": "15:17:54.822",
+      "sinceStartS": 10.4,
+      "videoS": 18.4,
+      "phoneVideoS": 14.9
+    },
+    {
+      "t": 1790349478445,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1790349484927,
+      "bed": "lofi",
+      "at": "15:17:58.445",
+      "sinceStartS": 14,
+      "videoS": 22.1,
+      "phoneVideoS": 18.5
+    },
+    {
+      "t": 1790349484963,
+      "status": "playing",
+      "phase": "clue",
+      "deadline": 1790349519927,
+      "bed": "lofi",
+      "at": "15:18:04.963",
+      "sinceStartS": 20.5,
+      "videoS": 28.6,
+      "phoneVideoS": 25
+    },
+    {
+      "t": 1790349489178,
+      "status": "playing",
+      "phase": "check",
+      "deadline": 1790349501041,
+      "bed": "lofi",
+      "at": "15:18:09.178",
+      "sinceStartS": 24.7,
+      "videoS": 32.8,
+      "phoneVideoS": 29.2
+    },
+    {
+      "t": 1790349493379,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1790349518268,
+      "bed": "pulse",
+      "at": "15:18:13.379",
+      "sinceStartS": 28.9,
+      "videoS": 37,
+      "phoneVideoS": 33.4
+    },
+    {
+      "t": 1790349496785,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1790349503195,
+      "bed": "lofi",
+      "at": "15:18:16.785",
+      "sinceStartS": 32.3,
+      "videoS": 40.4,
+      "phoneVideoS": 36.8
+    },
+    {
+      "t": 1790349503255,
+      "status": "playing",
+      "phase": "clue",
+      "deadline": 1790349538200,
+      "bed": "lofi",
+      "at": "15:18:23.255",
+      "sinceStartS": 38.8,
+      "videoS": 46.9,
+      "phoneVideoS": 43.3
+    },
+    {
+      "t": 1790349506140,
+      "status": "playing",
+      "phase": "check",
+      "deadline": 1790349518088,
+      "bed": "lofi",
+      "at": "15:18:26.140",
+      "sinceStartS": 41.7,
+      "videoS": 49.8,
+      "phoneVideoS": 46.2
+    },
+    {
+      "t": 1790349510144,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1790349535047,
+      "bed": "pulse",
+      "at": "15:18:30.144",
+      "sinceStartS": 45.7,
+      "videoS": 53.8,
+      "phoneVideoS": 50.2
+    },
+    {
+      "t": 1790349514341,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1790349520665,
+      "bed": "lofi",
+      "at": "15:18:34.341",
+      "sinceStartS": 49.9,
+      "videoS": 58,
+      "phoneVideoS": 54.4
+    },
+    {
+      "t": 1790349520723,
+      "status": "playing",
+      "phase": "clue",
+      "deadline": 1790349555675,
+      "bed": "lofi",
+      "at": "15:18:40.723",
+      "sinceStartS": 56.3,
+      "videoS": 64.3,
+      "phoneVideoS": 60.8
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}

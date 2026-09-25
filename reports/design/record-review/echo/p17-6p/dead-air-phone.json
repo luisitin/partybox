@@ -1,0 +1,176 @@
+{
+  "video": "C:\\dev\\partybox-game-echo\\reports\\design\\record-review\\echo\\p17-6p\\video\\phone\\round.webm",
+  "bytes": 7554921,
+  "durationS": 246.4,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 9.5,
+      "toS": 14.1,
+      "ms": 4600,
+      "during": "clue",
+      "cueInside": false
+    },
+    {
+      "fromS": 15.4,
+      "toS": 20,
+      "ms": 4600,
+      "during": "check",
+      "cueInside": false
+    },
+    {
+      "fromS": 20.6,
+      "toS": 26,
+      "ms": 5400,
+      "during": "check",
+      "cueInside": false
+    },
+    {
+      "fromS": 26.6,
+      "toS": 28.5,
+      "ms": 1900,
+      "during": "check",
+      "cueInside": false
+    },
+    {
+      "fromS": 170.7,
+      "toS": 176,
+      "ms": 5300,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 179.5,
+      "toS": 182,
+      "ms": 2500,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 183.3,
+      "toS": 185.1,
+      "ms": 1800,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 185.5,
+      "toS": 188,
+      "ms": 2500,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 189.6,
+      "toS": 191.1,
+      "ms": 1500,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 191.4,
+      "toS": 194,
+      "ms": 2600,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 195.3,
+      "toS": 197.1,
+      "ms": 1800,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 197.4,
+      "toS": 200,
+      "ms": 2600,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 203.5,
+      "toS": 206,
+      "ms": 2500,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 209.5,
+      "toS": 212,
+      "ms": 2500,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 215.4,
+      "toS": 218,
+      "ms": 2600,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 221.5,
+      "toS": 224,
+      "ms": 2500,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 225.3,
+      "toS": 227.1,
+      "ms": 1800,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 227.3,
+      "toS": 230,
+      "ms": 2700,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 233.4,
+      "toS": 236,
+      "ms": 2600,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 236.5,
+      "toS": 239.1,
+      "ms": 2600,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 239.3,
+      "toS": 242,
+      "ms": 2700,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 242.6,
+      "toS": 245,
+      "ms": 2400,
+      "during": "results",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 62000,
+  "hardCuts": [],
+  "samples": 2463,
+  "motion": {
+    "p50": 0.0001,
+    "p90": 0.0025,
+    "p99": 0.0653,
+    "max": 0.1212
+  }
+}
