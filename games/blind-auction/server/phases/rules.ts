@@ -28,9 +28,20 @@ export function countDown(state: State, now: number): State {
   return { ...state, rulesStep: 1, phase: { ...state.phase, deadline: now + COUNTDOWN_MS } };
 }
 
+/** Someone real has tapped Ready (bots are ready from the start). */
+function anyHumanReady(state: State): boolean {
+  return state.ready.some((id) => state.players[id]?.bot !== true);
+}
+
 export function reduceRules(state: State, event: GameEvent<Input>, next: Transition): State {
-  if (isTimerFor(state, event))
-    return state.rulesStep === 0 ? countDown(state, event.now) : next(state, event.now);
+  if (isTimerFor(state, event)) {
+    if (state.rulesStep === 1) return next(state, event.now);
+    // The safety net only ends a room where no person has done anything (the contract's idle
+    // players); once anyone is ready, it keeps waiting for the rest (reviewer [a9623e]).
+    if (anyHumanReady(state))
+      return { ...state, phase: { ...state.phase, deadline: event.now + RULES_SAFETY_MS } };
+    return countDown(state, event.now);
+  }
   if (event.type !== 'input' || event.input.type !== 'ready') return state;
   const id = event.playerId;
   if (!Object.hasOwn(state.players, id) || state.ready.includes(id) || state.rulesStep === 1)

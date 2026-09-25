@@ -51,4 +51,20 @@ describe('rules and ready-up', () => {
     expect([s.phase.id, s.rulesStep]).toEqual(['rules', 1]);
     expect(timer(s).phase.id).toBe('box');
   });
+
+  it('a slow reader is never skipped: with anyone ready, the safety net keeps waiting', () => {
+    let s = start(3);
+    s = ready(ready(s, 'p1'), 'p2');
+    s = timer(s);
+    expect([s.phase.id, s.rulesStep]).toEqual(['rules', 0]);
+    s = timer(s);
+    expect([s.phase.id, s.rulesStep]).toEqual(['rules', 0]);
+    s = ready(s, 'p3', (s.phase.deadline ?? 0) - 1);
+    expect(s.rulesStep).toBe(1);
+  });
+
+  it('nobody touched anything: the safety net starts the countdown', () => {
+    const s = timer(start(3));
+    expect([s.phase.id, s.rulesStep]).toEqual(['rules', 1]);
+  });
 });
