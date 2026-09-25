@@ -12,13 +12,14 @@ import {
   useT,
 } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
+import { EnglishNote } from './EnglishNote';
 import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { Outcome, RoomRows, Stake, wagerLabel } from './ControllerBits';
 import { CustomStake } from './CustomStake';
 import { PhoneNext } from './NextStep';
 import styles from './Controller.module.css';
-import { topicLine, pointsText, roundLabel } from './labels';
+import { difficultyText, pointsText, roundLabel } from './labels';
 import { STRINGS } from './strings';
 import { FINAL_REVEAL_HOLD_MS, REVEAL_BEAT_MS } from './timing';
 
@@ -74,8 +75,9 @@ export function Controller({
   if (phaseId === 'intro') {
     return (
       <WaitingScreen
-        title={L('Get ready!')}
-        hint={L('Four choices per question. Faster is worth more.')}
+        // ADR-053: the shell's stage showed the rules; the phone's beat is the title, no rule again
+        title="Lightning Round"
+        hint={L('First question coming up…')}
         mood="wait"
       />
     );
@@ -114,12 +116,17 @@ export function Controller({
           view.worth && !(revealed && shown) ? (
             <>
               {view.question.text}
+              {/* [196a9e]: an ES phone is told the question and answers are English */}
+              <EnglishNote />
               {/* I-789 B: after the tap the line keeps its space — locking in moves nothing;
                   I-790 C: the reveal band takes its place */}
               <Worth worth={view.worth} deadline={view.deadline} held={locked || revealed} />
             </>
           ) : (
-            view.question.text
+            <>
+              {view.question.text}
+              <EnglishNote />
+            </>
           )
         }
         // I-790 C: the verdict and the two numbers, one band under the question
@@ -167,7 +174,11 @@ export function Controller({
         promptKey="wager"
         kicker={
           view.finalTopic
-            ? L('Final question: {topic}', { topic: topicLine(view.finalTopic, L) }) // I-550 A
+            ? // I-550 A; review 6c24ba (3): the category is dropped — the topic names it — so the
+              // header stays one or two lines at 200 % text and the chips stay above the fade
+              L('Final: {topic}', {
+                topic: `${L.sent(view.finalTopic.subcategoryLabel)} · ${difficultyText(view.finalTopic.difficulty, L)}`,
+              })
             : L('Final question next')
         }
         prompt={

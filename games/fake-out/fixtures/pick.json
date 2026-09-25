@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "pick",
-    "startedAt": 1700000021282,
-    "deadline": 1700000046282
+    "startedAt": 1700000019166,
+    "deadline": 1700000044166
   },
   "rng": {
     "seed": 1,
@@ -13,25 +13,29 @@
       "id": "p1",
       "name": "Player 1",
       "avatarId": "fox",
-      "connected": true
+      "connected": true,
+      "canSeeTv": true
     },
     "p2": {
       "id": "p2",
       "name": "Player 2",
       "avatarId": "owl",
-      "connected": true
+      "connected": true,
+      "canSeeTv": true
     },
     "p3": {
       "id": "p3",
       "name": "Player 3",
       "avatarId": "frog",
-      "connected": true
+      "connected": true,
+      "canSeeTv": true
     },
     "p4": {
       "id": "p4",
       "name": "Player 4",
       "avatarId": "cat",
-      "connected": true
+      "connected": true,
+      "canSeeTv": false
     }
   },
   "cfg": {
@@ -290,32 +294,32 @@
       "verified": true,
       "hardWords": []
     },
-    "readAt": 1700000008638,
+    "readAt": 1700000000000,
     "lies": {
-      "p1": "sausage",
-      "p3": "pudding",
-      "p4": "pie",
-      "p2": "hay"
+      "p4": "gingerbread",
+      "p1": "butter",
+      "p2": "pudding",
+      "p3": "hay"
     },
     "truthTyped": [],
     "rejected": {},
     "suggestions": {
-      "p1": ["sausage", "gingerbread"],
-      "p3": ["pudding", "cake"],
-      "p4": ["pie", "butter"],
-      "p2": ["hay", "ham"]
+      "p4": ["sausage", "gingerbread"],
+      "p2": ["pudding", "cake"],
+      "p1": ["pie", "butter"],
+      "p3": ["hay", "ham"]
     },
     "claimed": ["sausage", "gingerbread", "pudding", "cake", "pie", "butter", "hay", "ham"],
     "options": [
       {
-        "display": "Pie",
+        "display": "Gingerbread",
         "authors": ["p4"],
         "house": false,
         "truth": false,
         "id": "o33"
       },
       {
-        "display": "Hay",
+        "display": "Pudding",
         "authors": ["p2"],
         "house": false,
         "truth": false,
@@ -329,14 +333,14 @@
         "id": "o12"
       },
       {
-        "display": "Pudding",
+        "display": "Hay",
         "authors": ["p3"],
         "house": false,
         "truth": false,
         "id": "o69"
       },
       {
-        "display": "Sausage",
+        "display": "Butter",
         "authors": ["p1"],
         "house": false,
         "truth": false,
@@ -387,22 +391,12 @@
     }
   },
   "offered": {
-    "p1": ["sausage", "gingerbread"],
-    "p3": ["pudding", "cake"],
-    "p4": ["pie", "butter"],
-    "p2": ["hay", "ham"]
+    "p4": ["sausage", "gingerbread"],
+    "p2": ["pudding", "cake"],
+    "p1": ["pie", "butter"],
+    "p3": ["hay", "ham"]
   },
   "speechMs": {
-    "fake-out-392e93e73353fd0d": -1,
-    "fake-out-5232f80954c39f06": -1,
-    "fake-out-6f1e24fb4a569594": -1,
-    "fake-out-102522184e8bdeec": -1,
-    "fake-out-66d48250cfb9d932": -1,
-    "fake-out-512f39705a64471f": -1,
-    "fake-out-8b77cba91500e3de": -1,
-    "fake-out-017416ce83a6e883": -1,
-    "fake-out-d6433bec2601394c": -1
-  },
-  "ready": ["p1", "p4", "p2", "p3"],
-  "goAt": 1700000008638
+    "fake-out-392e93e73353fd0d": -1
+  }
 }

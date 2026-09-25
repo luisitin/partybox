@@ -1,5 +1,6 @@
 // State and input types for Broken Pencil (docs/game-ideas/002-broken-pencil.html). Books are
 // arrays of pages that grow one page per step; every page is JSON (drawings are base64 strokes).
+import { readingMs, wordCount } from '@partybox/game-sdk';
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 import { COLORS, INK_CHARS, MAX_STROKES, WIDTHS } from './encoding';
@@ -129,11 +130,9 @@ export const BOT_SHOW_MS = { word: 5_000, draw: 8_000, guess: 5_000 } as const;
  *  screen of words stays up 1.5 s + 1/3 s a word, x1.3 because a Spanish phone or 200 % text
  *  reads longer (the server cannot see the phones' languages, so the margin is always on). */
 export function readMs(words: number): number {
-  return Math.round((1_500 + words * 333) * 1.3);
+  return readingMs(words, { ui: true });
 }
-export function wordCount(text: string): number {
-  return text.split(/\s+/).filter((w) => w.length > 0).length;
-}
+export { wordCount };
 /** I-512 B: a book's last page can't be turned in its first this-many ms — the verdict's beat. */
 export const VERDICT_BEAT_MS = 2_500;
 /** I-512 B: an UNBROKEN verdict (the rarer reveal) lands a second later on the TV (Tv.tsx `Beat`),

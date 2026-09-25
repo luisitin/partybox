@@ -131,9 +131,10 @@ export interface RoundState {
   /** playerId → card indices already swapped at the intro (one "deal me another" per card). */
   swapped: Record<string, number[]>;
   /**
-   * intro: who has tapped Ready (loop 344 — the owner: a real card-pick step). Once every
-   * connected person with cards has (bots and the disconnected count as ready), the first
-   * number is INTRO_READY_MS away — never before the deal plus the 3 · 2 · 1 (`introMinMs`).
+   * intro: who has picked their cards ("Play these", loop 344 — a real card-pick step; not a
+   * readiness check, ADR-053). Once every connected person with cards has (bots and the
+   * disconnected count), the first number is PICKED_HOLD_MS away with no count-in — never before
+   * the deal plus that hold (`introMinMs`).
    */
   ready: string[];
 }
@@ -217,7 +218,7 @@ export {
   DEAL_BOUNCE_MS,
   dealDoneMs,
   introMinMs,
-  INTRO_READY_MS,
+  PICKED_HOLD_MS,
   INTRO_BREATH_MS,
   ARM_MS,
   RESUME_MS,

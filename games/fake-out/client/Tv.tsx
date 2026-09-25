@@ -5,13 +5,11 @@ import { BigText, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { FakeOutTvView } from '../server/index';
 import { TvReveal } from './TvReveal';
-import { TvIntro, TvLie, TvPick, TvQuestion } from './TvRound';
+import { TvLie, TvPick, TvQuestion } from './TvRound';
 import { TvScores } from './TvScores';
 
 export function Tv({ view }: GameTvProps<FakeOutTvView>): JSX.Element {
   switch (view.phaseId) {
-    case 'intro':
-      return <TvIntro view={view} />;
     case 'question':
       return <TvQuestion view={view} />;
     case 'lie':
