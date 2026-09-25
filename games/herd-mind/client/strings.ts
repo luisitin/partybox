@@ -47,8 +47,8 @@ export const STRINGS: Strings = {
     'First to {target} points wins.': 'Gana quien llegue primero a {target} puntos.',
     'the Black Sheep': 'la Oveja Negra',
     // TV: answer
-    'Question {n} of {total} · First to {target}':
-      'Pregunta {n} de {total} · Gana quien llegue a {target}',
+    'Question {n} of {total} · First to {target}':
+      'Pregunta {n} de {total} · Gana quien llegue a {target}',
     '{name} has the Black Sheep': '{name} tiene la Oveja Negra',
     answers: 'respuestas',
     'Type what you think most people will say.': 'Escribe lo que crees que dirá la mayoría.',
@@ -108,8 +108,8 @@ export const STRINGS: Strings = {
       '🐑 ¡En el rebaño! +1 ({answer}, {count} de ustedes)',
     "Alone with {answer}. You've got the Black Sheep.":
       'Solo con {answer}. Te llevas la Oveja Negra.',
-    'Alone with {answer} — but so was someone else, so nobody takes the sheep.':
-      'Solo con {answer}, pero no fuiste el único, así que nadie se lleva la oveja.',
+    'Alone with {answer}, but so was someone else: no sheep.':
+      'Solo con {answer}, pero no fuiste el único: no hay oveja.',
     '{answer}, {count} of you. Tie. Nobody scores.':
       '{answer}, {count} de ustedes. Empate. Nadie suma.',
     '{answer}, {count} of you. Not the herd.': '{answer}, {count} de ustedes. No es el rebaño.',
@@ -121,7 +121,7 @@ export const STRINGS: Strings = {
     Merge: 'Unir',
     'Score it': 'Puntuar',
     Undo: 'Deshacer',
-    'in English': 'en inglés',
+    'in English': 'en inglés',
     // awards (scoring.ts — the shell's results screens translate them through this table)
     '🐑 Head of the Herd': '🐑 Líder del rebaño',
     'In the herd most often': 'En el rebaño más veces',

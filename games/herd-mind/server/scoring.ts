@@ -86,7 +86,6 @@ function ranking(state: State, scores: Record<string, number>): GameResults['ran
   return rows;
 }
 
-/** Everyone tied on the highest count of `pick` shares the award; nobody earns it at zero. */
 /** The one player with the most of `pick` (none when nobody has any). A tie goes to the higher
  *  score, then the earlier seat: an award tied five ways said nothing (design review 74a3bb). */
 function mostOf(state: State, pick: (s: Stats) => number): string[] {

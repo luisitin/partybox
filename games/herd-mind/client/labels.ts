@@ -4,7 +4,7 @@ import type { MyResult } from '../server/views';
 import type { Outcome } from '../server/types';
 
 export function kicker(n: number, total: number, target: number, L: Translator): string {
-  const line = L('Question {n} of {total} · First to {target}', { n, total, target });
+  const line = L('Question {n} of {total} · First to {target}', { n, total, target });
   // The questions and tiles stay in English (the pack is English-only): say so on every screen.
   return L.lang === 'en' ? line : `${line} · ${L('in English')}`;
 }
@@ -39,7 +39,7 @@ export function resultLine(r: MyResult, L: Translator): string {
     case 'sheep':
       return L("Alone with {answer}. You've got the Black Sheep.", { answer: r.label });
     case 'alone':
-      return L('Alone with {answer} — but so was someone else, so nobody takes the sheep.', {
+      return L('Alone with {answer}, but so was someone else: no sheep.', {
         answer: r.label,
       });
     case 'tie':
