@@ -141,6 +141,11 @@ export const en = {
     /** I-153 C: a tie with no person in it (a lone bot winner still gets its name). */
     botTie: 'The bots tie — nobody home?',
     tie: "It's a tie!",
+    // ADR-052: co-op and team games.
+    coopWon: 'Mission complete!',
+    coopLost: 'Mission failed',
+    teamWins: (team: string): string => `${team} wins!`,
+    teamDraw: 'A draw!',
     over: 'Game over',
     show: "That's the show!",
     scorelessHint: 'No points in this game — the books on the TV are the result.',

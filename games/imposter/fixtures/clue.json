@@ -1,0 +1,186 @@
+{
+  "phase": {
+    "id": "clue",
+    "startedAt": 1700000011252,
+    "deadline": 1700000051252
+  },
+  "rng": {
+    "seed": 3,
+    "step": 174
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    },
+    "p7": {
+      "id": "p7",
+      "name": "Player 7",
+      "avatarId": "penguin",
+      "connected": true
+    },
+    "p8": {
+      "id": "p8",
+      "name": "Player 8",
+      "avatarId": "octopus",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "rounds": 3,
+    "imposters": "auto",
+    "clueRounds": 1,
+    "clueSeconds": 40,
+    "talk": true,
+    "talkSeconds": 60,
+    "voteSeconds": 30,
+    "hint": "category",
+    "lastChance": "choices",
+    "categories": [],
+    "spicy": false,
+    "reader": "george"
+  },
+  "presence": {
+    "mode": "together",
+    "phoneOnly": false
+  },
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"],
+  "left": [],
+  "imposterBag": ["p7", "p3", "p8", "p2", "p1", "p5", "p4"],
+  "words": [
+    {
+      "id": "clothes-tie",
+      "answer": "tie",
+      "accept": ["ties", "necktie", "neckties", "tye", "cravat", "tei"],
+      "reject": ["toe", "pie", "tile"],
+      "family": [],
+      "cat": "clothes",
+      "label": "Clothes"
+    },
+    {
+      "id": "places-supermarket",
+      "answer": "supermarket",
+      "accept": [
+        "supermarkets",
+        "grocery store",
+        "grocery shop",
+        "grocers",
+        "supermaket",
+        "supermarkt"
+      ],
+      "reject": ["hypermarket", "flea market"],
+      "family": ["market"],
+      "cat": "places",
+      "label": "Places"
+    },
+    {
+      "id": "food-pancake",
+      "answer": "pancake",
+      "accept": ["pancakes", "hotcake", "hotcakes", "pankake", "pankakes", "pancackes"],
+      "reject": ["cupcake"],
+      "family": ["pancak"],
+      "cat": "food",
+      "label": "Food"
+    },
+    {
+      "id": "vehicles-bicycle",
+      "answer": "bicycle",
+      "accept": ["bike", "bikes", "bicycles", "pushbike", "bycicle", "bicycel", "cycle"],
+      "reject": ["tricycle", "unicycle"],
+      "family": [],
+      "cat": "vehicles",
+      "label": "Vehicles"
+    },
+    {
+      "id": "fantasy-castle",
+      "answer": "castle",
+      "accept": ["castles", "castel", "castl", "cassle", "fortress", "citadel"],
+      "reject": ["cattle", "hassle"],
+      "family": [],
+      "cat": "fantasy",
+      "label": "Fantasy"
+    }
+  ],
+  "round": {
+    "n": 1,
+    "w": 0,
+    "category": {
+      "id": "clothes",
+      "label": "Clothes"
+    },
+    "imposters": ["p6"],
+    "clueRound": 1,
+    "clues": [],
+    "revealOrder": [],
+    "revealed": 0,
+    "ready": ["p4", "p3", "p1", "p5", "p7", "p8", "p6", "p2"],
+    "votes": {},
+    "runoff": null,
+    "showing": "main",
+    "accused": [],
+    "spot": 0,
+    "flipped": false,
+    "options": null,
+    "guesses": {},
+    "delta": {},
+    "void": false,
+    "step": 0,
+    "rejects": {}
+  },
+  "scores": {
+    "p1": 0,
+    "p2": 0,
+    "p3": 0,
+    "p4": 0,
+    "p5": 0,
+    "p6": 0,
+    "p7": 0,
+    "p8": 0
+  },
+  "said": {},
+  "stats": {},
+  "speechMs": {
+    "impi5augk1ai26ea": -1,
+    "imp1ka2gh618kykle": -1,
+    "imp1y6i0ar78zar9": -1,
+    "imp1lvko6t1adf7i9": -1,
+    "impirldu9ogj6en": -1,
+    "imp14blf3vdz2p7l": -1,
+    "imp15n6hn81qf9mfk": -1,
+    "imp1myir931yikemv": -1,
+    "imp15cozm94k2903": -1,
+    "impq1b8pb1o78owx": -1
+  }
+}

@@ -145,9 +145,16 @@ code get typed fields.
 interface GameResults {
   scores: Record<string, number>; // every player from init
   ranking: { playerId: string; score: number; rank: number }[]; // rank 1 = winner; ties share a rank
-  winnerIds: string[];
+  winnerIds: string[]; // empty only for a co-op game the players lost
   awards: { id: string; title: string; description: string; playerId: string }[];
+  // ADR-052, optional: how a co-op or team game ended, and the results line (English, translated
+  // through the game's strings like awards)
+  outcome?:
+    | { kind: 'coop'; won: boolean }
+    | { kind: 'teams'; winner: string | null; teams: { id; name; mark?; members: string[] }[] };
+  headline?: string;
 }
+// a team game still ranks every member of the winning team 1 (winnerIds = that team)
 ```
 
 ### Recap (optional, ADR-035)

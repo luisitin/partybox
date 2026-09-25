@@ -1,7 +1,9 @@
 // Shared by the phone and TV results screens: results → scoreboard rows + winner sentence.
 import type { RoomSnapshot } from '@partybox/shared';
 import type { ScoreboardRow } from '@partybox/game-sdk/ui';
+import { getLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
+import { serverText } from '../server-text';
 
 export function scoreboardRows(room: RoomSnapshot): ScoreboardRow[] {
   const results = room.results;
@@ -34,9 +36,25 @@ export function nobodyScored(room: RoomSnapshot): boolean {
   return scores.length > 0 && scores.every((s) => s <= 0);
 }
 
+/** ADR-052: the line for a co-op or team game — the game's own headline first. */
+export function outcomeLine(room: RoomSnapshot): string | null {
+  const r = room.results;
+  if (!r) return null;
+  const say = (text: string): string => serverText(text, getLang(), r.gameId);
+  if (r.results.headline) return say(r.results.headline);
+  const o = r.results.outcome;
+  if (!o) return null;
+  if (o.kind === 'coop') return o.won ? t.results.coopWon : t.results.coopLost;
+  const team = o.teams.find((x) => x.id === o.winner);
+  if (!team) return t.results.teamDraw;
+  return t.results.teamWins(`${team.mark ? `${team.mark} ` : ''}${say(team.name)}`);
+}
+
 export function winnerLine(room: RoomSnapshot, scoreless = false): string {
   const results = room.results;
   if (!results) return '';
+  const outcome = outcomeLine(room);
+  if (outcome) return outcome;
   // A game without points (Broken Pencil) is a show, not a tie (review-loop #63).
   if (scoreless) return t.results.show;
   // Everyone on zero is still a tie (review-loop #6): the headline says so; the screens add why.
@@ -86,6 +104,7 @@ export function winnerLineFor(room: RoomSnapshot, meId: string, scoreless = fals
   const results = room.results;
   if (!results) return '';
   if (scoreless || nobodyScored(room)) return winnerLine(room, scoreless);
+  if (outcomeLine(room)) return winnerLine(room);
   const ids = results.results.winnerIds;
   if (!ids.includes(meId)) return winnerLine(room);
   if (ids.length === 1) return t.results.youWin;

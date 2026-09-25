@@ -318,9 +318,25 @@ export interface GameResults {
   perRoundVotes?: Record<string, number[]>;
   scores: Record<string, number>;
   ranking: { playerId: string; score: number; rank: number }[];
+  /** Who won. Empty only for a co-op game the players lost (`outcome`). */
   winnerIds: string[];
   awards: GameAward[];
+  /** ADR-052: a game that isn't "these players won" says how it ended (co-op, or a team). */
+  outcome?: GameOutcome;
+  /** ADR-052: the results screen's line, in English (translated through the game's strings, like
+   *  awards): "📡 Crystal clear!", "Mission failed". Absent: the shell words it from the outcome. */
+  headline?: string;
 }
+
+/** ADR-052: co-op (everyone wins or nobody does) or teams (`winner` null = a draw). */
+export type GameOutcome =
+  | { kind: 'coop'; won: boolean }
+  | {
+      kind: 'teams';
+      winner: string | null;
+      /** `mark` (▲ / ●) goes with the name, so a team never rests on colour alone. */
+      teams: { id: string; name: string; mark?: string; members: string[] }[];
+    };
 
 /** One extra file a recap writes next to `recap.md` (a drawing as SVG, a CSV). */
 export interface RecapFile {
