@@ -122,11 +122,16 @@ export function PhoneGuess({
     footer = (
       <div className={styles.bar} key="idle">
         <div className={styles.barLine}>{L('Tap a card to point at it')}</div>
-        {view.canEnd ? (
-          <button type="button" className={styles.button} onClick={() => point('end')}>
-            {L('End turn ✋')}
-          </button>
-        ) : null}
+        {/* Always there, so the bar keeps its height; before the first flip it says when it opens
+            (session-c N2: an empty band under the list on SE). */}
+        <button
+          type="button"
+          className={styles.button}
+          disabled={!view.canEnd}
+          onClick={() => point('end')}
+        >
+          {view.canEnd ? L('End turn ✋') : L('End turn opens after the first card')}
+        </button>
       </div>
     );
   }
