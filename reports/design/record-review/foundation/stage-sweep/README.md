@@ -27,13 +27,14 @@ Wisecrack, a TV, the VIP's phone (Sam) and a guest's (Maya), with bots.
 ## The edge cases, one recording each (`../stage-edges/<case>/`)
 
 Videos per surface (`video/*.webm`), and a strip per marked moment per surface (`strips/`, 10 fps,
-2.5 s). All six ran green (`capture-stage-edges.ts`).
+2.5 s). All seven ran green (`capture-stage-edges.ts`).
 
 | case      | what happens                                                                                                                            |
 | --------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | `drop`    | Sam is ready; Maya's phone closes before her READY → the count starts without her.                                                      |
 | `join`    | Sam is ready, Maya still reading; Leo joins → his phone gets the rules and a READY, and the count waits for him too; his tap starts it. |
 | `vipdrop` | Maya is ready; the VIP's phone closes unready → nobody waits for it; the TV's host bar still has Back / Start now.                      |
+| `allgone` | Sam ready, then both phones close → nothing counts; the TV says "Waiting for someone to come back"; Leo joins, reads, taps → 3·2·1.     |
 | `solo`    | the VIP alone with two bots: their READY is the room's → the breath and the 3·2·1 still play.                                           |
 | `back`    | the VIP's ‹ Back → every screen cross-fades to the picker, the game still chosen.                                                       |
 | `wait`    | the count runs, the VIP taps Wait → the rules come back "On hold"; Start now → 3·2·1 → the game.                                        |

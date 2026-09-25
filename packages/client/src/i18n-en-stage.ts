@@ -14,6 +14,8 @@ export const enStage = {
     /** READY while the last step is still below the fold: a tap scrolls to it (reviewer D1). */
     readAll: '↓ Read all 3 steps',
     waitingFor: (names: string[], more: number): string => `Waiting for ${list(names, more)}`,
+    /** The TV, when every person's phone has dropped: nothing counts until someone is back. */
+    nobodyHere: 'Waiting for someone to come back',
     everyoneReady: 'Everyone’s ready!',
     everyoneElseReady: 'Everyone else is ready',
     wait: 'Wait',

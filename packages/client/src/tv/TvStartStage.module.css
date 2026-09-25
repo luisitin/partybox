@@ -105,12 +105,16 @@
 }
 
 .faceName {
-  max-width: 180px;
+  max-width: 200px;
   font-size: 24px;
   font-weight: 700;
-  white-space: nowrap;
+  line-height: 1.15;
+  text-align: center;
+  /* two lines before an ellipsis: "Abuela's bot" read "Abuela's bo…" (tune-in) */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .waiting {

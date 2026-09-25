@@ -3,7 +3,7 @@
 // alone with bots, ‹ Back, and Wait during the count. Each case films the TV and every phone
 // (video), marks its moments, and cuts a strip per mark per surface (10 fps, 2.5 s).
 // Usage: tsx packages/e2e/src/design/capture-stage-edges.ts [--out <dir>] [--port 42301] [--build]
-//        [--only drop,join,vipdrop,solo,back,wait]
+//        [--only drop,join,vipdrop,allgone,solo,back,wait]
 import { existsSync, mkdirSync, readdirSync, renameSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -22,7 +22,7 @@ const { values } = parseArgs({
     out: { type: 'string' },
     port: { type: 'string', default: '42301' },
     build: { type: 'boolean', default: false },
-    only: { type: 'string', default: 'drop,join,vipdrop,solo,back,wait' },
+    only: { type: 'string', default: 'drop,join,vipdrop,allgone,solo,back,wait' },
   },
 });
 const OUT =
@@ -172,6 +172,27 @@ const SCENARIOS: Record<string, Scenario> = {
     c.mark('late-ready');
     await c.ready(late, 'late');
     if (!(await waitFor(c.api, 'playing'))) c.notes.push('join: the game never started');
+    await settle(1500);
+  },
+  // Every person's phone drops: nothing counts, the TV says what it is waiting for; one comes back.
+  async allgone(c) {
+    await c.tv();
+    const vip = await c.phone('vip', 'Sam');
+    const guest = await c.phone('guest', 'Maya');
+    await c.api.bots(1, 'random');
+    await c.api.post('/api/dev/start', { gameId: 'wisecrack', seed: 2, stage: true });
+    await settle(2000);
+    await c.ready(vip, 'vip');
+    c.mark('all-gone');
+    await guest.context().close();
+    await vip.context().close();
+    await settle(5000);
+    if ((await statusOf(c.api)) !== 'starting') c.notes.push('allgone: a game started for nobody');
+    c.mark('back');
+    const back = await c.phone('back', 'Leo', 'iphone');
+    await settle(1500);
+    await c.ready(back, 'back');
+    if (!(await waitFor(c.api, 'playing'))) c.notes.push('allgone: never started after Leo');
     await settle(1500);
   },
   // The VIP's phone drops unready: nobody waits for it; the TV's host bar still has the controls.

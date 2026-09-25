@@ -109,7 +109,10 @@
   cursor: pointer;
 }
 
-/* the rules' last line, watched: READY is offered once it has been on screen (reviewer D1) */
+/* The rules' end, watched: READY is offered once all of it has been on screen (reviewer D1). Its
+   height is the list's last few pixels: the body's bottom fade falls on it, not on step 3's last
+   line (tune-in: on an SE that line sat half-faded while READY was live). */
 .end {
-  height: 1px;
+  flex-shrink: 0;
+  height: 32px;
 }

@@ -31,6 +31,9 @@ export function TvStartStage({
   const isReady = (id: string, bot: boolean): boolean => bot || stage.ready.includes(id);
   const waiting = room.players.filter((p) => p.connected && !p.bot && !stage.ready.includes(p.id));
   const names = waiting.slice(0, 3).map((p) => p.name);
+  // every person's phone dropped: the stage holds (ADR-053) — say so, never "Everyone's ready!"
+  const people = room.players.filter((p) => !p.bot);
+  const nobodyHere = people.length > 0 && people.every((p) => !p.connected);
   return (
     <div className={styles.stage}>
       <div className={styles.card}>
@@ -63,11 +66,13 @@ export function TvStartStage({
         })}
       </ul>
       <p className={styles.waiting} role="status">
-        {stage.held
-          ? t.stage.held
-          : waiting.length === 0
-            ? t.stage.everyoneReady
-            : t.stage.waitingFor(names, waiting.length - names.length)}
+        {nobodyHere
+          ? t.stage.nobodyHere
+          : stage.held
+            ? t.stage.held
+            : waiting.length === 0
+              ? t.stage.everyoneReady
+              : t.stage.waitingFor(names, waiting.length - names.length)}
       </p>
       <StageCount at={stage.countdownAt} surface="tv" onNumber={onNumber} />
     </div>

@@ -56,9 +56,13 @@ export function StartStage({
   useEffect(() => {
     const el = end.current;
     if (!el || seenAll) return undefined;
-    const io = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) setSeenAll(true);
-    });
+    // all of the end block in view: step 3's last line is then clear of the fade
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.intersectionRatio >= 0.99)) setSeenAll(true);
+      },
+      { threshold: [0.99] },
+    );
     io.observe(el);
     return () => io.disconnect();
   }, [seenAll, about]);

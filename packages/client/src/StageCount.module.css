@@ -16,9 +16,10 @@
   border-radius: var(--pb-radius-lg);
 }
 
+/* the VIP's Wait sits under the number, clear of the footer's (fading) button (tune-in's nit) */
 .action {
   position: absolute;
-  bottom: calc(var(--pb-space-6) + env(safe-area-inset-bottom));
+  top: calc(50% + min(24vw, 20vh) + var(--pb-space-4));
   pointer-events: auto;
 }
 
