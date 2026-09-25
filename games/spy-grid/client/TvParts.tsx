@@ -118,8 +118,12 @@ export function ClueBar({ view }: { view: SpyTvView }): JSX.Element {
           <span>{L('Clues left: {n}', { n: view.cluesLeft })}</span>
         ) : null}
       </div>
-      {view.canEnd && (view.phaseId === 'guess' || view.phaseId === 'flip') ? (
-        <div className={`${styles.endTile} ${endFaces.length > 0 ? styles.endOn : ''}`}>
+      {view.phaseId === 'guess' || view.phaseId === 'flip' ? (
+        // Always laid out, hidden until the first flip, so the clue never slides sideways.
+        <div
+          className={`${styles.endTile} ${endFaces.length > 0 ? styles.endOn : ''} ${view.canEnd ? '' : styles.endHidden}`}
+          aria-hidden={!view.canEnd}
+        >
           <span className={styles.endIcon}>✋</span>
           <span className={styles.endLabel}>{L('End turn')}</span>
           <span className={styles.endCount}>{endFaces.length}</span>
@@ -143,8 +147,10 @@ export function History({ view }: { view: SpyTvView }): JSX.Element {
           key={`${i}${h.word}`}
           className={`${styles.chip} ${styles[`chip-${h.team}`]} ${fresh && i === last ? styles.chipNew : ''}`}
         >
-          <b>{SHAPE[h.team]}</b> {h.word} {h.number} <span className={styles.arrow}>→</span>{' '}
-          {L('{n} found', { n: h.found })}
+          <b>{SHAPE[h.team]}</b> {h.word} {h.number}{' '}
+          <span className={styles.nowrap}>
+            <span className={styles.arrow}>→</span> {L('{n} found', { n: h.found })}
+          </span>
         </span>
       ))}
     </div>
@@ -168,12 +174,14 @@ export function TurnEndCard({ view }: { view: SpyTvView }): JSX.Element {
     <div className={styles.turnCard}>
       {why ? <div className={styles.turnWhy}>{why}</div> : null}
       {view.ended !== 'noClue' ? (
-        <div className={styles.turnFound}>
-          {L('{shape} {team} found {n}.', {
-            shape: SHAPE[team],
-            team: teamName(team, L),
-            n: found,
-          })}
+        <div className={`${styles.turnFound} ${styles[`text-${team}`]}`}>
+          {view.mode === 'coop'
+            ? L('The crew found {n}.', { n: found })
+            : L('{shape} {team} found {n}.', {
+                shape: SHAPE[team],
+                team: teamName(team, L),
+                n: found,
+              })}
         </div>
       ) : null}
       <div className={`${styles.turnNext} ${styles[`text-${next}`]}`}>
@@ -189,6 +197,7 @@ export function reasonLine(view: SpyTvView, L: Translator): string {
   const w = view.winner;
   switch (view.reason) {
     case 'assassin':
+      if (view.mode === 'coop') return L('The crew touched the assassin 💀');
       return L('{team} found the assassin!', { team: teamName(w === 'sun' ? 'moon' : 'sun', L) });
     case 'agents':
       return view.mode === 'coop'

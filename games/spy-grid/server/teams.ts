@@ -64,15 +64,19 @@ export function join(state: State, id: string, team: Team): State {
   };
 }
 
-/** Rule 1: sizes within one — the bigger team's latest joiners cross over. */
-function balance(teams: Record<Team, string[]>): Record<Team, string[]> {
-  const out = { sun: [...teams.sun], moon: [...teams.moon] };
+/** Rule 1: sizes within one — the bigger team's latest BOTS cross over first, so a person keeps the
+ *  team they tapped; only a team of people alone gives up its latest joiner. */
+function balance(state: State): Record<Team, string[]> {
+  const out = { sun: [...state.teams.sun], moon: [...state.teams.moon] };
   for (;;) {
     const [big, small]: [Team, Team] =
       out.sun.length > out.moon.length ? ['sun', 'moon'] : ['moon', 'sun'];
     if (out[big].length - out[small].length <= 1) return out;
-    const moved = out[big].pop();
-    if (moved !== undefined) out[small].push(moved);
+    const bots = out[big].filter((id) => isBot(state, id));
+    const moved = bots.length > 0 ? bots[bots.length - 1] : out[big][out[big].length - 1];
+    if (moved === undefined) return out;
+    out[big] = out[big].filter((id) => id !== moved);
+    out[small].push(moved);
   }
 }
 
@@ -89,7 +93,7 @@ function chooseSpymaster(state: State, team: Team, rng: RngState): [string | nul
 
 /** When `teams` ends (or is skipped): balance, then a spymaster per team. */
 export function settleTeams(state: State): State {
-  const teams = state.mode === 'coop' ? state.teams : balance(state.teams);
+  const teams = state.mode === 'coop' ? state.teams : balance(state);
   let rng = state.rng;
   const spymaster: Record<Team, string | null> = { sun: null, moon: null };
   const settled: State = { ...state, teams };

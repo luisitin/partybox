@@ -36,13 +36,21 @@
 }
 
 .list {
-  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  /* two columns on a 320 px phone: a guesser sees ten words, not two (session-c #11) */
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
   gap: var(--pb-space-2);
 }
 
 .list .card {
   min-height: 48px;
   --sg-word: 1rem;
+}
+
+/* list rows carry the coordinate ('A1') and padding beside the word: fit what is left */
+.list .word {
+  --sg-fit: calc(
+    (100cqw - 2 * var(--pb-space-3) - 1.6em - var(--pb-space-2)) / (var(--n, 6) * 0.7)
+  );
 }
 
 .corner,
@@ -236,10 +244,11 @@
 
 .icon {
   display: flex;
-  font-size: calc(var(--sg-word) * 1.25);
+  /* never taller than half the card (the TV's short cards clipped it at the bottom edge) */
+  font-size: min(calc(var(--sg-word) * 1.25), 48cqh);
   line-height: 1;
   /* below the small word in the corner, so a long one never runs into it */
-  margin-top: 16%;
+  margin-top: 14cqh;
 }
 
 .smallWord {
@@ -354,7 +363,7 @@
 /* turning: lift the card off the table while it turns; everything else steps back */
 .turning {
   z-index: 2;
-  transform: translateY(-4%) scale(1.06);
+  transform: translateY(-3%) scale(1.03);
 }
 
 .dim {

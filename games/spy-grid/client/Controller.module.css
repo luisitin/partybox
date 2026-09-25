@@ -120,7 +120,11 @@
 .bar {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   gap: var(--pb-space-2);
+  /* one line + one row of buttons, whichever bar is up: a long-press or a tap never resizes the
+     board above it (session-c #12) */
+  min-height: calc(var(--pb-font-body) * 1.4 + 56px + var(--pb-space-2));
 }
 
 .barLine {
@@ -404,6 +408,12 @@
   text-transform: uppercase;
   user-select: text;
   -webkit-user-select: text;
+}
+
+/* at 200 % text the placeholder shrinks instead of clipping ('ONE WOR', session-c #9) */
+.input::placeholder {
+  font-size: min(1em, 18px);
+  text-overflow: ellipsis;
 }
 
 .input:focus {

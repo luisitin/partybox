@@ -47,7 +47,7 @@ export function TvTeams({ view }: { view: SpyTvView }): JSX.Element {
   const L = useT(STRINGS);
   const coop = view.mode === 'coop';
   return (
-    <div className={styles.teams}>
+    <div className={`${styles.teams} ${coop ? styles.teamsCoop : ''}`}>
       <div className={styles.columns}>
         {coop ? (
           <Column view={view} team="sun" title={L('Your crew')} />

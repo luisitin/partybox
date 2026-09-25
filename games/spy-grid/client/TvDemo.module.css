@@ -21,7 +21,7 @@
 
 .card {
   position: relative;
-  height: 76px;
+  height: 64px;
   transition: transform var(--pb-motion-base) var(--pb-ease);
 }
 

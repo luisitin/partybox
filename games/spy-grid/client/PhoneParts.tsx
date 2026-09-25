@@ -24,12 +24,14 @@ export function Scores({ view }: { view: SpyControllerView }): JSX.Element {
             {view.mode === 'coop'
               ? L('{n} agents left', { n: view.left[t] })
               : L('{n} left', { n: view.left[t] })}
+            {/* your team: a mark that never wraps onto its own line (session-c #9, #10) */}
+            {view.team === t ? (
+              <span aria-label={L('your team')} role="img">
+                {' '}
+                👤
+              </span>
+            ) : null}
           </span>
-          {view.team === t ? (
-            <span className={styles.nowrap} aria-label={L('your team')}>
-              · {L('you')}
-            </span>
-          ) : null}
         </span>
       ))}
       {view.cluesLeft !== null ? (

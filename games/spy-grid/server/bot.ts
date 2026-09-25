@@ -80,20 +80,30 @@ function plan(v: SpyControllerView, rng: Rng): Pointer | null {
   if (flipsSoFar >= clue.number) return v.canEnd ? 'end' : null;
   const down = faceDown(v);
   const idOf = (i: number): string => (v.words[i] ?? '').toLowerCase();
-  const theme = themesFor(v).find((t) =>
-    [t.clue, ...t.alts].some((c) => sameAnswer(c, clue.word, LANG)),
+  // Score every face-down word by how the clue relates to it: a theme the clue names (3), one of
+  // the word's own hints (3), a theme that shares a hint-matched word (1). A clue from outside the
+  // packs (a person's) still lands on the closest words instead of stalling the turn.
+  const said = (w: string): boolean => sameAnswer(w, clue.word, LANG);
+  const themes = themesFor(v);
+  const named = themes.filter((t) => [t.clue, ...t.alts].some(said));
+  const hinted = new Set(down.filter((i) => wordEntry(idOf(i)).hints.some(said)));
+  const near = themes.filter((t) =>
+    t.members.some((m) => down.some((i) => hinted.has(i) && idOf(i) === m)),
   );
-  if (theme) {
-    const next = theme.members
-      .map((m) => down.find((i) => idOf(i) === m))
-      .find((i) => i !== undefined);
-    if (next !== undefined) return next;
+  let best: number | null = null;
+  let top = 0;
+  for (const i of down) {
+    const id = idOf(i);
+    const score =
+      (named.some((t) => t.members.includes(id)) ? 3 : 0) +
+      (hinted.has(i) ? 3 : 0) +
+      (near.some((t) => t.members.includes(id)) ? 1 : 0);
+    if (score > top) [best, top] = [i, score];
   }
-  const hinted = down.find((i) =>
-    wordEntry(idOf(i)).hints.some((h) => sameAnswer(h, clue.word, LANG)),
-  );
-  if (hinted !== undefined) return hinted;
-  if (rng.float() < 0.3 && down.length > 0) return down[rng.int(0, down.length - 1)] ?? null;
+  if (best !== null) return best;
+  // Nothing relates: a first guess is owed (End turn opens only after a flip), so take a chance.
+  if ((!v.canEnd || rng.float() < 0.3) && down.length > 0)
+    return down[rng.int(0, down.length - 1)] ?? null;
   return v.canEnd ? 'end' : null;
 }
 

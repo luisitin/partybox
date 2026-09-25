@@ -134,6 +134,17 @@ describe('teams phase', () => {
     expect(s.spymaster.moon).not.toBeNull();
   });
 
+  it('balancing moves bots across first: two people who both tap Sun stay on Sun', () => {
+    // 2 people + 4 bots; the bots were seated on Sun last (session-c #4: a person got moved).
+    let s = start(6, {}, 1, 4);
+    s = send(s, 'p1', { type: 'join', team: 'sun' });
+    s = send(s, 'p2', { type: 'join', team: 'sun' });
+    for (const id of ['p3', 'p4', 'p5', 'p6']) s = send(s, id, { type: 'join', team: 'sun' });
+    s = skip(s);
+    expect(s.teams.sun).toEqual(expect.arrayContaining(['p1', 'p2']));
+    expect(s.teams.sun.length - s.teams.moon.length).toBeLessThanOrEqual(1);
+  });
+
   it('awards: Trap Door goes to the first pointer at a flipped assassin', () => {
     let s = rigged();
     s = send(clue(s, 2), 'p2', { type: 'point', target: 24 });

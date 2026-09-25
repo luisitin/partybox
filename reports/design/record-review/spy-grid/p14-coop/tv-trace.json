@@ -1,0 +1,803 @@
+{
+  "t0": 1790311552598.1,
+  "ev": [
+    { "t": 2892, "kind": "music:plan", "from": null, "to": "lobby" },
+    {
+      "t": 3737,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "george-street-shuffle",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    {
+      "t": 3739,
+      "kind": "cue",
+      "cue": "ready",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 3802, "kind": "music:stop", "track": "george-street-shuffle.mp3" },
+    { "t": 3802, "kind": "music:stop", "track": "" },
+    {
+      "t": 4307,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "bossa-antigua",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    { "t": 4698, "kind": "music:stop", "track": "bossa-antigua.mp3" },
+    { "t": 4699, "kind": "music:stop", "track": "" },
+    {
+      "t": 5210,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "airport-lounge",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    { "t": 5323, "kind": "music:stop", "track": "airport-lounge.mp3" },
+    { "t": 5323, "kind": "music:stop", "track": "" },
+    {
+      "t": 5835,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "local-forecast-elevator",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    { "t": 5841, "kind": "music:stop", "track": "local-forecast-elevator.mp3" },
+    { "t": 5841, "kind": "music:stop", "track": "" },
+    {
+      "t": 6260,
+      "kind": "cue",
+      "cue": "join",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    {
+      "t": 6341,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "airport-lounge",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    { "t": 6347, "kind": "music:stop", "track": "airport-lounge.mp3" },
+    { "t": 6347, "kind": "music:stop", "track": "" },
+    {
+      "t": 6855,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "bossa-antigua",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    { "t": 7096, "kind": "music:stop", "track": "bossa-antigua.mp3" },
+    { "t": 7096, "kind": "music:stop", "track": "" },
+    {
+      "t": 7599,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "airport-lounge",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    { "t": 7600, "kind": "music:stop", "track": "airport-lounge.mp3" },
+    { "t": 7600, "kind": "music:stop", "track": "" },
+    {
+      "t": 8111,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "george-street-shuffle",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    { "t": 8409, "kind": "music:stop", "track": "george-street-shuffle.mp3" },
+    { "t": 8410, "kind": "music:stop", "track": "" },
+    {
+      "t": 8924,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "local-forecast-elevator",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    { "t": 8931, "kind": "music:stop", "track": "local-forecast-elevator.mp3" },
+    { "t": 8931, "kind": "music:stop", "track": "" },
+    {
+      "t": 9105,
+      "kind": "cue",
+      "cue": "join",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 2,
+      "gain": 1
+    },
+    {
+      "t": 9209,
+      "kind": "cue",
+      "cue": "join",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 4,
+      "gain": 1
+    },
+    {
+      "t": 9443,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "airport-lounge",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    { "t": 9446, "kind": "music:stop", "track": "airport-lounge.mp3" },
+    { "t": 9446, "kind": "music:stop", "track": "" },
+    {
+      "t": 9956,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "george-street-shuffle",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    { "t": 9957, "kind": "music:stop", "track": "george-street-shuffle.mp3" },
+    { "t": 9957, "kind": "music:stop", "track": "" },
+    {
+      "t": 10467,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "airport-lounge",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    { "t": 10468, "kind": "music:stop", "track": "airport-lounge.mp3" },
+    { "t": 10468, "kind": "music:stop", "track": "" },
+    {
+      "t": 11133,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "george-street-shuffle",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    { "t": 11161, "kind": "music:plan", "from": "lobby", "to": null },
+    {
+      "t": 11161,
+      "kind": "cue",
+      "cue": "start",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 11190, "kind": "music:stop", "track": "george-street-shuffle.mp3" },
+    {
+      "t": 14490,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    {
+      "t": 18599,
+      "kind": "clip",
+      "src": "sg1fod7e114p7255.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 19751,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 19751, "kind": "bed:duck", "bed": "latenight", "cue": "phase" },
+    {
+      "t": 25282,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    {
+      "t": 28590,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 28590, "kind": "bed:duck", "bed": "pulse", "cue": "reveal" },
+    {
+      "t": 28592,
+      "kind": "clip",
+      "src": "sg18oabjjqezuq3.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 330
+    },
+    {
+      "t": 28926,
+      "kind": "cue",
+      "cue": "correct",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 0.7
+    },
+    { "t": 28926, "kind": "bed:duck", "bed": "pulse", "cue": "correct" },
+    {
+      "t": 29382,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 29382, "kind": "bed:duck", "bed": "pulse", "cue": "silence" },
+    {
+      "t": 30816,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 30816, "kind": "bed:duck", "bed": "pulse", "cue": "silence" },
+    {
+      "t": 35116,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    {
+      "t": 39006,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 39006, "kind": "bed:duck", "bed": "pulse", "cue": "reveal" },
+    {
+      "t": 39006,
+      "kind": "clip",
+      "src": "sg18oabjjqezuq3.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 330
+    },
+    {
+      "t": 39343,
+      "kind": "cue",
+      "cue": "correct",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 0.7
+    },
+    { "t": 39343, "kind": "bed:duck", "bed": "pulse", "cue": "correct" },
+    {
+      "t": 39859,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 39859, "kind": "bed:duck", "bed": "pulse", "cue": "silence" },
+    {
+      "t": 41266,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 41267, "kind": "bed:duck", "bed": "pulse", "cue": "silence" },
+    {
+      "t": 45412,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    {
+      "t": 47475,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 47475, "kind": "bed:duck", "bed": "pulse", "cue": "reveal" },
+    {
+      "t": 47475,
+      "kind": "clip",
+      "src": "sg18oabjjqezuq3.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 330
+    },
+    {
+      "t": 47811,
+      "kind": "cue",
+      "cue": "correct",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 0.7
+    },
+    { "t": 47811, "kind": "bed:duck", "bed": "pulse", "cue": "correct" },
+    {
+      "t": 48281,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 48281, "kind": "bed:duck", "bed": "pulse", "cue": "silence" },
+    {
+      "t": 49704,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 49704, "kind": "bed:duck", "bed": "pulse", "cue": "silence" },
+    {
+      "t": 53883,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    {
+      "t": 55316,
+      "kind": "cue",
+      "cue": "sweep",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 55316, "kind": "bed:duck", "bed": "pulse", "cue": "sweep" },
+    {
+      "t": 57815,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 57815, "kind": "bed:duck", "bed": "latenight", "cue": "silence" },
+    {
+      "t": 58727,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 58727, "kind": "bed:duck", "bed": "latenight", "cue": "phase" },
+    {
+      "t": 63883,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    {
+      "t": 67144,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 67144, "kind": "bed:duck", "bed": "pulse", "cue": "reveal" },
+    {
+      "t": 67145,
+      "kind": "clip",
+      "src": "sg18oabjjqezuq3.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 330
+    },
+    {
+      "t": 67482,
+      "kind": "cue",
+      "cue": "correct",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 0.7
+    },
+    { "t": 67482, "kind": "bed:duck", "bed": "pulse", "cue": "correct" },
+    {
+      "t": 67953,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 67953, "kind": "bed:duck", "bed": "pulse", "cue": "silence" },
+    {
+      "t": 69357,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 69357, "kind": "bed:duck", "bed": "pulse", "cue": "silence" },
+    {
+      "t": 73649,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    {
+      "t": 77086,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 77086, "kind": "bed:duck", "bed": "pulse", "cue": "reveal" },
+    {
+      "t": 77087,
+      "kind": "clip",
+      "src": "sgfvtlf58ayh19.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 330
+    },
+    {
+      "t": 77428,
+      "kind": "cue",
+      "cue": "tie",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 77428, "kind": "bed:duck", "bed": "pulse", "cue": "tie" },
+    {
+      "t": 77913,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 77913, "kind": "bed:duck", "bed": "pulse", "cue": "silence" },
+    {
+      "t": 79514,
+      "kind": "cue",
+      "cue": "sweep",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 79514, "kind": "bed:duck", "bed": "pulse", "cue": "sweep" },
+    {
+      "t": 82018,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 82018, "kind": "bed:duck", "bed": "latenight", "cue": "silence" },
+    {
+      "t": 83266,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 83266, "kind": "bed:duck", "bed": "latenight", "cue": "phase" },
+    {
+      "t": 83368,
+      "kind": "clip",
+      "src": "sgo3vxhs18bb9te.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 88351,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    {
+      "t": 90885,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 90885, "kind": "bed:duck", "bed": "pulse", "cue": "reveal" },
+    {
+      "t": 90885,
+      "kind": "clip",
+      "src": "sg18oabjjqezuq3.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 330
+    },
+    {
+      "t": 91220,
+      "kind": "cue",
+      "cue": "correct",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 0.7
+    },
+    { "t": 91220, "kind": "bed:duck", "bed": "pulse", "cue": "correct" },
+    {
+      "t": 91729,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 91729, "kind": "bed:duck", "bed": "pulse", "cue": "silence" },
+    {
+      "t": 93114,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 93114, "kind": "bed:duck", "bed": "pulse", "cue": "silence" },
+    {
+      "t": 97292,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    {
+      "t": 98110,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 98110, "kind": "bed:duck", "bed": "pulse", "cue": "reveal" },
+    {
+      "t": 98111,
+      "kind": "clip",
+      "src": "sgfvtlf58ayh19.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 330
+    },
+    {
+      "t": 98447,
+      "kind": "cue",
+      "cue": "tie",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 98447, "kind": "bed:duck", "bed": "pulse", "cue": "tie" },
+    {
+      "t": 98992,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 98992, "kind": "bed:duck", "bed": "pulse", "cue": "silence" },
+    {
+      "t": 100532,
+      "kind": "cue",
+      "cue": "sweep",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 100532, "kind": "bed:duck", "bed": "pulse", "cue": "sweep" },
+    {
+      "t": 103046,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 103046, "kind": "bed:duck", "bed": "latenight", "cue": "silence" },
+    {
+      "t": 103467,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 103467, "kind": "bed:duck", "bed": "latenight", "cue": "phase" },
+    {
+      "t": 103511,
+      "kind": "clip",
+      "src": "sgckvtr110z61i5.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 108604,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    {
+      "t": 110505,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 110505, "kind": "bed:duck", "bed": "pulse", "cue": "reveal" },
+    {
+      "t": 110505,
+      "kind": "clip",
+      "src": "sg18oabjjqezuq3.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 330
+    },
+    {
+      "t": 110839,
+      "kind": "cue",
+      "cue": "correct",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 0.7
+    },
+    { "t": 110839, "kind": "bed:duck", "bed": "pulse", "cue": "correct" },
+    {
+      "t": 111308,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0,
+      "gain": 1
+    },
+    { "t": 111308, "kind": "bed:duck", "bed": "pulse", "cue": "silence" }
+  ]
+}

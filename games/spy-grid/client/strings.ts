@@ -191,6 +191,10 @@ export const STRINGS: Strings = {
       'Las pistas van por el significado, no por letras ni casillas.',
     'Sending…': 'Enviando…',
     'Send clue': 'Enviar pista',
+    'The crew found {n}.': 'El equipo encontró {n}.',
+    'The crew touched the assassin 💀': 'El equipo tocó al asesino 💀',
+    'You all play one team. Want to give the clues? Switch on “I’ll be spymaster”.':
+      'Todos juegan en un equipo. ¿Quieres dar las pistas? Activa “Seré jefe de espías”.',
     // the coach line and the TV's how-it-works demo (play-test 2026-09-24)
     'New here? Here is how it works': '¿Nuevo? Así se juega',
     'Pick a team. Want to give the clues? Switch on “I’ll be spymaster”.':
@@ -198,7 +202,7 @@ export const STRINGS: Strings = {
     Watching: 'Mirando',
     'You join the next game.': 'Entras en la próxima partida.',
     '{team} is playing': 'Juega {team}',
-    'Your key is below — plan your next clue.': 'Tu clave está abajo: planea tu próxima pista.',
+    'Tap Show key and plan your next clue.': 'Toca Ver clave y planea tu próxima pista.',
     'Watch the TV. Your team is next.': 'Mira la tele. Tu equipo va después.',
     '🕶️ You are the spymaster': '🕶️ Eres el jefe de espías',
     'Tap Show key, find your {shape} words, type ONE word that links some of them, pick how many, Send.':

@@ -16,6 +16,12 @@ function lines(view: V, L: Translator): { role: string; next: string; mine: bool
   const team = t === 'sun' ? L('Sun') : L('Moon');
   const mineTurn = view.team === t;
   const spy = view.role === 'spymaster';
+  if (view.phaseId === 'teams' && view.mode === 'coop')
+    return {
+      role: L('New here? Here is how it works'),
+      next: L('You all play one team. Want to give the clues? Switch on “I’ll be spymaster”.'),
+      mine: true,
+    };
   if (view.phaseId === 'teams')
     return {
       role: L('New here? Here is how it works'),
@@ -28,7 +34,7 @@ function lines(view: V, L: Translator): { role: string; next: string; mine: bool
     return {
       role: `${SHAPE[t]} ${L('{team} is playing', { team })}`,
       next: spy
-        ? L('Your key is below — plan your next clue.')
+        ? L('Tap Show key and plan your next clue.')
         : L('Watch the TV. Your team is next.'),
       mine: false,
     };

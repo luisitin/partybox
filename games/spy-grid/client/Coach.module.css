@@ -42,3 +42,18 @@
   font-weight: 800;
   line-height: 1.3;
 }
+
+/* a short phone (SE): one tight line of guidance, so the board keeps the room */
+@media (max-height: 700px) {
+  .coach {
+    padding: var(--pb-space-1) var(--pb-space-3);
+  }
+
+  .role {
+    display: none;
+  }
+
+  .next {
+    font-size: var(--pb-font-caption);
+  }
+}

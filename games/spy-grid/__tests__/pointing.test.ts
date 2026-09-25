@@ -139,8 +139,12 @@ describe('bots follow people', () => {
         p3: { ...s.players.p3!, bot: true },
       },
     };
-    const input = game.bot.sampleInput(s, 'p2', createRng(9));
-    // ZZYZX matches no theme and no hint: a random card (30 %) or nothing before the first flip.
-    if (input) expect(input.type).toBe('point');
+    // ZZYZX matches no theme and no hint, and End turn is not open yet: a first guess is owed, so
+    // every seed points at a card (a person's off-pack clue used to stall the turn, session-c #2).
+    for (let seed = 1; seed <= 20; seed++) {
+      const input = game.bot.sampleInput(s, 'p2', createRng(seed));
+      expect(input?.type).toBe('point');
+      if (input?.type === 'point') expect(typeof input.target).toBe('number');
+    }
   });
 });

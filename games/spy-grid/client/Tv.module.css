@@ -42,6 +42,12 @@
   overflow: hidden;
 }
 
+/* the guess clock sits top-left: keep the clue clear of it (the End turn tile now always holds its
+   place on the right, which pulled the centred clue under the digits) */
+.clueBar:has(.clock) {
+  padding-left: 96px;
+}
+
 .on-sun {
   background: color-mix(in srgb, var(--sg-sun) 14%, var(--pb-surface));
 }
@@ -171,6 +177,28 @@
   width: 88px;
   height: 88px;
   flex: none;
+  /* the spymaster breathes while they think: the TV is never still in a long clue (session-c #16) */
+  animation: sg-think 2.4s ease-in-out infinite;
+}
+
+@keyframes sg-think {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.08) rotate(-4deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spyFace {
+    animation: none;
+  }
+}
+
+:global([data-motion='off']) .spyFace {
+  animation: none;
 }
 
 .dots {
@@ -366,6 +394,11 @@
   padding: 40px var(--pb-overscan-x, 96px) 96px;
 }
 
+/* co-op: one crew card, so the how-to-play gets the room */
+.teamsCoop {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
 .columns {
   display: grid;
   grid-auto-flow: column;
@@ -455,7 +488,10 @@
 .howTo {
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-4);
+  justify-content: safe center;
+  gap: var(--pb-space-3);
+  min-height: 0;
+  overflow: hidden;
   padding: var(--pb-space-5);
   border-radius: var(--pb-radius-lg);
   background: var(--pb-surface);
@@ -484,8 +520,9 @@
 
 .callToAction {
   animation: global(pb-breathe) 2.4s ease-in-out infinite;
-  margin: auto 0 0;
-  font-size: var(--pb-font-body);
+  margin: 0;
+  text-align: center;
+  font-size: var(--pb-font-caption);
   font-weight: 800;
   color: var(--pb-accent-2);
 }
@@ -509,4 +546,12 @@
 /* co-op: one team, so the clue bar takes the other two thirds */
 .coop .header {
   grid-template-columns: minmax(0, 1fr) minmax(0, 2.55fr);
+}
+
+.endHidden {
+  visibility: hidden;
+}
+
+.nowrap {
+  white-space: nowrap;
 }
