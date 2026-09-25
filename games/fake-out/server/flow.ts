@@ -76,7 +76,9 @@ export function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') return onPlayer(state, event);
   if (event.type === 'speech') return onSpeech(state, event.key, event.ms, event.now);
   const vip = applyVip(state, event, { skip, end: enterDone });
-  if (vip) return vip;
+  // A resume may find the room ready: a phone that dropped during the pause was the last one
+  // not ready, and drops don't re-check while paused (session-c [7f85d5], spy-grid [6865e4]).
+  if (vip) return vip.phase.id === 'intro' ? checkReady(vip, event.now) : vip;
   if (state.phase.paused) return state; // inputs and timers wait while paused
   switch (state.phase.id) {
     case 'intro':

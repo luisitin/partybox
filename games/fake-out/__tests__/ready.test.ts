@@ -86,3 +86,18 @@ describe('intro ready-up: the idle net', () => {
     expect(s.phase.id).toBe('question');
   });
 });
+
+describe('intro ready-up: resume re-checks', () => {
+  it('the last unready phone dropping during a pause starts the count on resume', () => {
+    let s = start({ fact: PENGUIN, players: 3 });
+    const [a, b, c] = PLAYERS.slice(0, 3).map((p) => p.id) as [string, string, string];
+    s = ready(ready(s, a), b);
+    const at = s.phase.startedAt + 2_000;
+    s = vip(s, 'pause', at);
+    s = connect(s, c, false, at + 500);
+    expect(s.counting).toBe(false);
+    s = vip(s, 'resume', at + 4_000);
+    expect(s.counting).toBe(true);
+    expect(s.phase.deadline).toBe(at + 4_000 + READY_BREATH_MS + COUNTDOWN_MS);
+  });
+});
