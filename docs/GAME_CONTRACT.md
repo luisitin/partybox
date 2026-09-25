@@ -154,6 +154,7 @@ interface GameResults {
     | { kind: 'teams'; winner: string | null; teams: { id; name; mark?; members: string[] }[] };
   headline?: string;
 }
+// a team game still ranks every member of the winning team 1 (winnerIds = that team)
 ```
 
 ### Recap (optional, ADR-035)

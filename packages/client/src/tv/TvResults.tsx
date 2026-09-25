@@ -41,20 +41,22 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
   const winnerIds = room.results?.results.winnerIds ?? [];
   // ADR-052: a co-op or team game — its line, the winning team's faces, no lone crown.
   const outcome = room.results?.results.outcome;
+  // A team's win counts only when the winner is one of its teams (else the line says a draw).
   const celebrate = !outcome
     ? null
     : outcome.kind === 'coop'
       ? outcome.won
-      : outcome.winner !== null;
+      : outcome.teams.some((team) => team.id === outcome.winner);
   const winner =
     !outcome && winnerIds.length === 1 && !nobodyScored(room) && !scoreless
       ? (room.results?.players.find((p) => p.id === winnerIds[0]) ?? null)
       : null;
   // I-037 A: a real tie shares the crown — the tied faces together beside the line.
   const tied =
-    (outcome ? outcome.kind === 'teams' && celebrate : winnerIds.length > 1) &&
-    !nobodyScored(room) &&
-    !scoreless
+    // a team's win crowns its faces even on a 0–0 board; the old tie still needs a score
+    (outcome
+      ? outcome.kind === 'teams' && celebrate
+      : winnerIds.length > 1 && !nobodyScored(room)) && !scoreless
       ? (room.results?.players.filter((p) => winnerIds.includes(p.id)) ?? []).slice(0, 4)
       : [];
   const crowned = winner !== null || tied.length > 0;
