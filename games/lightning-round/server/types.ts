@@ -1,5 +1,6 @@
 // State and input types for Lightning Round. Everything is JSON-serializable (docs/GAME_CONTRACT.md);
 // questions are referenced by id so the state stays small and the content pack stays the truth.
+import { readingMs, wordCount } from '@partybox/game-sdk';
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 
@@ -10,11 +11,9 @@ export type PhaseId = (typeof PHASES)[number];
  *  screen of words stays up 1.5 s + 1/3 s a word, x1.3 because a Spanish phone or 200 % text
  *  reads longer (the server cannot see the phones' languages, so the margin is always on). */
 export function readMs(words: number): number {
-  return Math.round((1_500 + words * 333) * 1.3);
+  return readingMs(words, { ui: true });
 }
-export function wordCount(text: string): number {
-  return text.split(/\s+/).filter((w) => w.length > 0).length;
-}
+export { wordCount };
 /** The title card: a 2 s beat — the name and the topic pill (~5 words). ADR-053: the shell's start
  *  stage has just shown the rules and counted 3 · 2 · 1, so the tagline is gone (was 9 s). */
 export const INTRO_MS = 2_000;
