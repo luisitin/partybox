@@ -91,9 +91,9 @@ export const TOP_SPOT_MS = 3_000;
  *  holds the room). */
 export const VOICE_WAIT_MS = 8_000;
 /** A "Not enough bees!" round. */
-export const SHORT_MS = 3_500;
+export const SHORT_MS = 6_000;
 /** `score`. */
-export const SCORE_MS = 6_000;
+export const SCORE_MS = 24_000;
 /** A question reading arriving later than this into `rank` is not played (it would talk over
  *  people who are already ranking). */
 export const SAY_LATE_MS = 3_000;

@@ -170,7 +170,7 @@ describe('score and the end', () => {
     let s = toRank(start({ rounds: 6 }));
     for (let i = 0; i < 20 && s.phase.id !== 'done'; i++) s = timer(s);
     expect(s.phase.id).toBe('done');
-    expect(s.phase.startedAt - 1_000_000).toBeLessThan(6 * 34_000 + 9_000);
+    expect(s.phase.startedAt - 1_000_000).toBeLessThan(6 * 36_000 + 9_000);
     expect(game.results(s)?.ranking.map((r) => r.rank)).toEqual([1, 1, 1]);
   });
 

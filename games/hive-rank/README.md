@@ -8,7 +8,7 @@ design: `docs/game-pack/hive-rank/SPEC.md` (Part 03); build notes: `docs/game-pa
 Each round everyone gets five things and a question ("Best to worst road-trip snack") and taps
 them into order on their phone. The orders are combined into the hive's order, which the TV counts
 down from 5th to 1st with the reader. You score for matching the hive — you're predicting the
-room, not your own taste. About 5 minutes. Interaction: ranking. Plays fully remote.
+room, not your own taste. About 6 minutes. Interaction: ranking. Plays fully remote.
 
 ## Players
 
@@ -26,7 +26,7 @@ goes straight to the next `rank` (or `done`).
 | `intro` | title, the three steps, **Let's go**                            | how to play; VIP **Let's go**                 | 8 s, or VIP                                                            |
 | `rank`  | "Round n of m", the question, "1 = top · 5 = bottom", 5 cards   | `OrderPicker`, sticky **Lock it in** / Change | every connected player locked in, `rankSeconds`, or VIP                |
 | `hive`  | ladder: "The hive has decided…", then 5th → 1st, faces, average | "👀 Watch the TV" (PhoneStage: the ladder)    | paced (~12 s; each spot ≥ 2 s or its reading + 0.6 s); VIP = next spot |
-| `score` | Queen Bee crowned, board climbs with +n; PERFECT HIVE           | my order vs the hive: ✓ / ±1 / ✗, points      | 6 s, or VIP **Next round** / **See results**                           |
+| `score` | Queen Bee crowned, board climbs with +n; PERFECT HIVE           | my order vs the hive: ✓ / ±1 / ✗, points      | 24 s, or VIP **Next round** / **See results**                          |
 
 - A spot whose reading is not made yet waits for it, never past 8 s into `hive`; then it lands silent.
 - Pause freezes the countdown (the shared helper); resume continues it.
@@ -54,7 +54,7 @@ sends complete orders. Orders are secret until `hive`: only their owner's phone 
 
 ## Edge cases
 
-- Fewer than 2 orders → "Not enough bees!" (3.5 s), no points, next round.
+- Fewer than 2 orders → "Not enough bees!" (6 s), no points, next round.
 - Everyone idle → every round is short; the game ends in about 3.5 minutes.
 - A drop mid-`rank` that leaves every connected player locked in closes the ranking.
 - One connected player: their lock closes `rank`, and the round is short.
