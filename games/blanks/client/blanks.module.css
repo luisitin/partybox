@@ -1857,6 +1857,24 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--pb-space-2);
+  /* I-447 B: the round label keeps its words together; when the Close / View pills don't fit
+     beside it (SE 320, 200 % type, Spanish) they wrap to a line of their own */
+  flex-wrap: wrap;
+  row-gap: var(--pb-space-1);
+}
+.handTitle > .kicker {
+  flex: 1 0 auto;
+  max-width: 100%;
+}
+/* the two pills travel together, right-aligned, and stack only when one line can't hold both */
+.handTools {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--pb-space-1) var(--pb-space-2);
+  margin-left: auto;
+  max-width: 100%;
 }
 .handMode {
   flex-shrink: 0;
@@ -1882,4 +1900,22 @@
   font-weight: 700;
   letter-spacing: 0;
   text-transform: none;
+}
+
+/* ── I-447 B: the VIP's "Close the round", small, in the title row (before the Fan/List pill). */
+.closeRound {
+  flex-shrink: 0;
+  max-width: 100%;
+  padding: 2px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--pb-border);
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+}
+.closeAsk {
+  border-color: var(--pb-accent);
+  color: var(--pb-text);
 }

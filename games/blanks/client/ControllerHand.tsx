@@ -12,6 +12,7 @@ import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard } from './Cards';
 import { FanDots, NewHandCard, useFan, useHandList } from './HandFan';
+import { CloseRound } from './CloseRound';
 import { NextButton } from './NextButton';
 import { STRINGS } from './strings';
 import styles from './blanks.module.css';
@@ -187,27 +188,37 @@ export function ControllerHand({ view, me, send, skip }: Props): JSX.Element {
               ? L('Round {round} · pick {n}, in order', { round: view.round, n: pick })
               : L('Round {round} · pick one', { round: view.round })}
           </span>
-          {/* I-159 B: Fan or List, this phone's own choice. Retro 0ac5d8: a bare "Fan" beside the
+          <span className={styles.handTools}>
+            {/* I-447 B: the TV says the VIP moves things on — here, while they are still choosing */}
+            {!view.timed && skip && view.playedCount > 0 ? (
+              <CloseRound
+                skip={skip}
+                waiting={Math.max(0, view.playersExpected - view.playedCount)}
+              />
+            ) : null}
+            {/* I-159 B: Fan or List, this phone's own choice. Retro 0ac5d8: a bare "Fan" beside the
               kicker meant nothing to a first-timer — the pill names the view it is showing, with
               an icon, and says what a tap does. */}
-          <button
-            type="button"
-            className={styles.handMode}
-            aria-label={
-              list ? L('Hand view: list. Show as a fan') : L('Hand view: fan. Show as a list')
-            }
-            onClick={() => {
-              const next = list ? 'fan' : 'list';
-              setMode(next);
-              try {
-                localStorage.setItem('pb.blanks.hand', next);
-              } catch {
-                /* private mode: the choice lasts this visit */
+            <button
+              type="button"
+              className={styles.handMode}
+              aria-label={
+                list ? L('Hand view: list. Show as a fan') : L('Hand view: fan. Show as a list')
               }
-            }}
-          >
-            <span aria-hidden>{list ? '☰' : '🃏'}</span> {list ? L('View: list') : L('View: fan')}
-          </button>
+              onClick={() => {
+                const next = list ? 'fan' : 'list';
+                setMode(next);
+                try {
+                  localStorage.setItem('pb.blanks.hand', next);
+                } catch {
+                  /* private mode: the choice lasts this visit */
+                }
+              }}
+            >
+              <span aria-hidden>{list ? '☰' : '🃏'}</span>{' '}
+              {list ? L('View: list') : L('View: fan')}
+            </button>
+          </span>
         </span>
       }
       footer={

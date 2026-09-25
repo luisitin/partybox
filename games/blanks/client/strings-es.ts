@@ -224,4 +224,13 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'View: list': 'Vista: lista',
   'Hand view: fan. Show as a list': 'Vista de la mano: abanico. Mostrar en lista',
   'Hand view: list. Show as a fan': 'Vista de la mano: lista. Mostrar en abanico',
+  // I-447
+  'No clock — {name} closes the round from their phone.':
+    'Sin reloj: {name} cierra la ronda desde su teléfono.',
+  'No clock — the VIP closes the round from their phone.':
+    'Sin reloj: el VIP cierra la ronda desde su teléfono.',
+  // I-447 B
+  '⏭ Close the round': '⏭ Cerrar la ronda',
+  'Sure? {n} still choosing': '¿Seguro? {n} aún eligiendo',
+  'Closing…': 'Cerrando…',
 };
