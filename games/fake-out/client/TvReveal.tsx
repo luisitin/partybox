@@ -10,7 +10,6 @@ import type { FakeOutTvView, RevealedOption } from '../server/index';
 import { useAfter, useClipAt, useCueOnce } from './beats';
 import { FactCard } from './FactCard';
 import { Deck } from './Deck';
-import { ReadAlong } from './ReadAlong';
 import { STRINGS } from './strings';
 import { kicker } from './labels';
 import styles from './tv.module.css';
@@ -105,9 +104,7 @@ function Spotlight({ view, option }: { view: FakeOutTvView; option: RevealedOpti
       </div>
       <div className={styles.spotScene}>
         <div ref={card} className={styles.spotCard}>
-          <span className={styles.spotText}>
-            <ReadAlong read={view.readAlong} pieces={[{ text: option.display.toUpperCase() }]} />
-          </span>
+          <span className={styles.spotText}>{option.display.toUpperCase()}</span>
           {option.likes > 0 ? (
             <span className={styles.likes} aria-label={L('{n} likes', { n: option.likes })}>
               👍 {option.likes}
@@ -203,7 +200,7 @@ export function TvReveal({ view }: Props): JSX.Element {
         ) : null}
         {reveal?.kind === 'fact' ? (
           <div className={styles.completed} key="fact">
-            <FactCard fact={view.fact} size="h1" filled read={view.readAlong} />
+            <FactCard fact={view.fact} size="h1" filled />
           </div>
         ) : null}
         {reveal?.kind === 'unpicked' ? <Unpicked view={view} /> : null}

@@ -241,7 +241,7 @@ The containment check only applies to truths of 5+ letters. Otherwise a short tr
 
 1. Take every submitted lie. Merge duplicates with `sameAnswer`, using union-find in seat order. The display form comes from the first author's text.
 2. Add the truth.
-3. Pad with house lies until there are at least **5 options**.
+3. The pick holds the truth + the players' own lies only (owner, 2026-09-25). Pad with house lies only up to **3 options**, so everyone still has a choice (a lone liar, or a room where only one player wrote).
    - Skip any house lie already claimed through Suggest, or matching a player's lie.
    - Padding keeps 2- and 3-player games interesting.
 4. Give each option an opaque id, and shuffle once with the rng.

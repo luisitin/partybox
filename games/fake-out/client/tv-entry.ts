@@ -7,9 +7,10 @@ import { Tv } from './Tv';
 export const tv: GameTvModule = {
   ...shared,
   Tv,
-  // The question card's tip is its own entrance. The reveal crossfades in: its first frame is a
-  // new composition (the grid folds into the deck).
-  quickInto: ['question'],
+  // Every screen but the reveal brings its own entrance (the question card's tip, the lie tray, the
+  // grid's deal, the board's rise), so the old text must not linger under it (spy-grid [6ff241]:
+  // ~1 s of cross-faded text). The reveal still crossfades in: the grid folds into the deck.
+  quickInto: ['question', 'lie', 'pick', 'scores'],
   // The reveal's own faces replace the strip (reviewer [d738fb]); pick keeps full names + scores.
   stripHidden: ['reveal'],
   // The reveal hands points out step by step: the strip's totals wait for the scoreboard.

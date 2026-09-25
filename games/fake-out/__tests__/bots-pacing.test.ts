@@ -68,7 +68,7 @@ describe('bots', () => {
       if (i?.type === 'pick') seen.add(i.option);
     }
     const own = s.q.options?.find((o) => o.authors.includes('ana'))?.id;
-    expect(seen.size).toBeGreaterThan(2);
+    expect(seen.size).toBe(2); // the truth + the one house lie that keeps it a choice
     expect(seen.has(own ?? '')).toBe(false);
     s = timer(s);
     expect(s.phase.id).toBe('reveal');

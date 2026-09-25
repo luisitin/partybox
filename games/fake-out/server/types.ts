@@ -133,5 +133,8 @@ export const VOICE_WAIT_MS = 6_000;
 
 export const TRUTH_POINTS = 1_000;
 export const FOOL_POINTS = 500;
-export const MIN_OPTIONS = 5;
+/** The pick holds the truth + the players' own lies only (owner, 2026-09-25). A house lie pads
+ *  only a grid too small to be a choice: every player must see at least two options besides
+ *  their own lie (e.g. a lone liar, or a 2-player room where one didn't write). */
+export const MIN_OPTIONS = 3;
 export const MAX_LIKES = 2;

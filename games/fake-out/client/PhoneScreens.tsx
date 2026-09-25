@@ -41,7 +41,7 @@ export function PhoneQuestion({ view, skip }: Props): JSX.Element {
       <p className={`${styles.kicker} ${view.final ? styles.kickerFinal : ''}`}>
         {kicker(L, view)}
       </p>
-      <FactCard fact={view.fact} size="phone" read={view.readAlong} className={styles.factCard} />
+      <FactCard fact={view.fact} size="phone" className={styles.factCard} />
       <EnglishNote />
       <p className={styles.getReady}>
         {phoneOnly

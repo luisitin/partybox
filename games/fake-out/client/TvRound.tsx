@@ -27,7 +27,7 @@ export function TvQuestion({ view }: Props): JSX.Element {
       <EnglishNote />
       <div className={styles.flipScene}>
         <div className={styles.questionCard} key={view.n}>
-          <FactCard fact={view.fact} size="h1" read={view.readAlong} />
+          <FactCard fact={view.fact} size="h1" />
         </div>
       </div>
     </Stage>

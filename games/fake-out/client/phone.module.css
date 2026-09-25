@@ -36,22 +36,12 @@
 
 .fact,
 .factCard {
-  padding: var(--pb-space-4);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-  border: 1px solid var(--pb-border);
-}
-
-.factCard {
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .factSmall {
   font-size: var(--pb-font-body);
-  padding: var(--pb-space-3);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-  border: 1px solid var(--pb-border);
+  padding: var(--pb-space-3) var(--pb-space-4);
 }
 
 .getReady {

@@ -94,16 +94,20 @@ describe('scoring rules', () => {
     expect(game.tvView({ ...s, q: { ...s.q, n: 3 } }).final).toBe(false);
   });
 
-  it('pads a two-player game to five options; a padding lie scores nobody', () => {
-    let s = lies(toLie(start({ fact: PENGUIN, players: 2 })), { ana: 'moose', ben: 'otter' });
-    expect(s.q.options?.length).toBe(5);
+  it('only the truth + the lies when everyone writes; a padding lie scores nobody', () => {
+    const full = lies(toLie(start({ fact: PENGUIN, players: 2 })), { ana: 'moose', ben: 'otter' });
+    expect(full.q.options?.length).toBe(3);
+    expect(full.q.options?.some((o) => o.house)).toBe(false);
+    // one of two didn't write: a single house lie keeps it a choice for the liar
+    let s = lies(toLie(start({ fact: PENGUIN, players: 2 })), { ben: 'moose' });
+    expect(s.q.options?.length).toBe(3);
     const house = s.q.options?.find((o) => o.house);
     expect(house).toBeDefined();
-    s = pick(s, 'ana', house?.id ?? '');
-    s = pick(s, 'ben', optionId(s, 'moose'));
+    s = pick(s, 'ana', optionId(s, 'moose'));
+    s = pick(s, 'ben', house?.id ?? '');
     s = throughReveal(s);
-    expect(s.scores).toEqual({ ana: 500, ben: 0 });
-    expect(s.stats['ana']?.house).toBe(1);
+    expect(s.scores).toEqual({ ana: 0, ben: 500 });
+    expect(s.stats['ben']?.house).toBe(1);
   });
 
   it('pays idle players nothing and gives a silent writer no option', () => {

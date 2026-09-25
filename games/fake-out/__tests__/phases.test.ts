@@ -88,13 +88,13 @@ describe('phase order and exits', () => {
     expect(Object.values(s.scores).every((v) => v === 0)).toBe(true);
   });
 
-  it('one connected player plays against the padding on deadlines', () => {
+  it('one connected player still gets a choice: the truth + one house lie', () => {
     let s = start({ fact: PENGUIN, players: 2 });
     s = connect(s, 'ben', false);
     s = toLie(s);
     s = lie(s, 'ana', 'walrus');
     expect(s.phase.id).toBe('pick');
-    expect(cv(s, 'ana').options).toHaveLength(4);
+    expect(cv(s, 'ana').options).toHaveLength(2);
   });
 
   it('ignores a late joiner (spectator) and unknown senders', () => {

@@ -110,13 +110,7 @@ export function PhoneStage(props: { view: PushedView<ControllerView> }): JSX.Ele
   const filled = reveal?.kind === 'fact' || reveal?.kind === 'unpicked';
   return (
     <Screen className={styles.screen}>
-      <FactCard
-        fact={view.fact}
-        size="phone"
-        filled={filled}
-        read={reveal?.kind === 'fact' ? view.readAlong : undefined}
-        className={styles.factSmall}
-      />
+      <FactCard fact={view.fact} size="phone" filled={filled} className={styles.factSmall} />
       <ul className={styles.feed}>
         {(reveal?.shown ?? []).map((o, i) => (
           <FeedCard
