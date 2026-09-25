@@ -1,0 +1,669 @@
+{
+  "phase": {
+    "id": "score",
+    "startedAt": 1790000010040,
+    "deadline": 1790000016040
+  },
+  "rng": {
+    "seed": 7,
+    "step": 203
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Priya",
+      "avatarId": "fox",
+      "connected": true,
+      "bot": false
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Sam",
+      "avatarId": "owl",
+      "connected": true,
+      "bot": false
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Maximiliano",
+      "avatarId": "frog",
+      "connected": true,
+      "bot": false
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Jo",
+      "avatarId": "cat",
+      "connected": true,
+      "bot": false
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Ana",
+      "avatarId": "bear",
+      "connected": true,
+      "bot": false
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Ben",
+      "avatarId": "panda",
+      "connected": true,
+      "bot": false
+    },
+    "p7": {
+      "id": "p7",
+      "name": "Cleo",
+      "avatarId": "lion",
+      "connected": true,
+      "bot": false
+    },
+    "p8": {
+      "id": "p8",
+      "name": "Dev",
+      "avatarId": "tiger",
+      "connected": true,
+      "bot": false
+    },
+    "p9": {
+      "id": "p9",
+      "name": "Eli",
+      "avatarId": "koala",
+      "connected": true,
+      "bot": false
+    },
+    "p10": {
+      "id": "p10",
+      "name": "Fay",
+      "avatarId": "pig",
+      "connected": true,
+      "bot": false
+    },
+    "p11": {
+      "id": "p11",
+      "name": "Gus",
+      "avatarId": "monkey",
+      "connected": true,
+      "bot": false
+    },
+    "p12": {
+      "id": "p12",
+      "name": "Hal",
+      "avatarId": "rabbit",
+      "connected": true,
+      "bot": false
+    },
+    "p13": {
+      "id": "p13",
+      "name": "Ivy",
+      "avatarId": "robot:1",
+      "connected": true,
+      "bot": true
+    },
+    "p14": {
+      "id": "p14",
+      "name": "Kit",
+      "avatarId": "robot:2",
+      "connected": true,
+      "bot": true
+    },
+    "p15": {
+      "id": "p15",
+      "name": "Lou",
+      "avatarId": "robot:3",
+      "connected": true,
+      "bot": true
+    },
+    "p16": {
+      "id": "p16",
+      "name": "Mo",
+      "avatarId": "robot:4",
+      "connected": true,
+      "bot": true
+    }
+  },
+  "settings": {
+    "rounds": 6,
+    "rankSeconds": 30,
+    "spicy": false,
+    "reader": "jessica"
+  },
+  "questions": [
+    {
+      "id": "hr-school-128",
+      "kind": "preference",
+      "prompt": "Best to worst school subject",
+      "say": "Rank these school subjects, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "history",
+          "label": "History"
+        },
+        {
+          "id": "art",
+          "label": "Art"
+        },
+        {
+          "id": "math",
+          "label": "Math"
+        },
+        {
+          "id": "music",
+          "label": "Music"
+        },
+        {
+          "id": "science",
+          "label": "Science"
+        }
+      ],
+      "expected": ["art", "science", "music", "history", "math"]
+    },
+    {
+      "id": "hr-scifi-224",
+      "kind": "usefulness",
+      "prompt": "Most to least useful when meeting an alien",
+      "say": "Rank these from most to least useful when you meet an alien.",
+      "top": "Most useful",
+      "bottom": "Least useful",
+      "items": [
+        {
+          "id": "net",
+          "label": "A big net"
+        },
+        {
+          "id": "cookies",
+          "label": "A plate of cookies"
+        },
+        {
+          "id": "translator",
+          "label": "A translator"
+        },
+        {
+          "id": "photo",
+          "label": "A photo of Earth"
+        },
+        {
+          "id": "wave",
+          "label": "A friendly wave"
+        }
+      ],
+      "expected": ["translator", "wave", "cookies", "photo", "net"]
+    },
+    {
+      "id": "hr-food-111",
+      "kind": "preference",
+      "prompt": "Best to worst soup on a cold day",
+      "say": "Rank these soups for a cold day, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "splitpea",
+          "label": "Split pea"
+        },
+        {
+          "id": "chicken",
+          "label": "Chicken noodle"
+        },
+        {
+          "id": "gazpacho",
+          "label": "Cold gazpacho"
+        },
+        {
+          "id": "tomato",
+          "label": "Tomato soup"
+        },
+        {
+          "id": "potato",
+          "label": "Potato soup"
+        }
+      ],
+      "expected": ["chicken", "tomato", "potato", "splitpea", "gazpacho"]
+    },
+    {
+      "id": "hr-food-108",
+      "kind": "preference",
+      "prompt": "Best to worst dessert",
+      "say": "Rank these desserts, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "fruit",
+          "label": "Fruit salad"
+        },
+        {
+          "id": "brownie",
+          "label": "Brownies"
+        },
+        {
+          "id": "pudding",
+          "label": "Rice pudding"
+        },
+        {
+          "id": "split",
+          "label": "Banana split"
+        },
+        {
+          "id": "pie",
+          "label": "Apple pie"
+        }
+      ],
+      "expected": ["brownie", "split", "pie", "fruit", "pudding"]
+    },
+    {
+      "id": "hr-math-206",
+      "kind": "usefulness",
+      "prompt": "Most to least useful in a surprise math test",
+      "say": "Rank these from most to least useful in a surprise math test.",
+      "top": "Most useful",
+      "bottom": "Least useful",
+      "items": [
+        {
+          "id": "eraser",
+          "label": "A big eraser"
+        },
+        {
+          "id": "sleep",
+          "label": "A good night's sleep"
+        },
+        {
+          "id": "sock",
+          "label": "A lucky sock"
+        },
+        {
+          "id": "calc",
+          "label": "A calculator"
+        },
+        {
+          "id": "pencil",
+          "label": "A sharp pencil"
+        }
+      ],
+      "expected": ["calc", "sleep", "pencil", "eraser", "sock"]
+    },
+    {
+      "id": "hr-snow-207",
+      "kind": "usefulness",
+      "prompt": "Most to least useful on a snow day",
+      "say": "Rank these from most to least useful on a snow day.",
+      "top": "Most useful",
+      "bottom": "Least useful",
+      "items": [
+        {
+          "id": "cocoa",
+          "label": "A thermos of cocoa"
+        },
+        {
+          "id": "flip",
+          "label": "A pair of flip-flops"
+        },
+        {
+          "id": "sled",
+          "label": "A sled"
+        },
+        {
+          "id": "shovel",
+          "label": "A snow shovel"
+        },
+        {
+          "id": "scarf",
+          "label": "A warm scarf"
+        }
+      ],
+      "expected": ["shovel", "scarf", "cocoa", "sled", "flip"]
+    }
+  ],
+  "q": {
+    "n": 1,
+    "orders": {
+      "p1": ["history", "art", "math", "music", "science"],
+      "p2": ["art", "history", "math", "music", "science"],
+      "p3": ["history", "math", "art", "music", "science"],
+      "p4": ["history", "art", "math", "science", "music"],
+      "p5": ["math", "art", "history", "music", "science"],
+      "p6": ["history", "art", "music", "math", "science"],
+      "p7": ["science", "music", "math", "art", "history"],
+      "p8": ["art", "math", "history", "science", "music"],
+      "p9": ["history", "art", "math", "music", "science"],
+      "p10": ["art", "history", "math", "music", "science"],
+      "p11": ["history", "math", "art", "music", "science"],
+      "p12": ["history", "art", "math", "science", "music"],
+      "p13": ["math", "art", "history", "music", "science"],
+      "p14": ["history", "art", "music", "math", "science"],
+      "p15": ["science", "music", "math", "art", "history"],
+      "p16": ["art", "math", "history", "science", "music"]
+    },
+    "hive": ["history", "art", "math", "music", "science"],
+    "totals": {
+      "history": 34,
+      "art": 34,
+      "math": 42,
+      "music": 62,
+      "science": 68
+    },
+    "step": 5,
+    "voiced": [],
+    "hold": false,
+    "delta": {
+      "p1": {
+        "pts": 12,
+        "exact": 5,
+        "near": 0,
+        "perfect": true
+      },
+      "p2": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p3": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p4": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p5": {
+        "pts": 6,
+        "exact": 3,
+        "near": 0,
+        "perfect": false
+      },
+      "p6": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p7": {
+        "pts": 2,
+        "exact": 1,
+        "near": 0,
+        "perfect": false
+      },
+      "p8": {
+        "pts": 4,
+        "exact": 0,
+        "near": 4,
+        "perfect": false
+      },
+      "p9": {
+        "pts": 12,
+        "exact": 5,
+        "near": 0,
+        "perfect": true
+      },
+      "p10": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p11": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p12": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p13": {
+        "pts": 6,
+        "exact": 3,
+        "near": 0,
+        "perfect": false
+      },
+      "p14": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p15": {
+        "pts": 2,
+        "exact": 1,
+        "near": 0,
+        "perfect": false
+      },
+      "p16": {
+        "pts": 4,
+        "exact": 0,
+        "near": 4,
+        "perfect": false
+      }
+    },
+    "queens": ["p1", "p9"],
+    "lows": ["p15", "p7"],
+    "short": false,
+    "sayOk": false,
+    "applied": true
+  },
+  "scores": {
+    "p1": 12,
+    "p2": 8,
+    "p3": 8,
+    "p4": 8,
+    "p5": 6,
+    "p6": 8,
+    "p7": 2,
+    "p8": 4,
+    "p9": 12,
+    "p10": 8,
+    "p11": 8,
+    "p12": 8,
+    "p13": 6,
+    "p14": 8,
+    "p15": 2,
+    "p16": 4
+  },
+  "stats": {
+    "p1": {
+      "exact": 5,
+      "queens": 1,
+      "lows": 0,
+      "perfects": 1
+    },
+    "p2": {
+      "exact": 3,
+      "queens": 0,
+      "lows": 0,
+      "perfects": 0
+    },
+    "p3": {
+      "exact": 3,
+      "queens": 0,
+      "lows": 0,
+      "perfects": 0
+    },
+    "p4": {
+      "exact": 3,
+      "queens": 0,
+      "lows": 0,
+      "perfects": 0
+    },
+    "p5": {
+      "exact": 3,
+      "queens": 0,
+      "lows": 0,
+      "perfects": 0
+    },
+    "p6": {
+      "exact": 3,
+      "queens": 0,
+      "lows": 0,
+      "perfects": 0
+    },
+    "p7": {
+      "exact": 1,
+      "queens": 0,
+      "lows": 1,
+      "perfects": 0
+    },
+    "p8": {
+      "exact": 0,
+      "queens": 0,
+      "lows": 0,
+      "perfects": 0
+    },
+    "p9": {
+      "exact": 5,
+      "queens": 1,
+      "lows": 0,
+      "perfects": 1
+    },
+    "p10": {
+      "exact": 3,
+      "queens": 0,
+      "lows": 0,
+      "perfects": 0
+    },
+    "p11": {
+      "exact": 3,
+      "queens": 0,
+      "lows": 0,
+      "perfects": 0
+    },
+    "p12": {
+      "exact": 3,
+      "queens": 0,
+      "lows": 0,
+      "perfects": 0
+    },
+    "p13": {
+      "exact": 3,
+      "queens": 0,
+      "lows": 0,
+      "perfects": 0
+    },
+    "p14": {
+      "exact": 3,
+      "queens": 0,
+      "lows": 0,
+      "perfects": 0
+    },
+    "p15": {
+      "exact": 1,
+      "queens": 0,
+      "lows": 1,
+      "perfects": 0
+    },
+    "p16": {
+      "exact": 0,
+      "queens": 0,
+      "lows": 0,
+      "perfects": 0
+    }
+  },
+  "pairs": {
+    "p1|p10": 3,
+    "p1|p11": 3,
+    "p1|p12": 3,
+    "p1|p13": 3,
+    "p1|p14": 3,
+    "p1|p15": 1,
+    "p1|p2": 3,
+    "p1|p3": 3,
+    "p1|p4": 3,
+    "p1|p5": 3,
+    "p1|p6": 3,
+    "p1|p7": 1,
+    "p1|p9": 5,
+    "p10|p11": 2,
+    "p10|p12": 1,
+    "p10|p13": 2,
+    "p10|p14": 1,
+    "p10|p15": 1,
+    "p10|p16": 1,
+    "p10|p2": 5,
+    "p10|p3": 2,
+    "p10|p4": 1,
+    "p10|p5": 2,
+    "p10|p6": 1,
+    "p10|p7": 1,
+    "p10|p8": 1,
+    "p10|p9": 3,
+    "p11|p12": 1,
+    "p11|p13": 2,
+    "p11|p14": 2,
+    "p11|p16": 1,
+    "p11|p2": 2,
+    "p11|p3": 5,
+    "p11|p4": 1,
+    "p11|p5": 2,
+    "p11|p6": 2,
+    "p11|p8": 1,
+    "p11|p9": 3,
+    "p12|p13": 1,
+    "p12|p14": 2,
+    "p12|p15": 1,
+    "p12|p16": 2,
+    "p12|p2": 1,
+    "p12|p3": 1,
+    "p12|p4": 5,
+    "p12|p5": 1,
+    "p12|p6": 2,
+    "p12|p7": 1,
+    "p12|p8": 2,
+    "p12|p9": 3,
+    "p13|p14": 2,
+    "p13|p16": 1,
+    "p13|p2": 2,
+    "p13|p3": 2,
+    "p13|p4": 1,
+    "p13|p5": 5,
+    "p13|p6": 2,
+    "p13|p8": 1,
+    "p13|p9": 3,
+    "p14|p2": 1,
+    "p14|p3": 2,
+    "p14|p4": 2,
+    "p14|p5": 2,
+    "p14|p6": 5,
+    "p14|p9": 3,
+    "p15|p2": 1,
+    "p15|p4": 1,
+    "p15|p7": 5,
+    "p15|p9": 1,
+    "p16|p2": 1,
+    "p16|p3": 1,
+    "p16|p4": 2,
+    "p16|p5": 1,
+    "p16|p8": 5,
+    "p2|p3": 2,
+    "p2|p4": 1,
+    "p2|p5": 2,
+    "p2|p6": 1,
+    "p2|p7": 1,
+    "p2|p8": 1,
+    "p2|p9": 3,
+    "p3|p4": 1,
+    "p3|p5": 2,
+    "p3|p6": 2,
+    "p3|p8": 1,
+    "p3|p9": 3,
+    "p4|p5": 1,
+    "p4|p6": 2,
+    "p4|p7": 1,
+    "p4|p8": 2,
+    "p4|p9": 3,
+    "p5|p6": 2,
+    "p5|p8": 1,
+    "p5|p9": 3,
+    "p6|p9": 3,
+    "p7|p9": 1
+  },
+  "speechMs": {}
+}

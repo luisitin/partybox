@@ -1,0 +1,384 @@
+{
+  "phase": {
+    "id": "score",
+    "startedAt": 1700000025605,
+    "deadline": 1700000031605
+  },
+  "rng": {
+    "seed": 1,
+    "step": 203
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    }
+  },
+  "settings": {
+    "rounds": 6,
+    "rankSeconds": 30,
+    "spicy": false,
+    "reader": "jessica"
+  },
+  "questions": [
+    {
+      "id": "hr-robot-330",
+      "kind": "hypothetical",
+      "prompt": "Best to worst job to hand to a robot",
+      "say": "You get a robot helper. Rank these jobs to give it, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "dog",
+          "label": "Walking the dog"
+        },
+        {
+          "id": "homework",
+          "label": "Doing homework"
+        },
+        {
+          "id": "toilet",
+          "label": "Scrubbing the toilet"
+        },
+        {
+          "id": "toys",
+          "label": "Picking up toys"
+        },
+        {
+          "id": "laundry",
+          "label": "Folding laundry"
+        }
+      ],
+      "expected": ["toilet", "laundry", "homework", "toys", "dog"]
+    },
+    {
+      "id": "hr-tech-135",
+      "kind": "preference",
+      "prompt": "Best to worst invention ever",
+      "say": "Rank these inventions, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "bread",
+          "label": "Sliced bread"
+        },
+        {
+          "id": "ac",
+          "label": "Air conditioning"
+        },
+        {
+          "id": "wrap",
+          "label": "Bubble wrap"
+        },
+        {
+          "id": "plumbing",
+          "label": "Indoor plumbing"
+        },
+        {
+          "id": "toaster",
+          "label": "Pop-up toaster"
+        }
+      ],
+      "expected": ["plumbing", "ac", "bread", "toaster", "wrap"]
+    },
+    {
+      "id": "hr-home-337",
+      "kind": "preference",
+      "prompt": "Best to worst part of bedtime",
+      "say": "Rank these parts of bedtime, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "teeth",
+          "label": "Brushing teeth"
+        },
+        {
+          "id": "story",
+          "label": "Bedtime story"
+        },
+        {
+          "id": "tidy",
+          "label": "Tidying up toys"
+        },
+        {
+          "id": "bath",
+          "label": "Warm bath"
+        },
+        {
+          "id": "pajamas",
+          "label": "Fresh pajamas"
+        }
+      ],
+      "expected": ["story", "pajamas", "bath", "teeth", "tidy"]
+    },
+    {
+      "id": "hr-alien-329",
+      "kind": "hypothetical",
+      "prompt": "Best to worst thing to show a visiting alien",
+      "say": "An alien is visiting. Rank these things to show it, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "traffic",
+          "label": "A traffic jam"
+        },
+        {
+          "id": "coaster",
+          "label": "A roller coaster"
+        },
+        {
+          "id": "dentist",
+          "label": "A dentist visit"
+        },
+        {
+          "id": "catvideo",
+          "label": "A cat video"
+        },
+        {
+          "id": "pizza",
+          "label": "A pizza"
+        }
+      ],
+      "expected": ["coaster", "pizza", "catvideo", "traffic", "dentist"]
+    },
+    {
+      "id": "hr-music-345",
+      "kind": "preference",
+      "prompt": "Best to worst instrument to learn",
+      "say": "Rank these instruments to learn, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "violin",
+          "label": "Violin"
+        },
+        {
+          "id": "guitar",
+          "label": "Guitar"
+        },
+        {
+          "id": "recorder",
+          "label": "Recorder"
+        },
+        {
+          "id": "drums",
+          "label": "Drums"
+        },
+        {
+          "id": "piano",
+          "label": "Piano"
+        }
+      ],
+      "expected": ["guitar", "piano", "drums", "violin", "recorder"]
+    },
+    {
+      "id": "hr-fight-302",
+      "kind": "hypothetical",
+      "prompt": "Most to least likely to win a snowball fight",
+      "say": "Who would win a snowball fight? Rank them from most to least likely.",
+      "top": "Wins",
+      "bottom": "Loses",
+      "items": [
+        {
+          "id": "penguin",
+          "label": "A penguin"
+        },
+        {
+          "id": "yeti",
+          "label": "A yeti"
+        },
+        {
+          "id": "plow",
+          "label": "A snowplow driver"
+        },
+        {
+          "id": "kid",
+          "label": "A kid on a snow day"
+        },
+        {
+          "id": "polar",
+          "label": "A polar bear"
+        }
+      ],
+      "expected": ["yeti", "kid", "polar", "plow", "penguin"]
+    }
+  ],
+  "q": {
+    "n": 1,
+    "orders": {
+      "p6": ["dog", "homework", "toilet", "toys", "laundry"],
+      "p3": ["dog", "homework", "toilet", "toys", "laundry"],
+      "p2": ["dog", "homework", "toys", "toilet", "laundry"],
+      "p5": ["homework", "dog", "toilet", "toys", "laundry"],
+      "p4": ["dog", "homework", "toilet", "toys", "laundry"],
+      "p1": ["dog", "homework", "toilet", "toys", "laundry"]
+    },
+    "hive": ["dog", "homework", "toilet", "toys", "laundry"],
+    "totals": {
+      "dog": 7,
+      "homework": 11,
+      "toilet": 19,
+      "toys": 23,
+      "laundry": 30
+    },
+    "step": 5,
+    "voiced": [],
+    "hold": false,
+    "delta": {
+      "p6": {
+        "pts": 12,
+        "exact": 5,
+        "near": 0,
+        "perfect": true
+      },
+      "p3": {
+        "pts": 12,
+        "exact": 5,
+        "near": 0,
+        "perfect": true
+      },
+      "p2": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p5": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p4": {
+        "pts": 12,
+        "exact": 5,
+        "near": 0,
+        "perfect": true
+      },
+      "p1": {
+        "pts": 12,
+        "exact": 5,
+        "near": 0,
+        "perfect": true
+      }
+    },
+    "queens": ["p1", "p3", "p4", "p6"],
+    "lows": ["p2", "p5"],
+    "short": false,
+    "sayOk": false,
+    "applied": true
+  },
+  "scores": {
+    "p1": 12,
+    "p2": 8,
+    "p3": 12,
+    "p4": 12,
+    "p5": 8,
+    "p6": 12
+  },
+  "stats": {
+    "p6": {
+      "exact": 5,
+      "queens": 1,
+      "lows": 0,
+      "perfects": 1
+    },
+    "p3": {
+      "exact": 5,
+      "queens": 1,
+      "lows": 0,
+      "perfects": 1
+    },
+    "p2": {
+      "exact": 3,
+      "queens": 0,
+      "lows": 1,
+      "perfects": 0
+    },
+    "p5": {
+      "exact": 3,
+      "queens": 0,
+      "lows": 1,
+      "perfects": 0
+    },
+    "p4": {
+      "exact": 5,
+      "queens": 1,
+      "lows": 0,
+      "perfects": 1
+    },
+    "p1": {
+      "exact": 5,
+      "queens": 1,
+      "lows": 0,
+      "perfects": 1
+    }
+  },
+  "pairs": {
+    "p1|p2": 3,
+    "p1|p3": 5,
+    "p1|p4": 5,
+    "p1|p5": 3,
+    "p1|p6": 5,
+    "p2|p3": 3,
+    "p2|p4": 3,
+    "p2|p5": 1,
+    "p2|p6": 3,
+    "p3|p4": 5,
+    "p3|p5": 3,
+    "p3|p6": 5,
+    "p4|p5": 3,
+    "p4|p6": 5,
+    "p5|p6": 3
+  },
+  "speechMs": {
+    "hrjof2zlg2txpr": -1,
+    "hr1m5eofd1hy3vax": -1,
+    "hr12c6ccs8v9d4g": -1,
+    "hrqjwd0b1samlrh": -1,
+    "hrhp9nja11nep6w": -1,
+    "hr1g8k6xi6efwyo": -1,
+    "hrs9exlnk70h3": -1,
+    "hr1y71de4jqfm58": -1,
+    "hr1rwomje1heqmfw": -1,
+    "hr1gke4y81j6jq0q": -1,
+    "hrfz70oliurahn": -1
+  }
+}

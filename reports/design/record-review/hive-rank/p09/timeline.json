@@ -1,0 +1,134 @@
+{
+  "pass": "09",
+  "game": "hive-rank",
+  "players": 6,
+  "scenario": "reconnect",
+  "focus": "tv",
+  "started": "21:25:21.761",
+  "tvVideoT0": "21:25:15.714",
+  "phoneVideoT0": "21:25:17.969",
+  "changes": [
+    {
+      "t": 1790285121771,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1790285129736,
+      "bed": "lofi",
+      "at": "21:25:21.771",
+      "sinceStartS": 0,
+      "videoS": 6.1,
+      "phoneVideoS": 3.8
+    },
+    {
+      "t": 1790285129830,
+      "status": "playing",
+      "phase": "rank",
+      "deadline": 1790285159738,
+      "bed": "lofi",
+      "at": "21:25:29.830",
+      "sinceStartS": 8.1,
+      "videoS": 14.1,
+      "phoneVideoS": 11.9
+    },
+    {
+      "t": 1790285150202,
+      "status": "playing",
+      "phase": "hive",
+      "deadline": 1790285153109,
+      "bed": "latenight",
+      "at": "21:25:50.202",
+      "sinceStartS": 28.4,
+      "videoS": 34.5,
+      "phoneVideoS": 32.2
+    },
+    {
+      "t": 1790285153167,
+      "status": "playing",
+      "phase": "score",
+      "deadline": 1790285159118,
+      "bed": "warm",
+      "at": "21:25:53.167",
+      "sinceStartS": 31.4,
+      "videoS": 37.5,
+      "phoneVideoS": 35.2
+    },
+    {
+      "t": 1790285159224,
+      "status": "playing",
+      "phase": "rank",
+      "deadline": 1790285189126,
+      "bed": "lofi",
+      "at": "21:25:59.224",
+      "sinceStartS": 37.5,
+      "videoS": 43.5,
+      "phoneVideoS": 41.3
+    },
+    {
+      "t": 1790285163415,
+      "status": "playing",
+      "phase": "hive",
+      "deadline": 1790285165603,
+      "bed": "latenight",
+      "at": "21:26:03.415",
+      "sinceStartS": 41.7,
+      "videoS": 47.7,
+      "phoneVideoS": 45.4
+    },
+    {
+      "t": 1790285178227,
+      "status": "playing",
+      "phase": "score",
+      "deadline": 1790285184148,
+      "bed": "warm",
+      "at": "21:26:18.227",
+      "sinceStartS": 56.5,
+      "videoS": 62.5,
+      "phoneVideoS": 60.3
+    },
+    {
+      "t": 1790285184272,
+      "status": "playing",
+      "phase": "rank",
+      "deadline": 1790285214162,
+      "bed": "lofi",
+      "at": "21:26:24.272",
+      "sinceStartS": 62.5,
+      "videoS": 68.6,
+      "phoneVideoS": 66.3
+    },
+    {
+      "t": 1790285188418,
+      "status": "playing",
+      "phase": "hive",
+      "deadline": 1790285190704,
+      "bed": "latenight",
+      "at": "21:26:28.418",
+      "sinceStartS": 66.7,
+      "videoS": 72.7,
+      "phoneVideoS": 70.4
+    },
+    {
+      "t": 1790285202915,
+      "status": "playing",
+      "phase": "score",
+      "deadline": 1790285208882,
+      "bed": "warm",
+      "at": "21:26:42.915",
+      "sinceStartS": 81.2,
+      "videoS": 87.2,
+      "phoneVideoS": 84.9
+    },
+    {
+      "t": 1790285208953,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "21:26:48.953",
+      "sinceStartS": 87.2,
+      "videoS": 93.2,
+      "phoneVideoS": 91
+    }
+  ],
+  "notes": ["reconnect: Sam dropped for 8 s at 2026-09-24T21:25:33.923Z in rank"]
+}
