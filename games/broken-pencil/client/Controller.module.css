@@ -321,3 +321,13 @@
   font-size: var(--pb-font-h2);
   overflow-wrap: normal;
 }
+
+/* ── I-213 A: what went on while you were away — a strip above the screen. */
+.awayNote {
+  margin: 0;
+  padding: var(--pb-space-2) var(--pb-space-4);
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font-size: var(--pb-font-caption);
+  text-align: center;
+}

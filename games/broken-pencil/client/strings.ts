@@ -31,6 +31,13 @@ export const STRINGS: Strings = {
     '{passes} of your {others} friends will touch your book.':
       'Tu libro pasará por las manos de {passes} de tus {others} amigos.',
     'Pick something drawable.': 'Elige algo que se pueda dibujar.',
+    // I-213 A
+    'While you were away the round moved on — your drawing went on as far as you got.':
+      'Mientras no estabas, la ronda siguió: tu dibujo pasó tal como lo dejaste.',
+    'While you were away the round moved on — your page went on as an empty sheet.':
+      'Mientras no estabas, la ronda siguió: tu página pasó en blanco.',
+    'While you were away the round moved on — your guess went on as ???.':
+      'Mientras no estabas, la ronda siguió: tu respuesta pasó como ???.',
     // I-507 A
     'It passes to 1 player, who only guesses.': 'Pasa a 1 jugador, que solo adivina.',
     'It passes to {n} players in turn; the last of them only guesses.':

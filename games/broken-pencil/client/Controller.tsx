@@ -209,15 +209,46 @@ export function Controller(props: GameControllerProps<PencilControllerView, Inpu
       />
     );
 
+  // I-213 A: back from a drop — the room moved on without waiting, and this says with what
+  const away =
+    view.awayPage === 'draft'
+      ? L('While you were away the round moved on — your drawing went on as far as you got.')
+      : view.awayPage === 'empty'
+        ? L('While you were away the round moved on — your page went on as an empty sheet.')
+        : view.awayPage === 'guess'
+          ? L('While you were away the round moved on — your guess went on as ???.')
+          : null;
+  const awayNote = away ? (
+    <p className={styles.awayNote} role="status">
+      {away}
+    </p>
+  ) : null;
   switch (view.phaseId) {
     case 'pick':
       return <Pick {...props} />;
     case 'draw':
     case 'pass':
     case 'guess':
-      if (view.stage === 'guess') return <Guess {...props} key={`g${view.step}`} />;
-      if (view.stage === 'draw') return <Draw {...props} key={`d${view.step}`} />;
-      return <Sent view={view} />;
+      if (view.stage === 'guess')
+        return (
+          <>
+            {awayNote}
+            <Guess {...props} key={`g${view.step}`} />
+          </>
+        );
+      if (view.stage === 'draw')
+        return (
+          <>
+            {awayNote}
+            <Draw {...props} key={`d${view.step}`} />
+          </>
+        );
+      return (
+        <>
+          {awayNote}
+          <Sent view={view} />
+        </>
+      );
     case 'show':
       return <Show {...props} />;
     default: {

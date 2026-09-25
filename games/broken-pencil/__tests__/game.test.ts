@@ -249,12 +249,12 @@ describe('draw, pass, guess', () => {
     s = timer(s);
     expect(s.phase.id).toBe('guess');
     expect(s.books[1]?.pages[2]).toEqual({ kind: 'guess', authorId: c, text: 'half done' });
-    expect(s.books[1]?.pages[3]).toEqual({ kind: 'draw', authorId: c, drawing: null });
-    expect(s.books[0]?.pages[2]).toEqual({ kind: 'guess', authorId: b, text: null });
-    expect(s.books[0]?.pages[3]).toEqual({ kind: 'draw', authorId: b, drawing: null });
+    expect(s.books[1]?.pages[3]).toEqual({ kind: 'draw', authorId: c, drawing: null, filled: 'time' });
+    expect(s.books[0]?.pages[2]).toEqual({ kind: 'guess', authorId: b, text: null, filled: 'time' });
+    expect(s.books[0]?.pages[3]).toEqual({ kind: 'draw', authorId: b, drawing: null, filled: 'time' });
     s = timer(s);
     expect(s.phase.id).toBe('show');
-    expect(s.books[0]?.pages[4]).toEqual({ kind: 'guess', authorId: c, text: null });
+    expect(s.books[0]?.pages[4]).toEqual({ kind: 'guess', authorId: c, text: null, filled: 'time' });
   });
 
   it('disconnected players are not waited for', () => {
