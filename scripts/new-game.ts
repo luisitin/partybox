@@ -51,9 +51,10 @@ for (const file of walk(target)) {
   if (text !== before) writeFileSync(file, text);
 }
 
-// The template's CLAUDE.md talks about being the template; give the new game a fresh one.
+// The template's AGENTS.md talks about being the template; give the new game a fresh one. The copied
+// CLAUDE.md stays as it is: it only imports AGENTS.md (ADR-055).
 writeFileSync(
-  join(target, 'CLAUDE.md'),
+  join(target, 'AGENTS.md'),
   `# ${id} — local rules
 - Spec lives in README.md (required headings); keep it true when rules change.
 - One file per phase under server/phases/; every phase in \`phases\` has fixtures/<phase>.json.
