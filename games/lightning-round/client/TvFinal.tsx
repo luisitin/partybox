@@ -20,6 +20,13 @@ const STEP_SPAN_MS = 1500;
 /** `--pb-motion-slow` (600 ms) is the unit the per-row stagger is expressed in, so it scales to 0. */
 const SLOW_MS = 600;
 
+/** I-542: the settled board — highest score first. */
+function byScore(a: RevealRow, b: RevealRow): number {
+  return b.score - a.score || a.playerId.localeCompare(b.playerId);
+}
+/** I-542 B: the re-deal into rank order, this long after the totals land. */
+const T_RANKED_MS = 1400;
+
 function byWager(a: RevealRow, b: RevealRow): number {
   return (
     (a.wagerAmount ?? 0) - (b.wagerAmount ?? 0) ||
@@ -41,13 +48,22 @@ export function FinalReveal({
   settled?: boolean;
 }): JSX.Element {
   const L = useT(STRINGS);
-  const rows = [...unsorted].sort(byWager);
-  const n = rows.length;
+  const n = unsorted.length;
   const stepMs = n > 1 ? Math.min(STEP_MAX_MS, STEP_SPAN_MS / (n - 1)) : 0;
   const lastMs = T_VERDICT_MS + stepMs * (n - 1);
   // The schedule is fixed for this mount: the row count cannot change inside one reveal.
-  const beats = useBeats([0, T_ANSWER_MS, T_VERDICT_MS, lastMs, lastMs + T_TOTALS_GAP_MS]);
-  const beat = settled ? 4 : beats;
+  const beats = useBeats([
+    0,
+    T_ANSWER_MS,
+    T_VERDICT_MS,
+    lastMs,
+    lastMs + T_TOTALS_GAP_MS,
+    lastMs + T_TOTALS_GAP_MS + T_RANKED_MS, // I-542 B: the re-deal into rank order
+  ]);
+  const beat = settled ? 5 : beats;
+  // I-542: dealt by bet (the biggest last), then — settled, or a beat after the totals — by rank
+  const ranked = beat >= 5;
+  const rows = [...unsorted].sort(ranked ? byScore : byWager);
   const answered = beat >= 1;
   const judged = beat >= 2;
   const totals = beat >= 4;
@@ -83,7 +99,8 @@ export function FinalReveal({
       <ol
         // Three or four bet rows (two lines each, under the question and the answer) ran past the
         // host bar in one column: they take two columns, like five to eight do.
-        className={`${styles.rows} ${rowsClass(n > 2 ? Math.max(n, 5) : n)} ${styles.rowsFinal}`}
+        key={ranked ? 'ranked' : 'dealt'} /* I-542: the rank order deals in fresh */
+        className={`${styles.rows} ${rowsClass(n > 2 ? Math.max(n, 5) : n)} ${styles.rowsFinal} ${ranked ? styles.rowsRanked : ''}`}
         style={listStyle}
         aria-label={L('results')}
       >
@@ -104,6 +121,10 @@ export function FinalReveal({
               className={`${styles.row} ${styles.rowFinal} ${leader ? styles.rowCorrect : ''}`}
               style={{ '--i': index } as CSSProperties}
             >
+              {/* I-542: the place, once the board is in rank order */}
+              {ranked ? (
+                <span className={styles.rankNum}>{rows.filter((r) => r.score > row.score).length + 1}</span>
+              ) : null}
               <Avatar avatarId={row.avatarId} size={48} dim={!row.connected} />
               <span className={styles.stack}>
                 <span className={styles.name}>{row.name}</span>
