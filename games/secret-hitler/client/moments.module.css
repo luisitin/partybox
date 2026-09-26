@@ -1,0 +1,305 @@
+/* Signature moments (SPEC §7.8) layered over the TV. Transform and opacity only. */
+
+.moments {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  --sh-u: 16px;
+}
+
+/* The room darkens except around one seat (the Hitler check, an execution). */
+.dimmer {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--x) var(--y),
+    transparent 0 100px,
+    var(--sh-night) 320px
+  );
+  opacity: 0;
+  animation: shDim 900ms var(--sh-ease) forwards;
+}
+
+@keyframes shDim {
+  to {
+    opacity: 0.8;
+  }
+}
+
+/* A thing that travels between seats: the envelope, the folder, the plate. */
+.traveler {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: transform var(--sh-dur-pass) var(--sh-ease);
+}
+
+.glide > * {
+  translate: -50% -100%;
+}
+
+.glide[data-glide] {
+  animation: shGlide 800ms var(--sh-ease) 150ms both;
+}
+
+@keyframes shGlide {
+  from {
+    transform: translate(var(--dx), var(--dy));
+  }
+  to {
+    transform: none;
+  }
+}
+
+.envelope {
+  position: relative;
+  width: 120px;
+  height: 78px;
+  border-radius: 6px;
+  background: var(--sh-paper-2);
+  box-shadow:
+    inset 0 0 0 2px var(--sh-brass-2),
+    0 10px 20px var(--sh-shadow);
+  animation: global(sh-deal) var(--sh-dur-deal) var(--sh-ease) both;
+}
+
+.flap {
+  position: absolute;
+  inset: 0 0 40%;
+  background: var(--sh-paper);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.wax {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 26px;
+  height: 26px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--sh-fascist);
+  box-shadow: 0 0 0 4px var(--sh-alarm);
+}
+
+.envelope[data-veto] {
+  animation: global(sh-shake) 300ms ease-in-out 2;
+}
+
+/* Stamps land centre stage (or over the boards), scaling down with a slight twist. */
+.stampAt {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 760px;
+  translate: -50% -50%;
+  opacity: 0;
+  animation: global(sh-stamp) var(--sh-dur-stamp) var(--sh-ease) forwards;
+}
+
+.stampAt[data-where='boards'] {
+  top: 47%;
+  width: 620px;
+}
+
+.stamp {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 18px var(--sh-shadow));
+}
+
+.stampSmall {
+  display: block;
+  width: 260px;
+  height: auto;
+}
+
+/* The Hitler reveal: the mask cracks open out of the dark. */
+.unmask {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  translate: -50% -50%;
+  opacity: 0;
+  animation: global(sh-stamp) 700ms var(--sh-ease) forwards;
+}
+
+/* The decree: dealt face-down to centre, turned, then it hands over to its slot. */
+.decree {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  translate: -50% -50%;
+  animation:
+    global(sh-deal) 400ms var(--sh-ease) both,
+    shHandOver 400ms var(--sh-ease) 1100ms forwards;
+}
+
+.decree[data-chaos] {
+  animation:
+    shTorn 500ms var(--sh-ease-slam) 700ms both,
+    shHandOver 400ms var(--sh-ease) 1400ms forwards;
+}
+
+@keyframes shHandOver {
+  to {
+    opacity: 0;
+    transform: translateY(-120px) scale(0.6);
+  }
+}
+
+@keyframes shTorn {
+  from {
+    opacity: 0;
+    transform: translate(420px, 200px) rotate(28deg) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-3deg);
+  }
+}
+
+/* The front page spins in (§7.7 headline spin), then holds. */
+.paperAt {
+  position: absolute;
+  right: 60px;
+  top: 150px;
+}
+
+.finale {
+  position: absolute;
+  /* Over the boards only: the banner's winner line above and every seat's role below stay
+     readable. */
+  left: 37%;
+  top: 246px;
+  translate: -50% 0;
+  scale: 0.8;
+  transform-origin: top center;
+}
+
+.paper {
+  width: 640px;
+  padding: 16px 24px 20px;
+  background: var(--sh-paper);
+  color: var(--sh-ink);
+  box-shadow: 0 20px 50px var(--sh-shadow);
+  opacity: 0;
+  transform: rotate(-1.5deg);
+  animation: global(sh-fade) 300ms var(--sh-ease) forwards;
+}
+
+.paper[data-spin] {
+  animation: global(sh-spin) var(--sh-dur-spin) var(--sh-ease) forwards;
+}
+
+.masthead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rule {
+  flex: 1;
+  border-top: 3px double var(--sh-ink);
+}
+
+.title {
+  font-family: var(--sh-font-headline);
+  font-weight: 900;
+  font-size: 34px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.dateline {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0 10px;
+  padding: 2px 0;
+  border-block: 1px solid var(--sh-ink);
+  font-family: var(--sh-font-type);
+  font-size: 22px;
+  text-transform: uppercase;
+}
+
+.headline {
+  margin: 0 0 12px;
+  font-family: var(--sh-font-headline);
+  font-weight: 900;
+  font-size: 56px;
+  line-height: 1;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.fine {
+  margin: 12px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--sh-ink-soft);
+  font-family: var(--sh-font-type);
+  font-size: 16px;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--sh-ink-soft);
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bar {
+  height: 8px;
+  border-radius: 2px;
+  background: var(--sh-ink-soft);
+  opacity: 0.45;
+}
+
+/* The investigation's CLASSIFIED folder slides over the target, then back to the President. */
+.folder {
+  display: grid;
+  place-items: center;
+  /* Wide enough for 'CONFIDENCIAL' with its stamp border (herd-mind review nit). */
+  min-width: 150px;
+  height: 104px;
+  padding: 0 14px;
+  border-radius: 4px 14px 4px 4px;
+  background: var(--sh-paper-2);
+  box-shadow:
+    inset 0 0 0 2px var(--sh-brass-2),
+    0 12px 22px var(--sh-shadow);
+  font-family: var(--sh-font-display);
+  font-size: 28px;
+  letter-spacing: 0.08em;
+  color: var(--sh-alarm);
+  animation: global(sh-deal) var(--sh-dur-deal) var(--sh-ease) both;
+}
+
+.plate {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, var(--sh-brass), var(--sh-brass-2));
+  color: var(--sh-ink);
+  font-family: var(--sh-font-display);
+  font-size: 30px;
+  letter-spacing: 0.06em;
+  box-shadow: 0 10px 20px var(--sh-shadow);
+  animation: global(sh-deal) var(--sh-dur-pass) var(--sh-ease) both;
+}
+
+.execute {
+  opacity: 0;
+  animation: global(sh-stamp) var(--sh-dur-stamp) var(--sh-ease) 1200ms forwards;
+}

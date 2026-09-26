@@ -1,0 +1,85 @@
+{
+  "video": "C:\\dev\\partybox-game-echo\\reports\\design\\record-review\\echo\\p02\\video\\tv\\round.webm",
+  "bytes": 24491715,
+  "durationS": 204,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 10.6,
+      "toS": 12.1,
+      "ms": 1500,
+      "during": "intro",
+      "cueInside": false
+    },
+    {
+      "fromS": 28.5,
+      "toS": 30.1,
+      "ms": 1600,
+      "during": "result",
+      "cueInside": false
+    },
+    {
+      "fromS": 48.4,
+      "toS": 50,
+      "ms": 1600,
+      "during": "result",
+      "cueInside": false
+    },
+    {
+      "fromS": 66.6,
+      "toS": 68.6,
+      "ms": 2000,
+      "during": "result",
+      "cueInside": false
+    },
+    {
+      "fromS": 84.8,
+      "toS": 87.3,
+      "ms": 2500,
+      "during": "result",
+      "cueInside": false
+    },
+    {
+      "fromS": 102.9,
+      "toS": 105.7,
+      "ms": 2800,
+      "during": "result",
+      "cueInside": false
+    },
+    {
+      "fromS": 122.1,
+      "toS": 125,
+      "ms": 2900,
+      "during": "result",
+      "cueInside": false
+    },
+    {
+      "fromS": 141.3,
+      "toS": 143.2,
+      "ms": 1900,
+      "during": "result",
+      "cueInside": false
+    },
+    {
+      "fromS": 196.5,
+      "toS": 198.2,
+      "ms": 1700,
+      "during": "result",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 18500,
+  "hardCuts": [],
+  "samples": 2039,
+  "motion": {
+    "p50": 0.0008,
+    "p90": 0.0055,
+    "p99": 0.0738,
+    "max": 0.1552
+  }
+}

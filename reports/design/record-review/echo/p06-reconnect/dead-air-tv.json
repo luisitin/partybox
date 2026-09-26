@@ -1,0 +1,64 @@
+{
+  "video": "C:\\dev\\partybox-game-echo\\reports\\design\\record-review\\echo\\p06-reconnect\\video\\tv\\round.webm",
+  "bytes": 27587597,
+  "durationS": 249.2,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 0.5,
+      "toS": 12.8,
+      "ms": 12300,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 12.9,
+      "toS": 22.2,
+      "ms": 9300,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 24.6,
+      "toS": 33,
+      "ms": 8400,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 34.2,
+      "toS": 35.9,
+      "ms": 1700,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 36.2,
+      "toS": 38.3,
+      "ms": 2100,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 38.4,
+      "toS": 40.7,
+      "ms": 2300,
+      "during": "(start)",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 36100,
+  "hardCuts": [],
+  "samples": 2491,
+  "motion": {
+    "p50": 0.0002,
+    "p90": 0.0036,
+    "p99": 0.063,
+    "max": 0.1009
+  }
+}

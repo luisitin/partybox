@@ -6,6 +6,7 @@ import type { ControllerView, PlayerPublic, PushedView, RoomSnapshot } from '@pa
 import {
   Avatar,
   PhoneOnlyProvider,
+  PhonePrefsProvider,
   PrimaryButton,
   SoundProvider,
   WaitingScreen,
@@ -21,6 +22,7 @@ import type { Controller } from '../net/controller';
 import type { PlayCueOptions } from '@partybox/game-sdk/ui';
 import type { SoundCue, SoundEngine } from '../sound';
 import { GameErrorBoundary } from './GameErrorBoundary';
+import { usePhonePrefsValue } from './usePhonePrefsValue';
 import { gameName as gameName_ } from '../catalog';
 
 export interface PlayingProps {
@@ -138,6 +140,8 @@ export function Playing({
     (cue: SoundCue, opts?: PlayCueOptions) => audio?.play(cue, opts),
     [audio],
   );
+  // A game's own settings menu flips this phone's music and sound (the owner, 2026-09-24).
+  const prefs = usePhonePrefsValue(audio, room);
   // ADR-050: the game's phone entry (usually already here: it downloads once the game is chosen).
   const game = useGame(room.selectedGameId, 'phone');
   if (me.spectator || view?.me.role === 'spectator') {
@@ -194,23 +198,25 @@ export function Playing({
     <GameErrorBoundary key={view.gameId}>
       <Suspense fallback={<DelayedWaiting title={t.connection.loadingGame} />}>
         <PhoneOnlyProvider value={stage}>
-          <SoundProvider
-            play={play}
-            clip={audio ? (src, opts) => audio.clip(src, opts) : undefined}
-            hush={audio ? () => audio.hushClips() : undefined}
-          >
-            {PhoneStage ? (
-              <PhoneStage view={view} />
-            ) : (
-              <GameController
-                view={view}
-                me={{ id: me.id, name: me.name, avatarId: me.avatarId }}
-                send={controller.sendInput}
-                skip={me.isVip ? () => controller.vip({ action: 'skip' }) : undefined}
-              />
-            )}
-            <Ready onReady={onGameReady} />
-          </SoundProvider>
+          <PhonePrefsProvider value={prefs}>
+            <SoundProvider
+              play={play}
+              clip={audio ? (src, opts) => audio.clip(src, opts) : undefined}
+              hush={audio ? () => audio.hushClips() : undefined}
+            >
+              {PhoneStage ? (
+                <PhoneStage view={view} />
+              ) : (
+                <GameController
+                  view={view}
+                  me={{ id: me.id, name: me.name, avatarId: me.avatarId }}
+                  send={controller.sendInput}
+                  skip={me.isVip ? () => controller.vip({ action: 'skip' }) : undefined}
+                />
+              )}
+              <Ready onReady={onGameReady} />
+            </SoundProvider>
+          </PhonePrefsProvider>
         </PhoneOnlyProvider>
       </Suspense>
     </GameErrorBoundary>
