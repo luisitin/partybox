@@ -29,6 +29,8 @@ const { values } = parseArgs({
 const OUT =
   values.out ?? join(REPO_ROOT, 'reports', 'design', 'record-review', 'foundation', 'results-tie'); // prettier-ignore
 
+const pageErrors = new WeakMap<Page, string[]>();
+
 async function open(browser: Browser, url: string, device: DeviceId, lang: string): Promise<Page> {
   const context = await browser.newContext({
     ...DEVICES[device].options,
@@ -36,13 +38,20 @@ async function open(browser: Browser, url: string, device: DeviceId, lang: strin
     locale: lang === 'es' ? 'es-ES' : 'en-US',
   });
   const page = await context.newPage();
+  const errors: string[] = [];
+  pageErrors.set(page, errors);
+  page.on('pageerror', (error) => errors.push(error.message));
+  page.on('console', (message) => {
+    if (message.type() === 'error') errors.push(message.text());
+  });
   await page.goto(url);
   await applyDeviceCss(page, device);
   return page;
 }
 
 // 'teams8': four a side with long team names (session-c fb4b9c); 'teamsDraw': the teams drew
-type Scenario = 'tie' | 'many' | 'teams' | 'teams8' | 'teamsDraw' | 'long' | 'coop';
+type Scenario =
+  'tie' | 'many' | 'teams' | 'teams3' | 'teams4' | 'teams8' | 'teamsDraw' | 'long' | 'coop';
 
 async function run(
   browser: Browser,
@@ -53,6 +62,7 @@ async function run(
   scenario: Scenario,
 ): Promise<void> {
   await api.reset();
+  await api.post('/api/dev/clock', { freeze: false });
   const tv = await open(browser, `${url}/tv`, 'tv', lang);
   await tv.waitForSelector('[data-surface="tv"]');
   await passAudioGate(tv);
@@ -67,7 +77,7 @@ async function run(
       ['p-ben', 'Ben', 'owl'],
       ['p-cleo', 'Cleo', 'frog'],
       ['p-dev', scenario === 'long' ? 'Wolfeschlegelste' : 'Maximiliano Guadalupe', 'panda'],
-      ...(scenario === 'teams8'
+      ...(scenario === 'teams8' || scenario === 'teams3' || scenario === 'teams4'
         ? [['p-eve', 'Evelyn', 'lion'], ['p-fin', 'Finn', 'whale'], ['p-gus', 'Gustavo', 'koala']] // prettier-ignore
         : []),
     ].map(([id, name, avatarId]) => ({ id, name, avatarId }));
@@ -79,8 +89,10 @@ async function run(
     const tie = scenario === 'tie';
     // 'many': one long-named winner and eight awards — the TV caps the cards at six (+ 2 more)
     const coop = scenario === 'coop';
-    const teams = scenario === 'teams' || scenario === 'teams8' || scenario === 'teamsDraw';
-    const eight = scenario === 'teams8';
+    const multi = scenario === 'teams3' || scenario === 'teams4';
+    const teams =
+      scenario === 'teams' || scenario === 'teams8' || scenario === 'teamsDraw' || multi;
+    const eight = scenario === 'teams8' || multi;
     // 'coop': a lost co-op game (Tune In's): everyone on the same group score, no winner
     const scores = coop
       ? { 'p-ana': 3, 'p-ben': 3, 'p-cleo': 3, 'p-dev': 3, [me]: 3 }
@@ -110,7 +122,7 @@ async function run(
         results: {
           scores,
           ranking,
-          winnerIds: coop || scenario === 'teamsDraw' ? [] : eight ? ['p-ben', 'p-cleo', 'p-eve', 'p-fin'] : teams ? ['p-ben', 'p-cleo'] : tie ? ['p-ana', 'p-ben', 'p-cleo'] : ['p-dev'], // prettier-ignore
+          winnerIds: coop || scenario === 'teamsDraw' ? [] : eight && !multi ? ['p-ben', 'p-cleo', 'p-eve', 'p-fin'] : teams ? ['p-ben', 'p-cleo'] : tie ? ['p-ana', 'p-ben', 'p-cleo'] : ['p-dev'], // prettier-ignore
           awards: teams ? awards.slice(0, 2) : awards,
           // ADR-052: a team game, Moon wins (its members first, the headline in its colour);
           // Maximiliano is in no team (they left), so the board ends on a "No team" group
@@ -119,15 +131,22 @@ async function run(
                 outcome: {
                   kind: 'teams',
                   winner: scenario === 'teamsDraw' ? null : 'moon',
-                  teams: eight
+                  teams: multi
                     ? [
-                        { id: 'sun', name: 'Supercalifragilistic Sunbeams', mark: '▲', color: 'var(--pb-accent-2)', members: ['p-ana', 'p-dev', 'p-gus', me] }, // prettier-ignore
-                        { id: 'moon', name: 'Moonlight Midnight Marauders', mark: '●', color: 'var(--pb-info)', members: ['p-ben', 'p-cleo', 'p-eve', 'p-fin'] }, // prettier-ignore
+                        { id: 'sun', name: 'Supercalifragilistic Sunbeams', mark: '▲', color: 'var(--pb-accent-2)', members: ['p-ana', me] }, // prettier-ignore
+                        { id: 'moon', name: 'Moonlight Midnight Marauders', mark: '●', color: 'var(--pb-info)', members: ['p-ben', 'p-cleo'] }, // prettier-ignore
+                        { id: 'stars', name: 'Starlight Trail Blazers', mark: '★', color: 'var(--pb-accent)', members: scenario === 'teams3' ? ['p-eve', 'p-fin', 'p-gus'] : ['p-eve', 'p-fin'] }, // prettier-ignore
+                        ...(scenario === 'teams4' ? [{ id: 'waves', name: 'Ocean Wave Wanderers', mark: '◆', color: 'var(--pb-text)', members: ['p-gus'] }] : []), // prettier-ignore
                       ]
-                    : [
-                        { id: 'sun', name: 'Sun', mark: '▲', color: 'var(--pb-accent-2)', members: ['p-ana', me] }, // prettier-ignore
-                        { id: 'moon', name: 'Moon', mark: '●', color: 'var(--pb-info)', members: ['p-ben', 'p-cleo'] }, // prettier-ignore
-                      ],
+                    : eight
+                      ? [
+                          { id: 'sun', name: 'Supercalifragilistic Sunbeams', mark: '▲', color: 'var(--pb-accent-2)', members: ['p-ana', 'p-dev', 'p-gus', me] }, // prettier-ignore
+                          { id: 'moon', name: 'Moonlight Midnight Marauders', mark: '●', color: 'var(--pb-info)', members: ['p-ben', 'p-cleo', 'p-eve', 'p-fin'] }, // prettier-ignore
+                        ]
+                      : [
+                          { id: 'sun', name: 'Sun', mark: '▲', color: 'var(--pb-accent-2)', members: ['p-ana', me] }, // prettier-ignore
+                          { id: 'moon', name: 'Moon', mark: '●', color: 'var(--pb-info)', members: ['p-ben', 'p-cleo'] }, // prettier-ignore
+                        ],
                 },
               }
             : coop
@@ -137,6 +156,7 @@ async function run(
       },
     });
     await settle(4500); // the board lands, the headline and awards follow
+    await api.post('/api/dev/clock', { freeze: true });
     if (device === 'iphone-se') await tv.screenshot({ path: join(OUT, `${lang}-tv-${scenario}.png`) }); // prettier-ignore
     await page.screenshot({ path: join(OUT, `${lang}-${device}-${scenario}.png`) });
     if (teams) {
@@ -150,12 +170,24 @@ async function run(
     await page.evaluate(`[...document.querySelectorAll('*')].filter((e) => /(auto|scroll)/.test(getComputedStyle(e).overflowY) && e.scrollHeight > e.clientHeight).forEach((e) => { e.scrollTop = e.scrollHeight; })`); // prettier-ignore
     await settle(600);
     await page.screenshot({ path: join(OUT, `${lang}-${device}-${scenario}-end.png`) });
+    const errors = [tv, page].flatMap((p) => pageErrors.get(p) ?? []);
+    if (errors.length > 0) throw new Error(`${lang}/${device}/${scenario}: ${errors.join('; ')}`);
   } finally {
     for (const p of [page, tv]) await p.context().close();
   }
 }
 
-const ALL: Scenario[] = ['tie', 'many', 'teams', 'teams8', 'teamsDraw', 'long', 'coop'];
+const ALL: Scenario[] = [
+  'tie',
+  'many',
+  'teams',
+  'teams3',
+  'teams4',
+  'teams8',
+  'teamsDraw',
+  'long',
+  'coop',
+];
 // --only teams8,teamsDraw: just those scenarios
 const SCENARIOS = values.only ? (values.only.split(',') as Scenario[]) : ALL;
 

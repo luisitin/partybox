@@ -23,12 +23,14 @@ export function TeamBoards({
   /** The winners' tag beside the team name ("Winners" / "Ganadores"). */
   wonLabel: string;
 }): JSX.Element {
-  const sides = Math.max(1, groups.filter((g) => g.id !== '').length);
+  // A third TV column leaves too little width for team and player names. More sides wrap below.
+  const sides = groups.filter((g) => g.id !== '').length;
+  const columns = Math.min(2, Math.max(1, sides));
   return (
     <div
-      className={`${styles.teams} ${compact ? styles.compact : ''} ${sideBySide ? styles.sideBySide : ''}`}
-      // one column per side; the "No team" group spans them all under the sides
-      style={sideBySide ? { gridTemplateColumns: `repeat(${sides}, minmax(0, 1fr))` } : undefined}
+      className={`${styles.teams} ${compact ? styles.compact : ''} ${sideBySide ? styles.sideBySide : ''} ${sideBySide && sides > 2 ? styles.multiSide : ''}`}
+      // The "No team" group spans both columns below the sides.
+      style={sideBySide ? { gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` } : undefined}
     >
       {groups.map((g) => (
         <section

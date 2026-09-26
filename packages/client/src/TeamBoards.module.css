@@ -8,8 +8,8 @@
 }
 
 /* Side by side on the TV: two teams of four stacked ran the losing side's last row and the
-   "Recap saved" line under the host bar (session-c fb4b9c #1). Each side is a column (the count
-   comes inline); "No team" spans them, under — a third narrow column cut its names to "Max…". */
+   "Recap saved" line under the host bar (session-c fb4b9c #1). At most two sides share a row;
+   three or four columns cut team names mid-word (session-c d4d8db). "No team" spans them below. */
 .sideBySide {
   display: grid;
   align-items: start;
@@ -17,6 +17,29 @@
 
 .sideBySide .teamless {
   grid-column: 1 / -1;
+}
+
+/* Three or four TV sides need two rows. Keep their headers readable while leaving the
+   unassigned players and the recap clear of the host bar. */
+.multiSide {
+  gap: var(--pb-space-2);
+}
+
+.multiSide .team {
+  gap: var(--pb-space-1);
+  padding: var(--pb-space-2);
+}
+
+.multiSide .head {
+  font-size: var(--pb-font-body);
+  line-height: 1.1;
+}
+
+.multiSide .teamless {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--pb-space-4);
 }
 
 .team {

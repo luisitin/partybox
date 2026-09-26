@@ -41,6 +41,20 @@ export function nobodyScored(room: RoomSnapshot): boolean {
   return scores.length > 0 && scores.every((s) => s <= 0);
 }
 
+/** The results cue, one rule for the TV and a phone-only room's phones: a soft note when nobody
+ *  scored; ADR-052 co-op / teams — the cheer for a win, the tie chord for a draw or a loss;
+ *  otherwise the tie chord for several winners (I-037 C), else the cheer. */
+export function resultsCue(room: RoomSnapshot): 'leave' | 'tie' | 'cheer' {
+  if (nobodyScored(room)) return 'leave';
+  const outcome = room.results?.results.outcome;
+  if (outcome) {
+    const won =
+      outcome.kind === 'coop' ? outcome.won : outcome.teams.some((x) => x.id === outcome.winner);
+    return won ? 'cheer' : 'tie';
+  }
+  return (room.results?.results.winnerIds.length ?? 0) > 1 ? 'tie' : 'cheer';
+}
+
 /** ADR-052: the line for a co-op or team game — the game's own headline first. */
 export function outcomeLine(room: RoomSnapshot): string | null {
   const r = room.results;

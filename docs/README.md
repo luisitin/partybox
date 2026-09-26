@@ -1,10 +1,11 @@
 # docs/
 
-All design docs for PartyBox. Start with `START_HERE.md` (reading order by task); `CLAUDE.md` at the repo root is the map.
+All design docs for PartyBox. Start with `START_HERE.md` (reading order by task); `AGENTS.md` at the repo root is the map.
 
 | File               | Purpose                                              |
 | ------------------ | ---------------------------------------------------- |
 | `START_HERE.md`    | reading order per task + one line per doc            |
+| `CODEX_GUIDE.md`   | onboarding for an agent new to this machine          |
 | `ARCHITECTURE.md`  | topology, data flow, dependency direction, discovery |
 | `GAME_CONTRACT.md` | the game interface, rules, worked example            |
 | `ADDING_A_GAME.md` | numbered recipe + definition of done                 |

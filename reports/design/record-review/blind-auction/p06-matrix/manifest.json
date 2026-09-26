@@ -1,0 +1,492 @@
+[
+  {
+    "file": "blind-auction/bid/tv-stage.png",
+    "group": "blind-auction",
+    "phase": "bid",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blind-auction/bid/iphone-se-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "bid",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/bid/iphone-se-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "bid",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/bid/iphone-se-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "bid",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/bid/font200-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "bid",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/bid/font200-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "bid",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/bid/font200-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "bid",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/done/tv-stage.png",
+    "group": "blind-auction",
+    "phase": "done",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blind-auction/done/iphone-se-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "done",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/done/iphone-se-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "done",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/done/iphone-se-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "done",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/done/font200-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "done",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/done/font200-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "done",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/done/font200-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "done",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/flip/tv-stage.png",
+    "group": "blind-auction",
+    "phase": "flip",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blind-auction/flip/iphone-se-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "flip",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/flip/iphone-se-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "flip",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/flip/iphone-se-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "flip",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/flip/font200-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "flip",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/flip/font200-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "flip",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/flip/font200-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "flip",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/intro/tv-stage.png",
+    "group": "blind-auction",
+    "phase": "intro",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blind-auction/intro/iphone-se-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "intro",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/intro/iphone-se-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "intro",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/intro/iphone-se-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "intro",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/intro/font200-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "intro",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/intro/font200-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "intro",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/intro/font200-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "intro",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/live/tv-stage.png",
+    "group": "blind-auction",
+    "phase": "live",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blind-auction/live/iphone-se-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "live",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/live/iphone-se-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "live",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/live/iphone-se-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "live",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/live/font200-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "live",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/live/font200-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "live",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/live/font200-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "live",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/lot/tv-stage.png",
+    "group": "blind-auction",
+    "phase": "lot",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blind-auction/lot/iphone-se-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "lot",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/lot/iphone-se-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "lot",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/lot/iphone-se-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "lot",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/lot/font200-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "lot",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/lot/font200-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "lot",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/lot/font200-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "lot",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/sold/tv-stage.png",
+    "group": "blind-auction",
+    "phase": "sold",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blind-auction/sold/iphone-se-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "sold",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/sold/iphone-se-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "sold",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/sold/iphone-se-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "sold",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "blind-auction/sold/font200-p1-p1.png",
+    "group": "blind-auction",
+    "phase": "sold",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/sold/font200-p2-p2.png",
+    "group": "blind-auction",
+    "phase": "sold",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "blind-auction/sold/font200-p3-p3.png",
+    "group": "blind-auction",
+    "phase": "sold",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  }
+]
