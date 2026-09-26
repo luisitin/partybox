@@ -118,3 +118,29 @@
 :global(:root[data-motion='off']) .tiedFace {
   animation: none;
 }
+
+/* ── I-218 A: the awards under a game's Finale — each one line ("Unbroken · Bot 4 · …"), centred;
+   a first build's three-line cards ran into the host bar under a board of two-line tiles. */
+.awardsRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-2);
+  margin-top: var(--pb-space-2);
+}
+.awardsRow .award {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--pb-space-2);
+  max-width: 100%;
+  padding: 4px 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.awardsRow .award > * {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
