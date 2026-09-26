@@ -1,6 +1,6 @@
 # Adding a game
 
-Prerequisite reading: `CLAUDE.md`, `docs/GAME_CONTRACT.md`. Budget: a small game is ~400 lines of
+Prerequisite reading: `AGENTS.md` (the repo map), `docs/GAME_CONTRACT.md`. Budget: a small game is ~400 lines of
 TypeScript plus content. Everything below is checked by `pnpm verify`; nothing is optional.
 
 ## Steps
@@ -81,7 +81,8 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
 | `manifest.json`                                                      | metadata, player bounds, settings spec, `supportsBots` (parsed with `gameManifestSchema` in `server/index.ts`) |
 | `manifest.es.json`                                                   | the manifest's sentences in Spanish, keyed by the English: the catalog, About and the settings form (ADR-049)  |
 | `README.md`                                                          | the spec (required headings above)                                                                             |
-| `CLAUDE.md`                                                          | ≤ 30 lines: local rules and commands for this game                                                             |
+| `AGENTS.md`                                                          | ≤ 30 lines: local rules and commands for this game (every agent reads this file)                               |
+| `CLAUDE.md`                                                          | the 3-line pointer: Claude Code imports `AGENTS.md` through it (ADR-055); never put rules here                 |
 | `server/index.ts`                                                    | exports `game: GameDefinition<State, Input>`: `init`, `reduce` (composes the phases), views, `results`, `bot`  |
 | `server/types.ts`                                                    | `State`, `Input` + `inputSchema`, `PHASES`, `Transition`                                                       |
 | `server/phases/answer.ts`, `server/phases/reveal.ts`                 | one file per phase: `enterX(state, now)` + `reduceX(state, event, next)`; they never import each other         |

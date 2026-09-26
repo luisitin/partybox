@@ -20,8 +20,10 @@ the entry chunk carries more `games/*` modules than `scripts/bundle-budget.json`
 entry's gzip grows over 1 KB, when a game's phone closure (JS + CSS gzip) is over the phone budget,
 or when a manifest would ship; it prints each game's phone and TV gzip and any `Tv*` code riding on
 a phone. After a deliberate change, `pnpm check-bundle --update` and commit the budget file.
-Doc-drift checks (`scripts/check-drift.ts`): registry current; required docs exist; `CLAUDE.md` ≤ 120 lines;
-every folder has a `README.md` ≤ 60 lines and every package/game a `CLAUDE.md` ≤ 30 lines; game READMEs
+Doc-drift checks (`scripts/check-drift.ts`): registry current; required docs exist; `AGENTS.md` ≤ 120 lines;
+every folder has a `README.md` ≤ 60 lines and every package/game an `AGENTS.md` ≤ 30 lines, with a `CLAUDE.md`
+beside each `AGENTS.md` that only imports it (ADR-055; a folder with only a `CLAUDE.md` passes under the
+same cap until it converts); game READMEs
 have the required headings; every phase has a fixture; `ADDING_A_GAME.md` mentions every `_template` file;
 `TODO(BL-nnn)` ids exist in `BACKLOG.md`; every dependency has a line in `DEPENDENCIES.md`.
 
