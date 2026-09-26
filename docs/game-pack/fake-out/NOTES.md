@@ -73,6 +73,10 @@ Written by research agents with web access, each fact checked against its `sourc
 - Owner follow-up added six family facts on 2026-09-25: Washington's ivory dentures and the teddy
   bear cartoon (Smithsonian), the first UPC scan (GS1 US), Webb's beryllium mirror segments (NASA),
   Titan's methane/ethane lakes (NASA), and fish-age ear stones (NOAA). Checkable sources are embedded in each fact's `source`.
+  The teddy-bear fact uses Smithsonian's qualified wording: Berryman's cartoon is believed to have
+  inspired the toy, not stated as a certain single origin. Its source is the Smithsonian Magazine
+  reprint of the National Museum of American History's Clifford Berryman story:
+  https://www.smithsonianmag.com/blogs/national-museum-american-history/2021/12/10/berryman-and-roosevelt/.
 
 ## Prompt style follow-up (2026-09-25)
 
