@@ -37,7 +37,14 @@ export function PhoneFrame({
       className={styles.screen}
       footer={
         <div className={styles.dock}>
-          {actions ? <div className={styles.actions}>{actions}</div> : null}
+          {actions ? (
+            <div
+              className={styles.actions}
+              data-chat={(view.phaseId === 'claims' && view.status === 'alive') || undefined}
+            >
+              {actions}
+            </div>
+          ) : null}
           <Roster view={view} showTeam={dossierOpen} facesOnly={view.phaseId === 'vote'} />
         </div>
       }

@@ -11,6 +11,7 @@ import type { Input } from '../server/types';
 import type { ShControllerView } from '../server/views';
 import { MaskEmblem, PartyEmblem, Stamp } from './art';
 import { FlipCard } from './Card';
+import { DiscussionChat } from './DiscussionChat';
 import { CREDIT, endingBanner, roleName, winnerLine } from './labels';
 import { phaseLines } from './lines';
 import { PhoneAct } from './PhoneAct';
@@ -162,7 +163,16 @@ export function Controller({
           kicker={over ? endingBanner(L, view.winReason, view.winner) : (hint ?? undefined)}
           title={over ? winnerLine(L, view.winner) : title}
           actions={
-            next ? (
+            view.phaseId === 'claims' && view.status === 'alive' ? (
+              <>
+                <DiscussionChat view={view} send={send} />
+                {next ? (
+                  <PrimaryButton tone="neutral" onClick={skip}>
+                    {L('Next')}
+                  </PrimaryButton>
+                ) : null}
+              </>
+            ) : next ? (
               <PrimaryButton tone="neutral" onClick={skip}>
                 {L('Next')}
               </PrimaryButton>

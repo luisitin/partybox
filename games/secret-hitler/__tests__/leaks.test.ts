@@ -137,4 +137,24 @@ describe('leaks', () => {
         expect(JSON.stringify(controllerView(s, id)).length).toBeLessThanOrEqual(4096);
     }
   });
+
+  it('a full discussion transcript stays within the 4 KB controller view budget', () => {
+    for (const seed of [1, 2, 3]) {
+      for (const s of playOut(10, seed, true).filter((state) => state.phase.id === 'claims')) {
+        const full = {
+          ...s,
+          chat: Array.from({ length: 6 }, (_, index) => ({
+            from: s.seats[index] ?? s.seats[0] ?? '',
+            text: 'x'.repeat(120),
+            at: s.phase.startedAt + index * 3_000,
+          })),
+        };
+        for (const id of s.seats) {
+          const view = controllerView(full, id);
+          expect(JSON.stringify(view).length).toBeLessThanOrEqual(4096);
+          if (s.alive.includes(id)) expect(view.chat?.length).toBeGreaterThan(0);
+        }
+      }
+    }
+  });
 });
