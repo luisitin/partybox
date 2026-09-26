@@ -1,7 +1,12 @@
 // The phone's music switch and volume (the owner, 2026-09-23: "the music off button on phone does
 // not actually turn music off … maybe we also need a music volume"). Pure parts only.
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { phoneMusicVolume, phoneMusicWanted, setPhoneMusicVolume } from './phone-music';
+import {
+  phoneMusicVolume,
+  phoneMusicWanted,
+  phoneMusicWantedForPlayer,
+  setPhoneMusicVolume,
+} from './phone-music';
 
 describe('phoneMusicWanted', () => {
   it("follows the room until the phone chooses: phone only and the VIP's switch turn it on", () => {
@@ -13,6 +18,25 @@ describe('phoneMusicWanted', () => {
   it("the phone's own Off wins over the room — the bug: Off did nothing in a phone-only room", () => {
     expect(phoneMusicWanted('off', { phoneOnly: true, musicOnPhones: true })).toBe(false);
     expect(phoneMusicWanted('on', {})).toBe(true);
+  });
+});
+
+describe('phoneMusicWantedForPlayer', () => {
+  const room = {
+    phoneOnly: false,
+    musicOnPhones: false,
+    players: [
+      { id: 'remote', canSeeTv: false },
+      { id: 'local', canSeeTv: true },
+    ],
+  };
+
+  it('matches the active player default and keeps their explicit choice', () => {
+    expect(phoneMusicWantedForPlayer(null, room, 'remote')).toBe(true);
+    expect(phoneMusicWantedForPlayer(null, room, 'local')).toBe(false);
+    expect(phoneMusicWantedForPlayer(null, room, 'missing')).toBe(false);
+    expect(phoneMusicWantedForPlayer('off', room, 'remote')).toBe(false);
+    expect(phoneMusicWantedForPlayer('on', room, 'local')).toBe(true);
   });
 });
 

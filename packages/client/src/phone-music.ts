@@ -34,6 +34,21 @@ export function phoneMusicWanted(
   if (choice !== null) return choice === 'on';
   return (room?.phoneOnly ?? false) || (room?.musicOnPhones ?? false) || remote;
 }
+
+/** The stage preference is per player: a phone that cannot see the TV carries its music. */
+export function phoneMusicWantedForPlayer(
+  choice: 'on' | 'off' | null,
+  room:
+    | ({ phoneOnly?: boolean; musicOnPhones?: boolean } & {
+        players?: readonly { id: string; canSeeTv?: boolean }[];
+      })
+    | null
+    | undefined,
+  playerId: string | null | undefined,
+): boolean {
+  const remote = room?.players?.find((player) => player.id === playerId)?.canSeeTv === false;
+  return phoneMusicWanted(choice, room, remote);
+}
 export function setPhoneMusicOn(on: boolean): void {
   try {
     localStorage.setItem(PHONE_MUSIC_KEY, on ? 'on' : 'off');

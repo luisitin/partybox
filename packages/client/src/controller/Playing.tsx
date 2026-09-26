@@ -141,7 +141,7 @@ export function Playing({
     [audio],
   );
   // A game's own settings menu flips this phone's music and sound (the owner, 2026-09-24).
-  const prefs = usePhonePrefsValue(audio, room);
+  const prefs = usePhonePrefsValue(audio, room, me.id);
   // ADR-050: the game's phone entry (usually already here: it downloads once the game is chosen).
   const game = useGame(room.selectedGameId, 'phone');
   if (me.spectator || view?.me.role === 'spectator') {

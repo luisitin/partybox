@@ -25,7 +25,7 @@ import type { MusicEngine } from '../music';
 import { createMusicEngine, planFor } from '../music';
 import {
   phoneMusicChoice,
-  phoneMusicWanted,
+  phoneMusicWantedForPlayer,
   subscribePhoneMusic,
   phoneMusicVolume,
 } from '../phone-music';
@@ -117,8 +117,7 @@ export function ControllerApp(): JSX.Element {
   // below already followed. Without it a game with music but no beds (Broken Pencil) was silent
   // on every phone in a phone-only room (the 2026-09-22 audio sweep: 2 sounds in a whole game).
   // The phone's own switch wins once touched (the owner, 2026-09-23: Off did not turn it off).
-  const remote = room?.players.find((p) => p.id === state.playerId)?.canSeeTv === false;
-  const musicWanted = phoneMusicWanted(musicChoice, room, remote);
+  const musicWanted = phoneMusicWantedForPlayer(musicChoice, room, state.playerId);
   // ADR-050: the chosen game's phone entry — this is also what starts its download (§2.3).
   const game = useGame(room?.selectedGameId, 'phone').module;
   const gameMusic = game?.music;

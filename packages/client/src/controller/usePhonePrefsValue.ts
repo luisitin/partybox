@@ -5,7 +5,7 @@ import type { PhonePrefs } from '@partybox/game-sdk/ui';
 import type { RoomSnapshot } from '@partybox/shared';
 import {
   phoneMusicChoice,
-  phoneMusicWanted,
+  phoneMusicWantedForPlayer,
   setPhoneMusicOn,
   subscribePhoneMusic,
 } from '../phone-music';
@@ -14,6 +14,7 @@ import type { SoundEngine } from '../sound';
 export function usePhonePrefsValue(
   audio: SoundEngine | null | undefined,
   room: RoomSnapshot,
+  playerId: string,
 ): Omit<PhonePrefs, 'available'> {
   const choice = useSyncExternalStore(subscribePhoneMusic, phoneMusicChoice, () => null);
   // The engine owns the mute (the 🎨 sheet flips it too): read it live, never a copy.
@@ -26,11 +27,10 @@ export function usePhonePrefsValue(
     () => audio?.muted() ?? true,
     () => true,
   );
-  const { phoneOnly, musicOnPhones } = room;
   return useMemo(
     () => ({
       music: {
-        on: phoneMusicWanted(choice, { phoneOnly, musicOnPhones }),
+        on: phoneMusicWantedForPlayer(choice, room, playerId),
         set: (on: boolean) => setPhoneMusicOn(on),
       },
       sound: {
@@ -42,6 +42,6 @@ export function usePhonePrefsValue(
         },
       },
     }),
-    [choice, phoneOnly, musicOnPhones, muted, audio],
+    [choice, room, playerId, muted, audio],
   );
 }
