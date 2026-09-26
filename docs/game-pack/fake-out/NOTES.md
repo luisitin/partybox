@@ -102,10 +102,10 @@ The fixture-only check is `p17-codex/score-teaser.png`; a live re-check is still
 
 Reviewer [c7bb99] found that the score reasons silently stopped after four scorers. The TV now
 keeps all reasons: up to six at once, or two automatic pages of six during the 10 s scores phase.
-Rooms with five or more players use a tighter score layout so the board and reasons clear the host
-bar. A 12-scorer fixture check puts the board at 457–860 px and both reason pages at 868–976 px
-on a 1080p TV; at 720p the same spans are 305–577 and 582–654 px. Six scorers also fit. The
-fixture-only screenshots are in `p18-score-reasons/`; a live re-check remains required.
+Rooms with 10 or more players use three compact scoreboard columns, keeping the reason rows clear
+of the host bar. A fixture with 12 scorers checks both six-reason pages (`p18-score-reasons/`). A
+live 12-player round checks both pages at 1920×1080 and 1280×720 (`p20-codex-live/` and
+`p21-codex-live-720/`); the full round videos, phase stills and timelines are in those folders.
 
 Sound (fo-audio probe, p03): `card` +20 ms after the question starts, the reading +10 ms after
 `readAt`; lie / pick lines 460 ms after the phone chime (by design, 450); each option's reading

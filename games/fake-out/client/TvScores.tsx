@@ -63,6 +63,7 @@ export function TvScores({ view }: Props): JSX.Element {
           stagger="climb"
           climbFrom={climbFrom}
           size={rows.length > 6 ? 'sm' : 'md'}
+          columns={rows.length >= 10 ? 3 : undefined}
         />
       </div>
       {scorers.length > 0 ? (
