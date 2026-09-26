@@ -103,6 +103,10 @@ export function results(state: State): GameResults | null {
         id: t,
         name: TEAM_NAME[t],
         mark: TEAM_MARK[t],
+        color:
+          t === 'sun'
+            ? 'var(--pb-team-sun, var(--pb-accent))'
+            : 'var(--pb-team-moon, var(--pb-info))',
         members: [...state.teams[t]],
       })),
     },

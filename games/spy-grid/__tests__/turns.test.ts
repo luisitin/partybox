@@ -139,6 +139,13 @@ describe('rounds', () => {
     const r = game.results(s);
     expect(Object.keys(r?.scores ?? {}).sort()).toEqual(['p1', 'p2', 'p3', 'p4', 'p5', 'p6']);
     expect(r?.winnerIds.sort()).toEqual(['p4', 'p5', 'p6']);
+    expect(r?.outcome).toMatchObject({
+      kind: 'teams',
+      teams: [
+        { id: 'sun', color: 'var(--pb-team-sun, var(--pb-accent))' },
+        { id: 'moon', color: 'var(--pb-team-moon, var(--pb-info))' },
+      ],
+    });
   });
 
   it('a spymaster who left is replaced by rule at their next clue', () => {
