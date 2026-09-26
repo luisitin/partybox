@@ -199,6 +199,10 @@ export const en = {
   paused: {
     other: (name: string) => `Paused — ${name} will resume the game`,
     vip: 'Paused — open ★ VIP and tap Resume',
+    // I-167: the header's short form
+    head: (name: string) => `⏸ ${name} paused`,
+    headVip: '⏸ VIP: resume',
+    resume: '⏸ Resume',
   },
   spectator: {
     title: 'Waiting for the next game',

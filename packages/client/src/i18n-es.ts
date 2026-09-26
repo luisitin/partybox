@@ -182,6 +182,9 @@ export const es: Texts = {
   paused: {
     other: (name) => `En pausa: ${name} reanudará el juego`,
     vip: 'En pausa: abre ★ VIP y toca Reanudar',
+    head: (name) => `⏸ ${name} en pausa`,
+    headVip: '⏸ VIP: reanuda',
+    resume: '⏸ Reanudar',
   },
   spectator: {
     title: 'Esperando al próximo juego',

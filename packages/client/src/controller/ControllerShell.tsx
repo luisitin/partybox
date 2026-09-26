@@ -119,21 +119,41 @@ export function ControllerShell({
     >
       <header className={styles.header}>
         <div className={styles.left}>
-          <span className={styles.brand} aria-label={t.appName}>
-            <span className={styles.brandFull}>{t.appName}</span>
-            <span className={styles.brandShort} aria-hidden>
-              {t.appShort}
-            </span>
-          </span>
-          {room ? (
-            // I-666 A: the code is the thing people ask for — tap it to share the room
-            <ShareButton
-              code={room.code}
-              className={`${styles.code} ${styles.codeButton}`}
-              label={room.code}
-              ariaLabel={`${t.lobby.room} ${room.code} — ${t.share.button}`}
-            />
-          ) : null}
+          {/* I-167 A: paused, the header says so — nothing covers the page, nothing moves */}
+          {paused ? (
+            me?.isVip ? (
+              // I-167 B: the VIP resumes right here
+              <button
+                type="button"
+                className={`${styles.pausedHead} ${styles.pausedResume}`}
+                onClick={() => controller.vip({ action: 'resume' })}
+              >
+                {t.paused.resume}
+              </button>
+            ) : (
+              <span className={styles.pausedHead} role="status">
+                {t.paused.head(vipName)}
+              </span>
+            )
+          ) : (
+            <>
+              <span className={styles.brand} aria-label={t.appName}>
+                <span className={styles.brandFull}>{t.appName}</span>
+                <span className={styles.brandShort} aria-hidden>
+                  {t.appShort}
+                </span>
+              </span>
+              {room ? (
+                // I-666 A: the code is the thing people ask for — tap it to share the room
+                <ShareButton
+                  code={room.code}
+                  className={`${styles.code} ${styles.codeButton}`}
+                  label={room.code}
+                  ariaLabel={`${t.lobby.room} ${room.code} — ${t.share.button}`}
+                />
+              ) : null}
+            </>
+          )}
         </div>
         <div className={styles.right}>
           {/* I-793 F: the join page's language is one "🌐 EN ▾" up here, not a row of pills */}
@@ -218,13 +238,6 @@ export function ControllerShell({
         className={`${styles.main} ${paused ? styles.pausedMain : ''} ${card === 'offline' ? styles.offlineMain : ''}`}
         inert={paused || card !== 'off'}
       >
-        {/* Overlays the top of the body and slides in (review-loop #20): a banner in the flow shoved
-            the drawing sheet under a finger mid-stroke. */}
-        {paused && card === 'off' ? (
-          <div className={styles.banner} role="status">
-            {me?.isVip ? t.paused.vip : t.paused.other(vipName)}
-          </div>
-        ) : null}
         {children}
         {card === 'back' ? (
           <BackCard before={before} view={view} seconds={seconds} playerId={state.playerId} />
