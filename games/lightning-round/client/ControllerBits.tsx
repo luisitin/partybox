@@ -9,18 +9,26 @@ import { STRINGS } from './strings';
 
 // The amount is the decision, so it leads at h1; the share is the caption. Plain digits, no
 // thousands separator (matches every other number in the game).
-export function wagerLabel(option: WagerOption, L: Translator): JSX.Element {
+export function wagerLabel(option: WagerOption, L: Translator, score?: number): JSX.Element {
   const caption =
     option.percent === 0
       ? L('nothing at stake')
       : option.percent === 100
         ? L('All in') // I-550 (the owner's note): the four chips already say 100 %
         : `${option.percent} %`; // I-550 (the owner's note): the prompt already says "of your N"
+  // I-247 B: what this bet does to me — right, and wrong
+  const outcome =
+    option.percent === 0 || score === undefined
+      ? null
+      : L('right → {win} · wrong → {lose}', { win: score + option.amount, lose: score - option.amount });
   return (
     <span className={styles.wagerRow}>
       <Chips percent={option.percent} />
       <span className={styles.amount}>{option.percent === 0 ? '0' : option.amount}</span>
-      <span className={styles.pct}>{caption}</span>
+      <span className={styles.pct}>
+        {caption}
+        {outcome ? <span className={styles.outcomeLine}>{outcome}</span> : null}
+      </span>
     </span>
   );
 }

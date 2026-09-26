@@ -411,3 +411,20 @@
   letter-spacing: 0;
   text-transform: none;
 }
+
+/* ── I-247 A: the standing, one bold line under the rule. */
+.standing {
+  display: block;
+  margin-top: var(--pb-space-1);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text);
+}
+
+/* ── I-247 B: the bet's two outcomes under its caption. */
+.outcomeLine {
+  display: block;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-weight: 700;
+}
