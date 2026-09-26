@@ -1381,6 +1381,27 @@
       "hardWords": []
     },
     {
+      "id": "fo-animals-014",
+      "category": "animals",
+      "kind": "body-part",
+      "fact": "Scientists can estimate a fish's age by studying tiny inner-ear stones called ___.",
+      "truth": {
+        "answer": "otoliths",
+        "accept": [
+          "otolith",
+          "fish otoliths",
+          "fish ear stones",
+          "ear stones",
+          "otolith ear stones",
+          "otoliths in fish ears"
+        ],
+        "reject": ["scales", "gills"]
+      },
+      "houseLies": ["scales", "gills", "fins", "teeth", "bones", "eggs", "livers", "whiskers"],
+      "source": "NOAA Fisheries Age and Growth (https://www.fisheries.noaa.gov/national/science-data/age-and-growth)",
+      "verified": true
+    },
+    {
       "id": "fo-history-001",
       "category": "history",
       "kind": "activity",
@@ -1723,6 +1744,50 @@
       "source": "University of Cambridge: Lord Byron and the bears beneath Cambridge (cam.ac.uk/research/news/lord-byron-and-the-bears-beneath-cambridge)",
       "verified": true,
       "hardWords": []
+    },
+    {
+      "id": "fo-history-016",
+      "category": "history",
+      "kind": "substance",
+      "fact": "Some of George Washington's dentures included modeled teeth carved from elephant ___.",
+      "truth": {
+        "answer": "ivory",
+        "accept": [
+          "elephant ivory",
+          "tusk ivory",
+          "ivory tusk",
+          "ivorie",
+          "ivory material",
+          "ivory from elephant"
+        ],
+        "reject": ["wood", "gold"]
+      },
+      "houseLies": ["wood", "gold", "silver", "clay", "porcelain", "bone", "copper", "glass"],
+      "source": "Smithsonian, George Washington: A National Treasure (https://georgewashington.si.edu/portrait/face.html)",
+      "verified": true
+    },
+    {
+      "id": "fo-history-017",
+      "category": "history",
+      "kind": "object",
+      "fact": "A 1902 Clifford Berryman cartoon helped inspire the ___ bear.",
+      "truth": {
+        "answer": "teddy",
+        "accept": [
+          "teddy bear",
+          "teddy-bear",
+          "teddy's",
+          "teddy bears",
+          "teddie",
+          "teddy-bear toy",
+          "teddy bear toy",
+          "theodore's bear"
+        ],
+        "reject": []
+      },
+      "houseLies": ["polar", "grizzly", "panda", "koala", "brown", "stuffed", "cuddly", "black"],
+      "source": "Smithsonian National Museum of American History (https://americanhistory.si.edu/press/fact-sheets/teddy-bear)",
+      "verified": true
     },
     {
       "id": "fo-holidays-001",
@@ -2434,6 +2499,57 @@
       "hardWords": []
     },
     {
+      "id": "fo-inventions-016",
+      "category": "inventions",
+      "kind": "food",
+      "fact": "The first commercial UPC scan in 1974 was a ten-pack of Wrigley's Juicy Fruit ___.",
+      "truth": {
+        "answer": "gum",
+        "accept": [
+          "chewing gum",
+          "juicy fruit",
+          "juicy fruit gum",
+          "wrigley's gum",
+          "gum pack",
+          "a pack of gum"
+        ],
+        "reject": ["mint", "candy bar"]
+      },
+      "houseLies": [
+        "mint",
+        "candy bar",
+        "chocolate",
+        "soda",
+        "crackers",
+        "batteries",
+        "soap",
+        "toothpaste"
+      ],
+      "source": "GS1 US (https://www.gs1us.org/upcs-barcodes-prefixes/guide-to-upcs)",
+      "verified": true
+    },
+    {
+      "id": "fo-inventions-017",
+      "category": "inventions",
+      "kind": "substance",
+      "fact": "The James Webb Space Telescope's mirror segments are made of ___.",
+      "truth": {
+        "answer": "beryllium",
+        "accept": [
+          "beryllium metal",
+          "beryllium mirrors",
+          "beryllium alloy",
+          "beryllium material",
+          "beryllium segments",
+          "beryllium mirror material"
+        ],
+        "reject": ["gold", "glass"]
+      },
+      "houseLies": ["gold", "glass", "aluminum", "steel", "copper", "plastic", "silicon", "silver"],
+      "source": "NASA Webb's Mirrors (https://science.nasa.gov/mission/webb/webbs-mirrors/)",
+      "verified": true
+    },
+    {
       "id": "fo-science-001",
       "category": "science",
       "kind": "substance",
@@ -3090,6 +3206,36 @@
       "source": "Wikipedia: Valentina Tereshkova",
       "verified": true,
       "hardWords": ["Valentina Tereshkova"]
+    },
+    {
+      "id": "fo-space-014",
+      "category": "space",
+      "kind": "substance",
+      "fact": "On Saturn's moon Titan, the lakes are made of liquid methane and ___.",
+      "truth": {
+        "answer": "ethane",
+        "accept": [
+          "liquid ethane",
+          "methane and ethane",
+          "ethane liquid",
+          "ethane lakes",
+          "ethane hydrocarbons",
+          "hydrocarbon liquid"
+        ],
+        "reject": ["water", "ammonia"]
+      },
+      "houseLies": [
+        "water",
+        "ammonia",
+        "lava",
+        "oil",
+        "sulfur",
+        "nitrogen",
+        "carbon dioxide",
+        "molten ice"
+      ],
+      "source": "NASA Titan Facts (https://science.nasa.gov/saturn/moons/titan/facts/)",
+      "verified": true
     },
     {
       "id": "fo-sports-001",

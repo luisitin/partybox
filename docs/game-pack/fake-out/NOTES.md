@@ -70,6 +70,20 @@ Written by research agents with web access, each fact checked against its `sourc
   (History Facts), Lincoln's Hall of Fame, OMG/Churchill (Smithsonian), the wooden mouse (Computer
   History Museum), Venice pigeons (NBC), Wisconsin margarine (WPR), several spicy ones.
 - Mild gross-out in family: Santa Anna's leg (`fo-history-007`). The urine tax moved to spicy.
+- Owner follow-up added six family facts on 2026-09-25: Washington's ivory dentures and the teddy
+  bear cartoon (Smithsonian), the first UPC scan (GS1 US), Webb's beryllium mirror segments (NASA),
+  Titan's methane/ethane lakes (NASA), and fish-age ear stones (NOAA). Checkable sources are embedded in each fact's `source`.
+
+## Prompt style follow-up (2026-09-25)
+
+Owner play-test [3a3622] found Fake-Out's question prompt visually unlike the other games: its words
+were underlined one at a time during read-along, its blank breathed with a gold underline, and the
+TV card entered with a large flip. The question now uses the dark-stage background, border and
+spacing tokens with a centered h1 prompt. The TV question no longer passes read-along word timing;
+its blank is static and uses the surface-2 fill with a neutral border. The reveal retains its
+existing presentation. Before/reference stills and after stills are stored in
+`C:/dev/scratch/codex-fake-out/question-style-*` (excluded from Git); the reference is Blanks' TV
+`answer` prompt card.
 
 ## Open questions for the owner
 
