@@ -1,0 +1,67 @@
+{
+  "settings": "{}",
+  "players": "8",
+  "cpu": "1",
+  "frames": 20820,
+  "long": 10,
+  "pct": 0.05,
+  "over100": 1,
+  "worst": 133,
+  "byPhase": {
+    "intro": 4,
+    "dial": 1,
+    "scores": 5
+  },
+  "samples": [
+    {
+      "ms": 50,
+      "phase": "intro",
+      "s": 0.19
+    },
+    {
+      "ms": 133,
+      "phase": "intro",
+      "s": 0.2
+    },
+    {
+      "ms": 67,
+      "phase": "intro",
+      "s": 0.89
+    },
+    {
+      "ms": 50,
+      "phase": "intro",
+      "s": 1.2
+    },
+    {
+      "ms": 50,
+      "phase": "dial",
+      "s": 12.93
+    },
+    {
+      "ms": 50,
+      "phase": "scores",
+      "s": 43.57
+    },
+    {
+      "ms": 50,
+      "phase": "scores",
+      "s": 173.64
+    },
+    {
+      "ms": 50,
+      "phase": "scores",
+      "s": 254.54
+    },
+    {
+      "ms": 50,
+      "phase": "scores",
+      "s": 294.71
+    },
+    {
+      "ms": 50,
+      "phase": "scores",
+      "s": 333.44
+    }
+  ]
+}
