@@ -105,6 +105,13 @@ export function advance(state: State, now: number): State {
   }
 }
 
+/** I-287: the VIP's skip. On a live question: closing costs nobody who
+ *  hadn't answered (A). Elsewhere, the deadline's own step. */
+function vipSkip(state: State, now: number): State {
+  if (state.phase.id !== 'question') return advance(state, now);
+  return enterReveal({ ...state, closedEarly: true }, now);
+}
+
 /** The drop of the last outstanding player ends the phase like their input would have
  *  (review-loop #48): the room never sits out a full timer for someone who has gone. */
 function closeIfDone(state: State, now: number): State {
@@ -122,7 +129,7 @@ function reduce(state: State, event: GameEvent<Input>): State {
     const after = setConnected(state, event);
     return event.connected || after.phase.paused ? after : closeIfDone(after, event.now);
   }
-  const vip = applyVip(state, event, { skip: advance, end: enterDone });
+  const vip = applyVip(state, event, { skip: vipSkip, end: enterDone });
   if (vip) return vip;
   if (state.phase.paused) return state; // inputs and timers wait while paused
   switch (state.phase.id) {

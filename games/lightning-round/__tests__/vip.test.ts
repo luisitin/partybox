@@ -38,11 +38,12 @@ describe('VIP skip', () => {
     expect(s.phase.id).toBe('question');
     expect(s.index).toBe(s.questionIds.length - 1);
     expect(s.wagers).toEqual({ a: bet });
-    // Skipping the final question loses the wager for a; b and c bet nothing.
+    // I-287 A: the VIP closing the final costs a nothing — the wager stays; b and c bet nothing.
     const before = { ...s.scores };
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('reveal');
-    expect(s.scores['a']).toBe((before['a'] ?? 0) - (bet ?? 0));
+    expect(s.scores['a']).toBe(before['a'] ?? 0);
+    expect(bet).toBeGreaterThan(0);
     expect(s.scores['b']).toBe(before['b']);
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('done');
