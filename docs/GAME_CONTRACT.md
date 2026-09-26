@@ -165,10 +165,16 @@ interface GameResults {
   // through the game's strings like awards)
   outcome?:
     | { kind: 'coop'; won: boolean }
-    | { kind: 'teams'; winner: string | null; teams: { id; name; mark?; members: string[] }[] };
+    | {
+        kind: 'teams';
+        winner: string | null;
+        teams: { id; name; mark?; color?; members: string[] }[];
+      };
   headline?: string;
 }
-// a team game still ranks every member of the winning team 1 (winnerIds = that team)
+// a team game still ranks every member of the winning team 1 (winnerIds = that team); `color` is the
+// game's own colour for the team (a CSS colour or token): the results boards group by team, head each
+// group in it, and tint the winner's headline
 ```
 
 ### Recap (optional, ADR-035)
