@@ -33,7 +33,7 @@ spectate and see exactly the TV's information.
 | `chanEnact`   | silence banner                                            | Chancellor: 2 cards, enact 1; Request veto (5 F) | an enactment / veto request, or 45 s → random |
 | `vetoAsk`     | VETO REQUESTED                                            | President: Agree / Refuse                        | an answer, or 20 s → refused                  |
 | `enactReveal` | the policy lands; power tag                               | same words                                       | 6 s                                           |
-| `claims`      | Discuss…                                                  | living players: room text chat                    | 60 s or VIP Next                              |
+| `claims`      | Discuss…                                                  | living players: room text chat                   | 60 s or VIP Next                              |
 | `power`       | the power banner                                          | President: target picker / peek                  | a choice, or 45 s → random (named); peek 15 s |
 | `powerReveal` | the public outcome; investigation pause 3 s then the file | same words                                       | 3–7 s                                         |
 | `chaos`       | the top card enacted, term limits lifted                  | same words                                       | 8 s                                           |
