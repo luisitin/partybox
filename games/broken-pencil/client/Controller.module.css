@@ -290,7 +290,10 @@
   font: inherit;
   font-size: var(--pb-font-small);
   font-weight: 800;
-  white-space: nowrap;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.2;
 }
 
 /* I-796 K: the page on the TV, in miniature on a TV room's phone — framed, quieter, capped so a
