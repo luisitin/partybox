@@ -1,14 +1,20 @@
 # START HERE — reading order by task
 
-You have a small context window and no memory of this repo. Read `CLAUDE.md` (the map), then only the
+You have a small context window and no memory of this repo. Read `AGENTS.md` (the map), then only the
 docs for your task. Every doc is short; every folder has a `README.md`; every package and game has a
-`CLAUDE.md` with local rules. Run `pnpm verify` before you commit — it is the definition of "works".
+`AGENTS.md` with local rules. Run `pnpm verify` before you commit — it is the definition of "works".
+
+## New to this machine (Codex, or any agent without memory of the project)
+
+1. `C:/dev/AGENTS.md`: the rules every agent here follows (Agent Hub, peer review, merging).
+2. `docs/CODEX_GUIDE.md`: setup, ports, the hub workflow, the owner's preferences, gotchas.
+3. `C:/dev/agent-hub/handoffs/<name>.md`: the handoff for the area you take over.
 
 ## Adding a game
 
 1. `docs/ADDING_A_GAME.md` — numbered steps + definition of done. Follow it literally.
 2. `docs/GAME_CONTRACT.md` — the interface your game implements, with a worked example.
-3. `games/_template/` — copy source of `pnpm new-game`; read its `README.md` and `CLAUDE.md`.
+3. `games/_template/` — copy source of `pnpm new-game`; read its `README.md` and `AGENTS.md`.
 4. `packages/game-sdk/README.md` — helpers and UI primitives you may use.
 5. `docs/DESIGN_SYSTEM.md` — only when writing `client/` components.
 
@@ -41,17 +47,18 @@ docs for your task. Every doc is short; every folder has a `README.md`; every pa
 
 ## Every doc, one line each
 
-| Doc                | Purpose                                                                      |
-| ------------------ | ---------------------------------------------------------------------------- |
-| `ARCHITECTURE.md`  | Packages, data flow diagram, dependency direction, runtime topology.         |
-| `GAME_CONTRACT.md` | `GameDefinition`, events, views, rules the engine enforces, worked example.  |
-| `ADDING_A_GAME.md` | Numbered recipe from `pnpm new-game` to `pnpm verify`, with checklist.       |
-| `PROTOCOL.md`      | Socket.IO events, payload schemas, `rev` ordering, limits.                   |
-| `DEV_API.md`       | Dev-only HTTP endpoints that drive the app deterministically.                |
-| `DESIGN_SYSTEM.md` | Tokens, TV vs phone type scales, primitives, motion, sound cues.             |
-| `TESTING.md`       | Layers (unit, contract, sim, e2e), `pnpm verify`, how to reproduce failures. |
-| `CONVENTIONS.md`   | Code + commit conventions, file size limits, naming.                         |
-| `DECISIONS.md`     | ADRs: Context → Decision → Consequences.                                     |
-| `DEPENDENCIES.md`  | One line per dependency and why it exists.                                   |
-| `BACKLOG.md`       | Known gaps and next items (`BL-nnn`).                                        |
-| `GLOSSARY.md`      | Room, VIP, spectator, phase, view, fixture, rev, seed…                       |
+| Doc                | Purpose                                                                         |
+| ------------------ | ------------------------------------------------------------------------------- |
+| `CODEX_GUIDE.md`   | Onboarding for an agent new to this machine: setup, ports, hub, owner, gotchas. |
+| `ARCHITECTURE.md`  | Packages, data flow diagram, dependency direction, runtime topology.            |
+| `GAME_CONTRACT.md` | `GameDefinition`, events, views, rules the engine enforces, worked example.     |
+| `ADDING_A_GAME.md` | Numbered recipe from `pnpm new-game` to `pnpm verify`, with checklist.          |
+| `PROTOCOL.md`      | Socket.IO events, payload schemas, `rev` ordering, limits.                      |
+| `DEV_API.md`       | Dev-only HTTP endpoints that drive the app deterministically.                   |
+| `DESIGN_SYSTEM.md` | Tokens, TV vs phone type scales, primitives, motion, sound cues.                |
+| `TESTING.md`       | Layers (unit, contract, sim, e2e), `pnpm verify`, how to reproduce failures.    |
+| `CONVENTIONS.md`   | Code + commit conventions, file size limits, naming.                            |
+| `DECISIONS.md`     | ADRs: Context → Decision → Consequences.                                        |
+| `DEPENDENCIES.md`  | One line per dependency and why it exists.                                      |
+| `BACKLOG.md`       | Known gaps and next items (`BL-nnn`).                                           |
+| `GLOSSARY.md`      | Room, VIP, spectator, phase, view, fixture, rev, seed…                          |

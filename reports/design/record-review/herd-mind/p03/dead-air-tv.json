@@ -1,0 +1,21 @@
+{
+  "video": "C:\\dev\\partybox-game-herd-mind\\reports\\design\\record-review\\herd-mind\\p03\\video\\tv\\round.webm",
+  "bytes": 13753555,
+  "durationS": 112.3,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [],
+  "deadMsTotal": 0,
+  "hardCuts": [],
+  "samples": 1122,
+  "motion": {
+    "p50": 0.0011,
+    "p90": 0.01,
+    "p99": 0.0477,
+    "max": 0.1089
+  }
+}
