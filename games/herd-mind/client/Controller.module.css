@@ -1,0 +1,659 @@
+/* Phone for Herd Mind. Phone column tokens (rem, so larger text scales the words). Designed at
+   320×568 first; nothing may zoom, select, flash or shift under a finger. */
+.answerScreen {
+  touch-action: manipulation;
+}
+
+.ask {
+  display: grid;
+  gap: var(--pb-space-1);
+}
+
+/* The kicker and the ⚙️ share a row, so the settings button costs no height. */
+.kickerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-2);
+  min-width: 0;
+}
+
+.topRight {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pushRight {
+  margin-left: auto;
+}
+
+.readyBar {
+  display: grid;
+  gap: var(--pb-space-2);
+}
+
+.readyLine {
+  margin: 0;
+  min-height: var(--pb-touch);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-accent-3);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.sheepCard {
+  display: grid;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  border: 3px solid var(--pb-accent-2-fill);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.sheepCard p {
+  margin: 0;
+}
+
+.sheepTitle {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+.kicker {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--pb-accent-2);
+}
+
+.prompt {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.promptSmall {
+  margin: 0 0 var(--pb-space-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+/* Two columns while a tile's words fit; one column when the text is big (the query's em is the
+   wrapper's own font size, so 200 % text trips it on any phone). */
+.tilesWrap {
+  container: tiles / inline-size;
+  font-size: var(--pb-font-body);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pb-space-2);
+}
+
+@container tiles (max-width: 14em) {
+  .tiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* A would-you-rather (2–4 choices): big stacked cards, not a sparse grid. */
+.few {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--pb-space-3);
+}
+
+.few .tile {
+  min-height: 88px;
+  font-size: var(--pb-font-h2);
+  text-align: center;
+  justify-items: center;
+}
+
+/* A sideways phone is wide and short: all eight tiles in two rows, no scrolling. */
+@container tiles (min-width: 28em) {
+  .tiles:not(.few) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.tile {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: 56px;
+  padding: var(--pb-space-2) var(--pb-space-4) var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border: 3px solid var(--pb-border);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--pb-motion-fast) var(--pb-ease),
+    background-color var(--pb-motion-fast) var(--pb-ease);
+}
+
+.tile:active {
+  transform: scale(0.97);
+}
+
+.tile:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+
+.tileOn {
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  border-color: var(--pb-accent);
+}
+
+.tileLabel {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  hyphens: auto;
+  overflow-wrap: anywhere;
+}
+
+/* The ✓ sits in the corner, off the label's line, so a pick never shifts or squeezes the words. */
+.tick {
+  position: absolute;
+  top: 3px;
+  right: 6px;
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tileOn .tick {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.status {
+  margin: 0;
+  min-height: var(--pb-touch);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--pb-text-muted);
+}
+
+/* ── typed ── */
+.typedForm {
+  display: grid;
+  gap: var(--pb-space-2);
+}
+
+.input {
+  width: 100%;
+  min-height: 56px;
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border: 3px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: max(16px, var(--pb-font-body));
+  font-weight: 700;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--pb-accent-2);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--pb-danger);
+}
+
+.counter {
+  justify-self: end;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.error {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-danger);
+}
+
+.lockedText {
+  margin: var(--pb-space-4) 0 0;
+  padding: var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  text-align: center;
+  overflow-wrap: anywhere;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── intro ── */
+.introHead {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  margin-bottom: var(--pb-space-4);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+}
+
+.steps {
+  margin: 0;
+  padding-left: 1.4em;
+  display: grid;
+  gap: var(--pb-space-3);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.note {
+  margin: var(--pb-space-4) 0 0;
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* ── herd ── */
+.watch {
+  /* fills what the ⚙️ row leaves: a min-height of 100 % overflowed and raised "more below" */
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.eyes {
+  display: inline-block; /* transforms never move an inline box */
+  font-size: var(--pb-font-display);
+  animation: phone-eyes 2.4s var(--pb-ease) infinite;
+}
+
+@keyframes phone-eyes {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-8%) rotate(-4deg);
+  }
+  50% {
+    transform: translateX(0) translateY(-4%);
+  }
+  75% {
+    transform: translateX(8%) rotate(4deg);
+  }
+}
+
+.watchTitle {
+  margin: var(--pb-space-2) 0 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+}
+
+.verdict {
+  margin: 0 0 var(--pb-space-3);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.groups,
+.mergeList,
+.race {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--pb-space-2);
+}
+
+.group,
+.mergeGroup {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--pb-space-1) var(--pb-space-2);
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border: 3px solid var(--pb-border);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  text-align: left;
+}
+
+.groupHerd {
+  border-color: var(--pb-accent-3);
+  background: var(--pb-surface-2);
+}
+
+.groupLabel {
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.groupCount {
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.groupNames {
+  grid-column: 1 / -1;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* ── merge tool ── */
+.mergeRow {
+  display: grid;
+  gap: var(--pb-space-1);
+}
+
+.mergeGroup {
+  min-height: var(--pb-touch);
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mergeOn {
+  border-color: var(--pb-accent-2);
+  background: var(--pb-surface-2);
+}
+
+.mergedTag {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-info);
+  text-transform: uppercase;
+}
+
+.undo {
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-surface-2);
+  background: transparent;
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  text-transform: none;
+  touch-action: manipulation;
+}
+
+.mergeBar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pb-space-2);
+}
+
+.mergeClock {
+  grid-column: 1 / -1;
+}
+
+.lockedWrap {
+  display: grid;
+  gap: var(--pb-space-3);
+  justify-items: center;
+}
+
+.waiting {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.status .waiting {
+  display: flex;
+  justify-content: center;
+}
+
+.dots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: herd-dot 1.2s var(--pb-ease) infinite;
+}
+
+.dots i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dots i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes herd-dot {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dots i {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .dots i {
+  animation: none;
+}
+
+/* ── score ── */
+.scoreBody {
+  margin-block: auto;
+  display: grid;
+  gap: var(--pb-space-2);
+}
+
+.nextLine {
+  margin: var(--pb-space-4) 0 0;
+  display: grid;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+.result {
+  position: relative;
+  padding: var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 3px solid var(--pb-border);
+  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.r_herd {
+  border-color: var(--pb-accent-3);
+}
+
+.r_sheep {
+  border-color: var(--pb-accent-2);
+}
+
+.resultLine {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.plusOne {
+  position: absolute;
+  top: calc(var(--pb-space-3) * -1);
+  right: var(--pb-space-3);
+  padding: 0 var(--pb-space-2);
+  border-radius: 999px;
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) 200ms both;
+}
+
+.points {
+  margin: var(--pb-space-4) 0 0;
+  text-align: center;
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.pointsNum {
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  color: var(--pb-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.holding {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  margin: var(--pb-space-3) 0 0;
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.race {
+  margin-top: var(--pb-space-4);
+}
+
+.race li {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: var(--pb-space-2);
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-2);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+}
+
+.raceWon {
+  outline: 3px solid var(--pb-accent-2);
+}
+
+.raceName {
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.raceScore {
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .tileOn .tick,
+  .lockedText,
+  .eyes,
+  .verdict,
+  .result,
+  .plusOne {
+    animation: none;
+    transition: none;
+  }
+}
+
+:global(:root[data-motion='off']) .tile,
+:global(:root[data-motion='off']) .tileOn .tick,
+:global(:root[data-motion='off']) .lockedText,
+:global(:root[data-motion='off']) .eyes,
+:global(:root[data-motion='off']) .verdict,
+:global(:root[data-motion='off']) .result,
+:global(:root[data-motion='off']) .plusOne {
+  animation: none;
+  transition: none;
+}
+
+/* A short phone (an SE is 667 px tall): eight tiles and a Spanish kicker must clear the body's
+   fade, or the last row sits under it with no "more below" cue (design review 74a3bb). */
+@media (max-height: 700px) {
+  .kicker {
+    letter-spacing: 0;
+  }
+
+  .tiles {
+    gap: 6px;
+  }
+
+  .tile {
+    min-height: 46px;
+    padding-block: 6px;
+  }
+}
