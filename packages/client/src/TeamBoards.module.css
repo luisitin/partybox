@@ -1,0 +1,102 @@
+/* ADR-052: team groups on the results boards. The team colour heads its group (never alone: the
+   mark and the name say which team), the winners' group is outlined in it. */
+.teams {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+  width: 100%;
+}
+
+/* Side by side on the TV: two teams of four stacked ran the losing side's last row and the
+   "Recap saved" line under the host bar (session-c fb4b9c #1). At most two sides share a row;
+   three or four columns cut team names mid-word (session-c d4d8db). "No team" spans them below. */
+.sideBySide {
+  display: grid;
+  align-items: start;
+}
+
+.sideBySide .teamless {
+  grid-column: 1 / -1;
+}
+
+/* Three or four TV sides need two rows. Keep their headers readable while leaving the
+   unassigned players and the recap clear of the host bar. */
+.multiSide {
+  gap: var(--pb-space-2);
+}
+
+.multiSide .team {
+  gap: var(--pb-space-1);
+  padding: var(--pb-space-2);
+}
+
+.multiSide .head {
+  font-size: var(--pb-font-body);
+  line-height: 1.1;
+}
+
+.multiSide .teamless {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--pb-space-4);
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius-lg);
+  border: 2px solid transparent;
+  /* A tap on "Your team lost this one" scrolls the group to the top: its header lands below the
+     phone list's top fade (Screen's fold-clear + fold-top, scrolled), not dimmed under it. */
+  scroll-margin-top: calc(var(--pb-space-4) + var(--pb-font-caption) * 2);
+  /* your own row in your team's colour, not the accent (tune-in 243619: Sun is the accent) */
+  --pb-me: var(--team);
+}
+
+.team.won {
+  border-color: var(--team);
+  background: color-mix(in srgb, var(--team) 10%, transparent);
+}
+
+/* A name and its tag share the row while they fit; a long name (or 200 % text) sends the tag to a
+   line of its own, so the name keeps the width and wraps between words, never mid-word
+   (session-c fb4b9c #2: "Moonlig / ht", the tag taking half the row). */
+.head {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--pb-space-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--team);
+}
+
+.name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: break-word; /* a word wider than the whole row still breaks, as a last resort */
+}
+
+.tag {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text);
+}
+
+.compact {
+  gap: var(--pb-space-3);
+}
+
+.compact .team {
+  padding: var(--pb-space-2);
+}
+
+.compact .head {
+  font-size: var(--pb-font-body);
+}

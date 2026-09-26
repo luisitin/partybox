@@ -1,0 +1,939 @@
+[
+  {
+    "id": "ba-pirate-chest",
+    "name": "Pirate's Chest",
+    "icon": "🏴‍☠️",
+    "flavour": "Found under a palm tree. Smells faintly of seaweed.",
+    "outcomes": [
+      { "type": "gain", "amount": 120, "chance": 60 },
+      { "type": "gain", "amount": 300, "chance": 30 },
+      { "type": "lose", "amount": 60, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-grandma-suitcase",
+    "name": "Grandma's Suitcase",
+    "icon": "🧳",
+    "flavour": "Heavier than it looks. Something inside is ticking.",
+    "outcomes": [
+      { "type": "gain", "amount": 90, "chance": 60 },
+      { "type": "lose", "amount": 50, "chance": 25 },
+      { "type": "double", "chance": 15 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-mystery-box",
+    "name": "Mystery Box",
+    "icon": "📦",
+    "flavour": "Shake it. Hear nothing. Bid anyway.",
+    "outcomes": [
+      { "type": "gain", "amount": 100, "chance": 50 },
+      { "type": "dud", "chance": 30 },
+      { "type": "gain", "amount": 250, "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-lost-luggage",
+    "name": "Lost Luggage",
+    "icon": "🛄",
+    "flavour": "Tagged for a flight that left in 1998.",
+    "outcomes": [
+      { "type": "gain", "amount": 70, "chance": 60 },
+      { "type": "gain", "amount": 150, "chance": 30 },
+      { "type": "dud", "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-cursed-doll",
+    "name": "Cursed Doll",
+    "icon": "🪆",
+    "flavour": "Its eyes follow you around the room. So does its price.",
+    "outcomes": [
+      { "type": "lose", "amount": 60, "chance": 50 },
+      { "type": "gain", "amount": 250, "chance": 40 },
+      { "type": "dud", "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-piggy-bank",
+    "name": "Old Piggy Bank",
+    "icon": "🐷",
+    "flavour": "Rattles like it's full of promises.",
+    "outcomes": [
+      { "type": "gain", "amount": 60, "chance": 70 },
+      { "type": "double", "chance": 30 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-treasure-map",
+    "name": "Treasure Map",
+    "icon": "🗺️",
+    "flavour": "X marks the spot. Several spots, actually.",
+    "outcomes": [
+      { "type": "gain", "amount": 200, "chance": 40 },
+      { "type": "dud", "chance": 50 },
+      { "type": "lose", "amount": 30, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-tackle-box",
+    "name": "Tackle Box",
+    "icon": "🎣",
+    "flavour": "Mostly hooks. Maybe one lucky lure.",
+    "outcomes": [
+      { "type": "gain", "amount": 50, "chance": 60 },
+      { "type": "gain", "amount": 180, "chance": 30 },
+      { "type": "lose", "amount": 40, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-antique-clock",
+    "name": "Antique Clock",
+    "icon": "🕰️",
+    "flavour": "It stopped at 3:17. Nobody knows why.",
+    "outcomes": [
+      { "type": "gain", "amount": 110, "chance": 60 },
+      { "type": "refund", "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-locked-safe",
+    "name": "Locked Safe",
+    "icon": "🔐",
+    "flavour": "The combination was on a sticky note. It fell off.",
+    "outcomes": [
+      { "type": "gain", "amount": 300, "chance": 30 },
+      { "type": "dud", "chance": 60 },
+      { "type": "lose", "amount": 50, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-golden-egg",
+    "name": "Golden Egg",
+    "icon": "🥚",
+    "flavour": "Laid by a very stressed goose.",
+    "outcomes": [
+      { "type": "gain", "amount": 150, "chance": 50 },
+      { "type": "lose", "amount": 70, "chance": 30 },
+      { "type": "double", "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-yard-sale-bin",
+    "name": "Yard Sale Bin",
+    "icon": "🗑️",
+    "flavour": "Everything's a dollar. Except whatever's in here.",
+    "outcomes": [
+      { "type": "gain", "amount": 40, "chance": 70 },
+      { "type": "dud", "chance": 20 },
+      { "type": "gain", "amount": 400, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-magician-hat",
+    "name": "Magician's Hat",
+    "icon": "🎩",
+    "flavour": "Pull out a rabbit. Or a coin. Or someone else's coins.",
+    "outcomes": [
+      { "type": "gain", "amount": 90, "chance": 60 },
+      { "type": "lose", "amount": 40, "chance": 20 },
+      { "type": "swap", "chance": 20 }
+    ],
+    "chaos": "normal"
+  },
+  {
+    "id": "ba-dragon-egg",
+    "name": "Dragon Egg",
+    "icon": "🐉",
+    "flavour": "Warm to the touch. Getting warmer.",
+    "outcomes": [
+      { "type": "gain", "amount": 250, "chance": 50 },
+      { "type": "lose", "amount": 100, "chance": 50 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-time-capsule",
+    "name": "Time Capsule",
+    "icon": "⏳",
+    "flavour": "Buried in 1985. Mostly cassette tapes.",
+    "outcomes": [
+      { "type": "gain", "amount": 80, "chance": 60 },
+      { "type": "gain", "amount": 200, "chance": 30 },
+      { "type": "dud", "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-sunken-crate",
+    "name": "Sunken Crate",
+    "icon": "🚢",
+    "flavour": "Salvaged from the deep. Still a little damp.",
+    "outcomes": [
+      { "type": "gain", "amount": 130, "chance": 50 },
+      { "type": "lose", "amount": 50, "chance": 30 },
+      { "type": "gain", "amount": 350, "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-wizard-trunk",
+    "name": "Wizard's Trunk",
+    "icon": "🧙",
+    "flavour": "Do not open before midnight. It's 11:58.",
+    "outcomes": [
+      { "type": "gain", "amount": 100, "chance": 50 },
+      { "type": "double", "chance": 30 },
+      { "type": "lose", "amount": 80, "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-hot-potato",
+    "name": "Hot Potato",
+    "icon": "🥔",
+    "flavour": "Nobody wants to hold it for long.",
+    "outcomes": [
+      { "type": "lose", "amount": 30, "chance": 60 },
+      { "type": "gain", "amount": 200, "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-crystal-ball",
+    "name": "Crystal Ball",
+    "icon": "🔮",
+    "flavour": "It saw this auction coming.",
+    "outcomes": [
+      { "type": "gain", "amount": 90, "chance": 60 },
+      { "type": "refund", "chance": 30 },
+      { "type": "dud", "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-space-rock",
+    "name": "Space Rock",
+    "icon": "☄️",
+    "flavour": "Fell from the sky last Tuesday. Still humming.",
+    "outcomes": [
+      { "type": "gain", "amount": 160, "chance": 60 },
+      { "type": "lose", "amount": 90, "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-birthday-cake",
+    "name": "Birthday Cake",
+    "icon": "🎂",
+    "flavour": "Something inside is definitely not a candle.",
+    "outcomes": [
+      { "type": "gain", "amount": 70, "chance": 60 },
+      { "type": "double", "chance": 20 },
+      { "type": "lose", "amount": 40, "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-vending-machine",
+    "name": "Vending Machine",
+    "icon": "🥤",
+    "flavour": "Put coins in. See what comes out.",
+    "outcomes": [
+      { "type": "refund", "chance": 50 },
+      { "type": "gain", "amount": 120, "chance": 50 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-haunted-mirror",
+    "name": "Haunted Mirror",
+    "icon": "🪞",
+    "flavour": "Your reflection placed a bid before you did.",
+    "outcomes": [
+      { "type": "lose", "amount": 50, "chance": 40 },
+      { "type": "gain", "amount": 200, "chance": 40 },
+      { "type": "swap", "chance": 20 }
+    ],
+    "chaos": "normal"
+  },
+  {
+    "id": "ba-lucky-clover",
+    "name": "Lucky Clover",
+    "icon": "🍀",
+    "flavour": "Four leaves. One of them is probably glued on.",
+    "outcomes": [
+      { "type": "gain", "amount": 80, "chance": 70 },
+      { "type": "gain", "amount": 200, "chance": 20 },
+      { "type": "lose", "amount": 30, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-rusty-toolbox",
+    "name": "Rusty Toolbox",
+    "icon": "🧰",
+    "flavour": "Squeaks when you lift it. Something shifts inside.",
+    "outcomes": [
+      { "type": "gain", "amount": 60, "chance": 60 },
+      { "type": "gain", "amount": 150, "chance": 30 },
+      { "type": "dud", "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-plain-envelope",
+    "name": "Plain Envelope",
+    "icon": "✉️",
+    "flavour": "Addressed to \"Whoever wins this.\"",
+    "outcomes": [
+      { "type": "gain", "amount": 100, "chance": 50 },
+      { "type": "dud", "chance": 50 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-genie-lamp",
+    "name": "Genie Lamp",
+    "icon": "🪔",
+    "flavour": "Rub gently. Terms and conditions apply.",
+    "outcomes": [
+      { "type": "refund", "chance": 50 },
+      { "type": "lose", "amount": 60, "chance": 30 },
+      { "type": "gain", "amount": 300, "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-knight-armor",
+    "name": "Knight's Armor",
+    "icon": "🛡️",
+    "flavour": "Dented in all the right places.",
+    "outcomes": [
+      { "type": "gain", "amount": 90, "chance": 60 },
+      { "type": "gain", "amount": 180, "chance": 30 },
+      { "type": "lose", "amount": 70, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-pinata",
+    "name": "Pinata",
+    "icon": "🪅",
+    "flavour": "Hit it hard enough and something falls out.",
+    "outcomes": [
+      { "type": "gain", "amount": 90, "chance": 70 },
+      { "type": "dud", "chance": 20 },
+      { "type": "double", "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-ice-chest",
+    "name": "Ice Chest",
+    "icon": "🧊",
+    "flavour": "Frozen since the last ice age. Or last week.",
+    "outcomes": [
+      { "type": "gain", "amount": 110, "chance": 60 },
+      { "type": "lose", "amount": 40, "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-snow-globe",
+    "name": "Snow Globe",
+    "icon": "❄️",
+    "flavour": "Shake it and a tiny town panics.",
+    "outcomes": [
+      { "type": "gain", "amount": 50, "chance": 60 },
+      { "type": "gain", "amount": 250, "chance": 20 },
+      { "type": "dud", "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-jewelry-box",
+    "name": "Jewelry Box",
+    "icon": "💍",
+    "flavour": "The ballerina still spins. Slowly. Judging you.",
+    "outcomes": [
+      { "type": "gain", "amount": 140, "chance": 60 },
+      { "type": "lose", "amount": 60, "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-bottle-message",
+    "name": "Bottle Message",
+    "icon": "🍾",
+    "flavour": "It says HELP. Or maybe it's a map. Hard to read.",
+    "outcomes": [
+      { "type": "gain", "amount": 60, "chance": 60 },
+      { "type": "dud", "chance": 30 },
+      { "type": "gain", "amount": 300, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-robot-butler",
+    "name": "Robot Butler",
+    "icon": "🤖",
+    "flavour": "Polite. Obedient. Oddly interested in your coins.",
+    "outcomes": [
+      { "type": "gain", "amount": 100, "chance": 60 },
+      { "type": "steal", "percent": 20, "chance": 30 },
+      { "type": "dud", "chance": 10 }
+    ],
+    "chaos": "normal"
+  },
+  {
+    "id": "ba-circus-cannon",
+    "name": "Circus Cannon",
+    "icon": "🎪",
+    "flavour": "Load it with coins. Stand well back.",
+    "outcomes": [
+      { "type": "double", "chance": 60 },
+      { "type": "lose", "amount": 40, "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-secret-recipe",
+    "name": "Secret Recipe",
+    "icon": "📜",
+    "flavour": "Grandpa's chili. Brings fortune. Or heartburn.",
+    "outcomes": [
+      { "type": "gain", "amount": 150, "chance": 50 },
+      { "type": "lose", "amount": 50, "chance": 50 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-carnival-prize",
+    "name": "Carnival Prize",
+    "icon": "🧸",
+    "flavour": "Won fair and square. Mostly square.",
+    "outcomes": [
+      { "type": "gain", "amount": 40, "chance": 70 },
+      { "type": "double", "chance": 30 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-golden-ticket",
+    "name": "Golden Ticket",
+    "icon": "🎫",
+    "flavour": "Admits one. To what, nobody's saying.",
+    "outcomes": [
+      { "type": "gain", "amount": 200, "chance": 40 },
+      { "type": "refund", "chance": 40 },
+      { "type": "dud", "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-gumball-machine",
+    "name": "Gumball Machine",
+    "icon": "🍬",
+    "flavour": "Every flavour is a surprise. Some of them are coins.",
+    "outcomes": [
+      { "type": "gain", "amount": 60, "chance": 60 },
+      { "type": "gain", "amount": 120, "chance": 30 },
+      { "type": "lose", "amount": 20, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-mummy-tomb",
+    "name": "Mummy's Tomb",
+    "icon": "🏺",
+    "flavour": "The curse is probably just a rumour.",
+    "outcomes": [
+      { "type": "lose", "amount": 80, "chance": 60 },
+      { "type": "gain", "amount": 250, "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-bank-vault",
+    "name": "Bank Vault",
+    "icon": "🏦",
+    "flavour": "The alarm hasn't worked in years. Probably.",
+    "outcomes": [
+      { "type": "gain", "amount": 180, "chance": 50 },
+      { "type": "lose", "amount": 70, "chance": 30 },
+      { "type": "steal", "percent": 25, "chance": 20 }
+    ],
+    "chaos": "normal"
+  },
+  {
+    "id": "ba-raffle-drum",
+    "name": "Raffle Drum",
+    "icon": "🥁",
+    "flavour": "One ticket in there has your name on it. Maybe.",
+    "outcomes": [
+      { "type": "gain", "amount": 50, "chance": 60 },
+      { "type": "gain", "amount": 220, "chance": 20 },
+      { "type": "dud", "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-science-kit",
+    "name": "Science Kit",
+    "icon": "🧪",
+    "flavour": "Contents may bubble. Contents may explode.",
+    "outcomes": [
+      { "type": "gain", "amount": 140, "chance": 50 },
+      { "type": "lose", "amount": 60, "chance": 30 },
+      { "type": "double", "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-chocolate-box",
+    "name": "Chocolate Box",
+    "icon": "🍫",
+    "flavour": "One of these is not chocolate.",
+    "outcomes": [
+      { "type": "gain", "amount": 70, "chance": 60 },
+      { "type": "lose", "amount": 20, "chance": 30 },
+      { "type": "gain", "amount": 200, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-pawn-guitar",
+    "name": "Pawn Shop Guitar",
+    "icon": "🎸",
+    "flavour": "Played by someone who was almost famous.",
+    "outcomes": [
+      { "type": "gain", "amount": 80, "chance": 60 },
+      { "type": "dud", "chance": 30 },
+      { "type": "gain", "amount": 250, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-ghost-ship",
+    "name": "Ghost Ship",
+    "icon": "👻",
+    "flavour": "Crew not included. Probably.",
+    "outcomes": [
+      { "type": "gain", "amount": 150, "chance": 50 },
+      { "type": "swap", "chance": 30 },
+      { "type": "lose", "amount": 50, "chance": 20 }
+    ],
+    "chaos": "normal"
+  },
+  {
+    "id": "ba-moon-cheese",
+    "name": "Moon Cheese",
+    "icon": "🌕",
+    "flavour": "Imported. Very, very imported.",
+    "outcomes": [
+      { "type": "gain", "amount": 90, "chance": 60 },
+      { "type": "gain", "amount": 160, "chance": 30 },
+      { "type": "dud", "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-volcano-rock",
+    "name": "Volcano Rock",
+    "icon": "🌋",
+    "flavour": "Still warm. Please don't lick it.",
+    "outcomes": [
+      { "type": "gain", "amount": 180, "chance": 50 },
+      { "type": "lose", "amount": 70, "chance": 30 },
+      { "type": "double", "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-carpet-bag",
+    "name": "Carpet Bag",
+    "icon": "👜",
+    "flavour": "Deeper on the inside than the outside.",
+    "outcomes": [
+      { "type": "gain", "amount": 100, "chance": 60 },
+      { "type": "refund", "chance": 30 },
+      { "type": "gain", "amount": 300, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-old-radio",
+    "name": "Old Radio",
+    "icon": "📻",
+    "flavour": "Picks up one station. It only plays auctions.",
+    "outcomes": [
+      { "type": "gain", "amount": 50, "chance": 60 },
+      { "type": "double", "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-casino-chip",
+    "name": "Casino Chip",
+    "icon": "🎰",
+    "flavour": "Worth something. At a casino. Somewhere.",
+    "outcomes": [
+      { "type": "double", "chance": 50 },
+      { "type": "dud", "chance": 30 },
+      { "type": "gain", "amount": 100, "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-scratch-card",
+    "name": "Scratch Card",
+    "icon": "🎟️",
+    "flavour": "Scratch off the silver. Hope for the best.",
+    "outcomes": [
+      { "type": "gain", "amount": 30, "chance": 60 },
+      { "type": "dud", "chance": 30 },
+      { "type": "gain", "amount": 500, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-crown-jewel",
+    "name": "Crown Jewel",
+    "icon": "👑",
+    "flavour": "Slightly used. The last owner lost their head.",
+    "outcomes": [
+      { "type": "gain", "amount": 160, "chance": 60 },
+      { "type": "lose", "amount": 100, "chance": 30 },
+      { "type": "steal", "percent": 30, "chance": 10 }
+    ],
+    "chaos": "normal"
+  },
+  {
+    "id": "ba-camping-chest",
+    "name": "Camping Chest",
+    "icon": "⛺",
+    "flavour": "Marshmallows, a tent and something that growls.",
+    "outcomes": [
+      { "type": "gain", "amount": 60, "chance": 60 },
+      { "type": "lose", "amount": 30, "chance": 30 },
+      { "type": "gain", "amount": 200, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-hollow-book",
+    "name": "Hollow Book",
+    "icon": "📕",
+    "flavour": "Chapter one is missing. Chapter two is coins.",
+    "outcomes": [
+      { "type": "gain", "amount": 110, "chance": 70 },
+      { "type": "dud", "chance": 30 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-snake-oil",
+    "name": "Snake Oil",
+    "icon": "🐍",
+    "flavour": "Cures everything. Guaranteed. Mostly.",
+    "outcomes": [
+      { "type": "lose", "amount": 40, "chance": 50 },
+      { "type": "gain", "amount": 250, "chance": 30 },
+      { "type": "refund", "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-parrot-cage",
+    "name": "Parrot Cage",
+    "icon": "🦜",
+    "flavour": "The parrot knows where the gold is. It won't say.",
+    "outcomes": [
+      { "type": "gain", "amount": 100, "chance": 60 },
+      { "type": "swap", "chance": 30 },
+      { "type": "dud", "chance": 10 }
+    ],
+    "chaos": "normal"
+  },
+  {
+    "id": "ba-tiny-goblin",
+    "name": "Tiny Goblin",
+    "icon": "👺",
+    "flavour": "Steals from everyone. Keeps nothing. Bites.",
+    "outcomes": [
+      { "type": "steal", "percent": 25, "chance": 50 },
+      { "type": "dud", "chance": 30 },
+      { "type": "gain", "amount": 120, "chance": 20 }
+    ],
+    "chaos": "normal"
+  },
+  {
+    "id": "ba-mail-order-kit",
+    "name": "Mail-Order Kit",
+    "icon": "📬",
+    "flavour": "Some assembly required. Some coins included.",
+    "outcomes": [
+      { "type": "gain", "amount": 70, "chance": 60 },
+      { "type": "gain", "amount": 140, "chance": 30 },
+      { "type": "lose", "amount": 50, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-rocket-crate",
+    "name": "Rocket Crate",
+    "icon": "🚀",
+    "flavour": "Handle with care. Or at least with oven mitts.",
+    "outcomes": [
+      { "type": "gain", "amount": 200, "chance": 40 },
+      { "type": "dud", "chance": 40 },
+      { "type": "lose", "amount": 60, "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-getaway-van",
+    "name": "Getaway Van",
+    "icon": "🚐",
+    "flavour": "Engine running. Nobody's asking questions.",
+    "outcomes": [
+      { "type": "steal", "percent": 30, "chance": 60 },
+      { "type": "dud", "chance": 40 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-swap-shop-box",
+    "name": "Swap Shop Box",
+    "icon": "🔄",
+    "flavour": "One person's junk is another person's fortune.",
+    "outcomes": [
+      { "type": "swap", "chance": 60 },
+      { "type": "gain", "amount": 60, "chance": 40 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-cat-burglar-kit",
+    "name": "Cat Burglar Kit",
+    "icon": "🐈‍⬛",
+    "flavour": "Black gloves, soft shoes, very sharp claws.",
+    "outcomes": [
+      { "type": "steal", "percent": 40, "chance": 50 },
+      { "type": "lose", "amount": 50, "chance": 50 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-raccoon-family",
+    "name": "Raccoon Family",
+    "icon": "🦝",
+    "flavour": "They've been collecting. From everyone.",
+    "outcomes": [
+      { "type": "steal", "percent": 25, "chance": 70 },
+      { "type": "dud", "chance": 30 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-pickpocket-coat",
+    "name": "Pickpocket's Coat",
+    "icon": "🧥",
+    "flavour": "Pockets inside pockets inside pockets.",
+    "outcomes": [
+      { "type": "steal", "percent": 20, "chance": 60 },
+      { "type": "gain", "amount": 60, "chance": 30 },
+      { "type": "lose", "amount": 60, "chance": 10 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-mystery-portal",
+    "name": "Mystery Portal",
+    "icon": "🌀",
+    "flavour": "Step through. Come back as someone else.",
+    "outcomes": [
+      { "type": "swap", "chance": 50 },
+      { "type": "double", "chance": 30 },
+      { "type": "lose", "amount": 70, "chance": 20 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-bandit-mask",
+    "name": "Bandit Mask",
+    "icon": "🥷",
+    "flavour": "Just the mask. The bandit costs extra.",
+    "outcomes": [
+      { "type": "steal", "percent": 35, "chance": 40 },
+      { "type": "dud", "chance": 40 },
+      { "type": "lose", "amount": 40, "chance": 20 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-booby-trap",
+    "name": "Booby Trap",
+    "icon": "🪤",
+    "flavour": "It says NOT A TRAP in big friendly letters.",
+    "outcomes": [
+      { "type": "lose", "amount": 80, "chance": 60 },
+      { "type": "steal", "percent": 50, "chance": 30 },
+      { "type": "gain", "amount": 150, "chance": 10 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-identity-machine",
+    "name": "Identity Machine",
+    "icon": "🎭",
+    "flavour": "Press the button. Become somebody richer.",
+    "outcomes": [
+      { "type": "swap", "chance": 70 },
+      { "type": "lose", "amount": 40, "chance": 30 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-heist-plans",
+    "name": "Heist Plans",
+    "icon": "📐",
+    "flavour": "The vault, the guards, the snacks. All planned.",
+    "outcomes": [
+      { "type": "steal", "percent": 40, "chance": 60 },
+      { "type": "lose", "amount": 60, "chance": 40 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-mutiny-barrel",
+    "name": "Mutiny Barrel",
+    "icon": "🛢️",
+    "flavour": "The crew wants a new captain. And your coins.",
+    "outcomes": [
+      { "type": "steal", "percent": 30, "chance": 50 },
+      { "type": "swap", "chance": 30 },
+      { "type": "lose", "amount": 50, "chance": 20 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-swap-potion",
+    "name": "Swap Potion",
+    "icon": "🫙",
+    "flavour": "Tastes like somebody else's life.",
+    "outcomes": [
+      { "type": "swap", "chance": 60 },
+      { "type": "dud", "chance": 20 },
+      { "type": "gain", "amount": 100, "chance": 20 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-quicksand-box",
+    "name": "Quicksand Box",
+    "icon": "⏬",
+    "flavour": "Everything that goes in keeps on going.",
+    "outcomes": [
+      { "type": "lose", "amount": 70, "chance": 50 },
+      { "type": "double", "chance": 30 },
+      { "type": "steal", "percent": 20, "chance": 20 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-treasure-thief",
+    "name": "Treasure Thief",
+    "icon": "🦹",
+    "flavour": "Takes from the rich. Keeps it.",
+    "outcomes": [
+      { "type": "steal", "percent": 30, "chance": 70 },
+      { "type": "lose", "amount": 40, "chance": 30 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-wooden-horse",
+    "name": "Wooden Horse",
+    "icon": "🐴",
+    "flavour": "A gift! A lovely wooden gift! Nothing inside!",
+    "outcomes": [
+      { "type": "steal", "percent": 45, "chance": 40 },
+      { "type": "dud", "chance": 40 },
+      { "type": "lose", "amount": 30, "chance": 20 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-wheel-of-fate",
+    "name": "Wheel of Fate",
+    "icon": "🎡",
+    "flavour": "Spin it. It spins you right back.",
+    "outcomes": [
+      { "type": "swap", "chance": 40 },
+      { "type": "gain", "amount": 200, "chance": 40 },
+      { "type": "lose", "amount": 100, "chance": 20 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-poison-apple",
+    "name": "Poison Apple",
+    "icon": "🍎",
+    "flavour": "One bite. What's the worst that could happen?",
+    "outcomes": [
+      { "type": "lose", "amount": 90, "chance": 50 },
+      { "type": "gain", "amount": 250, "chance": 30 },
+      { "type": "swap", "chance": 20 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-midnight-train",
+    "name": "Midnight Train",
+    "icon": "🚂",
+    "flavour": "Next stop: somebody else's wallet.",
+    "outcomes": [
+      { "type": "steal", "percent": 25, "chance": 60 },
+      { "type": "swap", "chance": 40 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-fools-gold",
+    "name": "Fool's Gold",
+    "icon": "🪙",
+    "flavour": "Shiny. Heavy. Worth exactly what you paid?",
+    "outcomes": [
+      { "type": "refund", "chance": 40 },
+      { "type": "lose", "amount": 60, "chance": 40 },
+      { "type": "steal", "percent": 30, "chance": 20 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-magpie-nest",
+    "name": "Magpie Nest",
+    "icon": "🐦",
+    "flavour": "Everything shiny in town ends up in here.",
+    "outcomes": [
+      { "type": "steal", "percent": 20, "chance": 50 },
+      { "type": "gain", "amount": 120, "chance": 30 },
+      { "type": "lose", "amount": 50, "chance": 20 }
+    ],
+    "chaos": "wild"
+  }
+]

@@ -1,0 +1,146 @@
+{
+  "phase": {
+    "id": "chaos",
+    "startedAt": 1700000453000,
+    "deadline": 1700000461000
+  },
+  "rng": {
+    "seed": 1,
+    "step": 36
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    },
+    "p7": {
+      "id": "p7",
+      "name": "Player 7",
+      "avatarId": "penguin",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "pace": "normal"
+  },
+  "seats": ["p7", "p1", "p3", "p4", "p5", "p6", "p2"],
+  "role": {
+    "p6": "hitler",
+    "p5": "fascist",
+    "p3": "fascist",
+    "p4": "liberal",
+    "p1": "liberal",
+    "p2": "liberal",
+    "p7": "liberal"
+  },
+  "alive": ["p7", "p1", "p3", "p4", "p5", "p6", "p2"],
+  "executed": [],
+  "exiled": [],
+  "droppedAt": {},
+  "ready": [],
+  "deck": ["F", "F", "F", "F", "F", "F", "L", "L", "L", "L", "F", "L", "F", "F", "F", "L"],
+  "discards": [],
+  "board": {
+    "L": 0,
+    "F": 1
+  },
+  "tracker": 0,
+  "chaosCount": 1,
+  "vetoUnlocked": false,
+  "presPointer": 5,
+  "special": null,
+  "lastElected": {
+    "president": null,
+    "chancellor": null
+  },
+  "investigated": [],
+  "notHitler": [],
+  "intel": {},
+  "round": {
+    "n": 3,
+    "president": "p6",
+    "nominee": "p3",
+    "votes": {},
+    "elected": false,
+    "draw": null,
+    "passed": null,
+    "vetoRequested": false,
+    "vetoAgreed": null,
+    "enacted": null,
+    "chaosCard": "F",
+    "chaosAfter": "fail",
+    "power": null,
+    "lastCall": false
+  },
+  "history": [
+    {
+      "n": 1,
+      "president": "p4",
+      "chancellor": "p3",
+      "ja": 0,
+      "nein": 7,
+      "elected": false,
+      "enacted": null,
+      "veto": false,
+      "chaos": null
+    },
+    {
+      "n": 2,
+      "president": "p5",
+      "chancellor": "p1",
+      "ja": 0,
+      "nein": 7,
+      "elected": false,
+      "enacted": null,
+      "veto": false,
+      "chaos": null
+    },
+    {
+      "n": 3,
+      "president": "p6",
+      "chancellor": "p3",
+      "ja": 0,
+      "nein": 7,
+      "elected": false,
+      "enacted": null,
+      "veto": false,
+      "chaos": "F"
+    }
+  ],
+  "announce": null,
+  "headline": "CHAOS IN THE CAPITAL",
+  "winner": null,
+  "winReason": null
+}

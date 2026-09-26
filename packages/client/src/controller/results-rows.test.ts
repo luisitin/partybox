@@ -2,7 +2,19 @@
 import { describe, expect, it } from 'vitest';
 import type { RoomSnapshot } from '@partybox/shared';
 import { ordinal } from '../i18n';
-import { myRow, winnerLine, winnerLineFor } from './results-rows';
+import {
+  groupAwards,
+  joinNames,
+  longestWord,
+  myRow,
+  outcomeLine,
+  resultsCue,
+  teamGroups,
+  winnerColor,
+  winnerLine,
+  winnerLineFor,
+  yourTeamLine,
+} from './results-rows';
 
 type Rank = { playerId: string; score: number; rank: number };
 
@@ -67,7 +79,8 @@ describe('winnerLineFor', () => {
         { playerId: 'Dev', score: 10, rank: 4 },
       ],
     );
-    expect(winnerLineFor(tied, 'Dev')).toBe('Kenji, Priya & 1 other tie!');
+    // three tied: all named (tune-in's review: 'Abuela, Kenji & 1 other tie!' had room for Lucía)
+    expect(winnerLineFor(tied, 'Dev')).toBe('Kenji, Priya & Sam tie!');
     const four = room(
       { Sam: 20, Priya: 20, Kenji: 20, Dev: 20, Ana: 10 },
       ['Sam', 'Priya', 'Kenji', 'Dev'],
@@ -143,8 +156,10 @@ describe('winnerLine with bots in the tie (I-153)', () => {
     expect(winnerLine(tieOf(['Bot 2', 'Sam']))).toBe('Sam & the bot tie!');
   });
 
-  it('says so when only bots tie, and still names a lone bot winner', () => {
-    expect(winnerLine(tieOf(['Bot 1', 'Bot 3'], ['Sam']))).toBe('The bots tie — nobody home?');
+  it('names bots that tie over a person, and still names a lone bot winner', () => {
+    // "nobody home?" is for a room with no person at all (imposter's play-test: it read as if Sam
+    // had not played)
+    expect(winnerLine(tieOf(['Bot 1', 'Bot 3'], ['Sam']))).toBe('Bot 1 & Bot 3 win!');
     expect(winnerLine(tieOf(['Bot 1'], ['Sam']))).toBe('Bot 1 wins!');
   });
 
@@ -170,11 +185,153 @@ describe('ADR-052: co-op and team games', () => {
       { id: 'sun', name: 'Sun', mark: '▲', members: ['Sam'] },
       { id: 'moon', name: 'Moon', mark: '●', members: ['Priya'] },
     ];
-    expect(winnerLine(withOutcome({ outcome: { kind: 'teams', winner: 'sun', teams } }))).toBe('▲ Sun wins!'); // prettier-ignore
+    expect(winnerLine(withOutcome({ outcome: { kind: 'teams', winner: 'sun', teams } }))).toBe('Sun wins! ▲'); // prettier-ignore
     expect(winnerLine(withOutcome({ outcome: { kind: 'teams', winner: null, teams } }))).toBe('A draw!'); // prettier-ignore
+  });
+  it('one results cue for the TV and a phone-only room (foundation [8fce81])', () => {
+    const teams = [
+      { id: 'sun', name: 'Sun', mark: '▲', members: ['Sam'] },
+      { id: 'moon', name: 'Moon', mark: '●', members: ['Priya'] },
+    ];
+    expect(resultsCue(withOutcome({ outcome: { kind: 'coop', won: true } }))).toBe('cheer');
+    // A lost co-op has no winners: never the cheer.
+    expect(resultsCue(withOutcome({ winnerIds: [], outcome: { kind: 'coop', won: false } }))).toBe('tie'); // prettier-ignore
+    expect(resultsCue(withOutcome({ outcome: { kind: 'teams', winner: 'sun', teams } }))).toBe('cheer'); // prettier-ignore
+    expect(resultsCue(withOutcome({ outcome: { kind: 'teams', winner: null, teams } }))).toBe('tie'); // prettier-ignore
+    expect(resultsCue(room({ Sam: 5, Priya: 5 }, ['Sam', 'Priya'], []))).toBe('tie');
+    expect(resultsCue(room({ Sam: 5, Priya: 2 }, ['Sam'], []))).toBe('cheer');
+    expect(resultsCue(room({ Sam: 0, Priya: 0 }, [], []))).toBe('leave');
   });
   it("the game's own headline wins", () => {
     const r = withOutcome({ outcome: { kind: 'coop', won: true }, headline: '📡 Crystal clear!' });
     expect(winnerLine(r)).toBe('📡 Crystal clear!');
+  });
+});
+
+describe('awards', () => {
+  it('a tie gives one card per award, with everyone who won it', () => {
+    const award = (id: string, playerId: string) => ({ id, title: id, description: 'd', playerId });
+    const groups = groupAwards([award('sharp', 'A'), award('sharp', 'B'), award('clear', 'C'), award('sharp', 'B')]); // prettier-ignore
+    expect(groups.map((g) => [g.id, g.playerIds])).toEqual([
+      ['sharp', ['A', 'B']],
+      ['clear', ['C']],
+    ]);
+    expect(groups[0]?.description).toBe('d');
+  });
+  it('a line that differs per winner stays with its winner', () => {
+    const groups = groupAwards([
+      { id: 'eye', title: 'Bullseye', description: 'Bullseyes: 1', playerId: 'A' },
+      { id: 'eye', title: 'Bullseye', description: 'Bullseyes: 2', playerId: 'B' },
+    ]);
+    expect(groups[0]?.description).toBeNull();
+    expect(groups[0]?.perPlayer.map((x) => x.description)).toEqual([
+      'Bullseyes: 1',
+      'Bullseyes: 2',
+    ]);
+  });
+  it('names read like a sentence', () => {
+    expect(joinNames(['Sam'])).toBe('Sam');
+    expect(joinNames(['Sam', 'Maya'])).toBe('Sam & Maya');
+    expect(joinNames(['Sam', 'Maya', 'Leo'])).toBe('Sam, Maya & Leo');
+  });
+});
+
+describe('a tie among bots', () => {
+  it('"nobody home?" only when no person played; with people below, the bots are named', () => {
+    const botsTie = room(
+      { 'Bot 1': 10, 'Bot 2': 10, 'Bot 3': 10, Lucia: 4 },
+      ['Bot 1', 'Bot 2', 'Bot 3'],
+      [
+        { playerId: 'Bot 1', score: 10, rank: 1 },
+        { playerId: 'Bot 2', score: 10, rank: 1 },
+        { playerId: 'Bot 3', score: 10, rank: 1 },
+        { playerId: 'Lucia', score: 4, rank: 4 },
+      ],
+    );
+    expect(winnerLine(botsTie)).toBe('Bot 1, Bot 2 & Bot 3 tie!');
+    const onlyBots = room(
+      { 'Bot 1': 10, 'Bot 2': 10, 'Bot 3': 4 },
+      ['Bot 1', 'Bot 2'],
+      [
+        { playerId: 'Bot 1', score: 10, rank: 1 },
+        { playerId: 'Bot 2', score: 10, rank: 1 },
+        { playerId: 'Bot 3', score: 4, rank: 3 },
+      ],
+    );
+    expect(winnerLine(onlyBots)).toBe('The bots tie — nobody home?');
+  });
+});
+
+describe('ADR-052: a team game grouped by team', () => {
+  const teamsRoom = (winner: string | null): RoomSnapshot => {
+    const base = room(
+      { Sam: 3, Priya: 1, Kenji: 2, Ana: 0 },
+      [],
+      [
+        { playerId: 'Sam', score: 3, rank: 1 },
+        { playerId: 'Kenji', score: 2, rank: 2 },
+        { playerId: 'Priya', score: 1, rank: 3 },
+        { playerId: 'Ana', score: 0, rank: 4 },
+      ],
+    );
+    const r = base.results as NonNullable<RoomSnapshot['results']>;
+    const outcome = {
+      kind: 'teams',
+      winner,
+      teams: [
+        {
+          id: 'sun',
+          name: 'Sun',
+          mark: '▲',
+          color: 'var(--pb-accent-2)',
+          members: ['Sam', 'Priya'],
+        },
+        { id: 'moon', name: 'Moon', mark: '●', color: 'var(--pb-info)', members: ['Kenji', 'Ana'] },
+      ],
+    };
+    return { ...base, results: { ...r, results: { ...r.results, outcome } } } as RoomSnapshot;
+  };
+  it('puts the winning team first, each with its members', () => {
+    const groups = teamGroups(teamsRoom('moon')) ?? [];
+    expect(groups.map((g) => [g.id, g.won, g.rows.map((row) => row.playerId)])).toEqual([
+      ['moon', true, ['Kenji', 'Ana']],
+      ['sun', false, ['Sam', 'Priya']],
+    ]);
+    expect(winnerColor(teamsRoom('moon'))).toBe('var(--pb-info)');
+  });
+  it('tells each phone its team won, lost or drew; a player in no team gets no team line', () => {
+    expect(yourTeamLine(teamsRoom('moon'), 'Ana')).toBe('Your team won!');
+    expect(yourTeamLine(teamsRoom('moon'), 'Sam')).toBe('Your team lost this one');
+    expect(yourTeamLine(teamsRoom(null), 'Sam')).toBe('Your team drew');
+    const left = teamsRoom('moon');
+    const o = left.results?.results.outcome;
+    if (o?.kind === 'teams') o.teams[0] = { ...o.teams[0]!, members: ['Sam'] };
+    expect(yourTeamLine(left, 'Priya')).toBeNull();
+    expect(teamGroups(room({ Sam: 1 }, ['Sam'], []))).toBeNull();
+  });
+  it('closes the headline with the winning mark, never mid-sentence', () => {
+    expect(outcomeLine(teamsRoom('moon'))).toBe('Moon wins! ●');
+  });
+  it('keeps a player in no team on the board, in a last group of their own', () => {
+    const r = teamsRoom('moon');
+    const o = r.results?.results.outcome;
+    if (o?.kind !== 'teams') throw new Error('teams outcome expected');
+    const left = { ...o, teams: o.teams.map((tm) => ({ ...tm, members: tm.members.filter((id) => id !== 'Priya') })) }; // prettier-ignore
+    const room2 = { ...r, results: { ...r.results, results: { ...r.results?.results, outcome: left } } } as RoomSnapshot; // prettier-ignore
+    const groups = teamGroups(room2) ?? [];
+    expect(groups.map((g) => [g.id, g.name, g.won, g.rows.map((row) => row.playerId)])).toEqual([
+      ['moon', 'Moon', true, ['Kenji', 'Ana']],
+      ['sun', 'Sun', false, ['Sam']],
+      ['', 'No team', false, ['Priya']],
+    ]);
+  });
+});
+
+describe('longestWord', () => {
+  it('counts the letters of the longest word, so a one-word name can shrink the headline', () => {
+    expect(longestWord('Wolfeschlegelste wins!')).toBe(16);
+    expect(longestWord('¡Gana Wolfeschlegelste!')).toBe(17);
+    expect(longestWord('Ana, Ben & Cleo tie!')).toBe(4);
+    expect(longestWord('')).toBe(1);
   });
 });

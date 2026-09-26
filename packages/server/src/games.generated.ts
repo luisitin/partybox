@@ -2,22 +2,30 @@
 import type { AnyGameDefinition } from '@partybox/shared';
 import { game as bingo } from '../../../games/bingo/server/index';
 import { game as blanks } from '../../../games/blanks/server/index';
+import { game as blindAuction } from '../../../games/blind-auction/server/index';
 import { game as brokenPencil } from '../../../games/broken-pencil/server/index';
+import { game as echo } from '../../../games/echo/server/index';
 import { game as fakeOut } from '../../../games/fake-out/server/index';
+import { game as herdMind } from '../../../games/herd-mind/server/index';
 import { game as hiveRank } from '../../../games/hive-rank/server/index';
 import { game as imposter } from '../../../games/imposter/server/index';
 import { game as lightningRound } from '../../../games/lightning-round/server/index';
+import { game as secretHitler } from '../../../games/secret-hitler/server/index';
 import { game as spyGrid } from '../../../games/spy-grid/server/index';
 import { game as tuneIn } from '../../../games/tune-in/server/index';
 import { game as whoSaidIt } from '../../../games/who-said-it/server/index';
 import { game as wisecrack } from '../../../games/wisecrack/server/index';
 import bingoEs from '../../../games/bingo/manifest.es.json' with { type: 'json' };
 import blanksEs from '../../../games/blanks/manifest.es.json' with { type: 'json' };
+import blindAuctionEs from '../../../games/blind-auction/manifest.es.json' with { type: 'json' };
 import brokenPencilEs from '../../../games/broken-pencil/manifest.es.json' with { type: 'json' };
+import echoEs from '../../../games/echo/manifest.es.json' with { type: 'json' };
 import fakeOutEs from '../../../games/fake-out/manifest.es.json' with { type: 'json' };
+import herdMindEs from '../../../games/herd-mind/manifest.es.json' with { type: 'json' };
 import hiveRankEs from '../../../games/hive-rank/manifest.es.json' with { type: 'json' };
 import imposterEs from '../../../games/imposter/manifest.es.json' with { type: 'json' };
 import lightningRoundEs from '../../../games/lightning-round/manifest.es.json' with { type: 'json' };
+import secretHitlerEs from '../../../games/secret-hitler/manifest.es.json' with { type: 'json' };
 import spyGridEs from '../../../games/spy-grid/manifest.es.json' with { type: 'json' };
 import tuneInEs from '../../../games/tune-in/manifest.es.json' with { type: 'json' };
 import whoSaidItEs from '../../../games/who-said-it/manifest.es.json' with { type: 'json' };
@@ -26,11 +34,15 @@ import wisecrackEs from '../../../games/wisecrack/manifest.es.json' with { type:
 export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'bingo': bingo,
   'blanks': blanks,
+  'blind-auction': blindAuction,
   'broken-pencil': brokenPencil,
+  'echo': echo,
   'fake-out': fakeOut,
+  'herd-mind': herdMind,
   'hive-rank': hiveRank,
   'imposter': imposter,
   'lightning-round': lightningRound,
+  'secret-hitler': secretHitler,
   'spy-grid': spyGrid,
   'tune-in': tuneIn,
   'who-said-it': whoSaidIt,
@@ -40,11 +52,15 @@ export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
 export const serverGameText: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, string>>>>>> = {
   'bingo': { es: bingoEs },
   'blanks': { es: blanksEs },
+  'blind-auction': { es: blindAuctionEs },
   'broken-pencil': { es: brokenPencilEs },
+  'echo': { es: echoEs },
   'fake-out': { es: fakeOutEs },
+  'herd-mind': { es: herdMindEs },
   'hive-rank': { es: hiveRankEs },
   'imposter': { es: imposterEs },
   'lightning-round': { es: lightningRoundEs },
+  'secret-hitler': { es: secretHitlerEs },
   'spy-grid': { es: spyGridEs },
   'tune-in': { es: tuneInEs },
   'who-said-it': { es: whoSaidItEs },

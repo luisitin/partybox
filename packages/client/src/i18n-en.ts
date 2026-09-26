@@ -135,6 +135,12 @@ export const en = {
     winners: (names: string) => `${names} win!`,
     /** Two tied winners' names, for `winners`. */
     pair: (a: string, b: string) => `${a} & ${b}`,
+    /** Three tied winners, all named ("Abuela, Kenji & Lucía tie!"). */
+    /** A shared award on your own phone: who you share it with. */
+    /** TV results: awards past the six cards that fit above the host bar. */
+    moreAwards: (n: number) => `+ ${n} more ${n === 1 ? 'award' : 'awards'}`,
+    sharedWith: (names: string) => `with ${names}`,
+    tieNamed: (names: string) => `${names} tie!`,
     tieAmong: (names: string, others: number) =>
       `${names} & ${others} ${others === 1 ? 'other' : 'others'} tie!`,
     /** I-153 B: bots tied with people take no naming slot (`names` comma-joined). */
@@ -148,6 +154,14 @@ export const en = {
     coopLost: 'Mission failed',
     teamWins: (team: string): string => `${team} wins!`,
     teamDraw: 'A draw!',
+    /** ADR-052: the winning team's tag on the results boards. */
+    teamWonTag: 'Winners',
+    /** ADR-052: the group for players in no team (someone who left mid-game). */
+    teamless: 'No team',
+    /** ADR-052: your team's result on your phone. */
+    yourTeamWon: 'Your team won!',
+    yourTeamLost: 'Your team lost this one',
+    yourTeamDrew: 'Your team drew',
     over: 'Game over',
     show: "That's the show!",
     scorelessHint: 'No points in this game — the books on the TV are the result.',
@@ -165,7 +179,8 @@ export const en = {
     youTie: 'You tie for first! 🏆',
     yourPlace: (rank: number, score: number) => `You finished ${ordinal(rank)} · ${score} pts`,
     /** I-155 A: an award you won, on your own phone ("Your card of the night"). */
-    yourAward: (title: string) => `Your ${title.charAt(0).toLowerCase()}${title.slice(1)}`,
+    // The owner: 'Your 🎲 High Roller' read wrong — say it is you.
+    yourAward: (title: string) => `${title} — that’s you!`,
     /** I-155 C: the votes your cards took, round by round ("2 · 0 · 3"). */
     myVotes: (list: string) => `your votes: ${list}`,
   },

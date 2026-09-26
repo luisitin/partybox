@@ -7,7 +7,16 @@ import type { JSX } from 'react';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
 import { Avatar, BigText, Confetti, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
-import { nobodyScored, scoreboardRows, winnerLine } from '../controller/results-rows';
+import {
+  groupAwards,
+  joinNames,
+  nobodyScored,
+  scoreboardRows,
+  teamGroups,
+  winnerColor,
+  winnerLine,
+} from '../controller/results-rows';
+import { TeamBoards } from '../TeamBoards';
 import { useGame } from '../game-loader';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
@@ -20,12 +29,21 @@ export interface TvResultsProps {
   lastView?: PushedView<TvView> | null;
 }
 
+const AWARD_CARDS = 6;
+
 export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Element {
   const L = useT(STRINGS);
   // An award is the game server's sentence: its own table carries the Spanish.
   const said = (text: string): string => serverText(text, L.lang, room.results?.gameId);
   const rows = scoreboardRows(room);
-  const awards = room.results?.results.awards ?? [];
+  // one card per award, everyone who won it named on it (a tie gave each tied player a copy)
+  const teams = teamGroups(room);
+  const teamColor = winnerColor(room);
+  const grouped = groupAwards(room.results?.results.awards ?? []);
+  // The award column never runs under the host bar, whatever a game sends: six cards (two columns
+  // of three) and a line for the rest (imposter's six-way tie sent seven).
+  const awards = grouped.slice(0, AWARD_CARDS);
+  const moreAwards = grouped.length - awards.length;
   const many = rows.length >= 7;
   const nameOf = (id: string): string =>
     room.results?.players.find((p) => p.id === id)?.name ?? '?';
@@ -33,6 +51,8 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
   const Finale = module?.Finale;
   const keepBoard = Boolean(Finale && lastView && module?.finale?.(lastView));
   const scoreless = module?.scoreless === true;
+  // a long line (two names, a long one) at display size wrapped and pushed the awards down
+  const line = winnerLine(room, scoreless) || t.results.title;
   // 7–8 rows sit in two columns of ≤ 4: large rows and a wider board column, or the lower half of
   // the stage is bare (review-loop #32).
   const large = many && rows.length <= 8;
@@ -66,7 +86,7 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
     // (review-loop #184).
     <Stage>
       <div
-        className={`${styles.hero} ${crowned ? styles.crowned : 'pb-enter'}`}
+        className={`${styles.hero} ${crowned ? styles.crowned : 'pb-enter'} ${tied.length > 0 ? styles.tiedHero : ''}`}
         data-screen="results"
       >
         {winner ? <Avatar avatarId={winner.avatarId} size={72} /> : null}
@@ -79,10 +99,19 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
             ))}
           </span>
         ) : null}
-        <BigText level={many || keepBoard ? 'h1' : 'display'} tone="accent">
-          {winnerLine(room, scoreless) || t.results.title}
+        {/* three or more tied names take the h1 size: at display size a Spanish tie wrapped to
+            two lines and pushed the last award under the host bar */}
+        <BigText
+          level={
+            many || keepBoard || tied.length >= 3 || line.length > 24 || teams ? 'h1' : 'display'
+          }
+          tone="accent"
+        >
+          {/* the winning team's colour on its headline (the mark alone was headline yellow) */}
+          <span style={teamColor ? { color: teamColor } : undefined}>{line}</span>
         </BigText>
-        {nobodyScored(room) && !scoreless ? (
+        {/* a plain game only: under a team draw or a co-op result it read as nonsense (secret-hitler 53d0d5) */}
+        {nobodyScored(room) && !scoreless && !outcome ? (
           <p className="pb-muted">{t.results.nobodyScored}</p>
         ) : null}
       </div>
@@ -105,30 +134,59 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
         <div
           className={`${styles.columns} ${awards.length === 0 ? styles.single : ''} ${large ? styles.wide : ''} ${crowned ? styles.photoFinish : ''}`}
         >
-          <Scoreboard
-            rows={rows}
-            noTrophy={nobodyScored(room)}
-            noRanks={nobodyScored(room)}
-            size={large ? 'lg' : 'md'}
-          />
+          {/* ADR-052: a team game's board is grouped by team, the winners first */}
+          {teams ? (
+            // body-size rows: two team headers on top of the board ran it under the host bar. A
+            // header costs about a row and a half, so from eight rows-and-headers (4 + 4, 3 + 3,
+            // 2 + 2 + a "No team" row) the groups stand side by side (session-c fb4b9c #1)
+            <TeamBoards
+              groups={teams}
+              size="sm"
+              sideBySide={rows.length + teams.length >= 8}
+              wonLabel={t.results.teamWonTag}
+            />
+          ) : (
+            <Scoreboard
+              rows={rows}
+              // a co-op board has no places: the group won or lost together (ADR-052)
+              noTrophy={nobodyScored(room) || outcome?.kind === 'coop'}
+              noRanks={nobodyScored(room) || outcome?.kind === 'coop'}
+              size={large ? 'lg' : 'md'}
+            />
+          )}
           {awards.length > 0 ? (
             <ul className={styles.awards} aria-label={L('awards')}>
               {awards.map((a) => (
-                <li key={a.id} className={styles.award}>
+                <li key={`${a.id}|${a.title}`} className={styles.award}>
                   <span className={styles.awardTitle}>{said(a.title)}</span>
-                  <span className={styles.awardWho}>{nameOf(a.playerId)}</span>
-                  <span className="pb-muted pb-caption">{said(a.description)}</span>
+                  <span className={styles.awardWho}>{joinNames(a.playerIds.map(nameOf))}</span>
+                  {a.description !== null ? (
+                    <span className="pb-muted pb-caption">{said(a.description)}</span>
+                  ) : (
+                    a.perPlayer.map((x) => (
+                      <span key={x.playerId} className="pb-muted pb-caption">
+                        {nameOf(x.playerId)}: {said(x.description)}
+                      </span>
+                    ))
+                  )}
                 </li>
               ))}
+              {moreAwards > 0 ? (
+                <li className={`${styles.award} ${styles.moreAwards}`}>
+                  {t.results.moreAwards(moreAwards)}
+                </li>
+              ) : null}
             </ul>
           ) : null}
         </div>
       )}
-      <p className={`pb-muted pb-caption ${awards.length === 0 ? styles.centredHint : ''}`}>
-        {t.vip.badge}: {t.results.playAgain} · {t.results.newGame} · {t.results.lobby}
-        {/* I-034 A: the room knows the game was kept. */}
-        {room.recording ? <> · {L('📼 Recap saved on the host PC')}</> : null}
-      </p>
+      {/* I-034 A: the room knows the game was kept. (The VIP's choices are the host bar's buttons
+          right under it; a line repeating them ran behind those buttons — tune-in's play-test.) */}
+      {room.recording ? (
+        <p className={`pb-muted pb-caption ${awards.length === 0 ? styles.centredHint : ''}`}>
+          {L('📼 Recap saved on the host PC')}
+        </p>
+      ) : null}
     </Stage>
   );
 }

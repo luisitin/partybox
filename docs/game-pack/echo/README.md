@@ -1,7 +1,7 @@
 # 🔁 Echo
 
-- **Game id (planned):** `echo` — the code will live in `games/echo/` once the owner says to build it.
-- **Status:** spec received 2026-09-24 (Part 04) — not started.
+- **Game id:** `echo` — code in `games/echo/`.
+- **Status:** built 2026-09-24 on `game/echo`; record-review passes p01–p16; in peer review (see [REVIEW.md](REVIEW.md), [NOTES.md](NOTES.md)).
 - **Spec:** [SPEC.md](SPEC.md) · part file [`../parts/04-ECHO-BLIND-AUCTION.md`](../parts/04-ECHO-BLIND-AUCTION.md) · platform: [`../parts/00-FOUNDATION.md`](../parts/00-FOUNDATION.md).
 - **How to build it (when asked):** the `game-pack-build` skill, then the `record-review` skill until every smoothness gate holds.
 

@@ -1,0 +1,344 @@
+/* Echo on the phone. Designed at 320×568, rem-based type (200 % text scales the words), tokens
+   only, targets ≥ 44 px, nothing selectable or zoomable under a thumb. */
+
+.screen {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
+.kicker {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.secretWord {
+  font-size: var(--pb-font-h2);
+  font-weight: 1000;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  color: var(--pb-accent-2);
+}
+
+.prompt {
+  text-wrap: balance;
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.hint {
+  text-wrap: balance;
+  margin: 0;
+  font-size: var(--pb-font-body);
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+.stack {
+  display: grid;
+  gap: var(--pb-space-4);
+  align-content: start;
+}
+
+/* Waiting screens sit in the middle of the phone, not stuck to the top. */
+.center {
+  min-height: 100%;
+  /* `safe`: a stack taller than the screen starts at the top (scrollable), never above it. */
+  align-content: safe center;
+}
+
+/* ── The clue boxes ────────────────────────────────────────────────────────────────────────── */
+.field {
+  display: grid;
+  gap: var(--pb-space-1);
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--pb-touch);
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-border);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: max(16px, var(--pb-font-body));
+  font-weight: 800;
+  text-align: center;
+  -webkit-user-select: text;
+  user-select: text;
+  transition: border-color var(--pb-motion-fast) var(--pb-ease);
+}
+
+.input:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+
+.input[data-idle='1'] {
+  animation: global(pb-breathe) 1.6s ease-in-out infinite;
+}
+
+.input[data-bad='1'] {
+  border-color: var(--pb-danger);
+}
+
+.input:disabled {
+  opacity: 0.7;
+}
+
+.legal {
+  text-wrap: balance;
+  min-height: 1.4em;
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  text-align: center;
+  color: var(--pb-text-muted);
+}
+
+.legal[data-bad='1'] {
+  color: var(--pb-danger);
+}
+
+.legal[data-ok='1'] {
+  color: var(--pb-accent-3);
+}
+
+.locked {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-2);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-4);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  border: 1px solid var(--pb-border);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.chipMine {
+  border-color: var(--pb-accent-3);
+}
+
+/* ── Secondary buttons (Don't know it, Pass, Same word…) ───────────────────────────────────── */
+.ghost {
+  justify-self: center;
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-4);
+  border-radius: 999px;
+  border: 1px solid var(--pb-border);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.ghost:active {
+  transform: scale(0.96);
+}
+
+.ghost:disabled {
+  opacity: 0.5;
+}
+
+.ghost[data-on='1'] {
+  border-color: var(--pb-accent-2);
+  color: var(--pb-accent-2);
+}
+
+.footerRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--pb-space-2);
+}
+
+.footerRow[data-two='1'] {
+  grid-template-columns: minmax(5.5em, auto) 1fr;
+}
+
+/* The footer's secondary action (Pass, That counts): a real button beside the primary one. */
+.second {
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-border);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-button);
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.second:active {
+  transform: scale(0.97);
+}
+
+.second:disabled {
+  opacity: 0.5;
+}
+
+.errorLine {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-danger);
+  text-align: center;
+  animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── Waiting / deck ────────────────────────────────────────────────────────────────────────── */
+.deck {
+  display: flex;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.deckItem {
+  display: grid;
+  justify-items: center;
+  min-width: 4.2em;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.deckNum {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.bigIcon {
+  margin: 0;
+  font-size: var(--pb-font-display);
+  line-height: 1;
+  text-align: center;
+  animation:
+    global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both,
+    echo-float 2.8s ease-in-out var(--pb-motion-slow) infinite;
+}
+
+/* A waiting phone is never frozen: the big icon floats gently (transform only). */
+@keyframes echo-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bigIcon {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .bigIcon {
+  animation: none;
+}
+
+.line {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  text-align: center;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.line[data-outcome='right'] {
+  color: var(--pb-accent-3);
+}
+
+.line[data-outcome='wrong'] {
+  color: var(--pb-danger);
+}
+
+.word {
+  margin: 0;
+  font-size: var(--pb-font-display);
+  font-weight: 1000;
+  line-height: 1.05;
+  text-align: center;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  color: var(--pb-accent-2);
+  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.steps {
+  display: grid;
+  gap: var(--pb-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 2em 1fr;
+  align-items: start;
+  gap: var(--pb-space-3);
+  font-size: var(--pb-font-body);
+  line-height: 1.35;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--i) * 250ms);
+}
+
+.stepNum {
+  display: grid;
+  place-items: center;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font-weight: 900;
+}
+
+@media (max-height: 620px) {
+  .stack {
+    gap: var(--pb-space-3);
+  }
+}

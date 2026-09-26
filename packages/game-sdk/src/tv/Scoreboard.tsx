@@ -8,7 +8,7 @@
 // while rows were still arriving read as two competing motions — review-loop #32); the leader's
 // trophy pops last. Everything runs on the motion tokens, so reduced motion renders the final
 // board at once.
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { Avatar } from '../ui/Avatar';
 import { useT } from '../ui/lang';
@@ -167,6 +167,17 @@ export function tieEdges(
   return up || down ? { top: !up, end: !down } : null;
 }
 
+/** A column that carries on the previous column's tie and then moves on to other ranks: its band
+ *  would read "1–8" beside column 1's "1" (hive-rank 489534), so a board like that shows no band
+ *  labels. A column that is all one carried-over rank ("4" after "1–4") still reads right. */
+export function tieSpansColumns(ranks: readonly number[], perCol: number): boolean {
+  for (let i = perCol; i < ranks.length; i += perCol) {
+    const last = ranks[Math.min(i + perCol - 1, ranks.length - 1)];
+    if (ranks[i] === ranks[i - 1] && last !== ranks[i]) return true;
+  }
+  return false;
+}
+
 /** I-146 B: the rank band over a split column's first row ("1–6", or "4" when the column is one
  *  tie), so a column edge reads as a continuation of the ranking, not a second list. */
 export function rankBand(ranks: readonly number[], index: number, perCol: number): string | null {
@@ -211,17 +222,17 @@ export function Scoreboard({
     return `${styles.tied ?? ''} ${tie.top ? (styles.tieTop ?? '') : ''} ${tie.end ? (styles.tieEnd ?? '') : ''}`;
   };
   const bandFor = (index: number): string | null =>
-    cols < 2 || noRanks ? null : rankBand(ranks, index, perCol);
+    cols < 2 || noRanks || tieSpansColumns(ranks, perCol) ? null : rankBand(ranks, index, perCol);
   return (
     <ol
-      className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : size === 'sm' ? styles.sm : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''} ${climb ? styles.climb : ''}`}
+      className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : size === 'sm' ? styles.sm : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''} ${climb ? styles.climb : ''} ${noRanks ? styles.noRanks : ''}`}
       style={{ '--pb-board-rows': Math.ceil(rows.length / cols) } as CSSProperties}
       aria-label={L('scoreboard')}
     >
       {rows.map((row, index) => (
         <li
           key={row.playerId}
-          className={`${styles.row} ${tieClass(index)}${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''} ${climb && from(row, index) > 0 ? styles.rose : ''} ${climb && from(row, index) < 0 ? styles.fell : ''}`}
+          className={`${styles.row} ${tieClass(index)} ${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''} ${climb && from(row, index) > 0 ? styles.rose : ''} ${climb && from(row, index) < 0 ? styles.fell : ''}`}
           aria-current={row.playerId === highlightId ? 'true' : undefined}
           style={
             staggered
@@ -236,15 +247,27 @@ export function Scoreboard({
               {bandFor(index)}
             </span>
           ) : null}
-          <span className={styles.rank} aria-label={L('rank {rank}', { rank: row.rank })}>
-            {noRanks ? '' : heldRanks ? '·' : row.rank === 1 && trophy ? '🏆' : row.rank}
-          </span>
+          {/* no ranks (a team's card): no rank slot at all, so the name gets its room (reviewer 69417f) */}
+          {noRanks ? null : (
+            <span className={styles.rank} aria-label={L('rank {rank}', { rank: row.rank })}>
+              {heldRanks ? '·' : row.rank === 1 && trophy ? '🏆' : row.rank}
+            </span>
+          )}
           <Avatar
             avatarId={row.avatarId}
             dim={row.connected === false}
             size={compact ? 32 : 'var(--pb-chip-size)'}
           />
-          <span className={styles.name}>{row.name}</span>
+          <span className={styles.name}>
+            {/* one span per word: on a phone a long name wraps at its spaces and a word too wide for
+                the row ends in its own ellipsis, never "Maximilia / no…" (session-c ec3ea7) */}
+            {row.name.split(' ').map((word, i) => (
+              <Fragment key={i}>
+                {i > 0 ? ' ' : null}
+                <span className={styles.word}>{word}</span>
+              </Fragment>
+            ))}
+          </span>
           {row.delta ? (
             <span className={styles.delta}>+{row.delta}</span>
           ) : markIds.includes(row.playerId) ? (

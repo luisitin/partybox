@@ -1,0 +1,35 @@
+✗ intro drag up: sel="" scale=1 scrollY=0 docW=320 diff=11.39%
+✓ intro drag down (overscroll top): sel="" scale=1 scrollY=0 docW=320 diff=0.24%
+✓ intro swipe sideways: sel="" scale=1 scrollY=0 docW=320 diff=0.34%
+✗ intro long-press upper text: sel="" scale=1 scrollY=0 docW=320 diff=27.79%
+✗ intro long-press middle: sel="" scale=1 scrollY=0 docW=320 diff=28.51%
+✗ intro long-press footer edge: sel="" scale=1 scrollY=0 docW=320 diff=27.73%
+✗ intro pinch: sel="" scale=1 scrollY=0 docW=320 diff=27.71%
+✗ intro double-tap middle: sel="" scale=1 scrollY=0 docW=320 diff=27.70%
+✓ guess drag up: sel="" scale=1 scrollY=0 docW=320 diff=0.06%
+✓ guess drag down (overscroll top): sel="" scale=1 scrollY=0 docW=320 diff=0.09%
+✓ guess swipe sideways: sel="" scale=1 scrollY=0 docW=320 diff=0.14%
+✓ guess long-press upper text: sel="" scale=1 scrollY=0 docW=320 diff=0.18%
+✓ guess long-press middle: sel="" scale=1 scrollY=0 docW=320 diff=0.21%
+✓ guess long-press footer edge: sel="" scale=1 scrollY=0 docW=320 diff=0.23%
+✓ guess pinch: sel="" scale=1 scrollY=0 docW=320 diff=0.28%
+✓ guess double-tap middle: sel="" scale=1 scrollY=0 docW=320 diff=0.31%
+✓ result drag up: sel="" scale=1 scrollY=0 docW=320 diff=0.14%
+✓ result drag down (overscroll top): sel="" scale=1 scrollY=0 docW=320 diff=0.31%
+✗ result swipe sideways: sel="" scale=1 scrollY=0 docW=320 diff=15.59%
+✗ result long-press upper text: sel="" scale=1 scrollY=0 docW=320 diff=15.56%
+✗ result long-press middle: sel="" scale=1 scrollY=0 docW=320 diff=15.52%
+✗ result long-press footer edge: sel="" scale=1 scrollY=0 docW=320 diff=15.50%
+✗ result pinch: sel="" scale=1 scrollY=0 docW=320 diff=15.46%
+✗ result double-tap middle: sel="" scale=1 scrollY=0 docW=320 diff=15.45%
+✗ clue drag up: sel="" scale=1 scrollY=0 docW=320 diff=11.90%
+✗ clue drag down (overscroll top): sel="" scale=1 scrollY=0 docW=320 diff=11.94%
+✗ clue swipe sideways: sel="" scale=1 scrollY=0 docW=320 diff=11.96%
+✗ clue long-press upper text: sel="" scale=1 scrollY=0 docW=320 diff=11.99%
+✗ clue long-press middle: sel="" scale=1 scrollY=0 docW=320 diff=13.17%
+✗ clue long-press footer edge: sel="" scale=1 scrollY=0 docW=320 diff=12.03%
+✗ clue pinch: sel="" scale=1 scrollY=0 docW=320 diff=12.07%
+✓ clue double-tap middle: sel="" scale=1 scrollY=0 docW=320 diff=0.73%
+  (card held and released)
+✓ clue after holding the word card: sel="" scale=1 scrollY=0 docW=320 diff=0.77%
+  triple-tap Lock it in → server clues {"7f64dc15-845d-454b-a659-02198bf39af8":["zoomy"]}
