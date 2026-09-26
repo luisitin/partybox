@@ -502,3 +502,18 @@
   font-size: var(--pb-font-h2);
   font-weight: 800;
 }
+
+/* ── I-542: the place on each row of the ranked final board — its own grid column (a first build
+   added a fourth child to the three-column row: every row wrapped to two lines and the board ran
+   under the host bar). */
+.rowsRanked .rowFinal {
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+}
+.rankNum {
+  flex: 0 0 auto;
+  min-width: 1.4em;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  text-align: center;
+}

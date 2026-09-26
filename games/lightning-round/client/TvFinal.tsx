@@ -20,6 +20,11 @@ const STEP_SPAN_MS = 1500;
 /** `--pb-motion-slow` (600 ms) is the unit the per-row stagger is expressed in, so it scales to 0. */
 const SLOW_MS = 600;
 
+/** I-542: the settled board — highest score first. */
+function byScore(a: RevealRow, b: RevealRow): number {
+  return b.score - a.score || a.playerId.localeCompare(b.playerId);
+}
+
 function byWager(a: RevealRow, b: RevealRow): number {
   return (
     (a.wagerAmount ?? 0) - (b.wagerAmount ?? 0) ||
@@ -41,7 +46,9 @@ export function FinalReveal({
   settled?: boolean;
 }): JSX.Element {
   const L = useT(STRINGS);
-  const rows = [...unsorted].sort(byWager);
+  // I-542 A: the live reveal deals by bet (the biggest last); the results stage keeps rank order
+  const ranked = settled;
+  const rows = [...unsorted].sort(ranked ? byScore : byWager);
   const n = rows.length;
   const stepMs = n > 1 ? Math.min(STEP_MAX_MS, STEP_SPAN_MS / (n - 1)) : 0;
   const lastMs = T_VERDICT_MS + stepMs * (n - 1);
@@ -83,7 +90,8 @@ export function FinalReveal({
       <ol
         // Three or four bet rows (two lines each, under the question and the answer) ran past the
         // host bar in one column: they take two columns, like five to eight do.
-        className={`${styles.rows} ${rowsClass(n > 2 ? Math.max(n, 5) : n)} ${styles.rowsFinal}`}
+        key={ranked ? 'ranked' : 'dealt'} /* I-542: the rank order deals in fresh */
+        className={`${styles.rows} ${rowsClass(n > 2 ? Math.max(n, 5) : n)} ${styles.rowsFinal} ${ranked ? styles.rowsRanked : ''}`}
         style={listStyle}
         aria-label={L('results')}
       >
@@ -104,6 +112,10 @@ export function FinalReveal({
               className={`${styles.row} ${styles.rowFinal} ${leader ? styles.rowCorrect : ''}`}
               style={{ '--i': index } as CSSProperties}
             >
+              {/* I-542: the place, once the board is in rank order */}
+              {ranked ? (
+                <span className={styles.rankNum}>{rows.filter((r) => r.score > row.score).length + 1}</span>
+              ) : null}
               <Avatar avatarId={row.avatarId} size={48} dim={!row.connected} />
               <span className={styles.stack}>
                 <span className={styles.name}>{row.name}</span>
