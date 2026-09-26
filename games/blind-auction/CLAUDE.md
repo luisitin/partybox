@@ -1,7 +1,3 @@
-# blind-auction — local rules
+@AGENTS.md
 
-- Spec lives in README.md (required headings); keep it true when rules change.
-- One file per phase under server/phases/; every phase in `phases` has fixtures/<phase>.json.
-- Imports: only @partybox/game-sdk (+ react in client/). server/ is pure (no Date.now, Math.random, timers, I/O).
-- Regenerate fixtures after changing state shape: pnpm sim --game blind-auction --dump-fixtures --players 4
-- Test: pnpm vitest --project games · pnpm vitest --project contract · pnpm sim --game blind-auction --players 6 --runs 200
+This folder's rules live in AGENTS.md next to this file: one rulebook for every agent (ADR-055). Edit AGENTS.md, not this file.
