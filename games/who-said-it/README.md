@@ -1,84 +1,59 @@
 # Who Said It 🗣️
 
-Everyone answers. Everyone guesses who wrote what. The full design is
-`docs/game-pack/who-said-it/SPEC.md` (Part 02, game 4); this file is the game's rules as built.
+When everyone answers, guess who wrote all but the last. Full design: `docs/game-pack/who-said-it/SPEC.md`.
 
 ## Overview
 
-Everyone answers the same question on their phone. The answers come up on the TV one at a time,
-read aloud, and everyone taps whose they think it is. It was… GRANDMA?! Score for every right
-guess and for every friend your answer fools. Write honestly, or like someone else. Free text +
-face picker; about 10 minutes; presence `anywhere` (identical in every mode).
+- The TV deals submitted answers in seeded order. Guess all but the last if everyone answered; otherwise guess every submitted answer.
+- Guesses stay hidden until the run ends; every card then reveals on its own beat. A skipped final card scores no one.
+- Authors sit out their own card. Their phone says “This one's yours — sit tight”; they count as done.
 
 ## Players
 
-3–16. Bots welcome (`supportsBots`): a bot answers with its own dealt canned answer (bots lead with
-different ones) and guesses uniformly at random, deciding only from its own phone's view — on its
-own card too, like a person. Late joiners spectate until the next game.
+3–16; bots welcome. Late joiners spectate until the next game. One connected player can finish alone.
 
 ## Phases
 
-| Phase    | TV                                                                                          | Phone                                           | Exit                                                                             |
-| -------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------------------------- |
-| `intro`  | title + three steps                                                                         | how to play                                     | 8 s or VIP → `prompt`                                                            |
-| `prompt` | "Question 2 of 3" + the question, read aloud                                                | the question                                    | reading + 1 s (≤ 10 s) or VIP → `write`                                          |
-| `write`  | question, "Answer on your phone", chips ✓                                                   | answer box, 💡 Need an idea?, Lock it in        | all connected answered (+0.9 s grace), `writeSeconds`, VIP                       |
-| `guess`  | "Who said it?", the answer big, "Answer 3 of 6"                                             | the answer + face picker (not yourself)         | all connected tapped (+grace, after the reading), `guessSeconds`, VIP → `reveal` |
-| `reveal` | beat `land`: taps fly to faces, hold, "It was…"; beat `shown`: author flips up, ✓/✗, points | 👀 Watch the TV, then your own line at the flip | `land` 2.6 s, `shown` ≥ 2.2 s (the name line + 0.9 s); VIP skip = next card      |
-| `scores` | board with this question's deltas ("Nobody answered!")                                      | your points and rank; VIP Next                  | 6 s or VIP → next `prompt` or `done`                                             |
+| Phase    | What happens                              | Ends                                                |
+| -------- | ----------------------------------------- | --------------------------------------------------- |
+| `prompt` | Question on TV and phones                 | Reading + 1 s (≤ 10 s), or VIP                      |
+| `write`  | Everyone answers; idea chips are optional | All answer (+0.9 s), deadline, or VIP               |
+| `guess`  | Guess a face for each guessable card      | All eligible players tap (+grace), deadline, or VIP |
+| `reveal` | Guesses land; author flips at `shown`     | `land` 3.2 s; `shown` ≥ 4.2 s; VIP advances         |
+| `scores` | Board with this prompt's deltas           | 6 s or VIP                                          |
 
-Cards play in a seeded order. With no cards, `write` goes straight to `scores`. `reveal` is one
-phase instance with two beats (ADR-033); the card is scored exactly once, at the flip (a VIP skip
-in `land` scores it first).
+No cards goes to `scores`. Cards score on flip; a VIP skip in `land` flips immediately.
 
 ## Inputs
 
-`{type:'answer', text ≤ 120}` in `write` (trimmed, runs of spaces collapsed, first 60 characters
-kept; empty is ignored; a resend replaces) · `{type:'idea'}` in `write`, once per question, when
-`ideas` is on · `{type:'guess', target}` in `guess` (a resend replaces). Ignored: wrong phase,
-unknown players and spectators, a second idea, a guess naming yourself, an unknown id or someone
-not seated when the question began.
+- `{type:'answer', text}` in `write`: trimmed, spaces collapsed, first 60 characters kept; resends replace.
+- `{type:'idea'}` once per prompt when enabled; fills from two dealt answers.
+- `{type:'guess', target}` in `guess`: resends replace. Invalid, self, unknown, spectator, and author guesses are ignored.
 
 ## Scoring
 
-Per card: +2 to each guesser who named the author (either author of a merged card); +1 to each
-author per guesser who named someone else. Guessers who don't tap count for nothing; an author's
-own tap never scores. Scores never go down; ties share a rank. Awards (skipped when nobody earned
-one; ties share): 🔮 Mind Reader (most right guesses), 🕶️ Mystery Guest (most guessers fooled), 📖
-Open Book (most right guesses received), 💞 Knows You Best (the guesser → author pair with the most
-right guesses, to the guesser: "Ana knows Ben best (3 of 3)").
++2 for each right guess; +1 to each author per wrong guess. Idle guessers score nothing. When all
+answer, the skipped final scores no one. Either merged author counts as right.
+Scores never go down; ties share rank. Awards: 🔮 Mind Reader, 🕶️ Mystery Guest, 📖 Open Book, 💞 Knows You Best.
 
 ## Edge cases
 
-- Two answers the same (`sameAnswer`): one card with both authors ("It was… BOTH Ana and Eli!").
-- A player who doesn't answer: no card, still guesses and is still a candidate.
-- An author who leaves before their card: it still plays and names them; someone who left for good
-  is not a candidate from the next question on. Guessing someone who left is allowed.
-- The author sits out their own card (the owner, 2026-09-24): their phone says "This one's yours —
-  sit tight", their tap is ignored, their chip shows ✓ and they count as done.
-- A drop that leaves everyone else done closes the phase. One connected player plays alone.
-- Everyone idle: no cards; the game runs out on deadlines. Pause mid-reveal resumes the same beat.
+- A player who skips writing has no card but can guess and remains a candidate.
+- A departed author's card still reveals; players who left are excluded from the next prompt's candidates.
+- If everyone is idle, deadlines finish the game. Pausing reveal resumes the same beat.
 
 ## Settings
 
-| Key            | Type    | Default | Range                                                                |
-| -------------- | ------- | ------- | -------------------------------------------------------------------- |
-| `prompts`      | select  | `auto`  | auto (3–6 players: 4, 7–10: 3, 11–16: 2), 1–4; clamped to ≤ 40 cards |
-| `writeSeconds` | number  | 60      | 30–120 step 10                                                       |
-| `guessSeconds` | number  | 12      | 8–20                                                                 |
-| `ideas`        | boolean | true    | the 💡 button (two dealt canned answers)                             |
-| `readAnswers`  | boolean | true    | the reader says each answer at the start of its guess                |
-| `spicy`        | boolean | false   | adds the spicy pack                                                  |
-| `reader`       | select  | `sky`   | sky, george, fable, jessica, original, none                          |
-
-Voice: the question; "Time to write."; "Who said it?" before the first answer; each answer;
-"It was Ben!" at the flip (fixed "It was…" when the name can't be read); "Everyone knew!" /
-"Nobody saw that coming!". Answers and name lines are made once `write` ends; a merged card's line
-at its reveal. Every line goes through `toSpeakable`; at most 10 readings are asked for at once.
+| Key            | Default | Options                                                                    |
+| -------------- | ------- | -------------------------------------------------------------------------- |
+| `prompts`      | `auto`  | Auto: 4 for 3–6 players, 3 for 7–10, 2 for 11–16; 1–4, clamped to 40 cards |
+| `writeSeconds` | 60      | 30–120, step 10                                                            |
+| `guessSeconds` | 12      | 8–20                                                                       |
+| `ideas`        | true    | Two dealt idea answers                                                     |
+| `readAnswers`  | true    | Read each guessable answer aloud                                           |
+| `spicy`        | false   | Include the spicy pack                                                     |
+| `reader`       | `sky`   | Every voice or none                                                        |
 
 ## Content
 
-`content/family.json` (120 questions: 72 habits, 36 hypotheticals, 12 describe-yourself) and
-`content/spicy.json` (50), each with 12+ bot answers (≤ 60 characters, mixed styles, no two the
-same answer); `content/pronunciations.json` (overrides). Host-only; `init` draws just the
-questions one game plays. State at 16 players ≈ 15 KB, views ≤ 3 KB.
+Prompts: `content/family.json` (120), `content/spicy.json` (50). Pronunciations: `content/pronunciations.json`.

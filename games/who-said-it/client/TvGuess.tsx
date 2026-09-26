@@ -50,6 +50,9 @@ export function TvGuess({ view }: GameTvProps<WsTvView>): JSX.Element {
           {L('{n} of {total} tapped', { n: tapped, total: seated.length })}
         </span>
       </p>
+      <p className={styles.guessPlan}>
+        {L('If anyone skipped writing, guess every answer; otherwise skip the last.')}
+      </p>
     </Stage>
   );
 }

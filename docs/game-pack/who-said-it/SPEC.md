@@ -22,7 +22,7 @@ Both play fully remote (P00 §3.7).
 
 |                  |                                                                                   |
 | ---------------- | --------------------------------------------------------------------------------- |
-| Name · tagline   | **Who Said It** · "Everyone answers. Everyone guesses who wrote what."            |
+| Name · tagline   | **Who Said It** · "When everyone answers, guess who wrote all but the last."      |
 | id · icon        | `who-said-it` · 🗣️                                                                |
 | Players · length | 3–16 · about 10 min · `estimatedMinutes: 10`                                      |
 | Tags             | `comedy`, `bluff`                                                                 |
@@ -33,7 +33,7 @@ Both play fully remote (P00 §3.7).
 **`howToPlay`**
 
 1. Everyone answers the same question on their phone.
-2. The answers appear one at a time. Tap who you think wrote each one.
+2. When everyone answers, see every answer except the last in turn and lock in each guess. If someone skips writing, guess every submitted answer. After guesses are in, watch every answer revealed one by one.
 3. Score for every right guess, and for every player your answer fools.
 
 ## 4.2 In plain words
@@ -41,29 +41,26 @@ Both play fully remote (P00 §3.7).
 Six players. The prompt is "What's a food everyone loves that you secretly can't stand?"
 
 1. **Write.** Everyone types an answer. Ana writes "avocado". Ben writes "bacon (don't tell anyone)". And so on.
-2. **Guess.**
-   - The TV shows one answer at a time, read aloud: "bacon (don't tell anyone)".
-   - Every phone shows the other players' faces, and everyone taps who they think wrote it.
-   - Ben's phone looks exactly like everyone else's, so a neighbour can't tell it's his. His tap just doesn't count.
-3. **Reveal.** The guesses fly onto faces, then: "It was… BEN!"
+2. **Guess.** When everyone answered, the TV shows each answer except the last in turn, read aloud. If someone skipped writing, every submitted answer is shown for guessing. Everyone except that answer's author picks a face on their phone; the author's phone says it is theirs. Guesses stay hidden while the room works through the guessable answers.
+3. **Reveal.** After the last guess, the guesses fly onto faces one answer at a time, then: "It was… BEN!" When everyone answered, the final answer has no vote and earns no points: once every other author is revealed, its author is known.
    - Everyone who picked Ben gets +2.
    - Ben gets +1 for each player who guessed someone else.
-4. **Next answer,** until every answer has had its turn. Then scores, and the next prompt.
+4. **Next prompt,** after all reveals and scores.
 
 **The twist:** you can answer honestly, or write like someone else to throw people off. Honesty earns points for your friends; misdirection earns points for you.
 
 ## 4.3 Phases
 
-**Order:** `intro` (once) → `prompt` → `write` → `guess` → `reveal` (the `guess`/`reveal` pair repeats once per answer) → `scores` → the next `prompt`, or `done`.
+**Order:** `intro` (once) → `prompt` → `write` → one `guess` per answer (except the final answer when everyone answered) → one `reveal` per answer → `scores` → the next `prompt`, or `done`.
 
-| Phase    | TV shows                                                                                          | Phone shows                                                | Inputs                              | Ends when                            | Sound · bed                                                                      |
-| -------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------- | ------------------------------------ | -------------------------------------------------------------------------------- |
-| `intro`  | Title and the three steps                                                                         | How to play                                                | —                                   | 8 s, or VIP                          | `start` · `warm`                                                                 |
-| `prompt` | "Prompt 2 of 3" and the prompt, read aloud                                                        | The prompt                                                 | —                                   | reading + 1 s (at most 10 s), or VIP | `card` · none                                                                    |
-| `write`  | The prompt, "Answer on your phone", chips ✓                                                       | Prompt, answer box, 💡 Need an idea?                       | `answer` (resend to change), `idea` | all connected answered, 60 s, or VIP | `phase` · `lofi`                                                                 |
-| `guess`  | "Who said it?", the answer big, "Answer 3 of 6", chips ✓                                          | The answer, and a `FacePicker` of everyone except yourself | `guess` (resend to change)          | all connected tapped, 12 s, or VIP   | `phase` (quiet) · `lofi`                                                         |
-| `reveal` | Guess faces land on the faces they picked; a pause; "It was…"; the author's face flips up; points | Stage, then the player's own result                        | —                                   | paced, about 4.5 s                   | `tally`, then `reveal`, then `cheer` (most guessed right) or `bust` (nobody did) |
-| `scores` | Scoreboard with deltas                                                                            | Own points and rank; VIP: **Next prompt**                  | —                                   | 6 s, or VIP                          | `tally` · `warm`                                                                 |
+| Phase    | TV shows                                                                                          | Phone shows                                                                                | Inputs                              | Ends when                                                          | Sound · bed                                                                      |
+| -------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| `intro`  | Title and the three steps                                                                         | How to play                                                                                | —                                   | 8 s, or VIP                                                        | `start` · `warm`                                                                 |
+| `prompt` | "Prompt 2 of 3" and the prompt, read aloud                                                        | The prompt                                                                                 | —                                   | reading + 1 s (at most 10 s), or VIP                               | `card` · none                                                                    |
+| `write`  | The prompt, "Answer on your phone", chips ✓                                                       | Prompt, answer box, 💡 Need an idea?                                                       | `answer` (resend to change), `idea` | all connected answered, 60 s, or VIP                               | `phase` · `lofi`                                                                 |
+| `guess`  | "Who said it?", the answer big, "Answer 3 of 5", chips ✓                                          | The answer, and a `FacePicker` of everyone except yourself; author sees "This one's yours" | `guess` (resend to change)          | all connected tapped, 12 s, or VIP; then next answer or reveal run | `phase` (quiet) · `lofi`                                                         |
+| `reveal` | Guess faces land on the faces they picked; a pause; "It was…"; the author's face flips up; points | Stage, then the player's own result                                                        | —                                   | paced, about 4.5 s                                                 | `tally`, then `reveal`, then `cheer` (most guessed right) or `bust` (nobody did) |
+| `scores` | Scoreboard with deltas                                                                            | Own points and rank; VIP: **Next prompt**                                                  | —                                   | 6 s, or VIP                                                        | `tally` · `warm`                                                                 |
 
 **Client hooks**
 
@@ -80,8 +77,8 @@ Six players. The prompt is "What's a food everyone loves that you secretly can't
 
 - The answer, centred at h1 (72 px), up to three lines. Long answers shrink to 48 px.
 - Quote marks are drawn as decoration.
-- Caption: "Answer 3 of 6".
-- The player strip below shows ✓ as people tap. That includes the author, who taps like everyone else.
+- Caption: "Answer 3 of 5" (there is no vote for the final answer).
+- The player strip below shows ✓ as eligible players tap. The author is already counted as done.
 
 **Reveal**
 
@@ -109,7 +106,7 @@ Six players. The prompt is "What's a food everyone loves that you secretly can't
 - A `FacePicker` below: 2 columns for up to 8 faces, 3 columns above 8.
 - Tap to pick; tap another face to change.
 - Header: "Who said it?"
-- **Identical for every player, the author included.** The author can't pick themselves either.
+- The author sees **"This one's yours — watch the TV"** and no picker. They sit out and count as done.
 
 **Reveal**
 
@@ -132,19 +129,16 @@ Six players. The prompt is "What's a food everyone loves that you secretly can't
 
 ## 4.5 Hidden information
 
-| Secret                | Who may see it          | When it goes public     |
-| --------------------- | ----------------------- | ----------------------- |
-| Each answer's author  | the author's own phone  | that answer's `reveal`  |
-| Answers not yet shown | the author's own phone  | their own `guess` phase |
-| Guesses               | the guesser's own phone | that answer's `reveal`  |
+| Secret                | Who may see it          | When it goes public         |
+| --------------------- | ----------------------- | --------------------------- |
+| Each answer's author  | the author's own phone  | that answer's `guess` phase |
+| Answers not yet shown | TV and phones           | their own `guess` phase     |
+| Guesses               | the guesser's own phone | that card's `reveal`        |
 
 **Leak rules for Who Said It**
 
-- **The author's phone is identical during their own card.**
-  - It shows the same face grid, the same header, and the same haptic.
-  - Their tap is accepted and their chip shows ✓, but it doesn't score.
-  - So neither a glance at their screen nor the ✓ pattern on the TV gives them away.
-- **"All done" counts every connected player,** the author included, for the same reason.
+- **The author sits out their own card** (owner ruling, 2026-09-24). Their phone identifies the answer as theirs and shows no faces; the TV counts them as done.
+- **All answers are guessed before any is revealed.** Keep guesses and upcoming answers private until their respective reveal.
 - **Card order** is a seeded shuffle, never submission order.
 - **Text is shown exactly as typed** (trimmed). Writing style is a fair tell here; reading your friends is part of the game.
 - **Speech:**
@@ -163,7 +157,8 @@ Per answer card:
 **Rules**
 
 - Guessers who don't tap don't count as fooled.
-- The author's own tap never scores.
+- The author sits out their own card and is excluded from its guess count.
+- When everyone answers, the final answer is revealed without a vote and scores no guesser or author points. If any player skips writing, the last submitted card remains guessable. A single submitted answer is revealed directly only when everyone submitted it (a merged card).
 - **Merged card:** when two answers match (`sameAnswer`), they become one card with both authors.
   - A guess naming either author is right.
   - Each author gets +1 per guesser who named neither of them.
@@ -233,10 +228,11 @@ type WhoState = {
     seated: PlayerId[]; // candidates for every card of this prompt
     answers: Record<PlayerId, string>; // SECRET
     ideas: Record<PlayerId, string[]>;
-    cards: { id: string; text: string; authors: PlayerId[] }[] | null; // authors SECRET until each reveal
+    cards: { id: string; text: string; authors: PlayerId[] }[] | null; // authors SECRET until each card's reveal
     order: string[];
     idx: number;
-    guesses: Record<PlayerId, PlayerId>; // current card; SECRET until reveal
+    guesses: Record<PlayerId, PlayerId>; // current guess; SECRET until the reveal run
+    guessesByCard: Record<PlayerId, PlayerId>[]; // SECRET until each card's reveal
     delta: Record<PlayerId, { pts: number; why: string[] }>;
   };
   scores: Record<PlayerId, number>;
@@ -268,7 +264,7 @@ type WhoState = {
 
 - **`answer`:** a random `botAnswers` entry that no other bot has used this prompt.
 - **`guess`:** uniformly random among the candidates. Recognising canned answers from the pack would use information no phone has, so bots don't.
-- **Author bots** tap on their own card too, as humans do, so their ✓ looks normal.
+- **Author bots** sit out their own card, as human authors do.
 
 ## 4.11 VIP moments
 
@@ -287,7 +283,7 @@ The reader defaults to `sky`.
 **Live readings**
 
 - The prompt.
-- Each answer, at the start of its `guess` phase (setting `readAnswers`).
+- Each guessable answer, at the start of its `guess` phase (setting `readAnswers`); the final answer is read at its reveal.
 - "It was Ben!" at the flip, when the name is readable. Otherwise, the fixed "It was…", with the name shown on screen.
 
 **Fixed clips**
@@ -364,23 +360,25 @@ Answers are player text, so `toSpeakable` handles emoji, shouting and stretched 
 
 ## 4.15 Edge cases
 
-| Situation                            | What happens                                                       |
-| ------------------------------------ | ------------------------------------------------------------------ |
-| A player doesn't answer              | No card for them; they still guess, and still count as a candidate |
-| Nobody answers                       | "Nobody answered!", then `scores`, then the next prompt            |
-| Two identical answers                | One merged card with both authors                                  |
-| The author leaves before their card  | The card still plays; the reveal names them                        |
-| A guesser picks someone who has left | Allowed; the candidates are fixed when the prompt begins           |
-| 3 players                            | Each card has 2 guessers, each choosing between 2 faces            |
-| Late joiner                          | Spectator; not a candidate until the next game                     |
-| Everyone idle                        | No cards; the game runs out on deadlines                           |
-| Pause mid-reveal                     | The helper freezes it; resume continues from the same point        |
+| Situation                            | What happens                                                                               |
+| ------------------------------------ | ------------------------------------------------------------------------------------------ |
+| A player doesn't answer              | No card for them; they still guess, and still count as a candidate                         |
+| Nobody answers                       | "Nobody answered!", then `scores`, then the next prompt                                    |
+| Two identical answers                | One merged card with both authors                                                          |
+| The author leaves before their card  | The card still plays; the reveal names them                                                |
+| A guesser picks someone who has left | Allowed; the candidates are fixed when the prompt begins                                   |
+| 3 players                            | Guessable cards have 2 guessers choosing between 2 faces; a skipped final card has no vote |
+| Late joiner                          | Spectator; not a candidate until the next game                                             |
+| Everyone idle                        | No cards; the game runs out on deadlines                                                   |
+| Pause mid-reveal                     | The helper freezes it; resume continues from the same point                                |
 
 ## 4.16 Tests to add
 
-- **Author camouflage:**
-  - During their own card, the author's view equals everyone else's (snapshot).
-  - Their tap is accepted and shows ✓, but scores nothing.
+- **Author sits out:**
+  - During their own card, the author sees the private-own-answer message and no picker.
+  - The author is counted as done without submitting a guess.
+- **Final answer:** for 3–16 players, when everyone answered, guess phases cover all but the last answer; its reveal scores no one. If anyone skipped writing, all submitted answers are guessable. A one-card direct reveal occurs only when every player submitted the same merged answer.
+- **Guess privacy:** every answer's guesses stay hidden until the reveal run begins; later-card guesses remain hidden through earlier reveals.
 - **Leaks:**
   - No author ids in any view before that card's reveal.
   - The text of upcoming cards never appears in any view.

@@ -64,6 +64,8 @@ export interface PromptRound {
   idx: number;
   /** SECRET until the reveal: guesserId → targetId for the current card. */
   guesses: Record<string, string>;
+  /** SECRET until each flip: guesses saved by card during the all-answers guessing run. */
+  guessesByCard: Record<string, string>[];
   step: RevealStep;
   flip: FlipLine | null;
   /** Scores when this prompt began; the scoreboard shows the difference. */
@@ -88,7 +90,7 @@ export interface State extends GameStateBase {
   p: PromptRound;
   scores: Record<string, number>;
   stats: Record<string, Stats>;
-  /** "guesser>author" → [right guesses, that author's cards the guesser tapped on]. */
+  /** "guesser>author" → [right guesses, that author's cards the guesser guessed on]. */
   pairs: Record<string, [number, number]>;
   /** Speech key → length in ms (-1 = could not be made). */
   speechMs: Record<string, number>;

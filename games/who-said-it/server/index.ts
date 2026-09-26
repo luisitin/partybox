@@ -1,4 +1,4 @@
-// Who Said It — everyone answers, everyone guesses who wrote what (docs/game-pack/who-said-it/
+// Who Said It — skip the final guess only for complete submissions (docs/game-pack/who-said-it/
 // SPEC.md). `game` is what the registry imports; this file only assembles the definition.
 import { createRng, gameManifestSchema, seedRng, shuffle } from '@partybox/game-sdk';
 import type { GameDefinition, InitContext } from '@partybox/game-sdk';

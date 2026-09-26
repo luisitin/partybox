@@ -1,6 +1,6 @@
 // The bot (SPEC §4.10, ruling 20): it decides from its own phone's view and nothing else. It answers
 // with its first dealt idea chip (dealt so bots lead with different answers), and guesses uniformly
-// at random among its candidates — on its own card too, as a person does, so its ✓ looks normal.
+// at random among its candidates. It sits out its own card, like a human author.
 import type { Rng } from '@partybox/game-sdk';
 import type { Input } from './types';
 import type { WsPhoneView } from './views';

@@ -1,6 +1,6 @@
 // Scoring (SPEC §4.6): per card, +2 to every guesser who named an author (either author of a merged
-// card); +1 to each author per guesser who named someone else. Idle guessers count for nothing, an
-// author's own tap never scores, scores never go down. Awards, standings and results() live here.
+// card); +1 to each author per guesser who named someone else. Idle guessers count for nothing;
+// authors sit out their own card. Scores never go down. Awards, standings and results() live here.
 import { buildResults, rank } from '@partybox/game-sdk';
 import type { GameAward, GameResults } from '@partybox/game-sdk';
 import { FOOLED_POINTS, RIGHT_POINTS } from './types';

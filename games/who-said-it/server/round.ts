@@ -22,6 +22,7 @@ export function startPrompt(state: State, n: number): State {
     cards: [],
     idx: 0,
     guesses: {},
+    guessesByCard: [],
     step: 'land',
     flip: null,
     startScores: { ...state.scores },
@@ -41,6 +42,11 @@ export function isSeated(state: State, id: string): boolean {
 /** Seated players who have answered (the write phase's "done" set). */
 export function answeredIds(state: State): string[] {
   return state.p.seated.filter((id) => state.p.answers[id] !== undefined);
+}
+
+/** The last card is deductable only when every seated player submitted an answer. */
+export function everyoneAnswered(state: State): boolean {
+  return answeredIds(state).length === state.p.seated.length;
 }
 
 /** Seated players who have tapped a face on the current card. */

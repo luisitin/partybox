@@ -1,4 +1,5 @@
-// The phase graph (the shell's start stage — rules, READY, 3·2·1 — opens the game): (prompt → write → (guess → reveal)* → scores)* → done. Phase files only
+// The phase graph (the shell's start stage — rules, READY, 3·2·1 — opens the game):
+// (prompt → write → guess* → reveal* → scores)* → done. Phase files only
 // know their own entry and exit; this file wires the loops so no phase imports another. A VIP skip
 // runs the same `advance` a deadline does.
 import { applyVip, hasPlayer, setConnected } from '@partybox/game-sdk';
@@ -9,19 +10,50 @@ import { enterPrompt, reducePrompt, retimePrompt } from './phases/prompt';
 import { enterReveal, flip, reduceReveal } from './phases/reveal';
 import { enterDone, enterScores, reduceScores } from './phases/scores';
 import { enterWrite, reduceWrite, writeDone } from './phases/write';
-import { closeSoon, isLastPrompt } from './round';
+import { closeSoon, everyoneAnswered, isLastPrompt } from './round';
 import type { Input, State } from './types';
 
 /** `write` is over: the answers become cards in a seeded order; none → straight to the scores. */
 function afterWrite(state: State, now: number): State {
   const [cards, rng] = buildCards(state.p.answers, state.seats, state.p.n, state.rng);
   const next: State = { ...state, rng, p: { ...state.p, cards } };
-  return cards.length === 0 ? enterScores(next, now) : enterGuess(next, now, 0);
+  if (cards.length === 0) return enterScores(next, now);
+  // The final card has no meaningful guess: after every other author is revealed, its author is
+  // the only one left. With one card, it is final from the start. Reveal it without scoring.
+  if (cards.length === 1 && everyoneAnswered(next)) {
+    return enterReveal({ ...next, p: { ...next.p, guessesByCard: [{}], guesses: {} } }, now);
+  }
+  return enterGuess(next, now, 0);
+}
+
+/** Keep every answer's picks private until the full guessing run is over. */
+function afterGuess(state: State, now: number): State {
+  const guessesByCard = [...state.p.guessesByCard];
+  guessesByCard[state.p.idx] = { ...state.p.guesses };
+  const next = { ...state, p: { ...state.p, guessesByCard } };
+  const idx = state.p.idx + 1;
+  if (idx < state.p.cards.length) {
+    if (idx === state.p.cards.length - 1 && everyoneAnswered(next)) {
+      // Everyone wrote, so the final author is deductable. Reveal that card without voting/scoring.
+      guessesByCard[idx] = {};
+      return enterReveal(
+        { ...next, p: { ...next.p, idx: 0, guesses: guessesByCard[0] ?? {} } },
+        now,
+      );
+    }
+    return enterGuess(next, now, idx);
+  }
+  return enterReveal({ ...next, p: { ...next.p, idx: 0, guesses: guessesByCard[0] ?? {} } }, now);
 }
 
 function afterReveal(state: State, now: number): State {
   const idx = state.p.idx + 1;
-  return idx < state.p.cards.length ? enterGuess(state, now, idx) : enterScores(state, now);
+  return idx < state.p.cards.length
+    ? enterReveal(
+        { ...state, p: { ...state.p, idx, guesses: state.p.guessesByCard[idx] ?? {} } },
+        now,
+      )
+    : enterScores(state, now);
 }
 
 /** What a deadline — or a VIP skip — does in each phase. */
@@ -32,7 +64,7 @@ export function advance(state: State, now: number): State {
     case 'write':
       return afterWrite(state, now);
     case 'guess':
-      return enterReveal(state, now);
+      return afterGuess(state, now);
     case 'reveal':
       // A skip during the landing flips the card now (the room always sees who wrote it); a skip
       // once it has flipped moves on (record-review s5: skipping straight past lost the author).

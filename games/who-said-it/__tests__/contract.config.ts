@@ -1,7 +1,7 @@
 // Hints for the shared contract suite (packages/game-sdk/src/contract-tests): strings a view must
 // never contain. Answers are secret while people write; upcoming cards are secret until their own
 // guess phase (SPEC §4.5). Author ids can't be listed (every id is on stage as a candidate), so the
-// author camouflage and author-leak rules are pinned in views.test.ts instead. Very short answers
+// author sit-out and author-leak rules are pinned in views.test.ts instead. Very short answers
 // are skipped: they collide with ordinary words in a view ("why", "nap").
 import type { GameStateBase } from '@partybox/game-sdk';
 import type { State } from '../server/types';

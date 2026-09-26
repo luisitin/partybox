@@ -52,17 +52,20 @@ describe('the author sits out their own card (the owner, 2026-09-24)', () => {
 describe('leaks', () => {
   it('no author id in any view before the flip; the TV shows them at the flip', () => {
     let s = until(written(start({ players: 5 }), FIVE), 'guess');
+    while (s.phase.id === 'guess') {
+      expect(tv(s).reveal).toBeNull();
+      for (const id of s.seats) expect(phone(s, id).result).toBeNull();
+      s = timer(s);
+    }
     for (let card = 0; card < 5; card += 1) {
       const author = authorsNow(s)[0] as string;
-      for (const phase of ['guess', 'reveal']) {
-        expect(s.phase.id).toBe(phase);
-        expect(tv(s).reveal?.authors ?? []).toEqual([]);
-        for (const id of s.seats) {
-          expect(phone(s, id).reveal?.authors ?? []).toEqual([]);
-          expect(phone(s, id).result).toBeNull();
-        }
-        s = timer(s);
+      expect(s.phase.id).toBe('reveal');
+      expect(tv(s).reveal?.authors ?? []).toEqual([]);
+      for (const id of s.seats) {
+        expect(phone(s, id).reveal?.authors ?? []).toEqual([]);
+        expect(phone(s, id).result).toBeNull();
       }
+      s = timer(s);
       expect(s.p.step).toBe('shown');
       expect(tv(s).reveal?.authors).toEqual([author]);
       expect(game.tvView(s).say).toEqual([]);
@@ -92,7 +95,7 @@ describe('leaks', () => {
     let s = until(written(start({ players: 5 }), FIVE), 'guess');
     const author = authorsNow(s)[0] as string;
     const right = s.seats.find((id) => id !== author) as string;
-    s = timer(guess(s, right, author));
+    s = until(guess(s, right, author), 'reveal');
     expect(phone(s, right).result).toBeNull();
     s = timer(s);
     expect(phone(s, right).result).toMatchObject({ kind: 'right', points: 2 });

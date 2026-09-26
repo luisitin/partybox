@@ -2,11 +2,11 @@
   "id": "who-said-it",
   "name": "Who Said It",
   "icon": "🗣️",
-  "tagline": "Everyone answers. Everyone guesses who wrote what.",
-  "description": "Everyone answers the same question on their phone. The answers come up one at a time and everyone taps who they think wrote each one. Score for every right guess, and for every friend your answer fools. Answer honestly, or write like someone else to throw the room off.",
+  "tagline": "When everyone answers, guess who wrote all but the last.",
+  "description": "Everyone answers the same question. If all answer, guess all but the last before any reveal; otherwise guess every answer. Then watch them flip one by one. Score for right guesses and each friend your answer fools. Answer honestly or write like someone else to throw the room off.",
   "howToPlay": [
     "Everyone answers the same question on their phone.",
-    "The answers appear one at a time. Tap who you think wrote each one.",
+    "Guess every answer if anyone skips writing; otherwise skip the last, then watch reveals.",
     "Score for every right guess, and for every player your answer fools."
   ],
   "version": "0.1.0",
@@ -61,7 +61,7 @@
     {
       "key": "guessSeconds",
       "label": "Guessing time",
-      "description": "Seconds to guess who wrote each answer",
+      "description": "Seconds to guess who wrote each guessable answer",
       "type": "number",
       "default": 12,
       "min": 8,
@@ -78,7 +78,7 @@
     {
       "key": "readAnswers",
       "label": "Read answers aloud",
-      "description": "The reader says each answer before the guessing",
+      "description": "The reader says each guessable answer before guessing",
       "type": "boolean",
       "default": true
     },

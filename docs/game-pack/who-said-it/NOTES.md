@@ -47,6 +47,15 @@ The fixed lines are still live readings (no render-clips pipeline for new games 
    camouflage): their phone says "This one's yours — sit tight" and their tap is ignored. Accepted
    cost: their ✓ is on the TV strip from the start, so a sharp room can read it as a tell.
 
+9. **Guess all, then reveal all** (follow-up to the owner's elimination play-test, [b68f93]):
+   guesses are held privately by card until the guess run ends, then answers reveal one by one.
+   Three-player rooms remain supported while the proposed decoy option is discussed.
+10. **Do not guess the final answer after complete submissions** (owner play-test ruling [a92dc4]):
+    if every seated player answered, after all other answers are matched the last author is known.
+    Skip that vote and reveal the last card without scoring it. If someone skipped writing, keep the
+    last submitted card guessable. The TV and phone counters distinguish the guess run from the full
+    reveal run.
+
 ## Open questions for the owner
 
 - None blocking. The deviations above are reversible if the owner prefers the spec's letter.

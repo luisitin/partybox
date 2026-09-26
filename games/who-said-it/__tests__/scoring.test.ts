@@ -1,34 +1,43 @@
-// Scoring (SPEC §4.6): right, wrong and idle guessers; the author's own tap; merged cards; awards
+// Scoring (SPEC §4.6): right, wrong and idle guessers; authors sit out; merged cards; awards
 // (ties share); Knows You Best; ranks.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { awardsFor, knowsBest } from '../server/scoring';
 import type { State } from '../server/types';
-import { authorsNow, guess, start, timer, until, written } from './helpers';
+import { guess, start, timer, until, written } from './helpers';
 
-/** Into the guess phase of the card written by `author`. */
-function cardOf(s0: State, author: string): State {
+/** Run the full private guessing run, then position the reveal on `author`'s card. */
+function cardOf(s0: State, author: string, picks: Record<string, string> = {}): State {
   let s = until(s0, 'guess');
-  for (let i = 0; i < 20 && !authorsNow(s).includes(author); i += 1) s = timer(timer(timer(s)));
-  if (!authorsNow(s).includes(author)) throw new Error(`no card for ${author}`);
+  const targetIdx = s.p.cards.findIndex((card) => card.authors.includes(author));
+  if (targetIdx < 0 || targetIdx >= s.p.cards.length - 1)
+    throw new Error(`no guessable card for ${author}`);
+  for (let i = 0; i < s.p.cards.length - 1; i += 1) {
+    if (i === targetIdx) for (const [g, t] of Object.entries(picks)) s = guess(s, g, t);
+    s = timer(s);
+  }
+  s = until(s, 'reveal');
+  for (let i = 0; i < targetIdx; i += 1) s = timer(timer(s));
   return s;
 }
 
-/** Guess, then play the reveal to the flip. */
-function flipWith(s0: State, guesses: Record<string, string>): State {
-  let s = s0;
-  for (const [g, t] of Object.entries(guesses)) s = guess(s, g, t);
-  return timer(timer(s)); // guess → reveal(land) → reveal(shown)
+/** Play the current card's reveal to the flip. */
+function flipWith(s: State): State {
+  return timer(s);
 }
 
 const FIVE = { ana: 'avocado', ben: 'bacon', cy: 'sushi', dee: 'tacos', eli: 'pancakes' };
 
 describe('per card', () => {
   it('+2 per right guesser, +1 to the author per guesser fooled, idle counts for nothing', () => {
-    let s = cardOf(written(start({ players: 5 }), FIVE), 'ben');
+    let s = cardOf(written(start({ players: 5, seed: 2 }), FIVE), 'ben', {
+      ana: 'ben',
+      cy: 'ben',
+      dee: 'ana',
+    });
     const before = { ...s.scores };
-    // ana, cy right; dee wrong; eli idle; ben (the author) taps too — never scores.
-    s = flipWith(s, { ana: 'ben', cy: 'ben', dee: 'ana', ben: 'cy' });
+    // ana, cy right; dee wrong; eli idle; ben (the author) sits out.
+    s = flipWith(s);
     expect(s.p.step).toBe('shown');
     const gained = (id: string): number => (s.scores[id] ?? 0) - (before[id] ?? 0);
     expect(gained('ana')).toBe(2);
@@ -40,14 +49,12 @@ describe('per card', () => {
 
   it('a card nobody taps scores nothing', () => {
     let s = cardOf(written(start({ players: 5 }), FIVE), 'ana');
-    s = flipWith(s, {});
+    s = flipWith(s);
     expect(Object.values(s.scores).every((v) => v === 0)).toBe(true);
   });
 
   it('scores are applied once, at the flip, and never go down', () => {
-    let s = cardOf(written(start({ players: 5 }), FIVE), 'ana');
-    s = guess(s, 'ben', 'ana');
-    s = timer(s);
+    let s = cardOf(written(start({ players: 5 }), FIVE), 'ana', { ben: 'ana' });
     expect(s.scores['ben']).toBe(0);
     s = timer(s);
     expect(s.scores['ben']).toBe(2);
@@ -67,16 +74,24 @@ describe('merged cards', () => {
   });
 
   it('naming either author is right; each author gets +1 per guesser who named neither', () => {
-    let s = cardOf(written(start({ players: 5 }), { ...FIVE, eli: 'avocado' }), 'ana');
-    s = flipWith(s, { ben: 'eli', cy: 'ana', dee: 'ben', ana: 'eli', eli: 'ana' });
+    let s = cardOf(written(start({ players: 5, seed: 2 }), { ...FIVE, eli: 'avocado' }), 'ana', {
+      ben: 'eli',
+      cy: 'ana',
+      dee: 'ben',
+    });
+    s = flipWith(s);
     expect(s.scores).toMatchObject({ ben: 2, cy: 2, dee: 0, ana: 1, eli: 1 });
   });
 });
 
 describe('awards', () => {
   function played(): State {
-    let s = cardOf(written(start({ players: 5 }), FIVE), 'ben');
-    s = flipWith(s, { ana: 'ben', cy: 'ben', dee: 'ana' });
+    let s = cardOf(written(start({ players: 5, seed: 2 }), FIVE), 'ben', {
+      ana: 'ben',
+      cy: 'ben',
+      dee: 'ana',
+    });
+    s = flipWith(s);
     return s;
   }
 

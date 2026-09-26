@@ -1,6 +1,6 @@
 // Phone during `guess` (SPEC §4.4): the answer at the top, "Who said it?", the faces of everyone
-// seated except you. Identical for every player — the author too (§4.5): same header, same grid,
-// same haptic (the shell's accept buzz). A tap sends at once and shows ✓; another tap changes it.
+// seated except you. The author sees a private-own-answer message and no picker. A tap sends at
+// once and shows ✓; another tap changes it.
 import { useState } from 'react';
 import type { JSX } from 'react';
 import { Screen, useT } from '@partybox/game-sdk/ui';

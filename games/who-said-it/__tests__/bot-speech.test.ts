@@ -1,5 +1,5 @@
 // Bots (SPEC §4.10): honest (their phone's view only), distinct answers per prompt, random guesses,
-// they tap on their own card too. Voice (§4.12): what is asked for when, the pending cap, pacing.
+// and they sit out their own card. Voice (§4.12): what is asked for when, the pending cap, pacing.
 import { createRng } from '@partybox/game-sdk';
 import { describe, expect, it } from 'vitest';
 import { decide } from '../server/bot';
@@ -101,7 +101,7 @@ describe('voice', () => {
     const author = authorsNow(s)[0] as string;
     const line = nameLine(s, author)?.key as string;
     s = reduce(s, { type: 'speech', now: s.phase.startedAt + 1, key: line, ms: 1400 });
-    s = timer(timer(s));
+    s = timer(until(s, 'reveal'));
     expect(s.p.flip?.key).toBe(line);
     expect(game.tvView(s).say[0]?.key).toBe(line);
     expect((s.phase.deadline ?? 0) - s.phase.startedAt).toBeGreaterThan(0);

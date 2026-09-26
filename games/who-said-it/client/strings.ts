@@ -21,7 +21,8 @@ export const STRINGS: Strings = {
     "Let's go": '¡Vamos!',
     'Start writing': 'A escribir',
     'Close answers': 'Cerrar respuestas',
-    'Reveal now': 'Revelar ya',
+    'Next answer': 'Siguiente respuesta',
+    'Begin reveals': 'Empezar a revelar',
     'Next card': 'Siguiente respuesta',
     'Show who wrote it': 'Mostrar quién la escribió',
     'Next question': 'Siguiente pregunta',
@@ -29,10 +30,10 @@ export const STRINGS: Strings = {
     'Skip / Next': 'Saltar / Siguiente',
 
     // The game picker (manifest.json).
-    'Everyone answers. Everyone guesses who wrote what.':
-      'Todos responden. Todos adivinan quién escribió qué.',
-    'Everyone answers the same question on their phone. The answers come up one at a time and everyone taps who they think wrote each one. Score for every right guess, and for every friend your answer fools. Answer honestly, or write like someone else to throw the room off.':
-      'Todos responden la misma pregunta en su teléfono. Las respuestas salen una a una y cada uno toca a quien cree que la escribió. Sumas por cada acierto y por cada amigo al que engañe tu respuesta. Responde con sinceridad, o escribe como otra persona para despistar a la sala.',
+    'When everyone answers, guess who wrote all but the last.':
+      'Si todos responden, adivina quién escribió todas menos la última.',
+    'Everyone answers the same question. If all answer, guess all but the last before any reveal; otherwise guess every answer. Then watch them flip one by one. Score for right guesses and each friend your answer fools. Answer honestly or write like someone else to throw the room off.':
+      'Todos responden la misma pregunta. Si todos responden, adivina todas menos la última antes de revelar; si no, adivina cada respuesta. Después mira cómo se revelan una a una. Sumas por cada acierto y cada amigo al que engañe tu respuesta. Responde con sinceridad o escribe como otra persona para despistar a la sala.',
     Questions: 'Preguntas',
     'Questions to answer; auto picks 4, 3 or 2 by room size, and a big room is capped at 40 answers':
       'Preguntas a responder; automático elige 4, 3 o 2 según la sala, y una sala grande tiene un tope de 40 respuestas',
@@ -44,14 +45,14 @@ export const STRINGS: Strings = {
     'Writing time': 'Tiempo para escribir',
     'Seconds to write an answer': 'Segundos para escribir una respuesta',
     'Guessing time': 'Tiempo para adivinar',
-    'Seconds to guess who wrote each answer':
-      'Segundos para adivinar quién escribió cada respuesta',
+    'Seconds to guess who wrote each guessable answer':
+      'Segundos para adivinar quién escribió cada respuesta que se puede adivinar',
     'Need an idea?': '¿Necesitas una idea?',
     'A once-per-question button that offers two ready-made answers':
       'Un botón, una vez por pregunta, que ofrece dos respuestas ya hechas',
     'Read answers aloud': 'Leer las respuestas en voz alta',
-    'The reader says each answer before the guessing':
-      'La voz lee cada respuesta antes de adivinar',
+    'The reader says each guessable answer before guessing':
+      'La voz lee cada respuesta que se puede adivinar',
     'Spicy questions': 'Preguntas picantes',
     'Mix in flirty, embarrassing questions for grown-ups':
       'Añade preguntas atrevidas y vergonzosas para adultos',
@@ -68,8 +69,8 @@ export const STRINGS: Strings = {
     // How to play (steps.ts).
     'Everyone answers the same question on their phone.':
       'Todos responden la misma pregunta en su teléfono.',
-    'The answers appear one at a time. Tap who you think wrote each one.':
-      'Las respuestas salen una a una. Toca a quien crees que escribió cada una.',
+    'Guess every answer if anyone skips writing; otherwise skip the last, then watch reveals.':
+      'Adivina todas si alguien no escribe; si no, omite la última y mira las revelaciones.',
     'Score for every right guess, and for every player your answer fools.':
       'Sumas por cada acierto y por cada jugador al que engañe tu respuesta.',
 
@@ -85,8 +86,10 @@ export const STRINGS: Strings = {
     'Waiting for {names} and {n} more…': 'Esperando a {names} y {n} más…',
     'Write like yourself — or like someone else.': 'Escribe como tú… o como otra persona.',
     'Who said it?': '¿Quién lo dijo?',
-    'Answer {n} of {total}': 'Respuesta {n} de {total}',
+    'Answer {n} of {total}': 'Respuesta {n} de {total} · en inglés',
     '{n} of {total} tapped': '{n} de {total} ya tocaron',
+    'If anyone skipped writing, guess every answer; otherwise skip the last.':
+      'Si alguien no escribió, adivinen todas; si no, omitan la última.',
     'It was…': 'Fue…',
     'It was… {name}!': '¡Fue… {name}!',
     'It was… BOTH {names} and {last}!': '¡Fueron… {names} Y {last}!',

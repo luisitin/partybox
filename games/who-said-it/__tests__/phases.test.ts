@@ -1,12 +1,12 @@
 // Phase order, exits (deadline / all done / VIP skip), pause, drops, idle rooms (SPEC §4.3, §4.15).
 import { describe, expect, it } from 'vitest';
 import { DONE_GRACE_MS, LAND_MS, SCORES_MS } from '../server/types';
-import { answer, guess, input, player, start, timer, until, vip, written } from './helpers';
+import { answer, guess, input, player, start, timer, tv, until, vip, written } from './helpers';
 
 const FOUR = { ana: 'avocado', ben: 'bacon', cy: 'sushi', dee: 'tacos' };
 
 describe('phase order', () => {
-  it('prompt → write → (guess → reveal)× cards → scores → next prompt … → done', () => {
+  it('prompt → write → guess all but the last card → reveal every card → scores → next prompt', () => {
     let s = start({ settings: { prompts: '2' } });
     expect(s.phase.id).toBe('prompt');
     s = timer(s);
@@ -16,10 +16,15 @@ describe('phase order', () => {
     expect(s.phase.id).toBe('guess');
     expect(s.p.cards).toHaveLength(4);
     const seen: string[] = [];
-    for (let i = 0; i < 4; i += 1) {
+    for (let i = 0; i < 3; i += 1) {
       expect(s.phase.id).toBe('guess');
       seen.push(s.p.cards[s.p.idx]?.text ?? '');
       s = timer(s);
+    }
+    expect(s.phase.id).toBe('reveal');
+    expect(s.p.idx).toBe(0);
+    expect(s.p.guessesByCard).toHaveLength(4);
+    for (let i = 0; i < 4; i += 1) {
       expect(s.phase.id).toBe('reveal');
       expect(s.p.step).toBe('land');
       expect(s.phase.deadline).toBe(s.phase.startedAt + LAND_MS);
@@ -28,7 +33,7 @@ describe('phase order', () => {
       expect(s.p.step).toBe('shown');
       s = timer(s);
     }
-    expect(new Set(seen).size).toBe(4);
+    expect(new Set(seen).size).toBe(3);
     expect(s.phase.id).toBe('scores');
     expect(s.phase.deadline).toBe(s.phase.startedAt + SCORES_MS);
     s = timer(s);
@@ -58,6 +63,116 @@ describe('phase order', () => {
     }
     expect(orders.size).toBeGreaterThan(1);
   });
+
+  it('saves each card’s picks without revealing an author until the whole question is guessed', () => {
+    let s = until(written(start({ players: 3, settings: { prompts: '1' } }), FOUR), 'guess');
+    const saved: { text: string; guesser: string; author: string }[] = [];
+    while (s.phase.id === 'guess') {
+      const card = s.p.cards[s.p.idx];
+      const author = card?.authors[0] as string;
+      const guesser = s.seats.find((id) => id !== author) as string;
+      saved.push({ text: card?.text ?? '', guesser, author });
+      s = timer(guess(s, guesser, author));
+      expect(s.log).toHaveLength(0);
+      expect(Object.values(s.scores)).toEqual([0, 0, 0]);
+      expect(tv(s).reveal?.authors ?? []).toEqual([]);
+    }
+    expect(saved).toHaveLength(2);
+    expect(s.p.guessesByCard).toHaveLength(3);
+    for (const [i, pick] of saved.entries()) {
+      expect(s.p.idx).toBe(i);
+      expect(s.p.guesses[pick.guesser]).toBe(pick.author);
+      s = timer(s);
+      expect(s.p.cards[s.p.idx]?.text).toBe(pick.text);
+      expect(s.p.points[pick.guesser]).toBe(2);
+      s = timer(s);
+    }
+    expect(s.phase.id).toBe('reveal');
+    expect(s.p.guesses).toEqual({});
+    const beforeLast = { ...s.scores };
+    s = timer(s);
+    expect(s.scores).toEqual(beforeLast);
+    s = timer(s);
+    expect(s.phase.id).toBe('scores');
+  });
+
+  it.each(Array.from({ length: 14 }, (_, i) => i + 3))(
+    'skips guessing the final answer in a %i-player room',
+    (players) => {
+      const initial = start({ players, settings: { prompts: '1' } });
+      const answers = Object.fromEntries(initial.seats.map((id, i) => [id, `answer ${i}`]));
+      let s = until(written(initial, answers), 'guess');
+      expect(s.p.cards).toHaveLength(players);
+      for (let i = 0; i < players - 1; i += 1) {
+        expect(s.phase.id).toBe('guess');
+        expect(s.p.idx).toBe(i);
+        expect(s.p.cards[s.p.idx]).toBeDefined();
+        expect(tv(s).card?.count).toBe(players - 1);
+        const author = s.p.cards[s.p.idx]?.authors[0] as string;
+        for (const id of s.p.seated.filter((seat) => seat !== author)) s = guess(s, id, author);
+        s = timer(s);
+      }
+      expect(s.phase.id).toBe('reveal');
+      expect(s.p.idx).toBe(0);
+      for (let i = 0; i < players; i += 1) {
+        expect(s.phase.id).toBe('reveal');
+        expect(s.p.idx).toBe(i);
+        if (i === players - 1) {
+          expect(s.p.guesses).toEqual({});
+          expect(tv(s).card?.count).toBe(players);
+          const before = { ...s.scores };
+          s = timer(s);
+          expect(s.scores).toEqual(before);
+        } else {
+          expect(Object.keys(s.p.guesses)).toHaveLength(players - 1);
+          s = timer(s);
+          expect(s.p.step).toBe('shown');
+        }
+        s = timer(s);
+      }
+      expect(s.phase.id).toBe('scores');
+    },
+  );
+
+  it('reveals a single merged card directly without a guess or score', () => {
+    let s = written(start({ players: 4, settings: { prompts: '1' } }), {
+      ana: 'same answer',
+      ben: 'same answer',
+      cy: 'same answer',
+      dee: 'same answer',
+    });
+    s = until(s, 'reveal');
+    expect(s.p.cards).toHaveLength(1);
+    expect(s.p.cards[0]?.authors).toHaveLength(4);
+    expect(s.p.guessesByCard).toEqual([{}]);
+    expect(s.p.guesses).toEqual({});
+    const before = { ...s.scores };
+    s = timer(s);
+    expect(s.p.step).toBe('shown');
+    expect(s.scores).toEqual(before);
+  });
+
+  it('keeps the last submitted card guessable when someone did not answer', () => {
+    let s = until(
+      written(start({ players: 4, settings: { prompts: '1' } }), {
+        ana: 'first answer',
+        ben: 'second answer',
+        cy: 'third answer',
+      }),
+      'guess',
+    );
+    expect(s.p.cards).toHaveLength(3);
+    for (let i = 0; i < 3; i += 1) {
+      expect(s.phase.id).toBe('guess');
+      expect(tv(s).card?.count).toBe(3);
+      const author = s.p.cards[s.p.idx]?.authors[0] as string;
+      for (const id of s.p.seated.filter((seat) => seat !== author)) s = guess(s, id, author);
+      s = timer(s);
+    }
+    expect(s.phase.id).toBe('reveal');
+    expect(s.p.guessesByCard).toHaveLength(3);
+    expect(Object.keys(s.p.guessesByCard[2] ?? {})).toHaveLength(3);
+  });
 });
 
 describe('exits', () => {
@@ -78,11 +193,10 @@ describe('exits', () => {
     expect(s.p.guesses['ben']).toBe('dee');
   });
 
-  it('guess closes after everyone connected tapped, the author included', () => {
+  it('guess closes after every non-author connected player tapped', () => {
     let s = until(written(start(), FOUR), 'guess');
-    for (const id of ['ana', 'ben', 'cy']) s = guess(s, id, id === 'ana' ? 'ben' : 'ana');
-    expect(s.phase.deadline).toBe(s.phase.startedAt + 12_000);
-    s = guess(s, 'dee', 'ana');
+    const author = s.p.cards[s.p.idx]?.authors[0] as string;
+    for (const id of s.p.seated.filter((seat) => seat !== author)) s = guess(s, id, author);
     expect(s.phase.deadline).toBe(s.phase.startedAt + 500 + DONE_GRACE_MS);
   });
 
@@ -94,7 +208,7 @@ describe('exits', () => {
       s = vip(s, 'skip');
       path.push(`${s.phase.id}${s.phase.id === 'reveal' ? `:${s.p.step}` : ''}`);
     }
-    expect(path).toEqual(['prompt', 'write', 'guess', 'reveal:land', 'reveal:shown', 'guess', 'reveal:land', 'reveal:shown', 'scores', 'done']); // prettier-ignore
+    expect(path).toEqual(['prompt', 'write', 'guess', 'guess', 'reveal:land', 'reveal:shown', 'reveal:land', 'reveal:shown', 'scores', 'done']); // prettier-ignore
     // A skip in the landing flips the card (scored once, the author shown); the next moves on.
     expect(s.log).toHaveLength(2);
   });

@@ -6,7 +6,7 @@ Branch `game/who-said-it` (not merged). Evidence under `reports/design/record-re
 ## Five lines
 
 1. Playable end to end: 7 phases, 170 questions (120 family + 50 spicy, 14 bot answers each),
-   author camouflage, merged cards, 4 awards, recap, the reader on every line.
+   author sit-out, the all-but-final guess run, merged cards, 4 awards, recap, the reader on every line.
 2. Tests: 73 unit tests + the contract suite; sim 800 games (random, idle, chaos, mixed × 200,
    3–16 players) clean; 16-player state 14.6 KB (budget 20), views ≤ 2.7 KB (budget 4).
 3. Recorded 23 passes (TV + phone video, stills, 10 fps strips, cue log, clip trace): the reveal is

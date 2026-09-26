@@ -183,6 +183,12 @@
   font-weight: 800;
   color: var(--pb-text-muted);
 }
+.guessPlan {
+  margin: var(--pb-space-2) 0 0;
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+}
 .dot {
   margin: 0 var(--pb-space-4);
 }

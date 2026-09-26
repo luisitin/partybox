@@ -1,5 +1,5 @@
-// Phase "guess": one answer on the TV, read aloud; every seated player — the author too, whose tap
-// counts for nothing (SPEC §4.5) — taps who they think wrote it; a resent guess replaces the first.
+// Phase "guess": one answer on the TV, read aloud; every seated player except the author
+// taps who they think wrote it; a resent guess replaces the first.
 // Exits when every connected seated player has tapped (after a grace, and never before the answer
 // has been read out), on the deadline, or on VIP skip.
 import { allConnectedDone, enterPhase, isTimerFor } from '@partybox/game-sdk';

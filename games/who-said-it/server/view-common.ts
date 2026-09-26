@@ -1,7 +1,7 @@
 // What the TV and the phones share: chip statuses, the lines the reader says right now, the reveal.
 // A speech key reaches a view only once its line is due (foundation §5.7) and only if it was made.
 import type { PlayerStatus } from '@partybox/game-sdk';
-import { answeredIds, currentCard, guessedIds } from './round';
+import { answeredIds, currentCard, everyoneAnswered, guessedIds } from './round';
 import { tallyCard } from './scoring';
 import { cardReading, fixedLine, msOf, promptReading } from './speech';
 import { LINE_GAP_MS, PROMPT_AFTER_MS, VOICE_LEAD_MS } from './types';
@@ -113,7 +113,9 @@ function anonymous(guesses: Record<string, string>): Record<string, string> {
 export function cardOf(state: State): { text: string; number: number; count: number } | null {
   const card = currentCard(state);
   if ((state.phase.id !== 'guess' && state.phase.id !== 'reveal') || !card) return null;
-  return { text: card.text, number: state.p.idx + 1, count: state.p.cards.length };
+  const skippedFinal = state.phase.id === 'guess' && everyoneAnswered(state) ? 1 : 0;
+  const count = state.p.cards.length - skippedFinal;
+  return { text: card.text, number: state.p.idx + 1, count };
 }
 
 /** VIP Skip / Next in words (I-774 B): English on the wire, translated by the game's strings. */
@@ -124,7 +126,9 @@ export function vipSkipLabel(state: State, last: boolean): string {
     case 'write':
       return 'Close answers';
     case 'guess':
-      return 'Reveal now';
+      return state.p.idx === state.p.cards.length - 1 - (everyoneAnswered(state) ? 1 : 0)
+        ? 'Begin reveals'
+        : 'Next answer';
     case 'reveal':
       return state.p.step === 'land' ? 'Show who wrote it' : 'Next card';
     case 'scores':
