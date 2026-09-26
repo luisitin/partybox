@@ -1,0 +1,233 @@
+{
+  "pass": "3",
+  "game": "herd-mind",
+  "players": 6,
+  "scenario": "normal",
+  "focus": "tv",
+  "started": "20:31:33.603",
+  "tvVideoT0": "20:31:25.111",
+  "phoneVideoT0": "20:31:27.633",
+  "changes": [
+    {
+      "t": 1790281893606,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1790281901574,
+      "bed": "bossa",
+      "at": "20:31:33.606",
+      "sinceStartS": 0,
+      "videoS": 8.5,
+      "phoneVideoS": 6
+    },
+    {
+      "t": 1790281901588,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1790281916580,
+      "bed": "bossa",
+      "at": "20:31:41.588",
+      "sinceStartS": 8,
+      "videoS": 16.5,
+      "phoneVideoS": 14
+    },
+    {
+      "t": 1790281906914,
+      "status": "playing",
+      "phase": "herd",
+      "deadline": 1790281911446,
+      "bed": "bossa",
+      "at": "20:31:46.914",
+      "sinceStartS": 13.3,
+      "videoS": 21.8,
+      "phoneVideoS": 19.3
+    },
+    {
+      "t": 1790281911498,
+      "status": "playing",
+      "phase": "score",
+      "deadline": 1790281916458,
+      "bed": "warm",
+      "at": "20:31:51.498",
+      "sinceStartS": 17.9,
+      "videoS": 26.4,
+      "phoneVideoS": 23.9
+    },
+    {
+      "t": 1790281916550,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1790281931469,
+      "bed": "bossa",
+      "at": "20:31:56.550",
+      "sinceStartS": 22.9,
+      "videoS": 31.4,
+      "phoneVideoS": 28.9
+    },
+    {
+      "t": 1790281921904,
+      "status": "playing",
+      "phase": "herd",
+      "deadline": 1790281926473,
+      "bed": "bossa",
+      "at": "20:32:01.904",
+      "sinceStartS": 28.3,
+      "videoS": 36.8,
+      "phoneVideoS": 34.3
+    },
+    {
+      "t": 1790281926539,
+      "status": "playing",
+      "phase": "score",
+      "deadline": 1790281931477,
+      "bed": "warm",
+      "at": "20:32:06.539",
+      "sinceStartS": 32.9,
+      "videoS": 41.4,
+      "phoneVideoS": 38.9
+    },
+    {
+      "t": 1790281931521,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1790281946490,
+      "bed": "bossa",
+      "at": "20:32:11.521",
+      "sinceStartS": 37.9,
+      "videoS": 46.4,
+      "phoneVideoS": 43.9
+    },
+    {
+      "t": 1790281936974,
+      "status": "playing",
+      "phase": "herd",
+      "deadline": 1790281941573,
+      "bed": "bossa",
+      "at": "20:32:16.974",
+      "sinceStartS": 43.4,
+      "videoS": 51.9,
+      "phoneVideoS": 49.3
+    },
+    {
+      "t": 1790281941580,
+      "status": "playing",
+      "phase": "score",
+      "deadline": 1790281946578,
+      "bed": "warm",
+      "at": "20:32:21.580",
+      "sinceStartS": 48,
+      "videoS": 56.5,
+      "phoneVideoS": 53.9
+    },
+    {
+      "t": 1790281946614,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1790281961585,
+      "bed": "bossa",
+      "at": "20:32:26.614",
+      "sinceStartS": 53,
+      "videoS": 61.5,
+      "phoneVideoS": 59
+    },
+    {
+      "t": 1790281951920,
+      "status": "playing",
+      "phase": "herd",
+      "deadline": 1790281956487,
+      "bed": "bossa",
+      "at": "20:32:31.920",
+      "sinceStartS": 58.3,
+      "videoS": 66.8,
+      "phoneVideoS": 64.3
+    },
+    {
+      "t": 1790281956528,
+      "status": "playing",
+      "phase": "score",
+      "deadline": 1790281961495,
+      "bed": "warm",
+      "at": "20:32:36.528",
+      "sinceStartS": 62.9,
+      "videoS": 71.4,
+      "phoneVideoS": 68.9
+    },
+    {
+      "t": 1790281961502,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1790281976498,
+      "bed": "bossa",
+      "at": "20:32:41.502",
+      "sinceStartS": 67.9,
+      "videoS": 76.4,
+      "phoneVideoS": 73.9
+    },
+    {
+      "t": 1790281966810,
+      "status": "playing",
+      "phase": "herd",
+      "deadline": 1790281971342,
+      "bed": "bossa",
+      "at": "20:32:46.810",
+      "sinceStartS": 73.2,
+      "videoS": 81.7,
+      "phoneVideoS": 79.2
+    },
+    {
+      "t": 1790281971351,
+      "status": "playing",
+      "phase": "score",
+      "deadline": 1790281976348,
+      "bed": "warm",
+      "at": "20:32:51.351",
+      "sinceStartS": 77.7,
+      "videoS": 86.2,
+      "phoneVideoS": 83.7
+    },
+    {
+      "t": 1790281976373,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1790281991357,
+      "bed": "bossa",
+      "at": "20:32:56.373",
+      "sinceStartS": 82.8,
+      "videoS": 91.3,
+      "phoneVideoS": 88.7
+    },
+    {
+      "t": 1790281981832,
+      "status": "playing",
+      "phase": "herd",
+      "deadline": 1790281986428,
+      "bed": "bossa",
+      "at": "20:33:01.832",
+      "sinceStartS": 88.2,
+      "videoS": 96.7,
+      "phoneVideoS": 94.2
+    },
+    {
+      "t": 1790281986528,
+      "status": "playing",
+      "phase": "score",
+      "deadline": 1790281992931,
+      "bed": "warm",
+      "at": "20:33:06.528",
+      "sinceStartS": 92.9,
+      "videoS": 101.4,
+      "phoneVideoS": 98.9
+    },
+    {
+      "t": 1790281993021,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "20:33:13.021",
+      "sinceStartS": 99.4,
+      "videoS": 107.9,
+      "phoneVideoS": 105.4
+    }
+  ],
+  "notes": []
+}

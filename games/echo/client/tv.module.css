@@ -1,0 +1,276 @@
+/* Echo on the TV. Tokens only (docs/DESIGN_SYSTEM.md); animate transform + opacity only. */
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--pb-space-6);
+  width: 100%;
+}
+
+.kicker {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.muted {
+  color: var(--pb-text-muted);
+}
+
+/* ── The deck counter: three little piles ──────────────────────────────────────────────────── */
+.deck {
+  display: flex;
+  gap: var(--pb-space-5);
+  padding: var(--pb-space-3) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+}
+
+.pile {
+  display: grid;
+  justify-items: center;
+  gap: 0;
+}
+
+.pileCards {
+  position: relative;
+  width: 44px;
+  height: 58px;
+}
+
+.pileCard {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: var(--pb-surface-2);
+  border: 2px solid var(--pb-border);
+  transform: translate(calc(var(--k) * 4px), calc(var(--k) * -4px));
+}
+
+.pile[data-kind='won'] .pileCard {
+  background: color-mix(in srgb, var(--pb-accent-3) 28%, var(--pb-surface-2));
+  border-color: var(--pb-accent-3);
+}
+
+.pile[data-kind='lost'] .pileCard {
+  background: color-mix(in srgb, var(--pb-danger) 22%, var(--pb-surface-2));
+  border-color: var(--pb-danger);
+}
+
+.pileEmpty {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  border: 2px dashed var(--pb-border);
+}
+
+.pileNum {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.pileNum[data-bump='1'] {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.pileLabel {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+/* ── Cards ──────────────────────────────────────────────────────────────────────────────────── */
+.table {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  gap: var(--pb-space-5);
+  width: 100%;
+  perspective: 1600px;
+}
+
+.table[data-rows='2'] {
+  /* Rows leave room for the author tags that hang under each card at the result. */
+  gap: var(--pb-space-6) var(--pb-space-4);
+}
+
+.card {
+  --card-w: 300px;
+  --card-h: 190px;
+  position: relative;
+  width: var(--card-w);
+  height: var(--card-h);
+  animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: calc(var(--deal, 0ms) - var(--skip, 0ms));
+}
+
+.still {
+  animation: none;
+}
+
+.table[data-rows='2'] .card {
+  --card-w: 232px;
+  --card-h: 118px;
+}
+
+.cardInner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform var(--pb-motion-slow) var(--pb-ease);
+}
+
+.card[data-up='1'] .cardInner {
+  transform: rotateY(180deg);
+}
+
+.cardBack,
+.cardFace {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--pb-radius-lg);
+  backface-visibility: hidden;
+  border: 2px solid var(--pb-border);
+  overflow: hidden;
+}
+
+.cardBack {
+  background:
+    repeating-linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--pb-accent) 16%, transparent) 0 14px,
+      transparent 14px 28px
+    ),
+    var(--pb-surface-2);
+  color: color-mix(in srgb, var(--pb-accent) 70%, var(--pb-text));
+  font-size: var(--pb-font-h1);
+}
+
+.cardFace {
+  transform: rotateY(180deg);
+  background: var(--pb-surface);
+  padding: var(--pb-space-3);
+  text-align: center;
+}
+
+.clueText {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.05;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+/* Longer words step down so a whole word fits the card (never "glowin / g"). A 20-letter word at
+   body size wraps only at its own hyphens. */
+.clueText[data-len='m'],
+.table[data-rows='2'] .clueText[data-len='l'] {
+  font-size: var(--pb-font-h2);
+}
+
+.clueText[data-len='s'],
+.table[data-rows='2'] .clueText[data-len='m'] {
+  font-size: var(--pb-font-body);
+}
+
+.table[data-rows='2'] .clueText[data-len='s'] {
+  font-size: var(--pb-font-caption);
+}
+
+.echoFace {
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      color-mix(in srgb, var(--pb-text-muted) 10%, transparent) 0 10px,
+      transparent 10px 20px
+    ),
+    var(--pb-bg);
+  border-style: dashed;
+  color: var(--pb-text-muted);
+}
+
+.echoMark {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-1);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+}
+
+.echoWord {
+  font-size: var(--pb-font-caption);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.struck {
+  text-decoration: line-through;
+  text-decoration-thickness: 4px;
+  color: var(--pb-text-muted);
+}
+
+.author {
+  position: absolute;
+  bottom: calc(-1 * var(--pb-space-5));
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-1) var(--pb-space-3) var(--pb-space-1) var(--pb-space-1);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  border: 1px solid var(--pb-border);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.check {
+  position: absolute;
+  top: var(--pb-space-2);
+  right: var(--pb-space-2);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .author,
+  .check,
+  .pileNum[data-bump='1'] {
+    animation: none;
+  }
+  .cardInner {
+    transition: none;
+  }
+}
+
+:global(:root[data-motion='off']) .card,
+:global(:root[data-motion='off']) .author,
+:global(:root[data-motion='off']) .check,
+:global(:root[data-motion='off']) .pileNum[data-bump='1'] {
+  animation: none;
+}
+
+:global(:root[data-motion='off']) .cardInner {
+  transition: none;
+}

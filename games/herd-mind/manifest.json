@@ -1,0 +1,128 @@
+{
+  "id": "herd-mind",
+  "name": "Herd Mind",
+  "icon": "🐑",
+  "tagline": "Think like the herd. Don't be the odd sheep.",
+  "description": "A question appears and everyone picks the answer they think most people will pick. The biggest group scores. Alone with your answer? You take the Black Sheep, and nobody holding it can win. First to the target without the sheep wins.",
+  "howToPlay": [
+    "A question appears. Pick the answer you think most people will pick.",
+    "The biggest group scores a point each. A tie for biggest scores nothing.",
+    "Alone with your answer? You get the Black Sheep and can't win while you hold it."
+  ],
+  "version": "0.1.0",
+  "minPlayers": 3,
+  "maxPlayers": 16,
+  "estimatedMinutes": 8,
+  "estimate": {
+    "fixedSeconds": 20,
+    "perRoundSeconds": 29,
+    "perPlayerPerRoundSeconds": 0,
+    "roundsSetting": "maxQuestions"
+  },
+  "tags": ["words"],
+  "settings": [
+    {
+      "key": "mode",
+      "label": "Answers",
+      "description": "Tap one of eight tiles, or type anything (the VIP can merge answers that mean the same)",
+      "type": "select",
+      "default": "tiles",
+      "options": [
+        {
+          "value": "tiles",
+          "label": "Tiles"
+        },
+        {
+          "value": "typed",
+          "label": "Typed"
+        }
+      ]
+    },
+    {
+      "key": "target",
+      "label": "Points to win",
+      "description": "First to this many points without the Black Sheep wins",
+      "type": "number",
+      "default": 8,
+      "min": 3,
+      "max": 15,
+      "step": 1
+    },
+    {
+      "key": "maxQuestions",
+      "label": "Questions",
+      "description": "The most questions before the top scorer without the sheep wins",
+      "type": "number",
+      "default": 12,
+      "min": 5,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "key": "pace",
+      "label": "Pace",
+      "description": "Time to answer: relaxed 25 s, normal 15 s, fast 10 s (typed: 35, 25, 20)",
+      "type": "select",
+      "default": "normal",
+      "options": [
+        {
+          "value": "relaxed",
+          "label": "Relaxed"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "fast",
+          "label": "Fast"
+        }
+      ]
+    },
+    {
+      "key": "spicy",
+      "label": "Spicy questions",
+      "description": "Adds the grown-up pack to the draw",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "reader",
+      "label": "Reader",
+      "description": "Who reads each question aloud",
+      "type": "select",
+      "default": "jessica",
+      "options": [
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "none",
+          "label": "No reader"
+        }
+      ]
+    }
+  ],
+  "supportsBots": true,
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-24"
+}

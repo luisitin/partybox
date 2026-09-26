@@ -8,7 +8,7 @@ that supplies `@partybox/game-sdk` and `react` to every game — a new game need
 
 ```
 games/<id>/
-  manifest.json  README.md (the spec)  CLAUDE.md
+  manifest.json  README.md (the spec)  AGENTS.md (local rules)  CLAUDE.md (imports AGENTS.md)
   server/  index.ts  types.ts  phases/<phaseId>.ts  scoring.ts  content.ts      # pure
   client/  index.ts  Tv.tsx  Controller.tsx                                     # React, dumb
   content/ schema.ts  *.json      fixtures/<phaseId>.json      __tests__/
