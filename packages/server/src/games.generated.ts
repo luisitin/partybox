@@ -2,6 +2,7 @@
 import type { AnyGameDefinition } from '@partybox/shared';
 import { game as bingo } from '../../../games/bingo/server/index';
 import { game as blanks } from '../../../games/blanks/server/index';
+import { game as blindAuction } from '../../../games/blind-auction/server/index';
 import { game as brokenPencil } from '../../../games/broken-pencil/server/index';
 import { game as echo } from '../../../games/echo/server/index';
 import { game as fakeOut } from '../../../games/fake-out/server/index';
@@ -16,6 +17,7 @@ import { game as whoSaidIt } from '../../../games/who-said-it/server/index';
 import { game as wisecrack } from '../../../games/wisecrack/server/index';
 import bingoEs from '../../../games/bingo/manifest.es.json' with { type: 'json' };
 import blanksEs from '../../../games/blanks/manifest.es.json' with { type: 'json' };
+import blindAuctionEs from '../../../games/blind-auction/manifest.es.json' with { type: 'json' };
 import brokenPencilEs from '../../../games/broken-pencil/manifest.es.json' with { type: 'json' };
 import echoEs from '../../../games/echo/manifest.es.json' with { type: 'json' };
 import fakeOutEs from '../../../games/fake-out/manifest.es.json' with { type: 'json' };
@@ -32,6 +34,7 @@ import wisecrackEs from '../../../games/wisecrack/manifest.es.json' with { type:
 export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'bingo': bingo,
   'blanks': blanks,
+  'blind-auction': blindAuction,
   'broken-pencil': brokenPencil,
   'echo': echo,
   'fake-out': fakeOut,
@@ -49,6 +52,7 @@ export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
 export const serverGameText: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, string>>>>>> = {
   'bingo': { es: bingoEs },
   'blanks': { es: blanksEs },
+  'blind-auction': { es: blindAuctionEs },
   'broken-pencil': { es: brokenPencilEs },
   'echo': { es: echoEs },
   'fake-out': { es: fakeOutEs },

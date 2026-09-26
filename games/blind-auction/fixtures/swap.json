@@ -1,0 +1,257 @@
+{
+  "phase": {
+    "id": "swap",
+    "startedAt": 1000060,
+    "deadline": 1012060
+  },
+  "rng": {
+    "seed": 21,
+    "step": 118
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Ana",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Ben",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Cy",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Dee",
+      "avatarId": "fox",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "rounds": 5,
+    "startCoins": 100,
+    "betSeconds": 20,
+    "grand": true,
+    "spicy": false,
+    "live": false,
+    "reader": "george"
+  },
+  "presence": {
+    "mode": "together",
+    "phoneOnly": false
+  },
+  "seats": ["p1", "p2", "p3", "p4"],
+  "left": [],
+  "boxes": [
+    {
+      "box": {
+        "id": "ba-bank-vault",
+        "name": "Bank Vault",
+        "icon": "🏦",
+        "flavour": "The alarm hasn't worked in years. Probably.",
+        "options": [
+          {
+            "kind": "treasure",
+            "chance": 50,
+            "pay": 1.8
+          },
+          {
+            "kind": "trap",
+            "chance": 30,
+            "pay": 3
+          },
+          {
+            "kind": "raccoon",
+            "chance": 20,
+            "pay": 4.5
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 0
+    },
+    {
+      "box": {
+        "id": "live-doors-1",
+        "name": "Three Doors",
+        "icon": "🚪",
+        "flavour": "A car behind one, goats behind two. Stay or switch?",
+        "options": [
+          {
+            "kind": "pick",
+            "chance": 33,
+            "pay": 2,
+            "label": {
+              "icon": "🚪",
+              "name": "Door 1"
+            }
+          },
+          {
+            "kind": "pick",
+            "chance": 33,
+            "pay": 2,
+            "label": {
+              "icon": "🚪",
+              "name": "Door 2"
+            }
+          },
+          {
+            "kind": "pick",
+            "chance": 34,
+            "pay": 2,
+            "label": {
+              "icon": "🚪",
+              "name": "Door 3"
+            }
+          }
+        ],
+        "grand": false,
+        "event": "doors"
+      },
+      "outcome": 2
+    },
+    {
+      "box": {
+        "id": "ba-carpet-bag",
+        "name": "Carpet Bag",
+        "icon": "👜",
+        "flavour": "Deeper on the inside than the outside.",
+        "options": [
+          {
+            "kind": "treasure",
+            "chance": 60,
+            "pay": 1.5
+          },
+          {
+            "kind": "receipt",
+            "chance": 30,
+            "pay": 3
+          },
+          {
+            "kind": "jackpot",
+            "chance": 10,
+            "pay": 9
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 1
+    },
+    {
+      "box": {
+        "id": "ba-magician-hat",
+        "name": "Magician's Hat",
+        "icon": "🎩",
+        "flavour": "Pull out a rabbit. Or a coin. Or someone else's coins.",
+        "options": [
+          {
+            "kind": "treasure",
+            "chance": 60,
+            "pay": 1.5
+          },
+          {
+            "kind": "trap",
+            "chance": 20,
+            "pay": 4.5
+          },
+          {
+            "kind": "mirror",
+            "chance": 20,
+            "pay": 4.5
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 0
+    },
+    {
+      "box": {
+        "id": "ba-wishing-well",
+        "name": "Wishing Well",
+        "icon": "⛲",
+        "flavour": "Toss in everything you have. Wish very hard.",
+        "options": [
+          {
+            "kind": "twins",
+            "chance": 60,
+            "pay": 1.5
+          },
+          {
+            "kind": "empty",
+            "chance": 40,
+            "pay": 2.5
+          }
+        ],
+        "grand": true
+      },
+      "outcome": 0
+    }
+  ],
+  "r": {
+    "idx": 1,
+    "bets": {
+      "p1": {
+        "option": 0,
+        "amount": 20
+      },
+      "p2": {
+        "option": 1,
+        "amount": 15
+      }
+    },
+    "step": 0,
+    "voiceAt": null,
+    "turnedAt": null,
+    "topped": [],
+    "opened": 1,
+    "swaps": {
+      "p1": 2
+    }
+  },
+  "coins": {
+    "p1": 100,
+    "p2": 100,
+    "p3": 100,
+    "p4": 100
+  },
+  "stats": {
+    "p1": {
+      "biggestBet": 0,
+      "biggestWin": 0,
+      "longShots": 0,
+      "calls": 0,
+      "lost": 0
+    },
+    "p2": {
+      "biggestBet": 0,
+      "biggestWin": 0,
+      "longShots": 0,
+      "calls": 0,
+      "lost": 0
+    },
+    "p3": {
+      "biggestBet": 0,
+      "biggestWin": 0,
+      "longShots": 0,
+      "calls": 0,
+      "lost": 0
+    },
+    "p4": {
+      "biggestBet": 0,
+      "biggestWin": 0,
+      "longShots": 0,
+      "calls": 0,
+      "lost": 0
+    }
+  },
+  "factors": {},
+  "notices": {},
+  "speechMs": {}
+}
