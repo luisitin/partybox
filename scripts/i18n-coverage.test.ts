@@ -13,6 +13,7 @@ import { STRINGS as TV_SHELL } from '../packages/client/src/tv/strings';
 import { STRINGS as SURFACE } from '../packages/client/src/surface/strings';
 import { STRINGS as SDK_PHONE } from '../packages/game-sdk/src/controller/strings';
 import { STRINGS as SDK_TV } from '../packages/game-sdk/src/tv/strings';
+import { BID_PAD_STRINGS } from '../packages/game-sdk/src/pack/bid-pad/strings';
 import { STRINGS as PACK_ORDER_PICKER } from '../packages/game-sdk/src/pack/order-picker/strings';
 import { STRINGS as TEMPLATE_GAME } from '../games/_template/client/strings';
 
@@ -55,6 +56,12 @@ const AREAS: Area[] = [
     dir: 'packages/game-sdk/src/controller',
     table: SDK_PHONE,
     tableFile: 'packages/game-sdk/src/controller/strings.ts',
+  },
+  // P00 §6: the pack's own SDK pieces live on subpaths with their own tables (audit #23).
+  {
+    dir: 'packages/game-sdk/src/pack/bid-pad',
+    table: BID_PAD_STRINGS,
+    tableFile: 'packages/game-sdk/src/pack/bid-pad/strings.ts',
   },
   // Pack pieces (packages/game-sdk/src/pack/<name>): one area per piece, its own table.
   {

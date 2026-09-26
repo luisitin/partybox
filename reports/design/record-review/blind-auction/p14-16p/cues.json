@@ -1,0 +1,832 @@
+[
+  {
+    "t": 1790286542570,
+    "surface": "tv",
+    "freqs": [523, 784],
+    "dur": 100,
+    "cue": "ready",
+    "phase": "lobby",
+    "at": "21:49:02.570",
+    "sinceStartS": -5.61
+  },
+  {
+    "t": 1790286544833,
+    "surface": "tv",
+    "freqs": [523, 659],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:49:04.833",
+    "sinceStartS": -3.35
+  },
+  {
+    "t": 1790286546844,
+    "surface": "tv",
+    "freqs": [587, 740],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:49:06.844",
+    "sinceStartS": -1.34
+  },
+  {
+    "t": 1790286546995,
+    "surface": "tv",
+    "freqs": [659, 830],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:49:06.995",
+    "sinceStartS": -1.19
+  },
+  {
+    "t": 1790286547042,
+    "surface": "tv",
+    "freqs": [523, 659],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:49:07.042",
+    "sinceStartS": -1.14
+  },
+  {
+    "t": 1790286547089,
+    "surface": "tv",
+    "freqs": [698, 880],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:49:07.089",
+    "sinceStartS": -1.09
+  },
+  {
+    "t": 1790286547152,
+    "surface": "tv",
+    "freqs": [587, 740],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:49:07.152",
+    "sinceStartS": -1.03
+  },
+  {
+    "t": 1790286547202,
+    "surface": "tv",
+    "freqs": [784, 987],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:49:07.202",
+    "sinceStartS": -0.98
+  },
+  {
+    "t": 1790286547726,
+    "surface": "tv",
+    "freqs": [392, 587],
+    "dur": 140,
+    "cue": "call",
+    "phase": "lobby",
+    "at": "21:49:07.726",
+    "sinceStartS": -0.46
+  },
+  {
+    "t": 1790286548289,
+    "surface": "tv",
+    "freqs": [392, 523, 659, 784],
+    "dur": 120,
+    "cue": "start",
+    "phase": "intro",
+    "at": "21:49:08.289",
+    "sinceStartS": 0.11
+  },
+  {
+    "t": 1790286556310,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "lot",
+    "at": "21:49:16.310",
+    "sinceStartS": 8.13
+  },
+  {
+    "t": 1790286562222,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "lot",
+    "at": "21:49:22.222",
+    "sinceStartS": 14.04
+  },
+  {
+    "t": 1790286563135,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:49:23.135",
+    "sinceStartS": 14.95
+  },
+  {
+    "t": 1790286566146,
+    "surface": "tv",
+    "freqs": [880],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "live",
+    "at": "21:49:26.146",
+    "sinceStartS": 17.96
+  },
+  {
+    "t": 1790286568156,
+    "surface": "tv",
+    "freqs": [880],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "live",
+    "at": "21:49:28.156",
+    "sinceStartS": 19.97
+  },
+  {
+    "t": 1790286570875,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "sold",
+    "at": "21:49:30.875",
+    "sinceStartS": 22.69
+  },
+  {
+    "t": 1790286574338,
+    "surface": "tv",
+    "freqs": [523, 659, 784, 1047],
+    "dur": 110,
+    "cue": "win",
+    "phase": "flip",
+    "at": "21:49:34.338",
+    "sinceStartS": 26.16
+  },
+  {
+    "t": 1790286579803,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "flip",
+    "at": "21:49:39.803",
+    "sinceStartS": 31.62
+  },
+  {
+    "t": 1790286586742,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "lot",
+    "at": "21:49:46.742",
+    "sinceStartS": 38.56
+  },
+  {
+    "t": 1790286587634,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:49:47.634",
+    "sinceStartS": 39.45
+  },
+  {
+    "t": 1790286587744,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:49:47.744",
+    "sinceStartS": 39.56
+  },
+  {
+    "t": 1790286588054,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:49:48.054",
+    "sinceStartS": 39.87
+  },
+  {
+    "t": 1790286588895,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:49:48.895",
+    "sinceStartS": 40.71
+  },
+  {
+    "t": 1790286591902,
+    "surface": "tv",
+    "freqs": [880],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "live",
+    "at": "21:49:51.902",
+    "sinceStartS": 43.72
+  },
+  {
+    "t": 1790286593916,
+    "surface": "tv",
+    "freqs": [880],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "live",
+    "at": "21:49:53.916",
+    "sinceStartS": 45.73
+  },
+  {
+    "t": 1790286596639,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "sold",
+    "at": "21:49:56.639",
+    "sinceStartS": 48.46
+  },
+  {
+    "t": 1790286600103,
+    "surface": "tv",
+    "freqs": [196, 185],
+    "dur": 320,
+    "cue": "bust",
+    "phase": "flip",
+    "at": "21:50:00.103",
+    "sinceStartS": 51.92
+  },
+  {
+    "t": 1790286605570,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "lot",
+    "at": "21:50:05.570",
+    "sinceStartS": 57.39
+  },
+  {
+    "t": 1790286611888,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "lot",
+    "at": "21:50:11.888",
+    "sinceStartS": 63.71
+  },
+  {
+    "t": 1790286612662,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:50:12.662",
+    "sinceStartS": 64.48
+  },
+  {
+    "t": 1790286613215,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:50:13.215",
+    "sinceStartS": 65.03
+  },
+  {
+    "t": 1790286613381,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:50:13.381",
+    "sinceStartS": 65.2
+  },
+  {
+    "t": 1790286613601,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:50:13.601",
+    "sinceStartS": 65.42
+  },
+  {
+    "t": 1790286613725,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:50:13.725",
+    "sinceStartS": 65.54
+  },
+  {
+    "t": 1790286614195,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:50:14.195",
+    "sinceStartS": 66.01
+  },
+  {
+    "t": 1790286614473,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:50:14.473",
+    "sinceStartS": 66.29
+  },
+  {
+    "t": 1790286614584,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:50:14.584",
+    "sinceStartS": 66.4
+  },
+  {
+    "t": 1790286614641,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:50:14.641",
+    "sinceStartS": 66.46
+  },
+  {
+    "t": 1790286614835,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:50:14.835",
+    "sinceStartS": 66.65
+  },
+  {
+    "t": 1790286614973,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:50:14.973",
+    "sinceStartS": 66.79
+  },
+  {
+    "t": 1790286617977,
+    "surface": "tv",
+    "freqs": [880],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "live",
+    "at": "21:50:17.977",
+    "sinceStartS": 69.8
+  },
+  {
+    "t": 1790286619979,
+    "surface": "tv",
+    "freqs": [880],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "live",
+    "at": "21:50:19.979",
+    "sinceStartS": 71.8
+  },
+  {
+    "t": 1790286622701,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "sold",
+    "at": "21:50:22.701",
+    "sinceStartS": 74.52
+  },
+  {
+    "t": 1790286626182,
+    "surface": "tv",
+    "freqs": [784, 988, 1175, 1568],
+    "dur": 80,
+    "cue": "jackpot",
+    "phase": "flip",
+    "at": "21:50:26.182",
+    "sinceStartS": 78
+  },
+  {
+    "t": 1790286631633,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "lot",
+    "at": "21:50:31.633",
+    "sinceStartS": 83.45
+  },
+  {
+    "t": 1790286638632,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "lot",
+    "at": "21:50:38.632",
+    "sinceStartS": 90.45
+  },
+  {
+    "t": 1790286639464,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:50:39.464",
+    "sinceStartS": 91.28
+  },
+  {
+    "t": 1790286639659,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:50:39.659",
+    "sinceStartS": 91.48
+  },
+  {
+    "t": 1790286639770,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:50:39.770",
+    "sinceStartS": 91.59
+  },
+  {
+    "t": 1790286639875,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:50:39.875",
+    "sinceStartS": 91.69
+  },
+  {
+    "t": 1790286640300,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:50:40.300",
+    "sinceStartS": 92.12
+  },
+  {
+    "t": 1790286640626,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:50:40.626",
+    "sinceStartS": 92.44
+  },
+  {
+    "t": 1790286640735,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:50:40.735",
+    "sinceStartS": 92.55
+  },
+  {
+    "t": 1790286641326,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:50:41.326",
+    "sinceStartS": 93.14
+  },
+  {
+    "t": 1790286644337,
+    "surface": "tv",
+    "freqs": [880],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "live",
+    "at": "21:50:44.337",
+    "sinceStartS": 96.16
+  },
+  {
+    "t": 1790286646351,
+    "surface": "tv",
+    "freqs": [880],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "live",
+    "at": "21:50:46.351",
+    "sinceStartS": 98.17
+  },
+  {
+    "t": 1790286649079,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "sold",
+    "at": "21:50:49.079",
+    "sinceStartS": 100.9
+  },
+  {
+    "t": 1790286652769,
+    "surface": "tv",
+    "freqs": [784, 988, 1175, 1568],
+    "dur": 80,
+    "cue": "jackpot",
+    "phase": "flip",
+    "at": "21:50:52.769",
+    "sinceStartS": 104.59
+  },
+  {
+    "t": 1790286658238,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "lot",
+    "at": "21:50:58.238",
+    "sinceStartS": 110.06
+  },
+  {
+    "t": 1790286665627,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "lot",
+    "at": "21:51:05.627",
+    "sinceStartS": 117.44
+  },
+  {
+    "t": 1790286666440,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:51:06.440",
+    "sinceStartS": 118.26
+  },
+  {
+    "t": 1790286666517,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:51:06.517",
+    "sinceStartS": 118.33
+  },
+  {
+    "t": 1790286666579,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:51:06.579",
+    "sinceStartS": 118.4
+  },
+  {
+    "t": 1790286667642,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:51:07.642",
+    "sinceStartS": 119.46
+  },
+  {
+    "t": 1790286667750,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:51:07.750",
+    "sinceStartS": 119.57
+  },
+  {
+    "t": 1790286667988,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:51:07.988",
+    "sinceStartS": 119.81
+  },
+  {
+    "t": 1790286668206,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:51:08.206",
+    "sinceStartS": 120.02
+  },
+  {
+    "t": 1790286668315,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:51:08.315",
+    "sinceStartS": 120.13
+  },
+  {
+    "t": 1790286668396,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:51:08.396",
+    "sinceStartS": 120.21
+  },
+  {
+    "t": 1790286668656,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:51:08.656",
+    "sinceStartS": 120.47
+  },
+  {
+    "t": 1790286668751,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:51:08.751",
+    "sinceStartS": 120.57
+  },
+  {
+    "t": 1790286669078,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:51:09.078",
+    "sinceStartS": 120.9
+  },
+  {
+    "t": 1790286669174,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:51:09.174",
+    "sinceStartS": 120.99
+  },
+  {
+    "t": 1790286669327,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:51:09.327",
+    "sinceStartS": 121.14
+  },
+  {
+    "t": 1790286669405,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:51:09.405",
+    "sinceStartS": 121.22
+  },
+  {
+    "t": 1790286669469,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:51:09.469",
+    "sinceStartS": 121.29
+  },
+  {
+    "t": 1790286669639,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:51:09.639",
+    "sinceStartS": 121.46
+  },
+  {
+    "t": 1790286669751,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "live",
+    "at": "21:51:09.751",
+    "sinceStartS": 121.57
+  },
+  {
+    "t": 1790286670359,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "live",
+    "at": "21:51:10.359",
+    "sinceStartS": 122.18
+  },
+  {
+    "t": 1790286673372,
+    "surface": "tv",
+    "freqs": [880],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "live",
+    "at": "21:51:13.372",
+    "sinceStartS": 125.19
+  },
+  {
+    "t": 1790286675376,
+    "surface": "tv",
+    "freqs": [880],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "live",
+    "at": "21:51:15.376",
+    "sinceStartS": 127.19
+  },
+  {
+    "t": 1790286678121,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "sold",
+    "at": "21:51:18.121",
+    "sinceStartS": 129.94
+  },
+  {
+    "t": 1790286681586,
+    "surface": "tv",
+    "freqs": [784, 988, 1175, 1568],
+    "dur": 80,
+    "cue": "jackpot",
+    "phase": "flip",
+    "at": "21:51:21.586",
+    "sinceStartS": 133.4
+  }
+]

@@ -1,0 +1,120 @@
+{
+  "video": "C:\\dev\\partybox-game-blind-auction\\reports\\design\\record-review\\blind-auction\\p01\\video\\phone\\round.webm",
+  "bytes": 4578926,
+  "durationS": 136.3,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 7.9,
+      "toS": 10.1,
+      "ms": 2200,
+      "during": "intro",
+      "cueInside": false
+    },
+    {
+      "fromS": 10.2,
+      "toS": 11.9,
+      "ms": 1700,
+      "during": "intro",
+      "cueInside": false
+    },
+    {
+      "fromS": 26,
+      "toS": 27.8,
+      "ms": 1800,
+      "during": "sold",
+      "cueInside": false
+    },
+    {
+      "fromS": 29.7,
+      "toS": 31.6,
+      "ms": 1900,
+      "during": "sold",
+      "cueInside": false
+    },
+    {
+      "fromS": 31.9,
+      "toS": 34.1,
+      "ms": 2200,
+      "during": "flip",
+      "cueInside": false
+    },
+    {
+      "fromS": 53.2,
+      "toS": 55.6,
+      "ms": 2400,
+      "during": "sold",
+      "cueInside": false
+    },
+    {
+      "fromS": 55.9,
+      "toS": 57.6,
+      "ms": 1700,
+      "during": "flip",
+      "cueInside": false
+    },
+    {
+      "fromS": 75,
+      "toS": 76.9,
+      "ms": 1900,
+      "during": "sold",
+      "cueInside": false
+    },
+    {
+      "fromS": 79.9,
+      "toS": 83.2,
+      "ms": 3300,
+      "during": "flip",
+      "cueInside": false
+    },
+    {
+      "fromS": 99.8,
+      "toS": 101.7,
+      "ms": 1900,
+      "during": "sold",
+      "cueInside": false
+    },
+    {
+      "fromS": 103.9,
+      "toS": 108,
+      "ms": 4100,
+      "during": "flip",
+      "cueInside": false
+    },
+    {
+      "fromS": 121.4,
+      "toS": 124,
+      "ms": 2600,
+      "during": "bid",
+      "cueInside": false
+    },
+    {
+      "fromS": 128,
+      "toS": 132.4,
+      "ms": 4400,
+      "during": "sold",
+      "cueInside": false
+    },
+    {
+      "fromS": 133.8,
+      "toS": 136.2,
+      "ms": 2400,
+      "during": "flip",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 34500,
+  "hardCuts": [],
+  "samples": 1362,
+  "motion": {
+    "p50": 0.0001,
+    "p90": 0.0059,
+    "p99": 0.0514,
+    "max": 0.1378
+  }
+}
