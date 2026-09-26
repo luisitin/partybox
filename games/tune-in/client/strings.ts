@@ -16,7 +16,8 @@ const SERVER: Record<string, string> = {
   'The closest dials on average': 'Los diales más cercanos de media',
   '📺 Static': '📺 Estática',
   'Dials that scored nothing: {n}': 'Diales que no puntuaron: {n}',
-  'See results': 'Ver resultados',
+  'End game': 'Terminar juego',
+  '★ {name} taps End game': '★ {name} toca Terminar juego',
   'Next round': 'Siguiente ronda',
 };
 

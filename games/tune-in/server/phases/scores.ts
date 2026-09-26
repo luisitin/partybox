@@ -1,5 +1,5 @@
 // Phase "scores": solo's scoreboard, the teams racing to the target, or co-op's group meter.
-// Ends after 6 s or on the VIP's Next round / See results. Also home to "done", the end.
+// Ends after the short fallback or on the VIP's Next round / End game. Also home to "done".
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { SCORES_MS } from '../types';

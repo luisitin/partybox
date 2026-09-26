@@ -70,7 +70,7 @@ export function tvView(state: State, gameId: string): TuneTvView {
     // Always the bar: the dial's and the call's seconds sit on the stage (TvRound's clock), because
     // a strip countdown that came and went with the phase re-wrapped the chips and moved the dial.
     timerMode: 'quiet' as const,
-    ...(phase === 'scores' ? { vipSkipLabel: isOver(state) ? 'See results' : 'Next round' } : {}),
+    ...(phase === 'scores' ? { vipSkipLabel: isOver(state) ? 'End game' : 'Next round' } : {}),
     turn: header(state),
     clueAt: state.turn.clueAt,
     needle: liveHuddle(state)

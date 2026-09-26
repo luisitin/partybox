@@ -126,6 +126,7 @@ function Bubble({ view, landed }: { view: TuneTvView; landed: boolean }): JSX.El
           <Thinking text={L('{name} is thinking', { name: psychic })} />
         )}
       </span>
+      <span className={styles.bubbleBalance} aria-hidden />
     </div>
   );
 }

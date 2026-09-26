@@ -41,7 +41,7 @@ export const STRINGS_TV: Record<string, string> = {
   'Winners!': '¡Ganadores!',
   '★ {name} taps Next round when everyone’s ready':
     '★ {name} toca Siguiente ronda cuando todos estén listos',
-  '★ {name} taps See results': '★ {name} toca Ver resultados',
+  '★ {name} taps End game': '★ {name} toca Terminar juego',
   'first up': 'empieza',
   '{team} plays first · {name} reads the first dial': '{team} empieza · {name} lee el primer dial',
   'No clue this round': 'Sin pista esta ronda',

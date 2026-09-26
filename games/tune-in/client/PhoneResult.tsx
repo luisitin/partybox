@@ -1,6 +1,6 @@
 // The phone after the TV's points beat (never before it, P00 §7.3): the player's own result, big —
 // "+4 · Bullseye! You were 2 away", the psychic's average, the caller's verdict — then, in
-// `scores`, the running total and the VIP's Next round / See results.
+// `scores`, the running total and the VIP's Next round / End game.
 import type { JSX } from 'react';
 import {
   Avatar,
@@ -192,12 +192,12 @@ export function PhoneResult({
         // and every other phone breathes whose tap moves it on, as the TV does.
         scores && skip ? (
           <PrimaryButton className={styles.breathe} onClick={skip}>
-            {view.last ? L('See results') : L('Next round')}
+            {view.last ? L('End game') : L('Next round')}
           </PrimaryButton>
         ) : scores && vipName ? (
           <p className={styles.nextHint}>
             {view.last
-              ? L('★ {name} taps See results', { name: vipName })
+              ? L('★ {name} taps End game', { name: vipName })
               : L('★ {name} taps Next round when everyone’s ready', { name: vipName })}
           </p>
         ) : undefined

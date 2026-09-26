@@ -2,7 +2,7 @@
 // rounds; drops, leaves and returns; the huddle's lock/unlock; one connected player; everyone idle.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
-import { DROP_GRACE_MS, REVEAL_OPEN_MS } from '../server/types';
+import { DROP_GRACE_MS, REVEAL_OPEN_MS, SCORES_MS } from '../server/types';
 import { dialAll, guessers, link, send, start, T0, timer, toClue, toDial, vip } from './helpers';
 
 describe('the round', () => {
@@ -23,6 +23,8 @@ describe('the round', () => {
     expect(s.turn.step).toBe(1);
     s = timer(s);
     expect(s.phase.id).toBe('scores');
+    expect(s.phase.deadline).toBe(s.phase.startedAt + SCORES_MS);
+    expect(SCORES_MS).toBeLessThanOrEqual(10_000);
     const first = s.turn.psychic;
     s = timer(s);
     expect(s.phase.id).toBe('clue');
@@ -97,6 +99,20 @@ describe('the VIP', () => {
     expect(s.phase.id).toBe('scores');
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('clue');
+  });
+
+  it('scores say Next round until the last turn, then End game advances to done', () => {
+    let s = start(3, { mode: 'solo', rounds: 3 });
+    for (let turn = 1; turn <= 3; turn += 1) {
+      s = dialAll(toDial(s), [50, 50]);
+      s = vip(s, 'skip');
+      s = vip(s, 'skip');
+      expect(s.phase.id).toBe('scores');
+      expect(game.tvView(s).vipSkipLabel).toBe(turn === 3 ? 'End game' : 'Next round');
+      expect(game.controllerView(s, 'p1').last).toBe(turn === 3);
+      s = vip(s, 'skip');
+      expect(s.phase.id).toBe(turn === 3 ? 'done' : 'clue');
+    }
   });
 
   it('resume re-checks what a drop did during the pause (reviewer [12ea6b])', () => {

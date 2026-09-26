@@ -58,7 +58,7 @@
   align-items: center;
   gap: var(--pb-space-4);
   max-width: 72%;
-  padding: var(--pb-space-3) var(--pb-space-7) var(--pb-space-3) var(--pb-space-4);
+  padding: var(--pb-space-3) var(--pb-space-4);
   border-radius: var(--pb-radius-lg);
   background: var(--pb-surface);
   border: 2px solid var(--pb-border);
@@ -81,6 +81,12 @@
   display: grid;
   gap: var(--pb-space-1);
   min-width: 0;
+  text-align: center;
+}
+
+/* Balance the psychic's face so the clue itself stays on the dial's center line. */
+.bubbleBalance {
+  flex: 0 0 64px;
 }
 
 .caption {

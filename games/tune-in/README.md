@@ -26,7 +26,7 @@ caller bot compares the clue's bank spot with the needle. Bots decide from their
 | dial   | all connected guessers locked, `dialSeconds`, VIP | VIP skip locks the dials where they are                  |
 | call   | all connected callers tapped, `callSeconds`, VIP  | teams only; skipped when there is no needle or no caller |
 | reveal | two beats: 3.6 s open, then ≥ 3 s points          | a void round is one 3.5 s beat and skips `scores`        |
-| scores | VIP Next round / See results, or 20 s fallback    | phone-only rooms show the scorecard and VIP control      |
+| scores | VIP Next round / End game, or 8 s fallback        | phone-only rooms show the scorecard and VIP control      |
 
 A psychic who drops during `clue` keeps it open 10 s at most and gets the full time back on
 return; one who leaves for good voids the round. The last outstanding guesser or caller dropping

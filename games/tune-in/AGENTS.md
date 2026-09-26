@@ -5,3 +5,4 @@
 - Imports: only @partybox/game-sdk (+ react in client/). server/ is pure (no Date.now, Math.random, timers, I/O).
 - Regenerate fixtures after changing state shape: pnpm sim --game tune-in --dump-fixtures --players 4
 - Test: pnpm vitest --project games · pnpm vitest --project contract · pnpm sim --game tune-in --players 6 --runs 200
+- Scores show a VIP Next round action (End game on the final turn) with an 8 s unattended-room fallback.

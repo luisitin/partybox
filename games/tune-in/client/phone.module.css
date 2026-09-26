@@ -295,7 +295,7 @@
 }
 
 /* ── the scores beat waits for the VIP ── */
-/* Their Next round / See results breathes: the next action is the thing that moves. */
+/* Their Next round / End game breathes: the next action is the thing that moves. */
 .breathe {
   animation: tune-ready-breathe calc(var(--pb-motion-pulse) * 2) ease-in-out infinite;
 }

@@ -64,7 +64,8 @@ returns `ctx.presence` (the SDK's `GamePresence`), else all in one room. Still l
   hiding the VIP's Next round button and leaving everyone on “Group 3 / 32 · Tuning in.” until the
   20 s fallback. Keep `PhoneStage` for the dial reveal only. The controller score beat now shows
   a solo leaderboard, team totals or a co-op card that names points this round and points earned
-  so far; the VIP can advance as soon as everyone has read it.
+  so far; the VIP can advance as soon as everyone has read it. The action is **End game** at the
+  final turn, with an 8 s fallback for unattended rooms.
 - **An idle room ends after three void rounds in a row** (spec §5.17 "the game ends quickly"): a
   whole idle game otherwise ran every round of "No signal!" (396 s in the sim, now 154 s). A round
   with a clue starts the count again.

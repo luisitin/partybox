@@ -124,9 +124,8 @@ export const REVEAL_OPEN_MS = 3_600;
 export const REVEAL_POINTS_MS = 6_500;
 /** A void round's card: "No signal! No clue came through. Nobody scores." (~8 words). */
 export const VOID_MS = 6_000;
-/** The scores wait for the VIP's Next round; this is only the fallback, long enough for a slow
- *  reader of a sixteen-row board in Spanish. */
-export const SCORES_MS = 20_000;
+/** The VIP can move on immediately; a short fallback keeps an unattended room progressing. */
+export const SCORES_MS = 8_000;
 /** A psychic who drops mid-clue keeps the clue open this long at most (they may come back). */
 export const DROP_GRACE_MS = 10_000;
 /** Spec §5.17 "Everyone idle … the game ends quickly": this many void rounds in a row end it

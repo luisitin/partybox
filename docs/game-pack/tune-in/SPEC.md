@@ -112,7 +112,7 @@ The first team to 10 points wins. A team that hits a bullseye while still behind
 | `dial`   | The clue in large text, the dial, chips ✓. Huddle: live markers and the needle                     | Guessers: clue, `DialInput`, **Lock in**; in huddle, teammates' markers too. Psychic: own clue and the target. Others: waiting | `dial` (throttled, §5.9), `lock` | all guessers locked, 25 s, or VIP                                | `phase` · `marimba`                                            |
 | `call`   | Sun's needle on the dial (target still hidden), "Moon: LEFT or RIGHT?"                             | Moon: ◀ LEFT / RIGHT ▶. Sun: waiting                                                                                           | `call`                           | all callers tapped, 15 s, or VIP                                 | `phase` · `pulse`                                              |
 | `reveal` | The shutter swings open; faces land at their dials; the needle settles; distances and points       | Stage, then own result                                                                                                         | —                                | paced, about 6 s                                                 | `reveal`; `jackpot` on a bullseye; `bust` if everyone scored 0 |
-| `scores` | Solo: scoreboard. Teams: the two totals racing to the target. Co-op: the group meter               | Solo: leaderboard; teams: both totals; co-op: points this round and group total. VIP: **Next round**                           | —                                | VIP, or 20 s fallback                                            | `tally` · `warm`                                               |
+| `scores` | Solo: scoreboard. Teams: the two totals racing to the target. Co-op: the group meter               | Solo: leaderboard; teams: both totals; co-op: points this round and group total. VIP: **Next round** / **End game** at the end | —                                | VIP, or 8 s fallback                                             | `tally` · `warm`                                               |
 
 **Client hooks:**
 
@@ -409,7 +409,7 @@ A bot treats each spectrum's clue bank as general knowledge, the way a person kn
 | `intro`            | **Let's go**                                         |
 | `clue`             | Skip ends the phase. With no clue, the round is void |
 | `dial`             | Skip locks everyone's dials where they are           |
-| `reveal`, `scores` | **Next round**, or **See results** at the end        |
+| `reveal`, `scores` | **Next round**, or **End game** at the end           |
 
 ## 5.13 Voice
 

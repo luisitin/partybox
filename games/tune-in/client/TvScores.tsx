@@ -40,7 +40,7 @@ function NextHint({ view }: { view: GameTvProps<TuneTvView>['view'] }): JSX.Elem
   return (
     <p className={styles.nextHint}>
       {view.last
-        ? L('★ {name} taps See results', { name: vip.name })
+        ? L('★ {name} taps End game', { name: vip.name })
         : L('★ {name} taps Next round when everyone’s ready', { name: vip.name })}
     </p>
   );
