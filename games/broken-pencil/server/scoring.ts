@@ -3,7 +3,7 @@
 import { buildResults } from '@partybox/game-sdk';
 import type { GameAward, GameResults } from '@partybox/game-sdk';
 import { bookIntact, lastGuessOf, wordOf } from './books';
-import type { State } from './types';
+import type { Drawing, State } from './types';
 
 export interface BookSummary {
   ownerId: string;
@@ -11,6 +11,8 @@ export interface BookSummary {
   word: string;
   last: string;
   intact: boolean;
+  /** I-218 B: the book's first drawing (null: none was drawn). */
+  drawing: Drawing | null;
 }
 
 /** Every book's first word beside its last guess (done screen; VIP end may leave books short). */
@@ -21,7 +23,14 @@ export function summary(state: State): BookSummary[] {
     word: wordOf(book),
     last: lastGuessOf(book),
     intact: bookIntact(state, b),
+    drawing: firstDrawing(book),
   }));
+}
+
+/** I-218 B: the first drawing in a book — the word as the room first saw it. */
+function firstDrawing(book: State['books'][number]): Drawing | null {
+  for (const page of book.pages) if (page.kind === 'draw') return page.drawing ?? null;
+  return null;
 }
 
 export function results(state: State): GameResults | null {

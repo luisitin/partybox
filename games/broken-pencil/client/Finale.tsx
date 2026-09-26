@@ -6,6 +6,7 @@ import type { CSSProperties, JSX } from 'react';
 import { BigText, useT } from '@partybox/game-sdk/ui';
 import type { GameFinaleProps } from '@partybox/game-sdk/ui';
 import type { PencilTvView } from '../server/views';
+import { DrawingView } from './DrawingView';
 import { STRINGS } from './strings';
 import styles from './Tv.module.css';
 
@@ -30,6 +31,15 @@ export function Summary({ view }: { view: PencilTvView }): JSX.Element {
             className={`${styles.summaryRow} ${styles.summaryIn}`}
             style={{ '--pb-i': i } as CSSProperties}
           >
+            {/* I-218 B: the picture, not only the words */}
+            <span className={styles.summaryDrawing}>
+              {b.drawing && b.drawing.strokes.length > 0 ? (
+                <DrawingView drawing={b.drawing} size="100%" label={L("{name}'s drawing", { name: b.ownerName })} />
+              ) : (
+                // nothing drawn: a blank sheet, not the page-sized "(nothing was drawn)" squeezed in
+                <span className={styles.summaryBlank} aria-label={L('an empty sheet')}>—</span>
+              )}
+            </span>
             <span className={styles.summaryOwner}>{b.ownerName}</span>
             <span className={styles.summaryPair}>
               {b.word} → {b.last}

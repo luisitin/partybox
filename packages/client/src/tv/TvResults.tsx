@@ -60,6 +60,20 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
       ? (room.results?.players.filter((p) => winnerIds.includes(p.id)) ?? []).slice(0, 4)
       : [];
   const crowned = winner !== null || tied.length > 0;
+  // I-218 A: a game's awards, beside the scoreboard — or in one row under the game's own Finale
+  // (they used to vanish whenever a game had a Finale: Broken Pencil's "Unbroken", Lightning's)
+  const awardList = (row: boolean): JSX.Element | null =>
+    awards.length > 0 ? (
+      <ul className={`${styles.awards} ${row ? styles.awardsRow : ''}`} aria-label={L('awards')}>
+        {awards.map((a) => (
+          <li key={a.id} className={styles.award}>
+            <span className={styles.awardTitle}>{said(a.title)}</span>
+            <span className={styles.awardWho}>{nameOf(a.playerId)}</span>
+            <span className="pb-muted pb-caption">{said(a.description)}</span>
+          </li>
+        ))}
+      </ul>
+    ) : null;
   return (
     // `data-screen` marks the end of a game for the e2e harness: a scoreboard is not a reliable
     // hook, since a game with its own finale (Bingo's board, Lightning's totals) replaces it
@@ -100,6 +114,7 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
               <Finale lastView={lastView} room={room} />
             </div>
           </Suspense>
+          {awardList(true)}
         </GameErrorBoundary>
       ) : (
         <div
@@ -111,17 +126,7 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
             noRanks={nobodyScored(room)}
             size={large ? 'lg' : 'md'}
           />
-          {awards.length > 0 ? (
-            <ul className={styles.awards} aria-label={L('awards')}>
-              {awards.map((a) => (
-                <li key={a.id} className={styles.award}>
-                  <span className={styles.awardTitle}>{said(a.title)}</span>
-                  <span className={styles.awardWho}>{nameOf(a.playerId)}</span>
-                  <span className="pb-muted pb-caption">{said(a.description)}</span>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+          {awardList(false)}
         </div>
       )}
       <p className={`pb-muted pb-caption ${awards.length === 0 ? styles.centredHint : ''}`}>
