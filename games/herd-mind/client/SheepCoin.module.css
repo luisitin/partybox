@@ -1,0 +1,70 @@
+/* The Black Sheep coin: gold disc, dark sheep, a rim for depth. Transform-only motion. */
+.coin {
+  --coin: 96px;
+  display: inline-grid;
+  place-items: center;
+  width: var(--coin);
+  height: var(--coin);
+  flex: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 28%, rgb(255 255 255 / 55%) 0 7%, transparent 8%),
+    var(--pb-accent-2-fill);
+  box-shadow:
+    inset 0 -6px 0 rgb(0 0 0 / 22%),
+    inset 0 0 0 4px rgb(0 0 0 / 12%);
+  transform-style: preserve-3d;
+}
+
+.sm {
+  --coin: 40px;
+}
+
+.md {
+  --coin: 64px;
+}
+
+.lg {
+  --coin: 168px;
+}
+
+.face {
+  font-size: calc(var(--coin) * 0.58);
+  line-height: 1;
+  filter: brightness(0);
+  transform: translateZ(1px);
+}
+
+/* A slow turn and a small hop: alive, never busy. */
+.spin {
+  animation: sheep-coin-turn 3.2s var(--pb-ease) infinite;
+}
+
+/* Never still: a bob the whole loop, and the turn in its second half. */
+@keyframes sheep-coin-turn {
+  0% {
+    transform: perspective(600px) rotateY(0deg) translateY(0);
+  }
+  25% {
+    transform: perspective(600px) rotateY(0deg) translateY(-5%);
+  }
+  50% {
+    transform: perspective(600px) rotateY(0deg) translateY(0);
+  }
+  75% {
+    transform: perspective(600px) rotateY(180deg) translateY(-9%);
+  }
+  100% {
+    transform: perspective(600px) rotateY(360deg) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .spin {
+  animation: none;
+}

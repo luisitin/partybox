@@ -10,7 +10,7 @@ import { createTvClient } from '../net/tv';
 import { bedFor, createBedEngine } from '../beds';
 import type { BedEngine } from '../beds';
 import { createMusicEngine, planFor } from '../music';
-import { nobodyScored } from '../controller/results-rows';
+import { resultsCue } from '../controller/results-rows';
 import type { MusicEngine } from '../music';
 import { createSoundEngine, joinSemitones, lockSemitones } from '../sound';
 import type { SoundEngine } from '../sound';
@@ -229,20 +229,12 @@ export function TvApp(): JSX.Element {
     if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
     // The winner moment (owner pick): a party horn with a crowd cheer under it (music ducked).
     if (room.status === 'results' && p.status !== 'results' && !homing) {
-      // I-128 C: an all-zero board gets a soft note, not the cheer.
-      if (nobodyScored(room)) audio.play('leave', { quiet: true });
+      // I-128 C / I-037 C / ADR-052: one rule, shared with a phone-only room's phones.
+      const cue = resultsCue(room);
+      if (cue === 'leave') audio.play('leave', { quiet: true });
       else {
         music.duck(9000);
-        // I-037 C: several winners — the suspended chord, not the horn.
-        const outcome = room.results?.results.outcome;
-        // ADR-052: co-op / teams — the cheer for a win, the tie chord for a draw or a loss.
-        const won =
-          outcome &&
-          (outcome.kind === 'coop'
-            ? outcome.won
-            : outcome.teams.some((x) => x.id === outcome.winner));
-        if (outcome) audio.play(won ? 'cheer' : 'tie');
-        else audio.play((room.results?.results.winnerIds.length ?? 0) > 1 ? 'tie' : 'cheer');
+        audio.play(cue);
       }
     }
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's

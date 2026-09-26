@@ -1,0 +1,234 @@
+[
+  {
+    "id": "ba-ex-shoebox",
+    "name": "Ex's Shoebox",
+    "icon": "👠",
+    "flavour": "Photos, letters and one very expensive ring.",
+    "outcomes": [
+      { "type": "gain", "amount": 150, "chance": 50 },
+      { "type": "lose", "amount": 60, "chance": 40 },
+      { "type": "dud", "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-bachelor-bag",
+    "name": "Bachelor Party Bag",
+    "icon": "🎉",
+    "flavour": "What happened in there stays in the bag.",
+    "outcomes": [
+      { "type": "gain", "amount": 90, "chance": 60 },
+      { "type": "lose", "amount": 80, "chance": 30 },
+      { "type": "double", "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-hotel-minibar",
+    "name": "Hotel Minibar",
+    "icon": "🥃",
+    "flavour": "Twelve tiny bottles. One enormous bill.",
+    "outcomes": [
+      { "type": "gain", "amount": 180, "chance": 60 },
+      { "type": "lose", "amount": 50, "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-divorce-papers",
+    "name": "Divorce Papers",
+    "icon": "📑",
+    "flavour": "Half of everything. Whose everything, though?",
+    "outcomes": [
+      { "type": "swap", "chance": 60 },
+      { "type": "gain", "amount": 80, "chance": 40 }
+    ],
+    "chaos": "normal"
+  },
+  {
+    "id": "ba-mystery-tattoo",
+    "name": "Mystery Tattoo",
+    "icon": "🖋️",
+    "flavour": "It seemed like a great idea at 2 a.m.",
+    "outcomes": [
+      { "type": "gain", "amount": 60, "chance": 60 },
+      { "type": "lose", "amount": 70, "chance": 30 },
+      { "type": "gain", "amount": 300, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-wedding-dress",
+    "name": "Wedding Dress",
+    "icon": "👰",
+    "flavour": "Worn once. Cried in twice.",
+    "outcomes": [
+      { "type": "gain", "amount": 120, "chance": 60 },
+      { "type": "refund", "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-party-photos",
+    "name": "Office Party Photos",
+    "icon": "📸",
+    "flavour": "Blackmail material. Or at least very awkward.",
+    "outcomes": [
+      { "type": "steal", "percent": 30, "chance": 60 },
+      { "type": "dud", "chance": 40 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-hangover-kit",
+    "name": "Hangover Kit",
+    "icon": "🕶️",
+    "flavour": "Sunglasses, aspirin and a lot of regrets.",
+    "outcomes": [
+      { "type": "gain", "amount": 50, "chance": 60 },
+      { "type": "double", "chance": 30 },
+      { "type": "lose", "amount": 40, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-love-letters",
+    "name": "Love Letters",
+    "icon": "💌",
+    "flavour": "Signed \"your secret admirer.\" Very secret.",
+    "outcomes": [
+      { "type": "gain", "amount": 100, "chance": 50 },
+      { "type": "dud", "chance": 30 },
+      { "type": "gain", "amount": 250, "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-casino-comps",
+    "name": "Casino Comps",
+    "icon": "🃏",
+    "flavour": "Free drinks! Free buffet! Free fall!",
+    "outcomes": [
+      { "type": "double", "chance": 60 },
+      { "type": "lose", "amount": 50, "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-sugar-card",
+    "name": "Sugar Daddy's Card",
+    "icon": "💳",
+    "flavour": "His card, her signature, your problem.",
+    "outcomes": [
+      { "type": "steal", "percent": 25, "chance": 50 },
+      { "type": "gain", "amount": 130, "chance": 30 },
+      { "type": "lose", "amount": 50, "chance": 20 }
+    ],
+    "chaos": "normal"
+  },
+  {
+    "id": "ba-vegas-chapel",
+    "name": "Vegas Chapel Deal",
+    "icon": "💒",
+    "flavour": "The officiant wore sequins. Annulment not included.",
+    "outcomes": [
+      { "type": "swap", "chance": 50 },
+      { "type": "lose", "amount": 40, "chance": 30 },
+      { "type": "gain", "amount": 200, "chance": 20 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-bar-tab",
+    "name": "Open Bar Tab",
+    "icon": "🍺",
+    "flavour": "Somebody ran it up. Somebody has to pay.",
+    "outcomes": [
+      { "type": "lose", "amount": 70, "chance": 50 },
+      { "type": "gain", "amount": 200, "chance": 50 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-diary",
+    "name": "Stolen Diary",
+    "icon": "📔",
+    "flavour": "Every secret you wish you hadn't read.",
+    "outcomes": [
+      { "type": "steal", "percent": 35, "chance": 50 },
+      { "type": "dud", "chance": 50 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-prenup",
+    "name": "Prenup Papers",
+    "icon": "🖊️",
+    "flavour": "Read the fine print. Then read it again.",
+    "outcomes": [
+      { "type": "refund", "chance": 60 },
+      { "type": "gain", "amount": 250, "chance": 30 },
+      { "type": "lose", "amount": 60, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-walk-of-shame",
+    "name": "Walk of Shame Bag",
+    "icon": "👟",
+    "flavour": "One shoe, someone else's jacket, zero dignity.",
+    "outcomes": [
+      { "type": "gain", "amount": 70, "chance": 60 },
+      { "type": "lose", "amount": 30, "chance": 30 },
+      { "type": "double", "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-dating-match",
+    "name": "Dating App Match",
+    "icon": "💘",
+    "flavour": "Looks great in photos. The photos are from 2009.",
+    "outcomes": [
+      { "type": "lose", "amount": 60, "chance": 40 },
+      { "type": "gain", "amount": 180, "chance": 40 },
+      { "type": "dud", "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-mob-suitcase",
+    "name": "Mob Boss Suitcase",
+    "icon": "💼",
+    "flavour": "Don't ask whose it is. Don't ask, ever.",
+    "outcomes": [
+      { "type": "steal", "percent": 40, "chance": 60 },
+      { "type": "lose", "amount": 90, "chance": 40 }
+    ],
+    "chaos": "wild"
+  },
+  {
+    "id": "ba-secret-drawer",
+    "name": "Secret Drawer",
+    "icon": "🩱",
+    "flavour": "Lace, silk and a suspicious amount of cash.",
+    "outcomes": [
+      { "type": "gain", "amount": 130, "chance": 60 },
+      { "type": "lose", "amount": 50, "chance": 30 },
+      { "type": "gain", "amount": 300, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-midlife-car",
+    "name": "Midlife Crisis Car",
+    "icon": "🏎️",
+    "flavour": "Red, loud and financed at 30 percent.",
+    "outcomes": [
+      { "type": "lose", "amount": 80, "chance": 40 },
+      { "type": "gain", "amount": 250, "chance": 40 },
+      { "type": "refund", "chance": 20 }
+    ],
+    "chaos": "calm"
+  }
+]

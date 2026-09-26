@@ -1,0 +1,207 @@
+/* The dossier folder (SPEC §9.2): manila cover, typed sheet. Tokens only. */
+
+.folder {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px 14px 10px 10px;
+  background: var(--sh-paper-2);
+  color: var(--sh-ink);
+  box-shadow:
+    inset 0 0 0 2px var(--sh-brass-2),
+    0 8px 18px var(--sh-shadow);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.cover {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 0.6rem;
+  min-height: 2.9rem;
+  padding: 0.35rem 0.8rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.tab {
+  font-family: var(--sh-font-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+}
+
+.stampMark {
+  padding: 0 0.4rem;
+  border: 2px solid var(--sh-fascist);
+  border-radius: 3px;
+  font-family: var(--sh-font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: var(--sh-fascist);
+  transform: rotate(-4deg);
+}
+
+.who {
+  font-family: var(--sh-font-type);
+  font-size: var(--pb-font-caption);
+  color: var(--sh-ink-soft);
+}
+
+.hint {
+  margin-left: auto;
+  white-space: nowrap;
+  font-size: var(--pb-font-caption);
+  color: var(--sh-ink-soft);
+}
+
+/* Seating, not opened yet: the folder breathes and its hint is bold. */
+.folder[data-beckon] {
+  animation: beckon 1.6s ease-in-out infinite;
+}
+
+.folder[data-beckon] .hint {
+  color: var(--sh-ink);
+  font-weight: 800;
+}
+
+@keyframes beckon {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 0 0 2px var(--sh-brass-2),
+      0 8px 18px var(--sh-shadow);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 2px var(--sh-brass),
+      0 0 0 4px var(--sh-brass),
+      0 8px 22px var(--sh-shadow);
+  }
+}
+
+/* A choice on screen: one short line, so the choice keeps the height; its type follows the screen's
+   height too, so at 200 % text it stays one line (review cfa424 #2). */
+.folder[data-compact] .cover {
+  min-height: 0;
+  padding-block: 0.15rem;
+}
+
+.folder[data-compact] .hint {
+  font-size: min(var(--pb-font-caption), 2.4vh);
+}
+
+.folder[data-compact] .stampMark {
+  display: none;
+}
+
+.folder[data-compact] .tab {
+  font-size: min(1rem, 2.8vh);
+}
+
+.folder[data-open] .hint {
+  color: var(--sh-ink);
+  font-weight: 700;
+}
+
+/* The sheet slides out of the folder. */
+.sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0 0.5rem 0.55rem;
+  padding: 0.75rem 0.8rem;
+  border-radius: 4px;
+  background: var(--sh-paper);
+  box-shadow: 0 4px 10px var(--sh-shadow);
+  font-family: var(--sh-font-type);
+  font-size: var(--pb-font-body);
+  animation: global(sh-rise) 260ms var(--sh-ease) both;
+}
+
+.row {
+  display: grid;
+  /* The label column gives way at 200 % text, so a row never runs past the card (review, font200). */
+  grid-template-columns: fit-content(34%) minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.row dt {
+  font-family: var(--sh-font-display);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--sh-ink-soft);
+}
+
+.row dd {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/* A small phone (SE 320): each section's label sits above it, so the words get the full width. */
+@media (max-width: 380px) {
+  /* The folder's cover stays one row: a smaller tab and stamp leave room for the hint. */
+  .cover {
+    gap: 0.2rem 0.45rem;
+    padding: 0.35rem 0.6rem;
+  }
+  .tab {
+    font-size: 1.15rem;
+  }
+  .stampMark {
+    font-size: 0.75rem;
+  }
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.15rem;
+  }
+}
+
+.peek {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.list {
+  flex-direction: column;
+  align-items: flex-start !important;
+}
+
+.roleMark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: var(--sh-liberal);
+}
+
+.roleMark[data-role='fascist'] {
+  color: var(--sh-fascist);
+}
+
+.goal {
+  display: block;
+  font-size: var(--pb-font-caption);
+  color: var(--sh-ink-soft);
+}
+
+.mate {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--sh-fascist);
+}

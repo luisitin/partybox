@@ -1,0 +1,67 @@
+[
+  {
+    "check": "bid screen shows the pad",
+    "pass": true,
+    "detail": "🪙0"
+  },
+  {
+    "check": "drags: no zoom, no sideways scroll, pad in place",
+    "pass": true,
+    "detail": "{\"scale\":1,\"sel\":\"\",\"scrollX\":0,\"amount\":\"🪙0\",\"box\":[88,203,217]}"
+  },
+  {
+    "check": "long-press + repeats, and stops on release",
+    "pass": true,
+    "detail": "held 50 → 50"
+  },
+  {
+    "check": "long-press: no selection, no zoom",
+    "pass": true,
+    "detail": "{\"scale\":1,\"sel\":\"\",\"scrollX\":0,\"amount\":\"🪙50\",\"box\":[88,203,217]}"
+  },
+  {
+    "check": "mashed confirm: exactly one bid, the shown amount",
+    "pass": true,
+    "detail": "{\"497b2d6a-416a-4b90-988f-ae5460a486ff\":50}"
+  },
+  {
+    "check": "confirm reads \"Bid placed\"",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "check": "double-tap on text: no selection, no zoom",
+    "pass": true,
+    "detail": "{\"scale\":1,\"sel\":\"\",\"scrollX\":0,\"amount\":\"🪙50\",\"box\":[88,203,217]}"
+  },
+  {
+    "check": "pinch: page does not zoom",
+    "pass": true,
+    "detail": "{\"scale\":1,\"sel\":\"\",\"scrollX\":0,\"amount\":\"🪙50\",\"box\":[88,203,217]}"
+  },
+  {
+    "check": "overscroll both ends: pad back in place",
+    "pass": true,
+    "detail": "{\"scale\":1,\"sel\":\"\",\"scrollX\":0,\"amount\":\"🪙50\",\"box\":[88,203,217]}"
+  },
+  {
+    "check": "sideways: every button on screen",
+    "pass": true,
+    "detail": "{\"hidden\":0,\"n\":11}"
+  },
+  {
+    "check": "rotate back: pad where it was",
+    "pass": true,
+    "detail": "{\"scale\":1,\"sel\":\"\",\"scrollX\":0,\"amount\":\"🪙50\",\"box\":[88,203,217]}"
+  },
+  {
+    "check": "mashed raise: one bid of 5, not 5 × 5",
+    "pass": true,
+    "detail": "{\"by\":\"497b2d6a-416a-4b90-988f-ae5460a486ff\",\"amount\":5}"
+  },
+  {
+    "check": "high bidder sees \"You're winning\"",
+    "pass": true,
+    "detail": ""
+  }
+]
