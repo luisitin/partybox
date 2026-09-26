@@ -466,7 +466,7 @@ button.option:focus-visible {
 
 /* With four or more answers, keep the selected card compact. At large text each alternative gets
    a full-width row; on an SE the icon drops from the half-width pill to free the whole name. */
-.phone.picked.many.largeText:not(.uniformBoard) {
+.phone.picked.largeText:not(.uniformBoard) {
   grid-template-columns: minmax(0, 1fr);
   gap: 4px;
 }
@@ -491,7 +491,17 @@ button.option:focus-visible {
   min-height: var(--pb-touch);
 }
 
-.phone.picked.many:not(.uniformBoard) .option:not(.selected) .name {
+/* Three-answer insurance/plain boards need the same full-width labels as live-event boards at
+   200% text. Two narrow columns made otherwise distinct choices read as fragments. */
+.phone.picked.largeText:not(.uniformBoard) .option:not(.selected) .name {
+  display: block;
+  overflow: visible;
+  white-space: normal;
+  overflow-wrap: normal;
+  -webkit-line-clamp: unset;
+}
+
+.phone.picked.many:not(.largeText):not(.uniformBoard) .option:not(.selected) .name {
   display: block;
   white-space: nowrap;
   overflow-wrap: normal;
