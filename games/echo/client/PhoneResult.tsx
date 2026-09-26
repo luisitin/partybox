@@ -75,7 +75,7 @@ export function PhoneResult(props: GameControllerProps<EchoControllerView, Input
             <p className={styles.word}>{r.word}</p>
           </>
         ) : (
-          <p className={styles.bigIcon}>{icon}</p>
+          <p className={`${styles.bigIcon} ${styles.resultIcon}`}>{icon}</p>
         )}
         {beat >= 1 ? (
           <p className={styles.line} data-outcome={r.outcome}>

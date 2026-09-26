@@ -7,6 +7,7 @@ import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import { useEffect, useRef } from 'react';
 import type { EchoTvView } from '../server/views';
 import { AuthorTag, Card, ClueText, Deck, EchoFace } from './TvParts';
+import { beforeResultCounts } from './deck-counts';
 import { RESULT } from './timing';
 import { usePhaseBeat, useMountElapsed } from './usePhaseBeat';
 import { useLine } from './useLine';
@@ -43,14 +44,7 @@ export function TvResult({ view }: GameTvProps<EchoTvView>): JSX.Element | null 
     r.outcome === 'right' ? L('✓ Got it!') : r.outcome === 'wrong' ? L('✗ Not quite') : L('PASS');
   const rows = r.clues.length > 6 ? 2 : 1;
   // Until the deck beat, the counter shows the piles as they were before this word.
-  const counts =
-    beat >= 3
-      ? view.counts
-      : {
-          left: view.counts.left + 1 + (r.burned ? 1 : 0),
-          won: view.counts.won - (r.outcome === 'right' ? 1 : 0) + (r.unwon ? 1 : 0),
-          lost: view.counts.lost - (r.outcome === 'right' ? 0 : 1) - (r.burned || r.unwon ? 1 : 0),
-        };
+  const counts = beat >= 3 ? view.counts : beforeResultCounts(view.counts, r);
   return (
     <Stage className={res.stage}>
       <div className={styles.top}>

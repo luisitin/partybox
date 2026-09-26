@@ -1,6 +1,7 @@
 // §7.17 Deck rules: right, pass, wrong (burns the next word), wrong on the last word (a won word
 // goes to lost), a VIP-counted guess; the rating table; results crown only Great or better.
 import { describe, expect, it } from 'vitest';
+import { beforeResultCounts } from '../client/deck-counts';
 import { piles, ratingOf } from '../server/deck';
 import { game } from '../server/index';
 import type { State } from '../server/types';
@@ -25,10 +26,14 @@ function play(state: State, text: string): State {
 
 describe('deck piles', () => {
   it('a right guess goes to won; the guesser rotates', () => {
-    const r = guess(toGuess(atClue(5)), 'Telescopes');
+    const g = toGuess(atClue(5));
+    const r = guess(g, 'Telescopes');
     expect(r.phase.id).toBe('result');
     expect(r.w.guess).toEqual({ text: 'Telescopes', result: 'right', byVip: false });
     expect(piles(r)).toEqual({ won: [TELESCOPE.id], lost: [], left: 9 });
+    expect(beforeResultCounts(game.tvView(r).counts, game.tvView(r).result!)).toEqual(
+      game.tvView(g).counts,
+    );
     const next = timer(r);
     expect(next.phase.id).toBe('clue');
     expect(next.w.guesser).toBe('p2');
@@ -43,11 +48,15 @@ describe('deck piles', () => {
   });
 
   it('a wrong guess burns the next word too', () => {
-    const r = guess(toGuess(atClue(5)), 'microscope');
+    const g = toGuess(atClue(5));
+    const r = guess(g, 'microscope');
     expect(r.w.guess?.result).toBe('wrong');
     const p = piles(r);
     expect(p.lost).toHaveLength(2);
     expect(p.left).toBe(8);
+    expect(beforeResultCounts(game.tvView(r).counts, game.tvView(r).result!)).toEqual(
+      game.tvView(g).counts,
+    );
     expect(timer(r).w.idx).toBe(2);
   });
 
@@ -61,6 +70,9 @@ describe('deck piles', () => {
     expect(p.won).toEqual([]);
     expect(p.lost).toHaveLength(6);
     expect(r.turns[5]?.unwon).toBe(TELESCOPE.id);
+    expect(beforeResultCounts(game.tvView(r).counts, game.tvView(r).result!)).toEqual(
+      game.tvView(toGuess(s)).counts,
+    );
     expect(timer(r).phase.id).toBe('done');
   });
 

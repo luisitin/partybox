@@ -6,7 +6,10 @@ import { PrimaryButton, Screen, useHold, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { EchoControllerView } from '../server/views';
+import { survivorStepMs } from '../shared/rules';
 import { EnglishTag } from './EnglishTag';
+import { GUESS } from './timing';
+import { usePhaseBeat } from './usePhaseBeat';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
@@ -15,20 +18,34 @@ const GUESS_MAX = 30;
 function Clues({ view }: { view: EchoControllerView }): JSX.Element {
   const L = useT(STRINGS);
   const { survivors, echoCount } = view.tv;
+  const clueLine = view.tv.say.find((s) => s.text !== 'Echo!' && s.text !== 'Total echo!');
+  const step = survivorStepMs(survivors.length, clueLine?.ms);
+  const beat = usePhaseBeat(view.tv.phaseAt, [
+    0,
+    GUESS.echoFlip,
+    ...survivors.map((_, i) => GUESS.firstSurvivor + i * step),
+  ]);
   return (
     <>
       {survivors.length > 0 ? (
         <div className={styles.locked}>
           {survivors.map((s, i) => (
-            <span key={`${s}:${i}`} className={styles.chip} style={{ '--i': i } as CSSProperties}>
-              {s}
+            <span
+              key={`${s}:${i}`}
+              className={styles.chip}
+              data-hidden={beat < 2 + i ? '1' : '0'}
+              style={{ '--i': i } as CSSProperties}
+            >
+              {beat >= 2 + i ? s : '…'}
             </span>
           ))}
         </div>
       ) : (
-        <p className={styles.line}>{echoCount > 0 ? L('Total echo!') : L('No clues!')}</p>
+        <p className={styles.line}>
+          {echoCount > 0 && beat < 1 ? '…' : echoCount > 0 ? L('Total echo!') : L('No clues!')}
+        </p>
       )}
-      {echoCount > 0 ? (
+      {echoCount > 0 && beat >= 1 ? (
         <p className={styles.hint}>
           {echoCount === 1
             ? L('🔇 1 clue echoed away')

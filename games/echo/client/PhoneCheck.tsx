@@ -67,6 +67,7 @@ export function PhoneCheck({
                     </span>
                   ))}
                   {row.echo ? <span className={check.tag}>{L('🔇 echo')}</span> : null}
+                  {!row.echo && multi ? <span className={check.tag}>{L('Kept apart')}</span> : null}
                 </span>
                 {row.echo ? (
                   <button
@@ -82,7 +83,7 @@ export function PhoneCheck({
                     className={check.act}
                     onClick={() => send({ type: 'split', group: row.id })}
                   >
-                    {L('Same after all')}
+                    {L('Undo')}
                   </button>
                 ) : (
                   <button

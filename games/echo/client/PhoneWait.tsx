@@ -5,12 +5,20 @@ import { Screen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { EchoControllerView } from '../server/views';
+import { beforeResultCounts } from './deck-counts';
+import { RESULT } from './timing';
+import { usePhaseBeat } from './usePhaseBeat';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
 export function PhoneDeck({ view }: { view: EchoControllerView }): JSX.Element {
   const L = useT(STRINGS);
-  const { left, won, lost } = view.tv.counts;
+  const beat = usePhaseBeat(view.tv.phaseAt, [0, RESULT.pile]);
+  const counts =
+    view.phaseId === 'result' && view.tv.result && beat === 0
+      ? beforeResultCounts(view.tv.counts, view.tv.result)
+      : view.tv.counts;
+  const { left, won, lost } = counts;
   return (
     <ul
       className={styles.deck}

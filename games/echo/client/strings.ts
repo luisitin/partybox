@@ -114,7 +114,7 @@ export const STRINGS: Strings = {
     'Warming up': 'Calentando',
     'Try again!': '¡Otra vez!',
     // phone: clue
-    'Hold to see the word': 'Mantén para ver la palabra',
+    'Hold to see the word': 'Mantén para ver',
     'One word to help {name}': 'Una palabra para ayudar a {name}',
     'Two different words to help {name}': 'Dos palabras distintas para ayudar a {name}',
     'Clue {n}': 'Pista {n}',
@@ -143,7 +143,8 @@ export const STRINGS: Strings = {
     'Now tap the clue it matches': 'Ahora toca la pista con la que coincide',
     '🔇 echo': '🔇 eco',
     'Not the same ✋': 'No son iguales ✋',
-    'Same after all': 'Sí eran iguales',
+    'Kept apart': 'Separadas',
+    Undo: 'Deshacer',
     'Same word ✋': 'Misma palabra ✋',
     Cancel: 'Cancelar',
     'Looks good': 'Todo bien',

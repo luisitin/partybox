@@ -1,16 +1,34 @@
 # Echo — build notes
 
-Branch `game/echo`, worktree `C:/dev/partybox-game-echo`, harness port 42370.
+Original build: `game/echo`, merged on main at `94b70db8`. Follow-up: `game/echo-followup`.
 
-## Status (2026-09-24)
+## Status (2026-09-25)
 
 | Stage              | State                                                                                 |
 | ------------------ | ------------------------------------------------------------------------------------- |
 | 1. Content         | ✅ 300 family + 80 spicy words, 10 bank clues each, pack test green                   |
 | 2. Server logic    | ✅ 6 phases, bots, awards, recap, speech; 78 unit tests; contract green; sim 800 runs |
-| 3. Client          | in progress                                                                           |
-| 4. Record → review | not started                                                                           |
-| 5. Review package  | not started                                                                           |
+| 3. Client          | ✅ six phases, English/Spanish, phone and TV                                          |
+| 4. Record → review | ✅ original game merged; follow-up capture complete                                   |
+| 5. Review package  | follow-up review pending                                                              |
+
+## Follow-up design pass (2026-09-25)
+
+- Phones now keep the old deck piles through the TV's 3.3 s pile beat, including a burned next
+  word or a won word moved to lost. Deck tests compare the reversed result counts with the
+  preceding server view for right, burn, and unwon cases.
+- Guess phones reveal each surviving clue on the TV's card beat and wait until the echo flip to
+  show the echo count or total echo message.
+- Check rows mark separated clues as “Kept apart” and label the reversal “Undo” (Spanish:
+  “Separadas”, “Deshacer”).
+- The phone result deck wraps at large text sizes; the result icon and line fit the iPhone SE at
+  200% Spanish text. Its three counts remain reachable by scrolling. The short Spanish SecretCard
+  mini instruction fits on the same device; the SDK's in-flow sizer remains a platform follow-up.
+- TV clue cards keep their declared width when a row is crowded, so the word itself cannot be
+  compressed by flex layout.
+- Evidence: an own-port six-player live capture reached results in 34 phase changes and 122 cues;
+  dead-air analysis found no still span during active play (TV: two spans at start/results; phone:
+  one at results). Fixture sweeps covered the TV and iPhone SE, with a targeted Spanish/200% pass.
 
 ## Platform pieces not on main yet (stand-ins in use)
 

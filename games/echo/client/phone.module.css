@@ -142,6 +142,11 @@
   border-color: var(--pb-accent-3);
 }
 
+.chip[data-hidden='1'] {
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
+}
+
 /* ── Secondary buttons (Don't know it, Pass, Same word…) ───────────────────────────────────── */
 .ghost {
   justify-self: center;
@@ -220,6 +225,7 @@
 /* ── Waiting / deck ────────────────────────────────────────────────────────────────────────── */
 .deck {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: var(--pb-space-3);
   margin: 0;
@@ -230,7 +236,7 @@
 .deckItem {
   display: grid;
   justify-items: center;
-  min-width: 4.2em;
+  min-width: min(4.2em, 100%);
   padding: var(--pb-space-2) var(--pb-space-3);
   border-radius: var(--pb-radius);
   background: var(--pb-surface);
@@ -257,6 +263,10 @@
     echo-float 2.8s ease-in-out var(--pb-motion-slow) infinite;
 }
 
+.resultIcon {
+  font-size: var(--pb-font-h1);
+}
+
 /* A waiting phone is never frozen: the big icon floats gently (transform only). */
 @keyframes echo-float {
   0%,
@@ -280,9 +290,12 @@
 
 .line {
   margin: 0;
+  min-width: 0;
   font-size: var(--pb-font-h2);
   font-weight: 900;
   text-align: center;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 

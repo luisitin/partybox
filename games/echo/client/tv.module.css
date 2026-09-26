@@ -106,6 +106,7 @@
   --card-h: 190px;
   position: relative;
   width: var(--card-w);
+  flex: 0 0 var(--card-w);
   height: var(--card-h);
   animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
   animation-delay: calc(var(--deal, 0ms) - var(--skip, 0ms));
