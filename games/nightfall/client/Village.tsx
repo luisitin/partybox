@@ -41,12 +41,16 @@ export function Village(p: VillageProps): JSX.Element {
   const L = useT(STRINGS);
   const faces = facesOf(p.players, p.living);
   const size = sizeFor(faces.length, p.narrow === true);
+  const wideNames = faces.length > 10;
   const maxHunch = Math.max(1, ...(p.tally ?? []).map((t) => t.n ?? 0));
   const order = new Map((p.tally ?? []).map((t, i) => [t.id, i + 1]));
   const noOne = (p.ballots ?? []).filter((b) => b.target === 'none');
   let landed = 0;
   return (
-    <div className={styles.village} style={{ '--face': `${size}px` } as CSSProperties}>
+    <div
+      className={`${styles.village} ${wideNames ? styles.wideNames : ''}`}
+      style={{ '--face': `${size}px` } as CSSProperties}
+    >
       {rowsOf(faces).map((row, r) => (
         <div key={r} className={styles.row}>
           {row.map((f, i) => {

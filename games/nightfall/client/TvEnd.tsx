@@ -55,9 +55,13 @@ export function EndBoard({
   const dead = new Set(view.graveyard.map((g) => g.id));
   const dense = end.roles.length > 10;
   return (
-    <div className={styles.column}>
+    <div className={`${styles.column} ${dense ? styles.denseEndBoard : ''}`}>
       {finale ? null : (
-        <h1 className={`${styles.display} ${styles.banner}`}>{L.sent(end.headline)}</h1>
+        <h1
+          className={`${styles.display} ${styles.banner} ${dense ? styles.denseEndHeadline : ''}`}
+        >
+          {L.sent(end.headline)}
+        </h1>
       )}
       <p className={styles.lead}>{whyLine(view, L)}</p>
       <div className={`${styles.cards} ${styles.endCards} ${dense ? styles.denseEndCards : ''}`}>

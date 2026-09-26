@@ -26,6 +26,10 @@
   transform: translateY(calc(var(--lift) * -28px));
 }
 
+.wideNames .person {
+  width: calc(var(--face) + 68px);
+}
+
 .inner {
   display: flex;
   flex-direction: column;
