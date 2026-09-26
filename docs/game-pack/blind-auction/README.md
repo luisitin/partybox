@@ -1,7 +1,7 @@
-# 🔨 Blind Auction
+# 🔨 Mystery Box
 
-- **Game id (planned):** `blind-auction` — the code will live in `games/blind-auction/` once the owner says to build it.
-- **Status:** spec received 2026-09-24 (Part 04) — not started.
+- **Game id:** `blind-auction` — code in `games/blind-auction/` on branch `game/blind-auction`.
+- **Status:** built 2026-09-24; review package [REVIEW.md](REVIEW.md) round 1 waiting for the owner; build notes [NOTES.md](NOTES.md). Not merged.
 - **Spec:** [SPEC.md](SPEC.md) · part file [`../parts/04-ECHO-BLIND-AUCTION.md`](../parts/04-ECHO-BLIND-AUCTION.md) · platform: [`../parts/00-FOUNDATION.md`](../parts/00-FOUNDATION.md).
 - **How to build it (when asked):** the `game-pack-build` skill, then the `record-review` skill until every smoothness gate holds.
 

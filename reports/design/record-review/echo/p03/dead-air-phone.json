@@ -1,0 +1,29 @@
+{
+  "video": "C:\\dev\\partybox-game-echo\\reports\\design\\record-review\\echo\\p03\\video\\phone\\round.webm",
+  "bytes": 6054408,
+  "durationS": 200.5,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 196.5,
+      "toS": 199.2,
+      "ms": 2700,
+      "during": "results",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 2700,
+  "hardCuts": [],
+  "samples": 2004,
+  "motion": {
+    "p50": 0.0001,
+    "p90": 0.004,
+    "p99": 0.0642,
+    "max": 0.1441
+  }
+}

@@ -91,10 +91,11 @@
   }
   50% {
     opacity: 1;
-    transform: translateX(-6%) scale(0.98); /* I-120 B: cleared away, not dissolved */
+    /* Overscan while lifting: shrinking and sliding left exposed the incoming game's right edge. */
+    transform: translateY(-8px) scale(1.08);
   }
   100% {
     opacity: 0;
-    transform: translateX(-6%) scale(0.98);
+    transform: translateY(-8px) scale(1.08);
   }
 }

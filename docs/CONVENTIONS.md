@@ -34,13 +34,26 @@ Examples: `feat(wisecrack): add vote phase`, `fix(engine): F-012 VIP handover ig
 
 ## Docs
 
-- `CLAUDE.md` (root) ≤ 120 lines; folder `README.md` ≤ 60 lines; package/game `CLAUDE.md` ≤ 30 lines.
+- `AGENTS.md` (root) ≤ 120 lines; folder `README.md` ≤ 60 lines; package/game `AGENTS.md` ≤ 30 lines.
+- One rulebook (ADR-055): a folder's rules live in its `AGENTS.md`, which Codex and other agents read by
+  name. The `CLAUDE.md` beside it holds only the pointer below, which Claude Code expands, so the two can't
+  drift. A folder that still has only a `CLAUDE.md` (a branch cut before the switch) converts with
+  `git mv CLAUDE.md AGENTS.md`, then the pointer as the new `CLAUDE.md`:
+
+  ```
+  @AGENTS.md
+
+  This folder's rules live in AGENTS.md next to this file: one rulebook for every agent (ADR-055). Edit AGENTS.md, not this file.
+  ```
+
 - Decisions → `docs/DECISIONS.md` (ADR: Context → Decision → Consequences, numbered).
 - New dependency → one line in `docs/DEPENDENCIES.md` (drift check fails otherwise).
 - Game `README.md` headings, in order: Overview, Players, Phases, Inputs, Scoring, Edge cases, Settings, Content.
 
 ## Git worktrees (parallel sessions)
 
-`claude --worktree <name>` creates `.claude/worktrees/<name>` (gitignored). Sessions run `git merge main`
-at the start of each loop and commit to their own branch; the owner merges into `main`. Ports: 42069 main,
-42070 stress, 42071 design. See `reports/README.md`.
+Every agent works in its own worktree and branch: `git -C C:/dev/partybox worktree add C:/dev/partybox-<name>
+-b <branch> main` (early sessions used `claude --worktree <name>`, giving `.claude/worktrees/<name>`, gitignored).
+Merge `main` in at the start of each loop. Branches reach `main` through peer review on the Agent Hub (4
+APPROVEs, 2 of them DESIGN), one merge at a time: `docs/CODEX_GUIDE.md`. Ports: 42069 is the owner's server,
+42070 stress, 42071 design; the guide lists the rest. See `reports/README.md`.

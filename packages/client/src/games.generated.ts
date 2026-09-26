@@ -11,13 +11,25 @@ export const gameLoaders: Readonly<Record<string, GameLoaders>> = {
     phone: () => import('../../../games/blanks/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/blanks/client/tv-entry').then((m) => m.tv),
   },
+  'blind-auction': {
+    phone: () => import('../../../games/blind-auction/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/blind-auction/client/tv-entry').then((m) => m.tv),
+  },
   'broken-pencil': {
     phone: () => import('../../../games/broken-pencil/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/broken-pencil/client/tv-entry').then((m) => m.tv),
   },
+  'echo': {
+    phone: () => import('../../../games/echo/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/echo/client/tv-entry').then((m) => m.tv),
+  },
   'fake-out': {
     phone: () => import('../../../games/fake-out/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/fake-out/client/tv-entry').then((m) => m.tv),
+  },
+  'herd-mind': {
+    phone: () => import('../../../games/herd-mind/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/herd-mind/client/tv-entry').then((m) => m.tv),
   },
   'hive-rank': {
     phone: () => import('../../../games/hive-rank/client/phone-entry').then((m) => m.phone),
@@ -31,6 +43,10 @@ export const gameLoaders: Readonly<Record<string, GameLoaders>> = {
     phone: () => import('../../../games/lightning-round/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/lightning-round/client/tv-entry').then((m) => m.tv),
   },
+  'secret-hitler': {
+    phone: () => import('../../../games/secret-hitler/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/secret-hitler/client/tv-entry').then((m) => m.tv),
+  },
   'spy-grid': {
     phone: () => import('../../../games/spy-grid/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/spy-grid/client/tv-entry').then((m) => m.tv),
@@ -39,6 +55,10 @@ export const gameLoaders: Readonly<Record<string, GameLoaders>> = {
   'tune-in': {
     phone: () => import('../../../games/tune-in/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/tune-in/client/tv-entry').then((m) => m.tv),
+  },
+  'who-said-it': {
+    phone: () => import('../../../games/who-said-it/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/who-said-it/client/tv-entry').then((m) => m.tv),
   },
   'wisecrack': {
     phone: () => import('../../../games/wisecrack/client/phone-entry').then((m) => m.phone),
