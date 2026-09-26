@@ -2,7 +2,8 @@
 
 .offices {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12em), 1fr));
+  font-size: var(--pb-font-caption);
   gap: 0.35rem;
 }
 
@@ -26,8 +27,9 @@
 }
 
 .office > span {
-  grid-column: 2;
-  overflow-wrap: anywhere;
+  grid-column: 1 / -1;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .office[data-office='chancellor'] {

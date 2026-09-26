@@ -28,6 +28,10 @@
   overflow-wrap: anywhere;
 }
 
+.messages[data-hidden-above] {
+  mask-image: linear-gradient(to bottom, transparent, black 1em);
+}
+
 .message strong {
   color: var(--sh-brass);
 }

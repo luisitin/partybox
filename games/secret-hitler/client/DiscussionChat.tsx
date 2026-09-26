@@ -18,10 +18,25 @@ export function DiscussionChat({
   const [lastSent, setLastSent] = useState<number | null>(null);
   const [now, setNow] = useState(0);
   const list = useRef<HTMLDivElement>(null);
+  const [hiddenAbove, setHiddenAbove] = useState(false);
   const chat = view.chat ?? [];
+  const transcriptKey = JSON.stringify(chat);
+  useEffect(() => {
+    const el = list.current;
+    if (!el) return;
+    const measure = (): void => setHiddenAbove(el.scrollTop > 1);
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    el.addEventListener('scroll', measure, { passive: true });
+    measure();
+    return () => {
+      observer.disconnect();
+      el.removeEventListener('scroll', measure);
+    };
+  }, []);
   useEffect(() => {
     list.current?.scrollTo({ top: list.current.scrollHeight });
-  }, [chat.length]);
+  }, [transcriptKey]);
   useEffect(() => {
     if (lastSent === null || now - lastSent >= 3_000) return;
     const timer = setTimeout(() => setNow(Date.now()), 3_000 - (now - lastSent));
@@ -42,7 +57,13 @@ export function DiscussionChat({
       <strong className={styles.heading}>
         {L('Discuss…')} · {L('Room chat')}
       </strong>
-      <div ref={list} className={styles.messages} role="log" aria-live="polite">
+      <div
+        ref={list}
+        className={styles.messages}
+        data-hidden-above={hiddenAbove || undefined}
+        role="log"
+        aria-live="polite"
+      >
         {chat.length === 0 ? <p className={styles.empty}>{L('Talk to the room')}</p> : null}
         {chat.map((message, index) => {
           const id = view.seats[message.seat]?.id;
