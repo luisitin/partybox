@@ -544,3 +544,14 @@
   font-size: 0.72em;
   vertical-align: 0.1em;
 }
+
+/* ── I-167 A: the pause, said in the header's left side (full strength — the header isn't dimmed). */
+.pausedHead {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+}
