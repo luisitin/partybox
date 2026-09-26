@@ -47,7 +47,7 @@ export const STRINGS_TV: Record<string, string> = {
   'No clue this round': 'Sin pista esta ronda',
   'Waiting for {name} to reconnect': 'Esperando a que {name} vuelva',
   '{names} & {last}': '{names} y {last}',
-  '{team} hit the bullseye and goes again!': '¡{team} dio en el blanco y vuelve a jugar!',
+  'Catch-up turn: {team} plays next.': 'Turno de remontada: {team} juega a continuación.',
   'Next up: {team}': 'Ahora juega {team}',
   '+{n} for the group this round': '+{n} para el grupo en esta ronda',
 };

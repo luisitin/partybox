@@ -70,7 +70,7 @@ export function TvScores({ view }: GameTvProps<TuneTvView>): JSX.Element {
         />
         {view.catchUpNext ? (
           <BigText level="h2" tone="accent" className={styles.catchUp}>
-            {L('{team} hit the bullseye and goes again!', { team: teamName(L, turn.team) })}
+            {L('Catch-up turn: {team} plays next.', { team: teamName(L, turn.team) })}
           </BigText>
         ) : view.last ? null : (
           <BigText level="h2" tone="muted" className={styles.catchUp}>
