@@ -234,7 +234,15 @@ function dispatch(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyRes
       const r = event.results as Partial<RoomState['results']> | null;
       const ok =
         !!r && typeof r.gameId === 'string' && Array.isArray(r.players) &&
-        !!r.results && Array.isArray(r.results.ranking) && Array.isArray(r.results.winnerIds); // prettier-ignore
+        !!r.results && Array.isArray(r.results.ranking) && Array.isArray(r.results.winnerIds) &&
+        r.results.winnerIds.every((id) => typeof id === 'string') &&
+        r.results.ranking.every((row) => row && typeof row.playerId === 'string' &&
+          Number.isFinite(row.score) && Number.isFinite(row.rank)) &&
+        !!r.results.scores && typeof r.results.scores === 'object' && !Array.isArray(r.results.scores) &&
+        Object.values(r.results.scores).every(Number.isFinite) &&
+        Array.isArray(r.results.awards) && r.results.awards.every((award) =>
+          award && ['id', 'title', 'description', 'playerId'].every((key) =>
+            typeof (award as unknown as Record<string, unknown>)[key] === 'string')); // prettier-ignore
       if (!ok || !deps.games[(r as { gameId: string }).gameId])
         return { room, effects: [{ type: 'log', level: 'warn', text: 'dev:results rejected' }] };
       const results = r as NonNullable<RoomState['results']>;

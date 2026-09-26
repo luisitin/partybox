@@ -177,4 +177,28 @@ describe('room', () => {
     const bad = applyRoomEvent(room, { type: 'dev:results', now: T0, results: { gameId: 'fake' } }, deps); // prettier-ignore
     expect(bad.room).toBe(room);
   });
+
+  it.each([
+    { awards: undefined },
+    { awards: null },
+    { awards: [null] },
+    { awards: [{ id: 'award', title: 'Winner', playerId: 'p1' }] },
+    { ranking: [null] },
+    { ranking: [{ playerId: 'p1', score: '1', rank: 1 }] },
+    { winnerIds: [null] },
+    { scores: [] },
+    { scores: { p1: Infinity } },
+  ])('dev:results rejects malformed required fields without changing the room: %j', (patch) => {
+    const room = roomWith(2);
+    const results = {
+      gameId: 'fake',
+      players: [],
+      results: { scores: {}, ranking: [], winnerIds: [], awards: [], ...patch },
+    };
+    const rejected = applyRoomEvent(room, { type: 'dev:results', now: T0, results }, deps);
+    expect(rejected.room).toBe(room);
+    expect(rejected.effects).toEqual([
+      { type: 'log', level: 'warn', text: 'dev:results rejected' },
+    ]);
+  });
 });
