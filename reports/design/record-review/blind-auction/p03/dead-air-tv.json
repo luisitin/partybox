@@ -1,0 +1,36 @@
+{
+  "video": "C:\\dev\\partybox-game-blind-auction\\reports\\design\\record-review\\blind-auction\\p03\\video\\tv\\round.webm",
+  "bytes": 22061883,
+  "durationS": 176.4,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 88.5,
+      "toS": 90.6,
+      "ms": 2100,
+      "during": "live",
+      "cueInside": false
+    },
+    {
+      "fromS": 128.3,
+      "toS": 130.2,
+      "ms": 1900,
+      "during": "sold",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 4000,
+  "hardCuts": [],
+  "samples": 1763,
+  "motion": {
+    "p50": 0.0011,
+    "p90": 0.0086,
+    "p99": 0.0316,
+    "max": 0.125
+  }
+}

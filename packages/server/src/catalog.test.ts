@@ -32,8 +32,10 @@ describe('catalog', () => {
   const catalog = buildCatalog(manifests, serverGameText, NOW);
 
   it('lists every game A–Z with no long text', () => {
-    // every registered game, A–Z (the list grows as the pack's games land)
-    const ids = manifests.map((m) => m.id).sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+    // every registered game, A–Z by name (the list grows as the pack's games land)
+    const ids = [...manifests]
+      .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
+      .map((m) => m.id);
     expect(catalog.games.map((g) => g.id)).toEqual(ids);
     for (const g of catalog.games) {
       expect(g).not.toHaveProperty('description');

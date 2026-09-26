@@ -1,0 +1,352 @@
+/* Mystery Box on the phone: rem tokens (a larger-text phone scales the words), ≥ 44 px targets,
+   nothing selectable or zoomable on the controls, transform / opacity motion only. */
+
+.screen {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.topRow {
+  /* Never squeezed by the screen's column: a two-line name keeps its height. */
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--pb-space-2);
+  min-height: var(--pb-touch);
+}
+
+.topRow > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.topRow > :last-child {
+  flex: none;
+}
+
+.purse {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-1);
+  margin-left: auto;
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.kicker {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+
+.grand {
+  color: var(--pb-accent-2);
+}
+
+.lotIcon {
+  font-size: 1.1em;
+  flex: none;
+}
+
+.flavour {
+  margin: 0;
+  color: var(--pb-text-muted);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.soon {
+  margin: var(--pb-space-3) 0 0;
+  text-align: center;
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  animation: global(pb-breathe) 2s ease-in-out infinite;
+}
+
+.lotTitle {
+  /* The kicker over the name: a long name (or 200 % text) wraps under itself, never over the
+     line below or under the coin pill. */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+  margin: var(--pb-space-1) 0 0;
+}
+
+.lotTitleKicker {
+  flex: none;
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+
+.lotTitle.grand .lotTitleKicker {
+  color: var(--pb-accent-2);
+}
+
+.lotTitleName {
+  min-width: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.15;
+  /* A long name wraps under itself instead of being cut (play-test: 'Prenup P…'). */
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+
+/* After a pick at large text, keep the whole box name on one readable line so the choices remain
+   above the pinned stake pad. The full-size name was shown on the preceding box screen. */
+.lotTitleCompact .lotTitleName {
+  font-size: var(--pb-font-caption);
+}
+
+/* The lot, centred in the phone's height: the dealt card over its name and hint. */
+.lotStage {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-4);
+  margin-block: auto;
+  padding-top: var(--pb-space-2);
+}
+
+/* ── own line ── */
+.ownLine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-3);
+  margin-top: var(--pb-space-4);
+  padding: var(--pb-space-5) var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  box-shadow: inset 0 0 0 3px var(--ba-mood, var(--pb-surface-2));
+  text-align: center;
+  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.up {
+  --ba-mood: var(--pb-accent-3);
+}
+
+.down {
+  --ba-mood: var(--pb-danger);
+}
+
+.flat {
+  --ba-mood: var(--pb-surface-2);
+}
+
+.ownGlyph {
+  font-size: 3rem;
+  line-height: 1;
+  animation: ba-float 2.4s ease-in-out infinite;
+}
+
+@keyframes ba-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(6deg);
+  }
+}
+
+.ownBig {
+  margin: 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 1000;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.ownSmall {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+}
+
+.ownLine .purse {
+  margin-left: 0;
+}
+
+/* ── PhoneStage ── */
+.stageTop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-4);
+  margin-top: var(--pb-space-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .soon,
+  .ownLine,
+  .ownGlyph {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) :is(.soon, .ownLine) {
+  animation: none;
+}
+
+/* A short phone (iPhone SE and smaller): the lot's picture gives way to its words, and the live
+   screen tightens, so the hint is never below the fold. */
+@media (max-height: 640px) {
+  .lotStage > :first-child {
+    display: none;
+  }
+  .standingAmount {
+    font-size: var(--pb-font-h1);
+  }
+  .raise {
+    min-height: 56px;
+    padding-block: var(--pb-space-1);
+  }
+  .raiseAmount {
+    font-size: var(--pb-font-body);
+  }
+  .standing {
+    margin-bottom: var(--pb-space-2);
+  }
+  .winning {
+    min-height: 124px;
+  }
+  /* The box's name and the coin pill share one row ("Box n/N" is on the TV; the grand box keeps
+     its ★ kicker): the bet's cards and stake fit above the fold on an SE (review [4ba285]). */
+  .lotTitle {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--pb-space-2);
+    margin-top: 0;
+  }
+  .lotTitle .kickerRow {
+    display: contents;
+  }
+  .lotTitle:not(.grand) .lotTitleKicker {
+    display: none;
+  }
+  .lotTitle .lotTitleKicker {
+    flex-basis: 100%;
+  }
+  .lotTitleName {
+    flex: 1 1 0;
+    order: 1;
+    font-size: var(--pb-font-body);
+  }
+  .lotTitle .kickerRow > :last-child {
+    order: 2;
+  }
+  .betHead {
+    gap: var(--pb-space-1);
+  }
+}
+
+.betHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+}
+
+/* ── doors: stay or switch ── */
+.doorRow {
+  display: flex;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  margin: var(--pb-space-3) 0;
+}
+
+.doorMini {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  width: 52px;
+  height: 74px;
+  border-radius: 10px 10px 3px 3px;
+  background: linear-gradient(#7a4a31, #4f2d1d);
+  box-shadow: inset 0 0 0 4px #2d1a10;
+  color: #f3d7b0;
+  font-size: 1.75rem;
+  font-weight: 900;
+}
+
+.doorMiniOpen {
+  /* px, not rem: the goat stays inside its frame at 200 % text. */
+  font-size: 30px;
+  background: var(--pb-bg);
+  box-shadow: inset 0 0 0 3px var(--pb-surface-2);
+}
+
+.doorMiniMine {
+  box-shadow:
+    inset 0 0 0 4px #2d1a10,
+    0 0 0 4px var(--pb-accent-2);
+}
+
+.swapLine {
+  margin: 0 0 var(--pb-space-3);
+  text-align: center;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.swapButtons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+}
+
+.betHint {
+  margin: 0;
+  text-align: center;
+  font-weight: 800;
+  color: var(--pb-accent-2);
+}
+
+.kickerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-2);
+  align-self: stretch;
+}
+
+/* The doubled grand-box caption and scaled coin pill must both fit at 200% text. */
+.lotTitle.grand .kickerRow {
+  flex-wrap: wrap;
+}
+
+.lotTitle.grand .lotTitleKicker {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.lotTitle.grand .kickerRow .purse {
+  flex-shrink: 0;
+}
+
+/* Short phones: the hint is a caption (after .betHint so it wins; review [2a24d2] #2). */
+@media (max-height: 640px) {
+  .betHint {
+    font-size: var(--pb-font-caption);
+  }
+}
