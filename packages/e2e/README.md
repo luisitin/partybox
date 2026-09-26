@@ -49,6 +49,7 @@ pnpm exec tsx packages/e2e/src/design/capture-game.ts --game <id> --out <dir>   
 pnpm exec tsx packages/e2e/src/design/capture-{themes,fit,home}.ts --out <dir>         # lobby per theme · TV at 4 viewport sizes · TV 🏠 flow
 pnpm exec tsx packages/e2e/src/design/capture-loop.ts --pass <n> --game <id> [--scenario …]  # /review-loop round: video, stills, strips, cue log · loop-sheet.ts <strip-dir> = contact sheet
 pnpm exec tsx packages/e2e/src/design/audio-trace.ts --out <dir>                       # every sound across every screen: 45 checks → AUDIO-TRACE.md
+pnpm exec tsx packages/e2e/src/design/capture-results-tie.ts --port <own-port> --build --only teams3,teams4 --out <dir> # team rows + unassigned player, EN/ES TV/SE/200%
 ```
 
 `quickpoll` is a throwaway `pnpm new-game quickpoll` scaffold of `_template` (text answer + bots welcome)
@@ -56,5 +57,4 @@ that `capture-core`, `-video`, `-bots` and `measure` drive: create it locally, n
 `games.generated.ts` it adds itself to). `devices.ts` = tv, tv4k, pc720, laptop, tv4kcss, iphone,
 iphone-se, pixel, galaxy, font200 (CSS-emulated 200 % scale), landscape. `session.ts` = dev-API client +
 join-through-the-form helpers. `shooter.ts` records every still in `manifest.json` for the contact sheet.
-`capture-core.ts` walks join errors, lobby 1/6/16, selecting, every phase with every phone role, results,
-play-again, end, kick, server restart; `capture-video.ts` records one unfrozen round.
+`capture-core.ts` walks join errors, lobby 1/6/16, selecting, every phase with every phone role, results, play-again, end, kick, server restart; `capture-video.ts` records one unfrozen round.
