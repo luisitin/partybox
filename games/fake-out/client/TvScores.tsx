@@ -1,6 +1,7 @@
 // TV: the scoreboard after each question (SPEC §3.3 `scores`): totals climbing to their new places
 // with this question's deltas, then how the points came — each scorer's reason chips ("+1000
 // truth", "+1000 fooled 2", "×2 final"). The Next button lives on the VIP's phone.
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { Avatar, BigText, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
@@ -34,8 +35,15 @@ export function TvScores({ view }: Props): JSX.Element {
     )
     .map((r) => r.playerId);
   const scorers = rows.filter((r) => r.delta > 0).sort((a, b) => b.delta - a.delta);
+  const [reasonPage, setReasonPage] = useState(0);
+  const reasonPages = Math.ceil(scorers.length / 6);
+  useEffect(() => {
+    if (reasonPages < 2) return;
+    const timer = window.setTimeout(() => setReasonPage(1), 4800);
+    return () => window.clearTimeout(timer);
+  }, [view.n, reasonPages]);
   return (
-    <Stage center className={styles.scores}>
+    <Stage center className={`${styles.scores} ${rows.length > 4 ? styles.scoresMany : ''}`}>
       <p className={styles.kicker}>
         {last
           ? L('After the Final Fake-Out')
@@ -49,22 +57,35 @@ export function TvScores({ view }: Props): JSX.Element {
       </p>
       <BigText level="h1">{last ? L('Final scores') : L('Scores so far')}</BigText>
       <div className={styles.board}>
-        <Scoreboard rows={rows} noTrophy stagger="climb" climbFrom={climbFrom} />
+        <Scoreboard
+          rows={rows}
+          noTrophy
+          stagger="climb"
+          climbFrom={climbFrom}
+          size={rows.length > 6 ? 'sm' : 'md'}
+        />
       </div>
       {scorers.length > 0 ? (
-        <ul className={styles.howList} aria-label={L('How the points came')}>
-          {scorers.slice(0, 4).map((r, i) => (
-            <li key={r.playerId} className={styles.how} style={{ ['--i' as string]: i }}>
-              <Avatar avatarId={r.avatarId} size="var(--pb-space-7)" />
-              <span className={styles.howName}>{r.name}</span>
-              {r.why.map((w, j) => (
-                <span key={j} className={styles.chip} data-k={w.k}>
-                  {whyChip(L, w)}
-                </span>
-              ))}
-            </li>
-          ))}
-        </ul>
+        <div className={styles.reasonFrame}>
+          <ul className={styles.howList} aria-label={L('How the points came')}>
+            {scorers.slice(reasonPage * 6, (reasonPage + 1) * 6).map((r, i) => (
+              <li key={r.playerId} className={styles.how} style={{ ['--i' as string]: i }}>
+                <Avatar avatarId={r.avatarId} size="var(--pb-space-7)" />
+                <span className={styles.howName}>{r.name}</span>
+                {r.why.map((w, j) => (
+                  <span key={j} className={styles.chip} data-k={w.k}>
+                    {whyChip(L, w)}
+                  </span>
+                ))}
+              </li>
+            ))}
+          </ul>
+          {reasonPages > 1 ? (
+            <span className={styles.reasonPage} aria-label={`${reasonPage + 1} / ${reasonPages}`}>
+              {reasonPage + 1} / {reasonPages}
+            </span>
+          ) : null}
+        </div>
       ) : (
         <BigText level="h2" tone="muted">
           {L('Nobody scored this time')}
