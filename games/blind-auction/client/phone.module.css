@@ -330,6 +330,20 @@
   align-self: stretch;
 }
 
+/* The doubled grand-box caption and scaled coin pill must both fit at 200% text. */
+.lotTitle.grand .kickerRow {
+  flex-wrap: wrap;
+}
+
+.lotTitle.grand .lotTitleKicker {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.lotTitle.grand .kickerRow .purse {
+  flex-shrink: 0;
+}
+
 /* Short phones: the hint is a caption (after .betHint so it wins; review [2a24d2] #2). */
 @media (max-height: 640px) {
   .betHint {
