@@ -224,6 +224,13 @@ game ships it, else the first listed; the picker's chip is honest about it. A ga
 loads its ES pack by that value, passes it to the SDK matcher and `toSpeakable`, and defaults its
 reader to a Spanish voice (`dora` / `alex` / `santa`).
 
+A select setting option may carry `lang: "en"` or `"es"`. The picker offers untagged options and
+options for the game's content language. If a stored value is not offered in that language, the
+picker displays the manifest default when it is offered, otherwise the first option tagged for
+that language, then the first offered untagged option if the manifest has no language-specific
+option. The game's server must use the same fallback for play; hiding an option in the picker alone
+does not change the stored value.
+
 ### Bots (`manifest.supportsBots`)
 
 Every game ships `bot.sampleInput` (sim, e2e and the contract suite need it). Setting
