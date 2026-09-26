@@ -411,3 +411,12 @@
   letter-spacing: 0;
   text-transform: none;
 }
+
+/* ── I-247 A: the standing, one bold line under the rule. */
+.standing {
+  display: block;
+  margin-top: var(--pb-space-1);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text);
+}

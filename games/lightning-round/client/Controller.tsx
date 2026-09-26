@@ -1,5 +1,6 @@
 // Controller (phone) view for Lightning Round: a ChoiceGrid for the question (locked after one
 // tap, ✓/✗ in reveal), a ChoiceGrid of wager options before the final, waiting screens otherwise.
+import type { WagerStanding } from '../server/views';
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import {
@@ -198,6 +199,10 @@ export function Controller({
             <span className={styles.rule}>
               {L('Right answer: +wager. Wrong or no answer: −wager.')}
             </span>
+            {/* I-247 A: where I stand — the numbers the bet depends on */}
+            {view.myStanding ? (
+              <span className={styles.standing}>{standingLine(view.myStanding, L)}</span>
+            ) : null}
           </>
         }
         choices={options.map((o) => ({
@@ -277,4 +282,13 @@ function Worth({
       {L('+{points} now', { points })}
     </span>
   );
+}
+
+/** I-247 A: "#2 of 6 · Priya leads by 340 · Bot 3 is 210 behind you". */
+function standingLine(s: WagerStanding, L: Translator): string {
+  const parts = [L('#{rank} of {count}', { rank: s.rank, count: s.count })];
+  if (s.leader) parts.push(L('{name} leads by {gap}', { name: s.leader.name, gap: s.leader.gap }));
+  else parts.push(L('you lead'));
+  if (s.chaser) parts.push(L('{name} is {gap} behind you', { name: s.chaser.name, gap: s.chaser.gap }));
+  return parts.join(' · ');
 }

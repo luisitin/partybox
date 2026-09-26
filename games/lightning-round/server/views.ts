@@ -92,6 +92,8 @@ export interface LightningControllerView extends ControllerView {
   worth?: { base: number; speedMax: number; bonus: number; windowMs: number };
   /** I-550 A: `wager`: the final question's topic. */
   finalTopic?: Topic | null;
+  /** I-247 A: `wager`: where I stand — my place, who leads, who is chasing me. */
+  myStanding?: WagerStanding;
   /** `wager`: the buttons for this player (0-score players only see 0). */
   wagerChoices?: WagerOption[];
   /** Own wager once placed (from `wager` through the final reveal). */
@@ -279,6 +281,7 @@ export function controllerView(
   if (round && !round.final && round.total > 0)
     view.progressStep = { unit: 'question', n: round.number, of: round.total };
   if (phase === 'wager' && me) view.wagerChoices = wagerOptions(score);
+  if (phase === 'wager' && me) view.myStanding = standingOf(state, playerId); // I-247 A
   if (phase === 'wager') view.finalTopic = finalTopicOf(state); // I-550 A
   const wagerVisible = phase === 'wager' || ((phase === 'question' || phase === 'reveal') && final);
   if (wagerVisible && me && Object.hasOwn(state.wagers, playerId))
@@ -298,4 +301,25 @@ function finalTopicOf(state: State): Topic | null {
     subcategoryLabel: labelOf(q.subcategory),
     difficulty: q.difficulty,
   };
+}
+
+/** I-247 A: the numbers a wager depends on. */
+export interface WagerStanding {
+  rank: number;
+  count: number;
+  /** The leader and their lead over me (null when I lead or share the lead). */
+  leader: { name: string; gap: number } | null;
+  /** The nearest player below me and how far behind they are (null when nobody is). */
+  chaser: { name: string; gap: number } | null;
+}
+
+export function standingOf(state: State, playerId: string): WagerStanding | undefined {
+  const rows = standingsOf(state);
+  const mine = rows.find((r) => r.playerId === playerId);
+  if (!mine) return undefined;
+  const top = rows[0];
+  const leader = top && top.score > mine.score ? { name: top.name, gap: top.score - mine.score } : null;
+  const next = rows.find((r) => r.playerId !== playerId && r.score < mine.score);
+  const chaser = next ? { name: next.name, gap: mine.score - next.score } : null;
+  return { rank: mine.rank, count: rows.length, leader, chaser };
 }
