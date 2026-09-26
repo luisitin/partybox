@@ -1,9 +1,8 @@
 # 🏛️ Secret Hitler
 
-- **Game id:** `secret-hitler` — code in `games/secret-hitler/`, branch `game/secret-hitler`,
-  worktree `C:/dev/partybox-game-secret-hitler`, harness port 42410.
-- **Status:** M1 (Classic rules engine + plain screens) built 2026-09-24; waiting for the owner's
-  review. M2–M4 not started.
+- **Game id:** `secret-hitler` — code in `games/secret-hitler/`, on main since `376c6712`.
+- **Status:** M1 Classic rules merged 2026-09-25; the M2 Parliament Noir visual pass is in place.
+  Claims, the full Record, narrator, chat and PhoneStage remain for M2; M3–M4 are not started.
 - **Spec:** [SPEC.md](SPEC.md) — a standalone spec (not cut from a part file), written against
   `GAME-DESIGN-BRIEF.md` and Part 00. Build notes, conflicts and stand-ins: [NOTES.md](NOTES.md).
 - **Licence:** adapted from Secret Hitler (Goat, Wolf, & Cabbage), CC BY-NC-SA 4.0 — private,

@@ -1,0 +1,77 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.35rem;
+  border: 2px solid var(--sh-brass-2);
+  border-radius: 9px;
+  background: var(--sh-night-2);
+}
+
+.heading {
+  color: var(--sh-brass);
+  font-family: var(--sh-font-display);
+  font-size: var(--pb-font-caption);
+}
+
+.messages {
+  min-height: 1.5rem;
+  max-height: min(13vh, 5rem);
+  overflow-y: auto;
+  color: var(--sh-text);
+  font-size: var(--pb-font-caption);
+}
+
+.message,
+.empty {
+  margin: 0 0 0.2rem;
+  overflow-wrap: anywhere;
+}
+
+.messages[data-hidden-above] {
+  mask-image: linear-gradient(to bottom, transparent, black 1em);
+}
+
+.message strong {
+  color: var(--sh-brass);
+}
+
+.empty {
+  color: var(--sh-text-muted);
+}
+
+.composer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.3rem;
+}
+
+.composer input,
+.composer button {
+  min-height: 44px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: var(--pb-font-caption);
+}
+
+.composer input {
+  min-width: 0;
+  padding: 0.35rem 0.5rem;
+  border: 2px solid var(--sh-paper);
+  color: var(--sh-ink);
+  background: var(--sh-paper);
+}
+
+.composer button {
+  padding: 0.35rem 0.65rem;
+  border: 2px solid var(--sh-brass);
+  color: var(--sh-ink);
+  background: var(--sh-brass);
+  font-family: var(--sh-font-display);
+  cursor: pointer;
+}
+
+.composer button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}

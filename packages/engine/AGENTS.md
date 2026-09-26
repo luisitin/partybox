@@ -6,3 +6,4 @@
 - `rev` increases on every push effect; VIP actions from non-VIPs return `{ state, effects: [] }`.
 - Keep ≥ 90 % line coverage — `pnpm test:coverage` fails the threshold otherwise.
 - Test: `pnpm vitest --project engine`.
+- `dev:results` must reject malformed required scores, ranking, winner IDs and awards before publishing capture state; regression cases live in `src/room.test.ts`.

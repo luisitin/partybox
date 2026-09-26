@@ -91,6 +91,7 @@ export function TvSeats({ view }: { view: ShTvView }): JSX.Element {
             style={style}
             data-seat={seat.id}
             data-gone={gone || undefined}
+            data-office={plate || undefined}
             data-spot={spot === seat.id || undefined}
             data-dim={(spot !== null && spot !== seat.id) || undefined}
           >

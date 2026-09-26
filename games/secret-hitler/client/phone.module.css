@@ -37,7 +37,7 @@
 }
 
 /* A two-way choice (Agree / Refuse) sits side by side to leave room for the table. */
-.actions:has(> :nth-child(2)):not(:has(> :nth-child(3))) {
+.actions:not([data-chat]):has(> :nth-child(2)):not(:has(> :nth-child(3))) {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }

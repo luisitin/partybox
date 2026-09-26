@@ -1,5 +1,5 @@
 // Shared by the phone and TV results screens: results → scoreboard rows + winner sentence.
-import type { RoomSnapshot } from '@partybox/shared';
+import type { GameAward, RoomSnapshot } from '@partybox/shared';
 import type { ScoreboardRow } from '@partybox/game-sdk/ui';
 import { getLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
@@ -30,10 +30,29 @@ export function scoreboardRows(room: RoomSnapshot): ScoreboardRow[] {
   });
 }
 
+/** The longest word in a line, in letters: the phone's headline shrinks until it fits. */
+export function longestWord(line: string): number {
+  return Math.max(1, ...line.split(/\s+/).map((word) => [...word].length));
+}
+
 /** True when nobody scored anything (a game ended early): trophies and "wins" would be nonsense. */
 export function nobodyScored(room: RoomSnapshot): boolean {
   const scores = Object.values(room.results?.results.scores ?? {});
   return scores.length > 0 && scores.every((s) => s <= 0);
+}
+
+/** The results cue, one rule for the TV and a phone-only room's phones: a soft note when nobody
+ *  scored; ADR-052 co-op / teams — the cheer for a win, the tie chord for a draw or a loss;
+ *  otherwise the tie chord for several winners (I-037 C), else the cheer. */
+export function resultsCue(room: RoomSnapshot): 'leave' | 'tie' | 'cheer' {
+  if (nobodyScored(room)) return 'leave';
+  const outcome = room.results?.results.outcome;
+  if (outcome) {
+    const won =
+      outcome.kind === 'coop' ? outcome.won : outcome.teams.some((x) => x.id === outcome.winner);
+    return won ? 'cheer' : 'tie';
+  }
+  return (room.results?.results.winnerIds.length ?? 0) > 1 ? 'tie' : 'cheer';
 }
 
 /** ADR-052: the line for a co-op or team game — the game's own headline first. */
@@ -47,7 +66,8 @@ export function outcomeLine(room: RoomSnapshot): string | null {
   if (o.kind === 'coop') return o.won ? t.results.coopWon : t.results.coopLost;
   const team = o.teams.find((x) => x.id === o.winner);
   if (!team) return t.results.teamDraw;
-  return t.results.teamWins(`${team.mark ? `${team.mark} ` : ''}${say(team.name)}`);
+  // The mark closes the line, never mid-sentence ("¡Gana ● Luna!" read as a typo, tune-in af72d6).
+  return `${t.results.teamWins(say(team.name))}${team.mark ? ` ${team.mark}` : ''}`;
 }
 
 export function winnerLine(room: RoomSnapshot, scoreless = false): string {
@@ -79,7 +99,11 @@ export function winnerLine(room: RoomSnapshot, scoreless = false): string {
   // I-153 C: a tie nobody was there for — a TIE, not a lone bot winner, which still gets its
   // name ("Bot 1 wins!"). Recording this caught it: the first draft crowned a single bot with
   // "The bots tie — nobody home?" over a board showing Bot 1 alone on 3.
-  if (ids.length > 1 && people.length === 0 && bots.length > 0) return t.results.botTie;
+  // Only when no person played at all: with people lower down the board, "nobody home?" read as if
+  // nobody had played (imposter's three-bot tie over Lucía's 3rd place) — then the bots are named.
+  const anyPerson = results.players.some((p) => p.bot !== true);
+  if (ids.length > 1 && people.length === 0 && bots.length > 0 && !anyPerson)
+    return t.results.botTie;
   // I-153 B: bots tied with people are "the bots" — furniture does not get billing.
   if (bots.length > 0 && people.length > 0) {
     const named = people.map((p) => p.name);
@@ -91,7 +115,43 @@ export function winnerLine(room: RoomSnapshot, scoreless = false): string {
   if (names.length === 1) return t.results.winner(names[0] as string);
   if (names.length === 2)
     return t.results.winners(t.results.pair(names[0] as string, names[1] as string));
+  // up to three are all named (the reviewer's "Abuela, Kenji & 1 other tie!" had room for Lucía)
+  if (names.length === 3) return t.results.tieNamed(joinNames(names));
   return t.results.tieAmong(`${names[0]}, ${names[1]}`, names.length - 2);
+}
+
+/** "Sam", "Sam & Maya", "Sam, Maya & Leo" — the language's own "&" (t.results.pair). */
+export function joinNames(names: string[]): string {
+  if (names.length <= 1) return names[0] ?? '';
+  return t.results.pair(names.slice(0, -1).join(', '), names.at(-1) as string);
+}
+
+/** One award, everyone who won it: a tie gives the award to each tied player, and a card per
+ *  player repeated the award (and collided on its key, echo/imposter play-tests). A description
+ *  often carries the winner's own number ("Most votes received: 6"): it stays the card's line only
+ *  when every winner's reads the same, else each winner keeps theirs (`perPlayer`). */
+export interface AwardGroup {
+  id: string;
+  title: string;
+  description: string | null;
+  playerIds: string[];
+  perPlayer: { playerId: string; description: string }[];
+}
+
+export function groupAwards(awards: readonly GameAward[]): AwardGroup[] {
+  const groups = new Map<string, AwardGroup>();
+  for (const a of awards) {
+    const key = `${a.id}|${a.title}`;
+    const group = groups.get(key);
+    if (!group) {
+      groups.set(key, { id: a.id, title: a.title, description: a.description, playerIds: [a.playerId], perPlayer: [{ playerId: a.playerId, description: a.description }] }); // prettier-ignore
+    } else if (!group.playerIds.includes(a.playerId)) {
+      group.playerIds.push(a.playerId);
+      group.perPlayer.push({ playerId: a.playerId, description: a.description });
+      if (group.description !== a.description) group.description = null;
+    }
+  }
+  return [...groups.values()];
 }
 
 /** My ranking entry — undefined for a spectator or a late joiner who has no row. */
@@ -110,4 +170,53 @@ export function winnerLineFor(room: RoomSnapshot, meId: string, scoreless = fals
   if (ids.length === 1) return t.results.youWin;
   if (ids.length >= results.players.length) return t.results.tie;
   return t.results.youTie;
+}
+
+/** ADR-052: one team's part of a team game's board. */
+export interface TeamGroup {
+  id: string;
+  name: string;
+  mark?: string;
+  color?: string;
+  won: boolean;
+  rows: ScoreboardRow[];
+}
+
+/** A team game's board grouped by team, the winning team first (null for any other game). */
+export function teamGroups(room: RoomSnapshot): TeamGroup[] | null {
+  const r = room.results;
+  const o = r?.results.outcome;
+  if (!r || !o || o.kind !== 'teams') return null;
+  const rows = scoreboardRows(room);
+  const groups: TeamGroup[] = o.teams.map((team) => ({
+    id: team.id,
+    name: serverText(team.name, getLang(), r.gameId),
+    ...(team.mark ? { mark: team.mark } : {}),
+    ...(team.color ? { color: team.color } : {}),
+    won: team.id === o.winner,
+    rows: rows.filter((row) => team.members.includes(row.playerId)),
+  }));
+  groups.sort((a, b) => Number(b.won) - Number(a.won));
+  // Someone in no team (the contract allows it: a player who left) still has a place on the board.
+  const teamless = rows.filter(
+    (row) => !o.teams.some((team) => team.members.includes(row.playerId)),
+  );
+  if (teamless.length > 0) groups.push({ id: '', name: t.results.teamless, color: 'var(--pb-text-muted)', won: false, rows: teamless }); // prettier-ignore
+  return groups;
+}
+
+/** The winning team's colour, for the headline (undefined when there is none). */
+export function winnerColor(room: RoomSnapshot): string | undefined {
+  return teamGroups(room)?.find((g) => g.won)?.color;
+}
+
+/** Your team's line on your phone: won, lost or drew (null outside a team game, or in no team). */
+export function yourTeamLine(room: RoomSnapshot, meId: string): string | null {
+  const groups = teamGroups(room);
+  const mine = groups?.find((g) => g.rows.some((row) => row.playerId === meId));
+  // the "No team" group is nobody's team: a player who left a side gets no team line
+  if (!groups || !mine || mine.id === '') return null;
+  // a draw still says where you were, and the tap finds your side (session-c fb4b9c #4)
+  if (!groups.some((g) => g.won)) return t.results.yourTeamDrew;
+  return mine.won ? t.results.yourTeamWon : t.results.yourTeamLost;
 }

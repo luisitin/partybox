@@ -1,0 +1,299 @@
+/* Mystery Box on the TV (1920×1080 CSS px, the shell zooms): tokens only, px not vw, transform /
+   opacity animation only, nothing important in the overscan. Reduced motion: every entrance and
+   loop off (see the end). */
+
+/* ── the table ── */
+.frame {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  container-type: size;
+  /* The card is at most 532 px tall, and never more than 62 % of the stage it is given. */
+  --ba-card-h: min(532px, 62cqh);
+}
+
+.table {
+  justify-content: safe center;
+  gap: var(--pb-space-4);
+  /* The strip above already sits inside the overscan: the table only keeps the bottom one (the
+     host bar), which gives a full room's short stage back ~40 px. */
+  padding-top: var(--pb-space-3);
+}
+
+.kicker {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-4);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+
+.grandKicker {
+  color: var(--pb-accent-2);
+  letter-spacing: 0.16em;
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.row {
+  display: flex;
+  /* Safe: a board taller than the row spills down, never up over the kicker (review [2a24d2] #1). */
+  align-items: safe center;
+  justify-content: center;
+  gap: var(--pb-space-8);
+  min-height: 0;
+}
+
+.cardCol {
+  flex: none;
+}
+
+.shake {
+  animation: global(pb-shake) var(--pb-motion-slow) var(--pb-ease) 600ms both;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--pb-space-5);
+  /* One width for every phase: the pair stays centred and the card never slides between phases. */
+  flex: 0 0 900px;
+  width: 900px;
+  min-width: 0;
+}
+
+/* Only the box's own panel rises in; the phases after it cut in place (the cards stay put). */
+.panelRise {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.plate,
+.call {
+  margin: 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.call {
+  color: var(--pb-accent);
+}
+
+.flavour {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  color: var(--pb-text-muted);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.count {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pb-space-4);
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.pips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-1);
+  max-width: 560px;
+}
+
+.pip {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--pb-text-muted);
+}
+
+.pipIn {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+@keyframes ba-stamp {
+  from {
+    opacity: 0;
+    transform: rotate(-22deg) scale(2.2);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-14deg) scale(1);
+  }
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+@keyframes ba-ring {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: var(--ba-ring-len);
+  }
+}
+
+@keyframes ba-bob {
+  0%,
+  100% {
+    transform: rotate(-12deg);
+  }
+  50% {
+    transform: rotate(18deg) translateY(-8px);
+  }
+}
+
+.soldHead {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-text-muted);
+}
+
+@keyframes ba-rung {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.good {
+  --ba-tone: var(--pb-accent-3);
+}
+
+.bad {
+  --ba-tone: var(--pb-danger);
+}
+
+.odd {
+  --ba-tone: var(--pb-info);
+}
+
+.purse {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  min-width: 200px;
+}
+
+@keyframes ba-fly {
+  from {
+    opacity: 0;
+    transform: translate(0, 10px) scale(0.6);
+  }
+  25% {
+    opacity: 1;
+    transform: translate(50px, -24px) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(190px, 0) scale(0.8);
+  }
+}
+
+@keyframes ba-swap {
+  from {
+    transform: rotate(-180deg) scale(0.6);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ── open: the reveal and the payouts ── */
+.insideLine {
+  margin: 0;
+  font-size: min(72px, 9cqh);
+  font-weight: 1000;
+  line-height: 1.05;
+  color: var(--ba-tone);
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.payouts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) 250ms both;
+}
+
+.winners {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2) var(--pb-space-4);
+  margin: 0;
+}
+
+.winner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.winner b {
+  color: var(--pb-accent-3);
+  font-weight: 1000;
+  font-variant-numeric: tabular-nums;
+}
+
+.winnerFace {
+  display: block;
+  width: min(48px, 6cqh);
+  height: min(48px, 6cqh);
+}
+
+.nobody {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+.losers {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grandKicker,
+  .shake,
+  .panel,
+  .pipIn,
+  .insideLine,
+  .payouts,
+  .winner {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) :is(.grandKicker, .shake, .panel, .pipIn) {
+  animation: none;
+}
