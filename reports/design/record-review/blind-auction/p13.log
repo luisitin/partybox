@@ -1,0 +1,26 @@
+(node:29348) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+pass 13: blind-auction pause 16p — 22 phase changes, 104 cues, tv long frames 300 (worst 117 ms), 197 s → reports/design/record-review/blind-auction/p13-16p-live
+  +0.0s playing/intro (timer 8 s)
+  +8.0s playing/lot (timer 7 s)
+  +15.4s playing/live (timer 8 s)
+  +32.5s playing/sold (timer 1 s)
+  +36.2s playing/flip (timer 1 s)
+  +42.5s playing/lot (timer 6 s)
+  +48.5s playing/live (timer 8 s)
+  +59.8s playing/sold (timer 1 s)
+  +63.0s playing/flip (timer 1 s)
+  +69.5s playing/lot (timer 6 s)
+  +76.8s playing/live (timer 8 s)
+  +87.5s playing/sold (timer 1 s)
+  +90.8s playing/flip (timer 1 s)
+  +97.1s playing/lot (timer 6 s)
+  +103.1s playing/live (timer 8 s)
+  +114.4s playing/sold (timer 1 s)
+  +117.8s playing/flip (timer 1 s)
+  +124.1s playing/lot (timer 7 s)
+  +131.2s playing/live (timer 8 s)
+  +147.9s playing/sold (timer 1 s)
+  +151.2s playing/flip (timer 1 s)
+  +157.6s results/results
+  note: pause: VIP paused 6 s at 2026-09-24T21:43:30.043Z in live
