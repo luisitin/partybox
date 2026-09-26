@@ -464,6 +464,53 @@ button.option:focus-visible {
   -webkit-box-orient: vertical;
 }
 
+/* With four or more answers, keep the selected card compact. At large text each alternative gets
+   a full-width row; on an SE the icon drops from the half-width pill to free the whole name. */
+.phone.picked.many.largeText:not(.uniformBoard) {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+}
+
+.phone.picked.many:not(.uniformBoard) .selected {
+  grid-template-areas:
+    'icon name name'
+    'odds odds pay';
+  padding-block: 2px;
+}
+
+.phone.picked.many:not(.uniformBoard) .selected .name,
+.phone.picked.many:not(.uniformBoard) .selected .pay {
+  font-size: calc(var(--pb-font-body) * 0.85);
+}
+
+.phone.picked.many:not(.uniformBoard) .selected .icon {
+  font-size: 1.125rem;
+}
+
+.phone.picked.many.largeText:not(.uniformBoard) .option:not(.selected) {
+  min-height: var(--pb-touch);
+}
+
+.phone.picked.many:not(.uniformBoard) .option:not(.selected) .name {
+  display: block;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+.phone.picked.many:not(.largeText):not(.uniformBoard) {
+  gap: 2px;
+}
+
+.phone.picked.many:not(.largeText):not(.uniformBoard) .option:not(.selected) {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'name short';
+  min-height: 40px;
+}
+
+.phone.picked.many:not(.largeText):not(.uniformBoard) .option:not(.selected) .icon {
+  display: none;
+}
+
 /* Every option pays the same (a uniform board): once one is picked, that shared line was read. */
 .phone.picked .uniform {
   display: none;

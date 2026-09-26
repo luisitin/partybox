@@ -1,5 +1,15 @@
 # Mystery Box — build notes
 
+## Folded bet layout review (2026-09-25)
+
+On a picked bet with four or more answers, the SE keeps two columns but drops icons from the
+alternative pills so each name and payout fit on one line. Large text uses one full-width row per
+alternative. The picked card stays compact; the full box title uses smaller type and Peek has a
+shorter visible label with its full wording available to assistive technology. On a
+short portrait phone, the pinned BidPad puts Pass beside Bet, leaving the last pill clear of the
+scroll fade. Measured on the race/peek, coin-streak/insurance and plain bet fixtures in EN and ES at
+SE and 200 % text.
+
 Session: Mystery Box · worktree `C:/dev/partybox-game-blind-auction` · branch `game/blind-auction` ·
 harness port 42380. Started 2026-09-24 (after the 30-minute foundation wait).
 

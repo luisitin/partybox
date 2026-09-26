@@ -24,6 +24,7 @@ export function OptionBoard({
   locked = null,
   still = false,
   hideLocked = false,
+  largeText = false,
 }: {
   options: readonly OptionView[];
   size?: 'tv' | 'phone';
@@ -46,6 +47,8 @@ export function OptionBoard({
   locked?: number | null;
   /** …and leave it out altogether (tug of war: the other team). */
   hideLocked?: boolean;
+  /** Large-text phone: keep picked alternatives full width. */
+  largeText?: boolean;
 }): JSX.Element {
   const L = useT(STRINGS);
   const picker = Boolean(onSelect);
@@ -67,7 +70,7 @@ export function OptionBoard({
   const cols = size === 'tv' ? (n <= 4 ? n : 3) : compact || uniform ? Math.min(n, 3) : 1;
   return (
     <div
-      className={`${styles.board} ${styles[size]} ${picker && selected !== null ? styles.picked : ''} ${compact ? styles.compact : ''} ${many ? styles.many : ''} ${uniform ? styles.uniformBoard : ''} ${still ? styles.still : ''} ${className ?? ''}`}
+      className={`${styles.board} ${styles[size]} ${picker && selected !== null ? styles.picked : ''} ${compact ? styles.compact : ''} ${many ? styles.many : ''} ${uniform ? styles.uniformBoard : ''} ${largeText ? styles.largeText : ''} ${still ? styles.still : ''} ${className ?? ''}`}
       role={picker ? 'radiogroup' : 'list'}
       aria-label={L("What's inside?")}
       style={{ '--ba-n': cols } as CSSProperties}

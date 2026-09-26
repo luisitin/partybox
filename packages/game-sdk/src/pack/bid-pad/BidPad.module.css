@@ -257,3 +257,26 @@
 .footer .pass {
   min-height: 36px;
 }
+
+/* On a short portrait phone, Pass shares the confirm row when the pad is pinned. The choices gain
+   one row of visible space without shrinking either tap target. */
+@media (orientation: portrait) and (max-height: 600px) {
+  .pinned .footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: stretch;
+    column-gap: var(--pb-space-2);
+  }
+  .pinned .footer .pad {
+    grid-column: 1 / -1;
+  }
+  .pinned .footer .pass {
+    max-width: 120px;
+    padding-inline: var(--pb-space-1);
+    font-size: var(--pb-font-caption);
+    line-height: 1.1;
+  }
+  .pinned .footer:not(:has(.pass)) > :last-child {
+    grid-column: 1 / -1;
+  }
+}

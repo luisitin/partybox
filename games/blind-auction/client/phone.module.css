@@ -108,6 +108,12 @@
   text-wrap: balance;
 }
 
+/* After a pick at large text, keep the whole box name on one readable line so the choices remain
+   above the pinned stake pad. The full-size name was shown on the preceding box screen. */
+.lotTitleCompact .lotTitleName {
+  font-size: var(--pb-font-caption);
+}
+
 /* The lot, centred in the phone's height: the dealt card over its name and hint. */
 .lotStage {
   flex-shrink: 0;

@@ -211,7 +211,7 @@ export function BidPad({
   );
   return (
     <Screen
-      className={`${styles.screen} ${className ?? ''}`}
+      className={`${styles.screen} ${pinPad ? styles.pinned : ''} ${className ?? ''}`}
       footer={
         <div className={styles.footer}>
           {pinPad ? pad : null}

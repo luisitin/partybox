@@ -76,28 +76,37 @@ export function PeekButton({
   done,
   struck,
   onPeek,
+  compact = false,
 }: {
   price: number;
   done: boolean;
   /** The ruled-out card's name, once peeked. */
   struck: string;
   onPeek: () => void;
+  /** After a pick, keep the large-text header to one touch-height line. */
+  compact?: boolean;
 }): JSX.Element {
   const L = useT(STRINGS);
+  const full = done
+    ? L('👁 Ruled out: {what}', { what: struck })
+    : L('👁 Peek: rule one out ({coin} {n})', { coin: COIN, n: price });
   return (
     <button
       type="button"
       disabled={done}
       aria-pressed={done}
+      aria-label={full}
       className={`${styles.insure} ${done ? styles.insureOn : ''}`}
       onClick={() => {
         buzz(10);
         onPeek();
       }}
     >
-      {done
-        ? L('👁 Ruled out: {what}', { what: struck })
-        : L('👁 Peek: rule one out ({coin} {n})', { coin: COIN, n: price })}
+      {compact
+        ? done
+          ? L('👁 Not {what}', { what: struck })
+          : L('👁 Peek {coin} {n}', { coin: COIN, n: price })
+        : full}
     </button>
   );
 }

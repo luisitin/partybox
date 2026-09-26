@@ -26,7 +26,15 @@ export function Purse({ coins }: { coins: number }): JSX.Element {
 }
 
 /** "Box 3/8 · 🏴‍☠️ Pirate's Chest" in one line. */
-export function LotTitle({ box, coins }: { box: BoxView; coins?: number }): JSX.Element {
+export function LotTitle({
+  box,
+  coins,
+  compact = false,
+}: {
+  box: BoxView;
+  coins?: number;
+  compact?: boolean;
+}): JSX.Element {
   const L = useT(STRINGS);
   const lang = useLang();
   const kicker = (
@@ -35,7 +43,9 @@ export function LotTitle({ box, coins }: { box: BoxView; coins?: number }): JSX.
     </span>
   );
   return (
-    <p className={`${styles.lotTitle} ${box.grand ? styles.grand : ''}`}>
+    <p
+      className={`${styles.lotTitle} ${box.grand ? styles.grand : ''} ${compact ? styles.lotTitleCompact : ''}`}
+    >
       {/* With `coins`, the purse shares the kicker's line so the name gets the full width. */}
       {coins === undefined ? (
         kicker

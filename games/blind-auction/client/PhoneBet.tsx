@@ -46,24 +46,31 @@ function largeText(): boolean {
 
 /** A short phone (an SE) or large text: the Bet button drops the pick's name, which the ticked
  *  card shows, so it stays one line (review [84a77f]). */
-function useShortPhone(): boolean {
+function usePhoneFit(): { short: boolean; large: boolean } {
   const query = '(max-height: 640px)';
-  const [short, setShort] = useState(
-    () => typeof window !== 'undefined' && (window.matchMedia(query).matches || largeText()),
-  );
+  const [fit, setFit] = useState(() => {
+    const large = typeof window !== 'undefined' && largeText();
+    return {
+      short: typeof window !== 'undefined' && (window.matchMedia(query).matches || large),
+      large,
+    };
+  });
   useEffect(() => {
     const m = window.matchMedia(query);
-    const on = (): void => setShort(m.matches || largeText());
+    const on = (): void => {
+      const large = largeText();
+      setFit({ short: m.matches || large, large });
+    };
     on();
     m.addEventListener('change', on);
     return () => m.removeEventListener('change', on);
   }, []);
-  return short;
+  return fit;
 }
 
 export function PhoneBet({ view, send }: Props): JSX.Element | null {
   const L = useT(STRINGS);
-  const short = useShortPhone();
+  const { short, large } = usePhoneFit();
   // Tug of war: you back your own team, picked for you.
   const [option, setOption] = useState<number | null>(
     view.myBet?.option ??
@@ -139,6 +146,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
         done={view.myPeek !== null}
         struck={struck ? nameOf(L, struck) : ''}
         onPeek={() => send({ type: 'peek' })}
+        compact={short && option !== null}
       />
     ) : undefined;
   return (
@@ -205,7 +213,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       pinPad={option !== null}
       header={
         <div className={styles.betHead} ref={headRef}>
-          <LotTitle box={box} coins={view.coins} />
+          <LotTitle box={box} coins={view.coins} compact={short && option !== null} />
           {option === null || !control ? (
             <TwistNote twist={box.twist} size="phone" short={option !== null} />
           ) : null}
@@ -249,6 +257,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
                     : view.myPeek
               }
               hideLocked={box.event === 'tug'}
+              largeText={large}
             />
           )}
         </div>
