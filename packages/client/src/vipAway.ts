@@ -27,6 +27,7 @@ export function useVipAway(
   useEffect(() => {
     if (!away) return;
     const update = (): void => setTick((t) => ({ now: Date.now(), since: t.since ?? Date.now() }));
+    update();
     const handle = setInterval(update, 1000);
     return () => {
       clearInterval(handle);

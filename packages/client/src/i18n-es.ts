@@ -64,7 +64,7 @@ export const es: Texts = {
   lobby: {
     title: 'Sala',
     waitingForVip: 'Esperando a que el VIP elija un juego…',
-    vipDropped: (vip) => `Se cayó el teléfono de ${vip}: esperando a que vuelva`,
+    vipDropped: (vip) => `Se desconectó el teléfono de ${vip}: esperando a que vuelva`,
     waitingFor: (name) => `Esperando a que ${name} elija un juego…`,
     waitingForFirst: 'Esperando al primer jugador…',
     youAreVip: 'Eres el VIP: elige un juego cuando estén todos.',

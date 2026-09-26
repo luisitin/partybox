@@ -1,12 +1,16 @@
 // The owner (2026-09-22): the TV speaks Spanish too. The host bar carries the language switch in
 // every room status, offering the other language in its own words.
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import type { RoomSnapshot, RoomStatus } from '@partybox/shared';
 import { setCatalog } from '../catalog';
 import { createStore } from '../net/store';
 import type { TvClient, TvState } from '../net/tv';
 import { HostBar } from './HostBar';
+
+vi.mock('../vipAway', () => ({
+  useVipAway: () => ({ vip: 'Sam', next: 'Priya', nextId: 'priya', seconds: 29 }),
+}));
 
 const client: TvClient = {
   store: createStore<TvState>({
@@ -46,6 +50,25 @@ describe('HostBar language switch', () => {
     // Rendered on the server the device language reads as English: the switch offers Spanish.
     expect(html).toContain('🌐 Español');
     expect(html).toContain('aria-label="Switch the TV to Spanish"');
+  });
+});
+
+describe('I-663: the VIP handover countdown', () => {
+  it.each(['lobby', 'selecting', 'results'] as const)(
+    'does not promise a handover during %s',
+    (status) => {
+      const html = renderToStaticMarkup(
+        <HostBar client={client} room={room(status)} view={null} />,
+      );
+      expect(html).not.toContain('passes to Priya');
+    },
+  );
+
+  it('shows the handover during play', () => {
+    const html = renderToStaticMarkup(
+      <HostBar client={client} room={room('playing')} view={null} />,
+    );
+    expect(html).toContain('passes to Priya');
   });
 });
 

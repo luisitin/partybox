@@ -234,7 +234,7 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
           })}
         </span>
       ) : null}
-      {vipAway && room.status !== 'lobby' ? (
+      {vipAway && room.status === 'playing' ? (
         <span className={styles.away} role="status">
           {vipAway.next ? t.host.vipAway(vipAway.next, vipAway.seconds) : t.host.vipAwayNobody}
         </span>
