@@ -15,7 +15,7 @@ export function DiscussionChat({
 }): JSX.Element {
   const L = useT(STRINGS);
   const [draft, setDraft] = useState('');
-  const [lastSent, setLastSent] = useState(0);
+  const [lastSent, setLastSent] = useState<number | null>(null);
   const [now, setNow] = useState(0);
   const list = useRef<HTMLDivElement>(null);
   const chat = view.chat ?? [];
@@ -23,11 +23,11 @@ export function DiscussionChat({
     list.current?.scrollTo({ top: list.current.scrollHeight });
   }, [chat.length]);
   useEffect(() => {
-    if (now - lastSent >= 3_000) return;
+    if (lastSent === null || now - lastSent >= 3_000) return;
     const timer = setTimeout(() => setNow(Date.now()), 3_000 - (now - lastSent));
     return () => clearTimeout(timer);
   }, [lastSent, now]);
-  const cooling = now - lastSent < 3_000;
+  const cooling = lastSent !== null && now - lastSent < 3_000;
   const submit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const text = draft.trim();

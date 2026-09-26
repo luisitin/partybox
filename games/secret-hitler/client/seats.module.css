@@ -5,9 +5,8 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  /* One height in every phase (plate or Next, then one tag line), so the avatars never move
-     between phases and the boards above keep their size. */
-  height: 214px;
+  /* Reserve two name lines; longer identities can grow rather than losing their suffix. */
+  min-height: 244px;
   gap: 8px;
   margin: 0;
   padding: 4px 12px 4px;
@@ -27,6 +26,8 @@
   gap: 2px;
   /* 160 px: ten seats still fit 1080p, and a status tag ('✓ No es Hitler') reads whole. */
   width: 160px;
+  flex: 1;
+  min-width: 0;
   padding-bottom: 2px;
   font-size: 24px;
   color: var(--sh-text);
@@ -229,9 +230,10 @@
 
 .name {
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  padding: 0 6px;
+  min-height: 2.2em;
+  overflow-wrap: anywhere;
+  text-align: center;
   font-weight: 800;
   font-size: 26px;
   line-height: 1.1;
