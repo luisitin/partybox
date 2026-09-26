@@ -1,0 +1,121 @@
+{
+  "id": "blind-auction",
+  "name": "Mystery Box",
+  "icon": "📦",
+  "tagline": "Bet on what's inside the mystery box.",
+  "description": "Everyone starts with 100 coins. A mystery box shows what it might hold and the odds of each. Everyone bets in secret on what's inside: the long shots pay big. Then the box opens. Most coins at the end wins.",
+  "howToPlay": [
+    "A mystery box shows what might be inside, with the odds of each.",
+    "Bet your coins in secret on what's inside. Long shots pay big.",
+    "The box opens and right calls get paid. Most coins at the end wins."
+  ],
+  "version": "0.1.0",
+  "minPlayers": 2,
+  "maxPlayers": 16,
+  "estimatedMinutes": 8,
+  "estimate": {
+    "fixedSeconds": 25,
+    "perRoundSeconds": 30,
+    "perPlayerPerRoundSeconds": 0.3,
+    "roundsSetting": "rounds"
+  },
+  "tags": ["bluff", "strategy"],
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-25",
+  "settings": [
+    {
+      "key": "rounds",
+      "label": "Boxes",
+      "description": "How many mystery boxes get opened",
+      "type": "number",
+      "default": 8,
+      "min": 5,
+      "max": 12,
+      "step": 1
+    },
+    {
+      "key": "startCoins",
+      "label": "Starting coins",
+      "description": "Every player's coins at the start",
+      "type": "number",
+      "default": 100,
+      "min": 50,
+      "max": 300,
+      "step": 50
+    },
+    {
+      "key": "betSeconds",
+      "label": "Betting time",
+      "description": "Seconds to place a secret bet",
+      "type": "number",
+      "default": 20,
+      "min": 10,
+      "max": 40,
+      "step": 5
+    },
+    {
+      "key": "grand",
+      "label": "Grand box",
+      "description": "The last box pays double",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "spicy",
+      "label": "Spicy boxes",
+      "description": "Adds grown-up boxes; the rules stay the same",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "live",
+      "label": "Live events",
+      "description": "Every other box is a live event: races, dice, doors, cards and more",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "twists",
+      "label": "Twists",
+      "description": "With Live events on, each odds event gets a twist: early-bird odds, insurance, crowd odds, peek, split or double or nothing",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "reader",
+      "label": "Host voice",
+      "description": "Short calls: place your bets, bets closed, the winners",
+      "type": "select",
+      "default": "none",
+      "options": [
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "none",
+          "label": "No voice"
+        }
+      ]
+    }
+  ],
+  "supportsBots": true
+}

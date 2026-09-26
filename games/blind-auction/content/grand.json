@@ -1,0 +1,143 @@
+[
+  {
+    "id": "ba-dragon-hoard",
+    "name": "Dragon Hoard",
+    "icon": "🐲",
+    "flavour": "A mountain of gold. And one very light sleeper.",
+    "outcomes": [
+      { "type": "gain", "amount": 300, "chance": 60 },
+      { "type": "gain", "amount": 700, "chance": 30 },
+      { "type": "lose", "amount": 150, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-lost-city",
+    "name": "Lost City",
+    "icon": "🏛️",
+    "flavour": "Streets paved with gold. Mostly.",
+    "outcomes": [
+      { "type": "gain", "amount": 350, "chance": 50 },
+      { "type": "lose", "amount": 200, "chance": 30 },
+      { "type": "double", "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-royal-diamond",
+    "name": "Royal Diamond",
+    "icon": "💎",
+    "flavour": "Big enough to see from space.",
+    "outcomes": [
+      { "type": "gain", "amount": 400, "chance": 50 },
+      { "type": "dud", "chance": 30 },
+      { "type": "lose", "amount": 150, "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-sunken-galleon",
+    "name": "Sunken Galleon",
+    "icon": "⚓",
+    "flavour": "Four hundred years underwater. Worth the wait?",
+    "outcomes": [
+      { "type": "gain", "amount": 200, "chance": 60 },
+      { "type": "gain", "amount": 600, "chance": 30 },
+      { "type": "lose", "amount": 100, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-golden-goose",
+    "name": "Golden Goose",
+    "icon": "🪿",
+    "flavour": "Lays a golden egg a day. Bites twice a day.",
+    "outcomes": [
+      { "type": "gain", "amount": 350, "chance": 60 },
+      { "type": "lose", "amount": 250, "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-dream-mansion",
+    "name": "Dream Mansion",
+    "icon": "🏰",
+    "flavour": "Nine bedrooms, one ghost, no refunds.",
+    "outcomes": [
+      { "type": "double", "chance": 50 },
+      { "type": "gain", "amount": 300, "chance": 30 },
+      { "type": "lose", "amount": 200, "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-lottery-jackpot",
+    "name": "Lottery Jackpot",
+    "icon": "🤑",
+    "flavour": "The winning numbers are in here somewhere.",
+    "outcomes": [
+      { "type": "gain", "amount": 150, "chance": 60 },
+      { "type": "dud", "chance": 30 },
+      { "type": "gain", "amount": 1000, "chance": 10 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-wishing-well",
+    "name": "Wishing Well",
+    "icon": "⛲",
+    "flavour": "Toss in everything you have. Wish very hard.",
+    "outcomes": [
+      { "type": "double", "chance": 60 },
+      { "type": "dud", "chance": 40 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-mega-box",
+    "name": "Mega Mystery Box",
+    "icon": "🎁",
+    "flavour": "The biggest box. The biggest question mark.",
+    "outcomes": [
+      { "type": "gain", "amount": 200, "chance": 50 },
+      { "type": "gain", "amount": 500, "chance": 30 },
+      { "type": "lose", "amount": 250, "chance": 20 }
+    ],
+    "chaos": "calm"
+  },
+  {
+    "id": "ba-bank-heist",
+    "name": "Bank Heist",
+    "icon": "💰",
+    "flavour": "The whole vault. Every last coin.",
+    "outcomes": [
+      { "type": "steal", "percent": 60, "chance": 60 },
+      { "type": "lose", "amount": 150, "chance": 40 }
+    ],
+    "chaos": "normal"
+  },
+  {
+    "id": "ba-emperor-tomb",
+    "name": "Emperor's Tomb",
+    "icon": "🗿",
+    "flavour": "Guarded by clay soldiers. They look annoyed.",
+    "outcomes": [
+      { "type": "gain", "amount": 450, "chance": 40 },
+      { "type": "lose", "amount": 200, "chance": 40 },
+      { "type": "swap", "chance": 20 }
+    ],
+    "chaos": "normal"
+  },
+  {
+    "id": "ba-pirate-king-map",
+    "name": "Pirate King's Map",
+    "icon": "🧭",
+    "flavour": "Leads to the biggest treasure ever buried.",
+    "outcomes": [
+      { "type": "gain", "amount": 300, "chance": 50 },
+      { "type": "steal", "percent": 40, "chance": 30 },
+      { "type": "lose", "amount": 150, "chance": 20 }
+    ],
+    "chaos": "normal"
+  }
+]
