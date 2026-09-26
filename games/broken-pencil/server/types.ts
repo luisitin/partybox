@@ -108,7 +108,7 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('pick'), option: z.number().int().min(0).max(2) }),
   /** show: the book's owner turns the page from their phone. */
   z.object({ type: z.literal('turn') }),
-  z.object({ type: z.literal('nextBook') }), // I-490 B: the VIP cuts the book on stage short
+  z.object({ type: z.literal('nextBook'), book: z.number().int().min(0).max(15) }), // I-490 B: the VIP cuts the book on stage short
   z.object({ type: z.literal('pickCustom'), text: z.string().trim().min(1).max(30) }),
   z.object({ type: z.literal('draw'), strokes: strokesSchema }),
   /** The sheet so far, while still drawing: what the deadline keeps if "Done" never comes. */

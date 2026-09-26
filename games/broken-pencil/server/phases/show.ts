@@ -114,6 +114,7 @@ export function reduceShow(state: State, event: GameEvent<Input>, next: Transiti
       event.input.type === 'nextBook' &&
       event.vip &&
       state.showing &&
+      event.input.book === state.showing.book &&
       presenterOf(state) !== event.playerId
     ) {
       const nextBook = state.showing.book + 1;

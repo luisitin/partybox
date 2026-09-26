@@ -55,7 +55,11 @@ export function Show({
   // I-490 B: the VIP can cut someone else's book short
   const nextBookButton =
     view.vip === view.me.id && !s.lastBook ? (
-      <button type="button" className={styles.nextBook} onClick={() => send({ type: 'nextBook' })}>
+      <button
+        type="button"
+        className={styles.nextBook}
+        onClick={() => send({ type: 'nextBook', book: s.book })}
+      >
         {L('⏭ Next book')}
       </button>
     ) : null;

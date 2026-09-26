@@ -73,7 +73,7 @@ from anywhere (books may be short; views cope). Pause holds the round (or the pa
   after a reload mid-drawing.
 - `{ type: 'turn' }` — `show`, from the owner of the book on the TV only: next page / next book / finish.
 - `{ type: 'veto', book }` — from the VIP only (the engine stamps `vip` on their inputs, ADR-042), on a broken book's last page in `show` or in `summary`: "close enough" — the book counts as intact (`vetoed`), once per book.
-- `{ type: 'nextBook' }` — `show`, from the VIP only and not while their own book is up: the rest of the book is skipped (last book → `summary`).
+- `{ type: 'nextBook', book }` — `show`, from the VIP only and not while their own book is up: the rest of the showing book is skipped (last book → `summary`). A delayed tap for an earlier book is ignored.
 - Anything else (a drawing after the last guess, a guess before drawing, a turn from a spectator) → ignored.
 
 ## Scoring
