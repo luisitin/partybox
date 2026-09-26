@@ -54,7 +54,7 @@ export function PhoneScore({
   const board = phoneOnly ? boardRows(view) : null;
   return (
     <Screen footer={<NextButton view={view} skip={skip} />} className={styles.scoreScreen}>
-      <div className={styles.head}>
+      <div className={`${styles.head} ${result ? styles.scoreHead : ''}`}>
         <span className={styles.kicker}>
           {L('Round {n} of {total}', { n: view.round, total: view.rounds })}
         </span>
@@ -67,14 +67,6 @@ export function PhoneScore({
           <p className={styles.noOrder}>{L('No order this round — you’ll get the next one!')}</p>
         )}
       </div>
-      {result?.queen ? <p className={styles.queenBanner}>{L('👑 You’re the Queen Bee!')}</p> : null}
-      {result?.perfect ? <p className={styles.perfectBanner}>{L('PERFECT HIVE')}</p> : null}
-      {result ? (
-        <p className={styles.legendPhone}>
-          <span>{L('✓ exact +2')}</span> · <span>{L('±1 one off +1')}</span> ·{' '}
-          <span>{L('all five +2')}</span>
-        </p>
-      ) : null}
       {result ? (
         <ol className={styles.marks} aria-label={L('Your order against the hive')}>
           {result.rows.map((row, i) => (
@@ -107,6 +99,14 @@ export function PhoneScore({
             </li>
           ))}
         </ol>
+      ) : null}
+      {result?.queen ? <p className={styles.queenBanner}>{L('👑 You’re the Queen Bee!')}</p> : null}
+      {result?.perfect ? <p className={styles.perfectBanner}>{L('PERFECT HIVE')}</p> : null}
+      {result ? (
+        <p className={styles.legendPhone}>
+          <span>{L('✓ exact +2')}</span> · <span>{L('±1 one off +1')}</span> ·{' '}
+          <span>{L('all five +2')}</span>
+        </p>
       ) : null}
       {!result && view.spots.length ? (
         <ol className={styles.marks} aria-label={L('The hive’s order')}>

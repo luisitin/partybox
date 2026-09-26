@@ -239,14 +239,29 @@
 }
 
 /* ── score ── */
+.scoreHead {
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--pb-space-1);
+}
+
+.scoreHead .kicker {
+  font-size: min(var(--pb-font-caption), 16px);
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
 .points {
   display: flex;
   align-items: baseline;
-  gap: var(--pb-space-2);
+  gap: var(--pb-space-1);
+  white-space: nowrap;
 }
 
 .pointsNum {
-  font-size: var(--pb-font-display);
+  /* The five marked rows, rather than this total, own the score screen's vertical space. */
+  font-size: min(var(--pb-font-display), 32px);
   font-weight: 900;
   line-height: 1;
   color: var(--pb-accent-3);
@@ -255,9 +270,10 @@
 }
 
 .pointsWord {
-  font-size: var(--pb-font-body);
+  font-size: min(var(--pb-font-body), 16px);
   font-weight: 800;
   color: var(--pb-text-muted);
+  white-space: nowrap;
 }
 
 .noOrder {

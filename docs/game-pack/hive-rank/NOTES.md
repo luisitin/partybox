@@ -57,6 +57,9 @@ game rather than ahead of it.
 11. **The shell stage (ADR-053) carries the rules, READY and 3·2·1**; `intro` is a 2.5 s title beat.
 12. **Change rearranges by swapping** (the owner's play-test): a full order swaps two tapped rows;
     rows never move under a finger.
+13. **At 200% text the phone score puts the five marked rows first** (Nightfall's design re-check):
+    the compact one-line round total leaves two or three full rows above the fold on an SE; Queen,
+    PERFECT HIVE and the points legend follow the rows in the same scroll view.
 
 ## Stand-ins (swap when the foundation lands)
 
