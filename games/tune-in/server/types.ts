@@ -124,7 +124,7 @@ export const REVEAL_OPEN_MS = 3_600;
 export const REVEAL_POINTS_MS = 6_500;
 /** A void round's card: "No signal! No clue came through. Nobody scores." (~8 words). */
 export const VOID_MS = 6_000;
-/** The VIP can move on immediately; a short fallback keeps an unattended room progressing. */
+/** The VIP can move on immediately; a visible short deadline keeps an unattended room progressing. */
 export const SCORES_MS = 8_000;
 /** A psychic who drops mid-clue keeps the clue open this long at most (they may come back). */
 export const DROP_GRACE_MS = 10_000;

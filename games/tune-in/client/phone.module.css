@@ -300,6 +300,12 @@
   animation: tune-ready-breathe calc(var(--pb-motion-pulse) * 2) ease-in-out infinite;
 }
 
+.scoreFooter {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-2);
+}
+
 @keyframes tune-ready-breathe {
   0%,
   100% {

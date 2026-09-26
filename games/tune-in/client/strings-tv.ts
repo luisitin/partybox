@@ -39,9 +39,10 @@ export const STRINGS_TV: Record<string, string> = {
   'After round {n}': 'Tras la ronda {n}',
   'After turn {n}': 'Tras el turno {n}',
   'Winners!': '¡Ganadores!',
-  '★ {name} taps Next round when everyone’s ready':
-    '★ {name} toca Siguiente ronda cuando todos estén listos',
-  '★ {name} taps End game': '★ {name} toca Terminar juego',
+  'Auto-advances in {seconds}s · ★ {name} can go now':
+    'Avanza automáticamente en {seconds} s · ★ {name} puede pasar ya',
+  'Ends in {seconds}s · ★ {name} can end now':
+    'Termina en {seconds} s · ★ {name} puede terminar ya',
   'first up': 'empieza',
   '{team} plays first · {name} reads the first dial': '{team} empieza · {name} lee el primer dial',
   'No clue this round': 'Sin pista esta ronda',

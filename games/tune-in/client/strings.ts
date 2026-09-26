@@ -17,7 +17,6 @@ const SERVER: Record<string, string> = {
   '📺 Static': '📺 Estática',
   'Dials that scored nothing: {n}': 'Diales que no puntuaron: {n}',
   'End game': 'Terminar juego',
-  '★ {name} taps End game': '★ {name} toca Terminar juego',
   'Next round': 'Siguiente ronda',
 };
 

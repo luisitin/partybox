@@ -8,6 +8,7 @@ import {
   Screen,
   WaitingScreen,
   usePhoneOnly,
+  useSecondsLeft,
   useT,
 } from '@partybox/game-sdk/ui';
 import type { Translator } from '@partybox/game-sdk/ui';
@@ -177,29 +178,34 @@ export function PhoneResult({
 }: {
   view: TuneControllerView;
   skip?: () => void;
-  /** The scores beat waits for the VIP: the other phones say whose tap moves it on. */
+  /** The other phones say whose tap can move the scores beat on early. */
   vipName?: string | null;
 }): JSX.Element {
   const L = useT(STRINGS);
   const { big, line } = lines(L, view);
   const scores = view.phaseId === 'scores';
   const teams = view.turn.mode === 'teams';
+  const seconds = useSecondsLeft(scores ? view.deadline : null, view.paused) ?? 8;
+  const nextHint = vipName
+    ? view.last
+      ? L('Ends in {seconds}s · ★ {name} can end now', { seconds, name: vipName })
+      : L('Auto-advances in {seconds}s · ★ {name} can go now', { seconds, name: vipName })
+    : null;
   return (
     <Screen
       className={`${styles.screen} ${scores ? styles.atScores : ''} ${scores && view.turn.mode === 'solo' ? styles.soloScores : ''}`}
       footer={
-        // The scores beat waits for the VIP (p14: a phone held still for 5 s): their button breathes,
-        // and every other phone breathes whose tap moves it on, as the TV does.
+        // The VIP action and automatic deadline stay together in the pinned footer, while other
+        // phones keep the same deadline and owner hint visible there.
         scores && skip ? (
-          <PrimaryButton className={styles.breathe} onClick={skip}>
-            {view.last ? L('End game') : L('Next round')}
-          </PrimaryButton>
+          <div className={styles.scoreFooter}>
+            <PrimaryButton className={styles.breathe} onClick={skip}>
+              {view.last ? L('End game') : L('Next round')}
+            </PrimaryButton>
+            {nextHint ? <p className={styles.nextHint}>{nextHint}</p> : null}
+          </div>
         ) : scores && vipName ? (
-          <p className={styles.nextHint}>
-            {view.last
-              ? L('★ {name} taps End game', { name: vipName })
-              : L('★ {name} taps Next round when everyone’s ready', { name: vipName })}
-          </p>
+          <p className={styles.nextHint}>{nextHint}</p>
         ) : undefined
       }
     >

@@ -1,7 +1,7 @@
 // The scores beat: solo's board (rows climb to their new places), the teams racing to the target,
 // or co-op's group meter filling. The catch-up turn is announced here, and the reader says it.
 import type { JSX } from 'react';
-import { BigText, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
+import { BigText, Scoreboard, Stage, useSecondsLeft, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ScoreboardRow } from '@partybox/game-sdk/ui';
 import type { TuneTvView } from '../server/index';
 import { ratingText, teamName } from './copy';
@@ -31,17 +31,17 @@ function soloRows(view: TuneTvView): { rows: ScoreboardRow[]; before: string[] }
   return { rows: ranked, before };
 }
 
-/** Who moves the game on, breathing (the scores wait for the VIP's tap [cc45f4]; the line keeps
- *  the stage alive while the room reads). */
+/** The live deadline and VIP action stay visible while the room reads the score. */
 function NextHint({ view }: { view: GameTvProps<TuneTvView>['view'] }): JSX.Element | null {
   const L = useT(STRINGS);
+  const seconds = useSecondsLeft(view.deadline, view.paused) ?? 8;
   const vip = view.players.find((p) => p.id === view.vip);
   if (!vip) return null;
   return (
     <p className={styles.nextHint}>
       {view.last
-        ? L('★ {name} taps End game', { name: vip.name })
-        : L('★ {name} taps Next round when everyone’s ready', { name: vip.name })}
+        ? L('Ends in {seconds}s · ★ {name} can end now', { seconds, name: vip.name })
+        : L('Auto-advances in {seconds}s · ★ {name} can go now', { seconds, name: vip.name })}
     </p>
   );
 }
