@@ -1,0 +1,175 @@
+/* Secret Hitler's global stylesheet, loaded with the game's own download (never the lobby):
+   the vendored fonts and the motion vocabulary's keyframes (SPEC §7.4, §7.7). Keyframes are
+   global so every CSS module can use them as global(sh-…), like the shell's pb-* ones. */
+
+@font-face {
+  font-family: 'SH Bebas';
+  src: url('./fonts/bebas-neue-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'SH Bebas';
+  src: url('./fonts/bebas-neue-latin-ext.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  unicode-range:
+    U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'SH Playfair';
+  src: url('./fonts/playfair-display-latin.woff2') format('woff2');
+  font-weight: 400 900;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'SH Playfair';
+  src: url('./fonts/playfair-display-latin-ext.woff2') format('woff2');
+  font-weight: 400 900;
+  font-display: swap;
+  unicode-range:
+    U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'SH Elite';
+  src: url('./fonts/special-elite-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'SH Elite';
+  src: url('./fonts/special-elite-latin-ext.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  unicode-range:
+    U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ── Motion vocabulary (§7.7): transform and opacity only ───────────────────────────────── */
+@keyframes sh-stamp {
+  0% {
+    opacity: 0;
+    transform: scale(1.6) rotate(-4deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.96) rotate(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-2deg);
+  }
+}
+@keyframes sh-deal {
+  from {
+    opacity: 0;
+    transform: translate(var(--sh-from-x, 0), var(--sh-from-y, -60px)) rotate(-12deg) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes sh-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes sh-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes sh-spin {
+  from {
+    opacity: 0;
+    transform: rotate(-720deg) scale(0.2);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-1.5deg) scale(1);
+  }
+}
+@keyframes sh-sweep {
+  from {
+    transform: translateX(-60%) rotate(18deg);
+  }
+  to {
+    transform: translateX(160%) rotate(-12deg);
+  }
+}
+@keyframes sh-shake {
+  0%,
+  100% {
+    transform: none;
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+@keyframes sh-rain {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes sh-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes sh-shred {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(120px) rotate(var(--sh-shred-r, 8deg));
+  }
+}
+@keyframes sh-pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

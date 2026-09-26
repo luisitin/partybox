@@ -81,4 +81,5 @@ whole server.
 
 ## Where to read next
 
-`CLAUDE.md` is the map of the repo; `docs/START_HERE.md` gives a reading order per task.
+`AGENTS.md` is the map of the repo (every agent reads it; `CLAUDE.md` imports it). `docs/START_HERE.md`
+gives a reading order per task, and `docs/CODEX_GUIDE.md` onboards an agent new to this machine.

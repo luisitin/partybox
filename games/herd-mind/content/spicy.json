@@ -1,0 +1,6607 @@
+{
+  "lang": "en",
+  "items": [
+    {
+      "id": "hmx-date-001",
+      "style": "name",
+      "prompt": "Name a dating app.",
+      "answers": [
+        {
+          "id": "tinder",
+          "answer": "tinder",
+          "weight": 42,
+          "accept": ["tindr", "tindder", "tinderr", "tinder gold", "tinder plus", "tindur"]
+        },
+        {
+          "id": "bumble",
+          "answer": "bumble",
+          "weight": 20,
+          "accept": ["bumbel", "bumble app", "bumblebee", "bumbl", "bummble", "bumblle"]
+        },
+        {
+          "id": "hinge",
+          "answer": "hinge",
+          "weight": 15,
+          "accept": ["hinge app", "hing", "hindge", "hinj", "hinges", "hinge dating"]
+        },
+        {
+          "id": "match",
+          "answer": "match",
+          "weight": 6,
+          "accept": ["match.com", "match dot com", "match app"]
+        },
+        {
+          "id": "grindr",
+          "answer": "grindr",
+          "weight": 4,
+          "accept": ["grinder", "grindrr", "grindir"]
+        },
+        {
+          "id": "okcupid",
+          "answer": "okcupid",
+          "display": "OkCupid",
+          "weight": 3,
+          "accept": ["okc", "okay cupid", "ok cupit"]
+        },
+        {
+          "id": "plenty-of-fish",
+          "answer": "plenty of fish",
+          "weight": 3,
+          "accept": ["pof", "plenty of fishes", "plenty a fish"]
+        },
+        {
+          "id": "eharmony",
+          "answer": "eharmony",
+          "display": "eHarmony",
+          "weight": 2,
+          "accept": ["eharmoney", "harmony"]
+        },
+        {
+          "id": "facebook-dating",
+          "answer": "facebook dating",
+          "display": "Facebook Dating",
+          "weight": 1,
+          "accept": ["fb dating", "facebook"]
+        },
+        {
+          "id": "raya",
+          "answer": "raya",
+          "weight": 1,
+          "accept": ["raya app"]
+        },
+        {
+          "id": "coffee-meets-bagel",
+          "answer": "coffee meets bagel",
+          "weight": 1,
+          "accept": ["cmb", "coffee meets bagle"]
+        },
+        {
+          "id": "feeld",
+          "answer": "feeld",
+          "weight": 1,
+          "accept": ["feeld app"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-002",
+      "style": "name",
+      "prompt": "Name a red flag on a first date.",
+      "answers": [
+        {
+          "id": "rude-to-waiter",
+          "answer": "rude to waiter",
+          "weight": 24,
+          "accept": [
+            "rude to the waiter",
+            "rude to staff",
+            "rude to server",
+            "mean to waiter",
+            "rude to waitress",
+            "rude",
+            "rudeness"
+          ]
+        },
+        {
+          "id": "talks-about-ex",
+          "answer": "talks about ex",
+          "weight": 18,
+          "accept": [
+            "talking about ex",
+            "talks about their ex",
+            "mentions ex",
+            "ex talk",
+            "still talks about ex",
+            "brings up ex"
+          ],
+          "reject": ["talks about self"]
+        },
+        {
+          "id": "on-their-phone",
+          "answer": "on their phone",
+          "weight": 15,
+          "accept": [
+            "phone",
+            "on phone",
+            "on the phone",
+            "always on phone",
+            "checking phone",
+            "texting",
+            "scrolling"
+          ]
+        },
+        {
+          "id": "late",
+          "answer": "shows up late",
+          "weight": 8,
+          "accept": ["late", "being late", "running late", "late arrival"]
+        },
+        {
+          "id": "drunk",
+          "answer": "gets drunk",
+          "weight": 7,
+          "accept": ["drunk", "too drunk", "drinks too much", "wasted", "sloppy drunk"]
+        },
+        {
+          "id": "married",
+          "answer": "married",
+          "weight": 6,
+          "accept": [
+            "wedding ring",
+            "already married",
+            "has a wife",
+            "has a husband",
+            "secretly married"
+          ]
+        },
+        {
+          "id": "brags",
+          "answer": "brags",
+          "weight": 6,
+          "accept": ["bragging", "braggart", "shows off", "showing off", "arrogant", "cocky"]
+        },
+        {
+          "id": "bad-breath",
+          "answer": "bad breath",
+          "weight": 4,
+          "accept": ["stinks", "smells bad", "bad hygiene", "body odor"]
+        },
+        {
+          "id": "lives-with-mom",
+          "answer": "lives with mom",
+          "weight": 4,
+          "accept": ["lives with mother", "lives with parents", "mama's boy", "moms basement"]
+        },
+        {
+          "id": "wont-pay",
+          "answer": "won't pay",
+          "weight": 3,
+          "accept": ["doesn't pay", "cheap", "cheapskate", "no wallet", "split the check"]
+        },
+        {
+          "id": "talks-about-self",
+          "answer": "talks about self",
+          "weight": 3,
+          "accept": ["self centered", "selfish", "me me me", "narcissist"],
+          "reject": ["talks about ex"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-003",
+      "style": "name",
+      "prompt": "Name a reason you'd dump someone.",
+      "answers": [
+        {
+          "id": "cheating",
+          "answer": "cheating",
+          "weight": 45,
+          "accept": [
+            "cheated",
+            "cheats",
+            "cheater",
+            "infidelity",
+            "unfaithful",
+            "affair",
+            "cheatin"
+          ]
+        },
+        {
+          "id": "lying",
+          "answer": "lying",
+          "weight": 14,
+          "accept": ["lies", "liar", "lied", "dishonesty", "dishonest", "lying to me"]
+        },
+        {
+          "id": "bad-hygiene",
+          "answer": "bad hygiene",
+          "weight": 7,
+          "accept": ["hygiene", "smells", "stinky", "smelly", "doesn't shower"]
+        },
+        {
+          "id": "jealousy",
+          "answer": "jealousy",
+          "weight": 6,
+          "accept": ["jealous", "controlling", "possessive", "too jealous"]
+        },
+        {
+          "id": "boring",
+          "answer": "boring",
+          "weight": 5,
+          "accept": ["bored", "dull", "no spark", "no chemistry"]
+        },
+        {
+          "id": "bad-in-bed",
+          "answer": "bad in bed",
+          "weight": 5,
+          "accept": ["bad sex", "no sex", "dead bedroom", "sex"]
+        },
+        {
+          "id": "no-job",
+          "answer": "no job",
+          "weight": 4,
+          "accept": ["lazy", "unemployed", "jobless", "broke"]
+        },
+        {
+          "id": "rude",
+          "answer": "rude",
+          "weight": 3,
+          "accept": ["mean", "disrespect", "disrespectful"]
+        },
+        {
+          "id": "different-goals",
+          "answer": "different goals",
+          "weight": 3,
+          "accept": ["wants kids", "doesn't want kids", "incompatible", "different values"]
+        },
+        {
+          "id": "drinks-too-much",
+          "answer": "drinks too much",
+          "weight": 2,
+          "accept": ["alcoholic", "drinking", "drunk"]
+        },
+        {
+          "id": "mean-to-pets",
+          "answer": "mean to pets",
+          "weight": 1,
+          "accept": ["hates dogs", "hates my dog", "mean to animals"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-004",
+      "style": "name",
+      "prompt": "Name something people do to get over an ex.",
+      "answers": [
+        {
+          "id": "drink",
+          "answer": "drink",
+          "weight": 25,
+          "accept": ["drinking", "get drunk", "alcohol", "booze", "wine", "drank", "drink a lot"]
+        },
+        {
+          "id": "hook-up",
+          "answer": "hook up",
+          "weight": 16,
+          "accept": [
+            "rebound",
+            "sleep around",
+            "hooking up",
+            "one night stand",
+            "sleep with someone",
+            "get laid"
+          ]
+        },
+        {
+          "id": "cry",
+          "answer": "cry",
+          "weight": 13,
+          "accept": ["crying", "cries", "sob", "ugly cry", "weep", "cry it out"]
+        },
+        {
+          "id": "ice-cream",
+          "answer": "eat ice cream",
+          "weight": 9,
+          "accept": ["ice cream", "junk food", "comfort food", "eat junk"]
+        },
+        {
+          "id": "gym",
+          "answer": "gym",
+          "weight": 8,
+          "accept": ["work out", "exercise", "working out", "lift", "revenge body", "lifting"]
+        },
+        {
+          "id": "go-out",
+          "answer": "go out",
+          "weight": 6,
+          "accept": ["party", "going out", "clubbing", "go out with friends", "hang with friends"]
+        },
+        {
+          "id": "date-someone-new",
+          "answer": "date someone new",
+          "weight": 5,
+          "accept": ["dating", "dating apps", "new boyfriend", "new girlfriend", "tinder"]
+        },
+        {
+          "id": "block-them",
+          "answer": "block them",
+          "weight": 5,
+          "accept": ["block", "unfollow", "delete number", "block their number", "no contact"]
+        },
+        {
+          "id": "delete-photos",
+          "answer": "delete photos",
+          "weight": 4,
+          "accept": ["delete pictures", "burn photos", "throw out their stuff", "burn their stuff"]
+        },
+        {
+          "id": "haircut",
+          "answer": "haircut",
+          "weight": 4,
+          "accept": ["new haircut", "cut hair", "dye hair", "new hair"]
+        },
+        {
+          "id": "travel",
+          "answer": "travel",
+          "weight": 3,
+          "accept": ["trip", "vacation", "take a trip"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-005",
+      "style": "name",
+      "prompt": "Name something sexy to wear to bed.",
+      "answers": [
+        {
+          "id": "lingerie",
+          "answer": "lingerie",
+          "weight": 32,
+          "accept": ["lingere", "lingerie set", "negligee", "teddy", "nightie", "lace", "linjerie"]
+        },
+        {
+          "id": "nothing",
+          "answer": "nothing",
+          "weight": 28,
+          "accept": ["naked", "nude", "birthday suit", "nothin", "nada", "in the nude"]
+        },
+        {
+          "id": "his-shirt",
+          "answer": "his shirt",
+          "weight": 8,
+          "accept": ["t-shirt", "big shirt", "oversized shirt", "boyfriend shirt", "shirt"]
+        },
+        {
+          "id": "boxers",
+          "answer": "boxers",
+          "weight": 6,
+          "accept": ["boxer briefs", "boxer", "briefs", "underwear"]
+        },
+        {
+          "id": "silk-pajamas",
+          "answer": "silk pajamas",
+          "weight": 6,
+          "accept": ["silk", "satin", "pajamas", "pjs"]
+        },
+        {
+          "id": "thong",
+          "answer": "thong",
+          "weight": 5,
+          "accept": ["thongs", "g string", "panties", "thong panties"]
+        },
+        {
+          "id": "robe",
+          "answer": "robe",
+          "weight": 3,
+          "accept": ["bathrobe", "kimono", "robes"]
+        },
+        {
+          "id": "perfume",
+          "answer": "perfume",
+          "weight": 3,
+          "accept": ["cologne", "scent", "perfum"]
+        },
+        {
+          "id": "socks",
+          "answer": "socks",
+          "weight": 2,
+          "accept": ["sock", "fuzzy socks", "long socks"]
+        },
+        {
+          "id": "heels",
+          "answer": "heels",
+          "weight": 2,
+          "accept": ["high heels", "stilettos"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-006",
+      "style": "name",
+      "prompt": "Name something that ruins the mood.",
+      "answers": [
+        {
+          "id": "fart",
+          "answer": "fart",
+          "weight": 24,
+          "accept": ["farting", "farts", "gas", "fart noise", "tooting", "queef"]
+        },
+        {
+          "id": "kids-walking-in",
+          "answer": "kids walking in",
+          "weight": 18,
+          "accept": ["kids", "kid walks in", "child", "children", "baby crying", "the kids walk in"]
+        },
+        {
+          "id": "bad-breath",
+          "answer": "bad breath",
+          "weight": 12,
+          "accept": [
+            "breath",
+            "morning breath",
+            "stinky breath",
+            "halitosis",
+            "bad breathe",
+            "garlic breath"
+          ]
+        },
+        {
+          "id": "phone-ringing",
+          "answer": "phone ringing",
+          "weight": 10,
+          "accept": ["phone", "phone call", "ringing phone", "text", "notification", "phone rings"]
+        },
+        {
+          "id": "parents",
+          "answer": "parents",
+          "weight": 5,
+          "accept": ["mom calls", "mom", "dad", "parents walk in", "in-laws"]
+        },
+        {
+          "id": "dog-watching",
+          "answer": "dog watching",
+          "weight": 5,
+          "accept": ["dog", "pet", "cat", "pets", "cat watching"]
+        },
+        {
+          "id": "wrong-name",
+          "answer": "wrong name",
+          "weight": 5,
+          "accept": ["saying the wrong name", "ex's name", "saying ex's name", "ex name"]
+        },
+        {
+          "id": "falling-asleep",
+          "answer": "falling asleep",
+          "weight": 4,
+          "accept": ["asleep", "sleeping", "snoring", "fell asleep"]
+        },
+        {
+          "id": "burp",
+          "answer": "burp",
+          "weight": 3,
+          "accept": ["burping", "belch", "burps"]
+        },
+        {
+          "id": "crying",
+          "answer": "crying",
+          "weight": 3,
+          "accept": ["tears", "sobbing", "cry"]
+        },
+        {
+          "id": "cramps",
+          "answer": "cramps",
+          "weight": 2,
+          "accept": ["period", "leg cramp", "charley horse"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-007",
+      "style": "name",
+      "prompt": "Name the first thing you check out on someone hot.",
+      "answers": [
+        {
+          "id": "eyes",
+          "answer": "eyes",
+          "weight": 24,
+          "accept": ["eye", "their eyes", "eye color", "eyez", "peepers", "blue eyes"]
+        },
+        {
+          "id": "smile",
+          "answer": "smile",
+          "weight": 18,
+          "accept": ["their smile", "grin", "smiley", "smil", "smille", "nice smile"]
+        },
+        {
+          "id": "butt",
+          "answer": "butt",
+          "weight": 18,
+          "accept": ["ass", "booty", "bum", "backside", "behind", "butts"]
+        },
+        {
+          "id": "chest",
+          "answer": "chest",
+          "weight": 8,
+          "accept": ["boobs", "breasts", "pecs", "tits", "rack"]
+        },
+        {
+          "id": "body",
+          "answer": "body",
+          "weight": 6,
+          "accept": ["physique", "figure", "abs", "build"]
+        },
+        {
+          "id": "hair",
+          "answer": "hair",
+          "weight": 5,
+          "accept": ["haircut", "hairstyle", "hairs"]
+        },
+        {
+          "id": "ring-finger",
+          "answer": "ring finger",
+          "weight": 5,
+          "accept": ["wedding ring", "ring", "hands"]
+        },
+        {
+          "id": "height",
+          "answer": "height",
+          "weight": 4,
+          "accept": ["tall", "how tall", "heigth"]
+        },
+        {
+          "id": "shoes",
+          "answer": "shoes",
+          "weight": 3,
+          "accept": ["shoe", "sneakers", "footwear"]
+        },
+        {
+          "id": "teeth",
+          "answer": "teeth",
+          "weight": 3,
+          "accept": ["tooth", "clean teeth", "straight teeth"]
+        },
+        {
+          "id": "legs",
+          "answer": "legs",
+          "weight": 2,
+          "accept": ["leg", "thighs"]
+        },
+        {
+          "id": "arms",
+          "answer": "arms",
+          "weight": 2,
+          "accept": ["biceps", "guns", "muscles"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-008",
+      "style": "best",
+      "prompt": "Worst place to get dumped?",
+      "answers": [
+        {
+          "id": "over-text",
+          "answer": "over text",
+          "weight": 30,
+          "accept": ["text", "texting", "by text", "text message", "sms", "via text"]
+        },
+        {
+          "id": "wedding",
+          "answer": "at a wedding",
+          "weight": 12,
+          "accept": [
+            "wedding",
+            "someone's wedding",
+            "weddings",
+            "at the wedding",
+            "reception",
+            "wedding reception"
+          ]
+        },
+        {
+          "id": "birthday",
+          "answer": "birthday",
+          "weight": 12,
+          "accept": [
+            "on my birthday",
+            "birthday party",
+            "my birthday",
+            "bday",
+            "at my party",
+            "birthday dinner"
+          ]
+        },
+        {
+          "id": "restaurant",
+          "answer": "restaurant",
+          "weight": 10,
+          "accept": ["dinner", "fancy dinner", "at dinner", "restaraunt", "date night", "resturant"]
+        },
+        {
+          "id": "in-public",
+          "answer": "in public",
+          "weight": 6,
+          "accept": ["public", "in front of people", "at the mall"]
+        },
+        {
+          "id": "vacation",
+          "answer": "vacation",
+          "weight": 6,
+          "accept": ["on vacation", "holiday", "trip", "on a trip"]
+        },
+        {
+          "id": "christmas",
+          "answer": "christmas",
+          "weight": 5,
+          "accept": ["xmas", "on christmas", "christmas eve"]
+        },
+        {
+          "id": "valentines-day",
+          "answer": "valentine's day",
+          "weight": 4,
+          "accept": ["valentines", "vday", "feb 14"]
+        },
+        {
+          "id": "at-work",
+          "answer": "at work",
+          "weight": 5,
+          "accept": ["work", "office", "workplace"]
+        },
+        {
+          "id": "funeral",
+          "answer": "funeral",
+          "weight": 3,
+          "accept": ["at a funeral", "funerals", "wake"]
+        },
+        {
+          "id": "in-bed",
+          "answer": "in bed",
+          "weight": 3,
+          "accept": ["bed", "during sex", "mid sex"]
+        },
+        {
+          "id": "airport",
+          "answer": "airport",
+          "weight": 2,
+          "accept": ["at the airport", "plane", "flight"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-009",
+      "style": "best",
+      "prompt": "Worst thing to hear in bed?",
+      "answers": [
+        {
+          "id": "wrong-name",
+          "answer": "wrong name",
+          "weight": 30,
+          "accept": [
+            "someone else's name",
+            "ex's name",
+            "your ex's name",
+            "another name",
+            "different name",
+            "other name"
+          ]
+        },
+        {
+          "id": "is-it-in",
+          "answer": "is it in",
+          "weight": 14,
+          "accept": [
+            "is it in yet",
+            "are you in",
+            "is it inside",
+            "wait is it in",
+            "you in yet",
+            "u in"
+          ]
+        },
+        {
+          "id": "thats-it",
+          "answer": "that's it",
+          "weight": 12,
+          "accept": [
+            "is that it",
+            "that was it",
+            "already",
+            "done already",
+            "that's all",
+            "is that all"
+          ]
+        },
+        {
+          "id": "oops",
+          "answer": "oops",
+          "weight": 9,
+          "accept": ["whoops", "uh oh", "oh no", "my bad", "oopsie", "woops"]
+        },
+        {
+          "id": "snoring",
+          "answer": "snoring",
+          "weight": 8,
+          "accept": ["snore", "snores", "someone snoring", "zzz"]
+        },
+        {
+          "id": "i-love-you",
+          "answer": "i love you",
+          "weight": 7,
+          "accept": ["love you", "i love u", "ily"]
+        },
+        {
+          "id": "spouse-is-home",
+          "answer": "spouse is home",
+          "weight": 5,
+          "accept": ["my wife", "my husband", "wife", "husband", "honey i'm home"]
+        },
+        {
+          "id": "ouch",
+          "answer": "ouch",
+          "weight": 4,
+          "accept": ["ow", "that hurts", "owww"]
+        },
+        {
+          "id": "your-mom",
+          "answer": "your mom",
+          "weight": 4,
+          "accept": ["mom", "mommy", "moms home", "my mom"]
+        },
+        {
+          "id": "sorry",
+          "answer": "sorry",
+          "weight": 3,
+          "accept": ["i'm sorry", "sry", "sorry babe"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-010",
+      "style": "best",
+      "prompt": "Best excuse to leave a bad date?",
+      "answers": [
+        {
+          "id": "family-emergency",
+          "answer": "family emergency",
+          "weight": 30,
+          "accept": [
+            "emergency",
+            "emergency call",
+            "fake emergency",
+            "family thing",
+            "family stuff",
+            "emergancy"
+          ]
+        },
+        {
+          "id": "feeling-sick",
+          "answer": "feeling sick",
+          "weight": 15,
+          "accept": [
+            "sick",
+            "i'm sick",
+            "food poisoning",
+            "stomach ache",
+            "nauseous",
+            "ill",
+            "headache"
+          ]
+        },
+        {
+          "id": "work",
+          "answer": "work",
+          "weight": 10,
+          "accept": [
+            "work emergency",
+            "boss called",
+            "got called in",
+            "on call",
+            "working",
+            "work call"
+          ]
+        },
+        {
+          "id": "my-dog",
+          "answer": "my dog",
+          "weight": 9,
+          "accept": ["dog", "feed the dog", "walk the dog", "pet", "cat", "let the dog out"]
+        },
+        {
+          "id": "early-morning",
+          "answer": "early morning",
+          "weight": 8,
+          "accept": ["early", "up early", "have to wake up early", "tired", "long day", "sleepy"]
+        },
+        {
+          "id": "babysitter",
+          "answer": "babysitter",
+          "weight": 5,
+          "accept": ["sitter", "kids", "babysitter left", "nanny"]
+        },
+        {
+          "id": "friend-needs-me",
+          "answer": "friend needs me",
+          "weight": 5,
+          "accept": ["friend", "friend emergency", "roommate", "bestie crisis"]
+        },
+        {
+          "id": "bathroom-escape",
+          "answer": "bathroom escape",
+          "weight": 4,
+          "accept": ["bathroom", "climb out window", "window", "ghost"]
+        },
+        {
+          "id": "the-truth",
+          "answer": "the truth",
+          "weight": 4,
+          "accept": ["be honest", "honesty", "just leave", "not feeling it", "tell the truth"]
+        },
+        {
+          "id": "parking-meter",
+          "answer": "parking meter",
+          "weight": 2,
+          "accept": ["parking", "meter", "car towed"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-011",
+      "style": "pick",
+      "prompt": "Pick an underwear color for a hot date.",
+      "answers": [
+        {
+          "id": "black",
+          "answer": "black",
+          "weight": 42,
+          "accept": ["blak", "all black", "black lace"]
+        },
+        {
+          "id": "red",
+          "answer": "red",
+          "weight": 25,
+          "accept": ["red lace", "bright red", "scarlet", "crimson"]
+        },
+        {
+          "id": "white",
+          "answer": "white",
+          "weight": 7,
+          "accept": ["whit", "white lace", "ivory"]
+        },
+        {
+          "id": "pink",
+          "answer": "pink",
+          "weight": 6,
+          "accept": ["hot pink", "pinkk", "blush"]
+        },
+        {
+          "id": "purple",
+          "answer": "purple",
+          "weight": 4,
+          "accept": ["lavender", "violet", "purpel"]
+        },
+        {
+          "id": "blue",
+          "answer": "blue",
+          "weight": 3,
+          "accept": ["navy", "baby blue", "light blue"]
+        },
+        {
+          "id": "nude",
+          "answer": "nude",
+          "weight": 3,
+          "accept": ["beige", "skin tone", "tan"]
+        },
+        {
+          "id": "leopard",
+          "answer": "leopard",
+          "weight": 2,
+          "accept": ["leopard print", "animal print", "cheetah"]
+        },
+        {
+          "id": "green",
+          "answer": "green",
+          "weight": 2,
+          "accept": ["emerald", "lime"]
+        },
+        {
+          "id": "gold",
+          "answer": "gold",
+          "weight": 2,
+          "accept": ["golden", "metallic"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-012",
+      "style": "pick",
+      "prompt": "Pick the worst month to be single.",
+      "answers": [
+        {
+          "id": "february",
+          "answer": "february",
+          "weight": 45,
+          "accept": ["feb", "febuary", "valentine month", "feburary"]
+        },
+        {
+          "id": "december",
+          "answer": "december",
+          "weight": 22,
+          "accept": ["dec", "christmas", "decmber", "xmas"]
+        },
+        {
+          "id": "november",
+          "answer": "november",
+          "weight": 8,
+          "accept": ["nov", "cuffing season", "thanksgiving"]
+        },
+        {
+          "id": "january",
+          "answer": "january",
+          "weight": 5,
+          "accept": ["new years", "janurary", "jan"]
+        },
+        {
+          "id": "october",
+          "answer": "october",
+          "weight": 5,
+          "accept": ["oct", "halloween", "octobr"]
+        },
+        {
+          "id": "june",
+          "answer": "june",
+          "weight": 4,
+          "accept": ["wedding season", "junee", "weddings"],
+          "reject": ["july"]
+        },
+        {
+          "id": "july",
+          "answer": "july",
+          "weight": 3,
+          "accept": ["july 4th", "fourth of july", "julyy"],
+          "reject": ["june"]
+        },
+        {
+          "id": "march",
+          "answer": "march",
+          "weight": 2,
+          "accept": ["marhc", "st patricks"]
+        },
+        {
+          "id": "april",
+          "answer": "april",
+          "weight": 2,
+          "accept": ["apr", "aprl"]
+        },
+        {
+          "id": "may",
+          "answer": "may",
+          "weight": 1,
+          "accept": []
+        },
+        {
+          "id": "august",
+          "answer": "august",
+          "weight": 1,
+          "accept": ["aug"]
+        },
+        {
+          "id": "september",
+          "answer": "september",
+          "weight": 1,
+          "accept": ["sept"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-013",
+      "style": "pick",
+      "prompt": "Pick a number from 1 to 10: dates before a sleepover.",
+      "answers": [
+        {
+          "id": "3",
+          "answer": "3",
+          "weight": 35,
+          "accept": ["third date", "3rd date", "thrid", "no 3"]
+        },
+        {
+          "id": "1",
+          "answer": "1",
+          "weight": 12,
+          "accept": ["first date", "1st date", "no 1"]
+        },
+        {
+          "id": "5",
+          "answer": "5",
+          "weight": 12,
+          "accept": ["5th date", "no 5", "5 dates"]
+        },
+        {
+          "id": "2",
+          "answer": "2",
+          "weight": 10,
+          "accept": ["second date", "2nd date", "no 2"]
+        },
+        {
+          "id": "4",
+          "answer": "4",
+          "weight": 8,
+          "accept": ["fourth date", "4th date", "no 4"]
+        },
+        {
+          "id": "10",
+          "answer": "10",
+          "weight": 6,
+          "accept": ["10th date", "no 10", "10 dates"]
+        },
+        {
+          "id": "6",
+          "answer": "6",
+          "weight": 5,
+          "accept": ["6th date", "no 6", "6 dates"]
+        },
+        {
+          "id": "7",
+          "answer": "7",
+          "weight": 4,
+          "accept": ["lucky 7", "7th date", "no 7"]
+        },
+        {
+          "id": "8",
+          "answer": "8",
+          "weight": 3,
+          "accept": ["eighth date", "8th date", "no 8"]
+        },
+        {
+          "id": "9",
+          "answer": "9",
+          "weight": 1,
+          "accept": ["9th date", "9 dates"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-date-014",
+      "style": "finish",
+      "prompt": "Finish this: My ex was a total ___.",
+      "say": "Finish this: My ex was a total... blank.",
+      "answers": [
+        {
+          "id": "psycho",
+          "answer": "psycho",
+          "weight": 25,
+          "accept": ["psychopath", "psyco", "crazy", "nutcase", "lunatic", "sicko", "psychotic"]
+        },
+        {
+          "id": "jerk",
+          "answer": "jerk",
+          "weight": 15,
+          "accept": ["jerkoff", "a-hole", "asshole", "dick", "douche", "douchebag", "tool"]
+        },
+        {
+          "id": "liar",
+          "answer": "liar",
+          "weight": 10,
+          "accept": ["lier", "liars", "compulsive liar", "fraud", "fake", "snake"]
+        },
+        {
+          "id": "loser",
+          "answer": "loser",
+          "weight": 10,
+          "accept": ["looser", "deadbeat", "bum", "failure", "waste", "slacker"]
+        },
+        {
+          "id": "nightmare",
+          "answer": "nightmare",
+          "weight": 8,
+          "accept": ["disaster", "hot mess", "trainwreck", "mess"]
+        },
+        {
+          "id": "cheater",
+          "answer": "cheater",
+          "weight": 7,
+          "accept": ["cheat", "player", "cheating", "fuckboy"]
+        },
+        {
+          "id": "narcissist",
+          "answer": "narcissist",
+          "weight": 6,
+          "accept": ["narc", "narcissistic", "narcisist", "ego maniac"]
+        },
+        {
+          "id": "baby",
+          "answer": "baby",
+          "weight": 4,
+          "accept": ["child", "man child", "crybaby"]
+        },
+        {
+          "id": "clown",
+          "answer": "clown",
+          "weight": 4,
+          "accept": ["joke", "clowns", "circus"]
+        },
+        {
+          "id": "catch",
+          "answer": "catch",
+          "weight": 3,
+          "accept": ["dream", "keeper", "sweetheart"]
+        },
+        {
+          "id": "bitch",
+          "answer": "bitch",
+          "weight": 3,
+          "accept": ["witch", "biatch", "beotch"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-party-001",
+      "style": "name",
+      "prompt": "Name a drinking game.",
+      "answers": [
+        {
+          "id": "beer-pong",
+          "answer": "beer pong",
+          "weight": 45,
+          "accept": ["pong", "beirut", "beer ping pong", "bier pong", "water pong", "cup pong"]
+        },
+        {
+          "id": "flip-cup",
+          "answer": "flip cup",
+          "weight": 16,
+          "accept": [
+            "flip cups",
+            "flippy cup",
+            "tippy cup",
+            "flip the cup",
+            "flip cup race",
+            "flipping cups"
+          ]
+        },
+        {
+          "id": "kings-cup",
+          "answer": "kings cup",
+          "weight": 10,
+          "accept": [
+            "kings",
+            "ring of fire",
+            "circle of death",
+            "king cup",
+            "kings cups",
+            "waterfall"
+          ]
+        },
+        {
+          "id": "never-have-i-ever",
+          "answer": "never have i ever",
+          "weight": 8,
+          "accept": ["never have i", "never ever", "nhie", "never have ever"]
+        },
+        {
+          "id": "quarters",
+          "answer": "quarters",
+          "weight": 4,
+          "accept": ["quarter", "quaters", "bounce quarter"]
+        },
+        {
+          "id": "power-hour",
+          "answer": "power hour",
+          "weight": 3,
+          "accept": ["centurion", "century club", "power hr"]
+        },
+        {
+          "id": "rage-cage",
+          "answer": "rage cage",
+          "weight": 3,
+          "accept": ["slap cup", "stack cup", "rage cages"]
+        },
+        {
+          "id": "drunk-jenga",
+          "answer": "drunk jenga",
+          "weight": 2,
+          "accept": ["jenga", "drinking jenga"]
+        },
+        {
+          "id": "ride-the-bus",
+          "answer": "ride the bus",
+          "weight": 2,
+          "accept": ["ride bus", "bus driver"]
+        },
+        {
+          "id": "truth-or-dare",
+          "answer": "truth or dare",
+          "weight": 2,
+          "accept": ["dare", "truth"]
+        },
+        {
+          "id": "f-the-dealer",
+          "answer": "f the dealer",
+          "weight": 1,
+          "accept": ["fuck the dealer", "screw the dealer"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-party-002",
+      "style": "name",
+      "prompt": "Name something people do when a party gets boring.",
+      "answers": [
+        {
+          "id": "leave",
+          "answer": "leave",
+          "weight": 32,
+          "accept": ["go home", "leaving", "head out", "dip", "irish exit", "bounce", "ghost"]
+        },
+        {
+          "id": "drink-more",
+          "answer": "drink more",
+          "weight": 15,
+          "accept": ["drink", "take shots", "shots", "get drunk", "chug", "pregame"]
+        },
+        {
+          "id": "phone",
+          "answer": "phone",
+          "weight": 13,
+          "accept": [
+            "on phone",
+            "scroll",
+            "check phone",
+            "scrolling",
+            "instagram",
+            "tiktok",
+            "text"
+          ]
+        },
+        {
+          "id": "play-games",
+          "answer": "play games",
+          "weight": 8,
+          "accept": ["games", "play a game", "board games", "cards"]
+        },
+        {
+          "id": "change-music",
+          "answer": "change music",
+          "weight": 6,
+          "accept": ["music", "dj", "aux", "take the aux"]
+        },
+        {
+          "id": "dance",
+          "answer": "dance",
+          "weight": 6,
+          "accept": ["dancing", "dance off", "twerk"]
+        },
+        {
+          "id": "smoke",
+          "answer": "smoke",
+          "weight": 5,
+          "accept": ["weed", "smoke weed", "get high", "vape", "smoking"]
+        },
+        {
+          "id": "order-food",
+          "answer": "order food",
+          "weight": 4,
+          "accept": ["food", "pizza", "eat", "doordash"]
+        },
+        {
+          "id": "hook-up",
+          "answer": "hook up",
+          "weight": 4,
+          "accept": ["make out", "find someone", "get lucky"]
+        },
+        {
+          "id": "gossip",
+          "answer": "gossip",
+          "weight": 3,
+          "accept": ["talk", "talk trash", "trash talk"]
+        },
+        {
+          "id": "sleep",
+          "answer": "sleep",
+          "weight": 2,
+          "accept": ["nap", "pass out", "fall asleep"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-party-003",
+      "style": "name",
+      "prompt": "Name a text you regret sending at 2 AM.",
+      "say": "Name a text you regret sending at two in the morning.",
+      "answers": [
+        {
+          "id": "you-up",
+          "answer": "you up",
+          "weight": 30,
+          "accept": ["u up", "you awake", "are you up", "r u up", "u awake", "wyd", "are you awake"]
+        },
+        {
+          "id": "i-miss-you",
+          "answer": "i miss you",
+          "weight": 22,
+          "accept": ["miss you", "i miss u", "miss u", "missing you", "i miss us", "imy"]
+        },
+        {
+          "id": "i-love-you",
+          "answer": "i love you",
+          "weight": 9,
+          "accept": ["love you", "i love u", "ily", "love u", "i love you still"]
+        },
+        {
+          "id": "come-over",
+          "answer": "come over",
+          "weight": 9,
+          "accept": ["wanna come over", "come thru", "come through", "cum over", "hmu"]
+        },
+        {
+          "id": "nudes",
+          "answer": "nudes",
+          "weight": 7,
+          "accept": ["nude", "naked pic", "naked photo", "dick pic"]
+        },
+        {
+          "id": "sorry",
+          "answer": "sorry",
+          "weight": 6,
+          "accept": ["i'm sorry", "apology", "apologizing", "sry"]
+        },
+        {
+          "id": "hey",
+          "answer": "hey",
+          "weight": 5,
+          "accept": ["hi", "heyy", "hey stranger", "hello"]
+        },
+        {
+          "id": "long-rant",
+          "answer": "long rant",
+          "weight": 4,
+          "accept": ["rant", "paragraph", "essay", "long paragraph"]
+        },
+        {
+          "id": "we-need-to-talk",
+          "answer": "we need to talk",
+          "weight": 3,
+          "accept": ["need to talk", "can we talk", "we should talk"]
+        },
+        {
+          "id": "i-quit",
+          "answer": "i quit",
+          "weight": 2,
+          "accept": ["quitting", "quit my job", "to my boss"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-party-004",
+      "style": "name",
+      "prompt": "Name something people do in the bathroom at a party.",
+      "answers": [
+        {
+          "id": "pee",
+          "answer": "pee",
+          "weight": 22,
+          "accept": ["peeing", "piss", "use it", "go potty", "urinate", "potty", "tinkle"]
+        },
+        {
+          "id": "throw-up",
+          "answer": "throw up",
+          "weight": 16,
+          "accept": ["puke", "vomit", "barf", "throwing up", "be sick", "hurl"]
+        },
+        {
+          "id": "make-out",
+          "answer": "make out",
+          "weight": 12,
+          "accept": ["hook up", "kiss", "making out", "sex", "smash", "makeout sesh"]
+        },
+        {
+          "id": "snoop",
+          "answer": "snoop",
+          "weight": 11,
+          "accept": [
+            "snooping",
+            "look in cabinets",
+            "medicine cabinet",
+            "go through cabinets",
+            "nose around",
+            "spy"
+          ]
+        },
+        {
+          "id": "fix-makeup",
+          "answer": "fix makeup",
+          "weight": 8,
+          "accept": ["makeup", "mirror", "check makeup", "fix hair", "check hair"]
+        },
+        {
+          "id": "cry",
+          "answer": "cry",
+          "weight": 7,
+          "accept": ["crying", "cries", "sob"]
+        },
+        {
+          "id": "drugs",
+          "answer": "drugs",
+          "weight": 5,
+          "accept": ["do drugs", "coke", "do lines", "snort"]
+        },
+        {
+          "id": "selfies",
+          "answer": "selfies",
+          "weight": 5,
+          "accept": ["selfie", "take selfies", "take pics"]
+        },
+        {
+          "id": "hide",
+          "answer": "hide",
+          "weight": 4,
+          "accept": ["hiding", "escape", "recharge", "hide out"]
+        },
+        {
+          "id": "poop",
+          "answer": "poop",
+          "weight": 3,
+          "accept": ["poo", "number 2", "dump", "poops"]
+        },
+        {
+          "id": "gossip",
+          "answer": "gossip",
+          "weight": 3,
+          "accept": ["talk", "girl talk", "talk trash"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-party-005",
+      "style": "name",
+      "prompt": "Name a place people hook up at a party.",
+      "answers": [
+        {
+          "id": "bedroom",
+          "answer": "bedroom",
+          "weight": 35,
+          "accept": [
+            "bed",
+            "parents' room",
+            "master bedroom",
+            "spare room",
+            "bedrooms",
+            "master suite"
+          ]
+        },
+        {
+          "id": "bathroom",
+          "answer": "bathroom",
+          "weight": 28,
+          "accept": ["toilet", "bathrooms", "shower", "powder room", "bath", "loo"]
+        },
+        {
+          "id": "car",
+          "answer": "car",
+          "weight": 10,
+          "accept": ["back seat", "in the car", "cars", "truck", "parking lot", "vehicle"]
+        },
+        {
+          "id": "closet",
+          "answer": "closet",
+          "weight": 8,
+          "accept": ["coat closet", "closets", "walk-in", "pantry"]
+        },
+        {
+          "id": "hot-tub",
+          "answer": "hot tub",
+          "weight": 5,
+          "accept": ["jacuzzi", "spa", "hot tubs"]
+        },
+        {
+          "id": "backyard",
+          "answer": "backyard",
+          "weight": 4,
+          "accept": ["yard", "outside", "garden", "bushes"]
+        },
+        {
+          "id": "couch",
+          "answer": "couch",
+          "weight": 3,
+          "accept": ["sofa", "living room", "futon"]
+        },
+        {
+          "id": "laundry-room",
+          "answer": "laundry room",
+          "weight": 2,
+          "accept": ["laundry", "utility room"]
+        },
+        {
+          "id": "basement",
+          "answer": "basement",
+          "weight": 2,
+          "accept": ["downstairs", "cellar"]
+        },
+        {
+          "id": "pool",
+          "answer": "pool",
+          "weight": 2,
+          "accept": ["swimming pool", "pool house"]
+        },
+        {
+          "id": "roof",
+          "answer": "roof",
+          "weight": 1,
+          "accept": ["rooftop"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-party-006",
+      "style": "best",
+      "prompt": "Most annoying drunk at a party?",
+      "answers": [
+        {
+          "id": "crier",
+          "answer": "crier",
+          "weight": 22,
+          "accept": ["crying", "cries", "sad drunk", "crybaby", "weeper", "emotional one"]
+        },
+        {
+          "id": "fighter",
+          "answer": "fighter",
+          "weight": 18,
+          "accept": ["fights", "angry drunk", "mean drunk", "fighting", "picks fights", "brawler"]
+        },
+        {
+          "id": "puker",
+          "answer": "puker",
+          "weight": 12,
+          "accept": ["pukes", "throws up", "vomits", "barfs", "sick one", "vomiter"]
+        },
+        {
+          "id": "clingy-one",
+          "answer": "clingy one",
+          "weight": 10,
+          "accept": ["clingy", "touchy", "handsy", "hugger", "touchy feely", "hugs"]
+        },
+        {
+          "id": "loud-one",
+          "answer": "loud one",
+          "weight": 10,
+          "accept": ["loud", "yeller", "screamer", "shouter", "loudmouth", "yelling"]
+        },
+        {
+          "id": "oversharer",
+          "answer": "oversharer",
+          "weight": 7,
+          "accept": ["overshares", "tmi", "talks too much", "storyteller"]
+        },
+        {
+          "id": "aux-hog",
+          "answer": "aux hog",
+          "weight": 6,
+          "accept": ["dj", "aux", "music hog", "aux thief"]
+        },
+        {
+          "id": "wont-leave",
+          "answer": "won't leave",
+          "weight": 5,
+          "accept": ["stays forever", "overstays", "last one"]
+        },
+        {
+          "id": "your-ex",
+          "answer": "your ex",
+          "weight": 4,
+          "accept": ["ex", "exes", "someone's ex"]
+        },
+        {
+          "id": "sloppy-one",
+          "answer": "sloppy one",
+          "weight": 4,
+          "accept": ["sloppy", "falls over", "stumbler"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-party-007",
+      "style": "best",
+      "prompt": "Worst thing to wake up next to after a party?",
+      "answers": [
+        {
+          "id": "your-ex",
+          "answer": "your ex",
+          "weight": 26,
+          "accept": ["ex", "my ex", "exes", "ex boyfriend", "ex girlfriend", "old flame"]
+        },
+        {
+          "id": "stranger",
+          "answer": "stranger",
+          "weight": 18,
+          "accept": [
+            "strangers",
+            "someone random",
+            "random person",
+            "random",
+            "nobody i know",
+            "unknown person"
+          ]
+        },
+        {
+          "id": "puke",
+          "answer": "puke",
+          "weight": 14,
+          "accept": ["vomit", "throw up", "barf", "puddle of puke", "sick", "pukes"]
+        },
+        {
+          "id": "boss",
+          "answer": "boss",
+          "weight": 9,
+          "accept": ["my boss", "manager", "supervisor", "boss man"]
+        },
+        {
+          "id": "coworker",
+          "answer": "coworker",
+          "weight": 7,
+          "accept": ["coworkers", "colleague", "work friend"]
+        },
+        {
+          "id": "friends-partner",
+          "answer": "friend's partner",
+          "weight": 6,
+          "accept": [
+            "best friend's boyfriend",
+            "friend's girlfriend",
+            "friend's boyfriend",
+            "friend's husband",
+            "friend's wife"
+          ]
+        },
+        {
+          "id": "traffic-cone",
+          "answer": "traffic cone",
+          "weight": 5,
+          "accept": ["cone", "road cone", "street sign"]
+        },
+        {
+          "id": "clown",
+          "answer": "clown",
+          "weight": 4,
+          "accept": ["clowns", "mime", "clown makeup"]
+        },
+        {
+          "id": "roommate",
+          "answer": "roommate",
+          "weight": 3,
+          "accept": ["roomie", "flatmate", "roommates"]
+        },
+        {
+          "id": "cop",
+          "answer": "cop",
+          "weight": 3,
+          "accept": ["police", "police officer", "cops", "officer"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-drink-001",
+      "style": "name",
+      "prompt": "Name a cocktail that gets you in trouble.",
+      "answers": [
+        {
+          "id": "long-island",
+          "answer": "long island",
+          "weight": 28,
+          "accept": [
+            "long island iced tea",
+            "long islands",
+            "long island ice tea",
+            "long iland",
+            "lit",
+            "long island tea"
+          ]
+        },
+        {
+          "id": "margarita",
+          "answer": "margarita",
+          "weight": 25,
+          "accept": ["marg", "margs", "margaritas", "margherita", "margerita", "marguerita"]
+        },
+        {
+          "id": "jungle-juice",
+          "answer": "jungle juice",
+          "weight": 10,
+          "accept": [
+            "jungle juices",
+            "jj",
+            "trash can punch",
+            "hunch punch",
+            "punch",
+            "party punch"
+          ]
+        },
+        {
+          "id": "mojito",
+          "answer": "mojito",
+          "weight": 7,
+          "accept": ["mojitos", "mohito", "moijto"]
+        },
+        {
+          "id": "martini",
+          "answer": "martini",
+          "weight": 6,
+          "accept": ["martinis", "dirty martini", "espresso martini"]
+        },
+        {
+          "id": "amf",
+          "answer": "amf",
+          "display": "AMF",
+          "weight": 5,
+          "accept": ["adios", "adios mf", "adios motherfucker"]
+        },
+        {
+          "id": "pina-colada",
+          "answer": "pina colada",
+          "weight": 4,
+          "accept": ["pina coladas", "colada", "pinya colada"]
+        },
+        {
+          "id": "old-fashioned",
+          "answer": "old fashioned",
+          "weight": 3,
+          "accept": ["old fashion", "old fashioneds", "bourbon"]
+        },
+        {
+          "id": "sex-on-the-beach",
+          "answer": "sex on the beach",
+          "weight": 3,
+          "accept": ["sotb", "sex on beach"]
+        },
+        {
+          "id": "cosmo",
+          "answer": "cosmo",
+          "weight": 2,
+          "accept": ["cosmopolitan", "cosmos"]
+        },
+        {
+          "id": "mimosa",
+          "answer": "mimosa",
+          "weight": 2,
+          "accept": ["mimosas", "bottomless mimosas"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-drink-002",
+      "style": "name",
+      "prompt": "Name something drunk people always do.",
+      "answers": [
+        {
+          "id": "cry",
+          "answer": "cry",
+          "weight": 14,
+          "accept": ["crying", "cries", "sob", "get emotional", "weep", "ugly cry"]
+        },
+        {
+          "id": "dance",
+          "answer": "dance",
+          "weight": 14,
+          "accept": [
+            "dancing",
+            "dances",
+            "dance on tables",
+            "twerk",
+            "dance badly",
+            "busting moves"
+          ]
+        },
+        {
+          "id": "sing",
+          "answer": "sing",
+          "weight": 12,
+          "accept": ["singing", "karaoke", "sings", "belt songs", "sing loudly", "scream songs"]
+        },
+        {
+          "id": "text-their-ex",
+          "answer": "text their ex",
+          "weight": 10,
+          "accept": [
+            "text ex",
+            "drunk text",
+            "call their ex",
+            "drunk dial",
+            "texting ex",
+            "text an ex"
+          ]
+        },
+        {
+          "id": "throw-up",
+          "answer": "throw up",
+          "weight": 9,
+          "accept": ["puke", "vomit", "barf", "throwing up"]
+        },
+        {
+          "id": "fall-down",
+          "answer": "fall down",
+          "weight": 8,
+          "accept": ["fall", "trip", "falling", "stumble", "fall over"]
+        },
+        {
+          "id": "eat",
+          "answer": "eat",
+          "weight": 7,
+          "accept": ["eat junk", "eating", "get food", "drunk food", "pizza"]
+        },
+        {
+          "id": "say-i-love-you",
+          "answer": "say i love you",
+          "weight": 6,
+          "accept": ["i love you", "love everyone", "tell everyone they love them"]
+        },
+        {
+          "id": "fight",
+          "answer": "fight",
+          "weight": 5,
+          "accept": ["fighting", "argue", "start fights"]
+        },
+        {
+          "id": "overshare",
+          "answer": "overshare",
+          "weight": 5,
+          "accept": ["tell secrets", "spill secrets", "tmi"]
+        },
+        {
+          "id": "lose-phone",
+          "answer": "lose phone",
+          "weight": 4,
+          "accept": ["lose stuff", "lose keys", "lose things"]
+        },
+        {
+          "id": "pee-outside",
+          "answer": "pee outside",
+          "weight": 3,
+          "accept": ["pee", "public pee", "piss outside"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-drink-003",
+      "style": "name",
+      "prompt": "Name a drunk food.",
+      "answers": [
+        {
+          "id": "pizza",
+          "answer": "pizza",
+          "weight": 40,
+          "accept": ["piza", "pizzas", "slice", "pizza slice", "pizzza", "pie"]
+        },
+        {
+          "id": "tacos",
+          "answer": "tacos",
+          "weight": 14,
+          "accept": ["taco", "taco bell", "tacos al pastor", "street tacos", "birria", "tacoz"]
+        },
+        {
+          "id": "fries",
+          "answer": "fries",
+          "weight": 9,
+          "accept": ["french fries", "fry", "chips", "cheese fries", "frys"]
+        },
+        {
+          "id": "burger",
+          "answer": "burger",
+          "weight": 8,
+          "accept": ["burgers", "cheeseburger", "hamburger", "double cheeseburger"]
+        },
+        {
+          "id": "mcdonalds",
+          "answer": "mcdonald's",
+          "display": "McDonald's",
+          "weight": 8,
+          "accept": ["mickey d's", "maccas", "mcd", "big mac"]
+        },
+        {
+          "id": "nachos",
+          "answer": "nachos",
+          "weight": 4,
+          "accept": ["nacho", "nachoes", "cheesy nachos"]
+        },
+        {
+          "id": "wings",
+          "answer": "wings",
+          "weight": 4,
+          "accept": ["chicken wings", "buffalo wings", "wing"]
+        },
+        {
+          "id": "nuggets",
+          "answer": "nuggets",
+          "weight": 4,
+          "accept": ["chicken nuggets", "nugs", "mcnuggets"]
+        },
+        {
+          "id": "burrito",
+          "answer": "burrito",
+          "weight": 3,
+          "accept": ["burritos", "chipotle", "breakfast burrito"]
+        },
+        {
+          "id": "ramen",
+          "answer": "ramen",
+          "weight": 2,
+          "accept": ["instant ramen", "noodles", "cup noodles"]
+        },
+        {
+          "id": "mac-and-cheese",
+          "answer": "mac and cheese",
+          "weight": 2,
+          "accept": ["mac n cheese", "kraft dinner"]
+        },
+        {
+          "id": "grilled-cheese",
+          "answer": "grilled cheese",
+          "weight": 2,
+          "accept": ["grill cheese", "cheese toastie"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-drink-004",
+      "style": "name",
+      "prompt": "Name something you lose on a night out.",
+      "answers": [
+        {
+          "id": "phone",
+          "answer": "phone",
+          "weight": 38,
+          "accept": ["cell phone", "iphone", "my phone", "fone", "mobile", "cell"]
+        },
+        {
+          "id": "keys",
+          "answer": "keys",
+          "weight": 14,
+          "accept": ["key", "car keys", "house keys", "keychain", "my keys", "keyz"]
+        },
+        {
+          "id": "wallet",
+          "answer": "wallet",
+          "weight": 12,
+          "accept": ["purse", "my wallet", "wallets", "money", "cash", "credit card"]
+        },
+        {
+          "id": "dignity",
+          "answer": "dignity",
+          "weight": 10,
+          "accept": ["self respect", "pride", "respect", "shame", "reputation", "my dignity"]
+        },
+        {
+          "id": "jacket",
+          "answer": "jacket",
+          "weight": 6,
+          "accept": ["coat", "hoodie", "sweater", "jackets"]
+        },
+        {
+          "id": "id",
+          "answer": "id",
+          "display": "ID",
+          "weight": 4,
+          "accept": ["license", "drivers license", "identification"]
+        },
+        {
+          "id": "shoes",
+          "answer": "shoes",
+          "weight": 4,
+          "accept": ["shoe", "heels", "sandals"]
+        },
+        {
+          "id": "friends",
+          "answer": "friends",
+          "weight": 4,
+          "accept": ["friend", "my friends", "the group"]
+        },
+        {
+          "id": "memory",
+          "answer": "memory",
+          "weight": 3,
+          "accept": ["memories", "my memory", "the night"]
+        },
+        {
+          "id": "earrings",
+          "answer": "earrings",
+          "weight": 2,
+          "accept": ["earring", "jewelry", "ring"]
+        },
+        {
+          "id": "virginity",
+          "answer": "virginity",
+          "weight": 2,
+          "accept": ["my virginity", "v card"]
+        },
+        {
+          "id": "sunglasses",
+          "answer": "sunglasses",
+          "weight": 1,
+          "accept": ["glasses"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-drink-005",
+      "style": "name",
+      "prompt": "Name something you shouldn't do drunk.",
+      "answers": [
+        {
+          "id": "drive",
+          "answer": "drive",
+          "weight": 45,
+          "accept": [
+            "driving",
+            "drunk driving",
+            "drive home",
+            "operate a car",
+            "dui",
+            "drive a car"
+          ]
+        },
+        {
+          "id": "text-your-ex",
+          "answer": "text your ex",
+          "weight": 18,
+          "accept": ["text ex", "call your ex", "drunk text", "drunk dial", "text", "texting"]
+        },
+        {
+          "id": "tattoo",
+          "answer": "get a tattoo",
+          "weight": 8,
+          "accept": ["tattoo", "tattoos", "get tattooed", "ink"]
+        },
+        {
+          "id": "online-shopping",
+          "answer": "online shopping",
+          "weight": 5,
+          "accept": ["shopping", "shop online", "buy stuff", "amazon"]
+        },
+        {
+          "id": "swim",
+          "answer": "swim",
+          "weight": 4,
+          "accept": ["swimming", "go swimming", "skinny dip"]
+        },
+        {
+          "id": "cook",
+          "answer": "cook",
+          "weight": 4,
+          "accept": ["cooking", "use the stove", "fry food"]
+        },
+        {
+          "id": "fight",
+          "answer": "fight",
+          "weight": 4,
+          "accept": ["fighting", "start a fight", "brawl"]
+        },
+        {
+          "id": "hook-up-with-ex",
+          "answer": "hook up with ex",
+          "weight": 3,
+          "accept": ["sleep with ex", "hook up"]
+        },
+        {
+          "id": "gamble",
+          "answer": "gamble",
+          "weight": 3,
+          "accept": ["gambling", "casino", "bet"]
+        },
+        {
+          "id": "get-married",
+          "answer": "get married",
+          "weight": 2,
+          "accept": ["marry", "vegas wedding", "marriage"]
+        },
+        {
+          "id": "post-online",
+          "answer": "post online",
+          "weight": 2,
+          "accept": ["post", "social media", "tweet"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-drink-006",
+      "style": "best",
+      "prompt": "Best hangover cure?",
+      "answers": [
+        {
+          "id": "water",
+          "answer": "water",
+          "weight": 25,
+          "accept": ["hydrate", "hydration", "h2o", "lots of water", "wader", "glass of water"]
+        },
+        {
+          "id": "sleep",
+          "answer": "sleep",
+          "weight": 16,
+          "accept": ["sleeping", "nap", "naps", "sleep it off", "more sleep", "rest"]
+        },
+        {
+          "id": "greasy-food",
+          "answer": "greasy food",
+          "weight": 13,
+          "accept": [
+            "grease",
+            "greasy breakfast",
+            "fast food",
+            "bacon",
+            "breakfast",
+            "food",
+            "eggs"
+          ]
+        },
+        {
+          "id": "advil",
+          "answer": "advil",
+          "display": "Advil",
+          "weight": 10,
+          "accept": ["ibuprofen", "tylenol", "aspirin", "painkillers", "pain killer", "motrin"]
+        },
+        {
+          "id": "hair-of-the-dog",
+          "answer": "hair of the dog",
+          "weight": 8,
+          "accept": [
+            "more alcohol",
+            "more beer",
+            "hair of dog",
+            "bloody mary",
+            "mimosa",
+            "another drink"
+          ]
+        },
+        {
+          "id": "gatorade",
+          "answer": "gatorade",
+          "display": "Gatorade",
+          "weight": 7,
+          "accept": ["powerade", "electrolytes", "sports drink", "gatoraid"]
+        },
+        {
+          "id": "pedialyte",
+          "answer": "pedialyte",
+          "display": "Pedialyte",
+          "weight": 5,
+          "accept": ["pedilyte", "pedialite", "liquid iv"]
+        },
+        {
+          "id": "coffee",
+          "answer": "coffee",
+          "weight": 5,
+          "accept": ["caffeine", "coffe", "espresso"]
+        },
+        {
+          "id": "shower",
+          "answer": "shower",
+          "weight": 3,
+          "accept": ["cold shower", "hot shower", "showers"]
+        },
+        {
+          "id": "pho",
+          "answer": "pho",
+          "weight": 2,
+          "accept": ["soup", "ramen"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-drink-007",
+      "style": "pick",
+      "prompt": "Pick a number from 1 to 10: how many drinks is \"a few\"?",
+      "say": "Pick a number from 1 to 10: how many drinks is a few?",
+      "answers": [
+        {
+          "id": "3",
+          "answer": "3",
+          "weight": 42,
+          "accept": ["3 drinks", "thre", "no 3"]
+        },
+        {
+          "id": "4",
+          "answer": "4",
+          "weight": 16,
+          "accept": ["4 drinks", "fourr", "no 4"]
+        },
+        {
+          "id": "2",
+          "answer": "2",
+          "weight": 12,
+          "accept": ["2 drinks", "a couple", "no 2"]
+        },
+        {
+          "id": "5",
+          "answer": "5",
+          "weight": 12,
+          "accept": ["5 drinks", "fiv", "no 5"]
+        },
+        {
+          "id": "6",
+          "answer": "6",
+          "weight": 6,
+          "accept": ["6 drinks", "six pack", "no 6"]
+        },
+        {
+          "id": "10",
+          "answer": "10",
+          "weight": 3,
+          "accept": ["10 drinks", "no 10"]
+        },
+        {
+          "id": "7",
+          "answer": "7",
+          "weight": 3,
+          "accept": ["7 drinks", "lucky 7"]
+        },
+        {
+          "id": "8",
+          "answer": "8",
+          "weight": 2,
+          "accept": ["8 drinks"]
+        },
+        {
+          "id": "1",
+          "answer": "1",
+          "weight": 1,
+          "accept": ["1 drink", "just one"]
+        },
+        {
+          "id": "9",
+          "answer": "9",
+          "weight": 1,
+          "accept": ["9 drinks"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-drink-008",
+      "style": "finish",
+      "prompt": "Finish this: I'm never drinking ___ again.",
+      "say": "Finish this: I'm never drinking... blank... again.",
+      "answers": [
+        {
+          "id": "tequila",
+          "answer": "tequila",
+          "weight": 42,
+          "accept": [
+            "tequilla",
+            "tekila",
+            "patron",
+            "tequila shots",
+            "taquila",
+            "don julio",
+            "casamigos"
+          ]
+        },
+        {
+          "id": "vodka",
+          "answer": "vodka",
+          "weight": 12,
+          "accept": ["vodca", "smirnoff", "titos", "grey goose", "vodkas", "wodka"]
+        },
+        {
+          "id": "fireball",
+          "answer": "fireball",
+          "weight": 9,
+          "accept": ["cinnamon whiskey", "fireballs", "fireball shots", "fierball"]
+        },
+        {
+          "id": "wine",
+          "answer": "wine",
+          "weight": 8,
+          "accept": ["red wine", "boxed wine", "white wine", "franzia", "wines"],
+          "reject": ["gin"]
+        },
+        {
+          "id": "jager",
+          "answer": "jager",
+          "weight": 6,
+          "accept": ["jagermeister", "jagerbombs", "yager", "jaeger"]
+        },
+        {
+          "id": "whiskey",
+          "answer": "whiskey",
+          "weight": 5,
+          "accept": ["whisky", "bourbon", "jack daniels", "jack"]
+        },
+        {
+          "id": "rum",
+          "answer": "rum",
+          "weight": 5,
+          "accept": ["bacardi", "captain morgan", "malibu"]
+        },
+        {
+          "id": "gin",
+          "answer": "gin",
+          "weight": 3,
+          "accept": ["gin and tonic", "gin tonic", "gin martini"],
+          "reject": ["wine"]
+        },
+        {
+          "id": "jungle-juice",
+          "answer": "jungle juice",
+          "weight": 3,
+          "accept": ["jj", "punch", "trash can punch"]
+        },
+        {
+          "id": "four-loko",
+          "answer": "four loko",
+          "weight": 2,
+          "accept": ["loko", "four lokos"]
+        },
+        {
+          "id": "everclear",
+          "answer": "everclear",
+          "weight": 2,
+          "accept": ["grain alcohol", "everclears"]
+        },
+        {
+          "id": "champagne",
+          "answer": "champagne",
+          "weight": 1,
+          "accept": ["champaign", "prosecco"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-drink-009",
+      "style": "finish",
+      "prompt": "Finish this: I only text my ex when I'm ___.",
+      "say": "Finish this: I only text my ex when I'm... blank.",
+      "answers": [
+        {
+          "id": "drunk",
+          "answer": "drunk",
+          "weight": 52,
+          "accept": ["tipsy", "wasted", "hammered", "buzzed", "drinking", "smashed", "plastered"]
+        },
+        {
+          "id": "lonely",
+          "answer": "lonely",
+          "weight": 12,
+          "accept": ["alone", "loney", "lonley", "feeling lonely", "by myself", "lonesome"]
+        },
+        {
+          "id": "bored",
+          "answer": "bored",
+          "weight": 8,
+          "accept": ["boring", "borde", "so bored"]
+        },
+        {
+          "id": "horny",
+          "answer": "horny",
+          "weight": 7,
+          "accept": ["thirsty", "frisky", "in the mood", "randy"]
+        },
+        {
+          "id": "sad",
+          "answer": "sad",
+          "weight": 6,
+          "accept": ["depressed", "down", "crying", "upset"]
+        },
+        {
+          "id": "high",
+          "answer": "high",
+          "weight": 4,
+          "accept": ["stoned", "baked", "blazed"]
+        },
+        {
+          "id": "desperate",
+          "answer": "desperate",
+          "weight": 3,
+          "accept": ["needy", "desprate", "dying"]
+        },
+        {
+          "id": "single",
+          "answer": "single",
+          "weight": 2,
+          "accept": ["on a break", "between dates"]
+        },
+        {
+          "id": "emotional",
+          "answer": "emotional",
+          "weight": 2,
+          "accept": ["in my feels", "feelings", "emo"]
+        },
+        {
+          "id": "petty",
+          "answer": "petty",
+          "weight": 2,
+          "accept": ["jealous", "angry", "spiteful"]
+        },
+        {
+          "id": "sleepy",
+          "answer": "sleepy",
+          "weight": 1,
+          "accept": ["tired", "half asleep"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-drink-010",
+      "style": "rather",
+      "prompt": "Would you rather give up alcohol or sex for a year?",
+      "tiles": "all",
+      "answers": [
+        {
+          "id": "alcohol",
+          "answer": "alcohol",
+          "weight": 58,
+          "accept": ["booze", "drinking", "drinks", "liquor", "give up alcohol"]
+        },
+        {
+          "id": "sex",
+          "answer": "sex",
+          "weight": 42,
+          "accept": ["give up sex", "no sex", "celibacy", "sexy time"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-lie-001",
+      "style": "name",
+      "prompt": "Name a lie you tell your doctor.",
+      "answers": [
+        {
+          "id": "drinking",
+          "answer": "drinking",
+          "weight": 38,
+          "accept": ["how much i drink", "alcohol", "drinks", "booze", "how much you drink", "beer"]
+        },
+        {
+          "id": "exercise",
+          "answer": "exercise",
+          "weight": 16,
+          "accept": [
+            "working out",
+            "workouts",
+            "gym",
+            "how much i exercise",
+            "exercize",
+            "activity"
+          ]
+        },
+        {
+          "id": "smoking",
+          "answer": "smoking",
+          "weight": 12,
+          "accept": ["smoke", "cigarettes", "vaping", "vape", "cigs", "how much i smoke"]
+        },
+        {
+          "id": "diet",
+          "answer": "diet",
+          "weight": 10,
+          "accept": ["what i eat", "eating", "food", "eating healthy", "healthy eating", "veggies"]
+        },
+        {
+          "id": "flossing",
+          "answer": "flossing",
+          "weight": 6,
+          "accept": ["floss", "i floss", "dental"]
+        },
+        {
+          "id": "sex-partners",
+          "answer": "sex partners",
+          "weight": 5,
+          "accept": ["partners", "body count", "sexual history", "hookups"]
+        },
+        {
+          "id": "drugs",
+          "answer": "drugs",
+          "weight": 4,
+          "accept": ["weed", "pot", "recreational drugs"]
+        },
+        {
+          "id": "sleep",
+          "answer": "sleep",
+          "weight": 3,
+          "accept": ["sleeping", "hours of sleep", "sleep hours"]
+        },
+        {
+          "id": "taking-meds",
+          "answer": "taking meds",
+          "weight": 3,
+          "accept": ["meds", "medication", "pills"]
+        },
+        {
+          "id": "im-fine",
+          "answer": "i'm fine",
+          "weight": 2,
+          "accept": ["fine", "im ok", "doing fine"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-lie-002",
+      "style": "name",
+      "prompt": "Name a lie people tell after a hookup.",
+      "answers": [
+        {
+          "id": "ill-call-you",
+          "answer": "i'll call you",
+          "weight": 38,
+          "accept": [
+            "i'll call",
+            "call you",
+            "i'll text you",
+            "text you later",
+            "talk soon",
+            "call you later"
+          ]
+        },
+        {
+          "id": "i-had-fun",
+          "answer": "i had fun",
+          "weight": 12,
+          "accept": [
+            "had fun",
+            "had a great time",
+            "that was fun",
+            "great time",
+            "so fun",
+            "had a blast"
+          ]
+        },
+        {
+          "id": "you-were-great",
+          "answer": "you were great",
+          "weight": 12,
+          "accept": [
+            "that was great",
+            "you're amazing",
+            "best ever",
+            "best i've had",
+            "that was amazing",
+            "you were amazing"
+          ]
+        },
+        {
+          "id": "never-do-this",
+          "answer": "i never do this",
+          "weight": 10,
+          "accept": [
+            "never do this",
+            "i don't usually do this",
+            "this never happens",
+            "first time",
+            "not usually like this",
+            "i'm not like this"
+          ]
+        },
+        {
+          "id": "work-early",
+          "answer": "work early",
+          "weight": 8,
+          "accept": ["early meeting", "have to work", "gotta go", "got work", "i have work early"]
+        },
+        {
+          "id": "im-single",
+          "answer": "i'm single",
+          "weight": 5,
+          "accept": ["single", "not married", "not seeing anyone", "no girlfriend", "no boyfriend"]
+        },
+        {
+          "id": "i-was-drunk",
+          "answer": "i was drunk",
+          "weight": 5,
+          "accept": ["drunk", "too drunk", "blame the alcohol"]
+        },
+        {
+          "id": "it-happens",
+          "answer": "it happens",
+          "weight": 3,
+          "accept": ["that happens", "happens to everyone", "it's normal", "no big deal"]
+        },
+        {
+          "id": "im-clean",
+          "answer": "i'm clean",
+          "weight": 2,
+          "accept": ["clean", "i got tested", "tested"]
+        },
+        {
+          "id": "i-finished",
+          "answer": "i finished",
+          "weight": 3,
+          "accept": ["i came", "finished", "came"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-lie-003",
+      "style": "name",
+      "prompt": "Name something people lie to their partner about.",
+      "answers": [
+        {
+          "id": "money",
+          "answer": "money",
+          "weight": 20,
+          "accept": [
+            "spending",
+            "finances",
+            "how much i spent",
+            "shopping",
+            "debt",
+            "purchases",
+            "cost"
+          ]
+        },
+        {
+          "id": "where-they-were",
+          "answer": "where they were",
+          "weight": 14,
+          "accept": [
+            "whereabouts",
+            "where i was",
+            "location",
+            "where they went",
+            "who they were with",
+            "out late"
+          ]
+        },
+        {
+          "id": "body-count",
+          "answer": "body count",
+          "weight": 14,
+          "accept": [
+            "how many partners",
+            "number of partners",
+            "past partners",
+            "sex history",
+            "partners",
+            "hookups"
+          ]
+        },
+        {
+          "id": "im-fine",
+          "answer": "i'm fine",
+          "weight": 10,
+          "accept": ["fine", "feelings", "being okay", "im ok", "not upset", "nothing's wrong"]
+        },
+        {
+          "id": "faking-it",
+          "answer": "faking it",
+          "weight": 8,
+          "accept": ["faked it", "orgasms", "fake orgasm", "enjoying sex", "finishing"]
+        },
+        {
+          "id": "talking-to-ex",
+          "answer": "talking to ex",
+          "weight": 7,
+          "accept": ["texting ex", "their ex", "ex", "exes"]
+        },
+        {
+          "id": "cheating",
+          "answer": "cheating",
+          "weight": 7,
+          "accept": ["cheated", "affair", "seeing someone", "other people"]
+        },
+        {
+          "id": "their-cooking",
+          "answer": "their cooking",
+          "weight": 5,
+          "accept": ["cooking", "food", "the meal", "dinner"]
+        },
+        {
+          "id": "drinking",
+          "answer": "drinking",
+          "weight": 4,
+          "accept": ["alcohol", "how much they drink", "drinks"]
+        },
+        {
+          "id": "gifts",
+          "answer": "gifts",
+          "weight": 3,
+          "accept": ["liking a gift", "presents", "gift"]
+        },
+        {
+          "id": "weight",
+          "answer": "weight",
+          "weight": 2,
+          "accept": ["their weight", "diet", "their size"]
+        },
+        {
+          "id": "age",
+          "answer": "age",
+          "weight": 2,
+          "accept": ["how old they are", "their age"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-lie-004",
+      "style": "name",
+      "prompt": "Name an excuse for not going out.",
+      "answers": [
+        {
+          "id": "tired",
+          "answer": "tired",
+          "weight": 28,
+          "accept": ["exhausted", "too tired", "sleepy", "long day", "worn out", "beat"]
+        },
+        {
+          "id": "sick",
+          "answer": "sick",
+          "weight": 20,
+          "accept": ["not feeling well", "feeling sick", "under the weather", "ill", "cold", "flu"]
+        },
+        {
+          "id": "work",
+          "answer": "work",
+          "weight": 11,
+          "accept": [
+            "working",
+            "work early",
+            "early meeting",
+            "have work",
+            "busy with work",
+            "gotta work"
+          ]
+        },
+        {
+          "id": "broke",
+          "answer": "broke",
+          "weight": 10,
+          "accept": ["no money", "money", "poor", "can't afford it", "saving money", "cash"]
+        },
+        {
+          "id": "other-plans",
+          "answer": "other plans",
+          "weight": 6,
+          "accept": ["plans", "have plans", "busy", "prior plans"]
+        },
+        {
+          "id": "headache",
+          "answer": "headache",
+          "weight": 5,
+          "accept": ["migraine", "head hurts", "hangover"]
+        },
+        {
+          "id": "family-stuff",
+          "answer": "family stuff",
+          "weight": 4,
+          "accept": ["family", "family thing", "family emergency"]
+        },
+        {
+          "id": "pet",
+          "answer": "pet",
+          "weight": 3,
+          "accept": ["dog", "dog is sick", "cat"]
+        },
+        {
+          "id": "no-babysitter",
+          "answer": "no babysitter",
+          "weight": 3,
+          "accept": ["babysitter", "kids", "no sitter"]
+        },
+        {
+          "id": "weather",
+          "answer": "weather",
+          "weight": 3,
+          "accept": ["rain", "snow", "bad weather"]
+        },
+        {
+          "id": "cramps",
+          "answer": "cramps",
+          "weight": 2,
+          "accept": ["period", "period cramps"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-lie-005",
+      "style": "name",
+      "prompt": "Name something people lie about on dating apps.",
+      "answers": [
+        {
+          "id": "height",
+          "answer": "height",
+          "weight": 36,
+          "accept": ["how tall", "tall", "tallness", "hieght", "heigth", "6 feet"],
+          "reject": ["weight"]
+        },
+        {
+          "id": "age",
+          "answer": "age",
+          "weight": 20,
+          "accept": ["how old", "years", "their age", "birthday", "agee", "being younger"]
+        },
+        {
+          "id": "weight",
+          "answer": "weight",
+          "weight": 14,
+          "accept": ["body", "size", "body type", "wieght", "how much they weigh", "weigh"],
+          "reject": ["height"]
+        },
+        {
+          "id": "job",
+          "answer": "job",
+          "weight": 8,
+          "accept": ["career", "occupation", "work", "what they do"]
+        },
+        {
+          "id": "photos",
+          "answer": "photos",
+          "weight": 7,
+          "accept": ["pictures", "pics", "old photos", "filters", "catfish"]
+        },
+        {
+          "id": "income",
+          "answer": "income",
+          "weight": 4,
+          "accept": ["money", "salary", "how rich"]
+        },
+        {
+          "id": "being-single",
+          "answer": "being single",
+          "weight": 4,
+          "accept": ["single", "married", "taken", "status"]
+        },
+        {
+          "id": "hobbies",
+          "answer": "hobbies",
+          "weight": 2,
+          "accept": ["interests", "likes hiking", "hiking"]
+        },
+        {
+          "id": "kids",
+          "answer": "kids",
+          "weight": 2,
+          "accept": ["children", "having kids"]
+        },
+        {
+          "id": "location",
+          "answer": "location",
+          "weight": 1,
+          "accept": ["where they live", "city"]
+        },
+        {
+          "id": "education",
+          "answer": "education",
+          "weight": 1,
+          "accept": ["school", "degree", "college"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-lie-006",
+      "style": "finish",
+      "prompt": "Finish this: Sorry I missed your call, I was ___.",
+      "say": "Finish this: Sorry I missed your call, I was... blank.",
+      "answers": [
+        {
+          "id": "busy",
+          "answer": "busy",
+          "weight": 30,
+          "accept": ["busy at work", "so busy", "buisy", "bizzy", "swamped", "tied up"]
+        },
+        {
+          "id": "sleeping",
+          "answer": "sleeping",
+          "weight": 18,
+          "accept": ["asleep", "napping", "sleep", "nap", "in bed", "snoozing"]
+        },
+        {
+          "id": "driving",
+          "answer": "driving",
+          "weight": 12,
+          "accept": ["in the car", "on the road", "drivin", "commuting", "in traffic", "traffic"]
+        },
+        {
+          "id": "in-the-shower",
+          "answer": "in the shower",
+          "weight": 10,
+          "accept": [
+            "shower",
+            "showering",
+            "in shower",
+            "bathing",
+            "taking a shower",
+            "shower time"
+          ]
+        },
+        {
+          "id": "at-work",
+          "answer": "at work",
+          "weight": 9,
+          "accept": ["work", "working", "in a meeting", "meeting", "at the office"]
+        },
+        {
+          "id": "at-the-gym",
+          "answer": "at the gym",
+          "weight": 5,
+          "accept": ["gym", "exercising", "lifting"]
+        },
+        {
+          "id": "on-the-toilet",
+          "answer": "on the toilet",
+          "weight": 5,
+          "accept": ["toilet", "pooping", "bathroom", "in the bathroom"]
+        },
+        {
+          "id": "cooking",
+          "answer": "cooking",
+          "weight": 3,
+          "accept": ["making dinner", "in the kitchen", "dinner"]
+        },
+        {
+          "id": "with-friends",
+          "answer": "with friends",
+          "weight": 3,
+          "accept": ["out with friends", "friends", "hanging out"]
+        },
+        {
+          "id": "ignoring-you",
+          "answer": "ignoring you",
+          "weight": 3,
+          "accept": ["avoiding you", "ignoring", "screening"]
+        },
+        {
+          "id": "charging-phone",
+          "answer": "charging phone",
+          "weight": 2,
+          "accept": ["charging", "phone died", "dead phone", "charging my phone"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-oops-001",
+      "style": "name",
+      "prompt": "Name something embarrassing to get caught doing.",
+      "answers": [
+        {
+          "id": "picking-nose",
+          "answer": "picking nose",
+          "weight": 20,
+          "accept": [
+            "nose picking",
+            "pick nose",
+            "picking your nose",
+            "boogers",
+            "nose",
+            "picking my nose"
+          ]
+        },
+        {
+          "id": "masturbating",
+          "answer": "masturbating",
+          "weight": 16,
+          "accept": [
+            "touching yourself",
+            "jerking off",
+            "self love",
+            "playing with yourself",
+            "masturbation",
+            "pleasuring yourself"
+          ]
+        },
+        {
+          "id": "singing",
+          "answer": "singing",
+          "weight": 10,
+          "accept": [
+            "sing",
+            "singing in the car",
+            "karaoke",
+            "singing in shower",
+            "shower singing",
+            "car karaoke"
+          ]
+        },
+        {
+          "id": "talking-to-self",
+          "answer": "talking to self",
+          "weight": 9,
+          "accept": ["talking to yourself", "self talk", "talk to myself"]
+        },
+        {
+          "id": "dancing",
+          "answer": "dancing",
+          "weight": 8,
+          "accept": ["dance", "dance moves", "dancing in mirror"]
+        },
+        {
+          "id": "farting",
+          "answer": "farting",
+          "weight": 8,
+          "accept": ["fart", "farts", "tooting"]
+        },
+        {
+          "id": "stalking-ex",
+          "answer": "stalking ex",
+          "weight": 7,
+          "accept": ["stalking", "creeping", "checking ex's instagram", "ex's profile"]
+        },
+        {
+          "id": "porn",
+          "answer": "porn",
+          "weight": 5,
+          "accept": ["watching porn", "adult videos", "pornhub"]
+        },
+        {
+          "id": "crying",
+          "answer": "crying",
+          "weight": 5,
+          "accept": ["cry", "sobbing", "tears"]
+        },
+        {
+          "id": "peeing-outside",
+          "answer": "peeing outside",
+          "weight": 4,
+          "accept": ["peeing", "public urination", "pee"]
+        },
+        {
+          "id": "having-sex",
+          "answer": "having sex",
+          "weight": 3,
+          "accept": ["sex", "doing it", "in the act"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-oops-002",
+      "style": "name",
+      "prompt": "Name something you'd hate your parents to find in your room.",
+      "answers": [
+        {
+          "id": "condoms",
+          "answer": "condoms",
+          "weight": 24,
+          "accept": ["condom", "rubbers", "trojans", "protection", "condums", "magnums"]
+        },
+        {
+          "id": "sex-toy",
+          "answer": "sex toy",
+          "weight": 16,
+          "accept": ["vibrator", "dildo", "toys", "sex toys", "toy", "adult toy"]
+        },
+        {
+          "id": "weed",
+          "answer": "weed",
+          "weight": 14,
+          "accept": ["pot", "marijuana", "bong", "joint", "drugs", "edibles"]
+        },
+        {
+          "id": "alcohol",
+          "answer": "alcohol",
+          "weight": 9,
+          "accept": ["booze", "liquor", "beer", "bottles"]
+        },
+        {
+          "id": "porn",
+          "answer": "porn",
+          "weight": 8,
+          "accept": ["magazines", "playboy", "dirty mags", "porno"]
+        },
+        {
+          "id": "lingerie",
+          "answer": "lingerie",
+          "weight": 6,
+          "accept": ["underwear", "thong", "panties"]
+        },
+        {
+          "id": "cigarettes",
+          "answer": "cigarettes",
+          "weight": 5,
+          "accept": ["cigs", "smokes", "vape"]
+        },
+        {
+          "id": "pregnancy-test",
+          "answer": "pregnancy test",
+          "weight": 4,
+          "accept": ["pregnancy", "pregnant", "positive test"]
+        },
+        {
+          "id": "handcuffs",
+          "answer": "handcuffs",
+          "weight": 3,
+          "accept": ["cuffs", "restraints", "whip"]
+        },
+        {
+          "id": "diary",
+          "answer": "diary",
+          "weight": 3,
+          "accept": ["journal", "secrets", "diaries"]
+        },
+        {
+          "id": "someone",
+          "answer": "someone",
+          "weight": 3,
+          "accept": ["a boy", "a girl", "boyfriend", "girlfriend", "a hookup"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-oops-003",
+      "style": "rather",
+      "prompt": "Would you rather Mom sees your texts or search history?",
+      "tiles": "all",
+      "answers": [
+        {
+          "id": "texts",
+          "answer": "texts",
+          "weight": 55,
+          "accept": ["text messages", "messages", "my texts", "phone"]
+        },
+        {
+          "id": "search-history",
+          "answer": "search history",
+          "weight": 45,
+          "accept": ["browser history", "search", "history", "searches"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-gross-001",
+      "style": "name",
+      "prompt": "Name something people do in the shower but won't admit.",
+      "answers": [
+        {
+          "id": "pee",
+          "answer": "pee",
+          "weight": 38,
+          "accept": [
+            "peeing",
+            "pee in the shower",
+            "piss",
+            "pissing",
+            "urinate",
+            "take a leak",
+            "wee"
+          ]
+        },
+        {
+          "id": "sing",
+          "answer": "sing",
+          "weight": 14,
+          "accept": [
+            "singing",
+            "sing loudly",
+            "shower concert",
+            "sing songs",
+            "belt it out",
+            "karaoke"
+          ]
+        },
+        {
+          "id": "cry",
+          "answer": "cry",
+          "weight": 9,
+          "accept": ["crying", "sob", "sobbing", "weep", "ugly cry", "cry it out"]
+        },
+        {
+          "id": "fart",
+          "answer": "fart",
+          "weight": 7,
+          "accept": ["farting", "pass gas", "rip one", "farts"]
+        },
+        {
+          "id": "talk-to-myself",
+          "answer": "talk to myself",
+          "weight": 6,
+          "accept": [
+            "talk to self",
+            "talking to myself",
+            "practice arguments",
+            "argue with myself",
+            "rehearse arguments"
+          ]
+        },
+        {
+          "id": "poop",
+          "answer": "poop",
+          "weight": 4,
+          "accept": ["pooping", "shit", "take a dump", "poo"]
+        },
+        {
+          "id": "brush-teeth",
+          "answer": "brush teeth",
+          "weight": 4,
+          "accept": ["brushing teeth", "brush my teeth", "teeth"]
+        },
+        {
+          "id": "sit-down",
+          "answer": "sit down",
+          "weight": 3,
+          "accept": ["sitting down", "sit on the floor", "lie down"]
+        },
+        {
+          "id": "snack",
+          "answer": "snack",
+          "weight": 3,
+          "accept": ["eat", "eating", "eat food", "snacking"]
+        },
+        {
+          "id": "dance",
+          "answer": "dance",
+          "weight": 3,
+          "accept": ["dancing", "dance around", "shower dance"]
+        },
+        {
+          "id": "spit",
+          "answer": "spit",
+          "weight": 2,
+          "accept": ["spitting", "hock loogies"]
+        },
+        {
+          "id": "fall-asleep",
+          "answer": "fall asleep",
+          "weight": 1,
+          "accept": ["sleep", "nap", "doze off"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-gross-002",
+      "style": "name",
+      "prompt": "Name something gross you'd find in a shared bathroom.",
+      "answers": [
+        {
+          "id": "hair",
+          "answer": "hair",
+          "weight": 30,
+          "accept": [
+            "hairs",
+            "hair in the drain",
+            "hair clog",
+            "clump of hair",
+            "hairball",
+            "drain hair"
+          ]
+        },
+        {
+          "id": "pee-on-seat",
+          "answer": "pee on the seat",
+          "weight": 16,
+          "accept": ["pee", "urine", "piss", "wet seat", "pee on the floor", "sprinkles"]
+        },
+        {
+          "id": "skid-marks",
+          "answer": "skid marks",
+          "weight": 10,
+          "accept": ["skidmark", "poop stains", "poop", "streaks", "shit stains", "floaters"]
+        },
+        {
+          "id": "mold",
+          "answer": "mold",
+          "weight": 9,
+          "accept": ["mould", "mildew", "black mold", "moldy", "pink mold"]
+        },
+        {
+          "id": "pubes",
+          "answer": "pubes",
+          "weight": 8,
+          "accept": ["pubic hair", "pube", "curlies", "pubic hairs"]
+        },
+        {
+          "id": "toenails",
+          "answer": "toenails",
+          "weight": 6,
+          "accept": ["toenail clippings", "nail clippings", "toenail", "clippings"]
+        },
+        {
+          "id": "no-toilet-paper",
+          "answer": "no toilet paper",
+          "weight": 5,
+          "accept": ["empty roll", "no tp", "empty toilet paper roll", "out of toilet paper"]
+        },
+        {
+          "id": "toothpaste",
+          "answer": "toothpaste",
+          "weight": 4,
+          "accept": ["toothpaste gunk", "toothpaste spit", "spit", "toothpaste in sink"]
+        },
+        {
+          "id": "used-tissues",
+          "answer": "used tissues",
+          "weight": 3,
+          "accept": ["tissues", "snotty tissue", "boogers", "snot"]
+        },
+        {
+          "id": "dirty-towels",
+          "answer": "dirty towels",
+          "weight": 3,
+          "accept": ["towels", "wet towels", "dirty towel"]
+        },
+        {
+          "id": "used-razor",
+          "answer": "used razor",
+          "weight": 2,
+          "accept": ["razor", "bloody razor", "razors"]
+        },
+        {
+          "id": "tampon",
+          "answer": "tampon",
+          "weight": 2,
+          "accept": ["tampons", "used tampon", "pad"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-gross-003",
+      "style": "name",
+      "prompt": "Name something you'd never share, even with your partner.",
+      "answers": [
+        {
+          "id": "toothbrush",
+          "answer": "toothbrush",
+          "weight": 40,
+          "accept": [
+            "toothbrushes",
+            "my toothbrush",
+            "tootbrush",
+            "toothbrsh",
+            "brush",
+            "your toothbrush"
+          ]
+        },
+        {
+          "id": "razor",
+          "answer": "razor",
+          "weight": 12,
+          "accept": ["razors", "shaver", "my razor", "razer", "razor blade", "shaving razor"]
+        },
+        {
+          "id": "underwear",
+          "answer": "underwear",
+          "weight": 10,
+          "accept": ["undies", "boxers", "panties", "briefs", "underware", "drawers"]
+        },
+        {
+          "id": "food",
+          "answer": "food",
+          "weight": 9,
+          "accept": ["my food", "snacks", "fries", "dessert", "my fries", "leftovers"]
+        },
+        {
+          "id": "deodorant",
+          "answer": "deodorant",
+          "weight": 5,
+          "accept": ["deoderant", "deo", "roll on"]
+        },
+        {
+          "id": "phone",
+          "answer": "phone",
+          "weight": 5,
+          "accept": ["my phone", "cell phone", "phone password", "passcode"]
+        },
+        {
+          "id": "towel",
+          "answer": "towel",
+          "weight": 4,
+          "accept": ["towels", "bath towel", "my towel"]
+        },
+        {
+          "id": "bank-account",
+          "answer": "bank account",
+          "weight": 4,
+          "accept": ["bank", "money", "bank card", "debit card"]
+        },
+        {
+          "id": "socks",
+          "answer": "socks",
+          "weight": 3,
+          "accept": ["sock", "my socks"]
+        },
+        {
+          "id": "drink",
+          "answer": "drink",
+          "weight": 2,
+          "accept": ["drinks", "my drink", "water bottle"]
+        },
+        {
+          "id": "blanket",
+          "answer": "blanket",
+          "weight": 2,
+          "accept": ["blankets", "covers", "duvet"]
+        },
+        {
+          "id": "bathwater",
+          "answer": "bathwater",
+          "weight": 1,
+          "accept": ["used bathwater"]
+        },
+        {
+          "id": "chapstick",
+          "answer": "chapstick",
+          "weight": 1,
+          "accept": ["lip balm"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-gross-004",
+      "style": "name",
+      "prompt": "Name a smell that makes you gag.",
+      "answers": [
+        {
+          "id": "vomit",
+          "answer": "vomit",
+          "weight": 20,
+          "accept": ["puke", "throw up", "barf", "vomit smell", "spew", "throwing up"]
+        },
+        {
+          "id": "poop",
+          "answer": "poop",
+          "weight": 14,
+          "accept": ["poo", "feces", "shit", "diarrhea", "dog poop", "crap"]
+        },
+        {
+          "id": "rotten-eggs",
+          "answer": "rotten eggs",
+          "weight": 10,
+          "accept": ["rotten egg", "eggs", "sulfur", "egg", "bad eggs", "sulphur"]
+        },
+        {
+          "id": "garbage",
+          "answer": "garbage",
+          "weight": 10,
+          "accept": ["trash", "rubbish", "dumpster", "garbage can", "trash can", "bin juice"]
+        },
+        {
+          "id": "body-odor",
+          "answer": "body odor",
+          "weight": 9,
+          "accept": ["bo", "armpits", "sweat", "pits", "stinky armpits", "body odour"]
+        },
+        {
+          "id": "fish",
+          "answer": "fish",
+          "weight": 7,
+          "accept": ["rotten fish", "fishy", "seafood", "tuna", "fish market"]
+        },
+        {
+          "id": "feet",
+          "answer": "feet",
+          "weight": 6,
+          "accept": ["foot", "stinky feet", "smelly feet", "sweaty socks", "foot odor"]
+        },
+        {
+          "id": "sour-milk",
+          "answer": "sour milk",
+          "weight": 5,
+          "accept": ["spoiled milk", "milk", "bad milk", "curdled milk"]
+        },
+        {
+          "id": "farts",
+          "answer": "farts",
+          "weight": 5,
+          "accept": ["fart", "gas", "flatulence", "toots"]
+        },
+        {
+          "id": "skunk",
+          "answer": "skunk",
+          "weight": 4,
+          "accept": ["skunks", "skunk spray", "skunked"]
+        },
+        {
+          "id": "sewer",
+          "answer": "sewer",
+          "weight": 3,
+          "accept": ["sewage", "septic", "drain"]
+        },
+        {
+          "id": "cigarettes",
+          "answer": "cigarettes",
+          "weight": 3,
+          "accept": ["cigarette smoke", "smoke", "ashtray", "cigs"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-gross-005",
+      "style": "name",
+      "prompt": "Name something people do on the toilet besides the obvious.",
+      "answers": [
+        {
+          "id": "scroll-phone",
+          "answer": "scroll phone",
+          "weight": 45,
+          "accept": [
+            "phone",
+            "scroll",
+            "on my phone",
+            "scrolling",
+            "social media",
+            "tiktok",
+            "scroll my phone"
+          ]
+        },
+        {
+          "id": "read",
+          "answer": "read",
+          "weight": 14,
+          "accept": [
+            "reading",
+            "read a book",
+            "read magazines",
+            "read the shampoo bottle",
+            "book",
+            "magazine"
+          ]
+        },
+        {
+          "id": "play-games",
+          "answer": "play games",
+          "weight": 8,
+          "accept": ["games", "gaming", "video games", "candy crush", "play a game"]
+        },
+        {
+          "id": "text",
+          "answer": "text",
+          "weight": 6,
+          "accept": ["texting", "text people", "send texts", "message friends"]
+        },
+        {
+          "id": "think",
+          "answer": "think",
+          "weight": 6,
+          "accept": ["thinking", "ponder", "reflect", "contemplate life"]
+        },
+        {
+          "id": "hide",
+          "answer": "hide",
+          "weight": 4,
+          "accept": ["hide from family", "escape", "get away", "alone time"]
+        },
+        {
+          "id": "cry",
+          "answer": "cry",
+          "weight": 3,
+          "accept": ["crying", "sob", "have a cry"]
+        },
+        {
+          "id": "online-shopping",
+          "answer": "online shopping",
+          "weight": 3,
+          "accept": ["shop", "shopping", "shop online", "amazon"]
+        },
+        {
+          "id": "fall-asleep",
+          "answer": "fall asleep",
+          "weight": 2,
+          "accept": ["sleep", "nap", "doze off"]
+        },
+        {
+          "id": "pop-pimples",
+          "answer": "pop pimples",
+          "weight": 2,
+          "accept": ["pimples", "pick zits", "zits", "squeeze pimples"]
+        },
+        {
+          "id": "take-calls",
+          "answer": "take calls",
+          "weight": 2,
+          "accept": ["calls", "call someone", "call mom", "answer calls"]
+        },
+        {
+          "id": "check-email",
+          "answer": "check email",
+          "weight": 2,
+          "accept": ["email", "emails", "work email"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-gross-006",
+      "style": "best",
+      "prompt": "Worst sound to hear from the next toilet stall.",
+      "answers": [
+        {
+          "id": "diarrhea",
+          "answer": "diarrhea",
+          "weight": 26,
+          "accept": [
+            "the runs",
+            "diarrhoea",
+            "splatter",
+            "explosive diarrhea",
+            "diarea",
+            "diahrrea"
+          ]
+        },
+        {
+          "id": "farting",
+          "answer": "farting",
+          "weight": 18,
+          "accept": ["fart", "farts", "loud fart", "wet fart", "trumpet", "gas"]
+        },
+        {
+          "id": "vomiting",
+          "answer": "vomiting",
+          "weight": 12,
+          "accept": ["vomit", "puking", "throwing up", "puke", "retching", "barfing"]
+        },
+        {
+          "id": "grunting",
+          "answer": "grunting",
+          "weight": 11,
+          "accept": ["grunt", "grunts", "straining", "pushing", "groaning", "moaning"]
+        },
+        {
+          "id": "crying",
+          "answer": "crying",
+          "weight": 6,
+          "accept": ["cry", "sobbing", "weeping", "sniffling"]
+        },
+        {
+          "id": "splash",
+          "answer": "splash",
+          "weight": 5,
+          "accept": ["plop", "kerplunk", "splashing", "big splash"]
+        },
+        {
+          "id": "phone-call",
+          "answer": "phone call",
+          "weight": 5,
+          "accept": ["talking on the phone", "on the phone", "phone calls", "someone on a call"]
+        },
+        {
+          "id": "eating",
+          "answer": "eating",
+          "weight": 4,
+          "accept": ["chewing", "crunching", "munching", "eating chips"]
+        },
+        {
+          "id": "no-toilet-paper",
+          "answer": "no toilet paper",
+          "weight": 4,
+          "accept": ["out of tp", "empty roll", "is there toilet paper", "any tp"]
+        },
+        {
+          "id": "screaming",
+          "answer": "screaming",
+          "weight": 3,
+          "accept": ["scream", "yelling", "oh god"]
+        },
+        {
+          "id": "hello",
+          "answer": "hello",
+          "weight": 3,
+          "accept": ["hi", "hey", "someone talking to me", "small talk"]
+        },
+        {
+          "id": "silence",
+          "answer": "silence",
+          "weight": 2,
+          "accept": ["nothing", "heavy breathing", "breathing"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-gross-007",
+      "style": "pick",
+      "prompt": "Pick a number from 1 to 10: days you'd wear jeans unwashed.",
+      "say": "Pick a number from one to ten: how many days would you wear jeans without washing them?",
+      "answers": [
+        {
+          "id": "3",
+          "answer": "3",
+          "weight": 18,
+          "accept": ["3 days", "no 3", "day 3"]
+        },
+        {
+          "id": "5",
+          "answer": "5",
+          "weight": 16,
+          "accept": ["5 days", "no 5", "a work week"]
+        },
+        {
+          "id": "7",
+          "answer": "7",
+          "weight": 14,
+          "accept": ["7 days", "no 7", "a week", "one week"]
+        },
+        {
+          "id": "10",
+          "answer": "10",
+          "weight": 12,
+          "accept": ["10 days", "no 10", "forever"]
+        },
+        {
+          "id": "2",
+          "answer": "2",
+          "weight": 9,
+          "accept": ["2 days", "no 2", "day 2"]
+        },
+        {
+          "id": "4",
+          "answer": "4",
+          "weight": 8,
+          "accept": ["4 days", "no 4", "day 4"]
+        },
+        {
+          "id": "1",
+          "answer": "1",
+          "weight": 6,
+          "accept": ["1 day", "no 1", "once"]
+        },
+        {
+          "id": "6",
+          "answer": "6",
+          "weight": 5,
+          "accept": ["6 days", "no 6", "day 6"]
+        },
+        {
+          "id": "8",
+          "answer": "8",
+          "weight": 4,
+          "accept": ["8 days", "no 8", "day 8"]
+        },
+        {
+          "id": "9",
+          "answer": "9",
+          "weight": 2,
+          "accept": ["9 days", "no 9"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-gross-008",
+      "style": "rather",
+      "prompt": "Would you rather lose your wifi or your toilet paper?",
+      "tiles": "all",
+      "answers": [
+        {
+          "id": "no-wifi",
+          "answer": "no wifi",
+          "weight": 62,
+          "accept": ["lose the wifi", "wifi", "internet", "no internet", "lose wifi"]
+        },
+        {
+          "id": "no-toilet-paper",
+          "answer": "no toilet paper",
+          "weight": 38,
+          "accept": ["lose toilet paper", "toilet paper", "tp", "no tp", "lose tp"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-office-001",
+      "style": "name",
+      "prompt": "Name a fake excuse for calling in sick.",
+      "answers": [
+        {
+          "id": "food-poisoning",
+          "answer": "food poisoning",
+          "weight": 22,
+          "accept": [
+            "food poison",
+            "bad food",
+            "ate something bad",
+            "stomach bug",
+            "upset stomach",
+            "tummy ache",
+            "stomach ache"
+          ]
+        },
+        {
+          "id": "flu",
+          "answer": "flu",
+          "weight": 14,
+          "accept": ["influenza", "fever", "virus", "covid", "sick", "flu bug"]
+        },
+        {
+          "id": "migraine",
+          "answer": "migraine",
+          "weight": 12,
+          "accept": [
+            "headache",
+            "migraines",
+            "bad headache",
+            "migrane",
+            "migrain",
+            "splitting headache"
+          ]
+        },
+        {
+          "id": "family-emergency",
+          "answer": "family emergency",
+          "weight": 12,
+          "accept": [
+            "emergency",
+            "family thing",
+            "family issue",
+            "sick relative",
+            "dead grandma",
+            "funeral"
+          ]
+        },
+        {
+          "id": "diarrhea",
+          "answer": "diarrhea",
+          "weight": 8,
+          "accept": [
+            "the runs",
+            "diarrhoea",
+            "explosive diarrhea",
+            "the shits",
+            "diarea",
+            "diahrrea"
+          ]
+        },
+        {
+          "id": "car-trouble",
+          "answer": "car trouble",
+          "weight": 7,
+          "accept": [
+            "car broke down",
+            "flat tire",
+            "car problems",
+            "car won't start",
+            "dead battery"
+          ]
+        },
+        {
+          "id": "cold",
+          "answer": "cold",
+          "weight": 6,
+          "accept": ["sore throat", "common cold", "sniffles"]
+        },
+        {
+          "id": "dentist",
+          "answer": "dentist",
+          "weight": 4,
+          "accept": ["dentist appointment", "toothache", "doctor appointment"]
+        },
+        {
+          "id": "back-pain",
+          "answer": "back pain",
+          "weight": 4,
+          "accept": ["bad back", "threw out my back", "back hurts", "back spasm"]
+        },
+        {
+          "id": "vomiting",
+          "answer": "vomiting",
+          "weight": 3,
+          "accept": ["throwing up", "puking", "vomit"]
+        },
+        {
+          "id": "sick-pet",
+          "answer": "sick pet",
+          "weight": 3,
+          "accept": ["sick dog", "vet", "pet emergency", "sick cat"],
+          "reject": ["emergency"]
+        },
+        {
+          "id": "hungover",
+          "answer": "hungover",
+          "weight": 2,
+          "accept": ["hangover"]
+        },
+        {
+          "id": "burst-pipe",
+          "answer": "burst pipe",
+          "weight": 1,
+          "accept": ["pipe burst", "flooded", "plumber", "plumbing"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-office-002",
+      "style": "name",
+      "prompt": "Name something people steal from the office.",
+      "answers": [
+        {
+          "id": "pens",
+          "answer": "pens",
+          "weight": 40,
+          "accept": [
+            "pen",
+            "ballpoint pens",
+            "ink pens",
+            "office pens",
+            "bic pens",
+            "pencils",
+            "pencil"
+          ]
+        },
+        {
+          "id": "sticky-notes",
+          "answer": "sticky notes",
+          "weight": 12,
+          "accept": [
+            "post its",
+            "post it notes",
+            "postit",
+            "stickies",
+            "sticky pads",
+            "sticky note"
+          ]
+        },
+        {
+          "id": "printer-paper",
+          "answer": "printer paper",
+          "weight": 10,
+          "accept": ["paper", "copy paper", "a4 paper", "reams", "ream of paper", "printing paper"]
+        },
+        {
+          "id": "snacks",
+          "answer": "snacks",
+          "weight": 8,
+          "accept": ["food", "candy", "chips", "break room snacks", "granola bars", "fruit"],
+          "reject": ["clips"]
+        },
+        {
+          "id": "coffee",
+          "answer": "coffee",
+          "weight": 6,
+          "accept": ["coffee pods", "k cups", "creamer", "coffee beans"],
+          "reject": ["cups"]
+        },
+        {
+          "id": "staplers",
+          "answer": "staplers",
+          "weight": 5,
+          "accept": ["stapler", "staples", "swingline"]
+        },
+        {
+          "id": "toilet-paper",
+          "answer": "toilet paper",
+          "weight": 5,
+          "accept": ["tp", "toilet rolls", "paper towels", "loo roll"]
+        },
+        {
+          "id": "paper-clips",
+          "answer": "paper clips",
+          "weight": 3,
+          "accept": ["paperclip", "binder clips", "clips"],
+          "reject": ["chips"]
+        },
+        {
+          "id": "tape",
+          "answer": "tape",
+          "weight": 3,
+          "accept": ["scotch tape", "tape dispenser", "masking tape"]
+        },
+        {
+          "id": "notebooks",
+          "answer": "notebooks",
+          "weight": 3,
+          "accept": ["notebook", "notepads", "legal pads"]
+        },
+        {
+          "id": "highlighters",
+          "answer": "highlighters",
+          "weight": 2,
+          "accept": ["highlighter", "markers", "sharpies"]
+        },
+        {
+          "id": "mugs",
+          "answer": "mugs",
+          "weight": 1,
+          "accept": ["mug", "cups", "glasses"]
+        },
+        {
+          "id": "batteries",
+          "answer": "batteries",
+          "weight": 1,
+          "accept": ["battery", "aa batteries"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-office-003",
+      "style": "name",
+      "prompt": "Name something people secretly do on a video call.",
+      "answers": [
+        {
+          "id": "no-pants",
+          "answer": "wear no pants",
+          "weight": 30,
+          "accept": [
+            "no pants",
+            "pantsless",
+            "pajama pants",
+            "sweatpants",
+            "pajamas",
+            "in my underwear",
+            "underwear"
+          ]
+        },
+        {
+          "id": "eat",
+          "answer": "eat",
+          "weight": 14,
+          "accept": ["eating", "snack", "snacking", "lunch", "eat lunch", "eat breakfast"]
+        },
+        {
+          "id": "check-phone",
+          "answer": "check phone",
+          "weight": 12,
+          "accept": ["phone", "scroll", "on my phone", "scroll phone", "texting", "text"]
+        },
+        {
+          "id": "online-shopping",
+          "answer": "online shopping",
+          "weight": 7,
+          "accept": ["shopping", "shop", "amazon", "shop online"]
+        },
+        {
+          "id": "play-games",
+          "answer": "play games",
+          "weight": 6,
+          "accept": ["games", "gaming", "video games", "play video games"]
+        },
+        {
+          "id": "nap",
+          "answer": "nap",
+          "weight": 5,
+          "accept": ["sleep", "sleeping", "napping", "doze off"]
+        },
+        {
+          "id": "watch-tv",
+          "answer": "watch tv",
+          "weight": 5,
+          "accept": ["tv", "netflix", "watch netflix", "watch a show"]
+        },
+        {
+          "id": "laundry",
+          "answer": "laundry",
+          "weight": 4,
+          "accept": ["fold laundry", "chores", "do laundry", "dishes"]
+        },
+        {
+          "id": "use-bathroom",
+          "answer": "use the bathroom",
+          "weight": 4,
+          "accept": ["bathroom", "pee", "go pee", "toilet"]
+        },
+        {
+          "id": "browse-web",
+          "answer": "browse the web",
+          "weight": 3,
+          "accept": ["browse", "internet", "reddit", "surf the web"]
+        },
+        {
+          "id": "swear-on-mute",
+          "answer": "swear on mute",
+          "weight": 3,
+          "accept": ["cuss", "swear", "curse", "talk trash"]
+        },
+        {
+          "id": "drink",
+          "answer": "drink",
+          "weight": 2,
+          "accept": ["drinking", "beer", "wine", "day drink"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-office-004",
+      "style": "name",
+      "prompt": "Name something you'd tell your boss on your last day.",
+      "answers": [
+        {
+          "id": "i-quit",
+          "answer": "i quit",
+          "weight": 24,
+          "accept": ["quit", "i'm quitting", "im done", "done", "peace out", "i'm out"]
+        },
+        {
+          "id": "screw-you",
+          "answer": "screw you",
+          "weight": 20,
+          "accept": ["f you", "f off", "fuck you", "fuck off", "up yours", "screw off"]
+        },
+        {
+          "id": "you-suck",
+          "answer": "you suck",
+          "weight": 11,
+          "accept": [
+            "you're the worst",
+            "worst boss",
+            "bad boss",
+            "you're terrible",
+            "you stink",
+            "you're awful"
+          ]
+        },
+        {
+          "id": "kiss-my-ass",
+          "answer": "kiss my ass",
+          "weight": 9,
+          "accept": ["kiss my butt", "kiss my arse", "bite me", "eat my shorts"]
+        },
+        {
+          "id": "thank-you",
+          "answer": "thank you",
+          "weight": 7,
+          "accept": ["thanks", "thanks for everything", "ty"]
+        },
+        {
+          "id": "goodbye",
+          "answer": "goodbye",
+          "weight": 6,
+          "accept": ["bye", "see ya", "so long", "later"]
+        },
+        {
+          "id": "youre-an-idiot",
+          "answer": "you're an idiot",
+          "weight": 5,
+          "accept": ["idiot", "moron", "you're dumb", "clown"]
+        },
+        {
+          "id": "do-it-yourself",
+          "answer": "do it yourself",
+          "weight": 4,
+          "accept": ["do your own work", "good luck without me", "enjoy the mess"]
+        },
+        {
+          "id": "i-found-better",
+          "answer": "i found better",
+          "weight": 3,
+          "accept": ["better job", "new job", "more money elsewhere"]
+        },
+        {
+          "id": "pay-me-more",
+          "answer": "pay me more",
+          "weight": 3,
+          "accept": ["give me a raise", "raise", "underpaid"]
+        },
+        {
+          "id": "you-smell",
+          "answer": "you smell",
+          "weight": 2,
+          "accept": ["bad breath", "you stink of coffee", "shower"]
+        },
+        {
+          "id": "nothing",
+          "answer": "nothing",
+          "weight": 2,
+          "accept": ["ghost them", "say nothing", "silence"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-office-005",
+      "style": "best",
+      "prompt": "Most annoying thing a coworker can do.",
+      "answers": [
+        {
+          "id": "loud-talking",
+          "answer": "talk loudly",
+          "weight": 18,
+          "accept": [
+            "loud",
+            "talking loud",
+            "being loud",
+            "loud talker",
+            "yelling",
+            "loud phone calls"
+          ]
+        },
+        {
+          "id": "smelly-food",
+          "answer": "smelly food",
+          "weight": 16,
+          "accept": [
+            "microwave fish",
+            "fish",
+            "stinky lunch",
+            "stinky food",
+            "heating fish",
+            "smelly lunch"
+          ]
+        },
+        {
+          "id": "steal-credit",
+          "answer": "steal credit",
+          "weight": 14,
+          "accept": [
+            "take credit",
+            "taking credit",
+            "stealing credit",
+            "credit stealer",
+            "steal my credit",
+            "take my credit"
+          ]
+        },
+        {
+          "id": "chew-loud",
+          "answer": "chew loudly",
+          "weight": 9,
+          "accept": ["loud chewing", "chewing", "smacking", "slurping"],
+          "reject": ["slacking"]
+        },
+        {
+          "id": "gossip",
+          "answer": "gossip",
+          "weight": 8,
+          "accept": ["gossiping", "gossips", "drama", "talk behind backs"]
+        },
+        {
+          "id": "reply-all",
+          "answer": "reply all",
+          "weight": 6,
+          "accept": ["replying all", "reply-all emails", "cc everyone"]
+        },
+        {
+          "id": "slacking",
+          "answer": "slack off",
+          "weight": 6,
+          "accept": ["slacking", "lazy", "being lazy", "not working"],
+          "reject": ["smacking"]
+        },
+        {
+          "id": "steal-food",
+          "answer": "steal my food",
+          "weight": 5,
+          "accept": ["stealing food", "eat my lunch", "take my lunch", "food thief"]
+        },
+        {
+          "id": "come-in-sick",
+          "answer": "come in sick",
+          "weight": 5,
+          "accept": ["coughing", "sneezing", "sick at work"]
+        },
+        {
+          "id": "micromanage",
+          "answer": "micromanage",
+          "weight": 4,
+          "accept": ["micromanaging", "hover", "bossy"]
+        },
+        {
+          "id": "brown-nose",
+          "answer": "suck up",
+          "weight": 3,
+          "accept": ["brown nose", "kiss up", "sucking up"]
+        },
+        {
+          "id": "clip-nails",
+          "answer": "clip nails",
+          "weight": 2,
+          "accept": ["nail clipping", "clipping nails", "cutting nails"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-office-006",
+      "style": "pick",
+      "prompt": "Pick a number from 1 to 10: how much do you hate your job?",
+      "say": "Pick a number from one to ten: how much do you hate your job?",
+      "answers": [
+        {
+          "id": "7",
+          "answer": "7",
+          "weight": 20,
+          "accept": ["no 7", "7/10", "7 out of 10"]
+        },
+        {
+          "id": "5",
+          "answer": "5",
+          "weight": 15,
+          "accept": ["no 5", "5/10", "5 out of 10", "half"]
+        },
+        {
+          "id": "8",
+          "answer": "8",
+          "weight": 15,
+          "accept": ["no 8", "8/10", "8 out of 10"]
+        },
+        {
+          "id": "10",
+          "answer": "10",
+          "weight": 12,
+          "accept": ["no 10", "10/10", "10 out of 10", "max"]
+        },
+        {
+          "id": "6",
+          "answer": "6",
+          "weight": 8,
+          "accept": ["no 6", "6/10", "6 out of 10"]
+        },
+        {
+          "id": "3",
+          "answer": "3",
+          "weight": 7,
+          "accept": ["no 3", "3/10", "3 out of 10"]
+        },
+        {
+          "id": "9",
+          "answer": "9",
+          "weight": 7,
+          "accept": ["no 9", "9/10", "9 out of 10"]
+        },
+        {
+          "id": "4",
+          "answer": "4",
+          "weight": 5,
+          "accept": ["no 4", "4/10", "4 out of 10"]
+        },
+        {
+          "id": "2",
+          "answer": "2",
+          "weight": 4,
+          "accept": ["no 2", "2/10", "2 out of 10"]
+        },
+        {
+          "id": "1",
+          "answer": "1",
+          "weight": 3,
+          "accept": ["no 1", "1/10", "love my job"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-office-007",
+      "style": "finish",
+      "prompt": "Finish this: Sorry I'm late, I was ___.",
+      "answers": [
+        {
+          "id": "stuck-in-traffic",
+          "answer": "stuck in traffic",
+          "weight": 34,
+          "accept": [
+            "traffic",
+            "in traffic",
+            "stuck in trafic",
+            "sitting in traffic",
+            "bad traffic",
+            "driving"
+          ]
+        },
+        {
+          "id": "sleeping",
+          "answer": "sleeping",
+          "weight": 16,
+          "accept": ["asleep", "sleeping in", "overslept", "oversleeping", "napping", "in bed"]
+        },
+        {
+          "id": "on-the-toilet",
+          "answer": "on the toilet",
+          "weight": 10,
+          "accept": [
+            "pooping",
+            "in the bathroom",
+            "on the can",
+            "taking a dump",
+            "on the loo",
+            "toilet"
+          ]
+        },
+        {
+          "id": "hungover",
+          "answer": "hungover",
+          "weight": 8,
+          "accept": ["drunk", "drinking", "partying"],
+          "reject": ["driving"]
+        },
+        {
+          "id": "busy",
+          "answer": "busy",
+          "weight": 7,
+          "accept": ["working", "tied up", "doing stuff"]
+        },
+        {
+          "id": "getting-ready",
+          "answer": "getting ready",
+          "weight": 6,
+          "accept": ["doing my hair", "doing makeup", "in the shower", "showering"]
+        },
+        {
+          "id": "eating",
+          "answer": "eating",
+          "weight": 5,
+          "accept": ["eating breakfast", "getting food", "getting coffee"]
+        },
+        {
+          "id": "having-sex",
+          "answer": "having sex",
+          "weight": 4,
+          "accept": ["busy in bed", "hooking up", "getting lucky", "with someone"]
+        },
+        {
+          "id": "lost",
+          "answer": "lost",
+          "weight": 3,
+          "accept": ["got lost", "getting lost", "wrong address"]
+        },
+        {
+          "id": "on-my-phone",
+          "answer": "on my phone",
+          "weight": 3,
+          "accept": ["on the phone", "scrolling", "on tiktok"]
+        },
+        {
+          "id": "gaming",
+          "answer": "gaming",
+          "weight": 2,
+          "accept": ["playing games", "video games", "playing xbox"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-money-001",
+      "style": "name",
+      "prompt": "Name something adults waste way too much money on.",
+      "answers": [
+        {
+          "id": "takeout",
+          "answer": "takeout",
+          "weight": 24,
+          "accept": [
+            "eating out",
+            "fast food",
+            "doordash",
+            "food delivery",
+            "restaurants",
+            "uber eats"
+          ]
+        },
+        {
+          "id": "coffee",
+          "answer": "coffee",
+          "weight": 16,
+          "accept": ["starbucks", "lattes", "latte", "coffee shops", "iced coffee", "cofee"]
+        },
+        {
+          "id": "alcohol",
+          "answer": "alcohol",
+          "weight": 12,
+          "accept": ["booze", "drinks", "beer", "wine", "liquor", "bar tabs"]
+        },
+        {
+          "id": "clothes",
+          "answer": "clothes",
+          "weight": 9,
+          "accept": ["clothing", "fashion", "outfits", "shoes"]
+        },
+        {
+          "id": "subscriptions",
+          "answer": "subscriptions",
+          "weight": 8,
+          "accept": ["streaming", "subscription", "netflix", "streaming services", "subs"]
+        },
+        {
+          "id": "amazon",
+          "answer": "amazon",
+          "weight": 6,
+          "accept": ["online shopping", "amazon orders", "impulse buys"]
+        },
+        {
+          "id": "lottery",
+          "answer": "lottery",
+          "weight": 5,
+          "accept": ["lottery tickets", "scratch offs", "gambling", "betting", "sports betting"],
+          "reject": ["gaming"]
+        },
+        {
+          "id": "vaping",
+          "answer": "vaping",
+          "weight": 4,
+          "accept": ["vapes", "cigarettes", "smoking", "cigs"]
+        },
+        {
+          "id": "gadgets",
+          "answer": "gadgets",
+          "weight": 3,
+          "accept": ["tech", "electronics", "new phones"]
+        },
+        {
+          "id": "video-games",
+          "answer": "video games",
+          "weight": 3,
+          "accept": ["games", "gaming", "skins"]
+        },
+        {
+          "id": "rideshare",
+          "answer": "uber",
+          "weight": 2,
+          "accept": ["lyft", "rideshare", "taxis"]
+        },
+        {
+          "id": "gym",
+          "answer": "gym",
+          "weight": 2,
+          "accept": ["gym membership", "unused gym", "fitness classes"]
+        },
+        {
+          "id": "weed",
+          "answer": "weed",
+          "weight": 2,
+          "accept": ["pot", "marijuana", "edibles"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-money-002",
+      "style": "name",
+      "prompt": "Name a sure sign you're broke.",
+      "answers": [
+        {
+          "id": "ramen",
+          "answer": "ramen",
+          "weight": 26,
+          "accept": [
+            "ramen noodles",
+            "instant noodles",
+            "cup noodles",
+            "top ramen",
+            "eating ramen",
+            "noodles"
+          ]
+        },
+        {
+          "id": "card-declined",
+          "answer": "card declined",
+          "weight": 18,
+          "accept": [
+            "declined",
+            "declined card",
+            "card got declined",
+            "card denied",
+            "insufficient funds",
+            "card rejected"
+          ]
+        },
+        {
+          "id": "overdraft",
+          "answer": "overdraft",
+          "weight": 12,
+          "accept": [
+            "overdrawn",
+            "overdraft fees",
+            "negative balance",
+            "negative bank account",
+            "in the red",
+            "overdraft fee"
+          ]
+        },
+        {
+          "id": "empty-fridge",
+          "answer": "empty fridge",
+          "weight": 9,
+          "accept": ["no food", "nothing in the fridge", "empty pantry", "hungry"]
+        },
+        {
+          "id": "living-with-parents",
+          "answer": "living at home",
+          "weight": 6,
+          "accept": [
+            "living with parents",
+            "live with parents",
+            "moved back home",
+            "mom's basement"
+          ]
+        },
+        {
+          "id": "borrowing-money",
+          "answer": "borrowing money",
+          "weight": 6,
+          "accept": ["borrow money", "asking for money", "loans", "owe people"]
+        },
+        {
+          "id": "couch-change",
+          "answer": "couch change",
+          "weight": 5,
+          "accept": ["searching for change", "coins", "counting change", "loose change"]
+        },
+        {
+          "id": "late-rent",
+          "answer": "late rent",
+          "weight": 5,
+          "accept": ["can't pay rent", "rent is late", "behind on rent"]
+        },
+        {
+          "id": "checking-balance",
+          "answer": "checking balance",
+          "weight": 4,
+          "accept": ["check my balance", "checking account", "bank app"]
+        },
+        {
+          "id": "unpaid-bills",
+          "answer": "unpaid bills",
+          "weight": 3,
+          "accept": ["bills", "past due", "collections"]
+        },
+        {
+          "id": "free-samples",
+          "answer": "free samples",
+          "weight": 2,
+          "accept": ["samples", "costco samples", "free food"]
+        },
+        {
+          "id": "selling-stuff",
+          "answer": "selling stuff",
+          "weight": 2,
+          "accept": ["pawn shop", "selling things", "pawning"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-money-003",
+      "style": "name",
+      "prompt": "Name something you'd sell if you were totally broke.",
+      "answers": [
+        {
+          "id": "car",
+          "answer": "car",
+          "weight": 20,
+          "accept": ["my car", "truck", "vehicle", "motorcycle", "cars", "my truck"]
+        },
+        {
+          "id": "plasma",
+          "answer": "plasma",
+          "weight": 12,
+          "accept": [
+            "blood",
+            "donate plasma",
+            "blood plasma",
+            "sell plasma",
+            "platelets",
+            "sell blood"
+          ]
+        },
+        {
+          "id": "feet-pics",
+          "answer": "feet pics",
+          "weight": 11,
+          "accept": [
+            "foot pics",
+            "feet pictures",
+            "feet photos",
+            "foot pictures",
+            "onlyfans",
+            "feet"
+          ]
+        },
+        {
+          "id": "jewelry",
+          "answer": "jewelry",
+          "weight": 10,
+          "accept": ["jewellery", "gold", "rings", "watch", "necklace", "jewlery"]
+        },
+        {
+          "id": "tv",
+          "answer": "tv",
+          "weight": 8,
+          "accept": ["television", "my tv", "flat screen", "tvs"]
+        },
+        {
+          "id": "game-console",
+          "answer": "game console",
+          "weight": 8,
+          "accept": ["playstation", "xbox", "ps5", "video games", "switch", "console"]
+        },
+        {
+          "id": "clothes",
+          "answer": "clothes",
+          "weight": 7,
+          "accept": ["clothing", "shoes", "sneakers", "designer bags"]
+        },
+        {
+          "id": "phone",
+          "answer": "phone",
+          "weight": 5,
+          "accept": ["my phone", "iphone", "cell phone"]
+        },
+        {
+          "id": "kidney",
+          "answer": "kidney",
+          "weight": 5,
+          "accept": ["kidneys", "organs", "an organ", "liver"]
+        },
+        {
+          "id": "laptop",
+          "answer": "laptop",
+          "weight": 4,
+          "accept": ["computer", "pc", "macbook"]
+        },
+        {
+          "id": "furniture",
+          "answer": "furniture",
+          "weight": 3,
+          "accept": ["couch", "bed", "table"]
+        },
+        {
+          "id": "used-underwear",
+          "answer": "used underwear",
+          "weight": 2,
+          "accept": ["underwear", "panties", "used panties"]
+        },
+        {
+          "id": "my-soul",
+          "answer": "my soul",
+          "weight": 1,
+          "accept": ["soul", "sell my soul"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-money-004",
+      "style": "best",
+      "prompt": "Most painful bill to pay as an adult.",
+      "answers": [
+        {
+          "id": "rent",
+          "answer": "rent",
+          "weight": 30,
+          "accept": ["rent payment", "monthly rent", "my rent", "rental", "landlord", "paying rent"]
+        },
+        {
+          "id": "student-loans",
+          "answer": "student loans",
+          "weight": 13,
+          "accept": [
+            "student loan",
+            "student debt",
+            "college loans",
+            "school loans",
+            "loans",
+            "sallie mae"
+          ]
+        },
+        {
+          "id": "taxes",
+          "answer": "taxes",
+          "weight": 11,
+          "accept": ["tax", "irs", "property tax", "income tax", "tax bill", "property taxes"]
+        },
+        {
+          "id": "health-insurance",
+          "answer": "health insurance",
+          "weight": 9,
+          "accept": ["insurance", "healthcare", "medical insurance", "premiums"]
+        },
+        {
+          "id": "medical-bills",
+          "answer": "medical bills",
+          "weight": 8,
+          "accept": ["hospital bill", "doctor bills", "er bill", "medical bill", "hospital"]
+        },
+        {
+          "id": "car-payment",
+          "answer": "car payment",
+          "weight": 8,
+          "accept": ["car note", "car loan", "auto loan", "car payments"]
+        },
+        {
+          "id": "mortgage",
+          "answer": "mortgage",
+          "weight": 6,
+          "accept": ["house payment", "mortgage payment", "morgage"]
+        },
+        {
+          "id": "credit-card",
+          "answer": "credit card",
+          "weight": 5,
+          "accept": ["credit cards", "credit card bill", "visa bill"]
+        },
+        {
+          "id": "electric",
+          "answer": "electric bill",
+          "weight": 4,
+          "accept": ["electricity", "power bill", "electric", "utilities"]
+        },
+        {
+          "id": "car-insurance",
+          "answer": "car insurance",
+          "weight": 3,
+          "accept": ["auto insurance", "car insurence"],
+          "reject": ["insurance"]
+        },
+        {
+          "id": "daycare",
+          "answer": "daycare",
+          "weight": 2,
+          "accept": ["childcare", "babysitter"]
+        },
+        {
+          "id": "phone-bill",
+          "answer": "phone bill",
+          "weight": 1,
+          "accept": ["cell phone bill", "phone"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-money-005",
+      "style": "pick",
+      "prompt": "Pick a number from 1 to 10: how broke are you right now?",
+      "say": "Pick a number from one to ten: how broke are you right now?",
+      "answers": [
+        {
+          "id": "7",
+          "answer": "7",
+          "weight": 18,
+          "accept": ["no 7", "7/10", "7 out of 10"]
+        },
+        {
+          "id": "8",
+          "answer": "8",
+          "weight": 15,
+          "accept": ["no 8", "8/10", "8 out of 10"]
+        },
+        {
+          "id": "10",
+          "answer": "10",
+          "weight": 14,
+          "accept": ["no 10", "10/10", "10 out of 10", "totally broke"]
+        },
+        {
+          "id": "5",
+          "answer": "5",
+          "weight": 12,
+          "accept": ["no 5", "5/10", "5 out of 10"]
+        },
+        {
+          "id": "9",
+          "answer": "9",
+          "weight": 10,
+          "accept": ["no 9", "9/10", "9 out of 10"]
+        },
+        {
+          "id": "6",
+          "answer": "6",
+          "weight": 9,
+          "accept": ["no 6", "6/10", "6 out of 10"]
+        },
+        {
+          "id": "3",
+          "answer": "3",
+          "weight": 6,
+          "accept": ["no 3", "3/10", "3 out of 10"]
+        },
+        {
+          "id": "4",
+          "answer": "4",
+          "weight": 5,
+          "accept": ["no 4", "4/10", "4 out of 10"]
+        },
+        {
+          "id": "2",
+          "answer": "2",
+          "weight": 4,
+          "accept": ["no 2", "2/10", "2 out of 10"]
+        },
+        {
+          "id": "1",
+          "answer": "1",
+          "weight": 3,
+          "accept": ["no 1", "1/10", "doing fine"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-guilty-001",
+      "style": "name",
+      "prompt": "Name something you do when you're home alone.",
+      "answers": [
+        {
+          "id": "walk-around-naked",
+          "answer": "be naked",
+          "weight": 26,
+          "accept": ["walk around naked", "naked", "go naked", "nude", "no clothes", "no pants"]
+        },
+        {
+          "id": "sing",
+          "answer": "sing",
+          "weight": 12,
+          "accept": [
+            "singing",
+            "sing loud",
+            "sing loudly",
+            "karaoke",
+            "belt songs",
+            "sing in the shower"
+          ]
+        },
+        {
+          "id": "dance",
+          "answer": "dance",
+          "weight": 11,
+          "accept": [
+            "dancing",
+            "dance around",
+            "dance party",
+            "dance like crazy",
+            "twerk",
+            "dance in my underwear"
+          ]
+        },
+        {
+          "id": "eat-junk",
+          "answer": "eat junk food",
+          "weight": 10,
+          "accept": ["eat", "eat junk", "junk food", "snack", "binge eat", "eat everything"]
+        },
+        {
+          "id": "watch-tv",
+          "answer": "watch tv",
+          "weight": 9,
+          "accept": ["tv", "netflix", "binge watch", "watch movies", "binge shows"]
+        },
+        {
+          "id": "sleep",
+          "answer": "sleep",
+          "weight": 7,
+          "accept": ["nap", "sleeping", "take a nap", "napping"]
+        },
+        {
+          "id": "door-open",
+          "answer": "pee door open",
+          "weight": 6,
+          "accept": ["pee with door open", "bathroom door open", "leave the door open", "door open"]
+        },
+        {
+          "id": "talk-to-myself",
+          "answer": "talk to myself",
+          "weight": 4,
+          "accept": ["talk to self", "talking to myself", "talk to the dog"]
+        },
+        {
+          "id": "play-games",
+          "answer": "play games",
+          "weight": 4,
+          "accept": ["video games", "gaming", "games"]
+        },
+        {
+          "id": "drink",
+          "answer": "drink",
+          "weight": 3,
+          "accept": ["drinking", "day drink", "wine"]
+        },
+        {
+          "id": "cry",
+          "answer": "cry",
+          "weight": 3,
+          "accept": ["crying", "ugly cry", "sob"]
+        },
+        {
+          "id": "snoop",
+          "answer": "snoop",
+          "weight": 2,
+          "accept": ["snooping", "go through stuff", "read their diary"]
+        },
+        {
+          "id": "fart-freely",
+          "answer": "fart freely",
+          "weight": 2,
+          "accept": ["fart", "farting", "let it rip"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-guilty-002",
+      "style": "name",
+      "prompt": "Name something adults still hide from their parents.",
+      "answers": [
+        {
+          "id": "tattoos",
+          "answer": "tattoos",
+          "weight": 24,
+          "accept": ["tattoo", "tats", "ink", "tatoo", "tatoos", "new tattoo"]
+        },
+        {
+          "id": "drinking",
+          "answer": "drinking",
+          "weight": 13,
+          "accept": ["alcohol", "booze", "getting drunk", "partying", "drunk", "hangovers"]
+        },
+        {
+          "id": "weed",
+          "answer": "weed",
+          "weight": 12,
+          "accept": ["pot", "marijuana", "smoking weed", "edibles", "drugs", "getting high"]
+        },
+        {
+          "id": "sex-life",
+          "answer": "sex life",
+          "weight": 11,
+          "accept": ["sex", "hookups", "hooking up", "one night stands", "love life", "dating life"]
+        },
+        {
+          "id": "debt",
+          "answer": "debt",
+          "weight": 8,
+          "accept": ["credit card debt", "money problems", "being broke", "finances"]
+        },
+        {
+          "id": "smoking",
+          "answer": "smoking",
+          "weight": 7,
+          "accept": ["cigarettes", "vaping", "vape", "cigs"]
+        },
+        {
+          "id": "partner",
+          "answer": "partner",
+          "weight": 6,
+          "accept": ["boyfriend", "girlfriend", "relationship", "who i'm dating"]
+        },
+        {
+          "id": "piercings",
+          "answer": "piercings",
+          "weight": 5,
+          "accept": ["piercing", "nipple piercing", "belly piercing"]
+        },
+        {
+          "id": "getting-fired",
+          "answer": "getting fired",
+          "weight": 4,
+          "accept": ["lost my job", "fired", "unemployed"]
+        },
+        {
+          "id": "therapy",
+          "answer": "therapy",
+          "weight": 3,
+          "accept": ["therapist", "mental health", "anxiety"]
+        },
+        {
+          "id": "tickets",
+          "answer": "speeding tickets",
+          "weight": 3,
+          "accept": ["tickets", "speeding ticket", "traffic ticket"]
+        },
+        {
+          "id": "religion",
+          "answer": "religion",
+          "weight": 2,
+          "accept": ["not going to church", "atheist", "beliefs"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-guilty-003",
+      "style": "name",
+      "prompt": "Name something people lie to their doctor about.",
+      "answers": [
+        {
+          "id": "drinking",
+          "answer": "drinking",
+          "weight": 28,
+          "accept": ["alcohol", "how much i drink", "booze", "drinks", "beer", "alcohol intake"]
+        },
+        {
+          "id": "smoking",
+          "answer": "smoking",
+          "weight": 15,
+          "accept": ["cigarettes", "smoke", "cigs", "tobacco", "vaping", "vape"]
+        },
+        {
+          "id": "exercise",
+          "answer": "exercise",
+          "weight": 14,
+          "accept": ["working out", "workouts", "gym", "exercising", "fitness", "excercise"]
+        },
+        {
+          "id": "diet",
+          "answer": "diet",
+          "weight": 10,
+          "accept": ["eating habits", "what i eat", "food", "junk food", "eating", "sugar"]
+        },
+        {
+          "id": "weight",
+          "answer": "weight",
+          "weight": 7,
+          "accept": ["how much i weigh", "my weight", "weigh"]
+        },
+        {
+          "id": "drugs",
+          "answer": "drugs",
+          "weight": 6,
+          "accept": ["drug use", "weed", "marijuana", "pot"]
+        },
+        {
+          "id": "flossing",
+          "answer": "flossing",
+          "weight": 5,
+          "accept": ["floss", "brushing teeth", "flosing"]
+        },
+        {
+          "id": "sex-partners",
+          "answer": "sex partners",
+          "weight": 4,
+          "accept": ["number of partners", "sex life", "body count", "partners"]
+        },
+        {
+          "id": "sleep",
+          "answer": "sleep",
+          "weight": 3,
+          "accept": ["how much i sleep", "sleeping", "hours of sleep"]
+        },
+        {
+          "id": "taking-meds",
+          "answer": "taking meds",
+          "weight": 3,
+          "accept": ["medication", "meds", "pills"]
+        },
+        {
+          "id": "symptoms",
+          "answer": "symptoms",
+          "weight": 2,
+          "accept": ["pain", "how bad it hurts", "pain level"]
+        },
+        {
+          "id": "stress",
+          "answer": "stress",
+          "weight": 2,
+          "accept": ["stressed", "mental health", "anxiety"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-guilty-004",
+      "style": "name",
+      "prompt": "Name something you'd delete before you die.",
+      "answers": [
+        {
+          "id": "search-history",
+          "answer": "search history",
+          "weight": 34,
+          "accept": [
+            "browser history",
+            "internet history",
+            "history",
+            "google history",
+            "browsing history",
+            "search hist"
+          ]
+        },
+        {
+          "id": "texts",
+          "answer": "texts",
+          "weight": 14,
+          "accept": ["text messages", "messages", "my texts", "sms", "text", "group chats"]
+        },
+        {
+          "id": "photos",
+          "answer": "photos",
+          "weight": 13,
+          "accept": ["pictures", "pics", "camera roll", "photo", "picture", "gallery"]
+        },
+        {
+          "id": "nudes",
+          "answer": "nudes",
+          "weight": 9,
+          "accept": ["nude pics", "nude photos", "naked pics", "spicy pics"]
+        },
+        {
+          "id": "dms",
+          "answer": "dms",
+          "weight": 7,
+          "accept": ["direct messages", "instagram dms", "my dms", "dm"],
+          "reject": ["instagram"]
+        },
+        {
+          "id": "social-media",
+          "answer": "social media",
+          "weight": 6,
+          "accept": ["facebook", "instagram", "tiktok", "twitter"]
+        },
+        {
+          "id": "videos",
+          "answer": "videos",
+          "weight": 5,
+          "accept": ["video", "home videos", "recordings"]
+        },
+        {
+          "id": "dating-apps",
+          "answer": "dating apps",
+          "weight": 4,
+          "accept": ["tinder", "dating profile", "bumble"]
+        },
+        {
+          "id": "emails",
+          "answer": "emails",
+          "weight": 3,
+          "accept": ["email", "inbox", "gmail"]
+        },
+        {
+          "id": "notes-app",
+          "answer": "notes app",
+          "weight": 2,
+          "accept": ["notes", "my notes", "journal", "diary"]
+        },
+        {
+          "id": "call-log",
+          "answer": "call log",
+          "weight": 1,
+          "accept": ["call history", "recent calls"]
+        },
+        {
+          "id": "saved-passwords",
+          "answer": "saved passwords",
+          "weight": 1,
+          "accept": ["passwords", "password list"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-guilty-005",
+      "style": "name",
+      "prompt": "Name a petty way to get revenge on a bad roommate.",
+      "answers": [
+        {
+          "id": "eat-their-food",
+          "answer": "eat their food",
+          "weight": 26,
+          "accept": [
+            "eat their snacks",
+            "steal their food",
+            "eat their leftovers",
+            "take their food",
+            "steal food",
+            "eat their stuff"
+          ],
+          "reject": ["use their stuff"]
+        },
+        {
+          "id": "change-wifi",
+          "answer": "change the wifi",
+          "weight": 12,
+          "accept": [
+            "change wifi password",
+            "wifi",
+            "kick them off wifi",
+            "unplug the router",
+            "turn off wifi",
+            "no wifi"
+          ]
+        },
+        {
+          "id": "hide-their-stuff",
+          "answer": "hide their stuff",
+          "weight": 10,
+          "accept": [
+            "hide things",
+            "hide their keys",
+            "hide the remote",
+            "move their stuff",
+            "hide their charger",
+            "hide their phone"
+          ],
+          "reject": ["use their stuff"]
+        },
+        {
+          "id": "leave-dishes",
+          "answer": "leave dishes",
+          "weight": 9,
+          "accept": ["dirty dishes", "don't do dishes", "pile of dishes", "leave a mess"]
+        },
+        {
+          "id": "passive-note",
+          "answer": "passive note",
+          "weight": 8,
+          "accept": ["leave a note", "passive aggressive note", "angry note", "sticky note"]
+        },
+        {
+          "id": "loud-music",
+          "answer": "loud music",
+          "weight": 7,
+          "accept": ["play music loud", "blast music", "be loud", "make noise"]
+        },
+        {
+          "id": "use-their-toothbrush",
+          "answer": "their toothbrush",
+          "weight": 6,
+          "accept": [
+            "use their toothbrush",
+            "toothbrush",
+            "toilet toothbrush",
+            "lick their toothbrush"
+          ]
+        },
+        {
+          "id": "spit-in-food",
+          "answer": "spit in food",
+          "weight": 4,
+          "accept": ["spit in their food", "spit in drink", "spit", "lick their food"]
+        },
+        {
+          "id": "take-hot-water",
+          "answer": "hog hot water",
+          "weight": 4,
+          "accept": ["use all hot water", "hot water", "long shower", "take all the hot water"]
+        },
+        {
+          "id": "no-toilet-paper",
+          "answer": "no toilet paper",
+          "weight": 3,
+          "accept": ["hide toilet paper", "take the tp", "last roll"]
+        },
+        {
+          "id": "use-their-stuff",
+          "answer": "steal shampoo",
+          "weight": 3,
+          "accept": ["use their shampoo", "shampoo", "use their stuff"],
+          "reject": ["eat their stuff", "hide their stuff"]
+        },
+        {
+          "id": "move-out",
+          "answer": "move out",
+          "weight": 2,
+          "accept": ["leave", "move", "break the lease"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-guilty-006",
+      "style": "name",
+      "prompt": "Name a question you dread at family holiday dinners.",
+      "answers": [
+        {
+          "id": "when-marry",
+          "answer": "married yet",
+          "weight": 28,
+          "accept": [
+            "when's the wedding",
+            "when are you getting married",
+            "marriage",
+            "getting married",
+            "when will you marry",
+            "wedding"
+          ]
+        },
+        {
+          "id": "dating",
+          "answer": "are you dating",
+          "weight": 18,
+          "accept": ["dating", "seeing anyone", "boyfriend", "girlfriend", "love life", "single"]
+        },
+        {
+          "id": "kids",
+          "answer": "kids yet",
+          "weight": 14,
+          "accept": [
+            "when are kids coming",
+            "kids",
+            "babies",
+            "grandkids",
+            "having kids",
+            "when are you having kids",
+            "baby"
+          ]
+        },
+        {
+          "id": "job",
+          "answer": "how's work",
+          "weight": 12,
+          "accept": ["job", "work", "career", "what do you do", "still at that job", "jobs"]
+        },
+        {
+          "id": "weight",
+          "answer": "gained weight",
+          "weight": 7,
+          "accept": ["did you gain weight", "weight", "you look bigger", "lost weight"]
+        },
+        {
+          "id": "money",
+          "answer": "your salary",
+          "weight": 5,
+          "accept": ["how much you make", "money", "salary", "income", "how much do you make"]
+        },
+        {
+          "id": "politics",
+          "answer": "politics",
+          "weight": 4,
+          "accept": ["who'd you vote for", "voting", "election"]
+        },
+        {
+          "id": "house",
+          "answer": "buying a house",
+          "weight": 3,
+          "accept": ["when will you buy a house", "house", "own a home"]
+        },
+        {
+          "id": "school",
+          "answer": "back to school",
+          "weight": 3,
+          "accept": ["going back to school", "school", "college", "degree"]
+        },
+        {
+          "id": "church",
+          "answer": "going to church",
+          "weight": 2,
+          "accept": ["church", "religion", "praying"]
+        },
+        {
+          "id": "haircut",
+          "answer": "your hair",
+          "weight": 2,
+          "accept": ["what's with your hair", "hair", "haircut"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-guilty-007",
+      "style": "best",
+      "prompt": "Best guilty-pleasure food at 2 a.m.",
+      "say": "Best guilty pleasure food at two in the morning.",
+      "answers": [
+        {
+          "id": "pizza",
+          "answer": "pizza",
+          "weight": 30,
+          "accept": [
+            "cold pizza",
+            "leftover pizza",
+            "pizza slice",
+            "frozen pizza",
+            "pizzas",
+            "piza"
+          ]
+        },
+        {
+          "id": "tacos",
+          "answer": "tacos",
+          "weight": 12,
+          "accept": ["taco", "taco bell", "burritos", "burrito", "late night tacos", "tacoz"]
+        },
+        {
+          "id": "ice-cream",
+          "answer": "ice cream",
+          "weight": 11,
+          "accept": [
+            "gelato",
+            "pint of ice cream",
+            "ben and jerry's",
+            "froyo",
+            "ice creams",
+            "soft serve"
+          ]
+        },
+        {
+          "id": "chips",
+          "answer": "chips",
+          "weight": 9,
+          "accept": ["potato chips", "doritos", "cheetos", "crisps"]
+        },
+        {
+          "id": "fries",
+          "answer": "fries",
+          "weight": 8,
+          "accept": ["french fries", "chili fries", "cheese fries", "frys"]
+        },
+        {
+          "id": "cereal",
+          "answer": "cereal",
+          "weight": 7,
+          "accept": ["bowl of cereal", "cereals", "froot loops"]
+        },
+        {
+          "id": "burger",
+          "answer": "burger",
+          "weight": 6,
+          "accept": ["burgers", "cheeseburger", "mcdonalds", "hamburger"]
+        },
+        {
+          "id": "mac-and-cheese",
+          "answer": "mac and cheese",
+          "weight": 4,
+          "accept": ["mac n cheese", "mac", "kraft dinner"]
+        },
+        {
+          "id": "ramen",
+          "answer": "ramen",
+          "weight": 4,
+          "accept": ["instant noodles", "cup noodles", "noodles"]
+        },
+        {
+          "id": "nachos",
+          "answer": "nachos",
+          "weight": 3,
+          "accept": ["nacho", "loaded nachos", "chips and cheese"]
+        },
+        {
+          "id": "cookies",
+          "answer": "cookies",
+          "weight": 3,
+          "accept": ["cookie", "cookie dough", "oreos"]
+        },
+        {
+          "id": "leftovers",
+          "answer": "leftovers",
+          "weight": 2,
+          "accept": ["leftover", "whatever's in the fridge", "cold leftovers"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-guilty-008",
+      "style": "finish",
+      "prompt": "Finish this: I'm not drunk, I'm just ___.",
+      "answers": [
+        {
+          "id": "tipsy",
+          "answer": "tipsy",
+          "weight": 24,
+          "accept": ["a little tipsy", "tispy", "slightly tipsy", "tipsey", "bit tipsy", "tipsy af"]
+        },
+        {
+          "id": "happy",
+          "answer": "happy",
+          "weight": 18,
+          "accept": ["very happy", "so happy", "happy drunk", "joyful", "cheerful", "merry"]
+        },
+        {
+          "id": "buzzed",
+          "answer": "buzzed",
+          "weight": 14,
+          "accept": ["buzzing", "a little buzzed", "buzzd", "buzz", "slightly buzzed", "buzzy"]
+        },
+        {
+          "id": "relaxed",
+          "answer": "relaxed",
+          "weight": 8,
+          "accept": ["chill", "chilling", "loose", "relaxing"]
+        },
+        {
+          "id": "tired",
+          "answer": "tired",
+          "weight": 7,
+          "accept": ["sleepy", "exhausted", "so tired"]
+        },
+        {
+          "id": "fun",
+          "answer": "fun",
+          "weight": 6,
+          "accept": ["having fun", "more fun", "the fun one"]
+        },
+        {
+          "id": "honest",
+          "answer": "honest",
+          "weight": 5,
+          "accept": ["more honest", "truthful", "brutally honest"]
+        },
+        {
+          "id": "friendly",
+          "answer": "friendly",
+          "weight": 4,
+          "accept": ["extra friendly", "social", "flirty"]
+        },
+        {
+          "id": "dizzy",
+          "answer": "dizzy",
+          "weight": 4,
+          "accept": ["spinning", "wobbly", "lightheaded"]
+        },
+        {
+          "id": "celebrating",
+          "answer": "celebrating",
+          "weight": 3,
+          "accept": ["partying", "celebrate", "on vacation"]
+        },
+        {
+          "id": "hungry",
+          "answer": "hungry",
+          "weight": 2,
+          "accept": ["starving", "need pizza", "snacky"]
+        },
+        {
+          "id": "sober",
+          "answer": "sober",
+          "weight": 2,
+          "accept": ["totally sober", "fine", "okay"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-guilty-009",
+      "style": "rather",
+      "prompt": "Would you rather your boss or mom saw your search history?",
+      "tiles": "all",
+      "answers": [
+        {
+          "id": "boss",
+          "answer": "my boss",
+          "weight": 55,
+          "accept": ["boss", "manager", "my manager"]
+        },
+        {
+          "id": "mom",
+          "answer": "my mom",
+          "weight": 45,
+          "accept": ["mom", "mother", "mum", "my mother"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-bedroom-001",
+      "style": "name",
+      "prompt": "Name something people lie about on a first date.",
+      "answers": [
+        {
+          "id": "age",
+          "answer": "age",
+          "weight": 20,
+          "accept": [
+            "their age",
+            "how old they are",
+            "my age",
+            "birthday",
+            "year born",
+            "being younger"
+          ],
+          "reject": ["how tall they are"]
+        },
+        {
+          "id": "job",
+          "answer": "job",
+          "weight": 18,
+          "accept": ["their job", "career", "work", "occupation", "job title", "what they do"]
+        },
+        {
+          "id": "money",
+          "answer": "money",
+          "weight": 13,
+          "accept": ["salary", "income", "how much they make", "being rich", "wealth", "finances"]
+        },
+        {
+          "id": "height",
+          "answer": "height",
+          "weight": 11,
+          "accept": [
+            "how tall they are",
+            "being tall",
+            "tall",
+            "their height",
+            "hieght",
+            "an extra inch"
+          ],
+          "reject": ["how old they are", "weight", "their weight"]
+        },
+        {
+          "id": "exes",
+          "answer": "exes",
+          "weight": 8,
+          "accept": ["ex", "past relationships", "their ex", "body count", "last relationship"]
+        },
+        {
+          "id": "weight",
+          "answer": "weight",
+          "weight": 7,
+          "accept": ["their weight", "how much they weigh", "size"],
+          "reject": ["height", "their height"]
+        },
+        {
+          "id": "being-single",
+          "answer": "being single",
+          "weight": 5,
+          "accept": ["single", "married", "relationship status", "being married"]
+        },
+        {
+          "id": "hobbies",
+          "answer": "hobbies",
+          "weight": 5,
+          "accept": ["hobby", "interests", "being outdoorsy", "the gym"]
+        },
+        {
+          "id": "drinking",
+          "answer": "drinking",
+          "weight": 3,
+          "accept": ["how much they drink", "alcohol", "sobriety"]
+        },
+        {
+          "id": "kids",
+          "answer": "having kids",
+          "weight": 3,
+          "accept": ["kids", "children", "wanting kids"]
+        },
+        {
+          "id": "car",
+          "answer": "car",
+          "weight": 2,
+          "accept": ["their car", "what they drive", "owning a car"]
+        },
+        {
+          "id": "living-situation",
+          "answer": "living at home",
+          "weight": 2,
+          "accept": ["living with parents", "roommates", "living situation", "live with mom"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-bedroom-002",
+      "style": "name",
+      "prompt": "Name an instant turn-off on a date.",
+      "answers": [
+        {
+          "id": "bad-breath",
+          "answer": "bad breath",
+          "weight": 24,
+          "accept": [
+            "breath",
+            "stinky breath",
+            "halitosis",
+            "smelly breath",
+            "dragon breath",
+            "bad breathe"
+          ]
+        },
+        {
+          "id": "rude",
+          "answer": "rude to waiter",
+          "weight": 16,
+          "accept": [
+            "rude",
+            "rudeness",
+            "rude to staff",
+            "being rude",
+            "mean to waiter",
+            "rude to the server"
+          ]
+        },
+        {
+          "id": "on-phone",
+          "answer": "on their phone",
+          "weight": 12,
+          "accept": [
+            "phone",
+            "on phone",
+            "texting",
+            "always on phone",
+            "checking phone",
+            "scrolling"
+          ]
+        },
+        {
+          "id": "body-odor",
+          "answer": "body odor",
+          "weight": 10,
+          "accept": ["bo", "smelly", "stinky", "bad hygiene", "body odour", "smells bad"],
+          "reject": ["stingy"]
+        },
+        {
+          "id": "talks-about-ex",
+          "answer": "talks about ex",
+          "weight": 9,
+          "accept": ["ex", "their ex", "talking about ex", "exes", "brings up ex"]
+        },
+        {
+          "id": "cocky",
+          "answer": "arrogance",
+          "weight": 7,
+          "accept": ["arrogant", "cocky", "full of themselves", "bragging", "ego"]
+        },
+        {
+          "id": "cheap",
+          "answer": "cheap",
+          "weight": 6,
+          "accept": ["being cheap", "won't pay", "stingy", "split the bill"],
+          "reject": ["stinky"]
+        },
+        {
+          "id": "smoking",
+          "answer": "smoking",
+          "weight": 4,
+          "accept": ["smoker", "cigarettes", "vaping"]
+        },
+        {
+          "id": "loud-chewing",
+          "answer": "loud chewing",
+          "weight": 3,
+          "accept": ["chewing", "bad manners", "chewing loud", "smacking"],
+          "reject": ["smoking"]
+        },
+        {
+          "id": "late",
+          "answer": "showing up late",
+          "weight": 3,
+          "accept": ["late", "being late", "tardy"]
+        },
+        {
+          "id": "drunk",
+          "answer": "getting drunk",
+          "weight": 2,
+          "accept": ["drunk", "too drunk", "wasted"]
+        },
+        {
+          "id": "bad-teeth",
+          "answer": "bad teeth",
+          "weight": 2,
+          "accept": ["teeth", "yellow teeth", "dirty teeth"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-bedroom-003",
+      "style": "name",
+      "prompt": "Name something people wear to bed.",
+      "answers": [
+        {
+          "id": "pajamas",
+          "answer": "pajamas",
+          "weight": 34,
+          "accept": ["pjs", "pyjamas", "jammies", "pj", "pajama pants", "pajamas set", "pijamas"]
+        },
+        {
+          "id": "nothing",
+          "answer": "nothing",
+          "weight": 18,
+          "accept": ["naked", "nude", "birthday suit", "au naturel", "nada", "nothin"]
+        },
+        {
+          "id": "t-shirt",
+          "answer": "t-shirt",
+          "weight": 13,
+          "accept": ["tee", "old shirt", "big shirt", "shirt", "tee shirt", "oversized tee"],
+          "reject": ["short", "his shirt"]
+        },
+        {
+          "id": "underwear",
+          "answer": "underwear",
+          "weight": 10,
+          "accept": ["boxers", "undies", "briefs", "panties", "underware", "boxer shorts"]
+        },
+        {
+          "id": "socks",
+          "answer": "socks",
+          "weight": 5,
+          "accept": ["sock", "fuzzy socks", "bed socks"]
+        },
+        {
+          "id": "shorts",
+          "answer": "shorts",
+          "weight": 4,
+          "accept": ["sleep shorts", "gym shorts", "short"],
+          "reject": ["shirt"]
+        },
+        {
+          "id": "sweatpants",
+          "answer": "sweatpants",
+          "weight": 4,
+          "accept": ["sweats", "joggers", "trackies"]
+        },
+        {
+          "id": "lingerie",
+          "answer": "lingerie",
+          "weight": 4,
+          "accept": ["lingere", "negligee", "teddy", "lace"]
+        },
+        {
+          "id": "nightgown",
+          "answer": "nightgown",
+          "weight": 3,
+          "accept": ["nightie", "nighty"]
+        },
+        {
+          "id": "partners-shirt",
+          "answer": "partner's shirt",
+          "weight": 2,
+          "accept": ["his shirt", "her shirt", "boyfriend's shirt"],
+          "reject": ["big shirt", "tee shirt"]
+        },
+        {
+          "id": "hoodie",
+          "answer": "hoodie",
+          "weight": 2,
+          "accept": ["sweatshirt", "hoody", "hoodies"]
+        },
+        {
+          "id": "sleep-mask",
+          "answer": "sleep mask",
+          "weight": 1,
+          "accept": ["eye mask", "eye cover"]
+        },
+        {
+          "id": "retainer",
+          "answer": "retainer",
+          "weight": 1,
+          "accept": ["mouth guard", "night guard"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-bedroom-004",
+      "style": "name",
+      "prompt": "Name something that kills the mood in the bedroom.",
+      "answers": [
+        {
+          "id": "fart",
+          "answer": "fart",
+          "weight": 22,
+          "accept": ["farting", "farts", "gas", "queef", "passing gas", "tooting"]
+        },
+        {
+          "id": "phone-ringing",
+          "answer": "phone ringing",
+          "weight": 14,
+          "accept": ["phone", "phone call", "ringtone", "text", "notification", "phone buzzing"]
+        },
+        {
+          "id": "bad-breath",
+          "answer": "bad breath",
+          "weight": 12,
+          "accept": [
+            "breath",
+            "stinky breath",
+            "morning breath",
+            "halitosis",
+            "dragon breath",
+            "smelly breath"
+          ]
+        },
+        {
+          "id": "pet",
+          "answer": "the pet",
+          "weight": 9,
+          "accept": ["dog", "cat", "pets", "dog watching", "cat on the bed"]
+        },
+        {
+          "id": "wrong-name",
+          "answer": "wrong name",
+          "weight": 8,
+          "accept": [
+            "saying the wrong name",
+            "ex's name",
+            "calling out wrong name",
+            "saying ex's name"
+          ]
+        },
+        {
+          "id": "roommate",
+          "answer": "roommate",
+          "weight": 7,
+          "accept": ["roommates", "roomie", "roomate", "thin walls"]
+        },
+        {
+          "id": "falling-asleep",
+          "answer": "falling asleep",
+          "weight": 5,
+          "accept": ["fall asleep", "snoring", "sleeping"]
+        },
+        {
+          "id": "cramp",
+          "answer": "leg cramp",
+          "weight": 4,
+          "accept": ["cramp", "cramps", "charley horse"]
+        },
+        {
+          "id": "parents-calling",
+          "answer": "mom calls",
+          "weight": 4,
+          "accept": ["mom calling", "parents", "mom", "in-laws"]
+        },
+        {
+          "id": "laughing",
+          "answer": "laughing",
+          "weight": 3,
+          "accept": ["giggling", "laugh", "someone laughs"]
+        },
+        {
+          "id": "doorbell",
+          "answer": "doorbell",
+          "weight": 3,
+          "accept": ["knocking", "delivery"]
+        },
+        {
+          "id": "burp",
+          "answer": "burp",
+          "weight": 2,
+          "accept": ["burping", "belch", "burped"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-bedroom-005",
+      "style": "name",
+      "prompt": "Name a food that's weirdly sexy.",
+      "answers": [
+        {
+          "id": "strawberries",
+          "answer": "strawberries",
+          "weight": 26,
+          "accept": [
+            "strawberry",
+            "chocolate strawberries",
+            "strawberrys",
+            "strawbs",
+            "chocolate covered strawberries",
+            "strawberies"
+          ]
+        },
+        {
+          "id": "whipped-cream",
+          "answer": "whipped cream",
+          "weight": 14,
+          "accept": [
+            "whip cream",
+            "cool whip",
+            "reddi whip",
+            "whipped creme",
+            "can of whipped cream",
+            "whipping cream"
+          ]
+        },
+        {
+          "id": "chocolate",
+          "answer": "chocolate",
+          "weight": 12,
+          "accept": [
+            "chocolate sauce",
+            "melted chocolate",
+            "chocolat",
+            "chocolates",
+            "fondue",
+            "choc"
+          ]
+        },
+        {
+          "id": "banana",
+          "answer": "banana",
+          "weight": 11,
+          "accept": [
+            "bananas",
+            "bananna",
+            "banannas",
+            "peeled banana",
+            "banana split",
+            "banana emoji"
+          ]
+        },
+        {
+          "id": "oysters",
+          "answer": "oysters",
+          "weight": 9,
+          "accept": [
+            "oyster",
+            "raw oysters",
+            "oysters on the half shell",
+            "clams",
+            "shellfish",
+            "oisters"
+          ]
+        },
+        {
+          "id": "cherries",
+          "answer": "cherries",
+          "weight": 6,
+          "accept": ["cherry", "cherry stem", "maraschino cherries"]
+        },
+        {
+          "id": "honey",
+          "answer": "honey",
+          "weight": 5,
+          "accept": ["hunny", "drizzled honey", "syrup"]
+        },
+        {
+          "id": "peach",
+          "answer": "peach",
+          "weight": 4,
+          "accept": ["peaches", "peach emoji", "juicy peach"]
+        },
+        {
+          "id": "eggplant",
+          "answer": "eggplant",
+          "weight": 4,
+          "accept": ["eggplants", "aubergine", "eggplant emoji"]
+        },
+        {
+          "id": "grapes",
+          "answer": "grapes",
+          "weight": 3,
+          "accept": ["grape", "feeding grapes", "peeled grapes"]
+        },
+        {
+          "id": "hot-dog",
+          "answer": "hot dog",
+          "weight": 2,
+          "accept": ["sausage", "wiener"]
+        },
+        {
+          "id": "popsicle",
+          "answer": "popsicle",
+          "weight": 2,
+          "accept": ["popsicles", "ice pop", "lollipop"]
+        },
+        {
+          "id": "avocado",
+          "answer": "avocado",
+          "weight": 1,
+          "accept": ["avocados", "avacado"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-bedroom-006",
+      "style": "name",
+      "prompt": "Name a spot couples get frisky besides the bed.",
+      "answers": [
+        {
+          "id": "shower",
+          "answer": "shower",
+          "weight": 28,
+          "accept": ["showers", "bathtub", "bath", "shower sex", "in the shower", "steamy shower"]
+        },
+        {
+          "id": "car",
+          "answer": "car",
+          "weight": 20,
+          "accept": ["backseat", "in the car", "truck", "cars", "in the backseat", "parked car"]
+        },
+        {
+          "id": "couch",
+          "answer": "couch",
+          "weight": 14,
+          "accept": ["sofa", "living room", "loveseat", "couches", "futon", "on the couch"]
+        },
+        {
+          "id": "kitchen",
+          "answer": "kitchen",
+          "weight": 9,
+          "accept": [
+            "kitchen counter",
+            "counter",
+            "kitchen table",
+            "table",
+            "countertop",
+            "kitchen floor"
+          ]
+        },
+        {
+          "id": "hot-tub",
+          "answer": "hot tub",
+          "weight": 5,
+          "accept": ["jacuzzi", "spa", "whirlpool"]
+        },
+        {
+          "id": "beach",
+          "answer": "beach",
+          "weight": 4,
+          "accept": ["on the beach", "sand", "sand dunes"]
+        },
+        {
+          "id": "floor",
+          "answer": "floor",
+          "weight": 4,
+          "accept": ["rug", "carpet", "living room floor"]
+        },
+        {
+          "id": "outdoors",
+          "answer": "outdoors",
+          "weight": 4,
+          "accept": ["outside", "the woods", "backyard", "camping"]
+        },
+        {
+          "id": "pool",
+          "answer": "pool",
+          "weight": 3,
+          "accept": ["swimming pool", "in the pool", "lake"]
+        },
+        {
+          "id": "office",
+          "answer": "office",
+          "weight": 3,
+          "accept": ["work", "desk", "at work"]
+        },
+        {
+          "id": "movie-theater",
+          "answer": "movie theater",
+          "weight": 2,
+          "accept": ["movies", "cinema", "theater"]
+        },
+        {
+          "id": "airplane",
+          "answer": "airplane",
+          "weight": 2,
+          "accept": ["plane", "mile high", "mile high club"]
+        },
+        {
+          "id": "elevator",
+          "answer": "elevator",
+          "weight": 1,
+          "accept": ["lift", "elevators"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-bedroom-007",
+      "style": "best",
+      "prompt": "Worst person to walk in on you in the bedroom.",
+      "answers": [
+        {
+          "id": "mom",
+          "answer": "my mom",
+          "weight": 34,
+          "accept": ["mom", "mother", "mum", "mommy", "your mom", "my mother"],
+          "reject": ["my father"]
+        },
+        {
+          "id": "dad",
+          "answer": "my dad",
+          "weight": 16,
+          "accept": ["dad", "father", "your dad", "daddy", "pops", "my father"],
+          "reject": ["my mother"]
+        },
+        {
+          "id": "grandma",
+          "answer": "grandma",
+          "weight": 11,
+          "accept": ["grandmother", "granny", "nana", "grandparents", "grandpa", "my grandma"]
+        },
+        {
+          "id": "boss",
+          "answer": "boss",
+          "weight": 8,
+          "accept": ["my boss", "manager", "coworker", "coworkers"]
+        },
+        {
+          "id": "in-laws",
+          "answer": "in-laws",
+          "weight": 8,
+          "accept": ["mother in law", "father in law", "partner's parents"]
+        },
+        {
+          "id": "ex",
+          "answer": "my ex",
+          "weight": 6,
+          "accept": ["ex", "ex boyfriend", "ex girlfriend", "exes"]
+        },
+        {
+          "id": "roommate",
+          "answer": "roommate",
+          "weight": 5,
+          "accept": ["roommates", "roomie", "roomate"]
+        },
+        {
+          "id": "pastor",
+          "answer": "pastor",
+          "weight": 4,
+          "accept": ["priest", "preacher", "minister"]
+        },
+        {
+          "id": "landlord",
+          "answer": "landlord",
+          "weight": 3,
+          "accept": ["landlady", "property manager"]
+        },
+        {
+          "id": "neighbor",
+          "answer": "neighbor",
+          "weight": 2,
+          "accept": ["neighbour", "neighbors", "nosy neighbor"]
+        },
+        {
+          "id": "police",
+          "answer": "police",
+          "weight": 2,
+          "accept": ["cops", "cop", "officer"]
+        },
+        {
+          "id": "spouse",
+          "answer": "my spouse",
+          "weight": 1,
+          "accept": ["husband", "wife", "spouse"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-bedroom-008",
+      "style": "best",
+      "prompt": "Worst thing to forget before a hot date.",
+      "answers": [
+        {
+          "id": "deodorant",
+          "answer": "deodorant",
+          "weight": 24,
+          "accept": [
+            "deoderant",
+            "deo",
+            "antiperspirant",
+            "deodorent",
+            "deodarant",
+            "wearing deodorant"
+          ]
+        },
+        {
+          "id": "wallet",
+          "answer": "wallet",
+          "weight": 16,
+          "accept": ["my wallet", "money", "cash", "credit card", "wallets", "walet"]
+        },
+        {
+          "id": "condoms",
+          "answer": "condoms",
+          "weight": 14,
+          "accept": ["condom", "protection", "rubbers", "rubber", "trojans", "condums"]
+        },
+        {
+          "id": "brush-teeth",
+          "answer": "brush teeth",
+          "weight": 11,
+          "accept": [
+            "brushing teeth",
+            "toothbrush",
+            "brush my teeth",
+            "mints",
+            "breath mints",
+            "gum"
+          ]
+        },
+        {
+          "id": "shower",
+          "answer": "shower",
+          "weight": 9,
+          "accept": ["showering", "take a shower", "bathe", "shower first"]
+        },
+        {
+          "id": "their-name",
+          "answer": "their name",
+          "weight": 6,
+          "accept": ["name", "date's name", "her name", "his name"]
+        },
+        {
+          "id": "shave",
+          "answer": "shave",
+          "weight": 5,
+          "accept": ["shaving", "manscaping", "wax"]
+        },
+        {
+          "id": "phone",
+          "answer": "phone",
+          "weight": 4,
+          "accept": ["my phone", "cell phone", "charger"]
+        },
+        {
+          "id": "underwear",
+          "answer": "underwear",
+          "weight": 3,
+          "accept": ["undies", "clean underwear", "boxers"]
+        },
+        {
+          "id": "keys",
+          "answer": "keys",
+          "weight": 2,
+          "accept": ["car keys", "key", "house keys"]
+        },
+        {
+          "id": "cologne",
+          "answer": "cologne",
+          "weight": 2,
+          "accept": ["perfume", "fragrance", "body spray"]
+        },
+        {
+          "id": "pants",
+          "answer": "pants",
+          "weight": 1,
+          "accept": ["trousers", "jeans"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-bedroom-009",
+      "style": "pick",
+      "prompt": "Pick the colour of underwear you're wearing right now.",
+      "say": "Pick the color of underwear you're wearing right now.",
+      "answers": [
+        {
+          "id": "black",
+          "answer": "black",
+          "weight": 30,
+          "accept": ["blk", "blak", "all black", "jet black"]
+        },
+        {
+          "id": "white",
+          "answer": "white",
+          "weight": 12,
+          "accept": ["wite", "whte", "off white"]
+        },
+        {
+          "id": "grey",
+          "answer": "grey",
+          "weight": 11,
+          "accept": ["gray", "heather grey", "charcoal"]
+        },
+        {
+          "id": "blue",
+          "answer": "blue",
+          "weight": 10,
+          "accept": ["navy", "navy blue", "light blue", "bleu"]
+        },
+        {
+          "id": "red",
+          "answer": "red",
+          "weight": 8,
+          "accept": ["crimson", "maroon", "burgundy"]
+        },
+        {
+          "id": "pink",
+          "answer": "pink",
+          "weight": 7,
+          "accept": ["hot pink", "light pink", "pinkish"]
+        },
+        {
+          "id": "none",
+          "answer": "none",
+          "weight": 6,
+          "accept": ["commando", "going commando", "no underwear"]
+        },
+        {
+          "id": "nude",
+          "answer": "nude",
+          "weight": 4,
+          "accept": ["beige", "tan", "skin tone"]
+        },
+        {
+          "id": "purple",
+          "answer": "purple",
+          "weight": 3,
+          "accept": ["lavender", "violet", "purpel"]
+        },
+        {
+          "id": "green",
+          "answer": "green",
+          "weight": 3,
+          "accept": ["olive", "mint", "forest green"]
+        },
+        {
+          "id": "leopard",
+          "answer": "leopard print",
+          "weight": 2,
+          "accept": ["leopard", "animal print", "cheetah print"]
+        },
+        {
+          "id": "yellow",
+          "answer": "yellow",
+          "weight": 1,
+          "accept": ["mustard", "yelow"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-bedroom-010",
+      "style": "finish",
+      "prompt": "Finish this: My ex was a ___.",
+      "answers": [
+        {
+          "id": "jerk",
+          "answer": "jerk",
+          "weight": 20,
+          "accept": ["total jerk", "jerkface", "big jerk", "real jerk", "jerks", "jerkoff"]
+        },
+        {
+          "id": "mistake",
+          "answer": "mistake",
+          "weight": 15,
+          "accept": ["big mistake", "huge mistake", "mistakes", "misteak", "error", "bad decision"]
+        },
+        {
+          "id": "liar",
+          "answer": "liar",
+          "weight": 12,
+          "accept": ["lier", "pathological liar", "big liar", "liars", "lyer", "compulsive liar"]
+        },
+        {
+          "id": "cheater",
+          "answer": "cheater",
+          "weight": 11,
+          "accept": ["cheat", "cheaters", "cheeter", "cheating", "two timer", "dirty cheater"]
+        },
+        {
+          "id": "psycho",
+          "answer": "psycho",
+          "weight": 9,
+          "accept": ["psychopath", "crazy", "nutcase", "lunatic", "sycho", "maniac"]
+        },
+        {
+          "id": "loser",
+          "answer": "loser",
+          "weight": 8,
+          "accept": ["looser", "total loser", "losers"]
+        },
+        {
+          "id": "narcissist",
+          "answer": "narcissist",
+          "weight": 6,
+          "accept": ["narcisist", "narc", "narcissistic"]
+        },
+        {
+          "id": "clown",
+          "answer": "clown",
+          "weight": 5,
+          "accept": ["joke", "clowns", "circus"]
+        },
+        {
+          "id": "nightmare",
+          "answer": "nightmare",
+          "weight": 4,
+          "accept": ["nightmares", "disaster", "total nightmare"]
+        },
+        {
+          "id": "dick",
+          "answer": "dick",
+          "weight": 3,
+          "accept": ["dickhead", "prick", "ass"]
+        },
+        {
+          "id": "saint",
+          "answer": "saint",
+          "weight": 2,
+          "accept": ["angel", "good person", "keeper"]
+        },
+        {
+          "id": "snake",
+          "answer": "snake",
+          "weight": 2,
+          "accept": ["snakes", "rat", "traitor"]
+        }
+      ]
+    },
+    {
+      "id": "hmx-bedroom-011",
+      "style": "finish",
+      "prompt": "Finish this: Take off your ___.",
+      "answers": [
+        {
+          "id": "clothes",
+          "answer": "clothes",
+          "weight": 28,
+          "accept": [
+            "clothing",
+            "cloths",
+            "clothes off",
+            "all your clothes",
+            "cloths off",
+            "outfit"
+          ]
+        },
+        {
+          "id": "shirt",
+          "answer": "shirt",
+          "weight": 18,
+          "accept": ["shirts", "top", "t-shirt", "blouse", "tee", "top off"],
+          "reject": ["shorts", "skirt"]
+        },
+        {
+          "id": "pants",
+          "answer": "pants",
+          "weight": 15,
+          "accept": ["trousers", "jeans", "slacks", "pant", "shorts", "skirt"],
+          "reject": ["shirt"]
+        },
+        {
+          "id": "shoes",
+          "answer": "shoes",
+          "weight": 12,
+          "accept": ["shoe", "sneakers", "boots", "heels", "shoos", "kicks"]
+        },
+        {
+          "id": "underwear",
+          "answer": "underwear",
+          "weight": 6,
+          "accept": ["undies", "panties", "boxers", "briefs"]
+        },
+        {
+          "id": "bra",
+          "answer": "bra",
+          "weight": 4,
+          "accept": ["bras", "brassiere", "bralette"]
+        },
+        {
+          "id": "jacket",
+          "answer": "jacket",
+          "weight": 4,
+          "accept": ["coat", "hoodie", "sweater"]
+        },
+        {
+          "id": "hat",
+          "answer": "hat",
+          "weight": 3,
+          "accept": ["cap", "baseball cap", "beanie"]
+        },
+        {
+          "id": "socks",
+          "answer": "socks",
+          "weight": 2,
+          "accept": ["sock", "stockings", "tights"]
+        },
+        {
+          "id": "glasses",
+          "answer": "glasses",
+          "weight": 2,
+          "accept": ["sunglasses", "specs", "shades"]
+        },
+        {
+          "id": "makeup",
+          "answer": "makeup",
+          "weight": 2,
+          "accept": ["mascara"]
+        },
+        {
+          "id": "mask",
+          "answer": "mask",
+          "weight": 1,
+          "accept": ["face mask", "disguise"]
+        }
+      ]
+    }
+  ]
+}

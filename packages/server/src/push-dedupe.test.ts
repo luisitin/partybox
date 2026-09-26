@@ -46,6 +46,8 @@ beforeAll(async () => {
     quiet: true,
     serveClient: false,
     publicHost: '127.0.0.1',
+    // Other tests and the live host may write the default tuned-settings.json.
+    recordingsDir: null,
   });
   await app.listen();
   url = `http://127.0.0.1:${app.port}`;
@@ -75,8 +77,16 @@ describe('I-750 A: only what changed is sent', () => {
     while (!picked && Date.now() < until) await new Promise((r) => setTimeout(r, 25));
     expect(picked).toBe(true); // the pick changed the room: sent
     await quiet(ben, 600);
+    // The first update creates the tuned-settings snapshot (I-763), so it legitimately pushes.
+    const selectedRev = rev;
+    ana.emit('vip', { action: 'updateSettings', settings: {} });
+    const tunedUntil = Date.now() + 5000;
+    while (rev === selectedRev && Date.now() < tunedUntil)
+      await new Promise((r) => setTimeout(r, 25));
+    expect(rev).toBeGreaterThan(selectedRev);
+    await quiet(ben, 600);
     const before = rev;
-    ana.emit('vip', { action: 'updateSettings', settings: {} }); // an empty change: the room is the same
+    ana.emit('vip', { action: 'updateSettings', settings: {} }); // identical snapshot: no push
     await quiet(ben, 600);
     expect(rev).toBe(before); // nothing newer was sent for the no-op
   });
