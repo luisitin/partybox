@@ -2,7 +2,7 @@
 // §1.3, §1.7, §1.13, §1.15).
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
-import { crewClue, input, roles, start, timer, until, vip } from './helpers';
+import { crewClue, input, roles, start, timer, T0, until, vip } from './helpers';
 import type { State } from '../server/types';
 
 function phasesOf(s0: State, steps = 60): string[] {
@@ -225,12 +225,40 @@ describe('edge cases', () => {
 });
 
 describe('the category (owner 2026-09-24)', () => {
-  it('only the hinted imposter sees it: never the crew, the TV or the reader', () => {
-    const s = until(start(6), 'clue');
+  it('stays private from crew and TV through every phase before the word reveal', () => {
+    let s = start(6, { rounds: 1, clueRounds: '1', talk: false });
     const { imps, crew } = roles(s);
-    expect(game.tvView(s).stage.category).toBeNull();
-    for (const id of crew) expect(game.controllerView(s, id).catLabel).toBeNull();
-    expect(game.controllerView(s, imps[0] as string).catLabel).toBe(s.round.category.label);
+    const visited = new Set<string>();
+    for (let i = 0; i < 80 && s.phase.id !== 'wordReveal'; i++) {
+      visited.add(s.phase.id);
+      const label = s.round.category.label;
+      expect(game.tvView(s).stage.category).toBeNull();
+      expect(JSON.stringify(game.tvView(s))).not.toContain(label);
+      for (const id of crew) {
+        const view = game.controllerView(s, id);
+        expect(view.catLabel).toBeNull();
+        expect(JSON.stringify(view)).not.toContain(label);
+      }
+      expect(game.controllerView(s, imps[0] as string).catLabel).toBe(label);
+      s = timer(s);
+    }
+    expect(s.phase.id).toBe('wordReveal');
+    expect(visited).toContain('deal');
+    expect(visited).toContain('clue');
+    expect(visited).toContain('clueReveal');
+    expect(visited).toContain('vote');
+    expect(visited).toContain('voteReveal');
+    expect(game.tvView(s).stage.reveal?.category).toBe(s.round.category.label);
+    expect(game.recap?.(s, { players: [], history: [], results: null })?.markdown).not.toContain(
+      s.round.category.label,
+    );
+    const scores = until(s, 'scores');
+    const recap = game.recap?.(scores, {
+      players: [],
+      history: [{ phase: 'scores', at: T0, state: scores }],
+      results: game.results(scores) ?? null,
+    });
+    expect(recap?.markdown).toContain(scores.round.category.label);
     const none = until(start(6, { hint: 'none' }), 'clue');
     expect(game.controllerView(none, roles(none).imps[0] as string).catLabel).toBeNull();
   });

@@ -88,6 +88,37 @@ describe('secrets across whole games', () => {
     }
   });
 
+  it(
+    'category stays off crew and TV views until wordReveal; bots use only their own role view',
+    LONG,
+    () => {
+      const seen = new Set<string>();
+      play(6, { rounds: 1, talk: false, clueRounds: '1' }, 23, (s) => {
+        if (!EARLY.has(s.phase.id)) return;
+        seen.add(s.phase.id);
+        const label = s.round.category.label;
+        const tv = game.tvView(s);
+        expect(tv.stage.category).toBeNull();
+        expect(JSON.stringify(tv)).not.toContain(label);
+        for (const id of s.seats) {
+          const view = game.controllerView(s, id);
+          if (s.round.imposters.includes(id)) {
+            expect(view.catLabel).toBe(s.cfg.hint === 'category' ? label : null);
+          } else {
+            expect(view.catLabel).toBeNull();
+            expect(JSON.stringify(view)).not.toContain(label);
+          }
+          const input = game.bot.sampleInput(s, id, createRng(23));
+          expect(JSON.stringify(input)).not.toContain(label);
+        }
+      });
+      expect(seen).toContain('deal');
+      expect(seen).toContain('clue');
+      expect(seen).toContain('vote');
+      expect(seen).toContain('lastChance');
+    },
+  );
+
   it('roles stay off other phones until the card flips', LONG, () => {
     play(10, { imposters: '2' }, 5, (s) => {
       for (const id of s.seats) {

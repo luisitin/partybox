@@ -1,5 +1,14 @@
 # Imposter — build notes
 
+## Owner ruling: category privacy (2026-09-25)
+
+Before `wordReveal`, the category is the hinted imposter's private clue. Crew phones show only the
+secret word; the TV and every crew-facing phone view must omit the category label. This includes
+the secret card, clue and voting surfaces, bot-facing controller views, and Spanish UI mode. The
+category may appear in the public word reveal and in the completed recap after that reveal. The
+follow-up leak tests exercise serialized TV/crew views across pre-reveal phases and confirm bot
+inputs do not expose the label.
+
 Branch `game/imposter`, worktree `C:/dev/partybox-game-imposter`, harness port 42310.
 
 ## Status (2026-09-24)

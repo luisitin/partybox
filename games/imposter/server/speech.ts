@@ -1,7 +1,7 @@
 // The reader (SPEC §1.11, ADR-045). Every line goes through the SDK's toSpeakable. Requests go
 // out as soon as a line's text is known and public-safe: clues when submitted (they stay in state,
-// never in a view, until their card), the accusation when the vote settles, the next round's
-// category during the vote — and "The word was …" only once wordReveal begins (SPEC §1.5).
+// never in a view, until their card), the accusation when the vote settles, the next round's short
+// deal line during the vote — and "The word was …" only once wordReveal begins (SPEC §1.5).
 // Fixed lines are requested live too (stand-in for render-clips, audit #22): same voice, cached.
 import type { SpeechRequest } from '@partybox/game-sdk';
 import { PRONUNCIATIONS } from './content';

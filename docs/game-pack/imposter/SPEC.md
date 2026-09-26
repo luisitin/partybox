@@ -38,7 +38,7 @@ Both play fully remote, because every input is typed or tapped (P00 §3.7).
 
 Six players. The word is PIZZA, the category is Food, and Sam is the imposter.
 
-1. **Deal.** Five phones say "Your word: PIZZA · Food". Sam's says "You're the imposter · Food". Each player holds the card to peek, so neighbours can't see.
+1. **Deal.** Five phones say "Your word: PIZZA". Sam's says "You're the imposter · Food". The category is the imposter's hint; the crew sees only its word until the word reveal. Each player holds the card to peek, so neighbours can't see.
 2. **Clues.** Everyone types one word at the same time.
    - The crew want to prove they know the word without making it easy: "pepperoni", "slice", "delivery", "cheese", "oven".
    - Sam only knows "Food" and types "dinner".
@@ -76,20 +76,20 @@ Six players. The word is PIZZA, the category is Food, and Sam is the imposter.
 10. `scores`
 11. Next round's `deal`, or `done`
 
-| Phase        | TV shows                                                                 | Phone shows                                                                                             | Inputs                    | Ends when                                             | Sound · bed                                            |
-| ------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------- | ------------------------------------------------------ |
-| `intro`      | Title and the three steps                                                | How to play                                                                                             | —                         | 8 s, or VIP                                           | `start` · `lounge`                                     |
-| `deal`       | "Round 2 of 3", the category (if hinted), card backs dealt to every chip | `SecretCard` with the role; **Got it**                                                                  | `ready`                   | all connected ready, or 12 s (quiet timer)            | `card` · `lounge`                                      |
-| `clue`       | Category, "Type one word", chips ✓                                       | Clue box, legality line (crew only), earlier clues, mini `SecretCard`                                   | `clue` (resend to change) | all connected submitted, 40 s, or VIP                 | `phase` · `marimba`                                    |
-| `clueReveal` | Clue cards dealt one at a time with their authors, each read aloud       | "👀 Watch the TV" / stage                                                                               | —                         | last card + 2 s, paced to the readings (hidden timer) | `reveal`, then `card` per card · none                  |
-| `talk`       | All clue cards, "Talk it over. Who's faking?", timer                     | All clues listed; VIP: **Start the vote**                                                               | —                         | 60 s, or VIP                                          | `sweep` · `latenight`                                  |
-| `vote`       | Clue cards dimmed, "Vote on your phone", chips ✓                         | `FacePicker` (1 or 2 picks), each face with its clues                                                   | `vote` (resend to change) | all connected voted, 30 s, or VIP                     | `phase` · `pulse`                                      |
-| `voteReveal` | Voters' faces land on their targets; counts appear                       | stage                                                                                                   | —                         | paced, about 4 s                                      | `tally` · none                                         |
-| `runoff`     | "Tie! Vote again: Sam or Ana?" with their clues                          | `FacePicker` limited to the tied players (never self)                                                   | `vote`                    | all voted, 20 s, or VIP                               | `phase` · `pulse`                                      |
-| `accuse`     | Spotlight on the accused, a pause, then the role card flips              | stage                                                                                                   | —                         | paced, about 5 s per accused player                   | `reveal`, then `cheer` (imposter) or `bust` (innocent) |
-| `lastChance` | "Sam's last chance" and the six options, or "Sam is typing…"             | Accused imposter: `ChoiceGrid` of 6 or `TextAnswer`. Everyone else: "Sam is guessing…" plus the options | `guess`                   | guess received, 20 s, or VIP                          | `wager` · `pulse`                                      |
-| `wordReveal` | "The word was PIZZA", imposter clues highlighted, the guess result       | stage, then the player's own result line; VIP override when allowed                                     | VIP: `countGuess`         | paced, about 6 s, or VIP                              | `reveal`, plus `jackpot` if stolen                     |
-| `scores`     | Scoreboard with round deltas and reason chips, climbing                  | Own points and rank; VIP: **Next round**                                                                | —                         | 8 s, or VIP                                           | `tally` · `warm`                                       |
+| Phase        | TV shows                                                           | Phone shows                                                                                             | Inputs                    | Ends when                                             | Sound · bed                                            |
+| ------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------- | ------------------------------------------------------ |
+| `intro`      | Title and the three steps                                          | How to play                                                                                             | —                         | 8 s, or VIP                                           | `start` · `lounge`                                     |
+| `deal`       | "Round 2 of 3", card backs dealt to every chip                     | `SecretCard` with the role; **Got it**                                                                  | `ready`                   | all connected ready, or 12 s (quiet timer)            | `card` · `lounge`                                      |
+| `clue`       | "Type one word", chips ✓                                           | Clue box, legality line (crew only), earlier clues, mini `SecretCard`                                   | `clue` (resend to change) | all connected submitted, 40 s, or VIP                 | `phase` · `marimba`                                    |
+| `clueReveal` | Clue cards dealt one at a time with their authors, each read aloud | "👀 Watch the TV" / stage                                                                               | —                         | last card + 2 s, paced to the readings (hidden timer) | `reveal`, then `card` per card · none                  |
+| `talk`       | All clue cards, "Talk it over. Who's faking?", timer               | All clues listed; VIP: **Start the vote**                                                               | —                         | 60 s, or VIP                                          | `sweep` · `latenight`                                  |
+| `vote`       | Clue cards dimmed, "Vote on your phone", chips ✓                   | `FacePicker` (1 or 2 picks), each face with its clues                                                   | `vote` (resend to change) | all connected voted, 30 s, or VIP                     | `phase` · `pulse`                                      |
+| `voteReveal` | Voters' faces land on their targets; counts appear                 | stage                                                                                                   | —                         | paced, about 4 s                                      | `tally` · none                                         |
+| `runoff`     | "Tie! Vote again: Sam or Ana?" with their clues                    | `FacePicker` limited to the tied players (never self)                                                   | `vote`                    | all voted, 20 s, or VIP                               | `phase` · `pulse`                                      |
+| `accuse`     | Spotlight on the accused, a pause, then the role card flips        | stage                                                                                                   | —                         | paced, about 5 s per accused player                   | `reveal`, then `cheer` (imposter) or `bust` (innocent) |
+| `lastChance` | "Sam's last chance" and the six options, or "Sam is typing…"       | Accused imposter: `ChoiceGrid` of 6 or `TextAnswer`. Everyone else: "Sam is guessing…" plus the options | `guess`                   | guess received, 20 s, or VIP                          | `wager` · `pulse`                                      |
+| `wordReveal` | "The word was PIZZA", imposter clues highlighted, the guess result | stage, then the player's own result line; VIP override when allowed                                     | VIP: `countGuess`         | paced, about 6 s, or VIP                              | `reveal`, plus `jackpot` if stolen                     |
+| `scores`     | Scoreboard with round deltas and reason chips, climbing            | Own points and rank; VIP: **Next round**                                                                | —                         | 8 s, or VIP                                           | `tally` · `warm`                                       |
 
 **Client hooks:**
 
@@ -143,7 +143,7 @@ Six players. The word is PIZZA, the category is Food, and Sam is the imposter.
 **Deal**
 
 - A full-width `SecretCard`. Its back reads "Hold to see your word" for everyone.
-- Crew face: "Your word" (caption), **PIZZA** (h1), "Category: Food".
+- Crew face: "Your word" (caption), **PIZZA** (h1). The category stays hidden from crew until word reveal.
 - Imposter face:
   - "You're the" (caption), **IMPOSTER 🕵️** (h1);
   - "Category: Food", or "No hint this round";
@@ -334,7 +334,7 @@ type ImposterState = {
 **`tvView`** contains:
 
 - the phase and "round n of N";
-- the category, if hinted;
+- no category label before `wordReveal`; at reveal, the public category and secret word;
 - revealed clue cards only;
 - chip statuses;
 - tallies, after `voteReveal`;
@@ -347,7 +347,7 @@ type ImposterState = {
 
 - the role;
 - the word (crew only);
-- the category, if hinted;
+- the category hint, if enabled (visible only to the imposter's phone before reveal);
 - the imposter count;
 - the player's own clue and vote;
 - the candidates, with their revealed clues;
@@ -390,7 +390,7 @@ The reader defaults to `george`. Every line goes through `toSpeakable` (P00 §5)
 
 | Phase        | Line                                                                                                           |
 | ------------ | -------------------------------------------------------------------------------------------------------------- |
-| `deal`       | "Round two. The category is food." Without a hint: "Round two."                                                |
+| `deal`       | "Round two."                                                                                                   |
 | `clueReveal` | each clue on its own ("Pepperoni.")                                                                            |
 | `accuse`     | "The room accuses Sam." when the name is readable (P00 §5.5); otherwise the fixed clip "The room has decided." |
 | `wordReveal` | "The word was pizza." Requested only when the phase begins (§1.5)                                              |
@@ -412,7 +412,7 @@ The reader defaults to `george`. Every line goes through `toSpeakable` (P00 §5)
 - Each clue card holds for its reading plus 0.3 s: at least 1.2 s, at most 3 s.
 - With no reader, each card holds 1.4 s.
 
-**Prefetch:** during `vote`, the next round's category line. It isn't secret.
+**Prefetch:** during `vote`, the next round's short deal line. It contains no category.
 
 ## 1.12 Settings
 

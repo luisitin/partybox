@@ -18,20 +18,20 @@ decides from its own phone view. Late joiners are spectators (stage only, no rol
 
 The shell's start stage (ADR-053) shows the rules and waits for everyone's READY + 3·2·1; the game begins at the first deal.
 
-| Phase        | What happens                                                   | Ends when                                   |
-| ------------ | -------------------------------------------------------------- | ------------------------------------------- |
-| `deal`       | Word, category and imposters drawn; phones hold the SecretCard | all connected ready, 12 s (quiet), or VIP   |
-| `clue`       | Everyone types one word (resend replaces)                      | all connected submitted, `clueSeconds`, VIP |
-| `clueReveal` | Cards dealt one at a time (seeded order), each read aloud      | last card + 2 s (hidden); VIP = next card   |
-| `talk`       | Talk it over (only when the room can talk)                     | `talkSeconds`, or VIP                       |
-| `vote`       | Tap the face(s) you suspect, never your own                    | all connected voted, `voteSeconds`, or VIP  |
-| `voteReveal` | Voters' faces land on their targets; accusation decided        | 4 s                                         |
-| `runoff`     | Tie only: vote again among the tied players                    | all voted, 20 s, or VIP                     |
-| `accuse`     | Spotlight 1.5 s, then the role card flips (per accused)        | 5 s per accused; VIP = next beat            |
-| `lastChance` | A caught imposter picks the word from six (or types it)        | guess in, 20 s, or VIP                      |
-| `wordReveal` | "The word was …", then the guess line and own results          | ≈ 7 s (10 s while a typed guess can count)  |
-| `scores`     | Points land, board climbs                                      | 8 s, or VIP                                 |
-| `done`       | Results                                                        | —                                           |
+| Phase        | What happens                                                                                          | Ends when                                   |
+| ------------ | ----------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `deal`       | Word and imposters drawn; phones hold the SecretCard. Only the imposter phone gets the category hint. | all connected ready, 12 s (quiet), or VIP   |
+| `clue`       | Everyone types one word (resend replaces)                                                             | all connected submitted, `clueSeconds`, VIP |
+| `clueReveal` | Cards dealt one at a time (seeded order), each read aloud                                             | last card + 2 s (hidden); VIP = next card   |
+| `talk`       | Talk it over (only when the room can talk)                                                            | `talkSeconds`, or VIP                       |
+| `vote`       | Tap the face(s) you suspect, never your own                                                           | all connected voted, `voteSeconds`, or VIP  |
+| `voteReveal` | Voters' faces land on their targets; accusation decided                                               | 4 s                                         |
+| `runoff`     | Tie only: vote again among the tied players                                                           | all voted, 20 s, or VIP                     |
+| `accuse`     | Spotlight 1.5 s, then the role card flips (per accused)                                               | 5 s per accused; VIP = next beat            |
+| `lastChance` | A caught imposter picks the word from six (or types it)                                               | guess in, 20 s, or VIP                      |
+| `wordReveal` | "The word was …", then the guess line and own results                                                 | ≈ 7 s (10 s while a typed guess can count)  |
+| `scores`     | Points land, board climbs                                                                             | 8 s, or VIP                                 |
+| `done`       | Results                                                                                               | —                                           |
 
 `clue → clueReveal` repeats per clue round (`clueRounds`: auto = 1 with talk, 2 without). Every
 imposter leaving the game before the vote voids the round (straight to `wordReveal`, no points).
