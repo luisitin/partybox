@@ -16,7 +16,7 @@ export interface RoleCardProps {
   cast: readonly CastEntry[];
   role: Role | null;
   flipped: boolean;
-  size?: 'hero' | 'medium' | 'small';
+  size?: 'hero' | 'medium' | 'small' | 'dense' | 'compact';
   delayMs?: number;
   /** Winner side glow on the end board. */
   won?: boolean;

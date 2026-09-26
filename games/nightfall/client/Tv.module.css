@@ -63,6 +63,12 @@
   font-size: var(--pb-font-h1);
 }
 
+.crowdedLine {
+  max-width: min(100%, 1500px);
+  font-size: clamp(32px, 3vw, 56px);
+  overflow-wrap: anywhere;
+}
+
 .h2 {
   font-size: var(--pb-font-h2);
 }
@@ -232,6 +238,17 @@
   flex-wrap: wrap;
   gap: var(--pb-space-4);
   max-width: 1600px;
+}
+
+.denseEndCards {
+  width: min(100%, 1600px);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 112px;
+  align-content: center;
+  gap: var(--pb-space-2);
+  row-gap: var(--pb-space-1);
+  margin-top: 0;
 }
 
 .aimer {

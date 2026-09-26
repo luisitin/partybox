@@ -53,13 +53,14 @@ export function EndBoard({
   const end = view.stage.end;
   if (!end) return null;
   const dead = new Set(view.graveyard.map((g) => g.id));
+  const dense = end.roles.length > 10;
   return (
     <div className={styles.column}>
       {finale ? null : (
         <h1 className={`${styles.display} ${styles.banner}`}>{L.sent(end.headline)}</h1>
       )}
       <p className={styles.lead}>{whyLine(view, L)}</p>
-      <div className={`${styles.cards} ${styles.endCards}`}>
+      <div className={`${styles.cards} ${styles.endCards} ${dense ? styles.denseEndCards : ''}`}>
         {end.roles.map((r, i) => {
           const who = playerOf(view.players, r.id);
           return (
@@ -70,7 +71,7 @@ export function EndBoard({
               cast={view.cast}
               role={r.role}
               flipped
-              size="small"
+              size={dense ? 'dense' : 'small'}
               delayMs={400 + i * 110}
               flipAfterMs={200}
               won={end.winner !== null && sideOf(r.role) === end.winner}

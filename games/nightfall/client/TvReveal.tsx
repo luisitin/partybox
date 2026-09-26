@@ -178,7 +178,17 @@ export function VerdictScene({ view }: { view: NightfallTvView }): JSX.Element {
       ) : (
         <>
           {reason ? <p className={styles.kicker}>{reason}</p> : null}
-          <Lines view={view} />
+          {crowded && view.step >= 1 ? (
+            <div className={styles.lines}>
+              {view.stage.lines.map((line, i) => (
+                <h1 key={`${view.step}-${i}-${line}`} className={styles.crowdedLine}>
+                  {L.sent(line)}
+                </h1>
+              ))}
+            </div>
+          ) : (
+            <Lines view={view} />
+          )}
         </>
       )}
       <div className={styles.court}>
@@ -201,7 +211,7 @@ export function VerdictScene({ view }: { view: NightfallTvView }): JSX.Element {
               flipped
               flipAfterMs={0}
               fastFlip
-              size="medium"
+              size={crowded ? 'compact' : 'medium'}
               dead
             />
           </div>
