@@ -10,23 +10,20 @@ describe('VIP skip', () => {
     expect(s.index).toBe(0);
   });
 
-  it('question → its reveal; unanswered players score 0 with no penalty', () => {
+  it('I-287 B: a skipped regular question is voided — the next one, nothing scored', () => {
     let s = timer(start());
+    const total = s.questionIds.length;
     s = pick(s, 'a', true);
     s = vip(s, 'skip');
-    expect(s.phase.id).toBe('reveal');
-    expect(s.scores['a']).toBeGreaterThan(0);
-    expect(s.scores['b']).toBe(0);
-    expect(s.lastDelta['b']).toBe(0);
+    expect(s.phase.id).toBe('question');
+    expect(s.index).toBe(0);
+    expect(s.questionIds.length).toBe(total - 1);
+    expect(s.scores['a']).toBe(0);
   });
 
-  it('reveal → next question, or the wager after the last regular question', () => {
+  it('I-287 B: voiding every regular question leads to the wager', () => {
     let s = timer(start({ questions: 5 }));
-    s = vip(s, 'skip'); // reveal of q1
-    s = vip(s, 'skip');
-    expect(s.phase.id).toBe('question');
-    expect(s.index).toBe(1);
-    for (let i = 0; i < 8; i++) s = vip(s, 'skip'); // q2..q5 + their reveals
+    for (let i = 0; i < 5; i++) s = vip(s, 'skip'); // q1..q5, each voided
     expect(s.phase.id).toBe('wager');
   });
 
@@ -38,11 +35,12 @@ describe('VIP skip', () => {
     expect(s.phase.id).toBe('question');
     expect(s.index).toBe(s.questionIds.length - 1);
     expect(s.wagers).toEqual({ a: bet });
-    // Skipping the final question loses the wager for a; b and c bet nothing.
+    // I-287 A: the VIP closing the final costs a nothing — the wager stays; b and c bet nothing.
     const before = { ...s.scores };
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('reveal');
-    expect(s.scores['a']).toBe((before['a'] ?? 0) - (bet ?? 0));
+    expect(s.scores['a']).toBe(before['a'] ?? 0);
+    expect(bet).toBeGreaterThan(0);
     expect(s.scores['b']).toBe(before['b']);
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('done');
@@ -91,7 +89,7 @@ describe('VIP end and pause', () => {
   it('skip while paused resumes first, then advances', () => {
     let s = vip(timer(start()), 'pause');
     s = vip(s, 'skip');
-    expect(s.phase.id).toBe('reveal');
+    expect(s.phase.id).toBe('question'); // I-287 B: voided, the next question
     expect(s.phase.paused).toBeUndefined();
   });
 });

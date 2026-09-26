@@ -105,6 +105,20 @@ export function advance(state: State, now: number): State {
   }
 }
 
+/** I-287: the VIP's skip. On a live question: a regular one is voided (B) — gone, unscored, the
+ *  next one up; the final (which can't be voided) closes like A. closing costs nobody who
+ *  hadn't answered (A). Elsewhere, the deadline's own step. */
+function vipSkip(state: State, now: number): State {
+  if (state.phase.id !== 'question') return advance(state, now);
+  if (!isFinalIndex(state, state.index)) {
+    const questionIds = state.questionIds.filter((_, i) => i !== state.index);
+    const voided = { ...state, questionIds, picks: {}, index: state.index - 1 };
+    // the question just voided was the last regular one: straight on to the wager
+    return state.index >= state.questionIds.length - 2 ? enterWager(voided, now) : enterQuestion(voided, now);
+  }
+  return enterReveal({ ...state, closedEarly: true }, now);
+}
+
 /** The drop of the last outstanding player ends the phase like their input would have
  *  (review-loop #48): the room never sits out a full timer for someone who has gone. */
 function closeIfDone(state: State, now: number): State {
@@ -122,7 +136,7 @@ function reduce(state: State, event: GameEvent<Input>): State {
     const after = setConnected(state, event);
     return event.connected || after.phase.paused ? after : closeIfDone(after, event.now);
   }
-  const vip = applyVip(state, event, { skip: advance, end: enterDone });
+  const vip = applyVip(state, event, { skip: vipSkip, end: enterDone });
   if (vip) return vip;
   if (state.phase.paused) return state; // inputs and timers wait while paused
   switch (state.phase.id) {

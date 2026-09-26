@@ -40,7 +40,9 @@ describe('I-589: the standings Next button', () => {
     expect(FINAL_REVEAL_MS).toBe(8000);
     let s = game.init({ players, settings: { questions: 5 }, seed: 1, now: 0 }) as State;
     s = game.reduce(s, { type: 'vip', action: 'skip', now: 10 }) as State;
-    s = game.reduce(s, { type: 'vip', action: 'skip', now: 20 }) as State;
+    // I-287 B: a VIP skip voids a live question — the room answers to reach its reveal
+    for (const id of ['a', 'b'])
+      s = game.reduce(s, { type: 'input', playerId: id, input: { type: 'pick', index: 0 }, now: 20 }) as State;
     expect(s.phase.id).toBe('reveal');
     expect(s.phase.deadline).toBe(20 + revealMs(s));
     expect(revealMs(s)).toBeGreaterThanOrEqual(REVEAL_MS);

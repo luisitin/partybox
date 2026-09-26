@@ -82,6 +82,8 @@ export interface State extends GameStateBase {
   /** Score change per player at the last reveal (negative on a lost wager). */
   lastDelta: Record<string, number>;
   stats: Record<string, PlayerStats>;
+  /** I-287 A: the VIP closed this question early — nobody who hadn't answered pays for it. */
+  closedEarly?: boolean;
 }
 
 export const inputSchema = z.discriminatedUnion('type', [

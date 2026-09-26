@@ -10,7 +10,7 @@ import type { Advance } from './intro';
 export function enterQuestion(state: State, now: number): State {
   const index = Math.min(state.index + 1, state.questionIds.length - 1);
   return enterPhase(
-    { ...state, index, picks: {} },
+    { ...state, index, picks: {}, closedEarly: false },
     'question',
     now,
     state.settings.answerSeconds * 1000,

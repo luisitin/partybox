@@ -60,11 +60,13 @@ export function scoreCurrentQuestion(state: State): State {
     const correct =
       question !== undefined && pick !== undefined && pick.index === question.answerIndex;
     const previous = stats[id] ?? EMPTY_STATS;
-    const streak = correct ? (streaks[id] ?? 0) + 1 : 0;
+    // I-287 A: closed early by the VIP — a player who hadn't answered keeps streak and wager
+    const spared = state.closedEarly === true && pick === undefined;
+    const streak = correct ? (streaks[id] ?? 0) + 1 : spared ? (streaks[id] ?? 0) : 0;
     const wager = state.wagers[id] ?? 0;
     let delta: number;
     // `0 - wager` (not `-wager`) so a lost 0 wager is +0, keeping views JSON-round-trippable.
-    if (final) delta = correct ? wager : 0 - wager;
+    if (final) delta = correct ? wager : spared ? 0 : 0 - wager;
     else
       delta =
         correct && pick ? questionPoints(pick.elapsedMs, state.settings.answerSeconds, streak) : 0;
