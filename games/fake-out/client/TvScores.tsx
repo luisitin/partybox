@@ -49,11 +49,17 @@ export function TvScores({ view }: Props): JSX.Element {
         </BigText>
       ) : null}
       <div className={styles.board}>
-        <Scoreboard rows={rows} noTrophy stagger="climb" climbFrom={climbFrom} />
+        <Scoreboard
+          rows={rows}
+          noTrophy
+          stagger="climb"
+          climbFrom={climbFrom}
+          columns={rows.length > 10 ? 3 : undefined}
+        />
       </div>
       {scorers.length > 0 ? (
         <ul className={styles.howList} aria-label={L('How the points came')}>
-          {scorers.slice(0, 4).map((r, i) => (
+          {scorers.map((r, i) => (
             <li key={r.playerId} className={styles.how} style={{ ['--i' as string]: i }}>
               <Avatar avatarId={r.avatarId} size="var(--pb-space-7)" />
               <span className={styles.howName}>{r.name}</span>
