@@ -118,6 +118,9 @@ export interface State extends GameStateBase {
   intel: Record<string, Intel[]>;
   round: Round;
   history: HistoryRow[];
+  /** Current discussion only; the bounded transcript is discarded at the next discussion. */
+  chat: { from: string; text: string; at: number }[];
+  lastChatAt: Record<string, number>;
   /**
    * D3: a timeout chose at random; `who` is named only for nominations and power targets. Set
    * with `fresh: true` by the timeout; the next phase shows it, the one after clears it.
@@ -139,6 +142,7 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('vetoAnswer'), agree: z.boolean() }),
   z.object({ type: z.literal('target'), target: z.string().max(64) }),
   z.object({ type: z.literal('peekDone') }),
+  z.object({ type: z.literal('chat'), text: z.string().max(120) }),
 ]);
 export type Input = z.infer<typeof inputSchema>;
 

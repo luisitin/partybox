@@ -125,6 +125,43 @@ describe('D1 · deadlines and timeouts', () => {
     expect(timeout(s).phase.id).toBe('nominate');
   });
 
+  it('discussion chat is shared only with living players during claims', () => {
+    let s = govern(seated(rig(5)), 'p2');
+    s = send(
+      s,
+      'p1',
+      { type: 'chat', text: '  I passed two liberals.  ' },
+      s.phase.startedAt + 100,
+    );
+    expect(s.chat).toMatchObject([{ from: 'p1', text: 'I passed two liberals.' }]);
+    expect(controllerView(s, 'p2').chat).toEqual([{ seat: 0, text: 'I passed two liberals.' }]);
+    expect(controllerView(s, 'spectator').chat).toBeUndefined();
+    expect('chat' in tvView(s)).toBe(false);
+    expect(send(s, 'p1', { type: 'chat', text: 'Again' }, s.phase.startedAt + 200)).toBe(s);
+    s = send(s, 'p2', { type: 'chat', text: 'I chose liberal.' }, s.phase.startedAt + 300);
+    expect(s.chat).toHaveLength(2);
+    const after = timeout(s);
+    expect(controllerView(after, 'p2').chat).toBeUndefined();
+    expect(send(after, 'p2', { type: 'chat', text: 'Too late' })).toBe(after);
+  });
+
+  it('discussion chat rejects empty, long, paused, and excluded senders, and stays bounded', () => {
+    let s = govern(seated(rig(5)), 'p2');
+    const at = s.phase.startedAt;
+    expect(send(s, 'p1', { type: 'chat', text: '   ' }, at + 100)).toBe(s);
+    expect(game.inputSchema.safeParse({ type: 'chat', text: 'a'.repeat(121) }).success).toBe(false);
+    s = { ...s, executed: ['p3'], alive: s.alive.filter((id) => id !== 'p3') };
+    expect(send(s, 'p3', { type: 'chat', text: 'Ghost' }, at + 100)).toBe(s);
+    expect(controllerView(s, 'p3').chat).toBeUndefined();
+    const paused = vip(s, 'pause', at + 200);
+    expect(send(paused, 'p1', { type: 'chat', text: 'Paused' }, at + 300)).toBe(paused);
+    s = vip(paused, 'resume', at + 400);
+    for (let i = 0; i < 10; i++)
+      s = send(s, 'p1', { type: 'chat', text: `Message ${i}` }, at + 4_000 * (i + 1));
+    expect(s.chat).toHaveLength(6);
+    expect(s.chat[0]?.text).toBe('Message 4');
+  });
+
   it('D1 power: a random valid target; a peek closes after 15 s', () => {
     let s = timeout(govern(seated(rig(5, { deck: FF, patch: { board: { L: 0, F: 3 } } })), 'p2'));
     expect(s.round.power?.kind).toBe('execute');

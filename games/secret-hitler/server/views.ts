@@ -125,6 +125,7 @@ export type ShControllerView = ControllerView &
     dossier: Dossier | null;
     status: 'alive' | 'executed' | 'exiled' | 'spectator';
     act: ActView | null;
+    chat?: { seat: number; text: string }[];
   };
 
 function seatView(state: State, id: string, nextId: string | null): SeatView {
@@ -317,7 +318,7 @@ export function controllerView(state: State, playerId: string): ShControllerView
         : 'alive';
   const pub = publicView(state);
   const mine = chooserOf(state) === playerId || (state.phase.id === 'vote' && status === 'alive');
-  return {
+  const view: ShControllerView = {
     ...controllerEnvelope(state, GAME_ID, playerId, { statusOf: statusOf(state) }),
     ...timing(state),
     ...pub,
@@ -326,4 +327,13 @@ export function controllerView(state: State, playerId: string): ShControllerView
     status,
     act: status === 'alive' ? actFor(state, playerId) : null,
   };
+  if (status === 'alive' && state.phase.id === 'claims') {
+    view.chat = (state.chat ?? []).map((message) => ({
+      seat: state.seats.indexOf(message.from),
+      text: message.text,
+    }));
+    // A long Parliament Record and ten photo avatars leave less room for chat in the 4 KB view.
+    while (view.chat.length > 0 && JSON.stringify(view).length > 4096) view.chat.shift();
+  }
+  return view;
 }

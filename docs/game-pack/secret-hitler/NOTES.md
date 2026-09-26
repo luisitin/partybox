@@ -1,16 +1,15 @@
 # Secret Hitler — build notes
 
-Branch `game/secret-hitler` (off main `fa3e9996`), worktree `C:/dev/partybox-game-secret-hitler`,
-harness port 42410.
+M1 and the M2 visual pass reached main at `376c6712`. Follow-up work uses a separate branch.
 
 ## Status
 
-| Milestone                       | State                                                                                                                                                                                                                            |
-| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| M1 rules engine + plain screens | done: 15 phases, every R1–R22 and D1–D11 rule has a named test (81 tests), contract green (random / fast / idle / skipper × normal / relaxed / fast), sim 4,800 games clean (5–10 players × random / idle / mixed / chaos × 200) |
-| M2 Parliament Noir              | visual pass in progress after the owner's play-test: tokens, fonts, art, TV moments, phone dossier/roster/cards (see below); claims, Record input, narrator, chat, PhoneStage still to do                                        |
-| M3 variants + S1                | not started                                                                                                                                                                                                                      |
-| M4 polish                       | not started                                                                                                                                                                                                                      |
+| Milestone                       | State                                                                                                                                                                                                                                   |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| M1 rules engine + plain screens | merged: 15 phases, every R1–R22 and D1–D11 rule has a named test (92 game tests), contract green (random / fast / idle / skipper × normal / relaxed / fast), sim 4,800 games clean (5–10 players × random / idle / mixed / chaos × 200) |
+| M2 Parliament Noir              | visual pass merged after the owner's play-test: tokens, fonts, art, TV moments, phone dossier/roster/cards (see below); claims, Record input, narrator, chat, PhoneStage still to do                                                    |
+| M3 variants + S1                | not started                                                                                                                                                                                                                             |
+| M4 polish                       | not started                                                                                                                                                                                                                             |
 
 ## The owner's play-test notes (2026-09-24) and the visual pass
 
@@ -53,14 +52,14 @@ effect runs before the parent's ref is attached, so seat positions are measured 
 
 ## Conflicts with main / the brief, and what was done
 
-| #   | Spec                                                | Main                                                                                                     | Done                                                                                                                                                                                                                                                             |
-| --- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | §1, §13 manifest `icon`, `howToPlay`, `presence`    | not in `gameManifestSchema` on main (Foundation F2/F4, unmerged); the contract deep-equals manifest.json | left out; the credit is in `description` (§20.1's minimum), the three steps in `content/about.json`. Values ready: 🏛️; `{ needs: 'voice-if-remote' }`; `addedOn` at ship                                                                                         |
-| 2   | §14 has no input for D4                             | games only see `vip: true` on inputs                                                                     | ruling 2 above                                                                                                                                                                                                                                                   |
-| 3   | D7 "after the 120 s hold"                           | seats are held all game                                                                                  | ruling 4 above                                                                                                                                                                                                                                                   |
-| 4   | §21 "3 × 35"                                        | relaxed idle ≈ 107 min                                                                                   | ruling 3 above                                                                                                                                                                                                                                                   |
-| 5   | Ruling 20: 4 KB views, `bot.decide(controllerView)` | main's API is `sampleInput(state)`                                                                       | `sampleInput` = `decide(controllerView(state, id))`. Views measured with UUID ids, photo avatars and 12-char names at 10 players: TV 3.6 KB, phone 4.0 KB (`leaks.test.ts` pins ≤ 4096). Seat flags are a `tags` list and Record rows name seats by index to fit |
-| 6   | §4 "manhunt" is a phase                             | V8 is M3                                                                                                 | not in `phases` yet (every declared phase needs a fixture)                                                                                                                                                                                                       |
+| #   | Spec                                                | Main                                                         | Done                                                                                                                                                                                                                                                             |
+| --- | --------------------------------------------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | §1, §13 manifest `icon`, `howToPlay`, `presence`    | absent when M1 began; the contract deep-equals manifest.json | adopted after Foundation landed: 🏛️, three steps and `{ needs: 'voice-if-remote' }`; `addedOn` is 2026-09-24. The credit is in `description`.                                                                                                                    |
+| 2   | §14 has no input for D4                             | games only see `vip: true` on inputs                         | ruling 2 above                                                                                                                                                                                                                                                   |
+| 3   | D7 "after the 120 s hold"                           | seats are held all game                                      | ruling 4 above                                                                                                                                                                                                                                                   |
+| 4   | §21 "3 × 35"                                        | relaxed idle ≈ 107 min                                       | ruling 3 above                                                                                                                                                                                                                                                   |
+| 5   | Ruling 20: 4 KB views, `bot.decide(controllerView)` | main's API is `sampleInput(state)`                           | `sampleInput` = `decide(controllerView(state, id))`. Views measured with UUID ids, photo avatars and 12-char names at 10 players: TV 3.6 KB, phone 4.0 KB (`leaks.test.ts` pins ≤ 4096). Seat flags are a `tags` list and Record rows name seats by index to fit |
+| 6   | §4 "manhunt" is a phase                             | V8 is M3                                                     | not in `phases` yet (every declared phase needs a fixture)                                                                                                                                                                                                       |
 
 ## Spec errata found while building
 
@@ -133,7 +132,7 @@ real reducer from a real room's state and loads it with `/api/dev/load-state`.
 
 ## Left for later milestones
 
-M2: `--sh-*` tokens (S2) and fonts, the art, motion and signature moments, claims + ⚡ + the full
-Record, narrator, chat, PhoneStage, tabs. M3: power cards, toggles, presets, S1 conditional
+M2: claims + ⚡ + the full Record, narrator, chat, PhoneStage, tabs. The `--sh-*` tokens,
+fonts, art, motion and signature moments are already on main. M3: power cards, toggles, presets, S1 conditional
 settings, `manhunt`. M4: bots per §16 in full + the honesty property test, presence modes, finale +
 Truth panel + recap, awards, speech lab, the full screenshot matrix.
