@@ -39,6 +39,10 @@ export function ChosenGame({ controller, room, me }: ChosenGameProps): JSX.Eleme
   const fix = !room.canStart.ok ? startFix(room, game, MAX_BOTS_PER_OWNER - myBots) : null;
   const tuned = form ? tunedLine(form, room.settings, lang) : null;
   const settings = form?.settings ?? [];
+  const cardsLabel =
+    room.contentLang === 'es' && !game.contentLangs?.includes('es')
+      ? t.roomRow.cardsOnlyEnglish
+      : t.roomRow.cards(room.contentLang);
   return (
     <Screen
       footer={
@@ -80,6 +84,15 @@ export function ChosenGame({ controller, room, me }: ChosenGameProps): JSX.Eleme
           {game.icon}
         </span>
         <h2 className={styles.chosenName}>{game.name}</h2>
+        {/* The deck cue stays visible before a long translated pitch pushes the Room row below
+            the fold on a small phone. It opens the same VIP menu as that row. */}
+        <button
+          type="button"
+          className={`${selecting.roomChip} ${styles.cardsChip}`}
+          onClick={() => window.dispatchEvent(new Event('pb:vip-menu'))}
+        >
+          {cardsLabel}
+        </button>
         <p className={styles.chosenTagline}>{taglineOf(game, lang)}</p>
         <p className={styles.meta}>
           {t.picker.players(game.minPlayers, game.maxPlayers)} ·{' '}
@@ -112,13 +125,6 @@ export function ChosenGame({ controller, room, me }: ChosenGameProps): JSX.Eleme
         onClick={() => window.dispatchEvent(new Event('pb:vip-menu'))}
       >
         <span className={selecting.roomLabel}>{t.roomRow.label}</span>
-        {/* ADR-054 (Session C): the deck's language first, on screen on an SE, so the stage holds
-            no surprise */}
-        <span className={selecting.roomChip}>
-          {room.contentLang === 'es' && !game.contentLangs?.includes('es')
-            ? t.roomRow.cardsOnlyEnglish
-            : t.roomRow.cards(room.contentLang)}
-        </span>
         <span className={`${selecting.roomChip} ${room.recording ? selecting.roomOn : ''}`}>
           {room.recording ? '✓ ' : ''}
           {t.roomRow.recap}

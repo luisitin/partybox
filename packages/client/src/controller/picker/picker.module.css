@@ -272,6 +272,15 @@
   text-wrap: balance;
 }
 
+/* The deck language is a decision cue before the pitch, even when a long Spanish pitch pushes
+   the room switches below the fold on an SE. The 44 px pill also opens the VIP room menu. */
+.cardsChip {
+  min-height: var(--pb-touch);
+  color: var(--pb-text);
+  border-color: var(--pb-accent-2);
+  text-align: center;
+}
+
 .chosenTagline {
   color: var(--pb-text-muted);
   text-wrap: balance;

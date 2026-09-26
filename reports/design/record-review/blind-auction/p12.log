@@ -1,0 +1,26 @@
+(node:42396) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+pass 12: blind-auction reconnect 16p — 22 phase changes, 78 cues, tv long frames 420 (worst 1867 ms), 380 s → reports/design/record-review/blind-auction/p12-16p
+  +0.0s playing/intro (timer 8 s)
+  +8.1s playing/lot (timer 6 s)
+  +28.2s playing/bid (timer 6 s)
+  +32.5s playing/sold (timer 6 s)
+  +41.0s playing/flip (timer 1 s)
+  +47.4s playing/lot (timer 6 s)
+  +53.7s playing/bid (timer 20 s)
+  +58.3s playing/sold (timer 6 s)
+  +67.1s playing/flip (timer 1 s)
+  +73.1s playing/lot (timer 6 s)
+  +79.1s playing/bid (timer 20 s)
+  +83.3s playing/sold (timer 5 s)
+  +91.0s playing/flip (timer 1 s)
+  +97.2s playing/lot (timer 6 s)
+  +103.1s playing/bid (timer 20 s)
+  +108.0s playing/sold (timer 6 s)
+  +116.8s playing/flip (timer 1 s)
+  +123.0s playing/lot (timer 6 s)
+  +129.0s playing/bid (timer 20 s)
+  +133.6s playing/sold (timer 5 s)
+  +141.1s playing/flip (timer 1 s)
+  +147.6s results/results
+  note: reconnect: Sam dropped for 8 s at 2026-09-24T21:34:42.596Z in lot

@@ -1,0 +1,334 @@
+{
+  "phase": {
+    "id": "bet",
+    "startedAt": 1001000,
+    "deadline": 1021000
+  },
+  "rng": {
+    "seed": 21,
+    "step": 123
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Ana",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Ben",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Cy",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Dee",
+      "avatarId": "bear",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Eli",
+      "avatarId": "frog",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "rounds": 8,
+    "startCoins": 100,
+    "betSeconds": 20,
+    "grand": true,
+    "spicy": false,
+    "reader": "george"
+  },
+  "presence": {
+    "mode": "together",
+    "phoneOnly": false
+  },
+  "seats": ["p1", "p2", "p3", "p4", "p5"],
+  "left": [],
+  "boxes": [
+    {
+      "box": {
+        "id": "ba-magician-hat",
+        "name": "Magician's Hat",
+        "icon": "🎩",
+        "flavour": "Pull out a rabbit. Or a coin. Or someone else's coins.",
+        "options": [
+          {
+            "kind": "treasure",
+            "chance": 60,
+            "pay": 1.5
+          },
+          {
+            "kind": "trap",
+            "chance": 20,
+            "pay": 4.5
+          },
+          {
+            "kind": "mirror",
+            "chance": 20,
+            "pay": 4.5
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 0
+    },
+    {
+      "box": {
+        "id": "ba-pirate-chest",
+        "name": "Pirate's Chest",
+        "icon": "🏴‍☠️",
+        "flavour": "Found under a palm tree. Smells faintly of seaweed.",
+        "options": [
+          {
+            "kind": "treasure",
+            "chance": 60,
+            "pay": 1.5
+          },
+          {
+            "kind": "jackpot",
+            "chance": 30,
+            "pay": 3
+          },
+          {
+            "kind": "trap",
+            "chance": 10,
+            "pay": 9
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 0
+    },
+    {
+      "box": {
+        "id": "ba-carpet-bag",
+        "name": "Carpet Bag",
+        "icon": "👜",
+        "flavour": "Deeper on the inside than the outside.",
+        "options": [
+          {
+            "kind": "treasure",
+            "chance": 60,
+            "pay": 1.5
+          },
+          {
+            "kind": "receipt",
+            "chance": 30,
+            "pay": 3
+          },
+          {
+            "kind": "jackpot",
+            "chance": 10,
+            "pay": 9
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 1
+    },
+    {
+      "box": {
+        "id": "ba-mail-order-kit",
+        "name": "Mail-Order Kit",
+        "icon": "📬",
+        "flavour": "Some assembly required. Some coins included.",
+        "options": [
+          {
+            "kind": "treasure",
+            "chance": 60,
+            "pay": 1.5
+          },
+          {
+            "kind": "jackpot",
+            "chance": 30,
+            "pay": 3
+          },
+          {
+            "kind": "trap",
+            "chance": 10,
+            "pay": 9
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 0
+    },
+    {
+      "box": {
+        "id": "ba-bank-vault",
+        "name": "Bank Vault",
+        "icon": "🏦",
+        "flavour": "The alarm hasn't worked in years. Probably.",
+        "options": [
+          {
+            "kind": "treasure",
+            "chance": 50,
+            "pay": 1.8
+          },
+          {
+            "kind": "trap",
+            "chance": 30,
+            "pay": 3
+          },
+          {
+            "kind": "raccoon",
+            "chance": 20,
+            "pay": 4.5
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 1
+    },
+    {
+      "box": {
+        "id": "ba-mummy-tomb",
+        "name": "Mummy's Tomb",
+        "icon": "🏺",
+        "flavour": "The curse is probably just a rumour.",
+        "options": [
+          {
+            "kind": "trap",
+            "chance": 60,
+            "pay": 1.5
+          },
+          {
+            "kind": "treasure",
+            "chance": 40,
+            "pay": 2.5
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 1
+    },
+    {
+      "box": {
+        "id": "ba-booby-trap",
+        "name": "Booby Trap",
+        "icon": "🪤",
+        "flavour": "It says NOT A TRAP in big friendly letters.",
+        "options": [
+          {
+            "kind": "trap",
+            "chance": 60,
+            "pay": 1.5
+          },
+          {
+            "kind": "raccoon",
+            "chance": 30,
+            "pay": 3
+          },
+          {
+            "kind": "treasure",
+            "chance": 10,
+            "pay": 9
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 1
+    },
+    {
+      "box": {
+        "id": "ba-dream-mansion",
+        "name": "Dream Mansion",
+        "icon": "🏰",
+        "flavour": "Nine bedrooms, one ghost, no refunds.",
+        "options": [
+          {
+            "kind": "twins",
+            "chance": 50,
+            "pay": 1.8
+          },
+          {
+            "kind": "treasure",
+            "chance": 30,
+            "pay": 3
+          },
+          {
+            "kind": "trap",
+            "chance": 20,
+            "pay": 4.5
+          }
+        ],
+        "grand": true
+      },
+      "outcome": 1
+    }
+  ],
+  "r": {
+    "idx": 0,
+    "bets": {
+      "p2": {
+        "option": 0,
+        "amount": 40
+      },
+      "p4": {
+        "option": 1,
+        "amount": 25
+      }
+    },
+    "step": 0,
+    "voiceAt": null,
+    "turnedAt": null,
+    "topped": []
+  },
+  "coins": {
+    "p1": 100,
+    "p2": 100,
+    "p3": 100,
+    "p4": 100,
+    "p5": 100
+  },
+  "stats": {
+    "p1": {
+      "biggestBet": 0,
+      "biggestWin": 0,
+      "longShots": 0,
+      "calls": 0,
+      "lost": 0
+    },
+    "p2": {
+      "biggestBet": 0,
+      "biggestWin": 0,
+      "longShots": 0,
+      "calls": 0,
+      "lost": 0
+    },
+    "p3": {
+      "biggestBet": 0,
+      "biggestWin": 0,
+      "longShots": 0,
+      "calls": 0,
+      "lost": 0
+    },
+    "p4": {
+      "biggestBet": 0,
+      "biggestWin": 0,
+      "longShots": 0,
+      "calls": 0,
+      "lost": 0
+    },
+    "p5": {
+      "biggestBet": 0,
+      "biggestWin": 0,
+      "longShots": 0,
+      "calls": 0,
+      "lost": 0
+    }
+  },
+  "factors": {},
+  "notices": {},
+  "speechMs": {}
+}

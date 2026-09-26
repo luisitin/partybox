@@ -1,26 +1,26 @@
 <!-- Cut from parts/04-ECHO-BLIND-AUCTION.md (received 2026-09-24). The part file is the original;
      this copy is the one game's spec, with the part's shared intro on top. -->
 
-# PartyBox Game Pack · Part 04 — Echo and Blind Auction
+# PartyBox Game Pack · Part 04 — Echo and Mystery Box
 
 _Batch 5 of 7 · read Part 00 first · games 7 and 8 of the pack._
 
 These two games change the room's mood. Brief §14 asks for both kinds:
 
 - **Echo** is the pack's real co-op game. Everyone wins or loses together against the deck.
-- **Blind Auction** is the pack's most openly competitive and chaotic game.
+- **Mystery Box** is the pack's most openly competitive and chaotic game.
 
-Both play fully remote. Blind Auction adds a live bidding mode when everyone shares a room.
+Both play fully remote. Mystery Box adds a live bidding mode when everyone shares a room.
 
 ---
 
-# Game 8 · Blind Auction 🔨
+# Game 8 · Mystery Box 🔨
 
 ## 8.1 Pitch
 
 |                  |                                                                                                          |
 | ---------------- | -------------------------------------------------------------------------------------------------------- |
-| Name · tagline   | **Blind Auction** · "Bid on mystery lots. Treasure or trap?"                                             |
+| Name · tagline   | **Mystery Box** · "Bid on mystery lots. Treasure or trap?"                                               |
 | id · icon        | `blind-auction` · 🔨                                                                                     |
 | Players · length | 2–16 · about 8 min · `estimatedMinutes: 8`                                                               |
 | Tags             | `strategy`, `bluff`, `quick`                                                                             |
@@ -544,7 +544,7 @@ A wild lot:
 
 ## 8.19 Recap
 
-"Blind Auction · <date>" contains:
+"Mystery Box · <date>" contains:
 
 - for each lot: its name and hint, every bid, the winner and price, the outcome, and the coins afterwards;
 - final coins and awards.
